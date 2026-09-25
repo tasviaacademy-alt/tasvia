@@ -26,6 +26,7 @@ header{background:var(--board);color:var(--chalk);padding:16px 18px 22px}
 .langs button{border:0;border-radius:999px;padding:4px 10px;background:rgba(255,255,255,.12);color:var(--chalk);font:inherit;font-size:.85rem;cursor:pointer}
 .langs button.on{background:var(--gold);color:#1a1405;font-weight:600}
 .kid{max-width:640px;margin:14px auto 0}
+.kid{display:flex;gap:14px;align-items:center}.kid .ph{width:72px;height:96px;border-radius:12px;overflow:hidden;border:3px solid var(--gold);flex:0 0 auto}.kid .ph img{width:100%;height:100%;object-fit:cover;display:block}
 .kid h1{font-size:1.9rem}.kid p{margin:2px 0 0;opacity:.85}
 main{max-width:640px;margin:-10px auto 0;padding:0 14px 40px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:12px}
@@ -90,7 +91,7 @@ function render(){
   const c=v.centre||{},ph=String(c.phone||"").replace(/\D/g,""),ph91=ph.length===10?"91"+ph:ph;
   if(v.left){msg(t.left);return}
   document.title=v.name+" – TASVIA Academy";
-  document.getElementById("kid").innerHTML=`<h1>${esc(v.name)}</h1><p>${esc(t.cls(v.cls))}${v.board?" · "+esc(v.board):""} · ${esc(v.year||"")}</p>`;
+  document.getElementById("kid").innerHTML=`${v.photo&&/^data:image\/jpeg;base64,/.test(v.photo)?`<div class="ph"><img src="${v.photo}" alt=""></div>`:""}<div><h1>${esc(v.name)}</h1><p>${esc(t.cls(v.cls))}${v.board?" · "+esc(v.board):""} · ${esc(v.year||"")}</p></div>`;
   const months=Object.keys(v.att||{}).sort().reverse(),cm=months[0],a=(v.att||{})[cm]||{p:0,a:0},tot=a.p+a.a,pc=tot?Math.round(a.p*100/tot):null;
   const yt=(v.yr||{}).p+(v.yr||{}).a,ypc=yt?Math.round(v.yr.p*100/yt):null;
   let h="";

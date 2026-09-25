@@ -140,6 +140,9 @@ table.t th{color:var(--muted);font-weight:500}
 .gate .btn{width:100%;padding:13px;margin-top:6px}
 .gate .err{color:#F3A08E;min-height:1.4em;font-size:.92rem;margin-top:10px}
 .gate .link{background:none;border:0;color:var(--chalk);text-decoration:underline;padding:8px 0;opacity:.85}
+.pp{display:flex;gap:14px;align-items:center;margin:-4px 0 12px}
+.av{width:84px;height:108px;border-radius:14px;background:var(--chip);flex:0 0 auto;display:grid;place-items:center;overflow:hidden;font-family:"Baloo 2",sans-serif;font-size:2rem;color:var(--muted)}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
 .toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;z-index:30;font-size:.92rem;display:none;max-width:90%}
 .toast.show{display:block}
 </style>
@@ -318,6 +321,44 @@ function salaryText(t,p){return `*TASVIA Academy – Salary slip*\nName: ${t.nam
 function infoText(){const i=info();return `*${i.name}*\n${i.subjects}\n`+(i.timings?`Timings: ${i.timings}\n`:"")+(i.notice?`\n📢 ${i.notice}\n`:"")+(i.extra?`\n${i.extra}\n`:"")+`\n📍 ${i.address}\n📞 ${i.phone}\n✉️ ${i.email}\nInstagram: ${i.insta}`}
 async function copy(text){try{await navigator.clipboard.writeText(text);toast("Copied")}catch(e){const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("Copied")}catch(_){toast("Select the text and copy it")}ta.remove()}}
 
+/* ---------- student photos ---------- */
+/* Small JPEGs (about 20–40 KB) kept in photos/<studentId>, loaded only when needed. */
+const photoCache={};
+async function getPhoto(sid){
+  if(sid in photoCache)return photoCache[sid];
+  if(!db){photoCache[sid]=null;return null}
+  try{const d=await db.doc("photos/"+sid).get();photoCache[sid]=d.exists?(d.data().img||null):null}catch(e){return null}
+  return photoCache[sid];
+}
+function resizePhoto(file){
+  return new Promise((res,rej)=>{
+    const url=URL.createObjectURL(file),img=new Image();
+    img.onload=()=>{
+      const W=300,H=400,c=document.createElement("canvas");c.width=W;c.height=H;const x=c.getContext("2d");
+      const sc=Math.max(W/img.width,H/img.height),w=img.width*sc,h=img.height*sc;
+      x.fillStyle="#fff";x.fillRect(0,0,W,H);x.drawImage(img,(W-w)/2,(H-h)/2.6,w,h);
+      URL.revokeObjectURL(url);let q=.8,out=c.toDataURL("image/jpeg",q);
+      while(out.length>120000&&q>.4){q-=.1;out=c.toDataURL("image/jpeg",q)}
+      res(out);
+    };
+    img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error("bad image"))};
+    img.src=url;
+  });
+}
+function pickPhoto(sid){
+  const inp=document.createElement("input");inp.type="file";inp.accept="image/*";
+  inp.onchange=async()=>{
+    const f=inp.files&&inp.files[0];if(!f)return;
+    try{toast("Saving photo…");const data=await resizePhoto(f);photoCache[sid]=data;
+      if(db)await db.doc("photos/"+sid).set({img:data,updated:Date.now()});
+      if(document.getElementById("scrim").classList.contains("open"))studentSheet(sid);schedulePV();toast("Photo saved")}
+    catch(e){toast(e&&e.code?errMsg(e):"Couldn't read that picture. Try another photo.")}
+  };
+  inp.click();
+}
+function initials(n){return String(n||"?").trim().split(/\s+|\./).filter(Boolean).slice(0,2).map(w=>w[0]).join("").toUpperCase()}
+function avatarHTML(sid,name){const p=photoCache[sid];return p?`<img src="${p}" alt="Photo of ${esc(name)}">`:esc(initials(name))}
+
 /* ---------- parent pages ---------- */
 /* Each student gets a long random code. A read-only summary lives at parentView/<code>; parents open parent.html#<code>. */
 let pvCache={},pvReady=false,pvT=null,pvBusy=false;
@@ -337,7 +378,7 @@ function buildParentView(s){
   const fees=s.fee?months.filter(m=>enrolledIn(s,m)).map(m=>({m,fee:+s.fee,paid:feeStatus(s,m).paid})):[];
   const pays=payList(s.id).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,6).map(p=>({d:p.date,a:+p.amount,m:p.month,mode:p.mode}));
   const hw=Object.keys(S.diary).sort().reverse().map(d=>{const e=((S.diary[d]||{}).entries||{})[s.cls];return e&&e.hw?{d,hw:e.hw,note:e.note||""}:null}).filter(Boolean).slice(0,5);
-  return {name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,
+  return {photo:photoCache[s.id]||null,name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,
     centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||""}};
 }
 function schedulePV(){clearTimeout(pvT);pvT=setTimeout(syncPV,3000)}
@@ -347,6 +388,7 @@ async function syncPV(){
     for(const [id,st] of Object.entries(S.students)){
       let code=st.pcode;
       if(!code){if(!active(st))continue;code=newCode();S.students[id]=Object.assign({},st,{pcode:code});await db.doc("students/"+id).set({pcode:code},{merge:true})}
+      if(active(st))await getPhoto(id);
       const v=buildParentView({id,...st}),j=stable(v);
       if(pvCache[code]!==j){pvCache[code]=j;await db.doc("parentView/"+code).set(Object.assign({},v,{updated:Date.now()}))}
     }
@@ -552,7 +594,8 @@ function studentSheet(id){
   const s={id,...S.students[id]},m=today().slice(0,7),st=attStats(id,m),pays=payList(id).sort((a,b)=>b.date.localeCompare(a.date));
   const tests=Object.values(S.tests).filter(t=>t.marks&&t.marks[id]!=null&&t.marks[id]!=="").sort((a,b)=>b.date.localeCompare(a.date));
   const txt=reportText(s);
-  openSheet(esc(s.name),`<p class="sub" style="margin-top:-8px">${clsLabel(s.cls)} · ${esc(s.board)}${s.joined?" · joined "+nice(s.joined):""}${active(s)?"":" · <b>left the centre</b>"}</p>
+  if(!(id in photoCache))getPhoto(id).then(p=>{const el=document.getElementById("av-"+id);if(el&&p){el.innerHTML=avatarHTML(id,s.name);const b=document.getElementById("avb-"+id);if(b)b.textContent="Change photo";const rm=document.getElementById("avr-"+id);if(rm)rm.hidden=false}});
+  openSheet(esc(s.name),`<div class="pp"><div class="av" id="av-${id}">${avatarHTML(id,s.name)}</div><div><p class="sub" style="margin:0 0 8px">${clsLabel(s.cls)} · ${esc(s.board)}${s.joined?" · joined "+nice(s.joined):""}${active(s)?"":" · <b>left the centre</b>"}</p><div class="acts" style="margin:0"><button class="btn sm gold" id="avb-${id}" data-act="photo" data-id="${id}">${photoCache[id]?"Change photo":"Add photo"}</button><button class="btn sm danger" id="avr-${id}" data-act="delPhoto" data-id="${id}" ${photoCache[id]?"":"hidden"}>Remove</button></div></div></div>
   <div class="card"><dl class="kv"><dt>Parent</dt><dd>${esc(s.parent||"–")}</dd><dt>Phone</dt><dd>${s.phone?`<a href="tel:${esc(s.phone)}">${esc(s.phone)}</a>`:"–"}</dd><dt>Monthly fee</dt><dd>${s.fee?rs(s.fee):"–"}</dd><dt>This month</dt><dd>${st.t?`${st.p}/${st.t} days present (${st.pct}%)`:"Not marked yet"}</dd><dt>Overall</dt><dd>${(o=>o.t?`${o.p}/${o.t} days (${o.pct}%)`:"–")(attStats(id,""))}</dd></dl>${s.notes?`<p class="sub" style="margin:10px 0 0">${esc(s.notes)}</p>`:""}</div>
   <div class="card"><h3>Test results</h3>${tests.length?`<table class="t"><tr><th>Test</th><th>Marks</th><th>Grade</th></tr>${tests.map(t=>{const pc=Math.round(t.marks[id]*100/t.max);return `<tr><td>${esc(t.subject)} – ${esc(t.name)}</td><td>${t.marks[id]}/${t.max}</td><td>${grade(pc)}</td></tr>`}).join("")}</table>`:`<p class="sub" style="margin:0">No marks entered yet.</p>`}</div>
   <div class="card"><h3>Payments</h3>${pays.length?`<table class="t"><tr><th>For</th><th>Amount</th><th></th></tr>${pays.map(p=>`<tr><td>${monthName(p.month)}<br><span class="sub">${nice(p.date)} · ${esc(p.mode)}</span></td><td>${rs(p.amount)}</td><td style="white-space:nowrap"><a class="btn sm ghost" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Receipt</a> <button class="btn sm danger" data-act="delPay" data-id="${id}" data-p="${esc(p.id)}" aria-label="Remove payment">×</button></td></tr>`).join("")}</table>`:`<p class="sub" style="margin:0">No payments recorded.</p>`}<div class="acts" style="margin-top:10px"><button class="btn sm gold" data-act="pay" data-id="${id}">Record payment</button></div></div>
@@ -692,9 +735,9 @@ function rcHTML(list,from,to){
   .sig{display:flex;justify-content:space-between;margin-top:46px;font-size:12px}.sig div{border-top:1px solid #333;width:28%;text-align:center;padding-top:4px}</style></head>
   <body><div class="bar"><span>${list.length} report card${list.length===1?"":"s"} · print on A4</span><button onclick="window.print()">Print / Save PDF</button></div>${pages}</body></html>`;
 }
-function idHTML(list){
+function idHTML(list,photos){photos=photos||{};
   const i=info(),ay=acYear(today());
-  const cards=list.map(s=>`<div class="card"><div class="top"><b>TASVIA</b> ACADEMY<span>STUDENT ID · ${ay.label}</span></div><div class="body"><div class="ph">Paste<br>photo</div><div class="d"><div class="n">${esc(s.name)}</div><div><i>Class</i> ${esc(clsLabel(s.cls))} · ${esc(s.board||"")}</div><div><i>Parent</i> ${esc(s.parent||"–")}</div><div><i>Phone</i> ${esc(s.phone||"–")}</div></div></div><div class="sg">Principal</div><div class="ft">TASVIA Academy, ${esc(i.address.split(",").slice(2,4).join(",").trim())} · ${esc(i.phone)}</div></div>`).join("");
+  const cards=list.map(s=>`<div class="card"><div class="top"><b>TASVIA</b> ACADEMY<span>STUDENT ID · ${ay.label}</span></div><div class="body"><div class="ph">${photos[s.id]?`<img src="${photos[s.id]}" alt="">`:"Paste<br>photo"}</div><div class="d"><div class="n">${esc(s.name)}</div><div><i>Class</i> ${esc(clsLabel(s.cls))} · ${esc(s.board||"")}</div><div><i>Parent</i> ${esc(s.parent||"–")}</div><div><i>Phone</i> ${esc(s.phone||"–")}</div></div></div><div class="sg">Principal</div><div class="ft">TASVIA Academy, ${esc(i.address.split(",").slice(2,4).join(",").trim())} · ${esc(i.phone)}</div></div>`).join("");
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ID cards</title><style>${PRINT_CSS}
   @page{size:A4;margin:10mm}.sheet{display:grid;grid-template-columns:repeat(2,85.6mm);gap:6mm 8mm;justify-content:center;padding:10px}
   .card{width:85.6mm;height:54mm;border:1px solid #9aa;border-radius:3mm;overflow:hidden;background:#fff;display:flex;flex-direction:column;page-break-inside:avoid}
@@ -702,6 +745,7 @@ function idHTML(list){
   .body{flex:1;display:flex;gap:3mm;padding:2.5mm 3mm}.ph{width:20mm;height:25mm;border:1px dashed #999;display:grid;place-items:center;text-align:center;font-size:8px;color:#999;flex:0 0 auto}
   .d{font-size:9.5px;line-height:1.55;min-width:0}.d .n{font-size:13px;font-weight:700;color:#1E3A32;line-height:1.2;margin-bottom:1mm}.d i{color:#777;font-style:normal;display:inline-block;width:10mm}
   .sg{font-size:7.5px;color:#555;text-align:right;padding:0 4mm 1mm;margin-top:-5mm}.sg::before{content:"";display:block;margin-left:auto;width:22mm;border-top:1px solid #777;margin-bottom:.6mm}
+  .ph img{width:100%;height:100%;object-fit:cover;display:block}
   .ft{background:#E3A21A;color:#1a1405;font-size:7.5px;padding:1.2mm 3mm;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   @media print{.sheet{padding:0}}</style></head><body><div class="bar"><span>${list.length} ID card${list.length===1?"":"s"} · print on A4, then cut out</span><button onclick="window.print()">Print / Save PDF</button></div><div class="sheet">${cards}</div></body></html>`;
 }
@@ -720,7 +764,10 @@ async function rcImage(id){
   x.fillStyle="#1E3A32";x.fillRect(0,0,W,250);
   x.fillStyle="#F3F6F1";x.font=FB(64);x.fillText("TASVIA",70,120);const tw=x.measureText("TASVIA ").width;x.fillStyle="#E3A21A";x.fillText("Academy",70+tw,120);
   x.fillStyle="#cfd8d3";x.font=F(500,30);x.fillText("Progress report · "+ay.label,70,180);
-  x.fillStyle="#15201C";x.font=FB(58);x.fillText(fit(s.name,W-140),70,340);
+  const pimg=await getPhoto(id).then(p=>p&&new Promise(ok=>{const im=new Image();im.onload=()=>ok(im);im.onerror=()=>ok(null);im.src=p}));
+  let nameW=W-140;
+  if(pimg){const pw=120,ph=160,px=W-70-pw,py=262;x.save();x.beginPath();x.roundRect(px,py,pw,ph,18);x.clip();x.drawImage(pimg,px,py,pw,ph);x.restore();x.strokeStyle="#E3A21A";x.lineWidth=5;x.beginPath();x.roundRect(px,py,pw,ph,18);x.stroke();nameW=W-140-pw-30}
+  x.fillStyle="#15201C";x.font=FB(58);x.fillText(fit(s.name,nameW),70,340);
   x.fillStyle="#5B6A63";x.font=F(500,32);x.fillText(`${clsLabel(s.cls)} · ${s.board||""}`,70,390);
   const box=(bx,label,val,col)=>{x.fillStyle="#fff";x.strokeStyle="#D3DCD7";x.lineWidth=2;x.beginPath();x.roundRect(bx,430,300,150,24);x.fill();x.stroke();x.fillStyle=col;x.font=FB(60);x.fillText(val,bx+28,515);x.fillStyle="#5B6A63";x.font=F(500,26);x.fillText(label,bx+30,556)};
   box(70,"Overall",d.pct!=null?d.pct+"%":"–","#1E3A32");box(390,"Grade",d.g||"–","#B97F0A");box(710,"Attendance",d.att.pct!=null?d.att.pct+"%":"–","#2B8A55");
@@ -785,8 +832,11 @@ document.addEventListener("click",e=>{
     case "copyHw":copy(hwText(b.dataset.c,UI.date,((S.diary[UI.date]||{}).entries||{})[b.dataset.c],b.dataset.l));break;
     case "cardCls":UI.cardCls=b.dataset.c;render();break;
     case "printRC":{const l=studentsOf(UI.cardCls);if(!l.length)break;if(UI.rcFrom>UI.rcTo){toast("'From' date must be before 'To' date");break}saveFile(`report-cards-${slug(clsLabel(UI.cardCls))}.html`,rcHTML(l,UI.rcFrom,UI.rcTo));break}
-    case "printID":{const l=studentsOf(UI.cardCls);if(l.length)saveFile(`id-cards-${slug(clsLabel(UI.cardCls))}.html`,idHTML(l));break}
-    case "idOne":saveFile(`id-card-${slug(S.students[id].name)}.html`,idHTML([{id,...S.students[id]}]));break;
+    case "printID":{const l=studentsOf(UI.cardCls);if(!l.length)break;b.disabled=true;b.textContent="Adding photos…";
+      Promise.all(l.map(x=>getPhoto(x.id))).then(()=>{const ph={};l.forEach(x=>ph[x.id]=photoCache[x.id]);return saveFile(`id-cards-${slug(clsLabel(UI.cardCls))}.html`,idHTML(l,ph))}).finally(()=>{b.disabled=false;b.textContent="Download ID cards"});break}
+    case "idOne":getPhoto(id).then(p=>saveFile(`id-card-${slug(S.students[id].name)}.html`,idHTML([{id,...S.students[id]}],{[id]:p})));break;
+    case "photo":pickPhoto(id);break;
+    case "delPhoto":if(confirmDel(b,"Tap again to remove")){photoCache[id]=null;if(db)db.doc("photos/"+id).delete().catch(e=>toast(errMsg(e)));studentSheet(id);schedulePV();toast("Photo removed")}break;
     case "rcImage":b.disabled=true;b.textContent="Making image…";rcImage(id).finally(()=>{b.disabled=false;b.textContent="Report card image"});break;
     case "cls":UI[b.dataset.key]=b.dataset.c;render();break;
     case "mark":mark(UI.date,id,b.dataset.v);break;
@@ -802,7 +852,7 @@ document.addEventListener("click",e=>{
     case "copyInfo":copy(infoText());break;
     case "copyReport":copy(reportText({id,...S.students[id]}));break;
     case "close":closeSheet();break;
-    case "delStudent":if(confirmDel(b,"Tap again: deletes all records")){const pc=(S.students[id]||{}).pcode;if(pc)remove("parentView/"+pc);delete S.students[id];delete S.fees[id];remove("students/"+id);remove("fees/"+id);closeSheet();render();toast("Student removed")}break;
+    case "delStudent":if(confirmDel(b,"Tap again: deletes all records")){const pc=(S.students[id]||{}).pcode;if(pc)remove("parentView/"+pc);remove("photos/"+id);delete photoCache[id];delete S.students[id];delete S.fees[id];remove("students/"+id);remove("fees/"+id);closeSheet();render();toast("Student removed")}break;
     case "delPay":if(confirmDel(b,"Remove?")){const pid=b.dataset.p,legacy=Array.isArray((S.fees[id]||{}).payments),cur={};payList(id).forEach(x=>{if(x.id!==pid)cur[x.id]=x});S.fees[id]={payments:cur};
       if(!db)saveLocal();else if(legacy)put("fees/"+id,S.fees[id]);else mergeWrite("fees/"+id,{payments:{[pid]:null}},{});render();studentSheet(id);toast("Payment removed")}break;
     case "remindAll":remindSheet();break;
