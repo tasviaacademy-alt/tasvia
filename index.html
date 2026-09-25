@@ -224,7 +224,7 @@ function subscribe(){
   unsubs.forEach(u=>u&&u());unsubs=[];
   const onErr=e=>setSync(e&&e.code==="permission-denied"?"Not on staff list":"Connection lost. Reopen the app.");
   const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;render()},onErr));
-  coll("students","students");coll("fees","fees");
+  coll("students","students"); const admin=window.currentUser&&window.currentUser.role==="admin"; if(admin)coll("fees","fees");
   {const y=+acYear(today()).from.slice(0,4)-1;coll("tests","tests",db.collection("tests").where("date",">=",y+"-06-01"))}
   coll("attendance","att",db.collection("attendance").orderBy("date","desc").limit(400));
   unsubs.push(db.doc("info/centre").onSnapshot(d=>{S.info=d.exists?d.data():null;render()},onErr));
