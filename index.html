@@ -214,7 +214,6 @@ function subscribe(){
   coll("students","students");coll("fees","fees");coll("tests","tests");
   coll("attendance","att",db.collection("attendance").orderBy("date","desc").limit(400));
   unsubs.push(db.doc("info/centre").onSnapshot(d=>{S.info=d.exists?d.data():null;render()},onErr));
-  pvReady=false;unsubs.push(db.collection("parentView").onSnapshot(sn=>{pvCache={};sn.docs.forEach(d=>{const x=Object.assign({},d.data());delete x.updated;pvCache[d.id]=stable(x)});pvReady=true;schedulePV()},()=>{}));
   coll("teachers","teachers");coll("salaries","salaries");coll("expenses","expenses");
   coll("staffattendance","tatt",db.collection("staffattendance").orderBy("date","desc").limit(400));
   coll("diary","diary",db.collection("diary").orderBy("date","desc").limit(120));
@@ -318,63 +317,6 @@ function salaryText(t,p){return `*TASVIA Academy – Salary slip*\nName: ${t.nam
 function infoText(){const i=info();return `*${i.name}*\n${i.subjects}\n`+(i.timings?`Timings: ${i.timings}\n`:"")+(i.notice?`\n📢 ${i.notice}\n`:"")+(i.extra?`\n${i.extra}\n`:"")+`\n📍 ${i.address}\n📞 ${i.phone}\n✉️ ${i.email}\nInstagram: ${i.insta}`}
 async function copy(text){try{await navigator.clipboard.writeText(text);toast("Copied")}catch(e){const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("Copied")}catch(_){toast("Select the text and copy it")}ta.remove()}}
 
-/* ---------- parent pages ---------- */
-/* Each student gets a long random code. A read-only summary lives at parentView/<code>; parents open parent.html#<code>. */
-let pvCache={},pvReady=false,pvT=null,pvBusy=false;
-const PC_ALPH="ABCDEFGHJKMNPQRSTUVWXYZ23456789";
-function newCode(){const a=new Uint32Array(10);crypto.getRandomValues(a);return Array.from(a,x=>PC_ALPH[x%PC_ALPH.length]).join("")}
-function stable(v){if(Array.isArray(v))return "["+v.map(stable).join(",")+"]";if(v&&typeof v==="object")return "{"+Object.keys(v).sort().map(k=>JSON.stringify(k)+":"+stable(v[k])).join(",")+"}";return JSON.stringify(v===undefined?null:v)}
-function parentURL(code){return location.origin+location.pathname.replace(/[^/]*$/,"")+"parent.html#"+code}
-function lastMonths(n){const out=[],d=new Date();d.setDate(1);for(let i=0;i<n;i++){out.push(d.toLocaleDateString("en-CA").slice(0,7));d.setMonth(d.getMonth()-1)}return out}
-function buildParentView(s){
-  const i=info();
-  if(!active(s))return {left:true,name:s.name,centre:{name:i.name,phone:i.phone}};
-  const ay=acYear(today()),months=lastMonths(3);
-  const att={};months.forEach(m=>{const t=attStats(s.id,m);att[m]={p:t.p,a:t.a}});
-  const yr=attStats(s.id,"",ay.from,today());
-  const abs=datesOf("att").filter(d=>d>=ay.from&&getMarks(d)[s.id]==="A").sort().reverse().slice(0,8);
-  const tests=Object.values(S.tests).filter(t=>t.date>=ay.from&&t.marks&&t.marks[s.id]!=null).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,25).map(t=>({d:t.date,s:t.subject,n:t.name,m:+t.marks[s.id],x:+t.max}));
-  const fees=s.fee?months.filter(m=>enrolledIn(s,m)).map(m=>({m,fee:+s.fee,paid:feeStatus(s,m).paid})):[];
-  const pays=payList(s.id).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,6).map(p=>({d:p.date,a:+p.amount,m:p.month,mode:p.mode}));
-  const hw=Object.keys(S.diary).sort().reverse().map(d=>{const e=((S.diary[d]||{}).entries||{})[s.cls];return e&&e.hw?{d,hw:e.hw,note:e.note||""}:null}).filter(Boolean).slice(0,5);
-  return {name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,
-    centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||""}};
-}
-function schedulePV(){clearTimeout(pvT);pvT=setTimeout(syncPV,3000)}
-async function syncPV(){
-  if(!db||!pvReady||pvBusy)return;pvBusy=true;
-  try{
-    for(const [id,st] of Object.entries(S.students)){
-      let code=st.pcode;
-      if(!code){if(!active(st))continue;code=newCode();S.students[id]=Object.assign({},st,{pcode:code});await db.doc("students/"+id).set({pcode:code},{merge:true})}
-      const v=buildParentView({id,...st}),j=stable(v);
-      if(pvCache[code]!==j){pvCache[code]=j;await db.doc("parentView/"+code).set(Object.assign({},v,{updated:Date.now()}))}
-    }
-  }catch(e){console.warn("parent sync",e)}
-  pvBusy=false;
-}
-const PL={
- en:(n,u,ph)=>`Dear parent, you can now check ${n}'s attendance, test marks, fees and homework on TASVIA Academy's parent page:\n${u}\n\nSave this link. Please don't share it with others. – TASVIA Academy, ${ph}`,
- te:(n,u,ph)=>`నమస్కారం, ${n} యొక్క హాజరు, పరీక్ష మార్కులు, ఫీజు మరియు హోంవర్క్ వివరాలను TASVIA అకాడమీ పేరెంట్ పేజీలో చూడవచ్చు:\n${u}\n\nఈ లింక్‌ను సేవ్ చేసుకోండి. దయచేసి ఇతరులతో పంచుకోవద్దు. – TASVIA అకాడమీ, ${ph}`,
- hi:(n,u,ph)=>`नमस्ते, अब आप ${n} की उपस्थिति, टेस्ट के अंक, फ़ीस और गृहकार्य TASVIA अकादमी के पेरेंट पेज पर देख सकते हैं:\n${u}\n\nयह लिंक सेव कर लें। कृपया इसे किसी और के साथ साझा न करें। – TASVIA अकादमी, ${ph}`};
-function parentLinkText(s){return PL[langOf(s)](s.name,parentURL(s.pcode),info().phone)}
-function parentCard(s){
-  if(!s.pcode)return `<div class="card"><h3>Parent page</h3><p class="sub" style="margin:0">Creating ${esc(s.name)}'s private parent link… it appears here in a few seconds.</p></div>`;
-  const u=parentURL(s.pcode);
-  return `<div class="card"><h3>Parent page</h3><p class="sub" style="margin:0 0 8px">A private page where the parent sees attendance, marks, fees and homework. It updates automatically.</p>
-  <pre class="msg" style="word-break:break-all">${esc(u)}</pre>
-  <div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,parentLinkText(s))}">Send link on WhatsApp</a><button class="btn ghost" data-act="copyPL" data-id="${s.id}">Copy link</button><a class="btn ghost" target="_blank" rel="noopener" href="${esc(u)}">Open</a><button class="btn danger" data-act="resetPL" data-id="${s.id}">New link</button></div>
-  <p class="sub" style="margin:8px 0 0;font-size:.82rem">Use "New link" if the link was shared with the wrong person. The old link stops working.</p></div>`;
-}
-function vParents(){
-  const list=studentsOf(UI.cls);
-  let h=mhead("Parent page links","Send each family their private link once");
-  if(!Object.keys(S.students).length)return h+noStudents();
-  h+=classChips("cls")+`<p class="sub" style="margin:0 0 10px">Each link shows only that child's attendance, marks, fees and homework. Parents can view but not change anything.</p><div class="list">`;
-  h+=list.map(s=>`<div class="item"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)} · ${esc(s.phone||"No number saved")} · ${LANGS[langOf(s)].split(" (")[0]}</div></div>${s.pcode?`<a class="btn sm gold" target="_blank" rel="noopener" href="${waLink(s.phone,parentLinkText(s))}">Send</a>`:`<span class="tag n">Creating…</span>`}</div>`).join("");
-  return h+`</div>`;
-}
-
 /* ---------- views ---------- */
 const TABS=[["today","Today","M4 5h16v15H4zM4 9h16M9 3v4M15 3v4M8 14l2.5 2.5L16 12"],["students","Students","M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 4-6 8-6s8 2 8 6"],["fees","Fees","M4 6h16v12H4zM4 10h16M8 15h3"],["tests","Tests","M6 3h9l4 4v14H6zM9 12h7M9 16h5M9 8h3"],["more","More","M4 6h16M4 12h16M4 18h16"]];
 function renderNav(){document.getElementById("nav").innerHTML=TABS.map(([k,l,d])=>`<button data-act="tab" data-k="${k}" class="${UI.tab===k?"on":""}" aria-current="${UI.tab===k?"page":"false"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>${l}</button>`).join("")}
@@ -415,7 +357,7 @@ function vHomework(){
     <div class="acts"><button class="btn sm ${e&&e.hw?"ghost":"gold"}" data-act="hwEdit" data-c="${c}">${e&&e.hw?"Edit":"Add homework"}</button>${e&&e.hw?`<button class="btn sm gold" data-act="hwSend" data-c="${c}">Send to parents</button>`:""}</div></div>`}).join("");
   return h+`</div>`;
 }
-const ICONS={parents:"M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7zM9 12l2 2 4-4",staff:"M16 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 20c0-3 3-5 6-5s6 2 6 5M14 15c3 0 8 1 8 5",money:"M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6",cards:"M3 5h18v14H3zM7 9h4v5H7zM14 10h4M14 13h3",centre:"M3 10l9-6 9 6M5 10v10h14V10M10 20v-5h4v5",backup:"M12 4v11M7 10l5 5 5-5M4 20h16"};
+const ICONS={staff:"M16 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 20c0-3 3-5 6-5s6 2 6 5M14 15c3 0 8 1 8 5",money:"M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6",cards:"M3 5h18v14H3zM7 9h4v5H7zM14 10h4M14 13h3",centre:"M3 10l9-6 9 6M5 10v10h14V10M10 20v-5h4v5",backup:"M12 4v11M7 10l5 5 5-5M4 20h16"};
 function mhead(title,sub,right){return `<button class="back" data-act="more" data-k="">‹ More</button><div class="hd"><div><h2>${title}</h2>${sub?`<div class="sub">${sub}</div>`:""}</div>${right||""}</div>`}
 function vMore(){
   if(UI.more==="staff")return vStaff();
@@ -423,13 +365,11 @@ function vMore(){
   if(UI.more==="cards")return vCards();
   if(UI.more==="centre")return mhead("Centre info","What parents see when you share",`<button class="btn ghost" data-act="editInfo">Edit</button>`)+vCentre();
   if(UI.more==="backup")return vBackup();
-  if(UI.more==="parents")return vParents();
   const m=today().slice(0,7),ts=teachersList(),salDue=ts.filter(t=>t.salary&&salStatus(t,m).k!=="paid").length;
   const items=[["staff","Staff & salaries",`${ts.length} teacher${ts.length===1?"":"s"}${salDue?` · ${salDue} salar${salDue===1?"y":"ies"} due`:""}`],
     ["money","Expenses & profit",`${monthName(m)} summary`],
     ["cards","Report cards & ID cards","Print or share on WhatsApp"],
     ["centre","Centre info & language","Notice, timings, message language"],
-    ["parents","Parent page links","Private page for each family"],
     ["backup","Backup spreadsheets","Download for Excel or Google Sheets"]];
   return `<div class="hd"><h2>More</h2></div><div class="menu">`+items.map(([k,t,d])=>`<button class="item" data-act="more" data-k="${k}"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${ICONS[k]}"/></svg></span><div class="grow"><div class="nm">${t}</div><div class="mt">${d}</div></div><span aria-hidden="true" style="color:var(--muted)">›</span></button>`).join("")+`</div><div class="card" style="margin-top:14px"><h3>Account</h3><p class="sub" style="margin:0 0 10px">Signed in as ${esc((auth&&auth.currentUser&&auth.currentUser.email)||"")}</p><button class="btn ghost" data-act="signOut">Sign out</button></div>`;
 }
@@ -524,7 +464,6 @@ function render(){
   const v={today:vToday,students:vStudents,fees:vFees,tests:vTests,more:vMore}[UI.tab]();
   const el=document.getElementById("view"),hadQ=document.activeElement&&document.activeElement.id==="q";
   el.innerHTML=v;
-  schedulePV();
   if(hadQ){const q=document.getElementById("q");q.focus();q.setSelectionRange(q.value.length,q.value.length)}
 }
 
@@ -557,7 +496,6 @@ function studentSheet(id){
   <div class="card"><h3>Test results</h3>${tests.length?`<table class="t"><tr><th>Test</th><th>Marks</th><th>Grade</th></tr>${tests.map(t=>{const pc=Math.round(t.marks[id]*100/t.max);return `<tr><td>${esc(t.subject)} – ${esc(t.name)}</td><td>${t.marks[id]}/${t.max}</td><td>${grade(pc)}</td></tr>`}).join("")}</table>`:`<p class="sub" style="margin:0">No marks entered yet.</p>`}</div>
   <div class="card"><h3>Payments</h3>${pays.length?`<table class="t"><tr><th>For</th><th>Amount</th><th></th></tr>${pays.map(p=>`<tr><td>${monthName(p.month)}<br><span class="sub">${nice(p.date)} · ${esc(p.mode)}</span></td><td>${rs(p.amount)}</td><td style="white-space:nowrap"><a class="btn sm ghost" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Receipt</a> <button class="btn sm danger" data-act="delPay" data-id="${id}" data-p="${esc(p.id)}" aria-label="Remove payment">×</button></td></tr>`).join("")}</table>`:`<p class="sub" style="margin:0">No payments recorded.</p>`}<div class="acts" style="margin-top:10px"><button class="btn sm gold" data-act="pay" data-id="${id}">Record payment</button></div></div>
   <div class="card"><h3>Send progress to parent</h3><pre class="msg">${esc(txt)}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,txt)}">Send on WhatsApp</a><button class="btn ghost" data-act="copyReport" data-id="${id}">Copy</button></div><p class="sub" style="margin:10px 0 0">Message language: ${LANGS[langOf(s)]}</p></div>
-  ${parentCard(s)}
   <div class="acts">${downloads?`<button class="btn gold" data-act="rcImage" data-id="${id}">Report card image</button><button class="btn ghost" data-act="idOne" data-id="${id}">ID card</button>`:""}<button class="btn ghost" data-act="editStudent" data-id="${id}">Edit student</button></div>`);
 }
 function payForm(id){
@@ -802,12 +740,10 @@ document.addEventListener("click",e=>{
     case "copyInfo":copy(infoText());break;
     case "copyReport":copy(reportText({id,...S.students[id]}));break;
     case "close":closeSheet();break;
-    case "delStudent":if(confirmDel(b,"Tap again: deletes all records")){const pc=(S.students[id]||{}).pcode;if(pc)remove("parentView/"+pc);delete S.students[id];delete S.fees[id];remove("students/"+id);remove("fees/"+id);closeSheet();render();toast("Student removed")}break;
+    case "delStudent":if(confirmDel(b,"Tap again: deletes all records")){delete S.students[id];delete S.fees[id];remove("students/"+id);remove("fees/"+id);closeSheet();render();toast("Student removed")}break;
     case "delPay":if(confirmDel(b,"Remove?")){const pid=b.dataset.p,legacy=Array.isArray((S.fees[id]||{}).payments),cur={};payList(id).forEach(x=>{if(x.id!==pid)cur[x.id]=x});S.fees[id]={payments:cur};
       if(!db)saveLocal();else if(legacy)put("fees/"+id,S.fees[id]);else mergeWrite("fees/"+id,{payments:{[pid]:null}},{});render();studentSheet(id);toast("Payment removed")}break;
     case "remindAll":remindSheet();break;
-    case "copyPL":copy(parentURL(S.students[id].pcode));break;
-    case "resetPL":if(confirmDel(b,"Tap again: old link stops")){const st=S.students[id],old=st.pcode,code=newCode();if(old)remove("parentView/"+old);S.students[id]=Object.assign({},st,{pcode:code});if(db)db.doc("students/"+id).set({pcode:code},{merge:true}).catch(e=>toast(errMsg(e)));schedulePV();studentSheet(id);toast("New link created")}break;
     case "signOut":if(confirmDel(b,"Tap again to sign out")&&auth)auth.signOut();break;
     case "export":exportCSV(b.dataset.k);break;
     case "delTest":if(confirmDel(b,"Tap again to delete")){delete S.tests[id];remove("tests/"+id);closeSheet();render();toast("Test deleted")}break;
@@ -832,7 +768,7 @@ document.addEventListener("submit",e=>{
     if(!s.name)return toast("Enter the student's name");
     const digits=s.phone.replace(/\D/g,"");if(s.phone&&!(digits.length===10||(digits.length===12&&digits.startsWith("91"))))return toast("Enter a 10-digit mobile number");
     if(d.fee&&isNaN(Number(d.fee)))return toast("Fee must be a number");
-    if(Object.entries(S.students).some(([k,x])=>k!==id&&x.name.toLowerCase()===s.name.toLowerCase()&&x.cls===s.cls&&!f.dataset.dup)){f.dataset.dup="1";return toast(`${s.name} is already in ${clsLabel(s.cls)}. Tap again to add anyway.`)}s.pcode=(S.students[id]||{}).pcode||newCode();S.students[id]=s;put("students/"+id,s);closeSheet();render();toast(f.dataset.id?"Changes saved":"Student added");
+    if(Object.entries(S.students).some(([k,x])=>k!==id&&x.name.toLowerCase()===s.name.toLowerCase()&&x.cls===s.cls&&!f.dataset.dup)){f.dataset.dup="1";return toast(`${s.name} is already in ${clsLabel(s.cls)}. Tap again to add anyway.`)}S.students[id]=s;put("students/"+id,s);closeSheet();render();toast(f.dataset.id?"Changes saved":"Student added");
   }
   if(f.id==="fPay"){
     const id=f.dataset.id,amt=Number(d.amount);if(!(amt>0))return toast("Enter an amount");
