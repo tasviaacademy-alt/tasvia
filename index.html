@@ -197,6 +197,9 @@ const rs=n=>"₹"+Number(n||0).toLocaleString("en-IN");
 function info(){return Object.assign({},DEFAULT_INFO,S.info||{})}
 function grade(p){return p>=90?"A+":p>=80?"A":p>=70?"B+":p>=60?"B":p>=50?"C":p>=35?"D":"E"}
 function studentsOf(cls,incLeft){return Object.entries(S.students).map(([id,s])=>({id,...s})).filter(s=>(incLeft||active(s))&&(cls==="all"||s.cls===cls)).sort((a,b)=>CLASSES.indexOf(a.cls)-CLASSES.indexOf(b.cls)||a.name.localeCompare(b.name))}
+function isAdmin(){return !!(window.currentUser&&window.currentUser.role==="admin")}
+function isStaff(){return !!(window.currentUser&&(window.currentUser.role==="staff"||window.currentUser.role==="admin"))}
+function requireAdmin(){if(isAdmin())return true;toast("Admin access required.");return false}
 
 /* ---------- storage ---------- */
 function loadLocal(){try{const d=JSON.parse(localStorage.getItem("tasvia-v1")||"null");if(d)S=Object.assign(S,d)}catch(e){}}
@@ -486,7 +489,7 @@ function vParents(){
 
 /* ---------- views ---------- */
 const TABS=[["today","Today","M4 5h16v15H4zM4 9h16M9 3v4M15 3v4M8 14l2.5 2.5L16 12"],["students","Students","M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 4-6 8-6s8 2 8 6"],["fees","Fees","M4 6h16v12H4zM4 10h16M8 15h3"],["tests","Tests","M6 3h9l4 4v14H6zM9 12h7M9 16h5M9 8h3"],["more","More","M4 6h16M4 12h16M4 18h16"]];
-function renderNav(){document.getElementById("nav").innerHTML=TABS.map(([k,l,d])=>`<button data-act="tab" data-k="${k}" class="${UI.tab===k?"on":""}" aria-current="${UI.tab===k?"page":"false"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>${l}</button>`).join("")}
+function renderNav(){const tabs=TABS.filter(([k])=>k!=="fees"||isAdmin());document.getElementById("nav").innerHTML=tabs.map(([k,l,d])=>`<button data-act="tab" data-k="${k}" class="${UI.tab===k?"on":""}" aria-current="${UI.tab===k?"page":"false"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>${l}</button>`).join("")}{document.getElementById("nav").innerHTML=TABS.map(([k,l,d])=>`<button data-act="tab" data-k="${k}" class="${UI.tab===k?"on":""}" aria-current="${UI.tab===k?"page":"false"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>${l}</button>`).join("")}
 function classChips(key){const used=new Set(Object.values(S.students).map(s=>s.cls));const cs=CLASSES.filter(c=>used.has(c));return `<div class="chips"><button class="chip ${UI[key]==="all"?"on":""}" data-act="cls" data-key="${key}" data-c="all">All</button>`+cs.map(c=>`<button class="chip ${UI[key]===c?"on":""}" data-act="cls" data-key="${key}" data-c="${c}">${clsLabel(c)}</button>`).join("")+`</div>`}
 function noStudents(){return `<div class="empty"><p>No students yet. Add your first student to start marking attendance, fees and tests.</p><button class="btn gold" data-act="addStudent">Add student</button></div>`}
 
@@ -590,12 +593,12 @@ function vBackup(){
   return h+`<div class="card"><p class="sub" style="margin:0 0 10px">These open in Excel or Google Sheets.</p><div class="acts">${[["students","Students"],["payments","Fee payments"],["marks","Test marks"],["money","Salaries & expenses"],["tattendance","Teacher attendance"]].map(([k,l])=>`<button class="btn ghost" data-act="export" data-k="${k}">${l}</button>`).join("")}</div></div>`;
 }
 function vStudents(){
-  let h=`<div class="hd"><div><h2>Students</h2><div class="sub">${studentsOf("all").length} studying now</div></div><button class="btn gold" data-act="addStudent">Add student</button></div>`;
+  let h=`<div class="hd"><div><h2>Students</h2><div class="sub">${studentsOf("all").length} studying now</div></div>${isAdmin()?`<button class="btn gold" data-act="addStudent">Add student</button>`:""}</div>`;
   if(!Object.keys(S.students).length)return h+noStudents();
   h+=`<input type="search" class="search" id="q" placeholder="Search by name or parent" value="${esc(UI.q)}">`+classChips("cls")+batchChips();
   const q=UI.q.toLowerCase(),list=byBatch(studentsOf(UI.cls,true)).filter(s=>!q||(s.name+" "+(s.parent||"")+" "+(s.phone||"")).toLowerCase().includes(q)).sort((a,b)=>active(b)-active(a));
   const m=today().slice(0,7);
-  h+=`<div class="list">`+list.map(s=>{const st=attStats(s.id,m),fs=feeStatus(s,m);const tag=!active(s)?`<span class="tag n">Left</span>`:fs.k==="paid"?`<span class="tag ok">Paid</span>`:fs.k==="part"?`<span class="tag due">${rs(fs.left)} due</span>`:fs.k==="due"&&enrolledIn(s,m)?`<span class="tag due">Fee due</span>`:"";return `<button class="item" data-act="openStudent" data-id="${s.id}" style="${active(s)?"":"opacity:.6"}"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)}${s.batch?" · "+s.batch:""} · ${esc(s.board||"")}${st.pct!=null?" · "+st.pct+"% attendance":""}</div></div>${tag}</button>`}).join("")+`</div>`;
+  h+=`<div class="list">`+list.map(s=>{const st=attStats(s.id,m),fs=isAdmin()?feeStatus(s,m):null;const tag=!active(s)?`<span class="tag n">Left</span>`:isAdmin()?(fs.k==="paid"?`<span class="tag ok">Paid</span>`:fs.k==="part"?`<span class="tag due">${rs(fs.left)} due</span>`:fs.k==="due"&&enrolledIn(s,m)?`<span class="tag due">Fee due</span>`:""):"";?`<span class="tag ok">Paid</span>`:fs.k==="part"?`<span class="tag due">${rs(fs.left)} due</span>`:fs.k==="due"&&enrolledIn(s,m)?`<span class="tag due">Fee due</span>`:"";return `<button class="item" data-act="openStudent" data-id="${s.id}" style="${active(s)?"":"opacity:.6"}"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)}${s.batch?" · "+s.batch:""} · ${esc(s.board||"")}${st.pct!=null?" · "+st.pct+"% attendance":""}</div></div>${tag}</button>`}).join("")+`</div>`;
   if(!list.length)h+=`<div class="empty">No students match.</div>`;
   return h;
 }
@@ -666,12 +669,12 @@ function studentSheet(id){
   const txt=reportText(s);
   if(!(id in photoCache))getPhoto(id).then(p=>{const el=document.getElementById("av-"+id);if(el&&p){el.innerHTML=avatarHTML(id,s.name);const b=document.getElementById("avb-"+id);if(b)b.textContent="Change photo";const rm=document.getElementById("avr-"+id);if(rm)rm.hidden=false}});
   openSheet(esc(s.name),`<div class="pp"><div class="av" id="av-${id}">${avatarHTML(id,s.name)}</div><div><p class="sub" style="margin:0 0 8px">${clsLabel(s.cls)}${s.batch?" · "+esc(s.batch)+" batch":""} · ${esc(s.board)}${s.joined?" · joined "+nice(s.joined):""}${active(s)?"":" · <b>left the centre</b>"}</p><div class="acts" style="margin:0"><button class="btn sm gold" id="avb-${id}" data-act="photo" data-id="${id}">${photoCache[id]?"Change photo":"Add photo"}</button><button class="btn sm danger" id="avr-${id}" data-act="delPhoto" data-id="${id}" ${photoCache[id]?"":"hidden"}>Remove</button></div></div></div>
-  <div class="card"><dl class="kv"><dt>Parent</dt><dd>${esc(s.parent||"–")}</dd><dt>Phone</dt><dd>${s.phone?`<a href="tel:${esc(s.phone)}">${esc(s.phone)}</a>`:"–"}</dd><dt>Monthly fee</dt><dd>${s.fee?rs(s.fee):"–"}</dd><dt>This month</dt><dd>${st.t?`${st.p}/${st.t} days present (${st.pct}%)`:"Not marked yet"}</dd><dt>Overall</dt><dd>${(o=>o.t?`${o.p}/${o.t} days (${o.pct}%)`:"–")(attStats(id,""))}</dd></dl>${s.notes?`<p class="sub" style="margin:10px 0 0">${esc(s.notes)}</p>`:""}</div>
+  <div class="card"><dl class="kv"><dt>Parent</dt><dd>${esc(s.parent||"–")}</dd><dt>Phone</dt><dd>${s.phone?`<a href="tel:${esc(s.phone)}">${esc(s.phone)}</a>`:"–"}</dd>${isAdmin()?`<dt>Monthly fee</dt><dd>${s.fee?rs(s.fee):"–"}</dd>`:""}<dt>This month</dt><dd>${st.t?`${st.p}/${st.t} days present (${st.pct}%)`:"Not marked yet"}</dd><dt>Overall</dt><dd>${(o=>o.t?`${o.p}/${o.t} days (${o.pct}%)`:"–")(attStats(id,""))}</dd></dl>${s.notes?`<p class="sub" style="margin:10px 0 0">${esc(s.notes)}</p>`:""}</div>
   <div class="card"><h3>Test results</h3>${tests.length?`<table class="t"><tr><th>Test</th><th>Marks</th><th>Grade</th></tr>${tests.map(t=>{const pc=Math.round(t.marks[id]*100/t.max);return `<tr><td>${esc(t.subject)} – ${esc(t.name)}</td><td>${t.marks[id]}/${t.max}</td><td>${grade(pc)}</td></tr>`}).join("")}</table>`:`<p class="sub" style="margin:0">No marks entered yet.</p>`}</div>
-  <div class="card"><h3>Payments</h3>${pays.length?`<table class="t"><tr><th>For</th><th>Amount</th><th></th></tr>${pays.map(p=>`<tr><td>${monthName(p.month)}<br><span class="sub">${nice(p.date)} · ${esc(p.mode)}</span></td><td>${rs(p.amount)}</td><td style="white-space:nowrap"><a class="btn sm ghost" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Receipt</a> <button class="btn sm danger" data-act="delPay" data-id="${id}" data-p="${esc(p.id)}" aria-label="Remove payment">×</button></td></tr>`).join("")}</table>`:`<p class="sub" style="margin:0">No payments recorded.</p>`}<div class="acts" style="margin-top:10px"><button class="btn sm gold" data-act="pay" data-id="${id}">Record payment</button></div></div>
+  <div class="card"><h3>Send progress to parent</h3>${pays.length?`<table class="t"><tr><th>For</th><th>Amount</th><th></th></tr>${pays.map(p=>`<tr><td>${monthName(p.month)}<br><span class="sub">${nice(p.date)} · ${esc(p.mode)}</span></td><td>${rs(p.amount)}</td><td style="white-space:nowrap"><a class="btn sm ghost" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Receipt</a> <button class="btn sm danger" data-act="delPay" data-id="${id}" data-p="${esc(p.id)}" aria-label="Remove payment">×</button></td></tr>`).join("")}</table>`:`<p class="sub" style="margin:0">No payments recorded.</p>`}<div class="acts" style="margin-top:10px"><button class="btn sm gold" data-act="pay" data-id="${id}">Record payment</button></div></div>
   <div class="card"><h3>Send progress to parent</h3><pre class="msg">${esc(txt)}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,txt)}">Send on WhatsApp</a><button class="btn ghost" data-act="copyReport" data-id="${id}">Copy</button></div><p class="sub" style="margin:10px 0 0">Message language: ${LANGS[langOf(s)]}</p></div>
   ${parentCard(s)}
-  <div class="acts">${downloads?`<button class="btn gold" data-act="rcImage" data-id="${id}">Report card image</button><button class="btn ghost" data-act="idOne" data-id="${id}">ID card</button>`:""}<button class="btn ghost" data-act="editStudent" data-id="${id}">Edit student</button></div>`);
+  <div class="acts">${downloads?`<button class="btn gold" data-act="rcImage" data-id="${id}">Report card image</button><button class="btn ghost" data-act="idOne" data-id="${id}">ID card</button>`:""}${isAdmin()?`<button class="btn ghost" data-act="editStudent" data-id="${id}">Edit student</button>`:""}</div>`);
 }
 function payForm(id){
   const s=S.students[id];
@@ -883,6 +886,7 @@ async function exportCSV(kind){
 /* ---------- events ---------- */
 document.addEventListener("click",e=>{
   const b=e.target.closest("[data-act]");if(!b)return;
+  if(!isAdmin()&&["addTeacher","editTeacher","paySal","delSal","delTeacher","addExpense","delExp","addStudent","editStudent","pay","editInfo","delStudent","delPay","resetPL","export","delTest"].includes(b.dataset.act)){toast("Admin access required.");return;}
   const a=b.dataset.act,id=b.dataset.id;
     switch(a){
     case "tab":if(b.dataset.k==="more")UI.more=null;UI.tab=b.dataset.k;render();window.scrollTo(0,0);break;
