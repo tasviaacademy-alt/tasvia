@@ -1,3 +1,4 @@
+// TASVIA Academy – Firebase settings (project: tasvia-academy)
 window.FIREBASE_CONFIG = {
   apiKey: "AIzaSyCzx7PInKPGfWjjCOIv_yLy9deHjb11RIc",
   authDomain: "tasvia-academy.firebaseapp.com",
