@@ -1098,7 +1098,6 @@ if(!window.firebase||!window.FIREBASE_CONFIG||!window.FIREBASE_CONFIG.apiKey){
     setSync("Signed out");
   }
 });
-  });
   document.getElementById("fLogin").addEventListener("submit",async e=>{
     e.preventDefault();e.stopPropagation();const d=Object.fromEntries(new FormData(e.target));const b=document.getElementById("loginBtn");
     b.disabled=true;b.textContent="Signing in…";gErr.textContent="";
