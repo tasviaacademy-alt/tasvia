@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TASVIA Academy</title>
-<meta name="theme-color" content="#1E3A32">
+<meta name="theme-color" content="#0B2455">
 <meta name="description" content="Attendance, fees, homework, salaries and report cards for TASVIA Academy Tuition Centre, Nizamabad">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
@@ -18,13 +18,13 @@
 <style>
 :root{
   --bg:#EDF1EE;--card:#FFFFFF;--ink:#15201C;--muted:#5B6A63;--line:#D3DCD7;--chip:#E2E9E5;
-  --board:#1E3A32;--board2:#2A4B41;--chalk:#F3F6F1;--gold:#E3A21A;--p:#2B8A55;--a:#C4432A;
+  --board:#0B2455;--board2:#15326F;--chalk:#F3F6F1;--gold:#F2AC10;--p:#2B8A55;--a:#C4432A;
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0E1613;--card:#17221E;--ink:#E6EDE9;--muted:#98A9A1;--line:#29372F;--chip:#213029;--board:#16302A;--board2:#21403A;
+  --bg:#0E1613;--card:#17221E;--ink:#E6EDE9;--muted:#98A9A1;--line:#29372F;--chip:#213029;--board:#081A3E;--board2:#12285A;
 }}
-:root[data-theme="dark"]{--bg:#0E1613;--card:#17221E;--ink:#E6EDE9;--muted:#98A9A1;--line:#29372F;--chip:#213029;--board:#16302A;--board2:#21403A;}
+:root[data-theme="dark"]{--bg:#0E1613;--card:#17221E;--ink:#E6EDE9;--muted:#98A9A1;--line:#29372F;--chip:#213029;--board:#081A3E;--board2:#12285A;}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Hind,"Segoe UI",system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
@@ -37,6 +37,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var
 .brand{display:flex;justify-content:space-between;align-items:baseline;gap:12px;max-width:760px;margin:0 auto}
 .brand h1{font-size:1.45rem;letter-spacing:.01em;white-space:nowrap}
 .brand h1 span{color:var(--gold)}
+.hlogo{width:34px;height:34px;border-radius:50%;background:#fff;vertical-align:middle;margin:-4px 8px 0 0;box-shadow:0 0 0 2px var(--gold)}
 .sync{font-size:.75rem;opacity:.75;text-align:right;line-height:1.3}
 
 main{max-width:760px;margin:0 auto;padding:16px 16px 110px}
@@ -48,7 +49,7 @@ main{max-width:760px;margin:0 auto;padding:16px 16px 110px}
 .board div{text-align:center}
 .board b{display:block;font-family:"Baloo 2",sans-serif;font-size:2.3rem;line-height:1}
 .board small{opacity:.8}
-.board .pp b{color:#8FD9A8}.board .aa b{color:#F3A08E}
+.board .pp b{color:#7EE0A6}.board .aa b{color:#F3A08E}
 
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;scrollbar-width:none}
@@ -133,7 +134,7 @@ table.t th{color:var(--muted);font-weight:500}
 .gate{position:fixed;inset:0;z-index:40;background:var(--board);color:var(--chalk);display:flex;align-items:center;justify-content:center;padding:24px}
 .gate[hidden]{display:none}
 .gate form{width:100%;max-width:360px}
-.gate h1{font-size:2.2rem;margin-bottom:2px}.gate h1 span{color:var(--gold)}
+.gate h1{font-size:2.2rem;margin-bottom:2px;text-align:center}.gate .glogo{display:block;width:132px;height:132px;margin:0 auto 12px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px var(--gold),0 12px 30px rgba(0,0,0,.35)}.gate .tag{text-align:center;color:var(--gold);letter-spacing:.08em;font-size:.8rem;margin:0 0 18px;opacity:1}.gate #gateMsg{text-align:center}.gate h1 span{color:var(--gold)}
 .gate p{opacity:.85;margin:0 0 20px}
 .gate label{display:block;margin-bottom:12px;font-size:.9rem}
 .gate input{display:block;width:100%;margin-top:4px;border:0;border-radius:12px;padding:12px;font-size:1rem;background:#fff;color:#15201C}
@@ -143,18 +144,22 @@ table.t th{color:var(--muted);font-weight:500}
 .pp{display:flex;gap:14px;align-items:center;margin:-4px 0 12px}
 .av{width:84px;height:108px;border-radius:14px;background:var(--chip);flex:0 0 auto;display:grid;place-items:center;overflow:hidden;font-family:"Baloo 2",sans-serif;font-size:2rem;color:var(--muted)}
 .av img{width:100%;height:100%;object-fit:cover;display:block}
+#banner{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 10px);transform:translate(-50%,-140%);z-index:50;display:flex;gap:10px;align-items:center;background:var(--card);color:var(--ink);border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:14px;padding:10px 14px;box-shadow:0 10px 30px rgba(0,0,0,.2);width:min(92%,420px);transition:transform .35s cubic-bezier(.2,.9,.3,1.2)}
+#banner.show{transform:translate(-50%,0)}#banner img{width:36px;height:36px;border-radius:50%;flex:0 0 auto}#banner b{display:block}#banner span{color:var(--muted);font-size:.9rem}
+@media (prefers-reduced-motion:reduce){#banner{transition:none}}
 .toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;z-index:30;font-size:.92rem;display:none;max-width:90%}
 .toast.show{display:block}
 </style>
 </head>
 <body>
-<header><div class="brand"><h1>TASVIA <span>Academy</span></h1><div class="sync" id="sync">Connecting…</div></div></header>
+<header><div class="brand"><h1><img class="hlogo" src="logo.png" alt="">TASVIA <span>Academy</span></h1><div class="sync" id="sync">Connecting…</div></div></header>
 <main id="view"></main>
 <nav><div class="in" id="nav"></div></nav>
 <div class="scrim" id="scrim"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
 <div class="toast" id="toast"></div>
 <div class="gate" id="gate" hidden><form id="fLogin" autocomplete="on">
-  <h1>TASVIA <span>Academy</span></h1><p id="gateMsg">Staff sign in</p>
+  <img class="glogo" src="logo.png" alt="TASVIA Academy logo">
+  <h1>TASVIA <span>Academy</span></h1><p class="tag">Inspire • Learn • Grow • Succeed</p><p id="gateMsg">Staff sign in</p>
   <label>Email<input name="email" type="email" autocomplete="username" required></label>
   <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
   <button class="btn gold" type="submit" id="loginBtn">Sign in</button>
@@ -213,7 +218,7 @@ function remove(path){
 function subscribe(){
   unsubs.forEach(u=>u&&u());unsubs=[];
   const onErr=e=>setSync(e&&e.code==="permission-denied"?"Not on staff list":"Connection lost. Reopen the app.");
-  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());S[key]=o;render()},onErr));
+  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);render()},onErr));
   coll("students","students");coll("fees","fees");coll("tests","tests");
   coll("attendance","att",db.collection("attendance").orderBy("date","desc").limit(400));
   unsubs.push(db.doc("info/centre").onSnapshot(d=>{S.info=d.exists?d.data():null;render()},onErr));
@@ -236,8 +241,8 @@ function getMarksK(k,date){
 function getMarks(date){return getMarksK("att",date)}
 function setMarksK(k,date,patch){const key=k+"|"+date;pend[key]=Object.assign(pend[key]||{},patch);render();clearTimeout(flushT[key]);flushT[key]=setTimeout(()=>flush(k,date),400)}
 function setMarks(date,patch){setMarksK("att",date,patch)}
-function mark(date,sid,val){setMarks(date,{[sid]:getMarks(date)[sid]===val?null:val})}
-function markT(date,tid,val){setMarksK("tatt",date,{[tid]:getMarksK("tatt",date)[tid]===val?null:val})}
+function mark(date,sid,val){SOUND.tap();setMarks(date,{[sid]:getMarks(date)[sid]===val?null:val})}
+function markT(date,tid,val){SOUND.tap();setMarksK("tatt",date,{[tid]:getMarksK("tatt",date)[tid]===val?null:val})}
 function markAll(date,list){const m=getMarks(date),patch={};list.forEach(s=>{if(!m[s.id])patch[s.id]="P"});if(Object.keys(patch).length)setMarks(date,patch)}
 async function flush(k,date){
   const key=k+"|"+date,patch=Object.assign({},pend[key]);if(!Object.keys(patch).length)return;
@@ -320,6 +325,55 @@ function hwText(cls,date,e,l){const T=L[l];return `*${T.hwT}*\n${T.cls(cls)} · 
 function salaryText(t,p){return `*TASVIA Academy – Salary slip*\nName: ${t.name}\nMonth: ${monthName(p.month)}\nAmount paid: ${rs(p.amount)} (${p.mode})\nPaid on: ${nice(p.date)}`+(p.note?`\nNote: ${p.note}`:"")+`\n\nThank you for your work. – TASVIA Academy`}
 function infoText(){const i=info();return `*${i.name}*\n${i.subjects}\n`+(i.timings?`Timings: ${i.timings}\n`:"")+(i.notice?`\n📢 ${i.notice}\n`:"")+(i.extra?`\n${i.extra}\n`:"")+`\n📍 ${i.address}\n📞 ${i.phone}\n✉️ ${i.email}\nInstagram: ${i.insta}`}
 async function copy(text){try{await navigator.clipboard.writeText(text);toast("Copied")}catch(e){const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("Copied")}catch(_){toast("Select the text and copy it")}ta.remove()}}
+
+/* ---------- brand logo (embedded in downloaded files) ---------- */
+let LOGO_DATA="";
+fetch("logo.png").then(r=>r.ok?r.blob():null).then(b=>{if(!b)return;const fr=new FileReader();fr.onload=()=>LOGO_DATA=fr.result;fr.readAsDataURL(b)}).catch(()=>{});
+const logoImg=()=>LOGO_DATA?`<img class="lg" src="${LOGO_DATA}" alt="">`:"";
+
+/* ---------- sounds & alerts ---------- */
+let PREF={sound:true,alerts:true};try{Object.assign(PREF,JSON.parse(localStorage.getItem("tasvia-prefs")||"{}"))}catch(e){}
+function savePref(){try{localStorage.setItem("tasvia-prefs",JSON.stringify(PREF))}catch(e){}}
+let actx=null;
+function tone(seq){
+  if(!PREF.sound)return;
+  try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();if(actx.state==="suspended")actx.resume();
+    const t0=actx.currentTime+.01;
+    seq.forEach(([f,st,du,vol,type])=>{const o=actx.createOscillator(),g=actx.createGain();o.type=type||"sine";o.frequency.value=f;
+      g.gain.setValueAtTime(0,t0+st);g.gain.linearRampToValueAtTime(vol||.16,t0+st+.012);g.gain.exponentialRampToValueAtTime(.0001,t0+st+du);
+      o.connect(g);g.connect(actx.destination);o.start(t0+st);o.stop(t0+st+du+.05)});
+  }catch(e){}
+}
+/* TASVIA sounds: a soft tick, a two-note "saved" chime, a rising three-note alert, a low buzz for problems */
+const SOUND={tap:()=>tone([[1175,0,.05,.07,"triangle"]]),save:()=>tone([[784,0,.16],[1175,.08,.3]]),
+  alert:()=>tone([[784,0,.22,.17],[988,.13,.22,.17],[1319,.26,.45,.15],[1976,.26,.3,.03]]),error:()=>tone([[196,0,.22,.12,"square"],[165,.12,.25,.1,"square"]])};
+const notifOK=()=>"Notification" in window;
+function notify(title,body){
+  SOUND.alert();
+  banner(title,body);
+  if(PREF.alerts&&notifOK()&&Notification.permission==="granted"&&document.hidden){
+    try{const n=new Notification(title,{body,icon:"icon-192.png",badge:"icon-192.png",tag:"tasvia-"+Date.now()});n.onclick=()=>{window.focus();n.close()}}catch(e){}
+  }
+}
+let bT;function banner(title,body){let el=document.getElementById("banner");if(!el){el=document.createElement("div");el.id="banner";el.setAttribute("role","status");document.body.appendChild(el)}
+  el.innerHTML=`<img src="logo.png" alt=""><div><b>${esc(title)}</b><span>${esc(body)}</span></div>`;el.classList.add("show");clearTimeout(bT);bT=setTimeout(()=>el.classList.remove("show"),5000)}
+/* Live alerts when OTHER staff record something (own actions are skipped) */
+const ownIds=new Set(),seenFirst={};
+function diffAlert(key,oldO,newO){
+  if(!PREF.alerts)return;
+  if(!seenFirst[key]){seenFirst[key]=true;return}
+  if(key==="fees")Object.entries(newO).forEach(([sid,f])=>{const before=new Set(mapList(oldO[sid],"payments").map(p=>p.id));mapList(f,"payments").forEach(p=>{if(!before.has(p.id)&&!ownIds.has(p.id)){const st=S.students[sid];notify("Fee received",`${rs(p.amount)} from ${st?st.name:"a student"} for ${monthName(p.month)}`)}})});
+  if(key==="diary")Object.entries(newO).forEach(([d,doc])=>{const was=((oldO[d]||{}).entries)||{};Object.entries(doc.entries||{}).forEach(([c,e])=>{if(e&&e.hw&&!(was[c]&&was[c].hw)&&!ownIds.has("hw:"+d+c))notify("Homework added",`${clsLabel(c)} · ${nice(d)}`)})});
+  if(key==="students")Object.keys(newO).forEach(id=>{if(!oldO[id]&&!ownIds.has(id))notify("New student",`${newO[id].name} joined ${clsLabel(newO[id].cls)}`)});
+  if(key==="tests")Object.keys(newO).forEach(id=>{if(!oldO[id]&&!ownIds.has(id))notify("New test",`${newO[id].subject} – ${newO[id].name} (${clsLabel(newO[id].cls)})`)});
+}
+function vAlerts(){
+  const perm=notifOK()?Notification.permission:"unsupported";
+  return mhead("Sounds & alerts","On this device")+`<div class="card"><label class="f" style="display:flex;gap:10px;align-items:center;color:var(--ink);font-size:1rem"><input type="checkbox" id="prefSound" ${PREF.sound?"checked":""} style="width:auto;margin:0"> Play sounds (tap, saved, alerts)</label>
+  <label class="f" style="display:flex;gap:10px;align-items:center;color:var(--ink);font-size:1rem"><input type="checkbox" id="prefAlerts" ${PREF.alerts?"checked":""} style="width:auto;margin:0"> Alert me when other teachers add fees, homework, students or tests</label>
+  <div class="acts"><button class="btn ghost" data-act="testSound">▶ Play alert sound</button>${perm==="default"?`<button class="btn gold" data-act="askNotif">Allow phone notifications</button>`:""}</div>
+  <p class="sub" style="margin:10px 0 0">${perm==="granted"?"✓ Phone notifications are on. They appear when the app is open in the background.":perm==="denied"?"Notifications are blocked. Turn them on for this site in your browser or phone settings.":perm==="unsupported"?"This browser doesn't support notifications. On iPhone, add the app to your Home Screen first, then open it from there.":"Allow notifications to see alerts when the app is in the background."}</p></div>`;
+}
 
 /* ---------- student photos ---------- */
 /* Small JPEGs (about 20–40 KB) kept in photos/<studentId>, loaded only when needed. */
@@ -457,7 +511,7 @@ function vHomework(){
     <div class="acts"><button class="btn sm ${e&&e.hw?"ghost":"gold"}" data-act="hwEdit" data-c="${c}">${e&&e.hw?"Edit":"Add homework"}</button>${e&&e.hw?`<button class="btn sm gold" data-act="hwSend" data-c="${c}">Send to parents</button>`:""}</div></div>`}).join("");
   return h+`</div>`;
 }
-const ICONS={parents:"M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7zM9 12l2 2 4-4",staff:"M16 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 20c0-3 3-5 6-5s6 2 6 5M14 15c3 0 8 1 8 5",money:"M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6",cards:"M3 5h18v14H3zM7 9h4v5H7zM14 10h4M14 13h3",centre:"M3 10l9-6 9 6M5 10v10h14V10M10 20v-5h4v5",backup:"M12 4v11M7 10l5 5 5-5M4 20h16"};
+const ICONS={alerts:"M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0",parents:"M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7zM9 12l2 2 4-4",staff:"M16 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 20c0-3 3-5 6-5s6 2 6 5M14 15c3 0 8 1 8 5",money:"M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6",cards:"M3 5h18v14H3zM7 9h4v5H7zM14 10h4M14 13h3",centre:"M3 10l9-6 9 6M5 10v10h14V10M10 20v-5h4v5",backup:"M12 4v11M7 10l5 5 5-5M4 20h16"};
 function mhead(title,sub,right){return `<button class="back" data-act="more" data-k="">‹ More</button><div class="hd"><div><h2>${title}</h2>${sub?`<div class="sub">${sub}</div>`:""}</div>${right||""}</div>`}
 function vMore(){
   if(UI.more==="staff")return vStaff();
@@ -466,12 +520,14 @@ function vMore(){
   if(UI.more==="centre")return mhead("Centre info","What parents see when you share",`<button class="btn ghost" data-act="editInfo">Edit</button>`)+vCentre();
   if(UI.more==="backup")return vBackup();
   if(UI.more==="parents")return vParents();
+  if(UI.more==="alerts")return vAlerts();
   const m=today().slice(0,7),ts=teachersList(),salDue=ts.filter(t=>t.salary&&salStatus(t,m).k!=="paid").length;
   const items=[["staff","Staff & salaries",`${ts.length} teacher${ts.length===1?"":"s"}${salDue?` · ${salDue} salar${salDue===1?"y":"ies"} due`:""}`],
     ["money","Expenses & profit",`${monthName(m)} summary`],
     ["cards","Report cards & ID cards","Print or share on WhatsApp"],
     ["centre","Centre info & language","Notice, timings, message language"],
     ["parents","Parent page links","Private page for each family"],
+    ["alerts","Sounds & alerts",PREF.sound?"Sound on":"Sound off"],
     ["backup","Backup spreadsheets","Download for Excel or Google Sheets"]];
   return `<div class="hd"><h2>More</h2></div><div class="menu">`+items.map(([k,t,d])=>`<button class="item" data-act="more" data-k="${k}"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${ICONS[k]}"/></svg></span><div class="grow"><div class="nm">${t}</div><div class="mt">${d}</div></div><span aria-hidden="true" style="color:var(--muted)">›</span></button>`).join("")+`</div><div class="card" style="margin-top:14px"><h3>Account</h3><p class="sub" style="margin:0 0 10px">Signed in as ${esc((auth&&auth.currentUser&&auth.currentUser.email)||"")}</p><button class="btn ghost" data-act="signOut">Sign out</button></div>`;
 }
@@ -709,13 +765,13 @@ function rcData(s,from,to){
   return {tests,subj,got,max,pct,g:pct!=null?grade(pct):null,att:attStats(s.id,"",from,to)};
 }
 const PRINT_CSS=`*{box-sizing:border-box}body{margin:0;font-family:"Segoe UI",Roboto,"Noto Sans",Arial,sans-serif;color:#15201C;background:#e9ece9}
-.bar{position:sticky;top:0;background:#1E3A32;color:#fff;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px}
-.bar button{background:#E3A21A;border:0;border-radius:8px;padding:8px 16px;font-weight:700;font-size:15px}
+.bar{position:sticky;top:0;background:#0B2455;color:#fff;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px}
+.bar button{background:#F2AC10;border:0;border-radius:8px;padding:8px 16px;font-weight:700;font-size:15px}
 @media print{.bar{display:none}body{background:#fff}}`;
 function rcHTML(list,from,to){
   const i=info(),ay=acYear(to);
   const pages=list.map(s=>{const d=rcData(s,from,to);
-    return `<section class="pg"><header><div><h1>${esc(i.name)}</h1><p>${esc(i.address)}<br>Phone ${esc(i.phone)} · ${esc(i.email)}</p></div><div class="yr">PROGRESS REPORT<br><b>${ay.label}</b></div></header>
+    return `<section class="pg"><header><div style="display:flex;gap:12px;align-items:center">${logoImg()}<div><h1>${esc(i.name)}</h1><p>${esc(i.address)}<br>Phone ${esc(i.phone)} · ${esc(i.email)}</p></div></div><div class="yr">PROGRESS REPORT<br><b>${ay.label}</b></div></header>
     <table class="info"><tr><td>Student</td><th>${esc(s.name)}</th><td>Class</td><th>${esc(clsLabel(s.cls))}</th></tr><tr><td>Parent</td><th>${esc(s.parent||"–")}</th><td>Syllabus</td><th>${esc(s.board||"–")}</th></tr><tr><td>Period</td><th colspan="3">${nice(from)} to ${nice(to)}</th></tr></table>
     <h2>Subject summary</h2>${Object.keys(d.subj).length?`<table class="m"><tr><th>Subject</th><th>Tests</th><th>Marks</th><th>%</th><th>Grade</th></tr>${Object.entries(d.subj).map(([k,x])=>{const pc=Math.round(x.got*100/x.max);return `<tr><td>${esc(k)}</td><td>${x.n}</td><td>${x.got} / ${x.max}</td><td>${pc}%</td><td><b>${grade(pc)}</b></td></tr>`}).join("")}<tr class="tot"><td>Overall</td><td>${d.tests.length}</td><td>${d.got} / ${d.max}</td><td>${d.pct}%</td><td><b>${d.g}</b></td></tr></table>`:`<p class="none">No test marks in this period.</p>`}
     ${d.tests.length?`<h2>Test details</h2><table class="m sm"><tr><th>Date</th><th>Subject</th><th>Test</th><th>Marks</th><th>Grade</th></tr>${d.tests.map(t=>`<tr><td>${nice(t.date)}</td><td>${esc(t.subject)}</td><td>${esc(t.name)}</td><td>${t.marks[s.id]} / ${t.max}</td><td>${grade(Math.round(t.marks[s.id]*100/t.max))}</td></tr>`).join("")}</table>`:""}
@@ -725,11 +781,12 @@ function rcHTML(list,from,to){
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Report cards – ${esc(list[0]?clsLabel(list[0].cls):"")}</title><style>${PRINT_CSS}
   @page{size:A4;margin:12mm}.pg{background:#fff;max-width:186mm;margin:12px auto;padding:10mm;page-break-after:always;border:1px solid #d3dcd7}
   @media print{.pg{margin:0;padding:0;border:0;max-width:none}}
-  header{display:flex;justify-content:space-between;gap:12px;border-bottom:3px solid #1E3A32;padding-bottom:8px;margin-bottom:10px}
-  h1{margin:0;font-size:20px;color:#1E3A32}header p{margin:4px 0 0;font-size:11px;color:#555}.yr{text-align:right;font-size:12px;color:#1E3A32;font-weight:700;letter-spacing:.04em}.yr b{font-size:16px;color:#B97F0A}
+  .lg{width:62px;height:62px;border-radius:50%}
+  header{display:flex;justify-content:space-between;gap:12px;border-bottom:3px solid #0B2455;padding-bottom:8px;margin-bottom:10px}
+  h1{margin:0;font-size:20px;color:#0B2455}header p{margin:4px 0 0;font-size:11px;color:#555}.yr{text-align:right;font-size:12px;color:#0B2455;font-weight:700;letter-spacing:.04em}.yr b{font-size:16px;color:#B8820A}
   table{width:100%;border-collapse:collapse;font-size:13px}.info td{color:#666;padding:4px 6px;width:14%}.info th{text-align:left;padding:4px 6px}
-  h2{font-size:14px;margin:14px 0 6px;color:#1E3A32;text-transform:uppercase;letter-spacing:.05em}h3{margin:0 0 4px;font-size:13px;color:#1E3A32}
-  .m th{background:#1E3A32;color:#fff;text-align:left;padding:6px}.m td{border-bottom:1px solid #ddd;padding:6px}.m .tot td{background:#fbf3df;font-weight:700}.sm{font-size:12px}
+  h2{font-size:14px;margin:14px 0 6px;color:#0B2455;text-transform:uppercase;letter-spacing:.05em}h3{margin:0 0 4px;font-size:13px;color:#0B2455}
+  .m th{background:#0B2455;color:#fff;text-align:left;padding:6px}.m td{border-bottom:1px solid #ddd;padding:6px}.m .tot td{background:#fbf3df;font-weight:700}.sm{font-size:12px}
   .two{display:grid;grid-template-columns:1fr 1.6fr;gap:10px;margin-top:14px}.box{border:1px solid #ccc;border-radius:6px;padding:8px 10px;font-size:13px}.box p{margin:0}.line{border-bottom:1px dotted #999;height:18px}
   .scale{font-size:10.5px;color:#666;margin:10px 0 0}.none{color:#666;font-size:13px}
   .sig{display:flex;justify-content:space-between;margin-top:46px;font-size:12px}.sig div{border-top:1px solid #333;width:28%;text-align:center;padding-top:4px}</style></head>
@@ -737,16 +794,16 @@ function rcHTML(list,from,to){
 }
 function idHTML(list,photos){photos=photos||{};
   const i=info(),ay=acYear(today());
-  const cards=list.map(s=>`<div class="card"><div class="top"><b>TASVIA</b> ACADEMY<span>STUDENT ID · ${ay.label}</span></div><div class="body"><div class="ph">${photos[s.id]?`<img src="${photos[s.id]}" alt="">`:"Paste<br>photo"}</div><div class="d"><div class="n">${esc(s.name)}</div><div><i>Class</i> ${esc(clsLabel(s.cls))} · ${esc(s.board||"")}</div><div><i>Parent</i> ${esc(s.parent||"–")}</div><div><i>Phone</i> ${esc(s.phone||"–")}</div></div></div><div class="sg">Principal</div><div class="ft">TASVIA Academy, ${esc(i.address.split(",").slice(2,4).join(",").trim())} · ${esc(i.phone)}</div></div>`).join("");
+  const cards=list.map(s=>`<div class="card"><div class="top">${LOGO_DATA?`<img src="${LOGO_DATA}" alt="" style="width:6mm;height:6mm;border-radius:50%;background:#fff;vertical-align:-1.6mm;margin-right:1.2mm">`:""}<b>TASVIA</b> ACADEMY<span>STUDENT ID · ${ay.label}</span></div><div class="body"><div class="ph">${photos[s.id]?`<img src="${photos[s.id]}" alt="">`:"Paste<br>photo"}</div><div class="d"><div class="n">${esc(s.name)}</div><div><i>Class</i> ${esc(clsLabel(s.cls))} · ${esc(s.board||"")}</div><div><i>Parent</i> ${esc(s.parent||"–")}</div><div><i>Phone</i> ${esc(s.phone||"–")}</div></div></div><div class="sg">Principal</div><div class="ft">TASVIA Academy, ${esc(i.address.split(",").slice(2,4).join(",").trim())} · ${esc(i.phone)}</div></div>`).join("");
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ID cards</title><style>${PRINT_CSS}
   @page{size:A4;margin:10mm}.sheet{display:grid;grid-template-columns:repeat(2,85.6mm);gap:6mm 8mm;justify-content:center;padding:10px}
   .card{width:85.6mm;height:54mm;border:1px solid #9aa;border-radius:3mm;overflow:hidden;background:#fff;display:flex;flex-direction:column;page-break-inside:avoid}
-  .top{background:#1E3A32;color:#fff;padding:2mm 3mm;font-size:12px;letter-spacing:.06em}.top b{color:#E3A21A;font-size:14px}.top span{float:right;font-size:8px;margin-top:1.3mm;opacity:.9}
+  .top{background:#0B2455;color:#fff;padding:2mm 3mm;font-size:12px;letter-spacing:.06em}.top b{color:#F2AC10;font-size:14px}.top span{float:right;font-size:8px;margin-top:1.3mm;opacity:.9}
   .body{flex:1;display:flex;gap:3mm;padding:2.5mm 3mm}.ph{width:20mm;height:25mm;border:1px dashed #999;display:grid;place-items:center;text-align:center;font-size:8px;color:#999;flex:0 0 auto}
-  .d{font-size:9.5px;line-height:1.55;min-width:0}.d .n{font-size:13px;font-weight:700;color:#1E3A32;line-height:1.2;margin-bottom:1mm}.d i{color:#777;font-style:normal;display:inline-block;width:10mm}
+  .d{font-size:9.5px;line-height:1.55;min-width:0}.d .n{font-size:13px;font-weight:700;color:#0B2455;line-height:1.2;margin-bottom:1mm}.d i{color:#777;font-style:normal;display:inline-block;width:10mm}
   .sg{font-size:7.5px;color:#555;text-align:right;padding:0 4mm 1mm;margin-top:-5mm}.sg::before{content:"";display:block;margin-left:auto;width:22mm;border-top:1px solid #777;margin-bottom:.6mm}
   .ph img{width:100%;height:100%;object-fit:cover;display:block}
-  .ft{background:#E3A21A;color:#1a1405;font-size:7.5px;padding:1.2mm 3mm;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ft{background:#F2AC10;color:#1a1405;font-size:7.5px;padding:1.2mm 3mm;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   @media print{.sheet{padding:0}}</style></head><body><div class="bar"><span>${list.length} ID card${list.length===1?"":"s"} · print on A4, then cut out</span><button onclick="window.print()">Print / Save PDF</button></div><div class="sheet">${cards}</div></body></html>`;
 }
 const slug=t=>String(t).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -761,24 +818,26 @@ async function rcImage(id){
   const F=(w,sz)=>`${w} ${sz}px "Hind","Segoe UI",sans-serif`,FB=sz=>`800 ${sz}px "Baloo 2","Segoe UI",sans-serif`;
   const fit=(t,max)=>{t=String(t);if(x.measureText(t).width<=max)return t;while(t.length&&x.measureText(t+"…").width>max)t=t.slice(0,-1);return t+"…"};
   x.fillStyle="#F3F6F1";x.fillRect(0,0,W,H);
-  x.fillStyle="#1E3A32";x.fillRect(0,0,W,250);
-  x.fillStyle="#F3F6F1";x.font=FB(64);x.fillText("TASVIA",70,120);const tw=x.measureText("TASVIA ").width;x.fillStyle="#E3A21A";x.fillText("Academy",70+tw,120);
-  x.fillStyle="#cfd8d3";x.font=F(500,30);x.fillText("Progress report · "+ay.label,70,180);
+  x.fillStyle="#0B2455";x.fillRect(0,0,W,250);
+  const lg=await new Promise(ok=>{const im=new Image();im.onload=()=>ok(im);im.onerror=()=>ok(null);im.src="logo.png"});
+  let lx=70;if(lg){x.fillStyle="#fff";x.beginPath();x.arc(140,125,74,0,Math.PI*2);x.fill();x.drawImage(lg,70,55,140,140);lx=240}
+  x.fillStyle="#F3F6F1";x.font=FB(64);x.fillText("TASVIA",lx,120);const tw=x.measureText("TASVIA ").width;x.fillStyle="#F2AC10";x.fillText("Academy",lx+tw,120);
+  x.fillStyle="#cfd8d3";x.font=F(500,30);x.fillText("Progress report · "+ay.label,lx,180);
   const pimg=await getPhoto(id).then(p=>p&&new Promise(ok=>{const im=new Image();im.onload=()=>ok(im);im.onerror=()=>ok(null);im.src=p}));
   let nameW=W-140;
-  if(pimg){const pw=120,ph=160,px=W-70-pw,py=262;x.save();x.beginPath();x.roundRect(px,py,pw,ph,18);x.clip();x.drawImage(pimg,px,py,pw,ph);x.restore();x.strokeStyle="#E3A21A";x.lineWidth=5;x.beginPath();x.roundRect(px,py,pw,ph,18);x.stroke();nameW=W-140-pw-30}
+  if(pimg){const pw=120,ph=160,px=W-70-pw,py=262;x.save();x.beginPath();x.roundRect(px,py,pw,ph,18);x.clip();x.drawImage(pimg,px,py,pw,ph);x.restore();x.strokeStyle="#F2AC10";x.lineWidth=5;x.beginPath();x.roundRect(px,py,pw,ph,18);x.stroke();nameW=W-140-pw-30}
   x.fillStyle="#15201C";x.font=FB(58);x.fillText(fit(s.name,nameW),70,340);
   x.fillStyle="#5B6A63";x.font=F(500,32);x.fillText(`${clsLabel(s.cls)} · ${s.board||""}`,70,390);
   const box=(bx,label,val,col)=>{x.fillStyle="#fff";x.strokeStyle="#D3DCD7";x.lineWidth=2;x.beginPath();x.roundRect(bx,430,300,150,24);x.fill();x.stroke();x.fillStyle=col;x.font=FB(60);x.fillText(val,bx+28,515);x.fillStyle="#5B6A63";x.font=F(500,26);x.fillText(label,bx+30,556)};
-  box(70,"Overall",d.pct!=null?d.pct+"%":"–","#1E3A32");box(390,"Grade",d.g||"–","#B97F0A");box(710,"Attendance",d.att.pct!=null?d.att.pct+"%":"–","#2B8A55");
-  x.fillStyle="#1E3A32";x.font=FB(36);x.fillText("Subjects",70,660);
+  box(70,"Overall",d.pct!=null?d.pct+"%":"–","#0B2455");box(390,"Grade",d.g||"–","#B8820A");box(710,"Attendance",d.att.pct!=null?d.att.pct+"%":"–","#2B8A55");
+  x.fillStyle="#0B2455";x.font=FB(36);x.fillText("Subjects",70,660);
   let y=710;const rows=Object.entries(d.subj).slice(0,9);
   if(!rows.length){x.fillStyle="#5B6A63";x.font=F(400,30);x.fillText("No test marks yet this year.",70,y);}
   rows.forEach(([k,v],n)=>{const pc=Math.round(v.got*100/v.max);if(n%2===0){x.fillStyle="#E2E9E5";x.fillRect(60,y-42,W-120,62)}
     x.fillStyle="#15201C";x.font=F(600,32);x.fillText(fit(k,470),80,y);x.font=F(500,30);x.fillStyle="#5B6A63";x.fillText(`${v.got}/${v.max}`,580,y);
-    x.fillStyle="#15201C";x.font=F(600,32);x.fillText(pc+"%",790,y);x.fillStyle="#B97F0A";x.font=FB(34);x.fillText(grade(pc),920,y);y+=62});
-  if(d.g){x.fillStyle="#1E3A32";x.font=F(600,30);x.fillText(fit(remark(d.g),W-140),70,y+40)}
-  x.fillStyle="#E3A21A";x.fillRect(0,H-90,W,90);x.fillStyle="#1a1405";x.font=F(600,28);x.fillText(fit(`${i.phone} · ${i.address.split(",").slice(-2).join(",").trim()}`,W-140),70,H-35);
+    x.fillStyle="#15201C";x.font=F(600,32);x.fillText(pc+"%",790,y);x.fillStyle="#B8820A";x.font=FB(34);x.fillText(grade(pc),920,y);y+=62});
+  if(d.g){x.fillStyle="#0B2455";x.font=F(600,30);x.fillText(fit(remark(d.g),W-140),70,y+40)}
+  x.fillStyle="#F2AC10";x.fillRect(0,H-90,W,90);x.fillStyle="#1a1405";x.font=F(600,28);x.fillText(fit(`${i.phone} · ${i.address.split(",").slice(-2).join(",").trim()}`,W-140),70,H-35);
   const blob=await new Promise(res=>c.toBlob(res,"image/png"));
   await saveFile(`report-card-${slug(s.name)}.png`,blob);
 }
@@ -856,6 +915,8 @@ document.addEventListener("click",e=>{
     case "delPay":if(confirmDel(b,"Remove?")){const pid=b.dataset.p,legacy=Array.isArray((S.fees[id]||{}).payments),cur={};payList(id).forEach(x=>{if(x.id!==pid)cur[x.id]=x});S.fees[id]={payments:cur};
       if(!db)saveLocal();else if(legacy)put("fees/"+id,S.fees[id]);else mergeWrite("fees/"+id,{payments:{[pid]:null}},{});render();studentSheet(id);toast("Payment removed")}break;
     case "remindAll":remindSheet();break;
+    case "testSound":{const was=PREF.sound;PREF.sound=true;SOUND.alert();PREF.sound=was;banner("TASVIA Academy","This is how alerts will look and sound.");break}
+    case "askNotif":Notification.requestPermission().then(()=>render());break;
     case "copyPL":copy(parentURL(S.students[id].pcode));break;
     case "resetPL":if(confirmDel(b,"Tap again: old link stops")){const st=S.students[id],old=st.pcode,code=newCode();if(old)remove("parentView/"+old);S.students[id]=Object.assign({},st,{pcode:code});if(db)db.doc("students/"+id).set({pcode:code},{merge:true}).catch(e=>toast(errMsg(e)));schedulePV();studentSheet(id);toast("New link created")}break;
     case "signOut":if(confirmDel(b,"Tap again to sign out")&&auth)auth.signOut();break;
@@ -872,13 +933,15 @@ document.addEventListener("change",e=>{
   if(e.target.id==="feeMonth"&&e.target.value){UI.feeMonth=e.target.value;render()}
   if(e.target.id==="moneyMonth"&&e.target.value){UI.moneyMonth=e.target.value;render()}
   if(e.target.id==="rcFrom"&&e.target.value){UI.rcFrom=e.target.value}
+  if(e.target.id==="prefSound"){PREF.sound=e.target.checked;savePref();if(PREF.sound)SOUND.save()}
+  if(e.target.id==="prefAlerts"){PREF.alerts=e.target.checked;savePref()}
   if(e.target.id==="rcTo"&&e.target.value){UI.rcTo=e.target.value}
 });
 document.addEventListener("submit",e=>{
   if(e.target.id==="fLogin")return;
   e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f));
   if(f.id==="fStudent"){
-    const id=f.dataset.id||uid("s");const s={name:d.name.trim().replace(/\s+/g," "),cls:d.cls,board:d.board,parent:d.parent.trim(),phone:d.phone.trim(),fee:Math.max(0,Number(d.fee)||0),joined:d.joined,lang:d.lang||"en",notes:d.notes.trim(),active:f.dataset.id?d.active==="on":true};
+    const id=f.dataset.id||uid("s");ownIds.add(id);const s={name:d.name.trim().replace(/\s+/g," "),cls:d.cls,board:d.board,parent:d.parent.trim(),phone:d.phone.trim(),fee:Math.max(0,Number(d.fee)||0),joined:d.joined,lang:d.lang||"en",notes:d.notes.trim(),active:f.dataset.id?d.active==="on":true};
     if(!s.name)return toast("Enter the student's name");
     const digits=s.phone.replace(/\D/g,"");if(s.phone&&!(digits.length===10||(digits.length===12&&digits.startsWith("91"))))return toast("Enter a 10-digit mobile number");
     if(d.fee&&isNaN(Number(d.fee)))return toast("Fee must be a number");
@@ -886,14 +949,14 @@ document.addEventListener("submit",e=>{
   }
   if(f.id==="fPay"){
     const id=f.dataset.id,amt=Number(d.amount);if(!(amt>0))return toast("Enter an amount");
-    const p={id:uid("p"),amount:amt,month:d.month,date:d.date,mode:d.mode,note:(d.note||"").trim()};
+    const p={id:uid("p"),amount:amt,month:d.month,date:d.date,mode:d.mode,note:(d.note||"").trim()};ownIds.add(p.id);
     const legacy=Array.isArray((S.fees[id]||{}).payments);const cur={};payList(id).forEach(x=>cur[x.id]=x);cur[p.id]=p;S.fees[id]={payments:cur};
     if(!db)saveLocal();else if(legacy)put("fees/"+id,S.fees[id]);else mergeWrite("fees/"+id,{payments:{[p.id]:p}},{});render();
     const s={id,...S.students[id]};
     openSheet("Payment saved",`<p>${rs(amt)} from ${esc(s.name)} for ${monthName(d.month)}.</p><pre class="msg">${esc(receiptText(s,p))}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Send receipt on WhatsApp</a><button class="btn ghost" data-act="close">Done</button></div>`);
   }
   if(f.id==="fTest"){
-    const id=uid("t"),t={name:d.name.trim(),subject:d.subject,cls:d.cls,max:Number(d.max)||100,date:d.date,marks:{}};
+    const id=uid("t");ownIds.add(id);const t={name:d.name.trim(),subject:d.subject,cls:d.cls,max:Number(d.max)||100,date:d.date,marks:{}};
     S.tests[id]=t;put("tests/"+id,t);render();testSheet(id);
   }
   if(f.id==="fMarks"){
@@ -927,14 +990,14 @@ document.addEventListener("submit",e=>{
     UI.moneyMonth=m;closeSheet();render();toast("Expense saved");
   }
   if(f.id==="fHw"){
-    const cls=f.dataset.c,e=(d.hw||"").trim()?{hw:d.hw.trim(),note:(d.note||"").trim()}:null;
+    ownIds.add("hw:"+UI.date+f.dataset.c);const cls=f.dataset.c,e=(d.hw||"").trim()?{hw:d.hw.trim(),note:(d.note||"").trim()}:null;
     const cur=Object.assign({},(S.diary[UI.date]||{}).entries);if(e)cur[cls]=e;else delete cur[cls];S.diary[UI.date]={date:UI.date,entries:cur};
     if(db)mergeWrite("diary/"+UI.date,{entries:{[cls]:e}},{date:UI.date});else saveLocal();
     closeSheet();render();if(e)hwSendSheet(cls);else toast("Homework cleared");
   }
   if(f.id==="fInfo"){S.info=Object.assign(info(),d);put("info/centre",S.info);closeSheet();render();toast("Centre info saved")}
 });
-let tt;function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2200)}
+let tt;function toast(m){if(!/…$/.test(m))(/couldn|can't|must|enter |check |isn't|not |blocked|full|error|before/i.test(m)?SOUND.error:SOUND.save)();const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2200)}
 
 /* ---------- start (Firebase) ---------- */
 function netStatus(){setSync(navigator.onLine?"Synced · "+((auth&&auth.currentUser&&auth.currentUser.email)||""):"Offline · will sync later")}

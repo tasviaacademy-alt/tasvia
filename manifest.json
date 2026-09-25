@@ -1,14 +1,14 @@
 {
   "name": "TASVIA Academy",
   "short_name": "TASVIA",
-  "description": "Attendance, fees, tests and parent updates for TASVIA Academy Tuition Centre, Nizamabad",
+  "description": "TASVIA Academy \u2013 Inspire \u2022 Learn \u2022 Grow \u2022 Succeed. Attendance, fees, homework, tests and parent updates.",
   "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#1E3A32",
-  "theme_color": "#1E3A32",
+  "background_color": "#FFFFFF",
+  "theme_color": "#0B2455",
   "categories": [
     "education",
     "productivity"

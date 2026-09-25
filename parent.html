@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TASVIA Academy – Parent</title>
-<meta name="theme-color" content="#1E3A32">
+<meta name="theme-color" content="#0B2455">
 <meta name="robots" content="noindex">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -13,14 +13,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Hind:wght@400;500;600&family=Noto+Sans+Telugu:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#EDF1EE;--card:#fff;--ink:#15201C;--muted:#5B6A63;--line:#D3DCD7;--chip:#E2E9E5;--board:#1E3A32;--chalk:#F3F6F1;--gold:#E3A21A;--p:#2B8A55;--a:#C4432A;
+:root{--bg:#EDF1EE;--card:#fff;--ink:#15201C;--muted:#5B6A63;--line:#D3DCD7;--chip:#E2E9E5;--board:#0B2455;--chalk:#F3F6F1;--gold:#F2AC10;--p:#2B8A55;--a:#C4432A;
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root{--bg:#0E1613;--card:#17221E;--ink:#E6EDE9;--muted:#98A9A1;--line:#29372F;--chip:#213029;--board:#16302A}}
+@media (prefers-color-scheme:dark){:root{--bg:#0E1613;--card:#17221E;--ink:#E6EDE9;--muted:#98A9A1;--line:#29372F;--chip:#213029;--board:#081A3E}}
 *,*::before,*::after{box-sizing:inherit}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Hind,"Noto Sans Telugu","Noto Sans Devanagari",system-ui,sans-serif}
 h1,h2,h3{font-family:"Baloo 2",Hind,"Noto Sans Telugu","Noto Sans Devanagari",system-ui,sans-serif;margin:0;line-height:1.2}
 header{background:var(--board);color:var(--chalk);padding:16px 18px 22px}
 .top{display:flex;justify-content:space-between;align-items:center;gap:10px;max-width:640px;margin:0 auto}
+.hlogo{width:36px;height:36px;border-radius:50%;background:#fff;vertical-align:middle;margin:-4px 8px 0 0;box-shadow:0 0 0 2px var(--gold)}
+#banner{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 10px);transform:translate(-50%,-150%);z-index:50;display:flex;gap:10px;align-items:center;background:var(--card);color:var(--ink);border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:14px;padding:10px 14px;box-shadow:0 10px 30px rgba(0,0,0,.25);width:min(92%,420px);transition:transform .35s}#banner.show{transform:translate(-50%,0)}#banner img{width:36px;height:36px;border-radius:50%}#banner b{display:block}#banner span{color:var(--muted);font-size:.9rem}
 .brand{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.3rem;white-space:nowrap}.brand span{color:var(--gold)}
 .langs{display:flex;gap:4px}
 .langs button{border:0;border-radius:999px;padding:4px 10px;background:rgba(255,255,255,.12);color:var(--chalk);font:inherit;font-size:.85rem;cursor:pointer}
@@ -34,7 +36,7 @@ main{max-width:640px;margin:-10px auto 0;padding:0 14px 40px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
 .stats b{display:block;font-family:"Baloo 2",sans-serif;font-size:1.9rem;line-height:1.1}
 .stats small{color:var(--muted)}
-.ok{color:var(--p)}.bad{color:var(--a)}.gold{color:#B97F0A}
+.ok{color:var(--p)}.bad{color:var(--a)}.gold{color:#B8820A}
 .bar{height:10px;border-radius:5px;background:var(--chip);overflow:hidden;margin:10px 0 4px}.bar i{display:block;height:100%;background:var(--p)}
 .sub{color:var(--muted);font-size:.9rem}
 table{width:100%;border-collapse:collapse;font-size:.95rem}
@@ -57,7 +59,7 @@ td.r,th.r{text-align:right;white-space:nowrap}
 </style>
 </head>
 <body>
-<header><div class="top"><div class="brand">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
+<header><div class="top"><div class="brand"><img class="hlogo" src="logo.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
 <main id="main"><div class="center" id="msg">Loading…</div></main>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -65,9 +67,9 @@ td.r,th.r{text-align:right;white-space:nowrap}
 <script src="firebase-config.js"></script>
 <script>
 const T={
- en:{loc:"en-IN",cls:c=>/^\d+$/.test(c)?"Class "+c:c,att:"Attendance",thisMonth:"This month",present:"Present",absent:"Absent",pct:"Attendance",year:"This year",days:"days",abs:"Recent absences",none:"No absences",tests:"Test marks",test:"Test",marks:"Marks",grade:"Grade",noTests:"No test marks yet",fees:"Fees",month:"Month",status:"Status",paid:"Paid",due:"Due",part:"Part paid",pays:"Recent payments",hw:"Homework",noHw:"No homework added yet",note:"Note",notice:"Notice",timings:"Timings",contact:"Contact the academy",call:"Call",wa:"WhatsApp",updated:"Updated",left:"This student is no longer enrolled at the academy.",invalid:"This link is not valid. Please ask TASVIA Academy for a new link.",offline:"Couldn't load. Check your internet connection and try again.",retry:"Try again",save:"Tip: add this page to your home screen to open it quickly.",overall:"Overall"},
- te:{loc:"te-IN",cls:c=>/^\d+$/.test(c)?c+"వ తరగతి":c,att:"హాజరు",thisMonth:"ఈ నెల",present:"హాజరు",absent:"గైర్హాజరు",pct:"హాజరు శాతం",year:"ఈ సంవత్సరం",days:"రోజులు",abs:"ఇటీవలి గైర్హాజరు రోజులు",none:"గైర్హాజరు లేదు",tests:"పరీక్ష మార్కులు",test:"పరీక్ష",marks:"మార్కులు",grade:"గ్రేడ్",noTests:"ఇంకా పరీక్ష మార్కులు లేవు",fees:"ఫీజు",month:"నెల",status:"స్థితి",paid:"చెల్లించారు",due:"బాకీ",part:"కొంత చెల్లించారు",pays:"ఇటీవలి చెల్లింపులు",hw:"హోంవర్క్",noHw:"ఇంకా హోంవర్క్ లేదు",note:"గమనిక",notice:"ప్రకటన",timings:"సమయాలు",contact:"అకాడమీని సంప్రదించండి",call:"కాల్",wa:"వాట్సాప్",updated:"నవీకరించబడింది",left:"ఈ విద్యార్థి ఇప్పుడు అకాడమీలో నమోదై లేరు.",invalid:"ఈ లింక్ చెల్లదు. దయచేసి TASVIA అకాడమీని కొత్త లింక్ అడగండి.",offline:"లోడ్ కాలేదు. ఇంటర్నెట్ కనెక్షన్ చూసి మళ్లీ ప్రయత్నించండి.",retry:"మళ్లీ ప్రయత్నించండి",save:"సూచన: ఈ పేజీని త్వరగా తెరవడానికి హోమ్ స్క్రీన్‌కు జోడించండి.",overall:"మొత్తం"},
- hi:{loc:"hi-IN",cls:c=>/^\d+$/.test(c)?"कक्षा "+c:c,att:"उपस्थिति",thisMonth:"इस महीने",present:"उपस्थित",absent:"अनुपस्थित",pct:"उपस्थिति",year:"इस वर्ष",days:"दिन",abs:"हाल की अनुपस्थिति",none:"कोई अनुपस्थिति नहीं",tests:"टेस्ट के अंक",test:"टेस्ट",marks:"अंक",grade:"ग्रेड",noTests:"अभी कोई टेस्ट अंक नहीं",fees:"फ़ीस",month:"महीना",status:"स्थिति",paid:"जमा",due:"बाकी",part:"आंशिक जमा",pays:"हाल के भुगतान",hw:"गृहकार्य",noHw:"अभी कोई गृहकार्य नहीं",note:"सूचना",notice:"सूचना",timings:"समय",contact:"अकादमी से संपर्क करें",call:"कॉल",wa:"व्हाट्सऐप",updated:"अपडेट",left:"यह छात्र अब अकादमी में नामांकित नहीं है।",invalid:"यह लिंक मान्य नहीं है। कृपया TASVIA अकादमी से नया लिंक माँगें।",offline:"लोड नहीं हुआ। इंटरनेट कनेक्शन देखकर फिर कोशिश करें।",retry:"फिर कोशिश करें",save:"सुझाव: जल्दी खोलने के लिए इस पेज को होम स्क्रीन पर जोड़ें।",overall:"कुल"}
+ en:{loc:"en-IN",newHw:"New homework",newTest:"New test marks",absentToday:"Marked absent",feePaid:"Fee payment recorded",alertsOn:"🔔 Turn on alerts",alertsDone:"🔔 Alerts are on while this page is open",cls:c=>/^\d+$/.test(c)?"Class "+c:c,att:"Attendance",thisMonth:"This month",present:"Present",absent:"Absent",pct:"Attendance",year:"This year",days:"days",abs:"Recent absences",none:"No absences",tests:"Test marks",test:"Test",marks:"Marks",grade:"Grade",noTests:"No test marks yet",fees:"Fees",month:"Month",status:"Status",paid:"Paid",due:"Due",part:"Part paid",pays:"Recent payments",hw:"Homework",noHw:"No homework added yet",note:"Note",notice:"Notice",timings:"Timings",contact:"Contact the academy",call:"Call",wa:"WhatsApp",updated:"Updated",left:"This student is no longer enrolled at the academy.",invalid:"This link is not valid. Please ask TASVIA Academy for a new link.",offline:"Couldn't load. Check your internet connection and try again.",retry:"Try again",save:"Tip: add this page to your home screen to open it quickly.",overall:"Overall"},
+ te:{loc:"te-IN",newHw:"కొత్త హోంవర్క్",newTest:"కొత్త పరీక్ష మార్కులు",absentToday:"గైర్హాజరు నమోదైంది",feePaid:"ఫీజు చెల్లింపు నమోదైంది",alertsOn:"🔔 అలర్ట్‌లు ఆన్ చేయండి",alertsDone:"🔔 ఈ పేజీ తెరిచి ఉన్నప్పుడు అలర్ట్‌లు వస్తాయి",cls:c=>/^\d+$/.test(c)?c+"వ తరగతి":c,att:"హాజరు",thisMonth:"ఈ నెల",present:"హాజరు",absent:"గైర్హాజరు",pct:"హాజరు శాతం",year:"ఈ సంవత్సరం",days:"రోజులు",abs:"ఇటీవలి గైర్హాజరు రోజులు",none:"గైర్హాజరు లేదు",tests:"పరీక్ష మార్కులు",test:"పరీక్ష",marks:"మార్కులు",grade:"గ్రేడ్",noTests:"ఇంకా పరీక్ష మార్కులు లేవు",fees:"ఫీజు",month:"నెల",status:"స్థితి",paid:"చెల్లించారు",due:"బాకీ",part:"కొంత చెల్లించారు",pays:"ఇటీవలి చెల్లింపులు",hw:"హోంవర్క్",noHw:"ఇంకా హోంవర్క్ లేదు",note:"గమనిక",notice:"ప్రకటన",timings:"సమయాలు",contact:"అకాడమీని సంప్రదించండి",call:"కాల్",wa:"వాట్సాప్",updated:"నవీకరించబడింది",left:"ఈ విద్యార్థి ఇప్పుడు అకాడమీలో నమోదై లేరు.",invalid:"ఈ లింక్ చెల్లదు. దయచేసి TASVIA అకాడమీని కొత్త లింక్ అడగండి.",offline:"లోడ్ కాలేదు. ఇంటర్నెట్ కనెక్షన్ చూసి మళ్లీ ప్రయత్నించండి.",retry:"మళ్లీ ప్రయత్నించండి",save:"సూచన: ఈ పేజీని త్వరగా తెరవడానికి హోమ్ స్క్రీన్‌కు జోడించండి.",overall:"మొత్తం"},
+ hi:{loc:"hi-IN",newHw:"नया गृहकार्य",newTest:"नए टेस्ट अंक",absentToday:"अनुपस्थिति दर्ज",feePaid:"फ़ीस भुगतान दर्ज",alertsOn:"🔔 अलर्ट चालू करें",alertsDone:"🔔 पेज खुला रहने पर अलर्ट मिलेंगे",cls:c=>/^\d+$/.test(c)?"कक्षा "+c:c,att:"उपस्थिति",thisMonth:"इस महीने",present:"उपस्थित",absent:"अनुपस्थित",pct:"उपस्थिति",year:"इस वर्ष",days:"दिन",abs:"हाल की अनुपस्थिति",none:"कोई अनुपस्थिति नहीं",tests:"टेस्ट के अंक",test:"टेस्ट",marks:"अंक",grade:"ग्रेड",noTests:"अभी कोई टेस्ट अंक नहीं",fees:"फ़ीस",month:"महीना",status:"स्थिति",paid:"जमा",due:"बाकी",part:"आंशिक जमा",pays:"हाल के भुगतान",hw:"गृहकार्य",noHw:"अभी कोई गृहकार्य नहीं",note:"सूचना",notice:"सूचना",timings:"समय",contact:"अकादमी से संपर्क करें",call:"कॉल",wa:"व्हाट्सऐप",updated:"अपडेट",left:"यह छात्र अब अकादमी में नामांकित नहीं है।",invalid:"यह लिंक मान्य नहीं है। कृपया TASVIA अकादमी से नया लिंक माँगें।",offline:"लोड नहीं हुआ। इंटरनेट कनेक्शन देखकर फिर कोशिश करें।",retry:"फिर कोशिश करें",save:"सुझाव: जल्दी खोलने के लिए इस पेज को होम स्क्रीन पर जोड़ें।",overall:"कुल"}
 };
 const LN={en:"English",te:"తెలుగు",hi:"हिन्दी"};
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -122,10 +124,28 @@ function render(){
   // contact
   h+=`<div class="card"><h2>${esc(t.contact)}</h2><p style="margin:0">${esc(c.name||"TASVIA Academy")}</p>${c.timings?`<p class="sub" style="margin:4px 0 0">${esc(t.timings)}: ${esc(c.timings)}</p>`:""}${c.address?`<p class="sub" style="margin:4px 0 0">${esc(c.address)}</p>`:""}
     <div class="acts">${ph?`<a class="btn gold" href="tel:${esc(ph)}">📞 ${esc(t.call)}</a><a class="btn" target="_blank" rel="noopener" href="https://wa.me/${esc(ph91)}">💬 ${esc(t.wa)}</a>`:""}</div></div>`;
+  const alertsOn=("Notification" in window&&Notification.permission==="granted")||(function(){try{return localStorage.getItem("tasvia-parent-alerts")==="1"}catch(e){return false}})();
+  h+=`<div class="acts" style="justify-content:center">${alertsOn?`<span class="sub">${esc(t.alertsDone)}</span>`:`<button id="alertBtn" class="btn gold" style="border:0;font:inherit;font-weight:600;cursor:pointer">${esc(t.alertsOn)}</button>`}</div>`;
   h+=`<p class="foot">${esc(t.updated)}: ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}<br>${esc(t.save)}</p>`;
   document.getElementById("main").innerHTML=h;
 }
 
+let actx=null;
+function chime(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();if(actx.state==="suspended")actx.resume();const t0=actx.currentTime+.01;
+  [[784,0,.22,.17],[988,.13,.22,.17],[1319,.26,.45,.15]].forEach(([f,st,du,vol])=>{const o=actx.createOscillator(),g=actx.createGain();o.frequency.value=f;g.gain.setValueAtTime(0,t0+st);g.gain.linearRampToValueAtTime(vol,t0+st+.012);g.gain.exponentialRampToValueAtTime(.0001,t0+st+du);o.connect(g);g.connect(actx.destination);o.start(t0+st);o.stop(t0+st+du+.05)})}catch(e){}}
+let bT;function banner(title,body){let el=document.getElementById("banner");if(!el){el=document.createElement("div");el.id="banner";el.setAttribute("role","status");document.body.appendChild(el)}
+  el.innerHTML=`<img src="logo.png" alt=""><div><b>${esc(title)}</b><span>${esc(body)}</span></div>`;el.classList.add("show");clearTimeout(bT);bT=setTimeout(()=>el.classList.remove("show"),6000)}
+function alertParent(title,body){chime();banner(title,body);
+  if("Notification" in window&&Notification.permission==="granted"&&document.hidden){try{new Notification(title,{body,icon:"icon-192.png",tag:"tasvia-parent"})}catch(e){}}}
+function changes(o,n){
+  const t=T[L],out=[];if(!o||!n||n.left)return out;
+  const h0=(o.hw||[])[0],h1=(n.hw||[])[0];if(h1&&(!h0||h0.d!==h1.d||h0.hw!==h1.hw))out.push([t.newHw,h1.hw.split("\n")[0]]);
+  if((n.tests||[]).length>(o.tests||[]).length){const x=n.tests[0];out.push([t.newTest,`${x.s} – ${x.n}: ${x.m}/${x.x}`])}
+  const a0=(o.abs||[])[0],a1=(n.abs||[])[0];if(a1&&a1!==a0)out.push([t.absentToday,dL(a1)]);
+  const p0=(o.pays||[])[0],p1=(n.pays||[])[0];if(p1&&(!p0||p0.d!==p1.d||p0.a!==p1.a))out.push([t.feePaid,rs(p1.a)+" · "+mN(p1.m)]);
+  return out;
+}
+document.addEventListener("click",e=>{if(e.target.id==="alertBtn"){chime();if("Notification" in window&&Notification.permission==="default")Notification.requestPermission().then(()=>render());else{try{localStorage.setItem("tasvia-parent-alerts","1")}catch(_){ }render()}}});
 (function start(){
   const saved=load("tasvia-parent-lang");if(saved&&T[saved])L=saved;langs();
   let code=(location.hash||"").replace("#","").trim().toUpperCase();
@@ -137,7 +157,8 @@ function render(){
   firebase.firestore().doc("parentView/"+code).onSnapshot(d=>{
     clearTimeout(timer);
     if(!d.exists){msg(T[L].invalid);return}
-    V=d.data();if(!saved&&V.lang&&T[V.lang])L=V.lang;render();
+    const prev=V;V=d.data();if(!saved&&V.lang&&T[V.lang])L=V.lang;render();
+    changes(prev,V).forEach(([a,b],i)=>setTimeout(()=>alertParent(a,b),i*1800));
   },e=>{clearTimeout(timer);msg(e&&e.code==="permission-denied"?T[L].invalid:T[L].offline,e&&e.code!=="permission-denied")});
 })();
 </script>
