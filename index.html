@@ -218,11 +218,12 @@ function remove(path){
 function subscribe(){
   unsubs.forEach(u=>u&&u());unsubs=[];
   const onErr=e=>setSync(e&&e.code==="permission-denied"?"Not on staff list":"Connection lost. Reopen the app.");
-  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);render()},onErr));
-  coll("students","students");coll("fees","fees");coll("tests","tests");
+  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;render()},onErr));
+  coll("students","students");coll("fees","fees");
+  {const y=+acYear(today()).from.slice(0,4)-1;coll("tests","tests",db.collection("tests").where("date",">=",y+"-06-01"))}
   coll("attendance","att",db.collection("attendance").orderBy("date","desc").limit(400));
   unsubs.push(db.doc("info/centre").onSnapshot(d=>{S.info=d.exists?d.data():null;render()},onErr));
-  pvReady=false;unsubs.push(db.collection("parentView").onSnapshot(sn=>{pvCache={};sn.docs.forEach(d=>{const x=Object.assign({},d.data());delete x.updated;pvCache[d.id]=stable(x)});pvReady=true;schedulePV()},()=>{}));
+  pvLoad();schedulePV();
   coll("teachers","teachers");coll("salaries","salaries");coll("expenses","expenses");
   coll("staffattendance","tatt",db.collection("staffattendance").orderBy("date","desc").limit(400));
   coll("diary","diary",db.collection("diary").orderBy("date","desc").limit(120));
@@ -358,14 +359,15 @@ function notify(title,body){
 let bT;function banner(title,body){let el=document.getElementById("banner");if(!el){el=document.createElement("div");el.id="banner";el.setAttribute("role","status");document.body.appendChild(el)}
   el.innerHTML=`<img src="logo.png" alt=""><div><b>${esc(title)}</b><span>${esc(body)}</span></div>`;el.classList.add("show");clearTimeout(bT);bT=setTimeout(()=>el.classList.remove("show"),5000)}
 /* Live alerts when OTHER staff record something (own actions are skipped) */
-const ownIds=new Set(),seenFirst={};
+const ownIds=new Set(),seenFirst={};let alertQ=[],alertT=null;
+function queueAlert(t,b){alertQ.push([t,b]);clearTimeout(alertT);alertT=setTimeout(()=>{const q=alertQ;alertQ=[];if(q.length<=2)q.forEach(([a,c],i)=>setTimeout(()=>notify(a,c),i*1500));else notify(q.length+" updates from other staff",[...new Set(q.map(x=>x[0]))].join(", "))},600)}
 function diffAlert(key,oldO,newO){
   if(!PREF.alerts)return;
-  if(!seenFirst[key]){seenFirst[key]=true;return}
-  if(key==="fees")Object.entries(newO).forEach(([sid,f])=>{const before=new Set(mapList(oldO[sid],"payments").map(p=>p.id));mapList(f,"payments").forEach(p=>{if(!before.has(p.id)&&!ownIds.has(p.id)){const st=S.students[sid];notify("Fee received",`${rs(p.amount)} from ${st?st.name:"a student"} for ${monthName(p.month)}`)}})});
-  if(key==="diary")Object.entries(newO).forEach(([d,doc])=>{const was=((oldO[d]||{}).entries)||{};Object.entries(doc.entries||{}).forEach(([c,e])=>{if(e&&e.hw&&!(was[c]&&was[c].hw)&&!ownIds.has("hw:"+d+c))notify("Homework added",`${clsLabel(c)} · ${nice(d)}`)})});
-  if(key==="students")Object.keys(newO).forEach(id=>{if(!oldO[id]&&!ownIds.has(id))notify("New student",`${newO[id].name} joined ${clsLabel(newO[id].cls)}`)});
-  if(key==="tests")Object.keys(newO).forEach(id=>{if(!oldO[id]&&!ownIds.has(id))notify("New test",`${newO[id].subject} – ${newO[id].name} (${clsLabel(newO[id].cls)})`)});
+  if(!seenFirst[key])return;
+  if(key==="fees")Object.entries(newO).forEach(([sid,f])=>{const before=new Set(mapList(oldO[sid],"payments").map(p=>p.id));mapList(f,"payments").forEach(p=>{if(!before.has(p.id)&&!ownIds.has(p.id)){const st=S.students[sid];queueAlert("Fee received",`${rs(p.amount)} from ${st?st.name:"a student"} for ${monthName(p.month)}`)}})});
+  if(key==="diary")Object.entries(newO).forEach(([d,doc])=>{const was=((oldO[d]||{}).entries)||{};Object.entries(doc.entries||{}).forEach(([c,e])=>{if(e&&e.hw&&!(was[c]&&was[c].hw)&&!ownIds.has("hw:"+d+c))queueAlert("Homework added",`${clsLabel(c)} · ${nice(d)}`)})});
+  if(key==="students")Object.keys(newO).forEach(id=>{if(!oldO[id]&&!ownIds.has(id))queueAlert("New student",`${newO[id].name} joined ${clsLabel(newO[id].cls)}`)});
+  if(key==="tests")Object.keys(newO).forEach(id=>{if(!oldO[id]&&!ownIds.has(id))queueAlert("New test",`${newO[id].subject} – ${newO[id].name} (${clsLabel(newO[id].cls)})`)});
 }
 function vAlerts(){
   const perm=notifOK()?Notification.permission:"unsupported";
@@ -404,7 +406,7 @@ function pickPhoto(sid){
   inp.onchange=async()=>{
     const f=inp.files&&inp.files[0];if(!f)return;
     try{toast("Saving photo…");const data=await resizePhoto(f);photoCache[sid]=data;
-      if(db)await db.doc("photos/"+sid).set({img:data,updated:Date.now()});
+      if(db){await db.doc("photos/"+sid).set({img:data,updated:Date.now()});const pc=(S.students[sid]||{}).pcode;if(pc)await db.doc("parentView/"+pc).set({photo:data},{merge:true})}
       if(document.getElementById("scrim").classList.contains("open"))studentSheet(sid);schedulePV();toast("Photo saved")}
     catch(e){toast(e&&e.code?errMsg(e):"Couldn't read that picture. Try another photo.")}
   };
@@ -416,6 +418,10 @@ function avatarHTML(sid,name){const p=photoCache[sid];return p?`<img src="${p}" 
 /* ---------- parent pages ---------- */
 /* Each student gets a long random code. A read-only summary lives at parentView/<code>; parents open parent.html#<code>. */
 let pvCache={},pvReady=false,pvT=null,pvBusy=false;
+/* Short fingerprint of each parent page this device last wrote, so unchanged pages are never rewritten (saves free-plan quota). */
+function hash(str){let h1=0xdeadbeef,h2=0x41c6ce57;for(let i=0;i<str.length;i++){const c=str.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677)}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return (h2>>>0).toString(36)+(h1>>>0).toString(36)}
+function pvLoad(){try{pvCache=JSON.parse(localStorage.getItem("tasvia-pv")||"{}")}catch(e){pvCache={}}pvReady=true}
+function pvSave(){try{localStorage.setItem("tasvia-pv",JSON.stringify(pvCache))}catch(e){}}
 const PC_ALPH="ABCDEFGHJKMNPQRSTUVWXYZ23456789";
 function newCode(){const a=new Uint32Array(10);crypto.getRandomValues(a);return Array.from(a,x=>PC_ALPH[x%PC_ALPH.length]).join("")}
 function stable(v){if(Array.isArray(v))return "["+v.map(stable).join(",")+"]";if(v&&typeof v==="object")return "{"+Object.keys(v).sort().map(k=>JSON.stringify(k)+":"+stable(v[k])).join(",")+"}";return JSON.stringify(v===undefined?null:v)}
@@ -432,7 +438,7 @@ function buildParentView(s){
   const fees=s.fee?months.filter(m=>enrolledIn(s,m)).map(m=>({m,fee:+s.fee,paid:feeStatus(s,m).paid})):[];
   const pays=payList(s.id).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,6).map(p=>({d:p.date,a:+p.amount,m:p.month,mode:p.mode}));
   const hw=Object.keys(S.diary).sort().reverse().map(d=>{const e=((S.diary[d]||{}).entries||{})[s.cls];return e&&e.hw?{d,hw:e.hw,note:e.note||""}:null}).filter(Boolean).slice(0,5);
-  return {photo:photoCache[s.id]||null,name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,
+  return {name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,
     centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||""}};
 }
 function schedulePV(){clearTimeout(pvT);pvT=setTimeout(syncPV,3000)}
@@ -442,9 +448,8 @@ async function syncPV(){
     for(const [id,st] of Object.entries(S.students)){
       let code=st.pcode;
       if(!code){if(!active(st))continue;code=newCode();S.students[id]=Object.assign({},st,{pcode:code});await db.doc("students/"+id).set({pcode:code},{merge:true})}
-      if(active(st))await getPhoto(id);
       const v=buildParentView({id,...st}),j=stable(v);
-      if(pvCache[code]!==j){pvCache[code]=j;await db.doc("parentView/"+code).set(Object.assign({},v,{updated:Date.now()}))}
+      const hj=hash(j);if(pvCache[code]!==hj){await db.doc("parentView/"+code).set(Object.assign({},v,{updated:Date.now()}),{merge:true});pvCache[code]=hj;pvSave()}
     }
   }catch(e){console.warn("parent sync",e)}
   pvBusy=false;
@@ -895,7 +900,7 @@ document.addEventListener("click",e=>{
       Promise.all(l.map(x=>getPhoto(x.id))).then(()=>{const ph={};l.forEach(x=>ph[x.id]=photoCache[x.id]);return saveFile(`id-cards-${slug(clsLabel(UI.cardCls))}.html`,idHTML(l,ph))}).finally(()=>{b.disabled=false;b.textContent="Download ID cards"});break}
     case "idOne":getPhoto(id).then(p=>saveFile(`id-card-${slug(S.students[id].name)}.html`,idHTML([{id,...S.students[id]}],{[id]:p})));break;
     case "photo":pickPhoto(id);break;
-    case "delPhoto":if(confirmDel(b,"Tap again to remove")){photoCache[id]=null;if(db)db.doc("photos/"+id).delete().catch(e=>toast(errMsg(e)));studentSheet(id);schedulePV();toast("Photo removed")}break;
+    case "delPhoto":if(confirmDel(b,"Tap again to remove")){photoCache[id]=null;if(db){db.doc("photos/"+id).delete().catch(e=>toast(errMsg(e)));const pc=(S.students[id]||{}).pcode;if(pc)db.doc("parentView/"+pc).set({photo:null},{merge:true}).catch(()=>{})}studentSheet(id);schedulePV();toast("Photo removed")}break;
     case "rcImage":b.disabled=true;b.textContent="Making image…";rcImage(id).finally(()=>{b.disabled=false;b.textContent="Report card image"});break;
     case "cls":UI[b.dataset.key]=b.dataset.c;render();break;
     case "mark":mark(UI.date,id,b.dataset.v);break;
@@ -918,7 +923,7 @@ document.addEventListener("click",e=>{
     case "testSound":{const was=PREF.sound;PREF.sound=true;SOUND.alert();PREF.sound=was;banner("TASVIA Academy","This is how alerts will look and sound.");break}
     case "askNotif":Notification.requestPermission().then(()=>render());break;
     case "copyPL":copy(parentURL(S.students[id].pcode));break;
-    case "resetPL":if(confirmDel(b,"Tap again: old link stops")){const st=S.students[id],old=st.pcode,code=newCode();if(old)remove("parentView/"+old);S.students[id]=Object.assign({},st,{pcode:code});if(db)db.doc("students/"+id).set({pcode:code},{merge:true}).catch(e=>toast(errMsg(e)));schedulePV();studentSheet(id);toast("New link created")}break;
+    case "resetPL":if(confirmDel(b,"Tap again: old link stops")){const st=S.students[id],old=st.pcode,code=newCode();if(old)remove("parentView/"+old);S.students[id]=Object.assign({},st,{pcode:code});if(db){db.doc("students/"+id).set({pcode:code},{merge:true}).catch(e=>toast(errMsg(e)));getPhoto(id).then(p=>{if(p)db.doc("parentView/"+code).set({photo:p},{merge:true}).catch(()=>{})})}schedulePV();studentSheet(id);toast("New link created")}break;
     case "signOut":if(confirmDel(b,"Tap again to sign out")&&auth)auth.signOut();break;
     case "export":exportCSV(b.dataset.k);break;
     case "delTest":if(confirmDel(b,"Tap again to delete")){delete S.tests[id];remove("tests/"+id);closeSheet();render();toast("Test deleted")}break;
