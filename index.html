@@ -1040,9 +1040,64 @@ if(!window.firebase||!window.FIREBASE_CONFIG||!window.FIREBASE_CONFIG.apiKey){
   auth=firebase.auth();
   const fs=firebase.firestore();
   fs.enablePersistence({synchronizeTabs:true}).catch(()=>{});
-  auth.onAuthStateChanged(u=>{
-    if(u){db=fs;gate.hidden=true;subscribe();netStatus()}
-    else{unsubs.forEach(x=>x&&x());unsubs=[];db=null;S={students:{},att:{},fees:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},diary:{}};render();gate.hidden=false;setSync("Signed out")}
+  auth.onAuthStateChanged(async u=>{
+  if(u){
+    try{
+      const email=u.email.trim().toLowerCase();
+      const snap=await fs.collection("Staff").doc(email).get();
+
+      if(!snap.exists){
+        await auth.signOut();
+        gErr.textContent="This account is not registered as TASVIA staff.";
+        return;
+      }
+
+      const staff=snap.data()||{};
+      const role=(staff.role||"staff").toLowerCase();
+
+      window.currentUser={
+        uid:u.uid,
+        email:email,
+        name:staff.name||email,
+        role:role
+      };
+
+      db=fs;
+      gate.hidden=true;
+
+      subscribe();
+      netStatus();
+
+    }catch(err){
+      console.error(err);
+      gErr.textContent="Unable to verify staff account.";
+      await auth.signOut();
+    }
+  }else{
+    unsubs.forEach(x=>x&&x());
+    unsubs=[];
+    db=null;
+
+    window.currentUser=null;
+
+    S={
+      students:{},
+      att:{},
+      fees:{},
+      tests:{},
+      info:null,
+      teachers:{},
+      tatt:{},
+      salaries:{},
+      expenses:{},
+      diary:{}
+    };
+
+    render();
+    gate.hidden=false;
+    setSync("Signed out");
+  }
+});
   });
   document.getElementById("fLogin").addEventListener("submit",async e=>{
     e.preventDefault();e.stopPropagation();const d=Object.fromEntries(new FormData(e.target));const b=document.getElementById("loginBtn");
