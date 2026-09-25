@@ -171,8 +171,13 @@ table.t th{color:var(--muted);font-weight:500}
 <script src="firebase-config.js"></script>
 
 <script>
-const CLASSES=["LKG","UKG","1","2","3","4","5","6","7","8","9","10","Inter-1","Inter-2"];
-const clsLabel=c=>/^\d+$/.test(c)?"Class "+c:c;
+/* Class order: Nursery → PP-1 → LKG → UKG → Class 1–10 → Intermediate (1st & 2nd year, by group). "Inter-1"/"Inter-2" kept for older records. */
+const GROUPS=["MPC","BiPC","CEC","MEC"];
+const CLASSES=["Nursery","PP-1","LKG","UKG","1","2","3","4","5","6","7","8","9","10",...GROUPS.map(g=>"Inter-1 "+g),"Inter-1",...GROUPS.map(g=>"Inter-2 "+g),"Inter-2"];
+const FORM_CLASSES=CLASSES.filter(c=>c!=="Inter-1"&&c!=="Inter-2");
+const BATCHES=["Morning","Evening"];
+function interLabel(c,y1,y2){const m=/^Inter-(1|2)(?: (.+))?$/.exec(c);if(!m)return null;return (m[1]==="1"?y1:y2)+(m[2]?" · "+m[2]:"")}
+const clsLabel=c=>/^\d+$/.test(c)?"Class "+c:(interLabel(c,"Inter 1st Year","Inter 2nd Year")||c);
 const DEFAULT_INFO={name:"TASVIA Academy Tuition Centre",notice:"Admissions open for 2026–27. LKG to Intermediate, State Board and CBSE.",timings:"",
   phone:"78421 38739",email:"tasviaacademy@gmail.com",insta:"@tasviaacademy",
   address:"Srinivasa Nilayam, Road No. 1, Gangasthan Phase 2, Nizamabad, Telangana 503003",
@@ -279,27 +284,30 @@ function salList(tid){return mapList(S.salaries[tid],"payments")}
 function salStatus(t,month){const paid=salList(t.id).filter(x=>x.month===month).reduce((a,b)=>a+ +b.amount,0);if(!t.salary)return {k:"none",paid};return paid>=t.salary?{k:"paid",paid}:{k:paid?"part":"due",paid,left:t.salary-paid}}
 function expList(month){return mapList(S.expenses[month],"items")}
 function acYear(d){const y=+d.slice(0,4),m=+d.slice(5,7);const s=m>=6?y:y-1;return {label:`${s}–${String((s+1)%100).padStart(2,"0")}`,from:`${s}-06-01`}}
+function byBatch(list){return UI.batch&&UI.batch!=="all"?list.filter(s=>(s.batch||"")===UI.batch):list}
+function batchChips(){const used=new Set(Object.values(S.students).map(s=>s.batch||"").filter(Boolean));if(!used.size)return "";const bs=BATCHES.filter(b=>used.has(b));
+  return `<div class="chips" style="margin-top:-4px">${[["all","All batches"],...bs.map(b=>[b,b==="Morning"?"☀️ Morning":b==="Evening"?"🌙 Evening":b])].map(([k,l])=>`<button class="chip ${(UI.batch||"all")===k?"on":""}" data-act="batch" data-b="${k}">${l}</button>`).join("")}</div>`}
 function usedClasses(){const u=new Set(studentsOf("all").map(s=>s.cls));return CLASSES.filter(c=>u.has(c))}
 
 /* ---------- WhatsApp messages in English / Telugu / Hindi ---------- */
 function waLink(phone,text){let d=String(phone||"").replace(/\D/g,"");if(d.length===10)d="91"+d;return "https://wa.me/"+d+"?text="+encodeURIComponent(text)}
 const LANGS={en:"English",te:"తెలుగు (Telugu)",hi:"हिन्दी (Hindi)"};
 const L={
- en:{loc:"en-IN",cls:c=>/^\d+$/.test(c)?"Class "+c:c,ac:"TASVIA Academy",
+ en:{loc:"en-IN",cls:c=>clsLabel(c),ac:"TASVIA Academy",
   absent:(n,c,d,ph)=>`Dear parent, ${n} (${c}) was absent from TASVIA Academy today, ${d}. Please let us know the reason. – TASVIA Academy, ${ph}`,
   repT:"TASVIA Academy – Progress update",stu:"Student",att:m=>`Attendance, ${m}`,days:(p,t,pc)=>`${p} of ${t} days (${pc}%)`,nm:"not marked yet",recent:"Recent tests",
   feeFor:m=>`Fee for ${m}`,full:"paid in full. Thank you!",part:(p,l)=>`${p} paid, ${l} pending.`,due:f=>`${f} due.`,call:ph=>`For any questions, call ${ph}.`,
   rcT:"TASVIA Academy – Fee receipt",amt:"Amount",forM:"For",paidOn:"Paid on",thanks:"Thank you.",
   remind:(n,c,a,m,ph)=>`Dear parent, a gentle reminder that ${n}'s (${c}) tuition fee of ${a} for ${m} is pending. Please pay at your earliest convenience. Thank you. – TASVIA Academy, ${ph}`,
   hwT:"TASVIA Academy – Homework",note:"Note",modes:{}},
- te:{loc:"te-IN",cls:c=>/^\d+$/.test(c)?c+"వ తరగతి":c,ac:"TASVIA అకాడమీ",
+ te:{loc:"te-IN",cls:c=>/^\d+$/.test(c)?c+"వ తరగతి":(interLabel(c,"ఇంటర్ 1వ సంవత్సరం","ఇంటర్ 2వ సంవత్సరం")||({Nursery:"నర్సరీ"})[c]||c),ac:"TASVIA అకాడమీ",
   absent:(n,c,d,ph)=>`నమస్కారం, ${n} (${c}) ఈ రోజు (${d}) TASVIA అకాడమీకి రాలేదు. దయచేసి కారణం తెలియజేయండి. – TASVIA అకాడమీ, ${ph}`,
   repT:"TASVIA అకాడమీ – ప్రగతి నివేదిక",stu:"విద్యార్థి",att:m=>`హాజరు, ${m}`,days:(p,t,pc)=>`${t} రోజులలో ${p} రోజులు (${pc}%)`,nm:"ఇంకా నమోదు కాలేదు",recent:"ఇటీవలి పరీక్షలు",
   feeFor:m=>`${m} ఫీజు`,full:"పూర్తిగా చెల్లించారు. ధన్యవాదాలు!",part:(p,l)=>`${p} చెల్లించారు, ${l} బాకీ ఉంది.`,due:f=>`${f} చెల్లించవలసి ఉంది.`,call:ph=>`సందేహాల కోసం ${ph} కు కాల్ చేయండి.`,
   rcT:"TASVIA అకాడమీ – ఫీజు రసీదు",amt:"మొత్తం",forM:"నెల",paidOn:"చెల్లించిన తేదీ",thanks:"ధన్యవాదాలు.",
   remind:(n,c,a,m,ph)=>`నమస్కారం, ${n} (${c}) యొక్క ${m} ట్యూషన్ ఫీజు ${a} ఇంకా చెల్లించవలసి ఉంది. దయచేసి వీలైనంత త్వరగా చెల్లించండి. ధన్యవాదాలు. – TASVIA అకాడమీ, ${ph}`,
   hwT:"TASVIA అకాడమీ – హోంవర్క్",note:"గమనిక",modes:{Cash:"నగదు","Bank transfer":"బ్యాంక్ బదిలీ",Cheque:"చెక్"}},
- hi:{loc:"hi-IN",cls:c=>/^\d+$/.test(c)?"कक्षा "+c:c,ac:"TASVIA अकादमी",
+ hi:{loc:"hi-IN",cls:c=>/^\d+$/.test(c)?"कक्षा "+c:(interLabel(c,"इंटर प्रथम वर्ष","इंटर द्वितीय वर्ष")||({Nursery:"नर्सरी"})[c]||c),ac:"TASVIA अकादमी",
   absent:(n,c,d,ph)=>`नमस्ते, ${n} (${c}) आज (${d}) TASVIA अकादमी में अनुपस्थित थे। कृपया कारण बताएं। – TASVIA अकादमी, ${ph}`,
   repT:"TASVIA अकादमी – प्रगति रिपोर्ट",stu:"छात्र",att:m=>`उपस्थिति, ${m}`,days:(p,t,pc)=>`${t} में से ${p} दिन (${pc}%)`,nm:"अभी दर्ज नहीं",recent:"हाल की परीक्षाएँ",
   feeFor:m=>`${m} की फ़ीस`,full:"पूरी जमा हो गई। धन्यवाद!",part:(p,l)=>`${p} जमा, ${l} बाकी।`,due:f=>`${f} बाकी है।`,call:ph=>`किसी भी जानकारी के लिए ${ph} पर कॉल करें।`,
@@ -488,13 +496,13 @@ function vToday(){
   h+=`<div class="seg" role="tablist">${[["students","Students"],["teachers","Teachers"],["homework","Homework"]].map(([k,l])=>`<button role="tab" aria-selected="${UI.seg===k}" data-act="seg" data-k="${k}" class="${UI.seg===k?"on":""}">${l}</button>`).join("")}</div>`;
   if(UI.seg==="teachers")return h+vTeacherAtt();
   if(UI.seg==="homework")return h+vHomework();
-  const list=studentsOf(UI.cls),marks=getMarks(UI.date);
+  const list=byBatch(studentsOf(UI.cls)),marks=getMarks(UI.date);
   const p=list.filter(s=>marks[s.id]==="P").length,a=list.filter(s=>marks[s.id]==="A").length;
   if(!Object.keys(S.students).length)return h+noStudents();
   h+=`<div class="board"><div class="pp"><b>${p}</b><small>Present</small></div><div class="aa"><b>${a}</b><small>Absent</small></div><div><b>${list.length-p-a}</b><small>Not marked</small></div></div>`;
-  h+=classChips("cls");
+  h+=classChips("cls")+batchChips();
   h+=`<div class="row" style="margin-bottom:10px"><button class="btn sm ghost" data-act="allP">Mark rest present</button>${a?`<button class="btn sm ghost" data-act="absentees">Message absent parents (${a})</button>`:""}</div><div class="list">`;
-  h+=list.map(s=>`<div class="item ${marks[s.id]||""}"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)} · ${esc(s.board||"")}</div></div><div class="pa"><button aria-label="Present" class="${marks[s.id]==="P"?"onP":""}" data-act="mark" data-id="${s.id}" data-v="P">P</button><button aria-label="Absent" class="${marks[s.id]==="A"?"onA":""}" data-act="mark" data-id="${s.id}" data-v="A">A</button></div></div>`).join("");
+  h+=list.map(s=>`<div class="item ${marks[s.id]||""}"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)}${s.batch?" · "+s.batch:""} · ${esc(s.board||"")}</div></div><div class="pa"><button aria-label="Present" class="${marks[s.id]==="P"?"onP":""}" data-act="mark" data-id="${s.id}" data-v="P">P</button><button aria-label="Absent" class="${marks[s.id]==="A"?"onA":""}" data-act="mark" data-id="${s.id}" data-v="A">A</button></div></div>`).join("");
   return h+"</div>";
 }
 function vTeacherAtt(){
@@ -584,20 +592,20 @@ function vBackup(){
 function vStudents(){
   let h=`<div class="hd"><div><h2>Students</h2><div class="sub">${studentsOf("all").length} studying now</div></div><button class="btn gold" data-act="addStudent">Add student</button></div>`;
   if(!Object.keys(S.students).length)return h+noStudents();
-  h+=`<input type="search" class="search" id="q" placeholder="Search by name or parent" value="${esc(UI.q)}">`+classChips("cls");
-  const q=UI.q.toLowerCase(),list=studentsOf(UI.cls,true).filter(s=>!q||(s.name+" "+(s.parent||"")+" "+(s.phone||"")).toLowerCase().includes(q)).sort((a,b)=>active(b)-active(a));
+  h+=`<input type="search" class="search" id="q" placeholder="Search by name or parent" value="${esc(UI.q)}">`+classChips("cls")+batchChips();
+  const q=UI.q.toLowerCase(),list=byBatch(studentsOf(UI.cls,true)).filter(s=>!q||(s.name+" "+(s.parent||"")+" "+(s.phone||"")).toLowerCase().includes(q)).sort((a,b)=>active(b)-active(a));
   const m=today().slice(0,7);
-  h+=`<div class="list">`+list.map(s=>{const st=attStats(s.id,m),fs=feeStatus(s,m);const tag=!active(s)?`<span class="tag n">Left</span>`:fs.k==="paid"?`<span class="tag ok">Paid</span>`:fs.k==="part"?`<span class="tag due">${rs(fs.left)} due</span>`:fs.k==="due"&&enrolledIn(s,m)?`<span class="tag due">Fee due</span>`:"";return `<button class="item" data-act="openStudent" data-id="${s.id}" style="${active(s)?"":"opacity:.6"}"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)} · ${esc(s.board||"")}${st.pct!=null?" · "+st.pct+"% attendance":""}</div></div>${tag}</button>`}).join("")+`</div>`;
+  h+=`<div class="list">`+list.map(s=>{const st=attStats(s.id,m),fs=feeStatus(s,m);const tag=!active(s)?`<span class="tag n">Left</span>`:fs.k==="paid"?`<span class="tag ok">Paid</span>`:fs.k==="part"?`<span class="tag due">${rs(fs.left)} due</span>`:fs.k==="due"&&enrolledIn(s,m)?`<span class="tag due">Fee due</span>`:"";return `<button class="item" data-act="openStudent" data-id="${s.id}" style="${active(s)?"":"opacity:.6"}"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)}${s.batch?" · "+s.batch:""} · ${esc(s.board||"")}${st.pct!=null?" · "+st.pct+"% attendance":""}</div></div>${tag}</button>`}).join("")+`</div>`;
   if(!list.length)h+=`<div class="empty">No students match.</div>`;
   return h;
 }
 function vFees(){
-  const m=UI.feeMonth,list=studentsOf(UI.cls).filter(s=>s.fee>0&&enrolledIn(s,m));
+  const m=UI.feeMonth,list=byBatch(studentsOf(UI.cls)).filter(s=>s.fee>0&&enrolledIn(s,m));
   let exp=0,col=0;list.forEach(s=>{exp+=+s.fee;col+=Math.min(feeStatus(s,m).paid,+s.fee)});
   let h=`<div class="hd"><div><h2>Fees</h2><div class="sub">${monthName(m)}</div></div><input type="month" id="feeMonth" value="${m}" aria-label="Month"></div>`;
   if(!Object.keys(S.students).length)return h+noStudents();
   const due=list.filter(s=>feeStatus(s,m).k!=="paid"),paid=list.filter(s=>feeStatus(s,m).k==="paid");
-  h+=`<div class="board"><div class="pp"><b style="font-size:1.5rem">${rs(col)}</b><small>Collected</small></div><div class="aa"><b style="font-size:1.5rem">${rs(Math.max(exp-col,0))}</b><small>Pending</small></div><div><b>${due.length}</b><small>Students due</small></div></div>`+classChips("cls");
+  h+=`<div class="board"><div class="pp"><b style="font-size:1.5rem">${rs(col)}</b><small>Collected</small></div><div class="aa"><b style="font-size:1.5rem">${rs(Math.max(exp-col,0))}</b><small>Pending</small></div><div><b>${due.length}</b><small>Students due</small></div></div>`+classChips("cls")+batchChips();
   const row=(s,isPaid)=>{const fs=feeStatus(s,m);return `<div class="item"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)} · ${rs(s.fee)}/month${fs.k==="part"?` · paid ${rs(fs.paid)}, <b>${rs(fs.left)} left</b>`:""}</div></div>${isPaid?`<span class="tag ok">Paid</span>`:`<button class="btn sm gold" data-act="pay" data-id="${s.id}">Record</button>`}</div>`};
   if(due.length)h+=`<div class="row" style="justify-content:space-between;margin:14px 0 8px"><h3>Due (${due.length})</h3><button class="btn sm ghost" data-act="remindAll">Fee reminders</button></div><div class="list">${due.map(s=>row(s,0)).join("")}</div>`;
   if(paid.length)h+=`<h3 style="margin:18px 0 8px">Paid (${paid.length})</h3><div class="list">${paid.map(s=>row(s,1)).join("")}</div>`;
@@ -640,9 +648,10 @@ function studentForm(id){
   const s=id?S.students[id]:{cls:"1",board:"State Board",joined:today()};
   openSheet(id?"Edit student":"Add student",`<form id="fStudent" data-id="${id||""}">
   <label class="f">Student name<input name="name" required value="${esc(s.name)}"></label>
-  <div class="two"><label class="f">Class<select name="cls">${CLASSES.map(c=>opt(c,s.cls,clsLabel(c))).join("")}</select></label>
+  <div class="two"><label class="f">Class<select name="cls">${(s.cls&&!FORM_CLASSES.includes(s.cls)?[s.cls]:[]).concat(FORM_CLASSES).map(c=>opt(c,s.cls,clsLabel(c))).join("")}</select></label>
   <label class="f">Syllabus<select name="board">${opt("State Board",s.board)}${opt("CBSE",s.board)}</select></label></div>
-  <label class="f">Parent name<input name="parent" value="${esc(s.parent)}"></label>
+  <div class="two"><label class="f">Parent name<input name="parent" value="${esc(s.parent)}"></label>
+  <label class="f">Batch<select name="batch">${opt("",s.batch||"","No batch")}${BATCHES.map(b=>opt(b,s.batch||"",b)).join("")}</select></label></div>
   <div class="two"><label class="f">Parent WhatsApp number<input name="phone" inputmode="tel" value="${esc(s.phone)}"></label>
   <label class="f">Monthly fee (₹)<input name="fee" inputmode="numeric" value="${esc(s.fee)}"></label></div>
   <div class="two"><label class="f">Joined on<input name="joined" type="date" value="${esc(s.joined)}"></label>
@@ -656,7 +665,7 @@ function studentSheet(id){
   const tests=Object.values(S.tests).filter(t=>t.marks&&t.marks[id]!=null&&t.marks[id]!=="").sort((a,b)=>b.date.localeCompare(a.date));
   const txt=reportText(s);
   if(!(id in photoCache))getPhoto(id).then(p=>{const el=document.getElementById("av-"+id);if(el&&p){el.innerHTML=avatarHTML(id,s.name);const b=document.getElementById("avb-"+id);if(b)b.textContent="Change photo";const rm=document.getElementById("avr-"+id);if(rm)rm.hidden=false}});
-  openSheet(esc(s.name),`<div class="pp"><div class="av" id="av-${id}">${avatarHTML(id,s.name)}</div><div><p class="sub" style="margin:0 0 8px">${clsLabel(s.cls)} · ${esc(s.board)}${s.joined?" · joined "+nice(s.joined):""}${active(s)?"":" · <b>left the centre</b>"}</p><div class="acts" style="margin:0"><button class="btn sm gold" id="avb-${id}" data-act="photo" data-id="${id}">${photoCache[id]?"Change photo":"Add photo"}</button><button class="btn sm danger" id="avr-${id}" data-act="delPhoto" data-id="${id}" ${photoCache[id]?"":"hidden"}>Remove</button></div></div></div>
+  openSheet(esc(s.name),`<div class="pp"><div class="av" id="av-${id}">${avatarHTML(id,s.name)}</div><div><p class="sub" style="margin:0 0 8px">${clsLabel(s.cls)}${s.batch?" · "+esc(s.batch)+" batch":""} · ${esc(s.board)}${s.joined?" · joined "+nice(s.joined):""}${active(s)?"":" · <b>left the centre</b>"}</p><div class="acts" style="margin:0"><button class="btn sm gold" id="avb-${id}" data-act="photo" data-id="${id}">${photoCache[id]?"Change photo":"Add photo"}</button><button class="btn sm danger" id="avr-${id}" data-act="delPhoto" data-id="${id}" ${photoCache[id]?"":"hidden"}>Remove</button></div></div></div>
   <div class="card"><dl class="kv"><dt>Parent</dt><dd>${esc(s.parent||"–")}</dd><dt>Phone</dt><dd>${s.phone?`<a href="tel:${esc(s.phone)}">${esc(s.phone)}</a>`:"–"}</dd><dt>Monthly fee</dt><dd>${s.fee?rs(s.fee):"–"}</dd><dt>This month</dt><dd>${st.t?`${st.p}/${st.t} days present (${st.pct}%)`:"Not marked yet"}</dd><dt>Overall</dt><dd>${(o=>o.t?`${o.p}/${o.t} days (${o.pct}%)`:"–")(attStats(id,""))}</dd></dl>${s.notes?`<p class="sub" style="margin:10px 0 0">${esc(s.notes)}</p>`:""}</div>
   <div class="card"><h3>Test results</h3>${tests.length?`<table class="t"><tr><th>Test</th><th>Marks</th><th>Grade</th></tr>${tests.map(t=>{const pc=Math.round(t.marks[id]*100/t.max);return `<tr><td>${esc(t.subject)} – ${esc(t.name)}</td><td>${t.marks[id]}/${t.max}</td><td>${grade(pc)}</td></tr>`}).join("")}</table>`:`<p class="sub" style="margin:0">No marks entered yet.</p>`}</div>
   <div class="card"><h3>Payments</h3>${pays.length?`<table class="t"><tr><th>For</th><th>Amount</th><th></th></tr>${pays.map(p=>`<tr><td>${monthName(p.month)}<br><span class="sub">${nice(p.date)} · ${esc(p.mode)}</span></td><td>${rs(p.amount)}</td><td style="white-space:nowrap"><a class="btn sm ghost" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Receipt</a> <button class="btn sm danger" data-act="delPay" data-id="${id}" data-p="${esc(p.id)}" aria-label="Remove payment">×</button></td></tr>`).join("")}</table>`:`<p class="sub" style="margin:0">No payments recorded.</p>`}<div class="acts" style="margin-top:10px"><button class="btn sm gold" data-act="pay" data-id="${id}">Record payment</button></div></div>
@@ -677,8 +686,8 @@ function payForm(id){
 function testForm(){
   openSheet("New test",`<form id="fTest">
   <label class="f">Test name<input name="name" required placeholder="Unit test 2"></label>
-  <div class="two"><label class="f">Subject<select name="subject">${["Mathematics","Science","Physics","Chemistry","Biology","English","Hindi","Telugu","Social Studies","Navodaya prep","Sainik prep"].map(x=>opt(x,"Mathematics")).join("")}</select></label>
-  <label class="f">Class<select name="cls">${(()=>{const def=UI.testCls!=="all"?UI.testCls:(studentsOf("all")[0]||{cls:"1"}).cls;return CLASSES.map(c=>opt(c,def,clsLabel(c))).join("")})()}</select></label></div>
+  <div class="two"><label class="f">Subject<select name="subject">${["Mathematics","Science","Physics","Chemistry","Biology","Botany","Zoology","Maths IA","Maths IB","Maths IIA","Maths IIB","Economics","Commerce","Civics","Accountancy","English","Hindi","Telugu","Sanskrit","Social Studies","EVS","Computer","Navodaya prep","Sainik prep"].map(x=>opt(x,"Mathematics")).join("")}</select></label>
+  <label class="f">Class<select name="cls">${(()=>{const def=UI.testCls!=="all"?UI.testCls:(studentsOf("all")[0]||{cls:"1"}).cls;return FORM_CLASSES.map(c=>opt(c,def,clsLabel(c))).join("")})()}</select></label></div>
   <div class="two"><label class="f">Maximum marks<input name="max" inputmode="numeric" required value="50"></label>
   <label class="f">Date<input name="date" type="date" required value="${today()}"></label></div>
   <div class="acts"><button class="btn gold" type="submit">Create and enter marks</button></div></form>`);
@@ -799,7 +808,7 @@ function rcHTML(list,from,to){
 }
 function idHTML(list,photos){photos=photos||{};
   const i=info(),ay=acYear(today());
-  const cards=list.map(s=>`<div class="card"><div class="top">${LOGO_DATA?`<img src="${LOGO_DATA}" alt="" style="width:6mm;height:6mm;border-radius:50%;background:#fff;vertical-align:-1.6mm;margin-right:1.2mm">`:""}<b>TASVIA</b> ACADEMY<span>STUDENT ID · ${ay.label}</span></div><div class="body"><div class="ph">${photos[s.id]?`<img src="${photos[s.id]}" alt="">`:"Paste<br>photo"}</div><div class="d"><div class="n">${esc(s.name)}</div><div><i>Class</i> ${esc(clsLabel(s.cls))} · ${esc(s.board||"")}</div><div><i>Parent</i> ${esc(s.parent||"–")}</div><div><i>Phone</i> ${esc(s.phone||"–")}</div></div></div><div class="sg">Principal</div><div class="ft">TASVIA Academy, ${esc(i.address.split(",").slice(2,4).join(",").trim())} · ${esc(i.phone)}</div></div>`).join("");
+  const cards=list.map(s=>`<div class="card"><div class="top">${LOGO_DATA?`<img src="${LOGO_DATA}" alt="" style="width:6mm;height:6mm;border-radius:50%;background:#fff;vertical-align:-1.6mm;margin-right:1.2mm">`:""}<b>TASVIA</b> ACADEMY<span>STUDENT ID · ${ay.label}</span></div><div class="body"><div class="ph">${photos[s.id]?`<img src="${photos[s.id]}" alt="">`:"Paste<br>photo"}</div><div class="d"><div class="n">${esc(s.name)}</div><div><i>Class</i> ${esc(clsLabel(s.cls))}${s.batch?" · "+esc(s.batch):""} · ${esc(s.board||"")}</div><div><i>Parent</i> ${esc(s.parent||"–")}</div><div><i>Phone</i> ${esc(s.phone||"–")}</div></div></div><div class="sg">Principal</div><div class="ft">TASVIA Academy, ${esc(i.address.split(",").slice(2,4).join(",").trim())} · ${esc(i.phone)}</div></div>`).join("");
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ID cards</title><style>${PRINT_CSS}
   @page{size:A4;margin:10mm}.sheet{display:grid;grid-template-columns:repeat(2,85.6mm);gap:6mm 8mm;justify-content:center;padding:10px}
   .card{width:85.6mm;height:54mm;border:1px solid #9aa;border-radius:3mm;overflow:hidden;background:#fff;display:flex;flex-direction:column;page-break-inside:avoid}
@@ -847,7 +856,7 @@ async function rcImage(id){
   await saveFile(`report-card-${slug(s.name)}.png`,blob);
 }
 function remindSheet(){
-  const m=UI.feeMonth,list=studentsOf(UI.cls).filter(s=>s.fee>0&&enrolledIn(s,m)&&feeStatus(s,m).k!=="paid");
+  const m=UI.feeMonth,list=byBatch(studentsOf(UI.cls)).filter(s=>s.fee>0&&enrolledIn(s,m)&&feeStatus(s,m).k!=="paid");
   openSheet("Fee reminders",`<p class="sub" style="margin-top:-8px">${monthName(m)} · tap to send each parent a polite reminder.</p><div class="list">${list.map(s=>`<div class="item"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${rs(feeStatus(s,m).left)} pending · ${esc(s.phone||"No number saved")}</div></div><a class="btn sm gold" target="_blank" rel="noopener" href="${waLink(s.phone,remindText(s,m))}">Remind</a></div>`).join("")}</div>`);
 }
 let downloads=null;
@@ -855,8 +864,8 @@ const csvCell=v=>{v=String(v??"");return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""
 const toCSV=rows=>"\ufeff"+rows.map(r=>r.map(csvCell).join(",")).join("\r\n");
 async function exportCSV(kind){
   if(!downloads)return;const m=today().slice(0,7);let rows,name;
-  if(kind==="students"){rows=[["Name","Class","Syllabus","Parent","Phone","Monthly fee","Joined","Status","Attendance this month %","Overall attendance %","Fee this month"]];
-    studentsOf("all",true).forEach(s=>{const fs=feeStatus(s,m);rows.push([s.name,clsLabel(s.cls),s.board,s.parent,s.phone,s.fee,s.joined,active(s)?"Studying":"Left",attStats(s.id,m).pct??"",attStats(s.id,"").pct??"",fs.k==="paid"?"Paid":fs.k==="part"?"Part paid":fs.k==="due"?"Due":""])});name="tasvia-students-"+today()+".csv"}
+  if(kind==="students"){rows=[["Name","Class","Batch","Syllabus","Parent","Phone","Monthly fee","Joined","Status","Attendance this month %","Overall attendance %","Fee this month"]];
+    studentsOf("all",true).forEach(s=>{const fs=feeStatus(s,m);rows.push([s.name,clsLabel(s.cls),s.batch||"",s.board,s.parent,s.phone,s.fee,s.joined,active(s)?"Studying":"Left",attStats(s.id,m).pct??"",attStats(s.id,"").pct??"",fs.k==="paid"?"Paid":fs.k==="part"?"Part paid":fs.k==="due"?"Due":""])});name="tasvia-students-"+today()+".csv"}
   else if(kind==="payments"){rows=[["Paid on","Student","Class","For month","Amount","Mode","Note"]];
     Object.keys(S.fees).forEach(id=>{const s=S.students[id];if(!s)return;payList(id).forEach(p=>rows.push([p.date,s.name,clsLabel(s.cls),p.month,p.amount,p.mode,p.note||""]))});
     rows=[rows[0],...rows.slice(1).sort((a,b)=>String(b[0]).localeCompare(a[0]))];name="tasvia-payments-"+today()+".csv"}
@@ -903,6 +912,7 @@ document.addEventListener("click",e=>{
     case "delPhoto":if(confirmDel(b,"Tap again to remove")){photoCache[id]=null;if(db){db.doc("photos/"+id).delete().catch(e=>toast(errMsg(e)));const pc=(S.students[id]||{}).pcode;if(pc)db.doc("parentView/"+pc).set({photo:null},{merge:true}).catch(()=>{})}studentSheet(id);schedulePV();toast("Photo removed")}break;
     case "rcImage":b.disabled=true;b.textContent="Making image…";rcImage(id).finally(()=>{b.disabled=false;b.textContent="Report card image"});break;
     case "cls":UI[b.dataset.key]=b.dataset.c;render();break;
+    case "batch":UI.batch=b.dataset.b;render();break;
     case "mark":mark(UI.date,id,b.dataset.v);break;
     case "allP":markAll(UI.date,studentsOf(UI.cls));break;
     case "absentees":absenteesSheet();break;
@@ -946,7 +956,7 @@ document.addEventListener("submit",e=>{
   if(e.target.id==="fLogin")return;
   e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f));
   if(f.id==="fStudent"){
-    const id=f.dataset.id||uid("s");ownIds.add(id);const s={name:d.name.trim().replace(/\s+/g," "),cls:d.cls,board:d.board,parent:d.parent.trim(),phone:d.phone.trim(),fee:Math.max(0,Number(d.fee)||0),joined:d.joined,lang:d.lang||"en",notes:d.notes.trim(),active:f.dataset.id?d.active==="on":true};
+    const id=f.dataset.id||uid("s");ownIds.add(id);const s={name:d.name.trim().replace(/\s+/g," "),cls:d.cls,board:d.board,parent:d.parent.trim(),phone:d.phone.trim(),fee:Math.max(0,Number(d.fee)||0),joined:d.joined,batch:d.batch||"",lang:d.lang||"en",notes:d.notes.trim(),active:f.dataset.id?d.active==="on":true};
     if(!s.name)return toast("Enter the student's name");
     const digits=s.phone.replace(/\D/g,"");if(s.phone&&!(digits.length===10||(digits.length===12&&digits.startsWith("91"))))return toast("Enter a 10-digit mobile number");
     if(d.fee&&isNaN(Number(d.fee)))return toast("Fee must be a number");
