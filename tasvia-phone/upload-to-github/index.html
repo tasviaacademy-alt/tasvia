@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TASVIA Academy</title>
+<meta name="theme-color" content="#1E3A32">
+<meta name="description" content="Attendance, fees and tests for TASVIA Academy Tuition Centre, Nizamabad">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TASVIA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDF1EE;--card:#FFFFFF;--ink:#15201C;--muted:#5B6A63;--line:#D3DCD7;--chip:#E2E9E5;
+  --board:#1E3A32;--board2:#2A4B41;--chalk:#F3F6F1;--gold:#E3A21A;--p:#2B8A55;--a:#C4432A;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E1613;--card:#17221E;--ink:#E6EDE9;--muted:#98A9A1;--line:#29372F;--chip:#213029;--board:#16302A;--board2:#21403A;
+}}
+:root[data-theme="dark"]{--bg:#0E1613;--card:#17221E;--ink:#E6EDE9;--muted:#98A9A1;--line:#29372F;--chip:#213029;--board:#16302A;--board2:#21403A;}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Hind,"Segoe UI",system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+h1,h2,h3{font-family:"Baloo 2","Hind",system-ui,sans-serif;line-height:1.15;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--board);color:var(--chalk);padding:14px 18px 12px}
+.brand{display:flex;justify-content:space-between;align-items:baseline;gap:12px;max-width:760px;margin:0 auto}
+.brand h1{font-size:1.45rem;letter-spacing:.01em}
+.brand h1 span{color:var(--gold)}
+.sync{font-size:.8rem;opacity:.75;text-align:right}
+
+main{max-width:760px;margin:0 auto;padding:16px 16px 110px}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:4px 0 14px}
+.hd h2{font-size:1.5rem}
+.sub{color:var(--muted);font-size:.92rem}
+
+.board{background:var(--board);color:var(--chalk);border-radius:18px;padding:16px 18px;margin-bottom:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.board div{text-align:center}
+.board b{display:block;font-family:"Baloo 2",sans-serif;font-size:2.3rem;line-height:1}
+.board small{opacity:.8}
+.board .pp b{color:#8FD9A8}.board .aa b{color:#F3A08E}
+
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;scrollbar-width:none}
+.chip{flex:0 0 auto;border:0;background:var(--chip);border-radius:999px;padding:6px 13px;font-weight:500;font-size:.9rem}
+.chip.on{background:var(--ink);color:var(--bg)}
+
+.list{display:flex;flex-direction:column;gap:8px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px;width:100%;text-align:left}
+button.item:hover{border-color:var(--muted)}
+.item .grow{flex:1;min-width:0}
+.item .nm{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item .mt{color:var(--muted);font-size:.85rem}
+.item.P{border-left:6px solid var(--p)}.item.A{border-left:6px solid var(--a)}
+
+.pa{display:flex;gap:6px}
+.pa button{width:46px;height:46px;border-radius:50%;border:2px solid var(--line);background:transparent;font-weight:700;font-family:"Baloo 2",sans-serif;font-size:1.1rem}
+.pa button.onP{background:var(--p);border-color:var(--p);color:#fff}
+.pa button.onA{background:var(--a);border-color:var(--a);color:#fff}
+
+.btn{border:0;border-radius:12px;padding:10px 16px;font-weight:600;background:var(--ink);color:var(--bg)}
+.btn.gold{background:var(--gold);color:#1a1405}
+.btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+.btn.danger{background:transparent;border:1.5px solid var(--a);color:var(--a)}
+.btn.sm{padding:6px 12px;font-size:.88rem}
+a.btn{text-decoration:none;display:inline-block}
+
+.tag{font-size:.78rem;font-weight:600;border-radius:999px;padding:2px 10px;white-space:nowrap}
+.tag.ok{background:color-mix(in srgb,var(--p) 18%,transparent);color:var(--p)}
+.tag.due{background:color-mix(in srgb,var(--a) 16%,transparent);color:var(--a)}
+.tag.n{background:var(--chip);color:var(--muted)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.card h3{font-size:1.15rem;margin-bottom:6px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.95rem}
+.kv dt{color:var(--muted)}.kv dd{margin:0}
+.empty{text-align:center;padding:36px 16px;color:var(--muted)}
+.empty .btn{margin-top:12px}
+input[type=search],input[type=date],input[type=month]{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;max-width:100%}
+.search{width:100%;margin-bottom:10px}
+.notice{border-left:5px solid var(--gold);padding:10px 14px;background:color-mix(in srgb,var(--gold) 12%,var(--card));border-radius:0 12px 12px 0;margin:10px 0}
+pre.msg{white-space:pre-wrap;background:var(--chip);border-radius:12px;padding:12px;font:inherit;font-size:.9rem;margin:8px 0 10px}
+
+nav{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav .in{display:grid;grid-template-columns:repeat(5,1fr);max-width:760px;margin:0 auto}
+nav button{border:0;background:none;padding:10px 2px 12px;font-size:.8rem;font-weight:600;color:var(--muted);position:relative}
+nav button svg{display:block;margin:0 auto 2px;width:22px;height:22px}
+nav button.on{color:var(--ink)}
+nav button.on::before{content:"";position:absolute;top:0;left:28%;right:28%;height:3px;border-radius:0 0 3px 3px;background:var(--gold)}
+
+.scrim{position:fixed;inset:0;background:rgba(10,20,16,.5);z-index:20;display:none;align-items:flex-end;justify-content:center}
+.scrim.open{display:flex}
+.sheet{background:var(--bg);width:100%;max-width:560px;max-height:88%;overflow:auto;border-radius:20px 20px 0 0;padding:18px 18px calc(22px + env(safe-area-inset-bottom,0px));animation:up .22s ease-out}
+@media (min-width:700px){.scrim{align-items:center}.sheet{border-radius:20px;max-height:85%}}
+@keyframes up{from{transform:translateY(30px);opacity:.4}}
+@media (prefers-reduced-motion:reduce){.sheet{animation:none}}
+.sheet .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.sheet h2{font-size:1.35rem}
+.x{border:0;background:var(--chip);width:36px;height:36px;border-radius:50%;font-size:1.2rem}
+label.f{display:block;margin-bottom:10px;font-size:.88rem;color:var(--muted);font-weight:500}
+label.f input,label.f select,label.f textarea{display:block;width:100%;margin-top:3px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 11px;color:var(--ink);font-size:1rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.mk{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.mk span{flex:1}.mk input{width:84px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:7px 9px;text-align:right}
+table.t{width:100%;border-collapse:collapse;font-size:.92rem}
+table.t td,table.t th{padding:6px 4px;border-bottom:1px solid var(--line);text-align:left}
+table.t th{color:var(--muted);font-weight:500}
+.gate{position:fixed;inset:0;z-index:40;background:var(--board);color:var(--chalk);display:flex;align-items:center;justify-content:center;padding:24px}
+.gate[hidden]{display:none}
+.gate form{width:100%;max-width:360px}
+.gate h1{font-size:2.2rem;margin-bottom:2px}.gate h1 span{color:var(--gold)}
+.gate p{opacity:.85;margin:0 0 20px}
+.gate label{display:block;margin-bottom:12px;font-size:.9rem}
+.gate input{display:block;width:100%;margin-top:4px;border:0;border-radius:12px;padding:12px;font-size:1rem;background:#fff;color:#15201C}
+.gate .btn{width:100%;padding:13px;margin-top:6px}
+.gate .err{color:#F3A08E;min-height:1.4em;font-size:.92rem;margin-top:10px}
+.gate .link{background:none;border:0;color:var(--chalk);text-decoration:underline;padding:8px 0;opacity:.85}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;z-index:30;font-size:.92rem;display:none;max-width:90%}
+.toast.show{display:block}
+</style>
+</head>
+<body>
+<header><div class="brand"><h1>TASVIA <span>Academy</span></h1><div class="sync" id="sync">Connecting…</div></div></header>
+<main id="view"></main>
+<nav><div class="in" id="nav"></div></nav>
+<div class="scrim" id="scrim"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
+<div class="toast" id="toast"></div>
+<div class="gate" id="gate" hidden><form id="fLogin" autocomplete="on">
+  <h1>TASVIA <span>Academy</span></h1><p id="gateMsg">Staff sign in</p>
+  <label>Email<input name="email" type="email" autocomplete="username" required></label>
+  <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+  <button class="btn gold" type="submit" id="loginBtn">Sign in</button>
+  <button class="link" type="button" id="forgot">Forgot password?</button>
+  <div class="err" id="gateErr" role="alert"></div></form></div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+
+<script>
+const CLASSES=["LKG","UKG","1","2","3","4","5","6","7","8","9","10","Inter-1","Inter-2"];
+const clsLabel=c=>/^\d+$/.test(c)?"Class "+c:c;
+const DEFAULT_INFO={name:"TASVIA Academy Tuition Centre",notice:"Admissions open for 2026–27. LKG to Intermediate, State Board and CBSE.",timings:"",
+  phone:"78421 38739",email:"tasviaacademy@gmail.com",insta:"@tasviaacademy",
+  address:"Srinivasa Nilayam, Road No. 1, Gangasthan Phase 2, Nizamabad, Telangana 503003",
+  subjects:"All subjects, LKG to Intermediate (State Board and CBSE)",
+  extra:"TASVIA Academy Competitive Coaching: Navodaya (JNVST) and Sainik School entrance."};
+
+let S={students:{},att:{},fees:{},tests:{},info:null};
+let db=null,unsubs=[];
+const UI={tab:"today",date:today(),cls:"all",feeMonth:today().slice(0,7),q:"",testCls:"all"};
+
+function today(){return new Date().toLocaleDateString("en-CA")}
+function monthName(m){const [y,mo]=m.split("-");return new Date(+y,+mo-1,1).toLocaleDateString("en-IN",{month:"long",year:"numeric"})}
+function nice(d){return new Date(d+"T00:00").toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function uid(p){return p+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+const rs=n=>"₹"+Number(n||0).toLocaleString("en-IN");
+function info(){return Object.assign({},DEFAULT_INFO,S.info||{})}
+function grade(p){return p>=90?"A+":p>=80?"A":p>=70?"B+":p>=60?"B":p>=50?"C":p>=35?"D":"E"}
+function studentsOf(cls,incLeft){return Object.entries(S.students).map(([id,s])=>({id,...s})).filter(s=>(incLeft||active(s))&&(cls==="all"||s.cls===cls)).sort((a,b)=>CLASSES.indexOf(a.cls)-CLASSES.indexOf(b.cls)||a.name.localeCompare(b.name))}
+
+/* ---------- storage ---------- */
+function loadLocal(){try{const d=JSON.parse(localStorage.getItem("tasvia-v1")||"null");if(d)S=Object.assign(S,d)}catch(e){}}
+function saveLocal(){if(window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey)return;try{localStorage.setItem("tasvia-v1",JSON.stringify(S))}catch(e){}}
+const queues={};
+function errMsg(e){if(e&&e.code==="permission-denied")return "This account isn't on the staff list, so changes can't be saved.";if(e&&e.code==="quota_exceeded")return "Storage is full. Delete old tests or students to add more.";if(e&&e.code==="invalid_argument")return "You have view-only access, so changes can't be saved.";return "Couldn't save. Check your connection and try again."}
+function put(path,data){
+  if(!db){saveLocal();return Promise.resolve()}
+  const p=(queues[path]||Promise.resolve()).then(()=>db.doc(path).set(data)).catch(e=>toast(errMsg(e)));
+  return queues[path]=p;
+}
+/* Merge-write: nested maps merge on the server, so two teachers editing the same day/test/student don't erase each other's work. */
+function mergeWrite(path,patch,base){
+  if(!db){saveLocal();return Promise.resolve(true)}
+  const run=async()=>{await db.doc(path).set(Object.assign({},base||{},patch),{merge:true});return true};
+  const p=(queues[path]||Promise.resolve()).then(run).catch(e=>{toast(errMsg(e));return false});
+  return queues[path]=p;
+}
+function remove(path){
+  if(!db){saveLocal();return Promise.resolve()}
+  const p=(queues[path]||Promise.resolve()).then(()=>db.doc(path).delete()).catch(e=>toast(errMsg(e)));
+  return queues[path]=p;
+}
+function subscribe(){
+  const onErr=e=>setSync(e&&e.code==="permission-denied"?"Not on staff list":"Connection lost. Reopen the app.");
+  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());S[key]=o;render()},onErr));
+  coll("students","students");coll("fees","fees");coll("tests","tests");
+  coll("attendance","att",db.collection("attendance").orderBy("date","desc").limit(400));
+  unsubs.push(db.doc("info/centre").onSnapshot(d=>{S.info=d.exists?d.data():null;render()},onErr));
+}
+function setSync(t){document.getElementById("sync").textContent=t}
+
+/* ---------- attendance writes (coalesced) ---------- */
+/* Taps are held locally (pend) until the server confirms, so a live update from another teacher never undoes a tap. */
+const pend={},flushT={};
+function getMarks(date){
+  const m=Object.assign({},(S.att[date]||{}).marks||{},pend[date]||{});
+  Object.keys(m).forEach(k=>{if(m[k]!=="P"&&m[k]!=="A")delete m[k]});return m;
+}
+function setMarks(date,patch){pend[date]=Object.assign(pend[date]||{},patch);render();clearTimeout(flushT[date]);flushT[date]=setTimeout(()=>flush(date),400)}
+function mark(date,sid,val){setMarks(date,{[sid]:getMarks(date)[sid]===val?null:val})}
+function markAll(date,list){const m=getMarks(date),patch={};list.forEach(s=>{if(!m[s.id])patch[s.id]="P"});if(Object.keys(patch).length)setMarks(date,patch)}
+async function flush(date){
+  const patch=Object.assign({},pend[date]);if(!Object.keys(patch).length)return;
+  if(!db){const m=Object.assign({},(S.att[date]||{}).marks);for(const k in patch){if(patch[k]==null)delete m[k];else m[k]=patch[k]}S.att[date]={date,marks:m};pend[date]={};saveLocal();render();return}
+  const ok=await mergeWrite("attendance/"+date,{marks:patch},{date});
+  if(ok){for(const k in patch)if(pend[date][k]===patch[k])delete pend[date][k];render()}
+}
+function attStats(sid,month){
+  let p=0,a=0;const dates=new Set([...Object.keys(S.att),...Object.keys(pend)]);
+  dates.forEach(d=>{if(d.startsWith(month)){const v=getMarks(d)[sid];if(v==="P")p++;else if(v==="A")a++}});
+  return {p,a,t:p+a,pct:p+a?Math.round(p*100/(p+a)):null};
+}
+/* Payments are a map keyed by id (older array form still read). */
+function payList(sid){const p=(S.fees[sid]||{}).payments;if(!p)return [];return (Array.isArray(p)?p:Object.values(p)).filter(Boolean).map((x,i)=>x.id?x:Object.assign({id:"p"+i},x))}
+function paidFor(sid,month){return payList(sid).filter(x=>x.month===month)}
+function feeStatus(s,month){
+  const paid=paidFor(s.id,month).reduce((a,b)=>a+ +b.amount,0);
+  if(!s.fee)return {k:"none",paid};
+  if(paid>=s.fee)return {k:"paid",paid,left:0};
+  return {k:paid?"part":"due",paid,left:s.fee-paid};
+}
+function enrolledIn(s,month){return !s.joined||s.joined.slice(0,7)<=month}
+const active=s=>s.active!==false;
+
+/* ---------- WhatsApp ---------- */
+function waLink(phone,text){let d=String(phone||"").replace(/\D/g,"");if(d.length===10)d="91"+d;return "https://wa.me/"+d+"?text="+encodeURIComponent(text)}
+function reportText(s){
+  const m=today().slice(0,7),st=attStats(s.id,m),inf=info();
+  const tests=Object.values(S.tests).filter(t=>t.marks&&t.marks[s.id]!=null&&t.marks[s.id]!=="").sort((a,b)=>b.date.localeCompare(a.date)).slice(0,5);
+  let t=`*TASVIA Academy – Progress update*\nStudent: ${s.name} (${clsLabel(s.cls)})\n\n`;
+  t+=`Attendance, ${monthName(m)}: `+(st.t?`${st.p} of ${st.t} days (${st.pct}%)`:"not marked yet")+"\n";
+  if(tests.length){t+="\nRecent tests:\n";tests.forEach(x=>{const sc=+x.marks[s.id],pc=Math.round(sc*100/x.max);t+=`• ${x.subject} – ${x.name}: ${sc}/${x.max} (${pc}%, ${grade(pc)})\n`})}
+  if(s.fee){const fs=feeStatus(s,m);t+=`\nFee for ${monthName(m)}: `+(fs.k==="paid"?`paid in full. Thank you!`:fs.k==="part"?`${rs(fs.paid)} paid, ${rs(fs.left)} pending.`:`${rs(s.fee)} due.`)+"\n"}
+  t+=`\nFor any questions, call ${inf.phone}.`;return t;
+}
+function absentText(s,date){return `Dear parent, ${s.name} (${clsLabel(s.cls)}) was absent from TASVIA Academy today, ${nice(date)}. Please let us know the reason. – TASVIA Academy, ${info().phone}`}
+function receiptText(s,p){return `*TASVIA Academy – Fee receipt*\nStudent: ${s.name} (${clsLabel(s.cls)})\nAmount: ${rs(p.amount)} (${p.mode})\nFor: ${monthName(p.month)}\nPaid on: ${nice(p.date)}\n\nThank you. – TASVIA Academy, ${info().phone}`}
+function infoText(){const i=info();return `*${i.name}*\n${i.subjects}\n`+(i.timings?`Timings: ${i.timings}\n`:"")+(i.notice?`\n📢 ${i.notice}\n`:"")+(i.extra?`\n${i.extra}\n`:"")+`\n📍 ${i.address}\n📞 ${i.phone}\n✉️ ${i.email}\nInstagram: ${i.insta}`}
+async function copy(text){try{await navigator.clipboard.writeText(text);toast("Copied")}catch(e){const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("Copied")}catch(_){toast("Select the text and copy it")}ta.remove()}}
+
+/* ---------- views ---------- */
+const TABS=[["today","Attendance","M4 5h16v15H4zM4 9h16M9 3v4M15 3v4M8 14l2.5 2.5L16 12"],["students","Students","M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 4-6 8-6s8 2 8 6"],["fees","Fees","M4 6h16v12H4zM4 10h16M8 15h3"],["tests","Tests","M6 3h9l4 4v14H6zM9 12h7M9 16h5M9 8h3"],["centre","Centre","M3 10l9-6 9 6M5 10v10h14V10M10 20v-5h4v5"]];
+function renderNav(){document.getElementById("nav").innerHTML=TABS.map(([k,l,d])=>`<button data-act="tab" data-k="${k}" class="${UI.tab===k?"on":""}" aria-current="${UI.tab===k?"page":"false"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>${l}</button>`).join("")}
+function classChips(key){const used=new Set(Object.values(S.students).map(s=>s.cls));const cs=CLASSES.filter(c=>used.has(c));return `<div class="chips"><button class="chip ${UI[key]==="all"?"on":""}" data-act="cls" data-key="${key}" data-c="all">All</button>`+cs.map(c=>`<button class="chip ${UI[key]===c?"on":""}" data-act="cls" data-key="${key}" data-c="${c}">${clsLabel(c)}</button>`).join("")+`</div>`}
+function noStudents(){return `<div class="empty"><p>No students yet. Add your first student to start marking attendance, fees and tests.</p><button class="btn gold" data-act="addStudent">Add student</button></div>`}
+
+function vToday(){
+  const list=studentsOf(UI.cls),marks=getMarks(UI.date);
+  const p=list.filter(s=>marks[s.id]==="P").length,a=list.filter(s=>marks[s.id]==="A").length;
+  let h=`<div class="hd"><div><h2>Attendance</h2><div class="sub">${new Date(UI.date+"T00:00").toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long"})}</div></div><input type="date" id="attDate" value="${UI.date}" max="${today()}" aria-label="Date"></div>`;
+  if(!Object.keys(S.students).length)return h+noStudents();
+  h+=`<div class="board"><div class="pp"><b>${p}</b><small>Present</small></div><div class="aa"><b>${a}</b><small>Absent</small></div><div><b>${list.length-p-a}</b><small>Not marked</small></div></div>`;
+  h+=classChips("cls");
+  h+=`<div class="row" style="margin-bottom:10px"><button class="btn sm ghost" data-act="allP">Mark rest present</button>${a?`<button class="btn sm ghost" data-act="absentees">Message absent parents (${a})</button>`:""}</div><div class="list">`;
+  h+=list.map(s=>`<div class="item ${marks[s.id]||""}"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)} · ${esc(s.board||"")}</div></div><div class="pa"><button aria-label="Present" class="${marks[s.id]==="P"?"onP":""}" data-act="mark" data-id="${s.id}" data-v="P">P</button><button aria-label="Absent" class="${marks[s.id]==="A"?"onA":""}" data-act="mark" data-id="${s.id}" data-v="A">A</button></div></div>`).join("");
+  return h+"</div>";
+}
+function vStudents(){
+  let h=`<div class="hd"><div><h2>Students</h2><div class="sub">${studentsOf("all").length} studying now</div></div><button class="btn gold" data-act="addStudent">Add student</button></div>`;
+  if(!Object.keys(S.students).length)return h+noStudents();
+  h+=`<input type="search" class="search" id="q" placeholder="Search by name or parent" value="${esc(UI.q)}">`+classChips("cls");
+  const q=UI.q.toLowerCase(),list=studentsOf(UI.cls,true).filter(s=>!q||(s.name+" "+(s.parent||"")+" "+(s.phone||"")).toLowerCase().includes(q)).sort((a,b)=>active(b)-active(a));
+  const m=today().slice(0,7);
+  h+=`<div class="list">`+list.map(s=>{const st=attStats(s.id,m),fs=feeStatus(s,m);const tag=!active(s)?`<span class="tag n">Left</span>`:fs.k==="paid"?`<span class="tag ok">Paid</span>`:fs.k==="part"?`<span class="tag due">${rs(fs.left)} due</span>`:fs.k==="due"&&enrolledIn(s,m)?`<span class="tag due">Fee due</span>`:"";return `<button class="item" data-act="openStudent" data-id="${s.id}" style="${active(s)?"":"opacity:.6"}"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)} · ${esc(s.board||"")}${st.pct!=null?" · "+st.pct+"% attendance":""}</div></div>${tag}</button>`}).join("")+`</div>`;
+  if(!list.length)h+=`<div class="empty">No students match.</div>`;
+  return h;
+}
+function vFees(){
+  const m=UI.feeMonth,list=studentsOf(UI.cls).filter(s=>s.fee>0&&enrolledIn(s,m));
+  let exp=0,col=0;list.forEach(s=>{exp+=+s.fee;col+=Math.min(feeStatus(s,m).paid,+s.fee)});
+  let h=`<div class="hd"><div><h2>Fees</h2><div class="sub">${monthName(m)}</div></div><input type="month" id="feeMonth" value="${m}" aria-label="Month"></div>`;
+  if(!Object.keys(S.students).length)return h+noStudents();
+  const due=list.filter(s=>feeStatus(s,m).k!=="paid"),paid=list.filter(s=>feeStatus(s,m).k==="paid");
+  h+=`<div class="board"><div class="pp"><b style="font-size:1.5rem">${rs(col)}</b><small>Collected</small></div><div class="aa"><b style="font-size:1.5rem">${rs(Math.max(exp-col,0))}</b><small>Pending</small></div><div><b>${due.length}</b><small>Students due</small></div></div>`+classChips("cls");
+  const row=(s,isPaid)=>{const fs=feeStatus(s,m);return `<div class="item"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)} · ${rs(s.fee)}/month${fs.k==="part"?` · paid ${rs(fs.paid)}, <b>${rs(fs.left)} left</b>`:""}</div></div>${isPaid?`<span class="tag ok">Paid</span>`:`<button class="btn sm gold" data-act="pay" data-id="${s.id}">Record</button>`}</div>`};
+  if(due.length)h+=`<div class="row" style="justify-content:space-between;margin:14px 0 8px"><h3>Due (${due.length})</h3><button class="btn sm ghost" data-act="remindAll">Fee reminders</button></div><div class="list">${due.map(s=>row(s,0)).join("")}</div>`;
+  if(paid.length)h+=`<h3 style="margin:18px 0 8px">Paid (${paid.length})</h3><div class="list">${paid.map(s=>row(s,1)).join("")}</div>`;
+  if(!list.length)h+=`<div class="empty">Set a monthly fee on a student's profile to track it here.</div>`;
+  return h;
+}
+function vTests(){
+  let h=`<div class="hd"><div><h2>Tests</h2><div class="sub">Marks and report cards</div></div><button class="btn gold" data-act="addTest">New test</button></div>`;
+  if(!Object.keys(S.students).length)return h+noStudents();
+  h+=classChips("testCls");
+  const list=Object.entries(S.tests).map(([id,t])=>({id,...t})).filter(t=>UI.testCls==="all"||t.cls===UI.testCls).sort((a,b)=>b.date.localeCompare(a.date));
+  if(!list.length)return h+`<div class="empty"><p>No tests yet. Create one, then enter each student's marks.</p></div>`;
+  return h+`<div class="list">`+list.map(t=>{const v=Object.values(t.marks||{}).filter(x=>x!==""&&x!=null).map(Number);const avg=v.length?Math.round(v.reduce((a,b)=>a+b,0)*100/(v.length*t.max)):null;return `<button class="item" data-act="openTest" data-id="${t.id}"><div class="grow"><div class="nm">${esc(t.subject)} – ${esc(t.name)}</div><div class="mt">${clsLabel(t.cls)} · ${nice(t.date)} · out of ${t.max}</div></div>${avg!=null?`<span class="tag n">Avg ${avg}%</span>`:`<span class="tag due">Enter marks</span>`}</button>`}).join("")+`</div>`;
+}
+function vCentre(){
+  const i=info();
+  return `<div class="hd"><div><h2>Centre info</h2><div class="sub">What parents see when you share</div></div><button class="btn ghost" data-act="editInfo">Edit</button></div>
+  <div class="card"><h3>${esc(i.name)}</h3><p class="sub" style="margin:0 0 8px">${esc(i.subjects)}</p>
+  ${i.notice?`<div class="notice">${esc(i.notice)}</div>`:""}
+  <dl class="kv"><dt>Timings</dt><dd>${i.timings?esc(i.timings):'<span class="sub">Add your class timings</span>'}</dd><dt>Address</dt><dd>${esc(i.address)}</dd><dt>Phone</dt><dd>${esc(i.phone)}</dd><dt>Email</dt><dd>${esc(i.email)}</dd><dt>Instagram</dt><dd>${esc(i.insta)}</dd></dl>
+  ${i.extra?`<p style="margin:12px 0 0">${esc(i.extra)}</p>`:""}</div>
+  <div class="card"><h3>Share with parents</h3><p class="sub" style="margin:0">Send this to a parents' WhatsApp group or broadcast list.</p><pre class="msg">${esc(infoText())}</pre>
+  <div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink("",infoText())}">Share on WhatsApp</a><button class="btn ghost" data-act="copyInfo">Copy text</button></div></div>
+  <div class="card"><h3>Account</h3><p class="sub" style="margin:0 0 10px">Signed in as ${esc((auth&&auth.currentUser&&auth.currentUser.email)||"")}</p><button class="btn ghost" data-act="signOut">Sign out</button></div>
+  ${downloads?`<div class="card"><h3>Backup and reports</h3><p class="sub" style="margin:0 0 10px">Download spreadsheets that open in Excel or Google Sheets. Keep a monthly copy as a backup.</p><div class="acts"><button class="btn ghost" data-act="export" data-k="students">Students</button><button class="btn ghost" data-act="export" data-k="payments">Payments</button><button class="btn ghost" data-act="export" data-k="marks">Test marks</button></div></div>`:""}`;
+}
+function render(){
+  renderNav();
+  const v={today:vToday,students:vStudents,fees:vFees,tests:vTests,centre:vCentre}[UI.tab]();
+  const el=document.getElementById("view"),hadQ=document.activeElement&&document.activeElement.id==="q";
+  el.innerHTML=v;
+  if(hadQ){const q=document.getElementById("q");q.focus();q.setSelectionRange(q.value.length,q.value.length)}
+}
+
+/* ---------- sheets ---------- */
+function openSheet(title,body){document.getElementById("sheet").innerHTML=`<div class="top"><h2>${title}</h2><button class="x" data-act="close" aria-label="Close">×</button></div>${body}`;document.getElementById("scrim").classList.add("open")}
+function closeSheet(){document.getElementById("scrim").classList.remove("open")}
+const opt=(v,cur,l)=>`<option value="${esc(v)}" ${v===cur?"selected":""}>${esc(l||v)}</option>`;
+
+function studentForm(id){
+  const s=id?S.students[id]:{cls:"1",board:"State Board",joined:today()};
+  openSheet(id?"Edit student":"Add student",`<form id="fStudent" data-id="${id||""}">
+  <label class="f">Student name<input name="name" required value="${esc(s.name)}"></label>
+  <div class="two"><label class="f">Class<select name="cls">${CLASSES.map(c=>opt(c,s.cls,clsLabel(c))).join("")}</select></label>
+  <label class="f">Syllabus<select name="board">${opt("State Board",s.board)}${opt("CBSE",s.board)}</select></label></div>
+  <label class="f">Parent name<input name="parent" value="${esc(s.parent)}"></label>
+  <div class="two"><label class="f">Parent WhatsApp number<input name="phone" inputmode="tel" value="${esc(s.phone)}"></label>
+  <label class="f">Monthly fee (₹)<input name="fee" inputmode="numeric" value="${esc(s.fee)}"></label></div>
+  <label class="f">Joined on<input name="joined" type="date" value="${esc(s.joined)}"></label>
+  <label class="f">Notes<textarea name="notes" rows="2">${esc(s.notes)}</textarea></label>
+  ${id?`<label class="f" style="display:flex;gap:8px;align-items:center;color:var(--ink)"><input type="checkbox" name="active" ${active(s)?"checked":""} style="width:auto;margin:0"> Still studying at the centre</label>`:""}
+  <div class="acts"><button class="btn gold" type="submit">${id?"Save changes":"Add student"}</button>${id?`<button class="btn danger" type="button" data-act="delStudent" data-id="${id}">Remove student</button>`:""}</div></form>`);
+}
+function studentSheet(id){
+  const s={id,...S.students[id]},m=today().slice(0,7),st=attStats(id,m),pays=payList(id).sort((a,b)=>b.date.localeCompare(a.date));
+  const tests=Object.values(S.tests).filter(t=>t.marks&&t.marks[id]!=null&&t.marks[id]!=="").sort((a,b)=>b.date.localeCompare(a.date));
+  const txt=reportText(s);
+  openSheet(esc(s.name),`<p class="sub" style="margin-top:-8px">${clsLabel(s.cls)} · ${esc(s.board)}${s.joined?" · joined "+nice(s.joined):""}${active(s)?"":" · <b>left the centre</b>"}</p>
+  <div class="card"><dl class="kv"><dt>Parent</dt><dd>${esc(s.parent||"–")}</dd><dt>Phone</dt><dd>${s.phone?`<a href="tel:${esc(s.phone)}">${esc(s.phone)}</a>`:"–"}</dd><dt>Monthly fee</dt><dd>${s.fee?rs(s.fee):"–"}</dd><dt>This month</dt><dd>${st.t?`${st.p}/${st.t} days present (${st.pct}%)`:"Not marked yet"}</dd><dt>Overall</dt><dd>${(o=>o.t?`${o.p}/${o.t} days (${o.pct}%)`:"–")(attStats(id,""))}</dd></dl>${s.notes?`<p class="sub" style="margin:10px 0 0">${esc(s.notes)}</p>`:""}</div>
+  <div class="card"><h3>Test results</h3>${tests.length?`<table class="t"><tr><th>Test</th><th>Marks</th><th>Grade</th></tr>${tests.map(t=>{const pc=Math.round(t.marks[id]*100/t.max);return `<tr><td>${esc(t.subject)} – ${esc(t.name)}</td><td>${t.marks[id]}/${t.max}</td><td>${grade(pc)}</td></tr>`}).join("")}</table>`:`<p class="sub" style="margin:0">No marks entered yet.</p>`}</div>
+  <div class="card"><h3>Payments</h3>${pays.length?`<table class="t"><tr><th>For</th><th>Amount</th><th></th></tr>${pays.map(p=>`<tr><td>${monthName(p.month)}<br><span class="sub">${nice(p.date)} · ${esc(p.mode)}</span></td><td>${rs(p.amount)}</td><td style="white-space:nowrap"><a class="btn sm ghost" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Receipt</a> <button class="btn sm danger" data-act="delPay" data-id="${id}" data-p="${esc(p.id)}" aria-label="Remove payment">×</button></td></tr>`).join("")}</table>`:`<p class="sub" style="margin:0">No payments recorded.</p>`}<div class="acts" style="margin-top:10px"><button class="btn sm gold" data-act="pay" data-id="${id}">Record payment</button></div></div>
+  <div class="card"><h3>Send progress to parent</h3><pre class="msg">${esc(txt)}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,txt)}">Send on WhatsApp</a><button class="btn ghost" data-act="copyReport" data-id="${id}">Copy</button><button class="btn ghost" data-act="editStudent" data-id="${id}">Edit student</button></div></div>`);
+}
+function payForm(id){
+  const s=S.students[id];
+  openSheet("Record payment",`<p class="sub" style="margin-top:-8px">${esc(s.name)} · ${clsLabel(s.cls)}</p><form id="fPay" data-id="${id}">
+  <div class="two"><label class="f">Amount (₹)<input name="amount" inputmode="numeric" required value="${esc(s.fee||"")}"></label>
+  <label class="f">Fee for month<input name="month" type="month" required value="${UI.tab==="fees"?UI.feeMonth:today().slice(0,7)}"></label></div>
+  <div class="two"><label class="f">Paid on<input name="date" type="date" required value="${today()}"></label>
+  <label class="f">Mode<select name="mode">${["Cash","UPI","Bank transfer","Cheque"].map(x=>opt(x,"Cash")).join("")}</select></label></div>
+  <label class="f">Note (optional)<input name="note" placeholder="Admission fee, books…"></label>
+  <div class="acts"><button class="btn gold" type="submit">Save payment</button></div></form>`);
+}
+function testForm(){
+  openSheet("New test",`<form id="fTest">
+  <label class="f">Test name<input name="name" required placeholder="Unit test 2"></label>
+  <div class="two"><label class="f">Subject<select name="subject">${["Mathematics","Science","Physics","Chemistry","Biology","English","Hindi","Telugu","Social Studies","Navodaya prep","Sainik prep"].map(x=>opt(x,"Mathematics")).join("")}</select></label>
+  <label class="f">Class<select name="cls">${(()=>{const def=UI.testCls!=="all"?UI.testCls:(studentsOf("all")[0]||{cls:"1"}).cls;return CLASSES.map(c=>opt(c,def,clsLabel(c))).join("")})()}</select></label></div>
+  <div class="two"><label class="f">Maximum marks<input name="max" inputmode="numeric" required value="50"></label>
+  <label class="f">Date<input name="date" type="date" required value="${today()}"></label></div>
+  <div class="acts"><button class="btn gold" type="submit">Create and enter marks</button></div></form>`);
+}
+function testSheet(id){
+  const t=S.tests[id],mk=t.marks||{},list=studentsOf(t.cls,true).filter(s=>active(s)||mk[s.id]!=null);
+  openSheet(esc(t.subject)+" – "+esc(t.name),`<p class="sub" style="margin-top:-8px">${clsLabel(t.cls)} · ${nice(t.date)} · out of ${t.max}</p>
+  <form id="fMarks" data-id="${id}">${list.length?list.map(s=>`<div class="mk"><span>${esc(s.name)}</span><input name="${s.id}" inputmode="decimal" aria-label="Marks for ${esc(s.name)}" value="${esc(mk[s.id]??"")}" placeholder="–"></div>`).join(""):`<p class="sub">No students in ${clsLabel(t.cls)} yet.</p>`}
+  <div class="acts" style="margin-top:14px"><button class="btn gold" type="submit">Save marks</button><button class="btn danger" type="button" data-act="delTest" data-id="${id}">Delete test</button></div></form>`);
+}
+function infoForm(){
+  const i=info();
+  openSheet("Edit centre info",`<form id="fInfo">
+  <label class="f">Notice for parents<textarea name="notice" rows="2">${esc(i.notice)}</textarea></label>
+  <label class="f">Class timings<input name="timings" value="${esc(i.timings)}" placeholder="Mon–Sat, 5–8 pm"></label>
+  <label class="f">Courses<input name="subjects" value="${esc(i.subjects)}"></label>
+  <label class="f">Other programmes<textarea name="extra" rows="2">${esc(i.extra)}</textarea></label>
+  <div class="two"><label class="f">Phone<input name="phone" value="${esc(i.phone)}"></label><label class="f">Instagram<input name="insta" value="${esc(i.insta)}"></label></div>
+  <label class="f">Email<input name="email" value="${esc(i.email)}"></label>
+  <label class="f">Address<textarea name="address" rows="2">${esc(i.address)}</textarea></label>
+  <div class="acts"><button class="btn gold" type="submit">Save info</button></div></form>`);
+}
+function absenteesSheet(){
+  const marks=getMarks(UI.date),list=studentsOf(UI.cls).filter(s=>marks[s.id]==="A");
+  openSheet("Absent today",`<p class="sub" style="margin-top:-8px">Tap to send each parent a WhatsApp message.</p><div class="list">${list.map(s=>`<div class="item A"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${esc(s.parent||"")} ${esc(s.phone||"No number saved")}</div></div><a class="btn sm gold" target="_blank" rel="noopener" href="${waLink(s.phone,absentText(s,UI.date))}">Message</a></div>`).join("")}</div>`);
+}
+
+function remindText(s,m){const fs=feeStatus(s,m);return `Dear parent, a gentle reminder that ${s.name}'s (${clsLabel(s.cls)}) tuition fee of ${rs(fs.left||s.fee)} for ${monthName(m)} is pending. Please pay at your earliest convenience. Thank you. – TASVIA Academy, ${info().phone}`}
+function remindSheet(){
+  const m=UI.feeMonth,list=studentsOf(UI.cls).filter(s=>s.fee>0&&enrolledIn(s,m)&&feeStatus(s,m).k!=="paid");
+  openSheet("Fee reminders",`<p class="sub" style="margin-top:-8px">${monthName(m)} · tap to send each parent a polite reminder.</p><div class="list">${list.map(s=>`<div class="item"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${rs(feeStatus(s,m).left)} pending · ${esc(s.phone||"No number saved")}</div></div><a class="btn sm gold" target="_blank" rel="noopener" href="${waLink(s.phone,remindText(s,m))}">Remind</a></div>`).join("")}</div>`);
+}
+let downloads=null;
+const csvCell=v=>{v=String(v??"");return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
+const toCSV=rows=>"\ufeff"+rows.map(r=>r.map(csvCell).join(",")).join("\r\n");
+async function exportCSV(kind){
+  if(!downloads)return;const m=today().slice(0,7);let rows,name;
+  if(kind==="students"){rows=[["Name","Class","Syllabus","Parent","Phone","Monthly fee","Joined","Status","Attendance this month %","Overall attendance %","Fee this month"]];
+    studentsOf("all",true).forEach(s=>{const fs=feeStatus(s,m);rows.push([s.name,clsLabel(s.cls),s.board,s.parent,s.phone,s.fee,s.joined,active(s)?"Studying":"Left",attStats(s.id,m).pct??"",attStats(s.id,"").pct??"",fs.k==="paid"?"Paid":fs.k==="part"?"Part paid":fs.k==="due"?"Due":""])});name="tasvia-students-"+today()+".csv"}
+  else if(kind==="payments"){rows=[["Paid on","Student","Class","For month","Amount","Mode","Note"]];
+    Object.keys(S.fees).forEach(id=>{const s=S.students[id];if(!s)return;payList(id).forEach(p=>rows.push([p.date,s.name,clsLabel(s.cls),p.month,p.amount,p.mode,p.note||""]))});
+    rows=[rows[0],...rows.slice(1).sort((a,b)=>String(b[0]).localeCompare(a[0]))];name="tasvia-payments-"+today()+".csv"}
+  else{rows=[["Date","Test","Subject","Class","Max","Student","Marks","%","Grade"]];
+    Object.values(S.tests).sort((a,b)=>b.date.localeCompare(a.date)).forEach(t=>Object.entries(t.marks||{}).forEach(([sid,v])=>{if(v==null||!S.students[sid])return;const pc=Math.round(v*100/t.max);rows.push([t.date,t.name,t.subject,clsLabel(t.cls),t.max,S.students[sid].name,v,pc,grade(pc)])}));name="tasvia-marks-"+today()+".csv"}
+  try{const r=await downloads.save({filename:name,data:toCSV(rows)});if(r&&r.status==="saved")toast("Downloaded")}catch(e){if(e&&e.code==="unavailable"){downloads=null;render()}}
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-act]");if(!b)return;
+  const a=b.dataset.act,id=b.dataset.id;
+    switch(a){
+    case "tab":UI.tab=b.dataset.k;render();window.scrollTo(0,0);break;
+    case "cls":UI[b.dataset.key]=b.dataset.c;render();break;
+    case "mark":mark(UI.date,id,b.dataset.v);break;
+    case "allP":markAll(UI.date,studentsOf(UI.cls));break;
+    case "absentees":absenteesSheet();break;
+    case "addStudent":studentForm();break;
+    case "editStudent":studentForm(id);break;
+    case "openStudent":studentSheet(id);break;
+    case "pay":payForm(id);break;
+    case "addTest":testForm();break;
+    case "openTest":testSheet(id);break;
+    case "editInfo":infoForm();break;
+    case "copyInfo":copy(infoText());break;
+    case "copyReport":copy(reportText({id,...S.students[id]}));break;
+    case "close":closeSheet();break;
+    case "delStudent":if(confirmDel(b,"Tap again: deletes all records")){delete S.students[id];delete S.fees[id];remove("students/"+id);remove("fees/"+id);closeSheet();render();toast("Student removed")}break;
+    case "delPay":if(confirmDel(b,"Remove?")){const pid=b.dataset.p,legacy=Array.isArray((S.fees[id]||{}).payments),cur={};payList(id).forEach(x=>{if(x.id!==pid)cur[x.id]=x});S.fees[id]={payments:cur};
+      if(!db)saveLocal();else if(legacy)put("fees/"+id,S.fees[id]);else mergeWrite("fees/"+id,{payments:{[pid]:null}},{});render();studentSheet(id);toast("Payment removed")}break;
+    case "remindAll":remindSheet();break;
+    case "signOut":if(confirmDel(b,"Tap again to sign out")&&auth)auth.signOut();break;
+    case "export":exportCSV(b.dataset.k);break;
+    case "delTest":if(confirmDel(b,"Tap again to delete")){delete S.tests[id];remove("tests/"+id);closeSheet();render();toast("Test deleted")}break;
+  }
+});
+document.getElementById("scrim").addEventListener("click",e=>{if(e.target.id==="scrim")closeSheet()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
+function confirmDel(b,msg){if(b.dataset.armed)return true;b.dataset.armed="1";b.textContent=msg;return false}
+document.addEventListener("input",e=>{if(e.target.id==="q"){UI.q=e.target.value;render()}});
+document.addEventListener("change",e=>{
+  if(e.target.id==="attDate"&&e.target.value){UI.date=e.target.value;render()}
+  if(e.target.id==="feeMonth"&&e.target.value){UI.feeMonth=e.target.value;render()}
+});
+document.addEventListener("submit",e=>{
+  if(e.target.id==="fLogin")return;
+  e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f));
+  if(f.id==="fStudent"){
+    const id=f.dataset.id||uid("s");const s={name:d.name.trim().replace(/\s+/g," "),cls:d.cls,board:d.board,parent:d.parent.trim(),phone:d.phone.trim(),fee:Math.max(0,Number(d.fee)||0),joined:d.joined,notes:d.notes.trim(),active:f.dataset.id?d.active==="on":true};
+    if(!s.name)return toast("Enter the student's name");
+    const digits=s.phone.replace(/\D/g,"");if(s.phone&&!(digits.length===10||(digits.length===12&&digits.startsWith("91"))))return toast("Enter a 10-digit mobile number");
+    if(d.fee&&isNaN(Number(d.fee)))return toast("Fee must be a number");
+    if(Object.entries(S.students).some(([k,x])=>k!==id&&x.name.toLowerCase()===s.name.toLowerCase()&&x.cls===s.cls&&!f.dataset.dup)){f.dataset.dup="1";return toast(`${s.name} is already in ${clsLabel(s.cls)}. Tap again to add anyway.`)}S.students[id]=s;put("students/"+id,s);closeSheet();render();toast(f.dataset.id?"Changes saved":"Student added");
+  }
+  if(f.id==="fPay"){
+    const id=f.dataset.id,amt=Number(d.amount);if(!(amt>0))return toast("Enter an amount");
+    const p={id:uid("p"),amount:amt,month:d.month,date:d.date,mode:d.mode,note:(d.note||"").trim()};
+    const legacy=Array.isArray((S.fees[id]||{}).payments);const cur={};payList(id).forEach(x=>cur[x.id]=x);cur[p.id]=p;S.fees[id]={payments:cur};
+    if(!db)saveLocal();else if(legacy)put("fees/"+id,S.fees[id]);else mergeWrite("fees/"+id,{payments:{[p.id]:p}},{});render();
+    const s={id,...S.students[id]};
+    openSheet("Payment saved",`<p>${rs(amt)} from ${esc(s.name)} for ${monthName(d.month)}.</p><pre class="msg">${esc(receiptText(s,p))}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Send receipt on WhatsApp</a><button class="btn ghost" data-act="close">Done</button></div>`);
+  }
+  if(f.id==="fTest"){
+    const id=uid("t"),t={name:d.name.trim(),subject:d.subject,cls:d.cls,max:Number(d.max)||100,date:d.date,marks:{}};
+    S.tests[id]=t;put("tests/"+id,t);render();testSheet(id);
+  }
+  if(f.id==="fMarks"){
+    const id=f.dataset.id,t=Object.assign({},S.tests[id]),old=t.marks||{},patch={};let bad=null;
+    Object.entries(d).forEach(([k,v])=>{v=v.trim();if(v===""){if(old[k]!=null)patch[k]=null;return}const n=Number(v);if(isNaN(n)||n<0||n>t.max)bad=bad||S.students[k]?.name;else if(old[k]!==n)patch[k]=n});
+    if(bad)return toast(`Check ${bad}'s marks: must be 0 to ${t.max}`);
+    if(!Object.keys(patch).length){closeSheet();return}
+    t.marks=Object.assign({},old,patch);S.tests[id]=t;
+    if(db)mergeWrite("tests/"+id,{marks:patch},t);else saveLocal();closeSheet();render();toast("Marks saved");
+  }
+  if(f.id==="fInfo"){S.info=Object.assign(info(),d);put("info/centre",S.info);closeSheet();render();toast("Centre info saved")}
+});
+let tt;function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2200)}
+
+/* ---------- start (Firebase) ---------- */
+const _sub=subscribe;
+subscribe=function(){unsubs.forEach(u=>u&&u());unsubs=[];_sub()};
+function netStatus(){setSync(navigator.onLine?"Synced · "+((auth&&auth.currentUser&&auth.currentUser.email)||""):"Offline · will sync later")}
+window.addEventListener("online",netStatus);window.addEventListener("offline",netStatus);
+downloads={async save({filename,data}){
+  const blob=new Blob([data],{type:"text/csv;charset=utf-8"});
+  try{const file=new File([blob],filename,{type:"text/csv"});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:filename});return {status:"saved"}}}catch(e){if(e&&e.name==="AbortError")return {status:"cancelled"}}
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);return {status:"saved"}}};
+let auth=null;
+const gate=document.getElementById("gate"),gErr=document.getElementById("gateErr");
+function authMsg(e){const c=(e&&e.code)||"";
+  if(/invalid-credential|wrong-password|user-not-found|invalid-email/.test(c))return "Email or password is incorrect.";
+  if(/too-many-requests/.test(c))return "Too many attempts. Wait a few minutes and try again.";
+  if(/network/.test(c))return "No internet connection. Connect and try again.";
+  return "Couldn't sign in ("+c+").";}
+render();
+if(!window.firebase||!window.FIREBASE_CONFIG||!window.FIREBASE_CONFIG.apiKey){
+  gate.hidden=false;document.getElementById("fLogin").innerHTML='<h1>TASVIA <span>Academy</span></h1><p>Setup needed: add your Firebase settings to firebase-config.js (see README).</p>';
+}else{
+  firebase.initializeApp(window.FIREBASE_CONFIG);
+  auth=firebase.auth();
+  const fs=firebase.firestore();
+  fs.enablePersistence({synchronizeTabs:true}).catch(()=>{});
+  auth.onAuthStateChanged(u=>{
+    if(u){db=fs;gate.hidden=true;subscribe();netStatus()}
+    else{db=null;S={students:{},att:{},fees:{},tests:{},info:null};render();gate.hidden=false;setSync("Signed out")}
+  });
+  document.getElementById("fLogin").addEventListener("submit",async e=>{
+    e.preventDefault();e.stopPropagation();const d=Object.fromEntries(new FormData(e.target));const b=document.getElementById("loginBtn");
+    b.disabled=true;b.textContent="Signing in…";gErr.textContent="";
+    try{await auth.signInWithEmailAndPassword(d.email.trim(),d.password)}catch(err){gErr.textContent=authMsg(err)}
+    b.disabled=false;b.textContent="Sign in";
+  },true);
+  document.getElementById("forgot").addEventListener("click",async()=>{
+    const em=document.querySelector("#fLogin [name=email]").value.trim();if(!em){gErr.textContent="Type your email above first.";return}
+    try{await auth.sendPasswordResetEmail(em);gErr.textContent="Reset link sent to "+em}catch(err){gErr.textContent=authMsg(err)}
+  });
+}
+if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>
