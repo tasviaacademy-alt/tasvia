@@ -8,7 +8,9 @@ service cloud.firestore {
       return exists(/databases/$(database)/documents/Staff/$(request.auth.token.email.lower()));
     }
     function isStaff() {
-      return signedIn() && staffDoc();
+      return signedIn()
+        && staffDoc()
+        && get(/databases/$(database)/documents/Staff/$(request.auth.token.email.lower())).data.role in ["staff", "admin"];
     }
     function isAdmin() {
       return isStaff()
@@ -16,12 +18,15 @@ service cloud.firestore {
     }
 
     match /Staff/{email} {
-      allow read: if isStaff();
+      allow read: if signedIn()
+        && request.auth.token.email.lower() == email.lower()
+        && isStaff();
       allow write: if false;
     }
 
     match /parentView/{code} {
-      allow get, list, write: if isStaff();
+      allow get: if true;
+      allow list, write: if isStaff();
     }
 
     match /students/{docId} {
