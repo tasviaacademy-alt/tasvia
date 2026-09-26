@@ -335,29 +335,7 @@ function reportText(s){
 function absentText(s,date){const l=langOf(s),T=L[l];return T.absent(s.name,T.cls(s.cls),dN(date,l),info().phone)}
 function receiptText(s,p){const l=langOf(s),T=L[l];return `*${T.rcT}*\n${T.stu}: ${s.name} (${T.cls(s.cls)})\n${T.amt}: ${rs(p.amount)} (${T.modes[p.mode]||p.mode})\n${T.forM}: ${mN(p.month,l)}\n${T.paidOn}: ${dN(p.date,l)}\n\n${T.thanks} – ${T.ac}, ${info().phone}`}
 function remindText(s,m){const l=langOf(s),T=L[l],fs=feeStatus(s,m);return T.remind(s.name,T.cls(s.cls),rs(fs.left||s.fee),mN(m,l),info().phone)}
-function hwText(cls,date,e,l){const T=L[l];return `*${T.hwT}*\n${T.cls(cls)} · ${dN(date,l)}\n\n${e.hw}`+(e.note?`\n\n${T.note}: ${e.note}`:"")+`\n\n– ${T.ac}, ${info().phone}`}
-function salaryText(t,p){return `*TASVIA Academy – Salary slip*\nName: ${t.name}\nMonth: ${monthName(p.month)}\nAmount paid: ${rs(p.amount)} (${p.mode})\nPaid on: ${nice(p.date)}`+(p.note?`\nNote: ${p.note}`:"")+`\n\nThank you for your work. – TASVIA Academy`}
-function infoText(){const i=info();return `*${i.name}*\n${i.subjects}\n`+(i.timings?`Timings: ${i.timings}\n`:"")+(i.notice?`\n📢 ${i.notice}\n`:"")+(i.extra?`\n${i.extra}\n`:"")+`\n📍 ${i.address}\n📞 ${i.phone}\n✉️ ${i.email}\nInstagram: ${i.insta}`}
-async function copy(text){try{await navigator.clipboard.writeText(text);toast("Copied")}catch(e){const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("Copied")}catch(_){toast("Select the text and copy it")}ta.remove()}}
-
-/* ---------- brand logo (embedded in downloaded files) ---------- */
-let LOGO_DATA="";
-fetch("logo.png").then(r=>r.ok?r.blob():null).then(b=>{if(!b)return;const fr=new FileReader();fr.onload=()=>LOGO_DATA=fr.result;fr.readAsDataURL(b)}).catch(()=>{});
-const logoImg=()=>LOGO_DATA?`<img class="lg" src="${LOGO_DATA}" alt="">`:"";
-
-/* ---------- sounds & alerts ---------- */
-let PREF={sound:true,alerts:true};try{Object.assign(PREF,JSON.parse(localStorage.getItem("tasvia-prefs")||"{}"))}catch(e){}
-function savePref(){try{localStorage.setItem("tasvia-prefs",JSON.stringify(PREF))}catch(e){}}
-let actx=null;
-function tone(seq){
-  if(!PREF.sound)return;
-  try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();if(actx.state==="suspended")actx.resume();
-    const t0=actx.currentTime+.01;
-    seq.forEach(([f,st,du,vol,type])=>{const o=actx.createOscillator(),g=actx.createGain();o.type=type||"sine";o.frequency.value=f;
-      g.gain.setValueAtTime(0,t0+st);g.gain.linearRampToValueAtTime(vol||.16,t0+st+.012);g.gain.exponentialRampToValueAtTime(.0001,t0+st+du);
-      o.connect(g);g.connect(actx.destination);o.start(t0+st);o.stop(t0+st+du+.05)});
-  }catch(e){}
-}
+function hwText(s,date,e,l){const T=L[l];return `*${T.hwT}*\n${s.name} · ${T.cls(s.cls)} · ${dN(date,l)}\n\n${e.hw}`+(e.note?`\n\n${T.note}: ${e.note}`:"")+\`\n\n– ${T.ac}, ${info().phone}`}
 /* TASVIA sounds: a soft tick, a two-note "saved" chime, a rising three-note alert, a low buzz for problems */
 const SOUND={tap:()=>tone([[1175,0,.05,.07,"triangle"]]),save:()=>tone([[784,0,.16],[1175,.08,.3]]),
   alert:()=>tone([[784,0,.22,.17],[988,.13,.22,.17],[1319,.26,.45,.15],[1976,.26,.3,.03]]),error:()=>tone([[196,0,.22,.12,"square"],[165,.12,.25,.1,"square"]])};
@@ -378,7 +356,7 @@ function diffAlert(key,oldO,newO){
   if(!PREF.alerts)return;
   if(!seenFirst[key])return;
   if(key==="fees")Object.entries(newO).forEach(([sid,f])=>{const before=new Set(mapList(oldO[sid],"payments").map(p=>p.id));mapList(f,"payments").forEach(p=>{if(!before.has(p.id)&&!ownIds.has(p.id)){const st=S.students[sid];queueAlert("Fee received",`${rs(p.amount)} from ${st?st.name:"a student"} for ${monthName(p.month)}`)}})});
-  if(key==="diary")Object.entries(newO).forEach(([d,doc])=>{const was=((oldO[d]||{}).entries)||{};Object.entries(doc.entries||{}).forEach(([c,e])=>{if(e&&e.hw&&!(was[c]&&was[c].hw)&&!ownIds.has("hw:"+d+c))queueAlert("Homework added",`${clsLabel(c)} · ${nice(d)}`)})});
+  if(key==="diary")Object.entries(newO).forEach(([d,doc])=>{const was=((oldO[d]||{}).entries)||{};Object.entries(doc.entries||{}).forEach(([sid,e])=>{if(e&&e.hw&&!(was[sid]&&was[sid].hw)&&!ownIds.has("hw:"+d+sid)){const st=S.students[sid];queueAlert("Homework added",`${st?st.name:"Student"} · ${nice(d)}`)}})});
   if(key==="students")Object.keys(newO).forEach(id=>{if(!oldO[id]&&!ownIds.has(id))queueAlert("New student",`${newO[id].name} joined ${clsLabel(newO[id].cls)}`)});
   if(key==="tests")Object.keys(newO).forEach(id=>{if(!oldO[id]&&!ownIds.has(id))queueAlert("New test",`${newO[id].subject} – ${newO[id].name} (${clsLabel(newO[id].cls)})`)});
 }
@@ -450,7 +428,7 @@ function buildParentView(s){
   const tests=Object.values(S.tests).filter(t=>t.date>=ay.from&&t.marks&&t.marks[s.id]!=null).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,25).map(t=>({d:t.date,s:t.subject,n:t.name,m:+t.marks[s.id],x:+t.max}));
   const fees=s.fee?months.filter(m=>enrolledIn(s,m)).map(m=>({m,fee:+s.fee,paid:feeStatus(s,m).paid})):[];
   const pays=payList(s.id).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,6).map(p=>({d:p.date,a:+p.amount,m:p.month,mode:p.mode}));
-  const hw=Object.keys(S.diary).sort().reverse().map(d=>{const e=((S.diary[d]||{}).entries||{})[s.cls];return e&&e.hw?{d,hw:e.hw,note:e.note||""}:null}).filter(Boolean).slice(0,5);
+  const hw=Object.keys(S.diary).sort().reverse().map(d=>{const e=((S.diary[d]||{}).entries||{})[s.id];return e&&e.hw?{d,hw:e.hw,note:e.note||""}:null}).filter(Boolean).slice(0,5);
   return {name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,
     centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||""}};
 }
@@ -519,14 +497,22 @@ function vTeacherAtt(){
   return h+`</div>`;
 }
 function vHomework(){
-  const cs=usedClasses();
-  if(!cs.length)return noStudents();
+  const list=studentsOf(UI.cls);
+  if(!list.length)return noStudents();
   const ent=(S.diary[UI.date]||{}).entries||{};
-  const done=cs.filter(c=>ent[c]&&ent[c].hw).length;
-  let h=`<p class="sub" style="margin:0 0 10px">${done} of ${cs.length} classes have homework for this day. Add it, then send it to the class WhatsApp group or each parent.</p><div class="list">`;
-  h+=cs.map(c=>{const e=ent[c];return `<div class="card" style="margin:0"><div class="row" style="justify-content:space-between"><h3 style="margin:0">${clsLabel(c)}</h3>${e&&e.hw?`<span class="tag ok">Added</span>`:`<span class="tag n">None yet</span>`}</div>
+  const done=list.filter(s=>ent[s.id]&&ent[s.id].hw).length;
+  let h=`<div class="hd"><div><h2>Homework</h2><div class="sub">${nice(UI.date)}</div></div><input type="date" id="attDate" value="${UI.date}" aria-label="Homework date"></div>`;
+  h+=classChips("cls");
+  h+=`<p class="sub" style="margin:0 0 10px">${done} of ${list.length} students have individual homework for this day.</p><div class="list">`;
+  h+=list.map(s=>{
+    const e=ent[s.id];
+    return `<div class="card" style="margin:0"><div class="row" style="justify-content:space-between">
+      <div><h3 style="margin:0">${esc(s.name)}</h3><div class="sub">${clsLabel(s.cls)}${s.batch?" · "+esc(s.batch):""}</div></div>
+      ${e&&e.hw?`<span class="tag ok">Added</span>`:`<span class="tag n">None yet</span>`}
+    </div>
     ${e&&e.hw?`<div class="hw">${esc(e.hw)}</div>${e.note?`<div class="notice" style="margin:0 0 10px">${esc(e.note)}</div>`:""}`:""}
-    <div class="acts"><button class="btn sm ${e&&e.hw?"ghost":"gold"}" data-act="hwEdit" data-c="${c}">${e&&e.hw?"Edit":"Add homework"}</button>${e&&e.hw?`<button class="btn sm gold" data-act="hwSend" data-c="${c}">Send to parents</button>`:""}</div></div>`}).join("");
+    <div class="acts"><button class="btn sm ${e&&e.hw?"ghost":"gold"}" data-act="hwEdit" data-id="${s.id}">${e&&e.hw?"Edit":"Add homework"}</button>${e&&e.hw?`<button class="btn sm gold" data-act="hwSend" data-id="${s.id}">Send to parent</button>`:""}</div></div>`;
+  }).join("");
   return h+`</div>`;
 }
 const ICONS={alerts:"M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0",parents:"M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7zM9 12l2 2 4-4",staff:"M16 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 20c0-3 3-5 6-5s6 2 6 5M14 15c3 0 8 1 8 5",money:"M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6",cards:"M3 5h18v14H3zM7 9h4v5H7zM14 10h4M14 13h3",centre:"M3 10l9-6 9 6M5 10v10h14V10M10 20v-5h4v5",backup:"M12 4v11M7 10l5 5 5-5M4 20h16"};
@@ -759,20 +745,21 @@ function expenseForm(){
   <label class="f">Note (optional)<input name="note" placeholder="September rent, printer ink…"></label>
   <div class="acts"><button class="btn gold" type="submit">Save expense</button></div></form>`);
 }
-function hwForm(cls){
-  const e=((S.diary[UI.date]||{}).entries||{})[cls]||{};
-  openSheet("Homework · "+clsLabel(cls),`<p class="sub" style="margin-top:-8px">${nice(UI.date)}</p><form id="fHw" data-c="${cls}">
+function hwForm(sid){
+  const s=S.students[sid];if(!s)return;
+  const e=((S.diary[UI.date]||{}).entries||{})[sid]||{};
+  openSheet("Homework · "+s.name,`<p class="sub" style="margin-top:-8px">${clsLabel(s.cls)} · ${nice(UI.date)}</p><form id="fHw" data-id="${sid}">
   <label class="f">Homework (one subject per line)<textarea name="hw" rows="6" placeholder="Maths: Exercise 3.2, questions 1–5&#10;English: Learn lesson 4 spellings&#10;Science: Draw the plant cell">${esc(e.hw)}</textarea></label>
   <label class="f">Note for parents (optional)<textarea name="note" rows="2" placeholder="Unit test on Monday. Bring geometry box.">${esc(e.note)}</textarea></label>
   <div class="acts"><button class="btn gold" type="submit">Save homework</button></div></form>`);
 }
-function hwSendSheet(cls,l){
-  const e=((S.diary[UI.date]||{}).entries||{})[cls];if(!e||!e.hw)return;
-  l=l||info().lang||"en";const txt=hwText(cls,UI.date,e,l),list=studentsOf(cls);
-  openSheet("Send homework · "+clsLabel(cls),`<div class="chips">${Object.entries(LANGS).map(([k,v])=>`<button class="chip ${k===l?"on":""}" data-act="hwLang" data-c="${cls}" data-l="${k}">${v.split(" (")[0]}</button>`).join("")}</div>
-  <pre class="msg">${esc(txt)}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink("",txt)}">Send to class group</a><button class="btn ghost" data-act="copyHw" data-c="${cls}" data-l="${l}">Copy</button></div>
-  <h3 style="margin:18px 0 4px">Or send to each parent</h3><p class="sub" style="margin:0 0 8px">Each message uses that parent's own language.</p>
-  <div class="list">${list.map(s=>`<div class="item"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${esc(s.phone||"No number saved")} · ${LANGS[langOf(s)].split(" (")[0]}</div></div><a class="btn sm gold" target="_blank" rel="noopener" href="${waLink(s.phone,hwText(cls,UI.date,e,langOf(s)))}">Send</a></div>`).join("")}</div>`);
+function hwSendSheet(sid,l){
+  const s=S.students[sid];if(!s)return;
+  const e=((S.diary[UI.date]||{}).entries||{})[sid];if(!e||!e.hw)return;
+  l=l||langOf(s);const txt=hwText(s,UI.date,e,l);
+  openSheet("Send homework · "+s.name,`<div class="chips">${Object.entries(LANGS).map(([k,v])=>`<button class="chip ${k===l?"on":""}" data-act="hwLang" data-id="${sid}" data-l="${k}">${v.split(" (")[0]}</button>`).join("")}</div>
+  <pre class="msg">${esc(txt)}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,txt)}">Send to parent</a><button class="btn ghost" data-act="copyHw" data-id="${sid}" data-l="${l}">Copy</button></div>
+  <p class="sub" style="margin:10px 0 0">This homework is private to ${esc(s.name)} and is not shared with the rest of the class.</p>`);
 }
 
 /* ---------- printable report cards & ID cards ---------- */
@@ -905,10 +892,10 @@ document.addEventListener("click",e=>{
     case "addExpense":expenseForm();break;
     case "delExp":if(confirmDel(b,"Remove?")){const m=UI.moneyMonth;S.expenses[m]={month:m,items:Object.fromEntries(expList(m).filter(x=>x.id!==id).map(x=>[x.id,x]))};
       if(db)mergeWrite("expenses/"+m,{items:{[id]:null}},{month:m});else saveLocal();render();toast("Expense removed")}break;
-    case "hwEdit":hwForm(b.dataset.c);break;
-    case "hwSend":hwSendSheet(b.dataset.c);break;
-    case "hwLang":hwSendSheet(b.dataset.c,b.dataset.l);break;
-    case "copyHw":copy(hwText(b.dataset.c,UI.date,((S.diary[UI.date]||{}).entries||{})[b.dataset.c],b.dataset.l));break;
+    case "hwEdit":hwForm(b.dataset.id);break;
+    case "hwSend":hwSendSheet(b.dataset.id);break;
+    case "hwLang":hwSendSheet(b.dataset.id,b.dataset.l);break;
+    case "copyHw":{const s=S.students[b.dataset.id],e=((S.diary[UI.date]||{}).entries||{})[b.dataset.id];if(s&&e)copy(hwText(s,UI.date,e,b.dataset.l));break;}
     case "cardCls":UI.cardCls=b.dataset.c;render();break;
     case "printRC":{const l=studentsOf(UI.cardCls);if(!l.length)break;if(UI.rcFrom>UI.rcTo){toast("'From' date must be before 'To' date");break}saveFile(`report-cards-${slug(clsLabel(UI.cardCls))}.html`,rcHTML(l,UI.rcFrom,UI.rcTo));break}
     case "printID":{const l=studentsOf(UI.cardCls);if(!l.length)break;b.disabled=true;b.textContent="Adding photos…";
@@ -1011,10 +998,11 @@ document.addEventListener("submit",e=>{
     UI.moneyMonth=m;closeSheet();render();toast("Expense saved");
   }
   if(f.id==="fHw"){
-    ownIds.add("hw:"+UI.date+f.dataset.c);const cls=f.dataset.c,e=(d.hw||"").trim()?{hw:d.hw.trim(),note:(d.note||"").trim()}:null;
-    const cur=Object.assign({},(S.diary[UI.date]||{}).entries);if(e)cur[cls]=e;else delete cur[cls];S.diary[UI.date]={date:UI.date,entries:cur};
-    if(db)mergeWrite("diary/"+UI.date,{entries:{[cls]:e}},{date:UI.date});else saveLocal();
-    closeSheet();render();if(e)hwSendSheet(cls);else toast("Homework cleared");
+    const sid=f.dataset.id,s=S.students[sid];if(!s)return;
+    ownIds.add("hw:"+UI.date+sid);const e=(d.hw||"").trim()?{hw:d.hw.trim(),note:(d.note||"").trim()}:null;
+    const cur=Object.assign({},(S.diary[UI.date]||{}).entries);if(e)cur[sid]=e;else delete cur[sid];S.diary[UI.date]={date:UI.date,entries:cur};
+    if(db)mergeWrite("diary/"+UI.date,{entries:{[sid]:e}},{date:UI.date});else saveLocal();
+    closeSheet();render();if(e)hwSendSheet(sid);else toast("Homework cleared");
   }
   if(f.id==="fInfo"){S.info=Object.assign(info(),d);put("info/centre",S.info);closeSheet();render();toast("Centre info saved")}
 });
