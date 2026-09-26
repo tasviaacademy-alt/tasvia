@@ -1041,10 +1041,13 @@ function authMsg(e){const c=(e&&e.code)||"";
   return "Couldn't sign in ("+c+").";}
 render();
 if(!window.firebase||!window.FIREBASE_CONFIG||!window.FIREBASE_CONFIG.apiKey){
+  setSync("Firebase config missing");
   gate.hidden=false;document.getElementById("fLogin").innerHTML='<h1>TASVIA <span>Academy</span></h1><p>Setup needed: add your Firebase settings to firebase-config.js (see the guide).</p>';
 }else{
+  setSync("Starting Firebase…");
   firebase.initializeApp(window.FIREBASE_CONFIG);
   auth=firebase.auth();
+  setSync("Firebase started · waiting for sign-in…");
   const fs=firebase.firestore();
   fs.enablePersistence({synchronizeTabs:true}).catch(err=>console.warn("Firebase persistence unavailable:",err));
   let authResolved=false;
@@ -1054,7 +1057,9 @@ if(!window.firebase||!window.FIREBASE_CONFIG||!window.FIREBASE_CONFIG.apiKey){
     clearTimeout(authWatchdog);
   if(u){
     try{
+      setSync("Signed in · verifying staff…");
       const email=u.email.trim().toLowerCase();
+      setSync("Checking staff account…");
       const snap=await withTimeout(fs.collection("Staff").doc(email).get(),10000,"Staff verification timed out");
 
       if(!snap.exists){
@@ -1075,16 +1080,19 @@ if(!window.firebase||!window.FIREBASE_CONFIG||!window.FIREBASE_CONFIG.apiKey){
 
       db=fs;
       gate.hidden=true;
+      setSync("Staff verified · loading data…");
 
       subscribe();
       netStatus();
 
     }catch(err){
-      console.error(err);
-      gErr.textContent="Unable to verify staff account.";
+      console.error("TASVIA staff verification:",err);
+      setSync(err&&err.message==="Staff verification timed out"?"Staff verification timed out":"Firebase staff verification failed");
+      gErr.textContent=err&&err.message==="Staff verification timed out"?"Firebase did not respond within 10 seconds.":"Unable to verify staff account.";
       await auth.signOut();
     }
   }else{
+    setSync("Signed out · login required");
     unsubs.forEach(x=>x&&x());
     unsubs=[];
     db=null;
