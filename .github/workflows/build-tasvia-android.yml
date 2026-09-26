@@ -46,6 +46,15 @@ jobs:
           printf '%s' "$TASVIA_KEYSTORE_BASE64" | tr -d '\r\n\t ' | base64 --decode --ignore-garbage > android.keystore
           test -s android.keystore
 
+      - name: Configure Bubblewrap toolchain
+        run: |
+          test -n "$JAVA_HOME"
+          test -n "$ANDROID_HOME"
+          mkdir -p "$HOME/.bubblewrap"
+          printf '%s\n' "{\"jdkPath\":\"$JAVA_HOME\",\"androidSdkPath\":\"$ANDROID_HOME\"}" > "$HOME/.bubblewrap/config.json"
+          cat "$HOME/.bubblewrap/config.json"
+          bubblewrap doctor
+
       - name: Build signed APK and AAB
         env:
           BUBBLEWRAP_KEYSTORE_PASSWORD: ${{ secrets.TASVIA_KEYSTORE_PASSWORD }}
