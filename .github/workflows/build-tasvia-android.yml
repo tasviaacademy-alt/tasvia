@@ -50,9 +50,14 @@ jobs:
         run: |
           test -n "$JAVA_HOME"
           test -n "$ANDROID_HOME"
+          mkdir -p "$ANDROID_HOME/bin"
+          if [ ! -e "$ANDROID_HOME/bin/sdkmanager" ]; then
+            ln -s "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$ANDROID_HOME/bin/sdkmanager"
+          fi
           mkdir -p "$HOME/.bubblewrap"
           printf '%s\n' "{\"jdkPath\":\"$JAVA_HOME\",\"androidSdkPath\":\"$ANDROID_HOME\"}" > "$HOME/.bubblewrap/config.json"
           cat "$HOME/.bubblewrap/config.json"
+          test -x "$ANDROID_HOME/bin/sdkmanager"
           bubblewrap doctor
 
       - name: Build signed APK and AAB
