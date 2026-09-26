@@ -27,7 +27,6 @@ jobs:
       - name: Generate Android project
         run: |
           NODE_PATH="$(npm root -g)" node <<'NODE'
-          const fs = require('fs');
           const {TwaGenerator, TwaManifest, ConsoleLog} = require('@bubblewrap/core');
           (async () => {
             const manifest = await TwaManifest.fromFile('twa-manifest.json');
