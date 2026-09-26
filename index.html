@@ -1039,6 +1039,18 @@ function authMsg(e){const c=(e&&e.code)||"";
   if(/too-many-requests/.test(c))return "Too many attempts. Wait a few minutes and try again.";
   if(/network/.test(c))return "No internet connection. Connect and try again.";
   return "Couldn't sign in ("+c+").";}
+window.addEventListener("error",e=>{
+  console.error("TASVIA startup error:",e.error||e.message);
+  const el=document.getElementById("sync"),ge=document.getElementById("gateErr");
+  if(el)el.textContent="Startup error · "+(e.message||"JavaScript error");
+  if(ge)ge.textContent="TASVIA startup error: "+(e.message||"JavaScript error");
+});
+window.addEventListener("unhandledrejection",e=>{
+  console.error("TASVIA startup rejection:",e.reason);
+  const el=document.getElementById("sync"),ge=document.getElementById("gateErr");
+  if(el)el.textContent="Startup error · Firebase/script";
+  if(ge)ge.textContent="TASVIA startup error: "+((e.reason&&e.reason.message)||e.reason||"Promise error");
+});
 render();
 if(!window.firebase||!window.FIREBASE_CONFIG||!window.FIREBASE_CONFIG.apiKey){
   setSync("Firebase config missing");
