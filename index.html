@@ -335,7 +335,7 @@ function reportText(s){
 function absentText(s,date){const l=langOf(s),T=L[l];return T.absent(s.name,T.cls(s.cls),dN(date,l),info().phone)}
 function receiptText(s,p){const l=langOf(s),T=L[l];return `*${T.rcT}*\n${T.stu}: ${s.name} (${T.cls(s.cls)})\n${T.amt}: ${rs(p.amount)} (${T.modes[p.mode]||p.mode})\n${T.forM}: ${mN(p.month,l)}\n${T.paidOn}: ${dN(p.date,l)}\n\n${T.thanks} – ${T.ac}, ${info().phone}`}
 function remindText(s,m){const l=langOf(s),T=L[l],fs=feeStatus(s,m);return T.remind(s.name,T.cls(s.cls),rs(fs.left||s.fee),mN(m,l),info().phone)}
-function hwText(s,date,e,l){const T=L[l];return `*${T.hwT}*\n${s.name} · ${T.cls(s.cls)} · ${dN(date,l)}\n\n${e.hw}`+(e.note?`\n\n${T.note}: ${e.note}`:"")+\`\n\n– ${T.ac}, ${info().phone}`}
+function hwText(s,date,e,l){const T=L[l];return `*${T.hwT}*\n${s.name} · ${T.cls(s.cls)} · ${dN(date,l)}\n\n${e.hw}`+(e.note?`\n\n${T.note}: ${e.note}`:"")+`\n\n– ${T.ac}, ${info().phone}`}
 /* TASVIA sounds: a soft tick, a two-note "saved" chime, a rising three-note alert, a low buzz for problems */
 const SOUND={tap:()=>tone([[1175,0,.05,.07,"triangle"]]),save:()=>tone([[784,0,.16],[1175,.08,.3]]),
   alert:()=>tone([[784,0,.22,.17],[988,.13,.22,.17],[1319,.26,.45,.15],[1976,.26,.3,.03]]),error:()=>tone([[196,0,.22,.12,"square"],[165,.12,.25,.1,"square"]])};
