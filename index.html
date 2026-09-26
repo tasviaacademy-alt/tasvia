@@ -1020,6 +1020,9 @@ let tt;function toast(m){if(!/…$/.test(m))(/couldn|can't|must|enter |check |is
 
 /* ---------- start (Firebase) ---------- */
 function netStatus(){setSync(navigator.onLine?"Synced · "+((auth&&auth.currentUser&&auth.currentUser.email)||""):"Offline · will sync later")}
+function withTimeout(promise,ms,message){
+  return Promise.race([promise,new Promise((_,reject)=>setTimeout(()=>reject(new Error(message)),ms))]);
+}
 window.addEventListener("online",netStatus);window.addEventListener("offline",netStatus);
 const MIME={csv:"text/csv;charset=utf-8",html:"text/html;charset=utf-8",png:"image/png"};
 downloads={async save({filename,data}){
@@ -1043,12 +1046,16 @@ if(!window.firebase||!window.FIREBASE_CONFIG||!window.FIREBASE_CONFIG.apiKey){
   firebase.initializeApp(window.FIREBASE_CONFIG);
   auth=firebase.auth();
   const fs=firebase.firestore();
-  fs.enablePersistence({synchronizeTabs:true}).catch(()=>{});
+  fs.enablePersistence({synchronizeTabs:true}).catch(err=>console.warn("Firebase persistence unavailable:",err));
+  let authResolved=false;
+  const authWatchdog=setTimeout(()=>{if(!authResolved){setSync("Firebase connection timeout");gErr.textContent="Firebase sign-in service did not respond. Check your internet connection and reload."; }},10000);
   auth.onAuthStateChanged(async u=>{
+    authResolved=true;
+    clearTimeout(authWatchdog);
   if(u){
     try{
       const email=u.email.trim().toLowerCase();
-      const snap=await fs.collection("Staff").doc(email).get();
+      const snap=await withTimeout(fs.collection("Staff").doc(email).get(),10000,"Staff verification timed out");
 
       if(!snap.exists){
         await auth.signOut();
