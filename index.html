@@ -105,6 +105,23 @@ nav button.on::before{content:"";position:absolute;top:0;left:28%;right:28%;heig
 @media (min-width:700px){.scrim{align-items:center}.sheet{border-radius:20px;max-height:85%}}
 @keyframes up{from{transform:translateY(30px);opacity:.4}}
 @media (prefers-reduced-motion:reduce){.sheet{animation:none}}
+/* TASVIA light motion: smooth, fast and battery-friendly. */
+@keyframes tasviaFade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@keyframes tasviaPop{0%{opacity:0;transform:scale(.97)}100%{opacity:1;transform:scale(1)}}
+@keyframes tasviaPulse{0%,100%{opacity:.62}50%{opacity:1}}
+main{animation:tasviaFade .22s ease-out}
+.list .item,.card{animation:tasviaFade .18s ease-out both}
+.list .item:nth-child(2){animation-delay:.015s}.list .item:nth-child(3){animation-delay:.03s}
+.list .item:nth-child(4){animation-delay:.045s}.list .item:nth-child(5){animation-delay:.06s}
+.board{animation:tasviaPop .2s ease-out}
+.sync{transition:opacity .2s ease}
+.sync:not(:empty){animation:tasviaPulse 1.6s ease-in-out 1}
+.btn,.chip,.pa button{transition:transform .12s ease,box-shadow .12s ease,background-color .15s ease}
+.btn:active,.chip:active,.pa button:active{transform:scale(.97)}
+@media (prefers-reduced-motion:reduce){
+  main,.list .item,.card,.board,.sync{animation:none!important}
+  .btn,.chip,.pa button{transition:none}
+}
 .sheet .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
 .sheet h2{font-size:1.35rem}
 .x{border:0;background:var(--chip);width:36px;height:36px;border-radius:50%;font-size:1.2rem}
