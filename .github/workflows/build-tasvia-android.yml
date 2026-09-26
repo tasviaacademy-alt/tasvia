@@ -22,11 +22,11 @@ jobs:
           java-version: '17'
 
       - name: Install Bubblewrap
-        run: npm install -g @bubblewrap/cli
+        run: npm install -g @bubblewrap/cli @bubblewrap/core
 
       - name: Generate Android project
         run: |
-          node <<'NODE'
+          NODE_PATH="$(npm root -g)" node <<'NODE'
           const fs = require('fs');
           const {TwaGenerator, TwaManifest, ConsoleLog} = require('@bubblewrap/core');
           (async () => {
