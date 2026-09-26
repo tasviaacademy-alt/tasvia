@@ -60,6 +60,6 @@ jobs:
         with:
           name: tasvia-playstore-build
           path: |
-            app-release-bundle.aab
-            app-release-signed.apk
-            assetlinks.json
+            android-twa/app-release-bundle.aab
+            android-twa/app-release-signed.apk
+            android-twa/assetlinks.json
