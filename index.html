@@ -325,6 +325,7 @@ function setMarks(date,patch){setMarksK("att",date,patch)}
 function mark(date,sid,val){SOUND.tap();setMarks(date,{[sid]:getMarks(date)[sid]===val?null:val})}
 function markT(date,tid,val){SOUND.tap();setMarksK("tatt",date,{[tid]:getMarksK("tatt",date)[tid]===val?null:val})}
 function markAll(date,list){const m=getMarks(date),patch={};list.forEach(s=>{if(!m[s.id])patch[s.id]="P"});if(Object.keys(patch).length)setMarks(date,patch)}
+function markAllT(date,list){const m=getMarksK("tatt",date),patch={};list.forEach(t=>{if(!m[t.id])patch[t.id]="P"});if(Object.keys(patch).length)setMarksK("tatt",date,patch)}
 async function flush(k,date){
   const key=k+"|"+date,patch=Object.assign({},pend[key]);if(!Object.keys(patch).length)return;
   if(!db){const m=Object.assign({},(S[k][date]||{}).marks);for(const x in patch){if(patch[x]==null)delete m[x];else m[x]=patch[x]}S[k][date]={date,marks:m};pend[key]={};saveLocal();render();return}
@@ -593,7 +594,7 @@ function vTeacherAtt(){
   const list=teachersList(),m=getMarksK("tatt",UI.date);
   if(!list.length)return `<div class="empty"><p>Add your teachers first. Then mark their attendance here every day.</p><button class="btn gold" data-act="addTeacher">Add teacher</button></div>`;
   const c=v=>list.filter(t=>m[t.id]===v).length;
-  let h=`<div class="board"><div class="pp"><b>${c("P")}</b><small>Present</small></div><div><b style="color:var(--gold)">${c("H")}</b><small>Half day</small></div><div class="aa"><b>${c("A")}</b><small>Absent</small></div></div><div class="list">`;
+  let h=`<div class="board"><div class="pp"><b>${c("P")}</b><small>Present</small></div><div><b style="color:var(--gold)">${c("H")}</b><small>Half day</small></div><div class="aa"><b>${c("A")}</b><small>Absent</small></div></div><div class="row" style="margin-bottom:10px"><button class="btn sm gold" data-act="allTP">Mark rest present</button></div><div class="list">`;
   h+=list.map(t=>`<div class="item ${m[t.id]||""}"><div class="grow"><div class="nm">${esc(t.name)}</div><div class="mt">${esc(t.subject||"Teacher")}</div></div><div class="pa">${[["P","P","Present"],["H","½","Half day"],["A","A","Absent"]].map(([v,l,al])=>`<button aria-label="${al}" class="${m[t.id]===v?"on"+v:""}" data-act="markT" data-id="${t.id}" data-v="${v}">${l}</button>`).join("")}</div></div>`).join("");
   return h+`</div>`;
 }
@@ -987,6 +988,10 @@ document.addEventListener("click",e=>{
       UI.seg=b.dataset.k;
       if(UI.seg==="teachers")ensureTeacherAttendance();
       render();break;
+    case "allTP":
+      markAllT(UI.date,teachersList());
+      toast("Remaining teachers marked present");
+      break;
     case "more":UI.more=b.dataset.k||null;render();window.scrollTo(0,0);break;
     case "markT":markT(UI.date,id,b.dataset.v);break;
     case "addTeacher":teacherForm();break;
