@@ -272,9 +272,24 @@ function subscribe(){
   coll("diary","diary",db.collection("diary").orderBy("date","desc").limit(120));
 }
 function ensureTeacherAttendance(){
-  if(!db||lazyTeacherAttLoaded)return;
-  lazyTeacherAttLoaded=true;
+  if(!db)return;
   const onErr=e=>setSync(e&&e.code==="permission-denied"?"Not on staff list":"Connection lost. Reopen the app.");
+  /* Teacher attendance needs both the teacher roster and attendance records.
+     The performance optimization made both lazy; load them together when this tab opens. */
+  if(isAdmin()&&!lazyMoreLoaded){
+    lazyMoreLoaded=true;
+    unsubs.push(db.collection("teachers").onSnapshot(s=>{
+      const o={};s.docs.forEach(d=>o[d.id]=d.data());S.teachers=o;scheduleRender();
+    },onErr));
+    unsubs.push(db.collection("salaries").onSnapshot(s=>{
+      const o={};s.docs.forEach(d=>o[d.id]=d.data());S.salaries=o;scheduleRender();
+    },onErr));
+    unsubs.push(db.collection("expenses").onSnapshot(s=>{
+      const o={};s.docs.forEach(d=>o[d.id]=d.data());S.expenses=o;scheduleRender();
+    },onErr));
+  }
+  if(lazyTeacherAttLoaded)return;
+  lazyTeacherAttLoaded=true;
   unsubs.push(db.collection("staffattendance").orderBy("date","desc").limit(400).onSnapshot(s=>{
     const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S.tatt;S.tatt=o;
     if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert("tatt",old||{},o);
