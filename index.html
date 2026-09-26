@@ -176,6 +176,69 @@ main{animation:tasviaPageIn .45s cubic-bezier(.22,1,.36,1) both}
 .card:nth-child(2),.list .item:nth-child(2){animation-delay:.05s}.card:nth-child(3),.list .item:nth-child(3){animation-delay:.1s}.card:nth-child(4),.list .item:nth-child(4){animation-delay:.15s}
 .btn{transition:transform .16s ease,box-shadow .16s ease}.btn:hover{transform:translateY(-2px);box-shadow:0 7px 18px rgba(11,36,85,.16)}.btn:active{transform:translateY(1px) scale(.98)}
 @media(prefers-reduced-motion:reduce){main,.card,.list .item,.board,.hero,.stat,.tile{animation:none!important}.btn{transition:none}}
+
+/* TASVIA CORPORATE UI LAYER */
+:root{
+  --bg:#F5F7FA;--card:#FFFFFF;--ink:#172033;--muted:#667085;--line:#E4E7EC;--chip:#F2F4F7;
+  --board:#0B2455;--board2:#12336F;--chalk:#F8FAFC;--gold:#D9A441;--p:#16845B;--a:#C83B36;
+}
+body{font-family:Inter,"Segoe UI",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);letter-spacing:-.005em}
+h1,h2,h3{font-family:Inter,"Segoe UI",system-ui,sans-serif;font-weight:700;letter-spacing:-.025em}
+header{padding:12px 18px 11px;box-shadow:0 1px 0 rgba(16,24,40,.12),0 4px 18px rgba(16,24,40,.08)}
+.brand{max-width:1120px}
+.brand h1{font-size:1.18rem;font-weight:750;letter-spacing:-.02em}
+.hlogo{width:32px;height:32px;box-shadow:0 0 0 1.5px var(--gold)}
+.sync{font-size:.7rem;font-weight:600;letter-spacing:.01em}
+main{max-width:1120px;padding:22px 20px 116px}
+.hd{margin:2px 0 16px}
+.hd h2{font-size:1.35rem}
+.sub{font-size:.84rem}
+.board{border-radius:14px;padding:18px 16px;margin-bottom:16px;box-shadow:0 8px 24px rgba(11,36,85,.10)}
+.board b{font-size:2rem;font-weight:750}
+.board small{font-size:.74rem;text-transform:uppercase;letter-spacing:.07em}
+.chip{background:#EEF1F5;border:1px solid transparent;padding:7px 13px;font-size:.82rem;font-weight:650}
+.chip.on{background:var(--board);color:#fff}
+.item,.card{border-radius:12px;box-shadow:0 1px 2px rgba(16,24,40,.03)}
+.item{padding:13px 14px}
+.item:hover{box-shadow:0 4px 14px rgba(16,24,40,.07);transform:translateY(-1px)}
+.card{padding:17px;margin-bottom:14px}
+.card h3{font-size:1rem}
+.btn{border-radius:9px;padding:9px 14px;font-weight:650;box-shadow:0 1px 1px rgba(16,24,40,.04)}
+.btn.gold{background:var(--gold);color:#171717}
+.btn.ghost{background:#fff;border-color:#D0D5DD}
+.btn.danger{border-color:#E7A6A3}
+.tag{font-size:.72rem;padding:3px 9px;letter-spacing:.01em}
+nav{background:rgba(255,255,255,.96);backdrop-filter:blur(14px);box-shadow:0 -5px 20px rgba(16,24,40,.06)}
+nav .in{max-width:1120px}
+nav button{font-size:.72rem;font-weight:650;padding:9px 2px 11px}
+nav button svg{width:21px;height:21px}
+nav button.on::before{left:34%;right:34%;height:2px}
+.menu{gap:8px}
+.menu .item{padding:14px}
+.menu .ic{width:40px;height:40px;border-radius:10px}
+.seg{border:1px solid var(--line);background:#EEF1F5;border-radius:10px}
+.seg button{font-size:.84rem}
+.seg button.on{box-shadow:0 1px 4px rgba(16,24,40,.10)}
+input[type=search],input[type=date],input[type=month]{border-color:#D0D5DD;background:#fff;border-radius:9px;padding:9px 11px}
+.sheet{border-radius:16px 16px 0 0;box-shadow:0 -12px 40px rgba(16,24,40,.18)}
+.notice{border-left-width:4px}
+.gate{background:linear-gradient(145deg,#081B40,#0B2455)}
+.gate form{max-width:380px}
+.gate h1{font-weight:750;letter-spacing:-.035em}
+.gate .glogo{box-shadow:0 0 0 3px var(--gold),0 14px 35px rgba(0,0,0,.28)}
+@media (min-width:760px){
+  main{padding-left:28px;padding-right:28px}
+  .list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .list .item{min-height:72px}
+  .menu{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (min-width:1050px){
+  main{padding-left:34px;padding-right:34px}
+  .board{grid-template-columns:repeat(3,1fr)}
+}
+@media (prefers-reduced-motion:reduce){
+  .item:hover{transform:none}
+}
 </style>
 </head>
 <body>
