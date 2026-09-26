@@ -1,5 +1,5 @@
 // Lets the app open without internet. Data sync is handled by Firebase (it queues changes offline).
-const CACHE = "tasvia-v3";
+const CACHE = "tasvia-v4";
 const SHELL = ["./", "index.html", "firebase-config.js", "manifest.json", "logo.png", "icon-192.png", "icon-512.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL))); self.skipWaiting(); });
 self.addEventListener("activate", e => {
