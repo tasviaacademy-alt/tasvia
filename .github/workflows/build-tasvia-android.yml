@@ -37,9 +37,11 @@ jobs:
           })().catch(err => { console.error(err); process.exit(1); });
           NODE
 
-           - name: Create Bubblewrap manifest checksum
+      - name: Create Bubblewrap manifest checksum
         run: |
-          sha1sum twa-manifest.json | awk '{printf "%s",$1}' > android-twa/manifest-checksum.txt - name: Decode upload keystore
+          sha1sum twa-manifest.json | awk '{printf "%s",$1}' > android-twa/manifest-checksum.txt
+
+      - name: Decode upload keystore
         env:
           TASVIA_KEYSTORE_BASE64: ${{ secrets.TASVIA_KEYSTORE_BASE64 }}
         run: |
@@ -68,7 +70,8 @@ jobs:
         run: |
           test -n "$BUBBLEWRAP_KEYSTORE_PASSWORD"
           test -n "$BUBBLEWRAP_KEY_PASSWORD"
-          cd android-twa && bubblewrap build --manifest=../twa-manifest.json --signingKeyPath=../android.keystore --signingKeyAlias=tasvia --skipPwaValidation
+          cd android-twa
+          bubblewrap build --manifest=../twa-manifest.json --signingKeyPath=../android.keystore --signingKeyAlias=tasvia --skipPwaValidation
 
       - name: Upload Play Store artifacts
         uses: actions/upload-artifact@v4
