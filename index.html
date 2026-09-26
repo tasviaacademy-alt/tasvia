@@ -336,6 +336,37 @@ function absentText(s,date){const l=langOf(s),T=L[l];return T.absent(s.name,T.cl
 function receiptText(s,p){const l=langOf(s),T=L[l];return `*${T.rcT}*\n${T.stu}: ${s.name} (${T.cls(s.cls)})\n${T.amt}: ${rs(p.amount)} (${T.modes[p.mode]||p.mode})\n${T.forM}: ${mN(p.month,l)}\n${T.paidOn}: ${dN(p.date,l)}\n\n${T.thanks} – ${T.ac}, ${info().phone}`}
 function remindText(s,m){const l=langOf(s),T=L[l],fs=feeStatus(s,m);return T.remind(s.name,T.cls(s.cls),rs(fs.left||s.fee),mN(m,l),info().phone)}
 function hwText(s,date,e,l){const T=L[l];return `*${T.hwT}*\n${s.name} · ${T.cls(s.cls)} · ${dN(date,l)}\n\n${e.hw}`+(e.note?`\n\n${T.note}: ${e.note}`:"")+`\n\n– ${T.ac}, ${info().phone}`}
+/* TASVIA device preferences + lightweight sound engine */
+const PREF=(()=>{
+  try{
+    const d=JSON.parse(localStorage.getItem("tasvia-prefs")||"null")||{};
+    return {sound:d.sound!==false,alerts:d.alerts!==false};
+  }catch(e){return {sound:true,alerts:true}}
+})();
+function savePref(){
+  try{localStorage.setItem("tasvia-prefs",JSON.stringify({sound:PREF.sound,alerts:PREF.alerts}))}catch(e){}
+}
+let audioCtx=null;
+function tone(seq){
+  if(!PREF.sound)return;
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC)return;
+    audioCtx=audioCtx||new AC();
+    if(audioCtx.state==="suspended")audioCtx.resume().catch(()=>{});
+    const now=audioCtx.currentTime;
+    seq.forEach(a=>{
+      const f=a[0],delay=a[1]||0,dur=a[2]||.15,vol=a[3]??.12,type=a[4]||"sine";
+      const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+      o.type=type;o.frequency.value=f;
+      g.gain.setValueAtTime(0,now+delay);
+      g.gain.linearRampToValueAtTime(vol,now+delay+.01);
+      g.gain.exponentialRampToValueAtTime(.001,now+delay+dur);
+      o.connect(g);g.connect(audioCtx.destination);
+      o.start(now+delay);o.stop(now+delay+dur+.02);
+    });
+  }catch(e){}
+}
 /* TASVIA sounds: a soft tick, a two-note "saved" chime, a rising three-note alert, a low buzz for problems */
 const SOUND={tap:()=>tone([[1175,0,.05,.07,"triangle"]]),save:()=>tone([[784,0,.16],[1175,.08,.3]]),
   alert:()=>tone([[784,0,.22,.17],[988,.13,.22,.17],[1319,.26,.45,.15],[1976,.26,.3,.03]]),error:()=>tone([[196,0,.22,.12,"square"],[165,.12,.25,.1,"square"]])};
