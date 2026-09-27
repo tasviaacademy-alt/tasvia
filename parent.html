@@ -56,6 +56,18 @@ td.r,th.r{text-align:right;white-space:nowrap}
 .foot{text-align:center;color:var(--muted);font-size:.8rem;margin-top:18px}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
 .chips span{background:var(--chip);border-radius:999px;padding:3px 10px;font-size:.88rem}
+
+/* PARENT FEE DUE — premium attention cue */
+@keyframes feeGlow{0%,100%{box-shadow:0 4px 18px rgba(199,71,64,.08)}50%{box-shadow:0 8px 28px rgba(199,71,64,.22)}}
+@keyframes feeSweep{0%{transform:translateX(-120%);opacity:0}12%{opacity:.55}55%{opacity:.15}100%{transform:translateX(260%);opacity:0}}
+.fee-due{position:relative;overflow:hidden;border:1.5px solid rgba(199,71,64,.48);animation:feeGlow 2.4s ease-in-out infinite}
+.fee-due::after{content:"";position:absolute;top:0;bottom:0;left:0;width:38%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.34),transparent);transform:translateX(-120%);animation:feeSweep 3.6s ease-in-out infinite;pointer-events:none}
+.fee-due .fee-alert{display:flex;align-items:center;gap:8px;margin:-3px 0 11px;padding:8px 10px;border-radius:10px;background:rgba(199,71,64,.09);color:var(--a);font-weight:700;font-size:.88rem}
+.fee-due .fee-alert .dot{width:8px;height:8px;border-radius:50%;background:var(--a);box-shadow:0 0 0 5px rgba(199,71,64,.12);animation:feeDot 1.4s ease-in-out infinite}
+@keyframes feeDot{50%{transform:scale(1.35);opacity:.65}}
+@media(prefers-reduced-motion:reduce){
+ .fee-due,.fee-due::after,.fee-due .fee-alert .dot{animation:none!important}
+}
 </style>
 </head>
 <body>
@@ -76,7 +88,7 @@ const LN={en:"English",te:"తెలుగు",hi:"हिन्दी"};
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const rs=n=>"₹"+Number(n||0).toLocaleString("en-IN");
 const grade=p=>p>=90?"A+":p>=80?"A":p>=70?"B+":p>=60?"B":p>=50?"C":p>=35?"D":"E";
-let V=null,L="en";
+let V=null,L="en",feeDueScrollDone=false;
 function store(k,v){try{v===undefined?localStorage.getItem(k):localStorage.setItem(k,v)}catch(e){}}
 function load(k){try{return localStorage.getItem(k)}catch(e){return null}}
 const mN=m=>{const [y,mo]=m.split("-");return new Date(+y,+mo-1,1).toLocaleDateString(T[L].loc,{month:"long",year:"numeric"})};
@@ -117,7 +129,8 @@ function render(){
   h+=`</div>`;
   // fees
   if((v.fees||[]).length||(v.pays||[]).length){
-    h+=`<div class="card"><h2>${esc(t.fees)}</h2>`;
+    const feeDue=(v.fees||[]).some(f=>Number(f.paid||0)<Number(f.fee||0));
+    h+=`<div id="feeCard" class="card${feeDue?" fee-due":""}"><h2>${esc(t.fees)}</h2>${feeDue?`<div class="fee-alert"><span class="dot"></span><span>${esc(t.due)} · ${esc(L==="te"?"ఫీజు చెల్లింపు పెండింగ్‌లో ఉంది":L==="hi"?"फ़ीस भुगतान बाकी है":"Fee payment pending")}</span></div>`:""}`;
     if((v.fees||[]).length)h+=`<table><tr><th>${esc(t.month)}</th><th class="r">${esc(t.status)}</th></tr>`+v.fees.map(f=>{const st=f.paid>=f.fee?`<span class="tag ok">${esc(t.paid)}</span>`:f.paid>0?`<span class="tag gold">${esc(t.part)} · ${esc(t.due)} ${rs(f.fee-f.paid)}</span>`:`<span class="tag bad">${esc(t.due)} ${rs(f.fee)}</span>`;return `<tr><td>${esc(mN(f.m))}</td><td class="r">${st}</td></tr>`}).join("")+`</table>`;
     if((v.pays||[]).length)h+=`<p class="sub" style="margin:12px 0 4px"><b>${esc(t.pays)}</b></p><table>`+v.pays.map(p=>`<tr><td>${esc(dN(p.d))}<br><span class="sub">${esc(mN(p.m))}</span></td><td class="r">${rs(p.a)}<br><span class="sub">${esc(p.mode||"")}</span></td></tr>`).join("")+`</table>`;
     h+=`</div>`;
@@ -129,6 +142,10 @@ function render(){
   h+=`<div class="acts" style="justify-content:center">${alertsOn?`<span class="sub">${esc(t.alertsDone)}</span>`:`<button id="alertBtn" class="btn gold" style="border:0;font:inherit;font-weight:600;cursor:pointer">${esc(t.alertsOn)}</button>`}</div>`;
   h+=`<p class="foot">${esc(t.updated)}: ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}<br>${esc(t.save)}</p>`;
   document.getElementById("main").innerHTML=h;
+  if(feeDue&&!feeDueScrollDone){
+    feeDueScrollDone=true;
+    setTimeout(()=>{const el=document.getElementById("feeCard");if(el)el.scrollIntoView({behavior:"smooth",block:"center"})},850);
+  }
 }
 
 let actx=null;
