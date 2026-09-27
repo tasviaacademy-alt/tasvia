@@ -111,7 +111,7 @@ td.r,th.r{text-align:right;white-space:nowrap}
     <h2>Welcome to <span>TASVIA</span></h2>
     <p id="welcomeGreeting">Let’s inspire, learn, grow and succeed together.</p>
     <p class="welcome-tag">INSPIRE • LEARN • GROW • SUCCEED</p>
-    <button id="welcomeEnter" class="welcome-enter" type="button">Enter Parents Portal</button>
+    <button id="welcomeEnter" class="welcome-enter" type="button" onclick="closeWelcome()">Enter Parents Portal</button>
     <br>
     <button id="welcomeSound" class="welcome-sound" type="button" aria-pressed="true">🔊 Welcome audio on</button>
   </div>
@@ -146,7 +146,7 @@ function speakWelcome(){
 function closeWelcome(){
   if(welcomeDone)return; welcomeDone=true;
   try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}
-  const b=document.getElementById("welcomeBackdrop");if(b)b.classList.add("hide");
+  const b=document.getElementById("welcomeBackdrop");if(b){b.classList.add("hide");b.style.pointerEvents="none";}
   setTimeout(()=>b&&b.remove(),520);
 }
 function showWelcome(){
@@ -157,7 +157,7 @@ function showWelcome(){
   welcomeVoiceTimer=setTimeout(closeWelcome,5200);
 }
 document.addEventListener("click",e=>{
-  if(e.target.id==="welcomeEnter"){clearTimeout(welcomeVoiceTimer);speakWelcome();setTimeout(closeWelcome,900)}
+  if(e.target.id==="welcomeEnter"){clearTimeout(welcomeVoiceTimer);try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(_){}closeWelcome()}
   if(e.target.id==="welcomeSound"){
     welcomeAudioOn=!welcomeAudioOn;e.target.textContent=welcomeAudioOn?"🔊 Welcome audio on":"🔇 Welcome audio off";e.target.classList.toggle("off",!welcomeAudioOn);
     if(welcomeAudioOn)speakWelcome();else try{window.speechSynthesis.cancel()}catch(_){}
