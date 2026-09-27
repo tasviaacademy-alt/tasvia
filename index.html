@@ -239,6 +239,48 @@ input[type=search],input[type=date],input[type=month]{border-color:#D0D5DD;backg
 @media (prefers-reduced-motion:reduce){
   .item:hover{transform:none}
 }
+
+/* TASVIA CLASSY EXECUTIVE LAYER */
+:root{
+ --bg:#F7F7F4;--card:#FFFFFF;--ink:#152033;--muted:#697386;--line:#E7E4DD;--chip:#F1F2F3;
+ --board:#071C42;--board2:#0D2A5C;--chalk:#FCFCFA;--gold:#C99A3D;--p:#19735A;--a:#B9443E;
+}
+body{background:linear-gradient(180deg,#F8F8F5 0,#F4F5F7 100%);font-size:15.5px}
+header{background:linear-gradient(135deg,#071A3D,#0B2858);border-bottom:1px solid rgba(201,154,61,.35)}
+.brand h1{font-size:1.16rem;letter-spacing:-.025em}.brand h1 span{color:#D9AE59}
+.hlogo{box-shadow:0 0 0 1px rgba(217,174,89,.95),0 4px 12px rgba(0,0,0,.16)}
+main{padding-top:24px}
+.hd h2{font-size:1.42rem;font-weight:760}.sub{line-height:1.45}
+.board{background:linear-gradient(145deg,#071C42,#0D2A5C);border:1px solid rgba(201,154,61,.25);box-shadow:0 12px 32px rgba(7,28,66,.12)}
+.board b{color:#fff}.board small{color:#DCE3EF;opacity:.88}
+.card,.item{border-color:var(--line);box-shadow:0 2px 8px rgba(20,32,51,.035),0 1px 2px rgba(20,32,51,.025)}
+.card{border-radius:14px}.item{border-radius:12px}
+.card:hover{box-shadow:0 8px 24px rgba(20,32,51,.065)}
+.btn{border-radius:10px;min-height:40px;letter-spacing:-.005em}
+.btn.gold{background:linear-gradient(135deg,#D7A84B,#C49332);color:#17130B;box-shadow:0 4px 12px rgba(196,147,50,.18)}
+.btn.gold:hover{box-shadow:0 7px 18px rgba(196,147,50,.24)}
+.btn.ghost{background:#fff;border-color:#D8D5CD}
+.chip{border:1px solid #E5E3DE;background:#F4F4F2}
+.chip.on{background:#0A2552;border-color:#0A2552;color:#fff;box-shadow:0 3px 10px rgba(10,37,82,.13)}
+.tag{font-weight:700}
+.menu .ic{background:linear-gradient(145deg,#071C42,#10336E);box-shadow:inset 0 0 0 1px rgba(217,174,89,.2)}
+nav{border-top-color:#E8E5DE}
+nav button.on{color:#071C42}
+nav button.on::before{background:#C99A3D}
+.sheet{background:#F8F8F5}
+.sheet .top{padding-bottom:10px;border-bottom:1px solid #E9E6DF}
+.x{background:#ECEDEA}
+input[type=search],input[type=date],input[type=month],label.f input,label.f select,label.f textarea{
+ box-shadow:inset 0 1px 2px rgba(16,24,40,.025);transition:border-color .15s ease,box-shadow .15s ease
+}
+input:focus,select:focus,textarea:focus{border-color:#9DAAC1!important;box-shadow:0 0 0 3px rgba(11,36,85,.08)!important;outline:none}
+.notice{background:#FFF9ED;border-left-color:#C99A3D}
+.gate .tag{color:#D9AE59}
+@media (prefers-color-scheme:dark){
+ :root:not([data-theme="light"]){--bg:#0C121C;--card:#121C28;--ink:#F2F4F7;--muted:#98A2B3;--line:#263444;--chip:#1B2836}
+ body{background:#0C121C}.btn.ghost{background:#121C28;border-color:#344253}.chip{background:#182431;border-color:#2B3948}.sheet{background:#0C121C}
+}
+:root[data-theme="dark"]{--bg:#0C121C;--card:#121C28;--ink:#F2F4F7;--muted:#98A2B3;--line:#263444;--chip:#1B2836}
 </style>
 </head>
 <body>
