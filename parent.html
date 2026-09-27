@@ -237,7 +237,7 @@ showWelcome();
 (function start(){
   const saved=load("tasvia-parent-lang");if(saved&&T[saved])L=saved;langs();
   let code=(location.hash||"").replace("#","").trim().toUpperCase();
-  if(code)store("tasvia-parent-code",code);else code=load("tasvia-parent-code")||"";
+  if(code)code=code;
   if(!/^[A-Z0-9]{8,20}$/.test(code)){msg(T[L].invalid);return}
   if(!window.firebase||!window.FIREBASE_CONFIG||!window.FIREBASE_CONFIG.apiKey){msg(T[L].offline,true);return}
   firebase.initializeApp(window.FIREBASE_CONFIG);
