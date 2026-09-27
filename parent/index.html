@@ -112,8 +112,6 @@ td.r,th.r{text-align:right;white-space:nowrap}
     <p id="welcomeGreeting">Let’s inspire, learn, grow and succeed together.</p>
     <p class="welcome-tag">INSPIRE • LEARN • GROW • SUCCEED</p>
     <button id="welcomeEnter" class="welcome-enter" type="button" onclick="closeWelcome()">Enter Parents Portal</button>
-    <br>
-    <button id="welcomeSound" class="welcome-sound" type="button" aria-pressed="true">🔊 Welcome audio on</button>
   </div>
 </div>
 
@@ -125,44 +123,6 @@ function parentResizePhoto(file){return new Promise((res,rej)=>{const u=URL.crea
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="firebase-config.js"></script>
 <script>
-
-/* TASVIA PARENT WELCOME AUDIO */
-let welcomeAudioOn=true,welcomeDone=false,welcomeVoiceTimer=null;
-function welcomeText(){
-  const name=V&&V.name?V.name:"";
-  if(L==="te") return name ? `నమస్కారం! ${name} గారి తల్లిదండ్రులకు TASVIA అకాడమీకి స్వాగతం. మనం కలిసి ప్రేరణతో నేర్చుకొని, ఎదిగి, విజయాన్ని సాధిద్దాం.` : "TASVIA అకాడమీకి స్వాగతం. మనం కలిసి ప్రేరణతో నేర్చుకొని, ఎదిగి, విజయాన్ని సాధిద్దాం.";
-  if(L==="hi") return name ? `नमस्कार! ${name} के माता-पिता का TASVIA Academy में स्वागत है। आइए, साथ मिलकर प्रेरित हों, सीखें, आगे बढ़ें और सफलता प्राप्त करें।` : "TASVIA Academy में आपका स्वागत है। आइए, साथ मिलकर प्रेरित हों, सीखें, आगे बढ़ें और सफलता प्राप्त करें।";
-  return name ? `Welcome to TASVIA Academy, parents of ${name}. Let’s inspire, learn, grow and succeed together.` : "Welcome to TASVIA Academy. Let’s inspire, learn, grow and succeed together.";
-}
-function speakWelcome(){
-  if(!welcomeAudioOn||!("speechSynthesis" in window))return;
-  try{
-    window.speechSynthesis.cancel();
-    const u=new SpeechSynthesisUtterance(welcomeText());
-    u.lang=T[L].loc||"en-IN";u.rate=.92;u.pitch=1.03;u.volume=.9;
-    window.speechSynthesis.speak(u);
-  }catch(e){}
-}
-function closeWelcome(){
-  if(welcomeDone)return; welcomeDone=true;
-  try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}
-  const b=document.getElementById("welcomeBackdrop");if(b){b.classList.add("hide");b.style.pointerEvents="none";}
-  setTimeout(()=>b&&b.remove(),520);
-}
-function showWelcome(){
-  const b=document.getElementById("welcomeBackdrop");if(!b)return;
-  const s=document.getElementById("welcomeSound");
-  s.textContent=welcomeAudioOn?"🔊 Welcome audio on":"🔇 Welcome audio off";
-  setTimeout(()=>{speakWelcome();},220);
-  welcomeVoiceTimer=setTimeout(closeWelcome,5200);
-}
-document.addEventListener("click",e=>{
-  if(e.target.id==="welcomeEnter"){clearTimeout(welcomeVoiceTimer);try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(_){}closeWelcome()}
-  if(e.target.id==="welcomeSound"){
-    welcomeAudioOn=!welcomeAudioOn;e.target.textContent=welcomeAudioOn?"🔊 Welcome audio on":"🔇 Welcome audio off";e.target.classList.toggle("off",!welcomeAudioOn);
-    if(welcomeAudioOn)speakWelcome();else try{window.speechSynthesis.cancel()}catch(_){}
-  }
-});
 
 function interLabel(c,y1,y2){const m=/^Inter-(1|2)(?: (.+))?$/.exec(c);if(!m)return null;return (m[1]==="1"?y1:y2)+(m[2]?" · "+m[2]:"")}
 const T={
