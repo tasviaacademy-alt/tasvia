@@ -143,8 +143,8 @@ function render(){
   }else h+=`<p class="sub">${esc(t.noTests)}</p>`;
   h+=`</div>`;
   // fees
+  const feeDue=(v.fees||[]).some(f=>Number(f.paid||0)<Number(f.fee||0));
   if((v.fees||[]).length||(v.pays||[]).length){
-    const feeDue=(v.fees||[]).some(f=>Number(f.paid||0)<Number(f.fee||0));
     h+=`<div id="feeCard" class="card${feeDue?" fee-due":""}"><h2>${esc(t.fees)}</h2>${feeDue?`<div class="fee-alert"><span class="dot"></span><span>${esc(t.due)} · ${esc(L==="te"?"ఫీజు చెల్లింపు పెండింగ్‌లో ఉంది":L==="hi"?"फ़ीस भुगतान बाकी है":"Fee payment pending")}</span></div>`:""}`;
     if((v.fees||[]).length)h+=`<table><tr><th>${esc(t.month)}</th><th class="r">${esc(t.status)}</th></tr>`+v.fees.map(f=>{const st=f.paid>=f.fee?`<span class="tag ok">${esc(t.paid)}</span>`:f.paid>0?`<span class="tag gold">${esc(t.part)} · ${esc(t.due)} ${rs(f.fee-f.paid)}</span>`:`<span class="tag bad">${esc(t.due)} ${rs(f.fee)}</span>`;return `<tr><td>${esc(mN(f.m))}</td><td class="r">${st}</td></tr>`}).join("")+`</table>`;
     if((v.pays||[]).length)h+=`<p class="sub" style="margin:12px 0 4px"><b>${esc(t.pays)}</b></p><table>`+v.pays.map(p=>`<tr><td>${esc(dN(p.d))}<br><span class="sub">${esc(mN(p.m))}</span></td><td class="r">${rs(p.a)}<br><span class="sub">${esc(p.mode||"")}</span></td></tr>`).join("")+`</table>`;
