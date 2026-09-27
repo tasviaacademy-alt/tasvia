@@ -83,13 +83,18 @@ td.r,th.r{text-align:right;white-space:nowrap}
 .fee-popup .btn{min-width:125px;cursor:pointer;border:0;font:inherit}
 @keyframes feePopupPulse{50%{transform:scale(1.08);box-shadow:0 0 0 9px rgba(196,67,42,.06)}}
 @media(prefers-reduced-motion:reduce){.fee-popup-backdrop,.fee-popup{transition:none}.fee-popup-icon{animation:none}}
+
+.photo-upload{display:flex;align-items:center;gap:12px;padding:12px;border:1px dashed var(--line);border-radius:14px;background:var(--chip);margin-top:10px}.photo-upload .preview{width:58px;height:72px;border-radius:10px;overflow:hidden;border:2px solid var(--gold);background:var(--chip);display:grid;place-items:center;font-size:24px;flex:0 0 auto}.photo-upload .preview img{width:100%;height:100%;object-fit:cover}.photo-upload input{display:none}
 </style>
 </head>
 <body>
 <header><div class="top"><div class="brand"><img class="hlogo" src="logo.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
 <main id="main"><div class="center" id="msg">Loading…</div></main>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js">
+document.addEventListener("change",async e=>{if(e.target.id!=="parentPhotoInput")return;const f=e.target.files&&e.target.files[0];if(!f||!V)return;if(f.size>2*1024*1024){alert("Photo must be smaller than 2 MB");return}try{const data=await parentResizePhoto(f),code=(location.hash||"").replace("#","").trim().toUpperCase()||load("tasvia-parent-code");await firebase.firestore().doc("parentView/"+code).update({photo:data,photoUpdated:Date.now()});V=Object.assign({},V,{photo:data});render();banner("Photo saved","It will also appear in the academy app.");}catch(err){alert("Photo could not be saved. Please try again.")}});
+function parentResizePhoto(file){return new Promise((res,rej)=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{const W=300,H=400,cv=document.createElement("canvas");cv.width=W;cv.height=H;const x=cv.getContext("2d"),sc=Math.max(W/im.width,H/im.height),w=im.width*sc,h=im.height*sc;x.fillStyle="#fff";x.fillRect(0,0,W,H);x.drawImage(im,(W-w)/2,(H-h)/2.5,w,h);URL.revokeObjectURL(u);let q=.78,out=cv.toDataURL("image/jpeg",q);while(out.length>150000&&q>.4){q-=.08;out=cv.toDataURL("image/jpeg",q)}res(out)};im.onerror=()=>{URL.revokeObjectURL(u);rej(new Error("image"))};im.src=u})}
+</script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="firebase-config.js"></script>
 <script>
@@ -156,6 +161,7 @@ function render(){
   const alertsOn=("Notification" in window&&Notification.permission==="granted")||(function(){try{return localStorage.getItem("tasvia-parent-alerts")==="1"}catch(e){return false}})();
   h+=`<div class="acts" style="justify-content:center">${alertsOn?`<span class="sub">${esc(t.alertsDone)}</span>`:`<button id="alertBtn" class="btn gold" style="border:0;font:inherit;font-weight:600;cursor:pointer">${esc(t.alertsOn)}</button>`}</div>`;
   h+=`<p class="foot">${esc(t.updated)}: ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}<br>${esc(t.save)}</p>`;
+  h+="<div class=\"card\"><h2>📷 Student photo</h2><div class=\"photo-upload\"><div class=\"preview\">"+(v.photo?"<img src=\""+v.photo+"\" alt=\"\">":"📷")+"</div><div><p style=\"margin:0 0 5px\"><b>"+(v.photo?"Photo uploaded":"Send your child’s photo")+"</b></p><p class=\"sub\" style=\"margin:0\">JPG/PNG · max 2 MB</p></div></div><input id=\"parentPhotoInput\" type=\"file\" accept=\"image/*\"><div class=\"acts\"><label class=\"btn gold\" for=\"parentPhotoInput\">"+(v.photo?"Change photo":"Upload photo")+"</label></div></div>";
   document.getElementById("main").innerHTML=h;
   if(feeDue){
     const dueAmount=(v.fees||[]).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
