@@ -388,10 +388,10 @@ main .card:nth-child(5),main .item:nth-child(5){animation-delay:.18s}
   <button class="btn gold" type="submit" id="loginBtn">Sign in</button>
   <button class="link" type="button" id="forgot">Forgot password?</button>
   <div class="err" id="gateErr" role="alert"></div></form></div>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="firebase-config.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script defer src="firebase-config.js"></script>
 
 <script>
 /* Class order: Nursery → PP-1 → LKG → UKG → Class 1–10 → Intermediate (1st & 2nd year, by group). "Inter-1"/"Inter-2" kept for older records. */
@@ -1383,95 +1383,72 @@ window.addEventListener("unhandledrejection",e=>{
   if(el)el.textContent="Startup error · Firebase/script";
   if(ge)ge.textContent="TASVIA startup error: "+((e.reason&&e.reason.message)||e.reason||"Promise error");
 });
-render();
-if(!window.firebase||!window.FIREBASE_CONFIG||!window.FIREBASE_CONFIG.apiKey){
-  setSync("Firebase config missing");
-  gate.hidden=false;document.getElementById("fLogin").innerHTML='<h1>TASVIA <span>Academy</span></h1><p>Setup needed: add your Firebase settings to firebase-config.js (see the guide).</p>';
-}else{
-  setSync("Starting Firebase…");
-  firebase.initializeApp(window.FIREBASE_CONFIG);
-  auth=firebase.auth();
-  setSync("Firebase started · waiting for sign-in…");
-  const fs=firebase.firestore();
-  fs.enablePersistence({synchronizeTabs:true}).catch(err=>console.warn("Firebase persistence unavailable:",err));
-  let authResolved=false;
-  const authWatchdog=setTimeout(()=>{if(!authResolved){setSync("Firebase connection timeout");gErr.textContent="Firebase sign-in service did not respond. Check your internet connection and reload."; }},10000);
-  auth.onAuthStateChanged(async u=>{
-    authResolved=true;
-    clearTimeout(authWatchdog);
-  if(u){
-    try{
-      setSync("Signed in · verifying staff…");
-      const email=u.email.trim().toLowerCase();
-      setSync("Checking staff account…");
-      const snap=await withTimeout(fs.collection("Staff").doc(email).get(),10000,"Staff verification timed out");
-
-      if(!snap.exists){
-        await auth.signOut();
-        gErr.textContent="This account is not registered as TASVIA staff.";
-        return;
-      }
-
-      const staff=snap.data()||{};
-      const role=(staff.role||"staff").toLowerCase();
-
-      window.currentUser={
-        uid:u.uid,
-        email:email,
-        name:staff.name||email,
-        role:role
-      };
-
-      db=fs;
-      gate.hidden=true;
-      setSync("Staff verified · loading data…");
-
-      subscribe();
-      netStatus();
-
-    }catch(err){
-      console.error("TASVIA staff verification:",err);
-      setSync(err&&err.message==="Staff verification timed out"?"Staff verification timed out":"Firebase staff verification failed");
-      gErr.textContent=err&&err.message==="Staff verification timed out"?"Firebase did not respond within 10 seconds.":"Unable to verify staff account.";
-      await auth.signOut();
-    }
-  }else{
-    setSync("Signed out · login required");
-    unsubs.forEach(x=>x&&x());
-    unsubs=[];
-    db=null;
-
-    window.currentUser=null;
-
-    S={
-      students:{},
-      att:{},
-      fees:{},
-      tests:{},
-      info:null,
-      teachers:{},
-      tatt:{},
-      salaries:{},
-      expenses:{},
-      diary:{}
-    };
-
-    render();
+function startFirebase(){
+  if(!window.firebase||!window.FIREBASE_CONFIG||!window.FIREBASE_CONFIG.apiKey){
+    setSync("Firebase unavailable");
     gate.hidden=false;
-    setSync("Signed out");
+    document.getElementById("fLogin").innerHTML='<h1>TASVIA <span>Academy</span></h1><p>Firebase could not be loaded. Check your internet connection and reload.</p><button class="btn gold" type="button" onclick="location.reload()">Reload TASVIA</button>';
+    return;
   }
-});
-  document.getElementById("fLogin").addEventListener("submit",async e=>{
-    e.preventDefault();e.stopPropagation();const d=Object.fromEntries(new FormData(e.target));const b=document.getElementById("loginBtn");
-    b.disabled=true;b.textContent="Signing in…";gErr.textContent="";
-    try{await auth.signInWithEmailAndPassword(d.email.trim(),d.password)}catch(err){gErr.textContent=authMsg(err)}
-    b.disabled=false;b.textContent="Sign in";
-  },true);
-  document.getElementById("forgot").addEventListener("click",async()=>{
-    const em=document.querySelector("#fLogin [name=email]").value.trim();if(!em){gErr.textContent="Type your email above first.";return}
-    try{await auth.sendPasswordResetEmail(em);gErr.textContent="Reset link sent to "+em}catch(err){gErr.textContent=authMsg(err)}
-  });
+  setSync("Starting Firebase…");
+  try{
+    firebase.initializeApp(window.FIREBASE_CONFIG);
+    auth=firebase.auth();
+    setSync("Firebase started · waiting for sign-in…");
+    const fs=firebase.firestore();
+    fs.enablePersistence({synchronizeTabs:true}).catch(err=>console.warn("Firebase persistence unavailable:",err));
+    let authResolved=false;
+    const authWatchdog=setTimeout(()=>{if(!authResolved){setSync("Firebase connection timeout");gErr.textContent="Firebase sign-in service did not respond. Check your internet connection and reload."; }},10000);
+    auth.onAuthStateChanged(async u=>{
+      authResolved=true;
+      clearTimeout(authWatchdog);
+      if(u){
+        try{
+          setSync("Signed in · verifying staff…");
+          const email=u.email.trim().toLowerCase();
+          setSync("Checking staff account…");
+          const snap=await withTimeout(fs.collection("Staff").doc(email).get(),10000,"Staff verification timed out");
+          if(!snap.exists){
+            await auth.signOut();
+            gErr.textContent="This account is not registered as TASVIA staff.";
+            return;
+          }
+          const staff=snap.data()||{},role=(staff.role||"staff").toLowerCase();
+          window.currentUser={uid:u.uid,email:email,name:staff.name||email,role:role};
+          db=fs;gate.hidden=true;setSync("Staff verified · loading data…");subscribe();netStatus();
+        }catch(err){
+          console.error("TASVIA staff verification:",err);
+          setSync(err&&err.message==="Staff verification timed out"?"Staff verification timed out":"Firebase staff verification failed");
+          gErr.textContent=err&&err.message==="Staff verification timed out"?"Firebase did not respond within 10 seconds.":"Unable to verify staff account.";
+          await auth.signOut();
+        }
+      }else{
+        setSync("Signed out · login required");
+        unsubs.forEach(x=>x&&x());unsubs=[];db=null;window.currentUser=null;
+        S={students:{},att:{},fees:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},diary:{}};
+        render();gate.hidden=false;setSync("Signed out");
+      }
+    });
+    document.getElementById("fLogin").addEventListener("submit",async e=>{
+      e.preventDefault();e.stopPropagation();const d=Object.fromEntries(new FormData(e.target));const b=document.getElementById("loginBtn");
+      b.disabled=true;b.textContent="Signing in…";gErr.textContent="";
+      try{await auth.signInWithEmailAndPassword(d.email.trim(),d.password)}catch(err){gErr.textContent=authMsg(err)}
+      b.disabled=false;b.textContent="Sign in";
+    },true);
+    document.getElementById("forgot").addEventListener("click",async()=>{
+      const em=document.querySelector("#fLogin [name=email]").value.trim();if(!em){gErr.textContent="Type your email above first.";return}
+      try{await auth.sendPasswordResetEmail(em);gErr.textContent="Reset link sent to "+em}catch(err){gErr.textContent=authMsg(err)}
+    });
+  }catch(err){
+    console.error("TASVIA Firebase startup:",err);
+    setSync("Firebase startup error");
+    gate.hidden=false;
+    gErr.textContent="TASVIA could not start Firebase. Please reload.";
+  }
 }
+render();
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
+else startFirebase();
 if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
 </body>
