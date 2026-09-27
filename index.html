@@ -674,7 +674,12 @@ const photoCache={};
 async function getPhoto(sid){
   if(sid in photoCache)return photoCache[sid];
   if(!db){photoCache[sid]=null;return null}
-  try{const d=await db.doc("photos/"+sid).get();photoCache[sid]=d.exists?(d.data().img||null):null}catch(e){return null}
+  try{
+    const d=await db.doc("photos/"+sid).get();
+    let p=d.exists?(d.data().img||null):null;
+    if(!p){const pc=(S.students[sid]||{}).pcode;if(pc){const pv=await db.doc("parentView/"+pc).get();p=pv.exists?(pv.data().photo||null):null;if(p)await db.doc("photos/"+sid).set({img:p,updated:Date.now()},{merge:true})}}
+    photoCache[sid]=p||null;
+  }catch(e){photoCache[sid]=null}
   return photoCache[sid];
 }
 function resizePhoto(file){
@@ -956,7 +961,7 @@ function studentSheet(id){
   const tests=Object.values(S.tests).filter(t=>t.marks&&t.marks[id]!=null&&t.marks[id]!=="").sort((a,b)=>b.date.localeCompare(a.date));
   const txt=reportText(s);
   if(!(id in photoCache))getPhoto(id).then(p=>{const el=document.getElementById("av-"+id);if(el&&p){el.innerHTML=avatarHTML(id,s.name);const b=document.getElementById("avb-"+id);if(b)b.textContent="Change photo";const rm=document.getElementById("avr-"+id);if(rm)rm.hidden=false}});
-  openSheet(esc(s.name),`<div class="pp"><div class="av" id="av-${id}">${avatarHTML(id,s.name)}</div><div><p class="sub" style="margin:0 0 8px">${clsLabel(s.cls)}${s.batch?" · "+esc(s.batch)+" batch":""} · ${esc(s.board)}${s.joined?" · joined "+nice(s.joined):""}${active(s)?"":" · <b>left the centre</b>"}</p><div class="acts" style="margin:0"><button class="btn sm gold" id="avb-${id}" data-act="photo" data-id="${id}">${photoCache[id]?"Change photo":"Add photo"}</button><button class="btn sm danger" id="avr-${id}" data-act="delPhoto" data-id="${id}" ${photoCache[id]?"":"hidden"}>Remove</button></div></div></div>
+  openSheet(esc(s.name),`<div class="pp"><div class="av" id="av-${id}">${avatarHTML(id,s.name)}</div><div><p class="sub" style="margin:0 0 8px">${clsLabel(s.cls)}${s.batch?" · "+esc(s.batch)+" batch":""} · ${esc(s.board)}${s.joined?" · joined "+nice(s.joined):""}${active(s)?"":" · <b>left the centre</b>"}</p><div class="acts" style="margin:0"><button class="btn sm gold" id="avb-${id}" data-act="photo" data-id="${id}">${photoCache[id]?"Change photo":"Add photo"}</button>${photoCache[id]?`<button class="btn sm ghost" data-act="viewPhoto" data-id="${id}">View photo</button>`:""}<button class="btn sm danger" id="avr-${id}" data-act="delPhoto" data-id="${id}" ${photoCache[id]?"":"hidden"}>Remove</button></div></div></div>
   <div class="card"><dl class="kv"><dt>Parent</dt><dd>${esc(s.parent||"–")}</dd><dt>Phone</dt><dd>${s.phone?`<a href="tel:${esc(s.phone)}">${esc(s.phone)}</a>`:"–"}</dd>${isAdmin()?`<dt>Monthly fee</dt><dd>${s.fee?rs(s.fee):"–"}</dd>`:""}<dt>This month</dt><dd>${st.t?`${st.p}/${st.t} days present (${st.pct}%)`:"Not marked yet"}</dd><dt>Overall</dt><dd>${(o=>o.t?`${o.p}/${o.t} days (${o.pct}%)`:"–")(attStats(id,""))}</dd></dl>${s.notes?`<p class="sub" style="margin:10px 0 0">${esc(s.notes)}</p>`:""}</div>
   <div class="card"><h3>Test results</h3>${tests.length?`<table class="t"><tr><th>Test</th><th>Marks</th><th>Grade</th></tr>${tests.map(t=>{const pc=Math.round(t.marks[id]*100/t.max);return `<tr><td>${esc(t.subject)} – ${esc(t.name)}</td><td>${t.marks[id]}/${t.max}</td><td>${grade(pc)}</td></tr>`}).join("")}</table>`:`<p class="sub" style="margin:0">No marks entered yet.</p>`}</div>
   <div class="card"><h3>Send progress to parent</h3>${pays.length?`<table class="t"><tr><th>For</th><th>Amount</th><th></th></tr>${pays.map(p=>`<tr><td>${monthName(p.month)}<br><span class="sub">${nice(p.date)} · ${esc(p.mode)}</span></td><td>${rs(p.amount)}</td><td style="white-space:nowrap"><a class="btn sm ghost" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Receipt</a> <button class="btn sm danger" data-act="delPay" data-id="${id}" data-p="${esc(p.id)}" aria-label="Remove payment">×</button></td></tr>`).join("")}</table>`:`<p class="sub" style="margin:0">No payments recorded.</p>`}<div class="acts" style="margin-top:10px"><button class="btn sm gold" data-act="pay" data-id="${id}">Record payment</button></div></div>
@@ -1212,6 +1217,7 @@ document.addEventListener("click",e=>{
       Promise.all(l.map(x=>getPhoto(x.id))).then(()=>{const ph={};l.forEach(x=>ph[x.id]=photoCache[x.id]);return saveFile(`id-cards-${slug(clsLabel(UI.cardCls))}.html`,idHTML(l,ph))}).finally(()=>{b.disabled=false;b.textContent="Download ID cards"});break}
     case "idOne":getPhoto(id).then(p=>saveFile(`id-card-${slug(S.students[id].name)}.html`,idHTML([{id,...S.students[id]}],{[id]:p})));break;
     case "photo":pickPhoto(id);break;
+    case "viewPhoto":getPhoto(id).then(p=>{if(p){openSheet(esc(S.students[id].name),`<div style="text-align:center"><img src="${p}" alt="Student photo" style="max-width:100%;max-height:65vh;border-radius:16px;object-fit:contain;border:2px solid var(--gold)"></div>`)}else toast("No photo available")});break;
     case "delPhoto":if(confirmDel(b,"Tap again to remove")){photoCache[id]=null;if(db){db.doc("photos/"+id).delete().catch(e=>toast(errMsg(e)));const pc=(S.students[id]||{}).pcode;if(pc)db.doc("parentView/"+pc).set({photo:null},{merge:true}).catch(()=>{})}studentSheet(id);schedulePV();toast("Photo removed")}break;
     case "rcImage":b.disabled=true;b.textContent="Making image…";rcImage(id).finally(()=>{b.disabled=false;b.textContent="Report card image"});break;
     case "cls":UI[b.dataset.key]=b.dataset.c;render();break;
