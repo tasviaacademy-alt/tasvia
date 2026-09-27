@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TASVIA Academy – Parent</title>
+<meta name="theme-color" content="#0B2455">
+<meta name="robots" content="noindex">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="TASVIA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Hind:wght@400;500;600&family=Noto+Sans+Telugu:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EDF1EE;--card:#fff;--ink:#15201C;--muted:#5B6A63;--line:#D3DCD7;--chip:#E2E9E5;--board:#0B2455;--chalk:#F3F6F1;--gold:#F2AC10;--p:#2B8A55;--a:#C4432A;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root{--bg:#0E1613;--card:#17221E;--ink:#E6EDE9;--muted:#98A9A1;--line:#29372F;--chip:#213029;--board:#081A3E}}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Hind,"Noto Sans Telugu","Noto Sans Devanagari",system-ui,sans-serif}
+h1,h2,h3{font-family:"Baloo 2",Hind,"Noto Sans Telugu","Noto Sans Devanagari",system-ui,sans-serif;margin:0;line-height:1.2}
+header{background:var(--board);color:var(--chalk);padding:16px 18px 22px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;max-width:640px;margin:0 auto}
+.hlogo{width:36px;height:36px;border-radius:50%;background:#fff;vertical-align:middle;margin:-4px 8px 0 0;box-shadow:0 0 0 2px var(--gold)}
+#banner{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 10px);transform:translate(-50%,-150%);z-index:50;display:flex;gap:10px;align-items:center;background:var(--card);color:var(--ink);border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:14px;padding:10px 14px;box-shadow:0 10px 30px rgba(0,0,0,.25);width:min(92%,420px);transition:transform .35s}#banner.show{transform:translate(-50%,0)}#banner img{width:36px;height:36px;border-radius:50%}#banner b{display:block}#banner span{color:var(--muted);font-size:.9rem}
+.brand{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.3rem;white-space:nowrap}.brand span{color:var(--gold)}
+.langs{display:flex;gap:4px}
+.langs button{border:0;border-radius:999px;padding:4px 10px;background:rgba(255,255,255,.12);color:var(--chalk);font:inherit;font-size:.85rem;cursor:pointer}
+.langs button.on{background:var(--gold);color:#1a1405;font-weight:600}
+.kid{max-width:640px;margin:14px auto 0}
+.kid{display:flex;gap:14px;align-items:center}.kid .ph{width:72px;height:96px;border-radius:12px;overflow:hidden;border:3px solid var(--gold);flex:0 0 auto}.kid .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.kid h1{font-size:1.9rem}.kid p{margin:2px 0 0;opacity:.85}
+main{max-width:640px;margin:-10px auto 0;padding:0 14px 40px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:12px}
+.card h2{font-size:1.2rem;margin-bottom:8px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+.stats b{display:block;font-family:"Baloo 2",sans-serif;font-size:1.9rem;line-height:1.1}
+.stats small{color:var(--muted)}
+.ok{color:var(--p)}.bad{color:var(--a)}.gold{color:#B8820A}
+.bar{height:10px;border-radius:5px;background:var(--chip);overflow:hidden;margin:10px 0 4px}.bar i{display:block;height:100%;background:var(--p)}
+.sub{color:var(--muted);font-size:.9rem}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+td,th{padding:7px 4px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:500;font-size:.85rem}
+td.r,th.r{text-align:right;white-space:nowrap}
+.tag{display:inline-block;font-size:.8rem;font-weight:600;border-radius:999px;padding:2px 10px}
+.tag.ok{background:color-mix(in srgb,var(--p) 16%,transparent)}.tag.bad{background:color-mix(in srgb,var(--a) 14%,transparent)}.tag.gold{background:color-mix(in srgb,var(--gold) 18%,transparent)}
+.hw{border-left:4px solid var(--gold);padding:4px 0 4px 12px;margin:10px 0}
+.hw b{font-size:.9rem;color:var(--muted);font-weight:600}
+.hw div{white-space:pre-wrap}
+.notice{border-left:5px solid var(--gold);background:color-mix(in srgb,var(--gold) 12%,var(--card));padding:10px 14px;border-radius:0 12px 12px 0}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btn{display:inline-block;text-decoration:none;border-radius:12px;padding:10px 16px;font-weight:600;background:var(--board);color:var(--chalk)}
+.btn.gold{background:var(--gold);color:#1a1405}
+.center{text-align:center;padding:60px 20px;color:var(--muted)}
+.foot{text-align:center;color:var(--muted);font-size:.8rem;margin-top:18px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips span{background:var(--chip);border-radius:999px;padding:3px 10px;font-size:.88rem}
+
+/* PARENT FEE DUE — premium attention cue */
+@keyframes feeGlow{0%,100%{box-shadow:0 4px 18px rgba(199,71,64,.08)}50%{box-shadow:0 8px 28px rgba(199,71,64,.22)}}
+@keyframes feeSweep{0%{transform:translateX(-120%);opacity:0}12%{opacity:.55}55%{opacity:.15}100%{transform:translateX(260%);opacity:0}}
+.fee-due{position:relative;overflow:hidden;border:1.5px solid rgba(199,71,64,.48);animation:feeGlow 2.4s ease-in-out infinite}
+.fee-due::after{content:"";position:absolute;top:0;bottom:0;left:0;width:38%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.34),transparent);transform:translateX(-120%);animation:feeSweep 3.6s ease-in-out infinite;pointer-events:none}
+.fee-due .fee-alert{display:flex;align-items:center;gap:8px;margin:-3px 0 11px;padding:8px 10px;border-radius:10px;background:rgba(199,71,64,.09);color:var(--a);font-weight:700;font-size:.88rem}
+.fee-due .fee-alert .dot{width:8px;height:8px;border-radius:50%;background:var(--a);box-shadow:0 0 0 5px rgba(199,71,64,.12);animation:feeDot 1.4s ease-in-out infinite}
+@keyframes feeDot{50%{transform:scale(1.35);opacity:.65}}
+@media(prefers-reduced-motion:reduce){
+ .fee-due,.fee-due::after,.fee-due .fee-alert .dot{animation:none!important}
+}
+
+/* PARENT FEE DUE POPUP */
+.fee-popup-backdrop{position:fixed;inset:0;z-index:100;background:rgba(7,18,14,.58);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .28s ease,visibility .28s ease}
+.fee-popup-backdrop.show{opacity:1;visibility:visible}
+.fee-popup{width:min(94%,390px);background:var(--card);border:1px solid rgba(199,71,64,.28);border-top:5px solid var(--a);border-radius:20px;padding:24px 20px 18px;box-shadow:0 22px 60px rgba(0,0,0,.32);transform:translateY(18px) scale(.96);transition:transform .32s cubic-bezier(.22,1,.36,1);text-align:center}
+.fee-popup-backdrop.show .fee-popup{transform:translateY(0) scale(1)}
+.fee-popup-icon{width:54px;height:54px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;background:rgba(196,67,42,.1);font-size:27px;animation:feePopupPulse 1.5s ease-in-out infinite}
+.fee-popup h3{font-size:1.45rem;color:var(--ink);margin-bottom:5px}
+.fee-popup .due-label{color:var(--a);font-weight:700;font-size:.95rem}
+.fee-popup .due-amount{font-family:"Baloo 2",sans-serif;font-size:2rem;font-weight:800;color:var(--a);line-height:1.15;margin:7px 0 15px}
+.fee-popup .due-note{color:var(--muted);font-size:.9rem;margin:0 0 16px}
+.fee-popup .acts{justify-content:center;margin-top:0}
+.fee-popup .btn{min-width:125px;cursor:pointer;border:0;font:inherit}
+@keyframes feePopupPulse{50%{transform:scale(1.08);box-shadow:0 0 0 9px rgba(196,67,42,.06)}}
+@media(prefers-reduced-motion:reduce){.fee-popup-backdrop,.fee-popup{transition:none}.fee-popup-icon{animation:none}}
+
+.photo-upload{display:flex;align-items:center;gap:12px;padding:12px;border:1px dashed var(--line);border-radius:14px;background:var(--chip);margin-top:10px}.photo-upload .preview{width:58px;height:72px;border-radius:10px;overflow:hidden;border:2px solid var(--gold);background:var(--chip);display:grid;place-items:center;font-size:24px;flex:0 0 auto}.photo-upload .preview img{width:100%;height:100%;object-fit:cover}.photo-upload input{display:none}
+
+/* PARENT WELCOME EXPERIENCE */
+.welcome-backdrop{position:fixed;inset:0;z-index:999;background:linear-gradient(145deg,#071a3d 0%,#0B2455 58%,#102e68 100%);display:flex;align-items:center;justify-content:center;padding:24px;opacity:1;visibility:visible;transition:opacity .45s ease,visibility .45s ease}
+.welcome-backdrop.hide{opacity:0;visibility:hidden;pointer-events:none}
+.welcome-card{width:min(92%,390px);text-align:center;color:#F3F6F1}
+.welcome-logo-wrap{width:112px;height:112px;margin:0 auto 18px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 0 0 4px #F2AC10,0 14px 45px rgba(0,0,0,.28);animation:welcomeLogoIn .75s cubic-bezier(.22,1,.36,1) both}
+.welcome-logo{width:88px;height:88px;border-radius:50%;object-fit:contain}
+.welcome-card h2{font-family:"Baloo 2",sans-serif;font-size:2rem;line-height:1.05;margin:0 0 7px}
+.welcome-card h2 span{color:#F2AC10}
+.welcome-card p{margin:0 auto;color:rgba(243,246,241,.86);font-size:1rem;max-width:320px}
+.welcome-tag{margin-top:12px!important;font-size:.82rem!important;color:#F2AC10!important;font-weight:600;letter-spacing:.04em}
+.welcome-enter{margin-top:24px;border:1px solid rgba(242,172,16,.7);border-radius:999px;background:#F2AC10;color:#1a1405;padding:11px 24px;font:600 16px Hind,sans-serif;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.welcome-sound{margin-top:12px;border:1px solid rgba(255,255,255,.22);border-radius:999px;background:rgba(255,255,255,.08);color:#F3F6F1;padding:7px 14px;font:500 13px Hind,sans-serif;cursor:pointer}
+.welcome-sound.off{opacity:.72}
+@keyframes welcomeLogoIn{from{opacity:0;transform:scale(.65) rotate(-8deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+@media(prefers-reduced-motion:reduce){.welcome-logo-wrap{animation:none}.welcome-backdrop{transition:none}}
+</style>
+</head>
+<body>
+<header><div class="top"><div class="brand"><img class="hlogo" src="logo.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
+<main id="main"><div class="center" id="msg">Loading…</div></main><div id="welcomeBackdrop" class="welcome-backdrop" role="dialog" aria-label="TASVIA Academy welcome">
+  <div class="welcome-card">
+    <div class="welcome-logo-wrap"><img class="welcome-logo" src="logo.png" alt="TASVIA Academy"></div>
+    <h2>Welcome to <span>TASVIA</span></h2>
+    <p id="welcomeGreeting">Let’s inspire, learn, grow and succeed together.</p>
+    <p class="welcome-tag">INSPIRE • LEARN • GROW • SUCCEED</p>
+    <button id="welcomeEnter" class="welcome-enter" type="button" onclick="closeWelcome()">Enter Parents Portal</button>
+    <br>
+    <button id="welcomeSound" class="welcome-sound" type="button" aria-pressed="true">🔊 Welcome audio on</button>
+  </div>
+</div>
+
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js">
+document.addEventListener("change",async e=>{if(e.target.id!=="parentPhotoInput")return;const f=e.target.files&&e.target.files[0];if(!f||!V)return;if(f.size>2*1024*1024){alert("Photo must be smaller than 2 MB");return}try{const data=await parentResizePhoto(f),code=(location.hash||"").replace("#","").trim().toUpperCase()||load("tasvia-parent-code");await firebase.firestore().doc("parentView/"+code).update({photo:data,photoUpdated:Date.now()});V=Object.assign({},V,{photo:data});render();banner("Photo saved","It will also appear in the academy app.");}catch(err){alert("Photo could not be saved. Please try again.")}});
+function parentResizePhoto(file){return new Promise((res,rej)=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{const W=300,H=400,cv=document.createElement("canvas");cv.width=W;cv.height=H;const x=cv.getContext("2d"),sc=Math.max(W/im.width,H/im.height),w=im.width*sc,h=im.height*sc;x.fillStyle="#fff";x.fillRect(0,0,W,H);x.drawImage(im,(W-w)/2,(H-h)/2.5,w,h);URL.revokeObjectURL(u);let q=.78,out=cv.toDataURL("image/jpeg",q);while(out.length>150000&&q>.4){q-=.08;out=cv.toDataURL("image/jpeg",q)}res(out)};im.onerror=()=>{URL.revokeObjectURL(u);rej(new Error("image"))};im.src=u})}
+</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
+
+/* TASVIA PARENT WELCOME AUDIO */
+let welcomeAudioOn=true,welcomeDone=false,welcomeVoiceTimer=null;
+function welcomeText(){
+  const name=V&&V.name?V.name:"";
+  if(L==="te") return name ? `నమస్కారం! ${name} గారి తల్లిదండ్రులకు TASVIA అకాడమీకి స్వాగతం. మనం కలిసి ప్రేరణతో నేర్చుకొని, ఎదిగి, విజయాన్ని సాధిద్దాం.` : "TASVIA అకాడమీకి స్వాగతం. మనం కలిసి ప్రేరణతో నేర్చుకొని, ఎదిగి, విజయాన్ని సాధిద్దాం.";
+  if(L==="hi") return name ? `नमस्कार! ${name} के माता-पिता का TASVIA Academy में स्वागत है। आइए, साथ मिलकर प्रेरित हों, सीखें, आगे बढ़ें और सफलता प्राप्त करें।` : "TASVIA Academy में आपका स्वागत है। आइए, साथ मिलकर प्रेरित हों, सीखें, आगे बढ़ें और सफलता प्राप्त करें।";
+  return name ? `Welcome to TASVIA Academy, parents of ${name}. Let’s inspire, learn, grow and succeed together.` : "Welcome to TASVIA Academy. Let’s inspire, learn, grow and succeed together.";
+}
+function speakWelcome(){
+  if(!welcomeAudioOn||!("speechSynthesis" in window))return;
+  try{
+    window.speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(welcomeText());
+    u.lang=T[L].loc||"en-IN";u.rate=.92;u.pitch=1.03;u.volume=.9;
+    window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+function closeWelcome(){
+  if(welcomeDone)return; welcomeDone=true;
+  try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}
+  const b=document.getElementById("welcomeBackdrop");if(b){b.classList.add("hide");b.style.pointerEvents="none";}
+  setTimeout(()=>b&&b.remove(),520);
+}
+function showWelcome(){
+  const b=document.getElementById("welcomeBackdrop");if(!b)return;
+  const s=document.getElementById("welcomeSound");
+  s.textContent=welcomeAudioOn?"🔊 Welcome audio on":"🔇 Welcome audio off";
+  setTimeout(()=>{speakWelcome();},220);
+  welcomeVoiceTimer=setTimeout(closeWelcome,5200);
+}
+document.addEventListener("click",e=>{
+  if(e.target.id==="welcomeEnter"){clearTimeout(welcomeVoiceTimer);try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(_){}closeWelcome()}
+  if(e.target.id==="welcomeSound"){
+    welcomeAudioOn=!welcomeAudioOn;e.target.textContent=welcomeAudioOn?"🔊 Welcome audio on":"🔇 Welcome audio off";e.target.classList.toggle("off",!welcomeAudioOn);
+    if(welcomeAudioOn)speakWelcome();else try{window.speechSynthesis.cancel()}catch(_){}
+  }
+});
+
+function interLabel(c,y1,y2){const m=/^Inter-(1|2)(?: (.+))?$/.exec(c);if(!m)return null;return (m[1]==="1"?y1:y2)+(m[2]?" · "+m[2]:"")}
+const T={
+ en:{loc:"en-IN",newHw:"New homework",newTest:"New test marks",absentToday:"Marked absent",feePaid:"Fee payment recorded",alertsOn:"🔔 Turn on alerts",alertsDone:"🔔 Alerts are on while this page is open",cls:c=>/^\d+$/.test(c)?"Class "+c:(interLabel(c,"Inter 1st Year","Inter 2nd Year")||c),att:"Attendance",thisMonth:"This month",present:"Present",absent:"Absent",pct:"Attendance",year:"This year",days:"days",abs:"Recent absences",none:"No absences",tests:"Test marks",test:"Test",marks:"Marks",grade:"Grade",noTests:"No test marks yet",fees:"Fees",month:"Month",status:"Status",paid:"Paid",due:"Due",part:"Part paid",pays:"Recent payments",hw:"Homework",noHw:"No homework added yet",note:"Note",notice:"Notice",timings:"Timings",contact:"Contact the academy",call:"Call",wa:"WhatsApp",updated:"Updated",left:"This student is no longer enrolled at the academy.",invalid:"This link is not valid. Please ask TASVIA Academy for a new link.",offline:"Couldn't load. Check your internet connection and try again.",retry:"Try again",save:"Tip: add this page to your home screen to open it quickly.",overall:"Overall"},
+ te:{loc:"te-IN",newHw:"కొత్త హోంవర్క్",newTest:"కొత్త పరీక్ష మార్కులు",absentToday:"గైర్హాజరు నమోదైంది",feePaid:"ఫీజు చెల్లింపు నమోదైంది",alertsOn:"🔔 అలర్ట్‌లు ఆన్ చేయండి",alertsDone:"🔔 ఈ పేజీ తెరిచి ఉన్నప్పుడు అలర్ట్‌లు వస్తాయి",cls:c=>/^\d+$/.test(c)?c+"వ తరగతి":(interLabel(c,"ఇంటర్ 1వ సంవత్సరం","ఇంటర్ 2వ సంవత్సరం")||({Nursery:"నర్సరీ"})[c]||c),att:"హాజరు",thisMonth:"ఈ నెల",present:"హాజరు",absent:"గైర్హాజరు",pct:"హాజరు శాతం",year:"ఈ సంవత్సరం",days:"రోజులు",abs:"ఇటీవలి గైర్హాజరు రోజులు",none:"గైర్హాజరు లేదు",tests:"పరీక్ష మార్కులు",test:"పరీక్ష",marks:"మార్కులు",grade:"గ్రేడ్",noTests:"ఇంకా పరీక్ష మార్కులు లేవు",fees:"ఫీజు",month:"నెల",status:"స్థితి",paid:"చెల్లించారు",due:"బాకీ",part:"కొంత చెల్లించారు",pays:"ఇటీవలి చెల్లింపులు",hw:"హోంవర్క్",noHw:"ఇంకా హోంవర్క్ లేదు",note:"గమనిక",notice:"ప్రకటన",timings:"సమయాలు",contact:"అకాడమీని సంప్రదించండి",call:"కాల్",wa:"వాట్సాప్",updated:"నవీకరించబడింది",left:"ఈ విద్యార్థి ఇప్పుడు అకాడమీలో నమోదై లేరు.",invalid:"ఈ లింక్ చెల్లదు. దయచేసి TASVIA అకాడమీని కొత్త లింక్ అడగండి.",offline:"లోడ్ కాలేదు. ఇంటర్నెట్ కనెక్షన్ చూసి మళ్లీ ప్రయత్నించండి.",retry:"మళ్లీ ప్రయత్నించండి",save:"సూచన: ఈ పేజీని త్వరగా తెరవడానికి హోమ్ స్క్రీన్‌కు జోడించండి.",overall:"మొత్తం"},
+ hi:{loc:"hi-IN",newHw:"नया गृहकार्य",newTest:"नए टेस्ट अंक",absentToday:"अनुपस्थिति दर्ज",feePaid:"फ़ीस भुगतान दर्ज",alertsOn:"🔔 अलर्ट चालू करें",alertsDone:"🔔 पेज खुला रहने पर अलर्ट मिलेंगे",cls:c=>/^\d+$/.test(c)?"कक्षा "+c:(interLabel(c,"इंटर प्रथम वर्ष","इंटर द्वितीय वर्ष")||({Nursery:"नर्सरी"})[c]||c),att:"उपस्थिति",thisMonth:"इस महीने",present:"उपस्थित",absent:"अनुपस्थित",pct:"उपस्थिति",year:"इस वर्ष",days:"दिन",abs:"हाल की अनुपस्थिति",none:"कोई अनुपस्थिति नहीं",tests:"टेस्ट के अंक",test:"टेस्ट",marks:"अंक",grade:"ग्रेड",noTests:"अभी कोई टेस्ट अंक नहीं",fees:"फ़ीस",month:"महीना",status:"स्थिति",paid:"जमा",due:"बाकी",part:"आंशिक जमा",pays:"हाल के भुगतान",hw:"गृहकार्य",noHw:"अभी कोई गृहकार्य नहीं",note:"सूचना",notice:"सूचना",timings:"समय",contact:"अकादमी से संपर्क करें",call:"कॉल",wa:"व्हाट्सऐप",updated:"अपडेट",left:"यह छात्र अब अकादमी में नामांकित नहीं है।",invalid:"यह लिंक मान्य नहीं है। कृपया TASVIA अकादमी से नया लिंक माँगें।",offline:"लोड नहीं हुआ। इंटरनेट कनेक्शन देखकर फिर कोशिश करें।",retry:"फिर कोशिश करें",save:"सुझाव: जल्दी खोलने के लिए इस पेज को होम स्क्रीन पर जोड़ें।",overall:"कुल"}
+};
+const LN={en:"English",te:"తెలుగు",hi:"हिन्दी"};
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const rs=n=>"₹"+Number(n||0).toLocaleString("en-IN");
+const grade=p=>p>=90?"A+":p>=80?"A":p>=70?"B+":p>=60?"B":p>=50?"C":p>=35?"D":"E";
+let V=null,L="en",feeDueScrollDone=false,feeDuePopupShown=false;
+function store(k,v){try{v===undefined?localStorage.getItem(k):localStorage.setItem(k,v)}catch(e){}}
+function load(k){try{return localStorage.getItem(k)}catch(e){return null}}
+const mN=m=>{const [y,mo]=m.split("-");return new Date(+y,+mo-1,1).toLocaleDateString(T[L].loc,{month:"long",year:"numeric"})};
+const dN=d=>new Date(d+"T00:00").toLocaleDateString(T[L].loc,{day:"numeric",month:"short"});
+const dL=d=>new Date(d+"T00:00").toLocaleDateString(T[L].loc,{weekday:"long",day:"numeric",month:"long"});
+
+function langs(){document.getElementById("langs").innerHTML=Object.keys(LN).map(k=>`<button class="${k===L?"on":""}" data-l="${k}" aria-pressed="${k===L}">${LN[k]}</button>`).join("");document.documentElement.lang=k2(L)}
+const k2=l=>({en:"en",te:"te",hi:"hi"})[l];
+document.getElementById("langs").addEventListener("click",e=>{const b=e.target.closest("[data-l]");if(!b)return;L=b.dataset.l;store("tasvia-parent-lang",L);render()});
+
+function msg(text,retry){document.getElementById("kid").innerHTML="";document.getElementById("main").innerHTML=`<div class="center">${esc(text)}${retry?`<div class="acts" style="justify-content:center"><a class="btn gold" href="" onclick="location.reload();return false">${esc(T[L].retry)}</a></div>`:""}</div>`}
+
+function render(){
+  langs();const t=T[L],v=V;if(!v)return;
+  const c=v.centre||{},ph=String(c.phone||"").replace(/\D/g,""),ph91=ph.length===10?"91"+ph:ph;
+  if(v.left){msg(t.left);return}
+  document.title=v.name+" – TASVIA Academy";
+  document.getElementById("kid").innerHTML=`${v.photo&&/^data:image\/jpeg;base64,/.test(v.photo)?`<div class="ph"><img src="${v.photo}" alt=""></div>`:""}<div><h1>${esc(v.name)}</h1><p>${esc(t.cls(v.cls))}${v.board?" · "+esc(v.board):""} · ${esc(v.year||"")}</p></div>`;
+  const months=Object.keys(v.att||{}).sort().reverse(),cm=months[0],a=(v.att||{})[cm]||{p:0,a:0},tot=a.p+a.a,pc=tot?Math.round(a.p*100/tot):null;
+  const yt=(v.yr||{}).p+(v.yr||{}).a,ypc=yt?Math.round(v.yr.p*100/yt):null;
+  let h="";
+  if(c.notice)h+=`<div class="card"><h2>📢 ${esc(t.notice)}</h2><div class="notice">${esc(c.notice)}</div></div>`;
+  // homework
+  h+=`<div class="card"><h2>${esc(t.hw)}</h2>`+((v.hw||[]).length?v.hw.map(x=>`<div class="hw"><b>${esc(dL(x.d))}</b><div>${esc(x.hw)}</div>${x.note?`<div class="sub">${esc(t.note)}: ${esc(x.note)}</div>`:""}</div>`).join(""):`<p class="sub">${esc(t.noHw)}</p>`)+`</div>`;
+  // attendance
+  h+=`<div class="card"><h2>${esc(t.att)} · ${esc(cm?mN(cm):"")}</h2><div class="stats"><div><b class="ok">${a.p}</b><small>${esc(t.present)}</small></div><div><b class="bad">${a.a}</b><small>${esc(t.absent)}</small></div><div><b>${pc!=null?pc+"%":"–"}</b><small>${esc(t.pct)}</small></div></div>`;
+  if(pc!=null)h+=`<div class="bar"><i style="width:${pc}%"></i></div>`;
+  h+=`<p class="sub" style="margin:6px 0 0">${esc(t.year)}: ${ypc!=null?`${v.yr.p}/${yt} ${esc(t.days)} (${ypc}%)`:"–"}</p>`;
+  if(months.length>1)h+=`<div class="chips" style="margin-top:8px">${months.slice(1).map(m=>{const x=v.att[m],tt=x.p+x.a;return `<span>${esc(mN(m))}: ${tt?Math.round(x.p*100/tt)+"%":"–"}</span>`}).join("")}</div>`;
+  h+=`<p class="sub" style="margin:10px 0 4px"><b>${esc(t.abs)}</b></p>`+((v.abs||[]).length?`<div class="chips">${v.abs.map(d=>`<span class="bad">${esc(dN(d))}</span>`).join("")}</div>`:`<p class="sub" style="margin:0">${esc(t.none)} ✓</p>`)+`</div>`;
+  // tests
+  h+=`<div class="card"><h2>${esc(t.tests)}</h2>`;
+  if((v.tests||[]).length){
+    const got=v.tests.reduce((s,x)=>s+x.m,0),mx=v.tests.reduce((s,x)=>s+x.x,0),op=mx?Math.round(got*100/mx):0;
+    h+=`<p class="sub" style="margin:0 0 6px">${esc(t.overall)}: <b style="color:var(--ink)">${op}%</b> · ${esc(t.grade)} <b class="gold">${grade(op)}</b></p><table><tr><th>${esc(t.test)}</th><th class="r">${esc(t.marks)}</th><th class="r">${esc(t.grade)}</th></tr>`+
+      v.tests.map(x=>{const p=x.x?Math.round(x.m*100/x.x):0;return `<tr><td>${esc(x.s)} – ${esc(x.n)}<br><span class="sub">${esc(dN(x.d))}</span></td><td class="r">${x.m}/${x.x}</td><td class="r"><b class="gold">${grade(p)}</b></td></tr>`}).join("")+`</table>`;
+  }else h+=`<p class="sub">${esc(t.noTests)}</p>`;
+  h+=`</div>`;
+  // fees
+  const feeDue=(v.fees||[]).some(f=>Number(f.paid||0)<Number(f.fee||0));
+  if((v.fees||[]).length||(v.pays||[]).length){
+    h+=`<div id="feeCard" class="card${feeDue?" fee-due":""}"><h2>${esc(t.fees)}</h2>${feeDue?`<div class="fee-alert"><span class="dot"></span><span>${esc(t.due)} · ${esc(L==="te"?"ఫీజు చెల్లింపు పెండింగ్‌లో ఉంది":L==="hi"?"फ़ीस भुगतान बाकी है":"Fee payment pending")}</span></div>`:""}`;
+    if((v.fees||[]).length)h+=`<table><tr><th>${esc(t.month)}</th><th class="r">${esc(t.status)}</th></tr>`+v.fees.map(f=>{const st=f.paid>=f.fee?`<span class="tag ok">${esc(t.paid)}</span>`:f.paid>0?`<span class="tag gold">${esc(t.part)} · ${esc(t.due)} ${rs(f.fee-f.paid)}</span>`:`<span class="tag bad">${esc(t.due)} ${rs(f.fee)}</span>`;return `<tr><td>${esc(mN(f.m))}</td><td class="r">${st}</td></tr>`}).join("")+`</table>`;
+    if((v.pays||[]).length)h+=`<p class="sub" style="margin:12px 0 4px"><b>${esc(t.pays)}</b></p><table>`+v.pays.map(p=>`<tr><td>${esc(dN(p.d))}<br><span class="sub">${esc(mN(p.m))}</span></td><td class="r">${rs(p.a)}<br><span class="sub">${esc(p.mode||"")}</span></td></tr>`).join("")+`</table>`;
+    h+=`</div>`;
+  }
+  // contact
+  h+=`<div class="card"><h2>${esc(t.contact)}</h2><p style="margin:0">${esc(c.name||"TASVIA Academy")}</p>${c.timings?`<p class="sub" style="margin:4px 0 0">${esc(t.timings)}: ${esc(c.timings)}</p>`:""}${c.address?`<p class="sub" style="margin:4px 0 0">${esc(c.address)}</p>`:""}
+    <div class="acts">${ph?`<a class="btn gold" href="tel:${esc(ph)}">📞 ${esc(t.call)}</a><a class="btn" target="_blank" rel="noopener" href="https://wa.me/${esc(ph91)}">💬 ${esc(t.wa)}</a>`:""}</div></div>`;
+  const alertsOn=("Notification" in window&&Notification.permission==="granted")||(function(){try{return localStorage.getItem("tasvia-parent-alerts")==="1"}catch(e){return false}})();
+  h+=`<div class="acts" style="justify-content:center">${alertsOn?`<span class="sub">${esc(t.alertsDone)}</span>`:`<button id="alertBtn" class="btn gold" style="border:0;font:inherit;font-weight:600;cursor:pointer">${esc(t.alertsOn)}</button>`}</div>`;
+  h+=`<p class="foot">${esc(t.updated)}: ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}<br>${esc(t.save)}</p>`;
+  h+="<div class=\"card\"><h2>📷 Student photo</h2><div class=\"photo-upload\"><div class=\"preview\">"+(v.photo?"<img src=\""+v.photo+"\" alt=\"\">":"📷")+"</div><div><p style=\"margin:0 0 5px\"><b>"+(v.photo?"Photo uploaded":"Send your child’s photo")+"</b></p><p class=\"sub\" style=\"margin:0\">JPG/PNG · max 2 MB</p></div></div><input id=\"parentPhotoInput\" type=\"file\" accept=\"image/*\"><div class=\"acts\"><label class=\"btn gold\" for=\"parentPhotoInput\">"+(v.photo?"Change photo":"Upload photo")+"</label></div></div>";
+  document.getElementById("main").innerHTML=h;
+  if(feeDue){
+    const dueAmount=(v.fees||[]).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
+    showFeeDuePopup(dueAmount);
+  }
+  if(feeDue&&!feeDueScrollDone){
+    feeDueScrollDone=true;
+    setTimeout(()=>{const el=document.getElementById("feeCard");if(el)el.scrollIntoView({behavior:"smooth",block:"center"})},850);
+  }
+}
+
+let actx=null;
+
+function showFeeDuePopup(amount){
+  if(feeDuePopupShown)return;
+  feeDuePopupShown=true;
+  let el=document.getElementById("feePopup");
+  if(!el){el=document.createElement("div");el.id="feePopup";document.body.appendChild(el)}
+  const title=L==="te"?"ఫీజు చెల్లింపు పెండింగ్‌లో ఉంది":L==="hi"?"फ़ीस भुगतान बाकी है":"Fee Payment Pending";
+  const note=L==="te"?"దయచేసి బాకీ ఉన్న ఫీజును చెల్లించండి.":L==="hi"?"कृपया बकाया फ़ीस का भुगतान करें।":"Please clear the pending fee payment.";
+  const view=L==="te"?"ఫీజు చూడండి":L==="hi"?"फ़ीस देखें":"View Fees";
+  const close=L==="te"?"తర్వాత":L==="hi"?"बाद में":"Later";
+  el.innerHTML=`<div class="fee-popup-backdrop show" role="dialog" aria-modal="true" aria-labelledby="feePopupTitle"><div class="fee-popup"><div class="fee-popup-icon">🔔</div><h3 id="feePopupTitle">${esc(title)}</h3><div class="due-label">${esc(T[L].due)}</div><div class="due-amount">${rs(amount)}</div><p class="due-note">${esc(note)}</p><div class="acts"><button class="btn" data-fee-close>${esc(close)}</button><button class="btn gold" data-fee-view>${esc(view)}</button></div></div></div>`;
+  const backdrop=el.querySelector(".fee-popup-backdrop");
+  const closePopup=()=>{backdrop.classList.remove("show");setTimeout(()=>el.remove(),300)};
+  el.querySelector("[data-fee-close]").onclick=closePopup;
+  el.querySelector("[data-fee-view]").onclick=()=>{closePopup();setTimeout(()=>document.getElementById("feeCard")?.scrollIntoView({behavior:"smooth",block:"center"}),80)};
+  backdrop.onclick=e=>{if(e.target===backdrop)closePopup()};
+}
+
+function chime(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();if(actx.state==="suspended")actx.resume();const t0=actx.currentTime+.01;
+  [[784,0,.22,.17],[988,.13,.22,.17],[1319,.26,.45,.15]].forEach(([f,st,du,vol])=>{const o=actx.createOscillator(),g=actx.createGain();o.frequency.value=f;g.gain.setValueAtTime(0,t0+st);g.gain.linearRampToValueAtTime(vol,t0+st+.012);g.gain.exponentialRampToValueAtTime(.0001,t0+st+du);o.connect(g);g.connect(actx.destination);o.start(t0+st);o.stop(t0+st+du+.05)})}catch(e){}}
+let bT;function banner(title,body){let el=document.getElementById("banner");if(!el){el=document.createElement("div");el.id="banner";el.setAttribute("role","status");document.body.appendChild(el)}
+  el.innerHTML=`<img src="logo.png" alt=""><div><b>${esc(title)}</b><span>${esc(body)}</span></div>`;el.classList.add("show");clearTimeout(bT);bT=setTimeout(()=>el.classList.remove("show"),6000)}
+function alertParent(title,body){chime();banner(title,body);
+  if("Notification" in window&&Notification.permission==="granted"&&document.hidden){try{new Notification(title,{body,icon:"icon-192.png",tag:"tasvia-parent"})}catch(e){}}}
+function changes(o,n){
+  const t=T[L],out=[];if(!o||!n||n.left)return out;
+  const h0=(o.hw||[])[0],h1=(n.hw||[])[0];if(h1&&(!h0||h0.d!==h1.d||h0.hw!==h1.hw))out.push([t.newHw,h1.hw.split("\n")[0]]);
+  if((n.tests||[]).length>(o.tests||[]).length){const x=n.tests[0];out.push([t.newTest,`${x.s} – ${x.n}: ${x.m}/${x.x}`])}
+  const a0=(o.abs||[])[0],a1=(n.abs||[])[0];if(a1&&a1!==a0)out.push([t.absentToday,dL(a1)]);
+  const p0=(o.pays||[])[0],p1=(n.pays||[])[0];if(p1&&(!p0||p0.d!==p1.d||p0.a!==p1.a))out.push([t.feePaid,rs(p1.a)+" · "+mN(p1.m)]);
+  return out;
+}
+document.addEventListener("click",e=>{if(e.target.id==="alertBtn"){chime();if("Notification" in window&&Notification.permission==="default")Notification.requestPermission().then(()=>render());else{try{localStorage.setItem("tasvia-parent-alerts","1")}catch(_){ }render()}}});
+showWelcome();
+(function start(){
+  const saved=load("tasvia-parent-lang");if(saved&&T[saved])L=saved;langs();
+  let code=(location.hash||"").replace("#","").trim().toUpperCase();
+  if(code)store("tasvia-parent-code",code);else code=load("tasvia-parent-code")||"";
+  if(!/^[A-Z0-9]{8,20}$/.test(code)){msg(T[L].invalid);return}
+  if(!window.firebase||!window.FIREBASE_CONFIG||!window.FIREBASE_CONFIG.apiKey){msg(T[L].offline,true);return}
+  firebase.initializeApp(window.FIREBASE_CONFIG);
+  const timer=setTimeout(()=>{if(!V)msg(T[L].offline,true)},15000);
+  firebase.firestore().doc("parentView/"+code).onSnapshot(d=>{
+    clearTimeout(timer);
+    if(!d.exists){msg(T[L].invalid);return}
+    const prev=V;V=d.data();if(!saved&&V.lang&&T[V.lang])L=V.lang;render();
+    changes(prev,V).forEach(([a,b],i)=>setTimeout(()=>alertParent(a,b),i*1800));
+  },e=>{clearTimeout(timer);msg(e&&e.code==="permission-denied"?T[L].invalid:T[L].offline,e&&e.code!=="permission-denied")});
+})();
+</script>
+</body>
+</html>
