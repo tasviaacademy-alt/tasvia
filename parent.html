@@ -68,6 +68,21 @@ td.r,th.r{text-align:right;white-space:nowrap}
 @media(prefers-reduced-motion:reduce){
  .fee-due,.fee-due::after,.fee-due .fee-alert .dot{animation:none!important}
 }
+
+/* PARENT FEE DUE POPUP */
+.fee-popup-backdrop{position:fixed;inset:0;z-index:100;background:rgba(7,18,14,.58);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .28s ease,visibility .28s ease}
+.fee-popup-backdrop.show{opacity:1;visibility:visible}
+.fee-popup{width:min(94%,390px);background:var(--card);border:1px solid rgba(199,71,64,.28);border-top:5px solid var(--a);border-radius:20px;padding:24px 20px 18px;box-shadow:0 22px 60px rgba(0,0,0,.32);transform:translateY(18px) scale(.96);transition:transform .32s cubic-bezier(.22,1,.36,1);text-align:center}
+.fee-popup-backdrop.show .fee-popup{transform:translateY(0) scale(1)}
+.fee-popup-icon{width:54px;height:54px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;background:rgba(196,67,42,.1);font-size:27px;animation:feePopupPulse 1.5s ease-in-out infinite}
+.fee-popup h3{font-size:1.45rem;color:var(--ink);margin-bottom:5px}
+.fee-popup .due-label{color:var(--a);font-weight:700;font-size:.95rem}
+.fee-popup .due-amount{font-family:"Baloo 2",sans-serif;font-size:2rem;font-weight:800;color:var(--a);line-height:1.15;margin:7px 0 15px}
+.fee-popup .due-note{color:var(--muted);font-size:.9rem;margin:0 0 16px}
+.fee-popup .acts{justify-content:center;margin-top:0}
+.fee-popup .btn{min-width:125px;cursor:pointer;border:0;font:inherit}
+@keyframes feePopupPulse{50%{transform:scale(1.08);box-shadow:0 0 0 9px rgba(196,67,42,.06)}}
+@media(prefers-reduced-motion:reduce){.fee-popup-backdrop,.fee-popup{transition:none}.fee-popup-icon{animation:none}}
 </style>
 </head>
 <body>
@@ -88,7 +103,7 @@ const LN={en:"English",te:"తెలుగు",hi:"हिन्दी"};
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const rs=n=>"₹"+Number(n||0).toLocaleString("en-IN");
 const grade=p=>p>=90?"A+":p>=80?"A":p>=70?"B+":p>=60?"B":p>=50?"C":p>=35?"D":"E";
-let V=null,L="en",feeDueScrollDone=false;
+let V=null,L="en",feeDueScrollDone=false,feeDuePopupShown=false;
 function store(k,v){try{v===undefined?localStorage.getItem(k):localStorage.setItem(k,v)}catch(e){}}
 function load(k){try{return localStorage.getItem(k)}catch(e){return null}}
 const mN=m=>{const [y,mo]=m.split("-");return new Date(+y,+mo-1,1).toLocaleDateString(T[L].loc,{month:"long",year:"numeric"})};
@@ -142,13 +157,31 @@ function render(){
   h+=`<div class="acts" style="justify-content:center">${alertsOn?`<span class="sub">${esc(t.alertsDone)}</span>`:`<button id="alertBtn" class="btn gold" style="border:0;font:inherit;font-weight:600;cursor:pointer">${esc(t.alertsOn)}</button>`}</div>`;
   h+=`<p class="foot">${esc(t.updated)}: ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}<br>${esc(t.save)}</p>`;
   document.getElementById("main").innerHTML=h;
-  if(feeDue&&!feeDueScrollDone){
+  if(feeDue){\n    const dueAmount=(v.fees||[]).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);\n    setTimeout(()=>showFeeDuePopup(dueAmount),350);\n  }\n  if(feeDue&&!feeDueScrollDone){
     feeDueScrollDone=true;
     setTimeout(()=>{const el=document.getElementById("feeCard");if(el)el.scrollIntoView({behavior:"smooth",block:"center"})},850);
   }
 }
 
 let actx=null;
+
+function showFeeDuePopup(amount){
+  if(feeDuePopupShown||!amount)return;
+  feeDuePopupShown=true;
+  let el=document.getElementById("feePopup");
+  if(!el){el=document.createElement("div");el.id="feePopup";document.body.appendChild(el)}
+  const title=L==="te"?"ఫీజు చెల్లింపు పెండింగ్‌లో ఉంది":L==="hi"?"फ़ीस भुगतान बाकी है":"Fee Payment Pending";
+  const note=L==="te"?"దయచేసి బాకీ ఉన్న ఫీజును చెల్లించండి.":L==="hi"?"कृपया बकाया फ़ीस का भुगतान करें।":"Please clear the pending fee payment.";
+  const view=L==="te"?"ఫీజు చూడండి":L==="hi"?"फ़ीस देखें":"View Fees";
+  const close=L==="te"?"తర్వాత":L==="hi"?"बाद में":"Later";
+  el.innerHTML=`<div class="fee-popup-backdrop show" role="dialog" aria-modal="true" aria-labelledby="feePopupTitle"><div class="fee-popup"><div class="fee-popup-icon">🔔</div><h3 id="feePopupTitle">${esc(title)}</h3><div class="due-label">${esc(T[L].due)}</div><div class="due-amount">${rs(amount)}</div><p class="due-note">${esc(note)}</p><div class="acts"><button class="btn" data-fee-close>${esc(close)}</button><button class="btn gold" data-fee-view>${esc(view)}</button></div></div></div>`;
+  const backdrop=el.querySelector(".fee-popup-backdrop");
+  const closePopup=()=>{backdrop.classList.remove("show");setTimeout(()=>el.remove(),300)};
+  el.querySelector("[data-fee-close]").onclick=closePopup;
+  el.querySelector("[data-fee-view]").onclick=()=>{closePopup();setTimeout(()=>document.getElementById("feeCard")?.scrollIntoView({behavior:"smooth",block:"center"}),80)};
+  backdrop.onclick=e=>{if(e.target===backdrop)closePopup()};
+}
+
 function chime(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();if(actx.state==="suspended")actx.resume();const t0=actx.currentTime+.01;
   [[784,0,.22,.17],[988,.13,.22,.17],[1319,.26,.45,.15]].forEach(([f,st,du,vol])=>{const o=actx.createOscillator(),g=actx.createGain();o.frequency.value=f;g.gain.setValueAtTime(0,t0+st);g.gain.linearRampToValueAtTime(vol,t0+st+.012);g.gain.exponentialRampToValueAtTime(.0001,t0+st+du);o.connect(g);g.connect(actx.destination);o.start(t0+st);o.stop(t0+st+du+.05)})}catch(e){}}
 let bT;function banner(title,body){let el=document.getElementById("banner");if(!el){el=document.createElement("div");el.id="banner";el.setAttribute("role","status");document.body.appendChild(el)}
