@@ -285,6 +285,21 @@ function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&l
 function uid(p){return p+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
 const rs=n=>"₹"+Number(n||0).toLocaleString("en-IN");
 function info(){return Object.assign({},DEFAULT_INFO,S.info||{})}
+function infoText(){
+  const i=info();
+  const parts=[
+    i.name,
+    i.notice,
+    i.timings?("Timings: "+i.timings):"",
+    i.subjects?("Courses: "+i.subjects):"",
+    i.extra,
+    i.address,
+    i.phone?("Phone: "+i.phone):"",
+    i.email?("Email: "+i.email):"",
+    i.insta?("Instagram: "+i.insta):""
+  ];
+  return parts.filter(Boolean).join("\n");
+}
 function grade(p){return p>=90?"A+":p>=80?"A":p>=70?"B+":p>=60?"B":p>=50?"C":p>=35?"D":"E"}
 function studentsOf(cls,incLeft){return Object.entries(S.students).map(([id,s])=>({id,...s})).filter(s=>(incLeft||active(s))&&(cls==="all"||s.cls===cls)).sort((a,b)=>CLASSES.indexOf(a.cls)-CLASSES.indexOf(b.cls)||a.name.localeCompare(b.name))}
 function isAdmin(){return !!(window.currentUser&&window.currentUser.role==="admin")}
