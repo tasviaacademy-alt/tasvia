@@ -85,11 +85,38 @@ td.r,th.r{text-align:right;white-space:nowrap}
 @media(prefers-reduced-motion:reduce){.fee-popup-backdrop,.fee-popup{transition:none}.fee-popup-icon{animation:none}}
 
 .photo-upload{display:flex;align-items:center;gap:12px;padding:12px;border:1px dashed var(--line);border-radius:14px;background:var(--chip);margin-top:10px}.photo-upload .preview{width:58px;height:72px;border-radius:10px;overflow:hidden;border:2px solid var(--gold);background:var(--chip);display:grid;place-items:center;font-size:24px;flex:0 0 auto}.photo-upload .preview img{width:100%;height:100%;object-fit:cover}.photo-upload input{display:none}
+
+/* PARENT WELCOME EXPERIENCE */
+.welcome-backdrop{position:fixed;inset:0;z-index:999;background:linear-gradient(145deg,#071a3d 0%,#0B2455 58%,#102e68 100%);display:flex;align-items:center;justify-content:center;padding:24px;opacity:1;visibility:visible;transition:opacity .45s ease,visibility .45s ease}
+.welcome-backdrop.hide{opacity:0;visibility:hidden;pointer-events:none}
+.welcome-card{width:min(92%,390px);text-align:center;color:#F3F6F1}
+.welcome-logo-wrap{width:112px;height:112px;margin:0 auto 18px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 0 0 4px #F2AC10,0 14px 45px rgba(0,0,0,.28);animation:welcomeLogoIn .75s cubic-bezier(.22,1,.36,1) both}
+.welcome-logo{width:88px;height:88px;border-radius:50%;object-fit:contain}
+.welcome-card h2{font-family:"Baloo 2",sans-serif;font-size:2rem;line-height:1.05;margin:0 0 7px}
+.welcome-card h2 span{color:#F2AC10}
+.welcome-card p{margin:0 auto;color:rgba(243,246,241,.86);font-size:1rem;max-width:320px}
+.welcome-tag{margin-top:12px!important;font-size:.82rem!important;color:#F2AC10!important;font-weight:600;letter-spacing:.04em}
+.welcome-enter{margin-top:24px;border:1px solid rgba(242,172,16,.7);border-radius:999px;background:#F2AC10;color:#1a1405;padding:11px 24px;font:600 16px Hind,sans-serif;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.welcome-sound{margin-top:12px;border:1px solid rgba(255,255,255,.22);border-radius:999px;background:rgba(255,255,255,.08);color:#F3F6F1;padding:7px 14px;font:500 13px Hind,sans-serif;cursor:pointer}
+.welcome-sound.off{opacity:.72}
+@keyframes welcomeLogoIn{from{opacity:0;transform:scale(.65) rotate(-8deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+@media(prefers-reduced-motion:reduce){.welcome-logo-wrap{animation:none}.welcome-backdrop{transition:none}}
 </style>
 </head>
 <body>
 <header><div class="top"><div class="brand"><img class="hlogo" src="logo.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
-<main id="main"><div class="center" id="msg">Loading…</div></main>
+<main id="main"><div class="center" id="msg">Loading…</div></main><div id="welcomeBackdrop" class="welcome-backdrop" role="dialog" aria-label="TASVIA Academy welcome">
+  <div class="welcome-card">
+    <div class="welcome-logo-wrap"><img class="welcome-logo" src="logo.png" alt="TASVIA Academy"></div>
+    <h2>Welcome to <span>TASVIA</span></h2>
+    <p id="welcomeGreeting">Let’s inspire, learn, grow and succeed together.</p>
+    <p class="welcome-tag">INSPIRE • LEARN • GROW • SUCCEED</p>
+    <button id="welcomeEnter" class="welcome-enter" type="button">Enter Parents Portal</button>
+    <br>
+    <button id="welcomeSound" class="welcome-sound" type="button" aria-pressed="true">🔊 Welcome audio on</button>
+  </div>
+</div>
+
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js">
 document.addEventListener("change",async e=>{if(e.target.id!=="parentPhotoInput")return;const f=e.target.files&&e.target.files[0];if(!f||!V)return;if(f.size>2*1024*1024){alert("Photo must be smaller than 2 MB");return}try{const data=await parentResizePhoto(f),code=(location.hash||"").replace("#","").trim().toUpperCase()||load("tasvia-parent-code");await firebase.firestore().doc("parentView/"+code).update({photo:data,photoUpdated:Date.now()});V=Object.assign({},V,{photo:data});render();banner("Photo saved","It will also appear in the academy app.");}catch(err){alert("Photo could not be saved. Please try again.")}});
@@ -98,7 +125,45 @@ function parentResizePhoto(file){return new Promise((res,rej)=>{const u=URL.crea
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="firebase-config.js"></script>
 <script>
-function interLabel(c,y1,y2){const m=/^Inter-(1|2)(?: (.+))?$/.exec(c);if(!m)return null;return (m[1]==="1"?y1:y2)+(m[2]?" · "+m[2]:"")}
+
+/* TASVIA PARENT WELCOME AUDIO */
+let welcomeAudioOn=true,welcomeDone=false,welcomeVoiceTimer=null;
+function welcomeText(){
+  const name=V&&V.name?V.name:"";
+  if(L==="te") return name ? `నమస్కారం! ${name} గారి తల్లిదండ్రులకు TASVIA అకాడమీకి స్వాగతం. మనం కలిసి ప్రేరణతో నేర్చుకొని, ఎదిగి, విజయాన్ని సాధిద్దాం.` : "TASVIA అకాడమీకి స్వాగతం. మనం కలిసి ప్రేరణతో నేర్చుకొని, ఎదిగి, విజయాన్ని సాధిద్దాం.";
+  if(L==="hi") return name ? `नमस्कार! ${name} के माता-पिता का TASVIA Academy में स्वागत है। आइए, साथ मिलकर प्रेरित हों, सीखें, आगे बढ़ें और सफलता प्राप्त करें।` : "TASVIA Academy में आपका स्वागत है। आइए, साथ मिलकर प्रेरित हों, सीखें, आगे बढ़ें और सफलता प्राप्त करें।";
+  return name ? `Welcome to TASVIA Academy, parents of ${name}. Let’s inspire, learn, grow and succeed together.` : "Welcome to TASVIA Academy. Let’s inspire, learn, grow and succeed together.";
+}
+function speakWelcome(){
+  if(!welcomeAudioOn||!("speechSynthesis" in window))return;
+  try{
+    window.speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(welcomeText());
+    u.lang=T[L].loc||"en-IN";u.rate=.92;u.pitch=1.03;u.volume=.9;
+    window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+function closeWelcome(){
+  if(welcomeDone)return; welcomeDone=true;
+  try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}
+  const b=document.getElementById("welcomeBackdrop");if(b)b.classList.add("hide");
+  setTimeout(()=>b&&b.remove(),520);
+}
+function showWelcome(){
+  const b=document.getElementById("welcomeBackdrop");if(!b)return;
+  const s=document.getElementById("welcomeSound");
+  s.textContent=welcomeAudioOn?"🔊 Welcome audio on":"🔇 Welcome audio off";
+  setTimeout(()=>{speakWelcome();},220);
+  welcomeVoiceTimer=setTimeout(closeWelcome,5200);
+}
+document.addEventListener("click",e=>{
+  if(e.target.id==="welcomeEnter"){clearTimeout(welcomeVoiceTimer);speakWelcome();setTimeout(closeWelcome,900)}
+  if(e.target.id==="welcomeSound"){
+    welcomeAudioOn=!welcomeAudioOn;e.target.textContent=welcomeAudioOn?"🔊 Welcome audio on":"🔇 Welcome audio off";e.target.classList.toggle("off",!welcomeAudioOn);
+    if(welcomeAudioOn)speakWelcome();else try{window.speechSynthesis.cancel()}catch(_){}
+  }
+});
+\nfunction interLabel(c,y1,y2){const m=/^Inter-(1|2)(?: (.+))?$/.exec(c);if(!m)return null;return (m[1]==="1"?y1:y2)+(m[2]?" · "+m[2]:"")}
 const T={
  en:{loc:"en-IN",newHw:"New homework",newTest:"New test marks",absentToday:"Marked absent",feePaid:"Fee payment recorded",alertsOn:"🔔 Turn on alerts",alertsDone:"🔔 Alerts are on while this page is open",cls:c=>/^\d+$/.test(c)?"Class "+c:(interLabel(c,"Inter 1st Year","Inter 2nd Year")||c),att:"Attendance",thisMonth:"This month",present:"Present",absent:"Absent",pct:"Attendance",year:"This year",days:"days",abs:"Recent absences",none:"No absences",tests:"Test marks",test:"Test",marks:"Marks",grade:"Grade",noTests:"No test marks yet",fees:"Fees",month:"Month",status:"Status",paid:"Paid",due:"Due",part:"Part paid",pays:"Recent payments",hw:"Homework",noHw:"No homework added yet",note:"Note",notice:"Notice",timings:"Timings",contact:"Contact the academy",call:"Call",wa:"WhatsApp",updated:"Updated",left:"This student is no longer enrolled at the academy.",invalid:"This link is not valid. Please ask TASVIA Academy for a new link.",offline:"Couldn't load. Check your internet connection and try again.",retry:"Try again",save:"Tip: add this page to your home screen to open it quickly.",overall:"Overall"},
  te:{loc:"te-IN",newHw:"కొత్త హోంవర్క్",newTest:"కొత్త పరీక్ష మార్కులు",absentToday:"గైర్హాజరు నమోదైంది",feePaid:"ఫీజు చెల్లింపు నమోదైంది",alertsOn:"🔔 అలర్ట్‌లు ఆన్ చేయండి",alertsDone:"🔔 ఈ పేజీ తెరిచి ఉన్నప్పుడు అలర్ట్‌లు వస్తాయి",cls:c=>/^\d+$/.test(c)?c+"వ తరగతి":(interLabel(c,"ఇంటర్ 1వ సంవత్సరం","ఇంటర్ 2వ సంవత్సరం")||({Nursery:"నర్సరీ"})[c]||c),att:"హాజరు",thisMonth:"ఈ నెల",present:"హాజరు",absent:"గైర్హాజరు",pct:"హాజరు శాతం",year:"ఈ సంవత్సరం",days:"రోజులు",abs:"ఇటీవలి గైర్హాజరు రోజులు",none:"గైర్హాజరు లేదు",tests:"పరీక్ష మార్కులు",test:"పరీక్ష",marks:"మార్కులు",grade:"గ్రేడ్",noTests:"ఇంకా పరీక్ష మార్కులు లేవు",fees:"ఫీజు",month:"నెల",status:"స్థితి",paid:"చెల్లించారు",due:"బాకీ",part:"కొంత చెల్లించారు",pays:"ఇటీవలి చెల్లింపులు",hw:"హోంవర్క్",noHw:"ఇంకా హోంవర్క్ లేదు",note:"గమనిక",notice:"ప్రకటన",timings:"సమయాలు",contact:"అకాడమీని సంప్రదించండి",call:"కాల్",wa:"వాట్సాప్",updated:"నవీకరించబడింది",left:"ఈ విద్యార్థి ఇప్పుడు అకాడమీలో నమోదై లేరు.",invalid:"ఈ లింక్ చెల్లదు. దయచేసి TASVIA అకాడమీని కొత్త లింక్ అడగండి.",offline:"లోడ్ కాలేదు. ఇంటర్నెట్ కనెక్షన్ చూసి మళ్లీ ప్రయత్నించండి.",retry:"మళ్లీ ప్రయత్నించండి",save:"సూచన: ఈ పేజీని త్వరగా తెరవడానికి హోమ్ స్క్రీన్‌కు జోడించండి.",overall:"మొత్తం"},
@@ -207,7 +272,7 @@ function changes(o,n){
   return out;
 }
 document.addEventListener("click",e=>{if(e.target.id==="alertBtn"){chime();if("Notification" in window&&Notification.permission==="default")Notification.requestPermission().then(()=>render());else{try{localStorage.setItem("tasvia-parent-alerts","1")}catch(_){ }render()}}});
-(function start(){
+showWelcome();\n(function start(){
   const saved=load("tasvia-parent-lang");if(saved&&T[saved])L=saved;langs();
   let code=(location.hash||"").replace("#","").trim().toUpperCase();
   if(code)store("tasvia-parent-code",code);else code=load("tasvia-parent-code")||"";
