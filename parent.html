@@ -111,7 +111,7 @@ td.r,th.r{text-align:right;white-space:nowrap}
     <h2>Welcome to <span>TASVIA</span></h2>
     <p id="welcomeGreeting">Let’s inspire, learn, grow and succeed together.</p>
     <p class="welcome-tag">INSPIRE • LEARN • GROW • SUCCEED</p>
-    <button id="welcomeEnter" class="welcome-enter" type="button" onclick="closeWelcome()">Enter Parents Portal</button>
+    <button id="welcomeEnter" class="welcome-enter" type="button" onclick="var w=document.getElementById('welcomeBackdrop');if(w){w.classList.add('hide');w.style.display='none';w.style.pointerEvents='none';}">Enter Parents Portal</button>
   </div>
 </div>
 
