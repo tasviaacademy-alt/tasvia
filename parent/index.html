@@ -118,8 +118,6 @@ td.r,th.r{text-align:right;white-space:nowrap}
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script>
-document.addEventListener("change",async e=>{if(e.target.id!=="parentPhotoInput")return;const f=e.target.files&&e.target.files[0];if(!f||!V)return;if(f.size>2*1024*1024){alert("Photo must be smaller than 2 MB");return}try{const data=await parentResizePhoto(f),code=(location.hash||"").replace("#","").trim().toUpperCase()||load("tasvia-parent-code");await firebase.firestore().doc("parentView/"+code).update({photo:data,photoUpdated:Date.now()});V=Object.assign({},V,{photo:data});render();banner("Photo saved","It will also appear in the academy app.");}catch(err){alert("Photo could not be saved. Please try again.")}});
-function parentResizePhoto(file){return new Promise((res,rej)=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{const W=300,H=400,cv=document.createElement("canvas");cv.width=W;cv.height=H;const x=cv.getContext("2d"),sc=Math.max(W/im.width,H/im.height),w=im.width*sc,h=im.height*sc;x.fillStyle="#fff";x.fillRect(0,0,W,H);x.drawImage(im,(W-w)/2,(H-h)/2.5,w,h);URL.revokeObjectURL(u);let q=.78,out=cv.toDataURL("image/jpeg",q);while(out.length>150000&&q>.4){q-=.08;out=cv.toDataURL("image/jpeg",q)}res(out)};im.onerror=()=>{URL.revokeObjectURL(u);rej(new Error("image"))};im.src=u})}
 </script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="../firebase-config.js"></script>
@@ -190,7 +188,6 @@ function render(){
   const alertsOn=("Notification" in window&&Notification.permission==="granted")||(function(){try{return localStorage.getItem("tasvia-parent-alerts")==="1"}catch(e){return false}})();
   h+=`<div class="acts" style="justify-content:center">${alertsOn?`<span class="sub">${esc(t.alertsDone)}</span>`:`<button id="alertBtn" class="btn gold" style="border:0;font:inherit;font-weight:600;cursor:pointer">${esc(t.alertsOn)}</button>`}</div>`;
   h+=`<p class="foot">${esc(t.updated)}: ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}<br>${esc(t.save)}</p>`;
-  h+="<div class=\"card\"><h2>📷 Student photo</h2><div class=\"photo-upload\"><div class=\"preview\">"+(v.photo?"<img src=\""+v.photo+"\" alt=\"\">":"📷")+"</div><div><p style=\"margin:0 0 5px\"><b>"+(v.photo?"Photo uploaded":"Send your child’s photo")+"</b></p><p class=\"sub\" style=\"margin:0\">JPG/PNG · max 2 MB</p></div></div><input id=\"parentPhotoInput\" type=\"file\" accept=\"image/*\"><div class=\"acts\"><label class=\"btn gold\" for=\"parentPhotoInput\">"+(v.photo?"Change photo":"Upload photo")+"</label></div></div>";
   document.getElementById("main").innerHTML=h;
   if(feeDue){
     const dueAmount=(v.fees||[]).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
