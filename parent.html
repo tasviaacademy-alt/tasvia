@@ -266,8 +266,7 @@ function alertParent(title,body){chime();banner(title,body);
   if("Notification" in window&&Notification.permission==="granted"&&document.hidden){try{new Notification(title,{body,icon:"icon-192.png",tag:"tasvia-parent"})}catch(e){}}}
 function changes(o,n){
   const t=T[L],out=[];if(!o||!n||n.left)return out;
-  const h0=(o.hw||[])[0],h1=(n.hw||[])[0];if(h1&&(!h0||h0.d!==h1.d||h0.hw!==h1.hw))out.push([t.newHw,h1.hw.split("
-")[0]]);
+  const h0=(o.hw||[])[0],h1=(n.hw||[])[0];if(h1&&(!h0||h0.d!==h1.d||h0.hw!==h1.hw))out.push([t.newHw,h1.hw.split("\n")[0]]);
   if((n.tests||[]).length>(o.tests||[]).length){const x=n.tests[0];out.push([t.newTest,`${x.s} – ${x.n}: ${x.m}/${x.x}`])}
   const a0=(o.abs||[])[0],a1=(n.abs||[])[0];if(a1&&a1!==a0)out.push([t.absentToday,dL(a1)]);
   const p0=(o.pays||[])[0],p1=(n.pays||[])[0];if(p1&&(!p0||p0.d!==p1.d||p0.a!==p1.a))out.push([t.feePaid,rs(p1.a)+" · "+mN(p1.m)]);
