@@ -157,7 +157,8 @@ function render(){
   h+=`<div class="acts" style="justify-content:center">${alertsOn?`<span class="sub">${esc(t.alertsDone)}</span>`:`<button id="alertBtn" class="btn gold" style="border:0;font:inherit;font-weight:600;cursor:pointer">${esc(t.alertsOn)}</button>`}</div>`;
   h+=`<p class="foot">${esc(t.updated)}: ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}<br>${esc(t.save)}</p>`;
   document.getElementById("main").innerHTML=h;
-  if(feeDue){\n    const dueAmount=(v.fees||[]).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);\n    setTimeout(()=>showFeeDuePopup(dueAmount),350);\n  }\n  if(feeDue&&!feeDueScrollDone){
+  if(feeDue){
+    const dueAmount=(v.fees||[]).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);\n    setTimeout(()=>showFeeDuePopup(dueAmount),350);\n  }\n  if(feeDue&&!feeDueScrollDone){
     feeDueScrollDone=true;
     setTimeout(()=>{const el=document.getElementById("feeCard");if(el)el.scrollIntoView({behavior:"smooth",block:"center"})},850);
   }
