@@ -808,7 +808,8 @@ function vToday(){
     <div class="commercial-kpi ${a?"warn":""}"><b>${a}</b><span>Absent</span></div>
     ${admin?`<div class="commercial-kpi ${feeDue?"warn":""}"><b>${feeDue}</b><span>Fees pending</span></div>`:`<div class="commercial-kpi"><b>${hwDone}</b><span>Homework</span></div>`}
   </div>`;
-  const testLabel=testCount===1?"test":"tests";\n  const markStatus=nm?`<span class="tag due">${nm} not marked</span>`:`<span class="tag ok">Attendance complete</span>`;\n  h+=`<div class="commercial-strip"><span>Academic month: <b>${monthName(m)}</b></span><span>${testCount} ${testLabel} recorded</span>${markStatus}</div>`;
+  const testLabel=testCount===1?"test":"tests";
+  const markStatus=nm?`<span class="tag due">${nm} not marked</span>`:`<span class="tag ok">Attendance complete</span>`;\n  h+=`<div class="commercial-strip"><span>Academic month: <b>${monthName(m)}</b></span><span>${testCount} ${testLabel} recorded</span>${markStatus}</div>`;
   h+=`<div class="seg" role="tablist">${[["students","Students"],["teachers","Teachers"],["homework","Homework"]].map(([k,l])=>`<button role="tab" aria-selected="${UI.seg===k}" data-act="seg" data-k="${k}" class="${UI.seg===k?"on":""}">${l}</button>`).join("")}</div>`;
   if(UI.seg==="teachers")return h+vTeacherAtt();
   if(UI.seg==="homework")return h+vHomework();
