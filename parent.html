@@ -149,15 +149,21 @@ function closeWelcome(){
   const b=document.getElementById("welcomeBackdrop");if(b){b.classList.add("hide");b.style.pointerEvents="none";}
   setTimeout(()=>b&&b.remove(),520);
 }
+let welcomeTouchActivated=false;
+function activateWelcomeAudio(){
+  if(welcomeTouchActivated||!welcomeAudioOn)return;
+  welcomeTouchActivated=true;
+  speakWelcome();
+}
 function showWelcome(){
   const b=document.getElementById("welcomeBackdrop");if(!b)return;
   const s=document.getElementById("welcomeSound");
   s.textContent=welcomeAudioOn?"🔊 Welcome audio on":"🔇 Welcome audio off";
-  setTimeout(()=>{speakWelcome();},220);
+  b.addEventListener("pointerdown",activateWelcomeAudio,{once:true,passive:true});
   welcomeVoiceTimer=setTimeout(closeWelcome,5200);
 }
 document.addEventListener("click",e=>{
-  if(e.target.id==="welcomeEnter"){clearTimeout(welcomeVoiceTimer);try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(_){}closeWelcome()}
+  if(e.target.id==="welcomeEnter"){clearTimeout(welcomeVoiceTimer);if(welcomeAudioOn){welcomeTouchActivated=true;speakWelcome()}setTimeout(closeWelcome,2600)}
   if(e.target.id==="welcomeSound"){
     welcomeAudioOn=!welcomeAudioOn;e.target.textContent=welcomeAudioOn?"🔊 Welcome audio on":"🔇 Welcome audio off";e.target.classList.toggle("off",!welcomeAudioOn);
     if(welcomeAudioOn)speakWelcome();else try{window.speechSynthesis.cancel()}catch(_){}
