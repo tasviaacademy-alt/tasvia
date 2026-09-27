@@ -739,7 +739,9 @@ function buildParentView(s){
 }
 function schedulePV(){clearTimeout(pvT);pvT=setTimeout(syncPV,3000)}
 async function syncPV(){
-  if(!db||!pvReady||pvBusy)return;pvBusy=true;
+  if(!db||!pvReady)return;
+  if(pvBusy){clearTimeout(pvT);pvT=setTimeout(syncPV,1200);return}
+  pvBusy=true;
   try{
     for(const [id,st] of Object.entries(S.students)){
       let code=st.pcode;
@@ -1237,7 +1239,7 @@ document.addEventListener("click",e=>{
     case "close":closeSheet();break;
     case "delStudent":if(confirmDel(b,"Tap again: deletes all records")){const pc=(S.students[id]||{}).pcode;if(pc)remove("parentView/"+pc);remove("photos/"+id);delete photoCache[id];delete S.students[id];delete S.fees[id];remove("students/"+id);remove("fees/"+id);closeSheet();render();toast("Student removed")}break;
     case "delPay":if(confirmDel(b,"Remove?")){const pid=b.dataset.p,legacy=Array.isArray((S.fees[id]||{}).payments),cur={};payList(id).forEach(x=>{if(x.id!==pid)cur[x.id]=x});S.fees[id]={payments:cur};
-      if(!db)saveLocal();else if(legacy)put("fees/"+id,S.fees[id]);else mergeWrite("fees/"+id,{payments:{[pid]:null}},{});render();studentSheet(id);toast("Payment removed")}break;
+      if(!db)saveLocal();else if(legacy)put("fees/"+id,S.fees[id]);else mergeWrite("fees/"+id,{payments:{[pid]:null}},{});pvCache[S.students[id]?.pcode]=null;render();schedulePV();studentSheet(id);toast("Payment removed")}break;
     case "remindAll":remindSheet();break;
     case "testSound":{const was=PREF.sound;PREF.sound=true;SOUND.alert();PREF.sound=was;banner("TASVIA Academy","This is how alerts will look and sound.");break}
     case "askNotif":Notification.requestPermission().then(()=>render());break;
@@ -1275,7 +1277,7 @@ document.addEventListener("submit",e=>{
     const id=f.dataset.id,amt=Number(d.amount);if(!(amt>0))return toast("Enter an amount");
     const p={id:uid("p"),amount:amt,month:d.month,date:d.date,mode:d.mode,note:(d.note||"").trim()};ownIds.add(p.id);
     const legacy=Array.isArray((S.fees[id]||{}).payments);const cur={};payList(id).forEach(x=>cur[x.id]=x);cur[p.id]=p;S.fees[id]={payments:cur};
-    if(!db)saveLocal();else if(legacy)put("fees/"+id,S.fees[id]);else mergeWrite("fees/"+id,{payments:{[p.id]:p}},{});render();
+    if(!db)saveLocal();else if(legacy)put("fees/"+id,S.fees[id]);else mergeWrite("fees/"+id,{payments:{[p.id]:p}},{});pvCache[S.students[id]?.pcode]=null;render();schedulePV();
     const s={id,...S.students[id]};
     openSheet("Payment saved",`<p>${rs(amt)} from ${esc(s.name)} for ${monthName(d.month)}.</p><pre class="msg">${esc(receiptText(s,p))}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Send receipt on WhatsApp</a><button class="btn ghost" data-act="close">Done</button></div>`);
   }
