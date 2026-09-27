@@ -159,7 +159,7 @@ function render(){
   document.getElementById("main").innerHTML=h;
   if(feeDue){
     const dueAmount=(v.fees||[]).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
-    setTimeout(()=>showFeeDuePopup(dueAmount),350);
+    showFeeDuePopup(dueAmount);
   }
   if(feeDue&&!feeDueScrollDone){
     feeDueScrollDone=true;
@@ -170,7 +170,7 @@ function render(){
 let actx=null;
 
 function showFeeDuePopup(amount){
-  if(feeDuePopupShown||!amount)return;
+  if(feeDuePopupShown)return;
   feeDuePopupShown=true;
   let el=document.getElementById("feePopup");
   if(!el){el=document.createElement("div");el.id="feePopup";document.body.appendChild(el)}
