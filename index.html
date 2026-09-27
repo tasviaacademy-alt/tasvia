@@ -281,6 +281,63 @@ input:focus,select:focus,textarea:focus{border-color:#9DAAC1!important;box-shado
  body{background:#0C121C}.btn.ghost{background:#121C28;border-color:#344253}.chip{background:#182431;border-color:#2B3948}.sheet{background:#0C121C}
 }
 :root[data-theme="dark"]{--bg:#0C121C;--card:#121C28;--ink:#F2F4F7;--muted:#98A2B3;--line:#263444;--chip:#1B2836}
+
+/* TASVIA PREMIUM POLISH */
+body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+header{border-bottom:1px solid rgba(217,171,80,.22);box-shadow:0 2px 14px rgba(0,0,0,.08)}
+.brand{align-items:center}
+.brand h1{font-weight:750;line-height:1.2}
+.sync{max-width:210px;overflow-wrap:anywhere}
+main{min-height:calc(100dvh - 150px)}
+.hd h2{font-weight:750;letter-spacing:-.03em}
+.card,.item,.board{transition:border-color .2s ease,box-shadow .2s ease,transform .16s ease}
+.card{box-shadow:0 2px 10px rgba(16,24,40,.035)}
+.card:focus-within{border-color:var(--gold)}
+.item:hover{box-shadow:0 5px 18px rgba(16,24,40,.07)}
+.btn{box-shadow:0 1px 2px rgba(16,24,40,.05)}
+.btn.gold{box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 4px 10px rgba(11,36,85,.09)}
+.chips{gap:8px;padding:3px 1px 9px;scroll-snap-type:x proximity}
+.chip{scroll-snap-align:start}
+input[type=search],input[type=date],input[type=month]{min-height:42px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
+.btn:focus-visible,.chip:focus-visible,nav button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.tag.ok{background:rgba(22,132,91,.13)}
+.tag.due{background:rgba(200,59,54,.12)}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#101827;--card:#192538;--ink:#F1F5FA;--muted:#B7C4D4;
+    --line:#34445A;--chip:#26354A;--board:#0B2455;--board2:#173766;
+    --chalk:#F8FAFC;--gold:#E5B95E;--p:#65D5A6;--a:#FF938D
+  }
+  :root:not([data-theme="light"]) .chip{background:#26354A;color:#E5EDF7;border:1px solid #40516A}
+  :root:not([data-theme="light"]) .chip.on{background:#234A89;color:#FFF;border-color:#6485B7}
+  :root:not([data-theme="light"]) .btn.ghost{background:#24344A;color:#F1F5FA;border-color:#52637B}
+  :root:not([data-theme="light"]) input,:root:not([data-theme="light"]) select,:root:not([data-theme="light"]) textarea{background:#1C2A3F;color:#F1F5FA;border-color:#455670}
+  :root:not([data-theme="light"]) nav{background:rgba(25,37,56,.97)}
+  :root:not([data-theme="light"]) .seg{background:#26354A}
+}
+:root[data-theme="dark"]{
+  --bg:#101827;--card:#192538;--ink:#F1F5FA;--muted:#B7C4D4;
+  --line:#34445A;--chip:#26354A;--board:#0B2455;--board2:#173766;
+  --chalk:#F8FAFC;--gold:#E5B95E;--p:#65D5A6;--a:#FF938D
+}
+:root[data-theme="dark"] .chip{background:#26354A;color:#E5EDF7;border:1px solid #40516A}
+:root[data-theme="dark"] .chip.on{background:#234A89;color:#FFF;border-color:#6485B7}
+:root[data-theme="dark"] .btn.ghost{background:#24344A;color:#F1F5FA;border-color:#52637B}
+:root[data-theme="dark"] input,:root[data-theme="dark"] select,:root[data-theme="dark"] textarea{background:#1C2A3F;color:#F1F5FA;border-color:#455670}
+:root[data-theme="dark"] nav{background:rgba(25,37,56,.97)}
+:root[data-theme="dark"] .seg{background:#26354A}
+@media (min-width:760px){
+  main{padding-left:28px;padding-right:28px}
+}
+@media (max-width:420px){
+  .brand h1{font-size:1.05rem}
+  .sync{font-size:.66rem;max-width:145px}
+  main{padding-left:14px;padding-right:14px}
+  .board{padding:15px 9px}
+  .board b{font-size:1.7rem}
+  .card{padding:15px}
+}
 </style>
 </head>
 <body>
