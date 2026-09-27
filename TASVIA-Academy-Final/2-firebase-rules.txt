@@ -27,6 +27,14 @@ service cloud.firestore {
     match /parentView/{code} {
       allow get: if true;
       allow list, write: if isStaff();
+      // Parents may update only the photo fields on their existing read-only page.
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(["photo", "photoUpdated"])
+        && request.resource.data.photo is string
+        && request.resource.data.photo.size() <= 150000;
+    }
+
+    match /photos/{docId} {
+      allow read, write: if isStaff();
     }
 
     match /students/{docId} {
