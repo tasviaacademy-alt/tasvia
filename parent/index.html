@@ -104,10 +104,10 @@ td.r,th.r{text-align:right;white-space:nowrap}
 </style>
 </head>
 <body>
-<header><div class="top"><div class="brand"><img class="hlogo" src="logo.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
+<header><div class="top"><div class="brand"><img class="hlogo" src="../logo.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
 <main id="main"><div class="center" id="msg">Loading…</div></main><div id="welcomeBackdrop" class="welcome-backdrop" role="dialog" aria-label="TASVIA Academy welcome">
   <div class="welcome-card">
-    <div class="welcome-logo-wrap"><img class="welcome-logo" src="logo.png" alt="TASVIA Academy"></div>
+    <div class="welcome-logo-wrap"><img class="welcome-logo" src="../logo.png" alt="TASVIA Academy"></div>
     <h2>Welcome to <span>TASVIA</span></h2>
     <p id="welcomeGreeting">Let’s inspire, learn, grow and succeed together.</p>
     <p class="welcome-tag">INSPIRE • LEARN • GROW • SUCCEED</p>
@@ -121,7 +121,7 @@ document.addEventListener("change",async e=>{if(e.target.id!=="parentPhotoInput"
 function parentResizePhoto(file){return new Promise((res,rej)=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{const W=300,H=400,cv=document.createElement("canvas");cv.width=W;cv.height=H;const x=cv.getContext("2d"),sc=Math.max(W/im.width,H/im.height),w=im.width*sc,h=im.height*sc;x.fillStyle="#fff";x.fillRect(0,0,W,H);x.drawImage(im,(W-w)/2,(H-h)/2.5,w,h);URL.revokeObjectURL(u);let q=.78,out=cv.toDataURL("image/jpeg",q);while(out.length>150000&&q>.4){q-=.08;out=cv.toDataURL("image/jpeg",q)}res(out)};im.onerror=()=>{URL.revokeObjectURL(u);rej(new Error("image"))};im.src=u})}
 </script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="firebase-config.js"></script>
+<script src="../firebase-config.js"></script>
 <script>
 
 function closeWelcome(){const b=document.getElementById("welcomeBackdrop");if(b){b.classList.add("hide");b.setAttribute("aria-hidden","true");b.style.pointerEvents="none";}document.body.classList.remove("welcome-open");}\nfunction interLabel(c,y1,y2){const m=/^Inter-(1|2)(?: (.+))?$/.exec(c);if(!m)return null;return (m[1]==="1"?y1:y2)+(m[2]?" · "+m[2]:"")}
@@ -221,7 +221,7 @@ function showFeeDuePopup(amount){
 function chime(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();if(actx.state==="suspended")actx.resume();const t0=actx.currentTime+.01;
   [[784,0,.22,.17],[988,.13,.22,.17],[1319,.26,.45,.15]].forEach(([f,st,du,vol])=>{const o=actx.createOscillator(),g=actx.createGain();o.frequency.value=f;g.gain.setValueAtTime(0,t0+st);g.gain.linearRampToValueAtTime(vol,t0+st+.012);g.gain.exponentialRampToValueAtTime(.0001,t0+st+du);o.connect(g);g.connect(actx.destination);o.start(t0+st);o.stop(t0+st+du+.05)})}catch(e){}}
 let bT;function banner(title,body){let el=document.getElementById("banner");if(!el){el=document.createElement("div");el.id="banner";el.setAttribute("role","status");document.body.appendChild(el)}
-  el.innerHTML=`<img src="logo.png" alt=""><div><b>${esc(title)}</b><span>${esc(body)}</span></div>`;el.classList.add("show");clearTimeout(bT);bT=setTimeout(()=>el.classList.remove("show"),6000)}
+  el.innerHTML=`<img src="../logo.png" alt=""><div><b>${esc(title)}</b><span>${esc(body)}</span></div>`;el.classList.add("show");clearTimeout(bT);bT=setTimeout(()=>el.classList.remove("show"),6000)}
 function alertParent(title,body){chime();banner(title,body);
   if("Notification" in window&&Notification.permission==="granted"&&document.hidden){try{new Notification(title,{body,icon:"icon-192.png",tag:"tasvia-parent"})}catch(e){}}}
 function changes(o,n){
