@@ -282,6 +282,19 @@ input:focus,select:focus,textarea:focus{border-color:#9DAAC1!important;box-shado
 }
 :root[data-theme="dark"]{--bg:#0C121C;--card:#121C28;--ink:#F2F4F7;--muted:#98A2B3;--line:#263444;--chip:#1B2836}
 
+/* TASVIA COMMERCIAL DASHBOARD */
+.commercial-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:0 0 10px}
+.commercial-kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 10px;box-shadow:0 2px 8px rgba(20,32,51,.035)}
+.commercial-kpi b{display:block;font-size:1.35rem;line-height:1.1;color:var(--board)}
+.commercial-kpi span{display:block;margin-top:4px;font-size:.72rem;color:var(--muted);font-weight:650}
+.commercial-kpi.warn{border-color:rgba(185,68,62,.3);background:rgba(185,68,62,.035)}
+.commercial-kpi.warn b{color:var(--a)}
+.commercial-strip{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 12px;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.72);font-size:.76rem;color:var(--muted)}
+.commercial-strip span{display:inline-flex;align-items:center;gap:4px}
+.commercial-strip b{color:var(--ink)}
+@media(max-width:620px){.commercial-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.commercial-kpi{padding:10px}.commercial-kpi b{font-size:1.2rem}.commercial-strip{font-size:.72rem}}
+@media(prefers-color-scheme:dark){.commercial-strip{background:rgba(18,28,40,.72)}}
+
 /* TASVIA PREMIUM POLISH */
 body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 header{border-bottom:1px solid rgba(217,171,80,.22);box-shadow:0 2px 14px rgba(0,0,0,.08)}
@@ -783,13 +796,24 @@ function noStudents(){return `<div class="empty"><p>No students yet. Add your fi
 function vToday(){
   const title={students:"Attendance",teachers:"Teacher attendance",homework:"Homework"}[UI.seg];
   let h=`<div class="hd"><div><h2>${title}</h2><div class="sub">${new Date(UI.date+"T00:00").toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long"})}</div></div><input type="date" id="attDate" value="${UI.date}" max="${today()}" aria-label="Date"></div>`;
+  const list=byBatch(studentsOf(UI.cls)),marks=getMarks(UI.date);
+  const p=list.filter(s=>marks[s.id]==="P").length,a=list.filter(s=>marks[s.id]==="A").length,nm=Math.max(list.length-p-a,0);
+  const ent=(S.diary[UI.date]||{}).entries||{},hwDone=list.filter(s=>ent[s.id]&&ent[s.id].hw).length;
+  const admin=isAdmin(),m=UI.date.slice(0,7);
+  const feeDue=admin?list.filter(s=>s.fee>0&&enrolledIn(s,m)&&feeStatus(s,m).k!=="paid").length:0;
+  const testCount=Object.values(S.tests).filter(t=>t.date&&t.date.slice(0,7)===m).length;
+  h+=`<div class="commercial-kpis">
+    <div class="commercial-kpi"><b>${list.length}</b><span>Students</span></div>
+    <div class="commercial-kpi"><b>${p}</b><span>Present</span></div>
+    <div class="commercial-kpi ${a?"warn":""}"><b>${a}</b><span>Absent</span></div>
+    ${admin?`<div class="commercial-kpi ${feeDue?"warn":""}"><b>${feeDue}</b><span>Fees pending</span></div>`:`<div class="commercial-kpi"><b>${hwDone}</b><span>Homework</span></div>`}
+  </div>`;
+  h+=`<div class="commercial-strip"><span>Academic month: <b>${monthName(m)}</b></span><span>${testCount} test${testCount===1?"":"s"} recorded</span>${nm?`<span class="tag due">${nm} not marked</span>`:"<span class="tag ok">Attendance complete</span>"}</div>`;
   h+=`<div class="seg" role="tablist">${[["students","Students"],["teachers","Teachers"],["homework","Homework"]].map(([k,l])=>`<button role="tab" aria-selected="${UI.seg===k}" data-act="seg" data-k="${k}" class="${UI.seg===k?"on":""}">${l}</button>`).join("")}</div>`;
   if(UI.seg==="teachers")return h+vTeacherAtt();
   if(UI.seg==="homework")return h+vHomework();
-  const list=byBatch(studentsOf(UI.cls)),marks=getMarks(UI.date);
-  const p=list.filter(s=>marks[s.id]==="P").length,a=list.filter(s=>marks[s.id]==="A").length;
   if(!Object.keys(S.students).length)return h+noStudents();
-  h+=`<div class="board"><div class="pp"><b>${p}</b><small>Present</small></div><div class="aa"><b>${a}</b><small>Absent</small></div><div><b>${list.length-p-a}</b><small>Not marked</small></div></div>`;
+  h+=`<div class="board"><div class="pp"><b>${p}</b><small>Present</small></div><div class="aa"><b>${a}</b><small>Absent</small></div><div><b>${nm}</b><small>Not marked</small></div></div>`;
   h+=classChips("cls")+batchChips();
   h+=`<div class="row" style="margin-bottom:10px"><button class="btn sm ghost" data-act="allP">Mark rest present</button>${a?`<button class="btn sm ghost" data-act="absentees">Message absent parents (${a})</button>`:""}</div><div class="list">`;
   h+=list.map(s=>`<div class="item ${marks[s.id]||""}"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)}${s.batch?" · "+s.batch:""} · ${esc(s.board||"")}</div></div><div class="pa"><button aria-label="Present" class="${marks[s.id]==="P"?"onP":""}" data-act="mark" data-id="${s.id}" data-v="P">P</button><button aria-label="Absent" class="${marks[s.id]==="A"?"onA":""}" data-act="mark" data-id="${s.id}" data-v="A">A</button></div></div>`).join("");
