@@ -756,7 +756,7 @@ function buildParentView(s){
     centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||""}};
 }
 function schedulePV(){clearTimeout(pvT);pvT=setTimeout(syncPV,3000)}
-async async function syncPV(){
+async function syncPV(){
   if(!db||!pvReady)return;
   if(pvBusy){clearTimeout(pvT);pvT=setTimeout(syncPV,1200);return}
   pvBusy=true;
