@@ -130,9 +130,6 @@ td.r,th.r{text-align:right;white-space:nowrap}
 .bodmas-result strong{font-family:"Baloo 2",sans-serif;font-size:1.8rem}
 @media(max-width:380px){.bodmas-input-row{flex-direction:column}.bodmas-submit{width:100%}}
 
-
-/* DAILY GENERAL KNOWLEDGE */
-.gk-card{border:1px solid rgba(242,172,16,.3);background:linear-gradient(145deg,var(--card),color-mix(in srgb,var(--gold) 5%,var(--card)));overflow:hidden}.gk-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.gk-icon{width:46px;height:46px;border-radius:14px;background:var(--board);color:#fff;display:grid;place-items:center;font-size:24px}.gk-sub{margin:3px 0 0}.gk-list{margin-top:12px;display:grid;gap:9px}.gk-q{padding:11px;border:1px solid var(--line);border-radius:12px;background:var(--chip)}.gk-q b{display:block;margin-bottom:4px}.gk-answer{color:var(--p);font-weight:700;font-size:.92rem}
 </style>
 </head>
 <body>
@@ -193,7 +190,7 @@ function render(){
   // homework
   h+=`<div class="card"><h2>${esc(t.hw)}</h2>`+((v.hw||[]).length?v.hw.map(x=>`<div class="hw"><b>${esc(dL(x.d))}</b><div>${esc(x.hw)}</div>${x.note?`<div class="sub">${esc(t.note)}: ${esc(x.note)}</div>`:""}</div>`).join(""):`<p class="sub">${esc(t.noHw)}</p>`)+`</div>`;
   // BODMAS practice
-  h+=`<div id="dailyTools" class="card"><h2>🧠 Daily Practice</h2><p class="sub">Loading daily learning activities…</p></div>`;
+  h+=buildBodmasCard();
   // attendance
   h+=`<div class="card"><h2>${esc(t.att)} · ${esc(cm?mN(cm):"")}</h2><div class="stats"><div><b class="ok">${a.p}</b><small>${esc(t.present)}</small></div><div><b class="bad">${a.a}</b><small>${esc(t.absent)}</small></div><div><b>${pc!=null?pc+"%":"–"}</b><small>${esc(t.pct)}</small></div></div>`;
   if(pc!=null)h+=`<div class="bar"><i style="width:${pc}%"></i></div>`;
@@ -224,7 +221,7 @@ function render(){
   h+=`<div class="acts" style="justify-content:center">${alertsOn?`<span class="sub">${esc(t.alertsDone)}</span>`:`<button id="alertBtn" class="btn gold" style="border:0;font:inherit;font-weight:600;cursor:pointer">${esc(t.alertsOn)}</button>`}</div>`;
   h+=`<p class="foot">${esc(t.updated)}: ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}<br>${esc(t.save)}</p>`;
   document.getElementById("main").innerHTML=h;
-  renderBodmas();\n  renderDailyGK();
+  renderBodmas();
   if(feeDue){
     const dueAmount=(v.fees||[]).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
     showFeeDuePopup(dueAmount);
@@ -246,34 +243,7 @@ function showFeeDuePopup(amount){
   const note=L==="te"?"దయచేసి బాకీ ఉన్న ఫీజును చెల్లించండి.":L==="hi"?"कृपया बकाया फ़ीस का भुगतान करें।":"Please clear the pending fee payment.";
   const view=L==="te"?"ఫీజు చూడండి":L==="hi"?"फ़ीस देखें":"View Fees";
   const close=L==="te"?"తర్వాత":L==="hi"?"बाद में":"Later";
-  el.innerHTML=`<div class="fee-popup-backdrop show" role="dialog" aria-modal="true" aria-labelledby="feePopupTitle"><div class="fee-popup"><div class="fee-popup-icon">🔔</div><h3 id="feePopupTitle">${esc(title)}</h3><div class="due-label">${esc(T[L].due)}</div><div class="due-amount">
-/* DAILY GENERAL KNOWLEDGE ENGINE */
-const GK_DAILY=[
- {q:"Which planet is known as the Red Planet?",a:"Mars"},
- {q:"What is the largest ocean on Earth?",a:"Pacific Ocean"},
- {q:"How many days are there in a leap year?",a:"366 days"},
- {q:"What is the capital of India?",a:"New Delhi"},
- {q:"Which gas do plants mainly absorb for photosynthesis?",a:"Carbon dioxide"},
- {q:"How many continents are there?",a:"7"},
- {q:"Which is the largest mammal in the world?",a:"Blue whale"},
- {q:"What is H2O commonly called?",a:"Water"},
- {q:"Which animal is known as the King of the Jungle?",a:"Lion"},
- {q:"How many sides does a hexagon have?",a:"6"},
- {q:"Which is the nearest star to Earth?",a:"The Sun"},
- {q:"Who wrote the national anthem of India?",a:"Rabindranath Tagore"},
- {q:"Which organ pumps blood through the human body?",a:"Heart"},
- {q:"What is the fastest land animal?",a:"Cheetah"},
- {q:"Which is the smallest prime number?",a:"2"},
- {q:"What is the currency of Japan?",a:"Yen"},
- {q:"Which festival is known as the Festival of Lights in India?",a:"Diwali"},
- {q:"How many colors are traditionally in a rainbow?",a:"7"},
- {q:"Which bird is the national bird of India?",a:"Indian peacock"},
- {q:"Which is the largest planet in our solar system?",a:"Jupiter"}
-];
-const GK_LABELS={en:{title:"Daily General Knowledge",sub:"5 questions every day · Learn something new",today:"Today's Questions",answer:"Answer"},te:{title:"రోజువారీ జనరల్ నాలెడ్జ్",sub:"ప్రతి రోజు 5 ప్రశ్నలు · ప్రతిరోజూ కొత్త విషయం నేర్చుకోండి",today:"ఈ రోజు ప్రశ్నలు",answer:"జవాబు"},hi:{title:"दैनिक सामान्य ज्ञान",sub:"हर दिन 5 प्रश्न · हर दिन कुछ नया सीखें",today:"आज के प्रश्न",answer:"उत्तर"}};
-function gkDayIndex(){const d=new Date();return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000)}
-function renderDailyGK(){const el=document.getElementById("dailyGK");if(!el)return;const t=GK_LABELS[L]||GK_LABELS.en,day=gkDayIndex(),items=[];for(let i=0;i<5;i++)items.push(GK_DAILY[(day*5+i)%GK_DAILY.length]);el.innerHTML='<div class="gk-head"><div><h2>🌍 '+esc(t.title)+'</h2><p class="sub gk-sub">'+esc(t.sub)+'</p></div><div class="gk-icon">?</div></div><p class="sub" style="margin:10px 0 0"><b>'+esc(t.today)+'</b></p><div class="gk-list">'+items.map((x,i)=>'<div class="gk-q"><b>'+(i+1)+'. '+esc(x.q)+'</b><span class="gk-answer">'+esc(t.answer)+': '+esc(x.a)+'</span></div>').join('')+'</div>'}
-${rs(amount)}</div><p class="due-note">${esc(note)}</p><div class="acts"><button class="btn" data-fee-close>${esc(close)}</button><button class="btn gold" data-fee-view>${esc(view)}</button></div></div></div>`;
+  el.innerHTML=`<div class="fee-popup-backdrop show" role="dialog" aria-modal="true" aria-labelledby="feePopupTitle"><div class="fee-popup"><div class="fee-popup-icon">🔔</div><h3 id="feePopupTitle">${esc(title)}</h3><div class="due-label">${esc(T[L].due)}</div><div class="due-amount">${rs(amount)}</div><p class="due-note">${esc(note)}</p><div class="acts"><button class="btn" data-fee-close>${esc(close)}</button><button class="btn gold" data-fee-view>${esc(view)}</button></div></div></div>`;
   const backdrop=el.querySelector(".fee-popup-backdrop");
   const closePopup=()=>{backdrop.classList.remove("show");setTimeout(()=>el.remove(),300)};
   el.querySelector("[data-fee-close]").onclick=closePopup;
@@ -285,17 +255,37 @@ ${rs(amount)}</div><p class="due-note">${esc(note)}</p><div class="acts"><button
 
 /* BODMAS PRACTICE ENGINE */
 let bodmas={level:"easy",questions:[],index:0,score:0,answered:false};
-const BODMAS_LEVELS={easy:[],medium:[],hard:[]};
-function bodmasDayKey(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
-function bodmasSeed(level){let s=bodmasDayKey()+":"+level,n=2166136261;for(let i=0;i<s.length;i++){n^=s.charCodeAt(i);n=Math.imul(n,16777619)}return ()=>{n+=0x6D2B79F5;let t=n;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296}}
-function bodmasInt(r,min,max){return Math.floor(r()*(max-min+1))+min}
-function bodmasExpr(level,r){
- if(level==="easy"){const a=bodmasInt(r,4,20),b=bodmasInt(r,2,10),c=bodmasInt(r,2,8),m=bodmasInt(r,0,3);if(m===0)return [a+" + "+b+" × "+c,a+b*c];if(m===1)return [a+" − "+b+" × "+c,a-b*c];if(m===2){const d=bodmasInt(r,2,8),n=d*bodmasInt(r,2,6);return [n+" ÷ "+d+" + "+c,n/d+c]}return [a+" × "+b+" − "+c,a*b-c]}
- if(level==="medium"){const a=bodmasInt(r,3,18),b=bodmasInt(r,2,10),c=bodmasInt(r,2,8),m=bodmasInt(r,0,3);if(m===0)return ["("+a+" + "+b+") × "+c,(a+b)*c];if(m===1){const d=bodmasInt(r,2,8),n=d*bodmasInt(r,2,8);return ["("+n+" − "+b+") ÷ "+d,(n-b)/d]}if(m===2)return [a+" + "+b+" × ("+c+" − 2)",a+b*(c-2)];const d=bodmasInt(r,2,7),n=(d+1)*bodmasInt(r,2,9);return [n+" ÷ ("+d+" + 1) + "+b,n/(d+1)+b]}
- const a=bodmasInt(r,6,24),b=bodmasInt(r,2,9),c=bodmasInt(r,2,8),d=bodmasInt(r,2,6),m=bodmasInt(r,0,3);if(m===0)return [a+" + "+b+" × ("+c+" − "+d+") ÷ 2",a+b*(c-d)/2];if(m===1){const n=d*Math.ceil((a-b)/d)+b;return ["("+n+" − "+b+") ÷ "+d+" + "+c,(n-b)/d+c]}if(m===2){const x=bodmasInt(r,3,9),n=x*(b-1);return [n+" ÷ ("+b+" − 1) + "+c+" × "+d,n/(b-1)+c*d]}const n=d*bodmasInt(r,3,10)-c;return ["("+n+" + "+c+") ÷ "+d+" + "+b+" × 2",(n+c)/d+b*2]
+const BODMAS_LEVELS={
+  easy:[
+    ["8 + 6 × 2",20],["18 − 4 × 3",6],["24 ÷ 6 + 7",11],["15 − 9 ÷ 3",12],["5 × 3 + 4",19],
+    ["20 ÷ 5 × 2",8],["7 + 12 ÷ 4",10],["9 × 2 − 5",13],["16 ÷ 4 + 9",13],["6 + 5 × 3",21],
+    ["30 − 6 × 4",6],["4 × 7 − 8",20],["36 ÷ 6 + 5",11],["11 + 3 × 4",23],["28 ÷ 7 + 8",12]
+  ],
+  medium:[
+    ["(12 + 8) ÷ 4",5],["18 − (3 × 4)",6],["(7 + 5) × 2",24],["30 ÷ (2 + 3)",6],["8 + 4 × (6 − 2)",24],
+    ["(15 − 3) ÷ 4",3],["6 × (5 + 2) − 8",34],["42 ÷ 6 + 3 × 2",13],["(9 + 3) × 2 − 5",19],["50 − 6 × (4 + 2)",14],
+    ["(18 ÷ 3) + (5 × 2)",16],["7 × (8 − 3) + 4",39],["64 ÷ (4 + 4) + 6",14],["(20 + 4) ÷ 6 + 3",7],["9 + (12 ÷ 3) × 2",17]
+  ],
+  hard:[
+    ["18 + 6 ÷ (3 × 2)",19],["(24 − 8) ÷ 4 + 7",11],["5 × (12 − 4) ÷ 2",20],["72 ÷ (6 + 3) × 2",16],["(15 + 9) ÷ 3 − 2",6],
+    ["7 + 4 × (9 − 5) ÷ 2",15],["(36 ÷ 6) × (8 − 3)",30],["48 ÷ (2 × 4) + 9",15],["6 × (7 + 3) − 18 ÷ 3",54],["(40 − 16) ÷ 3 + 5",13],
+    ["8 + (24 ÷ 6) × (5 − 2)",20],["(9 + 7) × 3 − 20",28],["60 ÷ (5 + 5) + 4 × 3",18],["(32 − 8) ÷ 4 × 3 + 2",20],["54 ÷ (3 × 3) + 7 × 2",20]
+  ]
+};
+const BODMAS_LABELS={
+  en:{title:"BODMAS Practice",sub:"Basic Mathematics · Practice the correct order of operations",easy:"Easy",medium:"Medium",hard:"Hard",start:"Start Practice",question:"Question",score:"Score",check:"Check Answer",next:"Next Question",correct:"Correct! 🎉",wrong:"Not quite. Try again.",answer:"Correct answer",finished:"Practice complete!",again:"Practice Again",tip:"Remember: Brackets → Orders → Division/Multiplication → Addition/Subtraction."},
+  te:{title:"BODMAS ప్రాక్టీస్",sub:"ప్రాథమిక గణితం · గణిత క్రమాన్ని సరిగ్గా అభ్యసించండి",easy:"సులభం",medium:"మధ్యస్థం",hard:"కష్టం",start:"ప్రాక్టీస్ ప్రారంభించండి",question:"ప్రశ్న",score:"స్కోర్",check:"జవాబు తనిఖీ",next:"తదుపరి ప్రశ్న",correct:"సరైన జవాబు! 🎉",wrong:"ఇంకా సరైనది కాదు. మళ్లీ ప్రయత్నించండి.",answer:"సరైన జవాబు",finished:"ప్రాక్టీస్ పూర్తైంది!",again:"మళ్లీ ప్రాక్టీస్",tip:"గుర్తుంచుకోండి: Brackets → Orders → Division/Multiplication → Addition/Subtraction."},
+  hi:{title:"BODMAS अभ्यास",sub:"बुनियादी गणित · गणना का सही क्रम अभ्यास करें",easy:"आसान",medium:"मध्यम",hard:"कठिन",start:"अभ्यास शुरू करें",question:"प्रश्न",score:"स्कोर",check:"उत्तर जाँचें",next:"अगला प्रश्न",correct:"सही उत्तर! 🎉",wrong:"अभी सही नहीं। फिर कोशिश करें।",answer:"सही उत्तर",finished:"अभ्यास पूरा!",again:"फिर अभ्यास करें",tip:"याद रखें: Brackets → Orders → Division/Multiplication → Addition/Subtraction."}
+};
+function bodmasShuffle(a){
+  const x=a.slice();
+  for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}
+  return x;
 }
-function bodmasDailyQuestions(level){const r=bodmasSeed(level),out=[],seen=new Set();let guard=0;while(out.length<10&&guard++<300){const q=bodmasExpr(level,r);if(Number.isFinite(q[1])&&Number.isInteger(q[1])&&!seen.has(q[0])){seen.add(q[0]);out.push(q)}}return out}
-function bodmasStart(level=bodmas.level){bodmas={level,questions:bodmasDailyQuestions(level),index:0,score:0,answered:false};renderBodmas();}
+function bodmasStart(level=bodmas.level){
+  bodmas={level,questions:bodmasShuffle(BODMAS_LEVELS[level]).slice(0,10),index:0,score:0,answered:false};
+  renderBodmas();
+}
 function buildBodmasCard(){
   const t=BODMAS_LABELS[L]||BODMAS_LABELS.en;
   return `<div class="card bodmas-card"><div class="bodmas-head"><div><h2>🧠 ${esc(t.title)}</h2><p class="sub bodmas-sub">${esc(t.sub)}</p></div><div class="bodmas-icon">÷</div></div><div class="bodmas-levels">
