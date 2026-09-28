@@ -130,6 +130,9 @@ td.r,th.r{text-align:right;white-space:nowrap}
 .bodmas-result strong{font-family:"Baloo 2",sans-serif;font-size:1.8rem}
 @media(max-width:380px){.bodmas-input-row{flex-direction:column}.bodmas-submit{width:100%}}
 
+
+/* DAILY GENERAL KNOWLEDGE */
+.gk-card{border:1px solid rgba(242,172,16,.3);background:linear-gradient(145deg,var(--card),color-mix(in srgb,var(--gold) 5%,var(--card)));overflow:hidden}.gk-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.gk-icon{width:46px;height:46px;border-radius:14px;background:var(--board);color:#fff;display:grid;place-items:center;font-size:24px}.gk-sub{margin:3px 0 0}.gk-list{margin-top:12px;display:grid;gap:9px}.gk-q{padding:11px;border:1px solid var(--line);border-radius:12px;background:var(--chip)}.gk-q b{display:block;margin-bottom:4px}.gk-answer{color:var(--p);font-weight:700;font-size:.92rem}
 </style>
 </head>
 <body>
@@ -190,7 +193,7 @@ function render(){
   // homework
   h+=`<div class="card"><h2>${esc(t.hw)}</h2>`+((v.hw||[]).length?v.hw.map(x=>`<div class="hw"><b>${esc(dL(x.d))}</b><div>${esc(x.hw)}</div>${x.note?`<div class="sub">${esc(t.note)}: ${esc(x.note)}</div>`:""}</div>`).join(""):`<p class="sub">${esc(t.noHw)}</p>`)+`</div>`;
   // BODMAS practice
-  h+=buildBodmasCard();
+  h+=buildBodmasCard();\n  h+=`<div id="dailyGK" class="card gk-card"></div>`;
   // attendance
   h+=`<div class="card"><h2>${esc(t.att)} · ${esc(cm?mN(cm):"")}</h2><div class="stats"><div><b class="ok">${a.p}</b><small>${esc(t.present)}</small></div><div><b class="bad">${a.a}</b><small>${esc(t.absent)}</small></div><div><b>${pc!=null?pc+"%":"–"}</b><small>${esc(t.pct)}</small></div></div>`;
   if(pc!=null)h+=`<div class="bar"><i style="width:${pc}%"></i></div>`;
@@ -221,7 +224,7 @@ function render(){
   h+=`<div class="acts" style="justify-content:center">${alertsOn?`<span class="sub">${esc(t.alertsDone)}</span>`:`<button id="alertBtn" class="btn gold" style="border:0;font:inherit;font-weight:600;cursor:pointer">${esc(t.alertsOn)}</button>`}</div>`;
   h+=`<p class="foot">${esc(t.updated)}: ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}<br>${esc(t.save)}</p>`;
   document.getElementById("main").innerHTML=h;
-  renderBodmas();
+  renderBodmas();\n  renderDailyGK();
   if(feeDue){
     const dueAmount=(v.fees||[]).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
     showFeeDuePopup(dueAmount);
@@ -243,7 +246,34 @@ function showFeeDuePopup(amount){
   const note=L==="te"?"దయచేసి బాకీ ఉన్న ఫీజును చెల్లించండి.":L==="hi"?"कृपया बकाया फ़ीस का भुगतान करें।":"Please clear the pending fee payment.";
   const view=L==="te"?"ఫీజు చూడండి":L==="hi"?"फ़ीस देखें":"View Fees";
   const close=L==="te"?"తర్వాత":L==="hi"?"बाद में":"Later";
-  el.innerHTML=`<div class="fee-popup-backdrop show" role="dialog" aria-modal="true" aria-labelledby="feePopupTitle"><div class="fee-popup"><div class="fee-popup-icon">🔔</div><h3 id="feePopupTitle">${esc(title)}</h3><div class="due-label">${esc(T[L].due)}</div><div class="due-amount">${rs(amount)}</div><p class="due-note">${esc(note)}</p><div class="acts"><button class="btn" data-fee-close>${esc(close)}</button><button class="btn gold" data-fee-view>${esc(view)}</button></div></div></div>`;
+  el.innerHTML=`<div class="fee-popup-backdrop show" role="dialog" aria-modal="true" aria-labelledby="feePopupTitle"><div class="fee-popup"><div class="fee-popup-icon">🔔</div><h3 id="feePopupTitle">${esc(title)}</h3><div class="due-label">${esc(T[L].due)}</div><div class="due-amount">
+/* DAILY GENERAL KNOWLEDGE ENGINE */
+const GK_DAILY=[
+ {q:"Which planet is known as the Red Planet?",a:"Mars"},
+ {q:"What is the largest ocean on Earth?",a:"Pacific Ocean"},
+ {q:"How many days are there in a leap year?",a:"366 days"},
+ {q:"What is the capital of India?",a:"New Delhi"},
+ {q:"Which gas do plants mainly absorb for photosynthesis?",a:"Carbon dioxide"},
+ {q:"How many continents are there?",a:"7"},
+ {q:"Which is the largest mammal in the world?",a:"Blue whale"},
+ {q:"What is H2O commonly called?",a:"Water"},
+ {q:"Which animal is known as the King of the Jungle?",a:"Lion"},
+ {q:"How many sides does a hexagon have?",a:"6"},
+ {q:"Which is the nearest star to Earth?",a:"The Sun"},
+ {q:"Who wrote the national anthem of India?",a:"Rabindranath Tagore"},
+ {q:"Which organ pumps blood through the human body?",a:"Heart"},
+ {q:"What is the fastest land animal?",a:"Cheetah"},
+ {q:"Which is the smallest prime number?",a:"2"},
+ {q:"What is the currency of Japan?",a:"Yen"},
+ {q:"Which festival is known as the Festival of Lights in India?",a:"Diwali"},
+ {q:"How many colors are traditionally in a rainbow?",a:"7"},
+ {q:"Which bird is the national bird of India?",a:"Indian peacock"},
+ {q:"Which is the largest planet in our solar system?",a:"Jupiter"}
+];
+const GK_LABELS={en:{title:"Daily General Knowledge",sub:"5 questions every day · Learn something new",today:"Today's Questions",answer:"Answer"},te:{title:"రోజువారీ జనరల్ నాలెడ్జ్",sub:"ప్రతి రోజు 5 ప్రశ్నలు · ప్రతిరోజూ కొత్త విషయం నేర్చుకోండి",today:"ఈ రోజు ప్రశ్నలు",answer:"జవాబు"},hi:{title:"दैनिक सामान्य ज्ञान",sub:"हर दिन 5 प्रश्न · हर दिन कुछ नया सीखें",today:"आज के प्रश्न",answer:"उत्तर"}};
+function gkDayIndex(){const d=new Date();return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000)}
+function renderDailyGK(){const el=document.getElementById("dailyGK");if(!el)return;const t=GK_LABELS[L]||GK_LABELS.en,day=gkDayIndex(),items=[];for(let i=0;i<5;i++)items.push(GK_DAILY[(day*5+i)%GK_DAILY.length]);el.innerHTML='<div class="gk-head"><div><h2>🌍 '+esc(t.title)+'</h2><p class="sub gk-sub">'+esc(t.sub)+'</p></div><div class="gk-icon">?</div></div><p class="sub" style="margin:10px 0 0"><b>'+esc(t.today)+'</b></p><div class="gk-list">'+items.map((x,i)=>'<div class="gk-q"><b>'+(i+1)+'. '+esc(x.q)+'</b><span class="gk-answer">'+esc(t.answer)+': '+esc(x.a)+'</span></div>').join('')+'</div>'}
+${rs(amount)}</div><p class="due-note">${esc(note)}</p><div class="acts"><button class="btn" data-fee-close>${esc(close)}</button><button class="btn gold" data-fee-view>${esc(view)}</button></div></div></div>`;
   const backdrop=el.querySelector(".fee-popup-backdrop");
   const closePopup=()=>{backdrop.classList.remove("show");setTimeout(()=>el.remove(),300)};
   el.querySelector("[data-fee-close]").onclick=closePopup;
