@@ -1151,6 +1151,13 @@ function idHTML(list,photos){photos=photos||{};
   @media print{.sheet{padding:0}}</style></head><body><div class="bar"><span>${list.length} ID card${list.length===1?"":"s"} · print on A4, then cut out</span><button onclick="window.print()">Print / Save PDF</button></div><div class="sheet">${cards}</div></body></html>`;
 }
 const slug=t=>String(t).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+function safeIDHTML(list,photos){
+  try{return idHTML(list,photos||{})}catch(e){
+    console.error("TASVIA ID HTML:",e);
+    const ay=acYear(today()),i=info(),rows=(list||[]).map(s=>`<div style="border:1px solid #999;border-radius:12px;width:340px;min-height:210px;margin:12px auto;overflow:hidden;background:#fff;font-family:Arial;color:#15201C"><div style="background:#0B2455;color:#fff;padding:12px;font-weight:700"><span style="color:#F2AC10">TASVIA</span> ACADEMY</div><div style="padding:16px"><h2 style="margin:0 0 10px;color:#0B2455">${esc(s.name)}</h2><div>Class: ${esc(clsLabel(s.cls))}</div><div>Parent: ${esc(s.parent||"–")}</div><div>Phone: ${esc(s.phone||"–")}</div><div style="margin-top:14px;font-size:12px">Student ID · ${esc(ay.label)}</div></div></div>`).join("");
+    return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TASVIA ID cards</title><style>body{margin:0;background:#eef1ef}.bar{position:sticky;top:0;background:#0B2455;color:#fff;padding:12px;display:flex;justify-content:space-between}.bar button{background:#F2AC10;border:0;padding:9px 14px;border-radius:8px;font-weight:700}</style></head><body><div class="bar"><span>TASVIA ID cards · ${rows?list.length:0}</span><button onclick="window.print()">Print / Save PDF</button></div>${rows}</body></html>`;
+  }
+}
 function openIDDocument(win,html){
   const blob=new Blob([html],{type:"text/html;charset=utf-8"});
   const url=URL.createObjectURL(blob);
@@ -1263,8 +1270,8 @@ document.addEventListener("click",e=>{
     case "printRC":{const l=studentsOf(UI.cardCls);if(!l.length)break;if(UI.rcFrom>UI.rcTo){toast("'From' date must be before 'To' date");break}saveFile(`report-cards-${slug(clsLabel(UI.cardCls))}.html`,rcHTML(l,UI.rcFrom,UI.rcTo));break}
     case "printID":{const l=studentsOf(UI.cardCls);if(!l.length)break;b.disabled=true;b.textContent="Preparing ID cards…";
       const w=window.open("about:blank","_blank");if(!w){b.disabled=false;b.textContent="Download ID cards";toast("Allow pop-ups to open the ID cards");break}
-      Promise.all(l.map(x=>getPhoto(x.id))).then(()=>{const ph={};l.forEach(x=>ph[x.id]=photoCache[x.id]);openIDDocument(w,idHTML(l,ph))}).catch(e=>{console.error("TASVIA ID cards:",e);try{w.close()}catch(_){}toast("ID cards could not be opened. Please try again.")}).finally(()=>{b.disabled=false;b.textContent="Download ID cards"});break}
-    case "idOne":{const s=S.students[id],w=window.open("about:blank","_blank");if(!w){toast("Allow pop-ups to open the ID card");break}getPhoto(id).then(p=>{openIDDocument(w,idHTML([{id,...s}],{[id]:p}))}).catch(e=>{console.error("TASVIA ID card:",e);try{w.close()}catch(_){}toast("ID card could not be opened. Please try again.")});break}
+      Promise.all(l.map(x=>Promise.resolve(getPhoto(x.id)).catch(()=>null))).then(()=>{const ph={};l.forEach(x=>ph[x.id]=photoCache[x.id]||null);openIDDocument(w,safeIDHTML(l,ph))}).catch(e=>{console.error("TASVIA ID cards:",e);openIDDocument(w,safeIDHTML(l,{}))}).finally(()=>{b.disabled=false;b.textContent="Download ID cards"});break}
+    case "idOne":{const s=S.students[id],w=window.open("about:blank","_blank");if(!w){toast("Allow pop-ups to open the ID card");break}Promise.resolve(getPhoto(id)).catch(()=>null).then(p=>{openIDDocument(w,safeIDHTML([{id,...s}],{[id]:p||null}))}).catch(e=>{console.error("TASVIA ID card:",e);openIDDocument(w,safeIDHTML([{id,...s}],{}))});break}
     case "photo":pickPhoto(id);break;
     case "viewPhoto":getPhoto(id).then(p=>{if(p){openSheet(esc(S.students[id].name),`<div style="text-align:center"><img src="${p}" alt="Student photo" style="max-width:100%;max-height:65vh;border-radius:16px;object-fit:contain;border:2px solid var(--gold)"></div>`)}else toast("No photo available")});break;
     case "delPhoto":if(confirmDel(b,"Tap again to remove")){photoCache[id]=null;if(db){db.doc("photos/"+id).delete().catch(e=>toast(errMsg(e)));const pc=(S.students[id]||{}).pcode;if(pc)db.doc("parentView/"+pc).set({photo:null},{merge:true}).catch(()=>{})}studentSheet(id);schedulePV();toast("Photo removed")}break;
