@@ -1155,6 +1155,15 @@ async function saveFile(name,data){
   if(!downloads)return toast("Downloads aren't available here");
   try{const r=await downloads.save({filename:name,data});if(r&&r.status==="saved")toast("Downloaded")}catch(e){if(e&&e.code==="unavailable"){downloads=null;render();toast("Downloads aren't available here")}}
 }
+function openPrintableFile(name,html){
+  /* iPhone/iPad Safari often ignores programmatic .download for generated HTML.
+     Open the printable document directly so the user can use Print → Save to Files/PDF. */
+  const w=window.open("about:blank","_blank");
+  if(!w){toast("Allow pop-ups to open the ID card");return false}
+  w.document.open();w.document.write(html);w.document.close();
+  try{w.document.title=name.replace(/\.html$/i,"")}catch(e){}
+  return true;
+}
 async function rcImage(id){
   const s={id,...S.students[id]},ay=acYear(today()),d=rcData(s,ay.from,today()),i=info();
   try{await document.fonts.ready}catch(e){}
@@ -1246,9 +1255,10 @@ document.addEventListener("click",e=>{
     case "copyHw":{const s=S.students[b.dataset.id],e=((S.diary[UI.date]||{}).entries||{})[b.dataset.id];if(s&&e)copy(hwText(s,UI.date,e,b.dataset.l));break;}
     case "cardCls":UI.cardCls=b.dataset.c;render();break;
     case "printRC":{const l=studentsOf(UI.cardCls);if(!l.length)break;if(UI.rcFrom>UI.rcTo){toast("'From' date must be before 'To' date");break}saveFile(`report-cards-${slug(clsLabel(UI.cardCls))}.html`,rcHTML(l,UI.rcFrom,UI.rcTo));break}
-    case "printID":{const l=studentsOf(UI.cardCls);if(!l.length)break;b.disabled=true;b.textContent="Adding photos…";
-      Promise.all(l.map(x=>getPhoto(x.id))).then(()=>{const ph={};l.forEach(x=>ph[x.id]=photoCache[x.id]);return saveFile(`id-cards-${slug(clsLabel(UI.cardCls))}.html`,idHTML(l,ph))}).finally(()=>{b.disabled=false;b.textContent="Download ID cards"});break}
-    case "idOne":getPhoto(id).then(p=>saveFile(`id-card-${slug(S.students[id].name)}.html`,idHTML([{id,...S.students[id]}],{[id]:p})));break;
+    case "printID":{const l=studentsOf(UI.cardCls);if(!l.length)break;b.disabled=true;b.textContent="Opening ID cards…";
+      const w=window.open("about:blank","_blank");if(!w){b.disabled=false;b.textContent="Download ID cards";toast("Allow pop-ups to open the ID cards");break}
+      Promise.all(l.map(x=>getPhoto(x.id))).then(()=>{const ph={};l.forEach(x=>ph[x.id]=photoCache[x.id]);const html=idHTML(l,ph);w.document.open();w.document.write(html);w.document.close();try{w.document.title="TASVIA ID cards"}catch(e){}}).catch(()=>{try{w.close()}catch(e){}toast("Could not prepare ID cards")}).finally(()=>{b.disabled=false;b.textContent="Download ID cards"});break}
+    case "idOne":{const s=S.students[id],w=window.open("about:blank","_blank");if(!w){toast("Allow pop-ups to open the ID card");break}getPhoto(id).then(p=>{w.document.open();w.document.write(idHTML([{id,...s}],{[id]:p}));w.document.close();try{w.document.title="TASVIA ID card - "+s.name}catch(e){}}).catch(()=>{try{w.close()}catch(e){}toast("Could not prepare the ID card")});break}
     case "photo":pickPhoto(id);break;
     case "viewPhoto":getPhoto(id).then(p=>{if(p){openSheet(esc(S.students[id].name),`<div style="text-align:center"><img src="${p}" alt="Student photo" style="max-width:100%;max-height:65vh;border-radius:16px;object-fit:contain;border:2px solid var(--gold)"></div>`)}else toast("No photo available")});break;
     case "delPhoto":if(confirmDel(b,"Tap again to remove")){photoCache[id]=null;if(db){db.doc("photos/"+id).delete().catch(e=>toast(errMsg(e)));const pc=(S.students[id]||{}).pcode;if(pc)db.doc("parentView/"+pc).set({photo:null},{merge:true}).catch(()=>{})}studentSheet(id);schedulePV();toast("Photo removed")}break;
