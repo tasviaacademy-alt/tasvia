@@ -534,7 +534,7 @@ function getMarksK(k,date){
   Object.keys(m).forEach(x=>{if(!okMark(m[x]))delete m[x]});return m;
 }
 function getMarks(date){return getMarksK("att",date)}
-function setMarksK(k,date,patch){const key=k+"|"+date;pend[key]=Object.assign(pend[key]||{},patch);const y=window.scrollY||window.pageYOffset||0;document.body.classList.add("attendance-live");render();requestAnimationFrame(()=>{window.scrollTo(0,y);document.body.classList.remove("attendance-live")});clearTimeout(flushT[key]);flushT[key]=setTimeout(()=>flush(k,date),400)}
+function setMarksK(k,date,patch){const key=k+"|"+date;pend[key]=Object.assign(pend[key]||{},patch);const y=window.scrollY||window.pageYOffset||0;render();requestAnimationFrame(()=>window.scrollTo(0,y));clearTimeout(flushT[key]);flushT[key]=setTimeout(()=>flush(k,date),400)}
 function setMarks(date,patch){setMarksK("att",date,patch)}
 function mark(date,sid,val){SOUND.tap();setMarks(date,{[sid]:getMarks(date)[sid]===val?null:val})}
 function markT(date,tid,val){SOUND.tap();setMarksK("tatt",date,{[tid]:getMarksK("tatt",date)[tid]===val?null:val})}
@@ -961,6 +961,8 @@ function render(){
   renderNav();
   const v={today:vToday,students:vStudents,fees:vFees,tests:vTests,more:vMore}[UI.tab]();
   const el=document.getElementById("view"),hadQ=document.activeElement&&document.activeElement.id==="q";
+  const attendanceScreen=UI.tab==="today"&&UI.seg==="students";
+  document.body.classList.toggle("attendance-live",attendanceScreen);
   el.innerHTML=v;
   schedulePV();
   if(hadQ){const q=document.getElementById("q");q.focus();q.setSelectionRange(q.value.length,q.value.length)}
