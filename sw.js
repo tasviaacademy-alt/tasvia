@@ -14,18 +14,14 @@ const STATIC_SHELL = [
 ];
 
 self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open(CACHE).then(cache => cache.addAll(STATIC_SHELL))
-  );
+  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(STATIC_SHELL)));
   self.skipWaiting();
 });
 
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(
-        keys.filter(key => key !== CACHE).map(key => caches.delete(key))
-      )
+      Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key)))
     )
   );
   self.clients.claim();
@@ -36,16 +32,16 @@ self.addEventListener("fetch", event => {
   if (request.method !== "GET") return;
 
   const url = new URL(request.url);
-  if (url.origin !== self.location.origin) {
-    // Never cache Firebase, authentication, or other third-party application traffic.
-    return;
-  }
+  if (url.origin !== self.location.origin) return;
 
-  const isHtml = request.mode === "navigate" || request.destination === "document";
-  const isStaticAsset = /\\.(?:css|js|png|jpg|jpeg|webp|svg|ico|woff2?)$/i.test(url.pathname);
+  const isHtml =
+    request.mode === "navigate" ||
+    request.destination === "document";
+
+  const isStaticAsset =
+    /\.(?:css|js|png|jpg|jpeg|webp|svg|ico|woff2?)$/i.test(url.pathname);
 
   if (isHtml) {
-    // Always prefer the current deployed HTML; fall back to cached HTML only offline.
     event.respondWith(
       fetch(request)
         .then(response => {
@@ -55,16 +51,20 @@ self.addEventListener("fetch", event => {
           }
           return response;
         })
-        .catch(() => caches.match(request).then(cached => cached || caches.match("/index.html")))
+        .catch(() =>
+          caches.match(request).then(
+            cached => cached || caches.match("/index.html")
+          )
+        )
     );
     return;
   }
 
   if (isStaticAsset) {
-    // Versioned static assets can safely use cache-first with network fallback.
     event.respondWith(
       caches.match(request).then(cached =>
-        cached || fetch(request).then(response => {
+        cached ||
+        fetch(request).then(response => {
           if (response.ok) {
             const copy = response.clone();
             caches.open(CACHE).then(cache => cache.put(request, copy));
