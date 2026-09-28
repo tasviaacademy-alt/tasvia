@@ -223,7 +223,7 @@ function showFeeDuePopup(amount){
 }
 
 function abacusKey(){const code=(location.hash||"").replace("#","").trim().toUpperCase();return "tasvia-abacus-"+code}
-function abacusLoad(){try{const x=JSON.parse(localStorage.getItem(abacusKey())||"{}");return {level:Math.min(5,Math.max(1,Number(x.level)||1),accuracy:Number(x.accuracy)||0,streak:Number(x.streak)||0,attempts:Number(x.attempts)||0,correct:Number(x.correct)||0,last:x.last||""}}catch(e){return {level:1,accuracy:0,streak:0,attempts:0,correct:0,last:""}}}
+function abacusLoad(){try{const x=JSON.parse(localStorage.getItem(abacusKey())||"{}");return {level:Math.min(5,Math.max(1,Number(x.level)||1)),accuracy:Number(x.accuracy)||0,streak:Number(x.streak)||0,attempts:Number(x.attempts)||0,correct:Number(x.correct)||0,last:x.last||""}}catch(e){return {level:1,accuracy:0,streak:0,attempts:0,correct:0,last:""}}}
 function abacusSave(x){try{localStorage.setItem(abacusKey(),JSON.stringify(x))}catch(e){}}
 function abacusMake(level){const max=level<=1?9:level===2?20:level===3?50:level===4?100:200;let a=Math.floor(Math.random()*max)+1,b=Math.floor(Math.random()*max)+1;if(level<=2&&Math.random()<.5)return {a,b,op:"+",ans:a+b};if(Math.random()<.35&&b>a)[a,b]=[b,a];return {a,b,op:Math.random()<.5?"+":"-",ans:a+(Math.random()<.5?b:-b)}}
 function abacusRods(n){const s=String(Math.abs(n)).padStart(2,"0").slice(-3);return `<div class="abacus-rods">${[...s].map((d,i)=>`<div class="abacus-rod">${Array.from({length:Math.min(5,Number(d)||0)},(_,j)=>`<i class="abacus-bead" style="top:${7+j*9}px"></i>`).join("")}</div>`).join("")}</div>`}
