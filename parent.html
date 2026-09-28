@@ -101,6 +101,84 @@ td.r,th.r{text-align:right;white-space:nowrap}
 .welcome-sound.off{opacity:.72}
 @keyframes welcomeLogoIn{from{opacity:0;transform:scale(.65) rotate(-8deg)}to{opacity:1;transform:scale(1) rotate(0)}}
 @media(prefers-reduced-motion:reduce){.welcome-logo-wrap{animation:none}.welcome-backdrop{transition:none}}
+
+/* STANDARD SOROBAN — photo-matched frame and true bead stacking */
+.abacus-frame{
+  max-width:520px!important;
+  padding:18px 16px 14px!important;
+  border:12px solid #B87518!important;
+  border-radius:4px!important;
+  background:linear-gradient(180deg,#E2A33A 0%,#C47A18 45%,#A85E10 100%)!important;
+  box-shadow:inset 0 0 0 3px #F6C65E,inset 0 0 0 7px #8E4D0D,0 8px 22px rgba(0,0,0,.30)!important;
+}
+.abacus-frame:before{
+  inset:7px!important;
+  border:3px solid rgba(255,222,165,.72)!important;
+  border-radius:1px!important;
+}
+.abacus-rods{
+  gap:10px!important;
+  padding:4px 8px 0!important;
+}
+.abacus-column{min-width:52px!important}
+.abacus-rod{
+  width:46px!important;
+  height:238px!important;
+}
+.abacus-rod:before{
+  width:6px!important;
+  background:linear-gradient(90deg,#D5B27A,#FFF7E0 45%,#C99A55 70%,#9A6A2E)!important;
+}
+.abacus-rod:after{
+  top:86px!important;
+  height:10px!important;
+  left:-9px!important;
+  right:-9px!important;
+  border-radius:1px!important;
+  background:linear-gradient(#8D4A0D,#5B2D08)!important;
+  box-shadow:0 2px 4px rgba(0,0,0,.45),inset 0 1px 1px rgba(255,220,160,.4)!important;
+}
+.abacus-bead{
+  left:4px!important;
+  width:38px!important;
+  height:25px!important;
+  border-radius:50%!important;
+  background:radial-gradient(circle at 35% 25%,#FFE991 0,#F5B414 42%,#C97800 100%)!important;
+  border:2px solid #FFF0A8!important;
+  box-shadow:0 3px 5px rgba(0,0,0,.42)!important;
+  transition:top .22s cubic-bezier(.22,1,.36,1),opacity .12s,transform .1s!important;
+}
+.abacus-bead.off{
+  opacity:.30!important;
+  background:radial-gradient(circle at 35% 25%,#E5C48B 0,#B7833C 50%,#80531F 100%)!important;
+  border-color:#E4C795!important;
+}
+/* Heaven bead: away from beam -> touching beam */
+.abacus-heaven{top:12px!important}
+.abacus-heaven.on{top:71px!important}
+/* Earth beads: four distinct positions, never overlap */
+.abacus-earth[data-bead-index="1"]{top:145px!important}
+.abacus-earth[data-bead-index="2"]{top:168px!important}
+.abacus-earth[data-bead-index="3"]{top:191px!important}
+.abacus-earth[data-bead-index="4"]{top:214px!important}
+.abacus-earth[data-bead-index="1"].on{top:94px!important}
+.abacus-earth[data-bead-index="2"].on{top:117px!important}
+.abacus-earth[data-bead-index="3"].on{top:140px!important}
+.abacus-earth[data-bead-index="4"].on{top:163px!important}
+.abacus-place{color:#FFF4D8!important}
+.abacus-touch{color:#FFF4D8!important}
+@media(max-width:560px){
+  .abacus-frame{max-width:100%!important;padding-left:6px!important;padding-right:6px!important}
+  .abacus-rods{gap:3px!important;padding-left:3px!important;padding-right:3px!important}
+  .abacus-column{min-width:0!important}
+  .abacus-rod{width:42px!important}
+  .abacus-bead{left:2px!important;width:38px!important}
+}
+@media(max-width:420px){
+  .abacus-rod{width:38px!important}
+  .abacus-bead{width:34px!important;left:2px!important}
+}
+
 </style>
 </head>
 <body>
@@ -250,7 +328,7 @@ function changes(o,n){
   const p0=(o.pays||[])[0],p1=(n.pays||[])[0];if(p1&&(!p0||p0.d!==p1.d||p0.a!==p1.a))out.push([t.feePaid,rs(p1.a)+" · "+mN(p1.m)]);
   return out;
 }
-document.addEventListener("click",e=>{const bead=e.target.closest("[data-abacus-bead]");if(bead&&abacusSession){const rod=Number(bead.dataset.abacusBead),idx=Number(bead.dataset.beadIndex),ds=abacusSession.digits,cur=ds[rod];let next=cur;if(idx===5){next=cur>=5?cur-5:cur+5}else{const beadValue=idx;next=cur>=beadValue?beadValue-1:beadValue}if(next!==cur){ds[rod]=Math.max(0,Math.min(9,next));abacusBeadSound();abacusRenderRods()}return}if(e.target.id==="abacusStart"||e.target.id==="abacusRestart"){startAbacus();return}if(e.target.id==="abacusCheck"){abacusCheck();return}if(e.target.id==="alertBtn"){chime();if("Notification" in window&&Notification.permission==="default")Notification.requestPermission().then(()=>render());else{try{localStorage.setItem("tasvia-parent-alerts","1")}catch(_){ }render()}}});
+document.addEventListener("click",e=>{const bead=e.target.closest("[data-abacus-bead]");if(bead&&abacusSession){const rod=Number(bead.dataset.abacusBead),idx=Number(bead.dataset.beadIndex),ds=abacusSession.digits,cur=ds[rod];let next=cur;if(idx===5){next=cur>=5?cur-5:cur+5}else{const earth=cur%5;if(idx<=earth){next=idx-1}else{next=idx}}if(next!==cur){ds[rod]=Math.max(0,Math.min(9,next));abacusBeadSound();abacusRenderRods()}return}if(e.target.id==="abacusStart"||e.target.id==="abacusRestart"){startAbacus();return}if(e.target.id==="abacusCheck"){abacusCheck();return}if(e.target.id==="alertBtn"){chime();if("Notification" in window&&Notification.permission==="default")Notification.requestPermission().then(()=>render());else{try{localStorage.setItem("tasvia-parent-alerts","1")}catch(_){ }render()}}});
 showWelcome();
 (function start(){
   const saved=load("tasvia-parent-lang");if(saved&&T[saved])L=saved;langs();
