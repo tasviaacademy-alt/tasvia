@@ -239,6 +239,7 @@ showWelcome();
     changes(prev,V).forEach(([a,b],i)=>setTimeout(()=>alertParent(a,b),i*1800));
   },e=>{clearTimeout(timer);msg(e&&e.code==="permission-denied"?T[L].invalid:T[L].offline,e&&e.code!=="permission-denied")});
 })();
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("/sw.js",{scope:"/"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
 </body>
 </html>
