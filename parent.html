@@ -265,6 +265,7 @@ function bodmasExpr(level,r){
  const a=bodmasInt(r,6,24),b=bodmasInt(r,2,9),c=bodmasInt(r,2,8),d=bodmasInt(r,2,6),m=bodmasInt(r,0,3);if(m===0)return [a+" + "+b+" × ("+c+" − "+d+") ÷ 2",a+b*(c-d)/2];if(m===1){const n=d*Math.ceil((a-b)/d)+b;return ["("+n+" − "+b+") ÷ "+d+" + "+c,(n-b)/d+c]}if(m===2){const x=bodmasInt(r,3,9),n=x*(b-1);return [n+" ÷ ("+b+" − 1) + "+c+" × "+d,n/(b-1)+c*d]}const n=d*bodmasInt(r,3,10)-c;return ["("+n+" + "+c+") ÷ "+d+" + "+b+" × 2",(n+c)/d+b*2]
 }
 function bodmasDailyQuestions(level){const r=bodmasSeed(level),out=[],seen=new Set();let guard=0;while(out.length<10&&guard++<300){const q=bodmasExpr(level,r);if(Number.isFinite(q[1])&&Number.isInteger(q[1])&&!seen.has(q[0])){seen.add(q[0]);out.push(q)}}return out}
+function bodmasStart(level=bodmas.level){bodmas={level,questions:bodmasDailyQuestions(level),index:0,score:0,answered:false};renderBodmas();}
 function buildBodmasCard(){
   const t=BODMAS_LABELS[L]||BODMAS_LABELS.en;
   return `<div class="card bodmas-card"><div class="bodmas-head"><div><h2>🧠 ${esc(t.title)}</h2><p class="sub bodmas-sub">${esc(t.sub)}</p></div><div class="bodmas-icon">÷</div></div><div class="bodmas-levels">
