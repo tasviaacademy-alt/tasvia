@@ -2,7 +2,8 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/parent.html", "destination": "/parent/" },
-    { "source": "/parent", "destination": "/parent/" }
+    { "source": "/parent", "destination": "/parent/index.html" },
+    { "source": "/parent/", "destination": "/parent/index.html" },
+    { "source": "/parent.html", "destination": "/parent/index.html" }
   ]
 }
