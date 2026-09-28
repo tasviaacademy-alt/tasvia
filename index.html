@@ -1122,7 +1122,7 @@ function rcHTML(list,from,to){
     <div class="two"><div class="box"><h3>Attendance</h3><p>${d.att.t?`${d.att.p} of ${d.att.t} day${d.att.t===1?"":"s"} present <b>(${d.att.pct}%)</b>`:"Not recorded"}</p></div><div class="box"><h3>Remarks</h3><p>${d.g?remark(d.g):"&nbsp;"}</p><div class="line"></div></div></div>
     <p class="scale">Grades: A+ 90–100 · A 80–89 · B+ 70–79 · B 60–69 · C 50–59 · D 35–49 · E below 35</p>
     <div class="sig"><div>Class teacher</div><div>Principal</div><div>Parent</div></div></section>`}).join("");
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Report cards – ${esc(list[0]?clsLabel(list[0].cls):"")}</title><style>${PRINT_CSS}
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><title>Report cards – ${esc(list[0]?clsLabel(list[0].cls):"")}</title><style>${PRINT_CSS}
   @page{size:A4;margin:12mm}.pg{background:#fff;max-width:186mm;margin:12px auto;padding:10mm;page-break-after:always;border:1px solid #d3dcd7}
   @media print{.pg{margin:0;padding:0;border:0;max-width:none}}
   .lg{width:62px;height:62px;border-radius:50%}
@@ -1270,7 +1270,7 @@ document.addEventListener("click",e=>{
     case "printRC":{const l=studentsOf(UI.cardCls);if(!l.length)break;if(UI.rcFrom>UI.rcTo){toast("'From' date must be before 'To' date");break}saveFile(`report-cards-${slug(clsLabel(UI.cardCls))}.html`,rcHTML(l,UI.rcFrom,UI.rcTo));break}
     case "printID":{const l=studentsOf(UI.cardCls);if(!l.length)break;b.disabled=true;b.textContent="Preparing ID cards…";
       Promise.all(l.map(x=>Promise.resolve(getPhoto(x.id)).catch(()=>null))).then(()=>{const ph={};l.forEach(x=>ph[x.id]=photoCache[x.id]||null);const html=safeIDHTML(l,ph),blob=new Blob([html],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob);location.href=url;setTimeout(()=>URL.revokeObjectURL(url),60000)}).catch(e=>{console.error("TASVIA ID cards:",e);toast("Please try again")}).finally(()=>{b.disabled=false;b.textContent="Download ID cards"});break}
-    case "idOne":{const s=S.students[id];b.disabled=true;b.textContent="Preparing…";Promise.resolve(getPhoto(id)).catch(()=>null).then(p=>{const html=safeIDHTML([{id,...s}],{[id]:p||null});const blob=new Blob([html],{type:"text/html;charset=utf-8"});const url=URL.createObjectURL(blob);location.href=url;setTimeout(()=>URL.revokeObjectURL(url),60000)}).catch(e=>{console.error("TASVIA ID card:",e);toast("Please try again")});break}
+    case "idOne":{const s=S.students[id];b.disabled=true;b.textContent="Preparing…";Promise.resolve(getPhoto(id)).catch(()=>null).then(p=>{const html=safeIDHTML([{id,...s}],{[id]:p||null});const blob=new Blob([html],{type:"text/html;charset=utf-8"});if(navigator.share){const file=new File([blob],"tasvia-id-card.html",{type:"text/html"});return navigator.share({files:[file],title:"TASVIA ID Card"}).catch(e=>{if(e&&e.name==="AbortError")return;throw e})}const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="tasvia-id-card.html";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),60000)}).catch(e=>{console.error("TASVIA ID card:",e);toast("ID card could not be created")}).finally(()=>{b.disabled=false;b.textContent="ID card"});break}
     case "photo":pickPhoto(id);break;
     case "viewPhoto":getPhoto(id).then(p=>{if(p){openSheet(esc(S.students[id].name),`<div style="text-align:center"><img src="${p}" alt="Student photo" style="max-width:100%;max-height:65vh;border-radius:16px;object-fit:contain;border:2px solid var(--gold)"></div>`)}else toast("No photo available")});break;
     case "delPhoto":if(confirmDel(b,"Tap again to remove")){photoCache[id]=null;if(db){db.doc("photos/"+id).delete().catch(e=>toast(errMsg(e)));const pc=(S.students[id]||{}).pcode;if(pc)db.doc("parentView/"+pc).set({photo:null},{merge:true}).catch(()=>{})}studentSheet(id);schedulePV();toast("Photo removed")}break;
@@ -1478,7 +1478,7 @@ function startFirebase(){
 render();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
 else startFirebase();
-if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("sw.js?v=7").then(reg=>reg.update()).catch(()=>{});
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.getRegistrations().then(rs=>{rs.forEach(r=>r.unregister())}).catch(()=>{});navigator.serviceWorker.getRegistrations().then(rs=>{if(rs.length)location.reload()}).catch(()=>{})}
 </script>
 </body>
 </html>
