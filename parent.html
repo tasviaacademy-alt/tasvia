@@ -193,8 +193,7 @@ function render(){
   // homework
   h+=`<div class="card"><h2>${esc(t.hw)}</h2>`+((v.hw||[]).length?v.hw.map(x=>`<div class="hw"><b>${esc(dL(x.d))}</b><div>${esc(x.hw)}</div>${x.note?`<div class="sub">${esc(t.note)}: ${esc(x.note)}</div>`:""}</div>`).join(""):`<p class="sub">${esc(t.noHw)}</p>`)+`</div>`;
   // BODMAS practice
-  h+=buildBodmasCard();
-  h+=`<div id="dailyGK" class="card gk-card"></div>`;
+  h+=`<div id="dailyTools" class="card"><h2>🧠 Daily Practice</h2><p class="sub">Loading daily learning activities…</p></div>`;
   // attendance
   h+=`<div class="card"><h2>${esc(t.att)} · ${esc(cm?mN(cm):"")}</h2><div class="stats"><div><b class="ok">${a.p}</b><small>${esc(t.present)}</small></div><div><b class="bad">${a.a}</b><small>${esc(t.absent)}</small></div><div><b>${pc!=null?pc+"%":"–"}</b><small>${esc(t.pct)}</small></div></div>`;
   if(pc!=null)h+=`<div class="bar"><i style="width:${pc}%"></i></div>`;
