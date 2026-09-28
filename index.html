@@ -1269,9 +1269,8 @@ document.addEventListener("click",e=>{
     case "cardCls":UI.cardCls=b.dataset.c;render();break;
     case "printRC":{const l=studentsOf(UI.cardCls);if(!l.length)break;if(UI.rcFrom>UI.rcTo){toast("'From' date must be before 'To' date");break}saveFile(`report-cards-${slug(clsLabel(UI.cardCls))}.html`,rcHTML(l,UI.rcFrom,UI.rcTo));break}
     case "printID":{const l=studentsOf(UI.cardCls);if(!l.length)break;b.disabled=true;b.textContent="Preparing ID cards…";
-      const w=window.open("about:blank","_blank");if(!w){b.disabled=false;b.textContent="Download ID cards";toast("Allow pop-ups to open the ID cards");break}
-      Promise.all(l.map(x=>Promise.resolve(getPhoto(x.id)).catch(()=>null))).then(()=>{const ph={};l.forEach(x=>ph[x.id]=photoCache[x.id]||null);openIDDocument(w,safeIDHTML(l,ph))}).catch(e=>{console.error("TASVIA ID cards:",e);openIDDocument(w,safeIDHTML(l,{}))}).finally(()=>{b.disabled=false;b.textContent="Download ID cards"});break}
-    case "idOne":{const s=S.students[id],w=window.open("about:blank","_blank");if(!w){toast("Allow pop-ups to open the ID card");break}Promise.resolve(getPhoto(id)).catch(()=>null).then(p=>{openIDDocument(w,safeIDHTML([{id,...s}],{[id]:p||null}))}).catch(e=>{console.error("TASVIA ID card:",e);openIDDocument(w,safeIDHTML([{id,...s}],{}))});break}
+      Promise.all(l.map(x=>Promise.resolve(getPhoto(x.id)).catch(()=>null))).then(()=>{const ph={};l.forEach(x=>ph[x.id]=photoCache[x.id]||null);const html=safeIDHTML(l,ph),blob=new Blob([html],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob);location.href=url;setTimeout(()=>URL.revokeObjectURL(url),60000)}).catch(e=>{console.error("TASVIA ID cards:",e);toast("Please try again")}).finally(()=>{b.disabled=false;b.textContent="Download ID cards"});break}
+    case "idOne":{const s=S.students[id];b.disabled=true;b.textContent="Preparing…";Promise.resolve(getPhoto(id)).catch(()=>null).then(p=>{const html=safeIDHTML([{id,...s}],{[id]:p||null});const blob=new Blob([html],{type:"text/html;charset=utf-8"});const url=URL.createObjectURL(blob);location.href=url;setTimeout(()=>URL.revokeObjectURL(url),60000)}).catch(e=>{console.error("TASVIA ID card:",e);toast("Please try again")});break}
     case "photo":pickPhoto(id);break;
     case "viewPhoto":getPhoto(id).then(p=>{if(p){openSheet(esc(S.students[id].name),`<div style="text-align:center"><img src="${p}" alt="Student photo" style="max-width:100%;max-height:65vh;border-radius:16px;object-fit:contain;border:2px solid var(--gold)"></div>`)}else toast("No photo available")});break;
     case "delPhoto":if(confirmDel(b,"Tap again to remove")){photoCache[id]=null;if(db){db.doc("photos/"+id).delete().catch(e=>toast(errMsg(e)));const pc=(S.students[id]||{}).pcode;if(pc)db.doc("parentView/"+pc).set({photo:null},{merge:true}).catch(()=>{})}studentSheet(id);schedulePV();toast("Photo removed")}break;
@@ -1479,7 +1478,7 @@ function startFirebase(){
 render();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
 else startFirebase();
-if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("sw.js").catch(()=>{});
+if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("sw.js?v=7").then(reg=>reg.update()).catch(()=>{});
 </script>
 </body>
 </html>
