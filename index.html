@@ -1488,7 +1488,7 @@ function startFirebase(){
 render();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
 else startFirebase();
-if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.getRegistrations().then(rs=>{rs.forEach(r=>r.unregister())}).catch(()=>{});navigator.serviceWorker.getRegistrations().then(rs=>{if(rs.length)location.reload()}).catch(()=>{})}
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js",{scope:"./"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
 </body>
 </html>
