@@ -372,6 +372,9 @@ main .card:nth-child(5),main .item:nth-child(5){animation-delay:.18s}
   main .hd,main .board,main .chips,main .card,main .item,main .menu .item,.board,.hd::after{animation:none!important}
   main{scroll-behavior:auto}
 }
+/* Attendance marking must stay visually stable while each tap re-renders the list. */
+.attendance-live main .hd,.attendance-live main .board,.attendance-live main .chips,.attendance-live main .card,.attendance-live main .item,.attendance-live main .menu .item,.attendance-live main .hd::after{animation:none!important;transition:none!important}
+.attendance-live main{scroll-behavior:auto}
 </style>
 </head>
 <body>
@@ -531,7 +534,7 @@ function getMarksK(k,date){
   Object.keys(m).forEach(x=>{if(!okMark(m[x]))delete m[x]});return m;
 }
 function getMarks(date){return getMarksK("att",date)}
-function setMarksK(k,date,patch){const key=k+"|"+date;pend[key]=Object.assign(pend[key]||{},patch);render();clearTimeout(flushT[key]);flushT[key]=setTimeout(()=>flush(k,date),400)}
+function setMarksK(k,date,patch){const key=k+"|"+date;pend[key]=Object.assign(pend[key]||{},patch);const y=window.scrollY||window.pageYOffset||0;document.body.classList.add("attendance-live");render();requestAnimationFrame(()=>{window.scrollTo(0,y);document.body.classList.remove("attendance-live")});clearTimeout(flushT[key]);flushT[key]=setTimeout(()=>flush(k,date),400)}
 function setMarks(date,patch){setMarksK("att",date,patch)}
 function mark(date,sid,val){SOUND.tap();setMarks(date,{[sid]:getMarks(date)[sid]===val?null:val})}
 function markT(date,tid,val){SOUND.tap();setMarksK("tatt",date,{[tid]:getMarksK("tatt",date)[tid]===val?null:val})}
