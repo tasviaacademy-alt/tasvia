@@ -159,8 +159,7 @@ function render(){
   let h="";
   if(c.notice)h+=`<div class="card"><h2>📢 ${esc(t.notice)}</h2><div class="notice">${esc(c.notice)}</div></div>`;
   // Abacus practice
-  const ab=abacusLoad();
-  h+=`<div class="card abacus-card"><div class="abacus-head"><div><h2>🧮 ${esc(t.abacus)}</h2><p class="sub" style="margin:3px 0 0">${esc(t.abacusSub)}</p></div><div class="abacus-icon">🧮</div></div><div class="abacus-stats"><div class="abacus-stat"><b>${ab.level}</b><small>${esc(t.level)}</small></div><div class="abacus-stat"><b>${ab.accuracy}%</b><small>${esc(t.accuracy)}</small></div><div class="abacus-stat"><b>${ab.streak}</b><small>${esc(t.streak)}</small></div></div><button class="btn gold abacus-start" id="abacusStart" type="button">▶ ${esc(t.startAbacus)}</button><div id="abacusPractice"></div></div>`;
+  h+=`<div class="card abacus-card"><div class="abacus-head"><div><h2>🧮 ${esc(t.abacus)}</h2><p class="sub" style="margin:3px 0 0">${esc(t.abacusSub)}</p></div><div class="abacus-icon">🧮</div></div><div class="chips" style="margin-top:10px"><span>Practice only</span><span>No academic marks</span></div><button class="btn gold abacus-start" id="abacusStart" type="button">▶ ${esc(t.startAbacus)}</button><div id="abacusPractice"></div></div>`;
   // homework
   h+=`<div class="card"><h2>${esc(t.hw)}</h2>`+((v.hw||[]).length?v.hw.map(x=>`<div class="hw"><b>${esc(dL(x.d))}</b><div>${esc(x.hw)}</div>${x.note?`<div class="sub">${esc(t.note)}: ${esc(x.note)}</div>`:""}</div>`).join(""):`<p class="sub">${esc(t.noHw)}</p>`)+`</div>`;
   // attendance
