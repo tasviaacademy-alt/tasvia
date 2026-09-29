@@ -44,6 +44,10 @@ jobs:
             });
             console.log('JS syntax OK:', file);
           }
+          for (const file of ['firebase-config.js','sw.js']) {
+            require('child_process').execFileSync(process.execPath, ['--check', file], {stdio:'inherit'});
+            console.log('JS syntax OK:', file);
+          }
           for (const file of ['manifest.json','twa-manifest.json','vercel.json']) {
             JSON.parse(fs.readFileSync(file,'utf8'));
             console.log('JSON OK:', file);
