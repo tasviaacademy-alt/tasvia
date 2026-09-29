@@ -931,7 +931,7 @@ function homeworkBackupHTML(){
     });
   });
   const recent=rows.slice(0,80);
-  return `<div class="list">`+recent.map(x=>`<div class="card" style="margin:0"><div class="row" style="justify-content:space-between"><b>${esc(x.name)}</b><span class="tag n">${nice(x.date)} · ${clsLabel(x.cls)}</span></div><div class="hw">${esc(x.hw)}</div>${x.note?`<div class="notice" style="margin:0">${esc(x.note)}</div>`:""}</div>`).join("")+`</div>`:`<div class="empty">No homework backup records found.</div>`;
+  return recent.length ? `<div class="list">`+recent.map(x=>`<div class="card" style="margin:0"><div class="row" style="justify-content:space-between"><b>${esc(x.name)}</b><span class="tag n">${nice(x.date)} · ${clsLabel(x.cls)}</span></div><div class="hw">${esc(x.hw)}</div>${x.note?`<div class="notice" style="margin:0">${esc(x.note)}</div>`:""}</div>`).join("")+`</div>`:`<div class="empty">No homework backup records found.</div>`;
 }
 function gkBackupHTML(){
   if(gkBackupLoading)return `<div class="card"><p class="sub">Loading GK backup…</p></div>`;
