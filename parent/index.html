@@ -6,7 +6,7 @@
 <title>TASVIA Academy – Parent</title>
 <meta name="theme-color" content="#0B2455">
 <meta name="robots" content="noindex">
-<link rel="icon" href="/icon-192.png">
+<link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="TASVIA">
@@ -103,13 +103,40 @@ td.r,th.r{text-align:right;white-space:nowrap}
 @media(prefers-reduced-motion:reduce){.welcome-logo-wrap{animation:none}.welcome-backdrop{transition:none}}
 
 
-</style>
+.brain-card{border:1px solid rgba(242,172,16,.35);background:linear-gradient(145deg,var(--card),color-mix(in srgb,var(--gold) 6%,var(--card)));overflow:hidden}.brain-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.brain-icon{width:46px;height:46px;border-radius:14px;background:var(--board);display:grid;place-items:center;font-size:25px;flex:0 0 auto}.brain-sub{margin:3px 0 0}.brain-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.brain-chips span{background:var(--chip);border-radius:999px;padding:3px 10px;font-size:.8rem}.brain-start{width:100%;margin-top:12px;border:0;cursor:pointer;font:600 16px Hind,sans-serif}.brain-game{margin-top:12px;padding:13px;border:1px solid var(--line);border-radius:14px;background:var(--chip)}.brain-bar{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:.82rem;color:var(--muted);margin-bottom:10px}.brain-bar b{color:var(--ink)}.memory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:360px;margin:0 auto}.memory-card{aspect-ratio:1;border:0;border-radius:12px;background:var(--board);color:#fff;cursor:pointer;min-width:44px;min-height:44px;font:700 1.45rem/1 Hind,sans-serif;box-shadow:0 3px 7px rgba(0,0,0,.18)}.memory-card.revealed,.memory-card.matched{background:var(--card);color:var(--ink);border:2px solid var(--gold)}.memory-card.matched{opacity:.72}.memory-card:disabled{cursor:default}.memory-card:focus-visible{outline:3px solid var(--gold);outline-offset:2px}.memory-symbol{display:none}.memory-card.revealed .memory-symbol,.memory-card.matched .memory-symbol{display:block}.memory-card.revealed .memory-back,.memory-card.matched .memory-back{display:none}.brain-feedback{text-align:center;font-weight:700;min-height:25px;margin-top:9px}.brain-feedback.ok{color:var(--p)}.brain-feedback.bad{color:var(--a)}.brain-games{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}.brain-game-btn{border:1px solid var(--line);border-radius:12px;padding:11px 8px;background:var(--card);color:var(--ink);font:600 15px Hind,sans-serif;cursor:pointer}.brain-game-btn:active{transform:scale(.98)}.brain-question{font-size:1.35rem;font-weight:800;text-align:center;margin:8px 0 12px}.brain-options{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.brain-option{border:1px solid var(--line);border-radius:12px;padding:11px;background:var(--card);color:var(--ink);font:700 16px Hind,sans-serif;cursor:pointer}.brain-option.correct{border-color:var(--p);background:color-mix(in srgb,var(--p) 14%,var(--card))}.brain-option.wrong{border-color:var(--a);background:color-mix(in srgb,var(--a) 12%,var(--card))}.sequence-box{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:10px 0}.sequence-box span{min-width:42px;padding:8px 10px;border-radius:10px;background:var(--board);color:#fff;font-weight:800;text-align:center}.sequence-box .missing{background:var(--gold);color:#1a1405}
+
+/* BODMAS PRACTICE */
+.bodmas-card{border:1px solid rgba(43,138,85,.28);background:linear-gradient(145deg,var(--card),color-mix(in srgb,var(--p) 5%,var(--card)));overflow:hidden}
+.bodmas-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bodmas-icon{width:46px;height:46px;border-radius:14px;background:var(--board);color:#fff;display:grid;place-items:center;font-size:24px;flex:0 0 auto}
+.bodmas-sub{margin:3px 0 0}
+.bodmas-levels{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:11px}
+.bodmas-level{border:1px solid var(--line);border-radius:10px;padding:8px 5px;background:var(--card);color:var(--ink);font:600 14px Hind,sans-serif;cursor:pointer}
+.bodmas-level.active{background:var(--board);color:#fff;border-color:var(--board)}
+.bodmas-panel{margin-top:11px;padding:13px;border:1px solid var(--line);border-radius:14px;background:var(--chip)}
+.bodmas-meta{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:.84rem}
+.bodmas-question{text-align:center;font-family:"Baloo 2",sans-serif;font-size:1.65rem;font-weight:800;letter-spacing:.02em;margin:12px 0}
+.bodmas-input-row{display:flex;gap:8px;max-width:360px;margin:0 auto}
+.bodmas-input{flex:1;min-width:0;border:2px solid var(--line);border-radius:11px;padding:10px 12px;background:var(--card);color:var(--ink);font:700 18px Hind,sans-serif;text-align:center}
+.bodmas-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(242,172,16,.15)}
+.bodmas-submit{border:0;border-radius:11px;padding:10px 16px;background:var(--board);color:#fff;font:700 15px Hind,sans-serif;cursor:pointer}
+.bodmas-submit:disabled{opacity:.55;cursor:default}
+.bodmas-feedback{text-align:center;min-height:26px;margin-top:9px;font-weight:700}
+.bodmas-feedback.ok{color:var(--p)}.bodmas-feedback.bad{color:var(--a)}
+.bodmas-next{width:100%;margin-top:9px;border:0;cursor:pointer;font:600 15px Hind,sans-serif}
+.bodmas-progress{height:8px;border-radius:5px;background:var(--card);overflow:hidden;margin:8px 0 2px}
+.bodmas-progress i{display:block;height:100%;background:var(--p);transition:width .25s ease}
+.bodmas-result{text-align:center;padding:9px 0 2px}
+.bodmas-result strong{font-family:"Baloo 2",sans-serif;font-size:1.8rem}
+@media(max-width:380px){.bodmas-input-row{flex-direction:column}.bodmas-submit{width:100%}}
+
+.gk-card{border:1px solid rgba(242,172,16,.3);background:linear-gradient(145deg,var(--card),color-mix(in srgb,var(--gold) 5%,var(--card)));overflow:hidden}.gk-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.gk-icon{width:46px;height:46px;border-radius:14px;background:var(--board);color:#fff;display:grid;place-items:center;font-size:24px}.gk-list{display:grid;gap:9px;margin-top:10px}.gk-q{padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--chip)}.gk-q b{display:block}.gk-answer{display:block;color:var(--p);font-weight:700;font-size:.9rem;margin-top:3px}\n</style>
 </head>
 <body>
-<header><div class="top"><div class="brand"><img class="hlogo" src="/logo.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
+<header><div class="top"><div class="brand"><img class="hlogo" src="logo.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
 <main id="main"><div class="center" id="msg">Loading…</div></main><div id="welcomeBackdrop" class="welcome-backdrop" role="dialog" aria-label="TASVIA Academy welcome">
   <div class="welcome-card">
-    <div class="welcome-logo-wrap"><img class="welcome-logo" src="/logo.png" alt="TASVIA Academy"></div>
+    <div class="welcome-logo-wrap"><img class="welcome-logo" src="logo.png" alt="TASVIA Academy"></div>
     <h2>Welcome to <span>TASVIA</span></h2>
     <p id="welcomeGreeting">Let’s inspire, learn, grow and succeed together.</p>
     <p class="welcome-tag">INSPIRE • LEARN • GROW • SUCCEED</p>
@@ -160,13 +187,15 @@ function render(){
   const yt=(v.yr||{}).p+(v.yr||{}).a,ypc=yt?Math.round(v.yr.p*100/yt):null;
   let h="";
   if(c.notice)h+=`<div class="card"><h2>📢 ${esc(t.notice)}</h2><div class="notice">${esc(c.notice)}</div></div>`;
-  // homework — keep Firestore data as the backup source; show only the latest 7 days.
-  const hwNow=Date.now(),hwWeek=7*24*60*60*1000;
-  const allHw=Array.isArray(v.hw)?v.hw:[];
+  // homework — show only the latest 7 days; keep older entries as a local backup.
+  const hwNow=Date.now(),hwWeek=7*24*60*60*1000,allHw=Array.isArray(v.hw)?v.hw:[];
   const activeHw=allHw.filter(x=>{const tm=Date.parse(String(x.d||""));return Number.isFinite(tm)&&hwNow-tm>=0&&hwNow-tm<hwWeek;});
   const archivedHw=allHw.filter(x=>{const tm=Date.parse(String(x.d||""));return Number.isFinite(tm)&&hwNow-tm>=hwWeek;});
-  try{const bk=JSON.parse(localStorage.getItem("tasvia-homework-backup")||"[]");const key=String(location.hash||"").replace("#","").trim().toUpperCase()||"portal";localStorage.setItem("tasvia-homework-backup",JSON.stringify([...bk.filter(z=>z.key!==key),{key,backedUpAt:new Date().toISOString(),homework:archivedHw}].slice(-20)))}catch(_){ }
+  try{const bk=JSON.parse(localStorage.getItem("tasvia-homework-backup")||"[]");const key=String(location.hash||"").replace("#","").trim().toUpperCase()||"portal";localStorage.setItem("tasvia-homework-backup",JSON.stringify([...bk.filter(z=>z.key!==key),{key,backedUpAt:new Date().toISOString(),homework:archivedHw}].slice(-20)))}catch(_){}
   h+=`<div class="card"><h2>${esc(t.hw)}</h2>`+(activeHw.length?activeHw.sort((a,b)=>String(b.d).localeCompare(String(a.d))).map(x=>`<div class="hw"><b>${esc(dL(x.d))}</b><div>${esc(x.hw)}</div>${x.note?`<div class="sub">${esc(t.note)}: ${esc(x.note)}</div>`:""}</div>`).join(""):`<p class="sub">${esc(t.noHw)}</p>`)+`</div>`;
+  // BODMAS practice
+  h+=buildBodmasCard();
+  h+=`<div class="card gk-card">${buildDailyGK()}</div>`;
   // attendance
   h+=`<div class="card"><h2>${esc(t.att)} · ${esc(cm?mN(cm):"")}</h2><div class="stats"><div><b class="ok">${a.p}</b><small>${esc(t.present)}</small></div><div><b class="bad">${a.a}</b><small>${esc(t.absent)}</small></div><div><b>${pc!=null?pc+"%":"–"}</b><small>${esc(t.pct)}</small></div></div>`;
   if(pc!=null)h+=`<div class="bar"><i style="width:${pc}%"></i></div>`;
@@ -197,6 +226,7 @@ function render(){
   h+=`<div class="acts" style="justify-content:center">${alertsOn?`<span class="sub">${esc(t.alertsDone)}</span>`:`<button id="alertBtn" class="btn gold" style="border:0;font:inherit;font-weight:600;cursor:pointer">${esc(t.alertsOn)}</button>`}</div>`;
   h+=`<p class="foot">${esc(t.updated)}: ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}<br>${esc(t.save)}</p>`;
   document.getElementById("main").innerHTML=h;
+  renderBodmas();
   if(feeDue){
     const dueAmount=(v.fees||[]).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
     showFeeDuePopup(dueAmount);
@@ -209,7 +239,6 @@ function render(){
 
 let actx=null;
 
-function chime(){try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const x=new C(),o=x.createOscillator(),g=x.createGain();o.frequency.value=720;g.gain.setValueAtTime(.0001,x.currentTime);g.gain.exponentialRampToValueAtTime(.08,x.currentTime+.01);g.gain.exponentialRampToValueAtTime(.0001,x.currentTime+.08);o.connect(g);g.connect(x.destination);o.start();o.stop(x.currentTime+.09)}catch(e){}}
 function showFeeDuePopup(amount){
   if(feeDuePopupShown)return;
   feeDuePopupShown=true;
@@ -228,7 +257,90 @@ function showFeeDuePopup(amount){
 }
 
 
-document.addEventListener("click",e=>{if(e.target.id==="alertBtn"){chime();if("Notification" in window&&Notification.permission==="default")Notification.requestPermission().then(()=>render());else{try{localStorage.setItem("tasvia-parent-alerts","1")}catch(_){ }render()}}});
+
+/* BODMAS PRACTICE ENGINE */
+let bodmas={level:"easy",questions:[],index:0,score:0,answered:false};
+const BODMAS_LEVELS={
+  easy:[
+    ["8 + 6 × 2",20],["18 − 4 × 3",6],["24 ÷ 6 + 7",11],["15 − 9 ÷ 3",12],["5 × 3 + 4",19],
+    ["20 ÷ 5 × 2",8],["7 + 12 ÷ 4",10],["9 × 2 − 5",13],["16 ÷ 4 + 9",13],["6 + 5 × 3",21],
+    ["30 − 6 × 4",6],["4 × 7 − 8",20],["36 ÷ 6 + 5",11],["11 + 3 × 4",23],["28 ÷ 7 + 8",12]
+  ],
+  medium:[
+    ["(12 + 8) ÷ 4",5],["18 − (3 × 4)",6],["(7 + 5) × 2",24],["30 ÷ (2 + 3)",6],["8 + 4 × (6 − 2)",24],
+    ["(15 − 3) ÷ 4",3],["6 × (5 + 2) − 8",34],["42 ÷ 6 + 3 × 2",13],["(9 + 3) × 2 − 5",19],["50 − 6 × (4 + 2)",14],
+    ["(18 ÷ 3) + (5 × 2)",16],["7 × (8 − 3) + 4",39],["64 ÷ (4 + 4) + 6",14],["(20 + 4) ÷ 6 + 3",7],["9 + (12 ÷ 3) × 2",17]
+  ],
+  hard:[
+    ["18 + 6 ÷ (3 × 2)",19],["(24 − 8) ÷ 4 + 7",11],["5 × (12 − 4) ÷ 2",20],["72 ÷ (6 + 3) × 2",16],["(15 + 9) ÷ 3 − 2",6],
+    ["7 + 4 × (9 − 5) ÷ 2",15],["(36 ÷ 6) × (8 − 3)",30],["48 ÷ (2 × 4) + 9",15],["6 × (7 + 3) − 18 ÷ 3",54],["(40 − 16) ÷ 3 + 5",13],
+    ["8 + (24 ÷ 6) × (5 − 2)",20],["(9 + 7) × 3 − 20",28],["60 ÷ (5 + 5) + 4 × 3",18],["(32 − 8) ÷ 4 × 3 + 2",20],["54 ÷ (3 × 3) + 7 × 2",20]
+  ]
+};
+const BODMAS_LABELS={
+  en:{title:"BODMAS Practice",sub:"Basic Mathematics · Practice the correct order of operations",easy:"Easy",medium:"Medium",hard:"Hard",start:"Start Practice",question:"Question",score:"Score",check:"Check Answer",next:"Next Question",correct:"Correct! 🎉",wrong:"Not quite. Try again.",answer:"Correct answer",finished:"Practice complete!",again:"Practice Again",tip:"Remember: Brackets → Orders → Division/Multiplication → Addition/Subtraction."},
+  te:{title:"BODMAS ప్రాక్టీస్",sub:"ప్రాథమిక గణితం · గణిత క్రమాన్ని సరిగ్గా అభ్యసించండి",easy:"సులభం",medium:"మధ్యస్థం",hard:"కష్టం",start:"ప్రాక్టీస్ ప్రారంభించండి",question:"ప్రశ్న",score:"స్కోర్",check:"జవాబు తనిఖీ",next:"తదుపరి ప్రశ్న",correct:"సరైన జవాబు! 🎉",wrong:"ఇంకా సరైనది కాదు. మళ్లీ ప్రయత్నించండి.",answer:"సరైన జవాబు",finished:"ప్రాక్టీస్ పూర్తైంది!",again:"మళ్లీ ప్రాక్టీస్",tip:"గుర్తుంచుకోండి: Brackets → Orders → Division/Multiplication → Addition/Subtraction."},
+  hi:{title:"BODMAS अभ्यास",sub:"बुनियादी गणित · गणना का सही क्रम अभ्यास करें",easy:"आसान",medium:"मध्यम",hard:"कठिन",start:"अभ्यास शुरू करें",question:"प्रश्न",score:"स्कोर",check:"उत्तर जाँचें",next:"अगला प्रश्न",correct:"सही उत्तर! 🎉",wrong:"अभी सही नहीं। फिर कोशिश करें।",answer:"सही उत्तर",finished:"अभ्यास पूरा!",again:"फिर अभ्यास करें",tip:"याद रखें: Brackets → Orders → Division/Multiplication → Addition/Subtraction."}
+};
+function bodmasShuffle(a){
+  const x=a.slice();
+  for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}
+  return x;
+}
+function bodmasStart(level=bodmas.level){
+  bodmas={level,questions:bodmasShuffle(BODMAS_LEVELS[level]).slice(0,10),index:0,score:0,answered:false};
+  renderBodmas();
+}
+function buildBodmasCard(){
+  const t=BODMAS_LABELS[L]||BODMAS_LABELS.en;
+  return `<div class="card bodmas-card"><div class="bodmas-head"><div><h2>🧠 ${esc(t.title)}</h2><p class="sub bodmas-sub">${esc(t.sub)}</p></div><div class="bodmas-icon">÷</div></div><div class="bodmas-levels">
+    <button class="bodmas-level ${bodmas.level==="easy"?"active":""}" type="button" onclick="bodmasStart('easy')">${esc(t.easy)}</button>
+    <button class="bodmas-level ${bodmas.level==="medium"?"active":""}" type="button" onclick="bodmasStart('medium')">${esc(t.medium)}</button>
+    <button class="bodmas-level ${bodmas.level==="hard"?"active":""}" type="button" onclick="bodmasStart('hard')">${esc(t.hard)}</button>
+  </div><div id="bodmasPanel"></div></div>`;
+}
+function renderBodmas(){
+  const p=document.getElementById("bodmasPanel");if(!p)return;
+  const t=BODMAS_LABELS[L]||BODMAS_LABELS.en;
+  if(!bodmas.questions.length){
+    p.innerHTML=`<div class="center" style="padding:20px 8px"><p class="sub">${esc(t.tip)}</p><button class="btn gold bodmas-next" type="button" onclick="bodmasStart()">${esc(t.start)}</button></div>`;
+    return;
+  }
+  if(bodmas.index>=bodmas.questions.length){
+    const pct=Math.round(bodmas.score*100/bodmas.questions.length);
+    p.innerHTML=`<div class="bodmas-result"><p class="sub">${esc(t.finished)}</p><strong>${bodmas.score}/${bodmas.questions.length}</strong><div class="bar"><i style="width:${pct}%"></i></div><p class="sub">${pct}%</p><button class="btn gold bodmas-next" type="button" onclick="bodmasStart()">${esc(t.again)}</button></div>`;
+    return;
+  }
+  const q=bodmas.questions[bodmas.index];
+  p.innerHTML=`<div class="bodmas-meta"><span>${esc(t.question)} ${bodmas.index+1}/${bodmas.questions.length}</span><span>${esc(t.score)}: <b>${bodmas.score}</b></span></div><div class="bodmas-progress"><i style="width:${Math.round(bodmas.index*100/bodmas.questions.length)}%"></i></div><div class="bodmas-question">${esc(q[0])} = ?</div><div class="bodmas-input-row"><input id="bodmasAnswer" class="bodmas-input" type="number" inputmode="numeric" autocomplete="off" aria-label="${esc(t.answer)}"><button id="bodmasCheck" class="bodmas-submit" type="button" onclick="bodmasCheck()">${esc(t.check)}</button></div><div id="bodmasFeedback" class="bodmas-feedback" aria-live="polite"></div>`;
+  const inp=document.getElementById("bodmasAnswer");if(inp)inp.addEventListener("keydown",e=>{if(e.key==="Enter")bodmasCheck()});setTimeout(()=>inp&&inp.focus(),0);
+}
+function bodmasCheck(){
+  if(bodmas.answered)return;
+  const inp=document.getElementById("bodmasAnswer"),fb=document.getElementById("bodmasFeedback"),btn=document.getElementById("bodmasCheck");
+  if(!inp||!fb)return;
+  const value=Number(inp.value);if(inp.value.trim()===""){inp.focus();return}
+  const answer=bodmas.questions[bodmas.index][1];
+  bodmas.answered=true;inp.disabled=true;if(btn)btn.disabled=true;
+  if(value===answer){bodmas.score++;fb.className="bodmas-feedback ok";fb.innerHTML=esc((BODMAS_LABELS[L]||BODMAS_LABELS.en).correct)}
+  else{fb.className="bodmas-feedback bad";fb.innerHTML=esc((BODMAS_LABELS[L]||BODMAS_LABELS.en).wrong)+"<br>"+esc((BODMAS_LABELS[L]||BODMAS_LABELS.en).answer)+": <b>"+answer+"</b>"}
+  const t=BODMAS_LABELS[L]||BODMAS_LABELS.en;
+  const next=document.createElement("button");next.className="btn gold bodmas-next";next.type="button";next.textContent=bodmas.index+1>=bodmas.questions.length?t.finished:t.next;
+  next.onclick=()=>{bodmas.index++;bodmas.answered=false;renderBodmas()};
+  document.getElementById("bodmasPanel").appendChild(next);
+}
+
+
+/* DAILY GENERAL KNOWLEDGE */
+const GK_DAILY=[["Which planet is known as the Red Planet?","Mars"],["What is the largest ocean on Earth?","Pacific Ocean"],["How many days are there in a leap year?","366 days"],["What is the capital of India?","New Delhi"],["Which gas do plants absorb for photosynthesis?","Carbon dioxide"],["How many continents are there?","7"],["Which is the largest mammal?","Blue whale"],["What is H2O commonly called?","Water"],["How many sides does a hexagon have?","6"],["Which is the nearest star to Earth?","The Sun"],["Which organ pumps blood?","Heart"],["What is the fastest land animal?","Cheetah"],["What is the smallest prime number?","2"],["What is the currency of Japan?","Yen"],["Which is the largest planet?","Jupiter"],["What is India's national bird?","Peacock"],["How many colors are traditionally in a rainbow?","7"],["Which festival is called the Festival of Lights?","Diwali"],["What is the largest continent?","Asia"],["Which ocean is between Africa and Australia?","Indian Ocean"]];
+const GK_LABELS={en:{title:"Daily General Knowledge",sub:"5 questions every day · Learn something new",today:"Today's Questions",answer:"Answer"},te:{title:"రోజువారీ జనరల్ నాలెడ్జ్",sub:"ప్రతి రోజు 5 ప్రశ్నలు",today:"ఈ రోజు ప్రశ్నలు",answer:"జవాబు"},hi:{title:"दैनिक सामान्य ज्ञान",sub:"हर दिन 5 प्रश्न",today:"आज के प्रश्न",answer:"उत्तर"}};
+function gkDayIndex(){const d=new Date();return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000)}
+function buildDailyGK(){const t=GK_LABELS[L]||GK_LABELS.en,day=gkDayIndex(),now=Date.now(),week=7*24*60*60*1000;
+  const key=String(location.hash||"").replace("#","").trim().toUpperCase()||"portal",dateKey=new Date().toISOString().slice(0,10),bkKey="tasvia-gk-backup";
+  const items=[];for(let i=0;i<5;i++){const x=GK_DAILY[(day*5+i)%GK_DAILY.length];items.push({q:x[0],a:x[1]});}
+  try{const bk=JSON.parse(localStorage.getItem(bkKey)||"[]");const recent=bk.filter(z=>z.key===key&&now-Date.parse(z.date)<week);const merged=[...recent.filter(z=>z.date!==dateKey),{key,date:dateKey,backedUpAt:new Date().toISOString(),questions:items}];localStorage.setItem(bkKey,JSON.stringify(merged.slice(-7)))}catch(_){ }
+  try{if(window.firebase&&window.FIREBASE_CONFIG&&key!=="portal"){firebase.firestore().collection("gkBackup").doc(key+"_"+dateKey).set({code:key,date:dateKey,updated:now,name:(V&&V.name)||"",cls:(V&&V.cls)||"",questions:items},{merge:true}).catch(()=>{});}}catch(_){ }
+  let h='<div class="gk-head"><div><h2>🌍 '+esc(t.title)+'</h2><p class="sub" style="margin:3px 0 0">'+esc(t.sub)+'</p></div><div class="gk-icon">?</div></div><p class="sub" style="margin:10px 0 0"><b>'+esc(t.today)+'</b></p><div class="gk-list>';for(let i=0;i<items.length;i++){const x=items[i];h+='<div class="gk-q"><b>'+(i+1)+'. '+esc(x.q)+'</b><span class="gk-answer">'+esc(t.answer)+': '+esc(x.a)+'</span></div>'}return h+'</div>'}
 showWelcome();
 (function start(){
   const saved=load("tasvia-parent-lang");if(saved&&T[saved])L=saved;langs();
@@ -245,6 +357,7 @@ showWelcome();
     changes(prev,V).forEach(([a,b],i)=>setTimeout(()=>alertParent(a,b),i*1800));
   },e=>{clearTimeout(timer);msg(e&&e.code==="permission-denied"?T[L].invalid:T[L].offline,e&&e.code!=="permission-denied")});
 })();
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("/sw.js",{scope:"/"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
 </body>
 </html>
