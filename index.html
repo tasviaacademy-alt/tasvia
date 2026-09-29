@@ -943,7 +943,7 @@ function vBackup(){
   let h=mhead("Backups","Permanent staff backup of homework & daily GK");
   h+=`<div class="seg" role="tablist"><button class="${UI.backupTab!=="gk"?"on":""}" data-act="backupTab" data-k="homework">Homework archive</button><button class="${UI.backupTab==="gk"?"on":""}" data-act="backupTab" data-k="gk">Daily GK archive</button></div>`;
   h+=UI.backupTab==="gk"?gkBackupHTML():`<div class="notice">Homework remains in Firebase diary records. The parent portal only shows the active recent homework; staff can use this archive to recover older entries.</div>`+homeworkBackupHTML();
-  if(downloads)h+=`<div class="card" style="margin-top:14px"><h3>Spreadsheet backup</h3><p class="sub" style="margin:0 0 10px">Keep a copy in Excel or Google Sheets.</p><div class="acts">`+[["students","Students"],["payments","Fee payments"],["marks","Test marks"],["money","Salaries & expenses"],["tattendance","Teacher attendance"]].map(([k,l])=>`<button class="btn ghost" data-act="export" data-k="${k}">${l}</button>`).join("")+`</div></div>`;
+  if(downloads)h+=`<div class="card" style="margin-top:14px"><h3>Spreadsheet backup</h3><p class="sub" style="margin:0 0 10px">Keep a copy in Excel or Google Sheets.</p><div class="acts">`+[["students","Students"],["payments","Fee payments"],["marks","Test marks"],["money","Salaries & expenses"],["tattendance","Teacher attendance"]].map(([k,l])=>`<button class="btn ghost" data-act="export" data-k="${k}">${l}</button>`).join("")+`</div></div>`;h+=`<div class="card" style="margin-top:14px"><h3>Complete backup & restore</h3><p class="sub" style="margin:0 0 10px">Backup students, attendance, tests, fees, homework, staff, salaries, expenses, centre settings and daily GK in one JSON file.</p><div class="acts"><button class="btn gold" data-act="backupNow">Create full backup</button><button class="btn ghost" data-act="restoreBackup">Restore backup</button></div><p class="sub" style="margin:10px 0 0">Keep the downloaded file somewhere safe. Restore should only be used by the admin.</p></div>`;
   return h;
 }
 function vStudents(){
@@ -1272,6 +1272,51 @@ async function exportCSV(kind){
   try{const r=await downloads.save({filename:name,data:toCSV(rows)});if(r&&r.status==="saved")toast("Downloaded")}catch(e){if(e&&e.code==="unavailable"){downloads=null;render()}}
 }
 
+function buildFullBackup(){
+  const data={version:1,createdAt:new Date().toISOString(),app:"TASVIA Academy",collections:{
+    students:S.students||{},fees:S.fees||{},tests:S.tests||{},attendance:S.att||{},diary:S.diary||{},
+    teachers:S.teachers||{},salaries:S.salaries||{},expenses:S.expenses||{},staffattendance:S.tatt||{},
+    info:S.info?{centre:S.info}:{} ,gkBackup:gkBackupRows||{}
+  }};
+  return data;
+}
+async function backupNow(){
+  if(!isAdmin()){toast("Admin access required.");return}
+  const data=buildFullBackup(),name="tasvia-full-backup-"+today()+".json";
+  try{
+    if(downloads){const r=await downloads.save({filename:name,data:JSON.stringify(data,null,2)});if(r&&r.status==="saved")toast("Full backup downloaded")}
+    else{
+      const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");
+      a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast("Full backup downloaded");
+    }
+  }catch(e){toast("Backup download failed")}
+}
+function restoreBackupFile(){
+  if(!isAdmin()){toast("Admin access required.");return}
+  const inp=document.createElement("input");inp.type="file";inp.accept=".json,application/json";
+  inp.onchange=async()=>{
+    const f=inp.files&&inp.files[0];if(!f)return;
+    try{
+      const data=JSON.parse(await f.text()),c=data&&data.collections;
+      if(!c||data.app!=="TASVIA Academy")throw new Error("Invalid backup");
+      if(!confirm("Restore this TASVIA backup? Existing matching records will be overwritten. This cannot be undone."))return;
+      if(!db)throw new Error("Database unavailable");
+      const maps={students:c.students,fees:c.fees,tests:c.tests,attendance:c.attendance,diary:c.diary,teachers:c.teachers,salaries:c.salaries,expenses:c.expenses,staffattendance:c.staffattendance,gkBackup:c.gkBackup};
+      for(const [col,docs] of Object.entries(maps)){
+        if(!docs||typeof docs!=="object")continue;
+        const entries=Array.isArray(docs)?docs.map(x=>[x.id,x]):Object.entries(docs);
+        for(let i=0;i<entries.length;i+=400){
+          const batch=db.batch();
+          entries.slice(i,i+400).forEach(([id,val])=>batch.set(db.collection(col).doc(String(id)),val||{}, {merge:true}));
+          await batch.commit();
+        }
+      }
+      if(c.info&&c.info.centre)await db.doc("info/centre").set(c.info.centre,{merge:true});
+      toast("Backup restored successfully");scheduleRender();
+    }catch(e){console.error("restore backup",e);toast(e&&e.message==="Invalid backup"?"Invalid TASVIA backup file":"Restore failed")}
+  };
+  inp.click();
+}
 /* ---------- events ---------- */
 document.addEventListener("click",e=>{
   const b=e.target.closest("[data-act]");if(!b)return;
@@ -1341,6 +1386,8 @@ document.addEventListener("click",e=>{
     case "resetPL":if(confirmDel(b,"Tap again: old link stops")){const st=S.students[id],old=st.pcode,code=newCode();if(old)remove("parentView/"+old);S.students[id]=Object.assign({},st,{pcode:code});if(db){db.doc("students/"+id).set({pcode:code},{merge:true}).catch(e=>toast(errMsg(e)));getPhoto(id).then(p=>{if(p)db.doc("parentView/"+code).set({photo:p},{merge:true}).catch(()=>{})})}schedulePV();studentSheet(id);toast("New link created")}break;
     case "signOut":if(confirmDel(b,"Tap again to sign out")&&auth)auth.signOut();break;
     case "export":exportCSV(b.dataset.k);break;
+    case "backupNow":backupNow();break;
+    case "restoreBackup":restoreBackupFile();break;
     case "delTest":if(confirmDel(b,"Tap again to delete")){delete S.tests[id];remove("tests/"+id);closeSheet();render();toast("Test deleted")}break;
   }
 });
