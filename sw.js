@@ -61,7 +61,7 @@ self.addEventListener("fetch", event => {
   }
 
   if (isStaticAsset) {
-    const isCode = /\\.(?:js|json)$/i.test(url.pathname);
+    const isCode = /\.(?:js|json)$/i.test(url.pathname);
     if (isCode) {
       // Always prefer fresh application code/config. Fall back to cache only offline.
       event.respondWith(
