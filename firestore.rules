@@ -1,0 +1,104 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function staff() {
+      return signedIn()
+        && request.auth.token.email != null
+        && exists(/databases/$(database)/documents/Staff/$(request.auth.token.email));
+    }
+
+    function admin() {
+      return staff()
+        && get(/databases/$(database)/documents/Staff/$(request.auth.token.email)).data.role == "admin";
+    }
+
+    // Staff accounts are controlled from the Staff collection.
+    // A staff member can read their own account; only admins can manage staff.
+    match /Staff/{email} {
+      allow get: if staff() && request.auth.token.email == email;
+      allow list: if admin();
+      allow create, update, delete: if admin();
+    }
+
+    // Main academic/operational data is available only to authenticated staff.
+    match /students/{id} {
+      allow read, write: if staff();
+    }
+
+    match /tests/{id} {
+      allow read, write: if staff();
+    }
+
+    match /attendance/{id} {
+      allow read, write: if staff();
+    }
+
+    match /diary/{id} {
+      allow read, write: if staff();
+    }
+
+    match /staffattendance/{id} {
+      allow read, write: if staff();
+    }
+
+    match /teachers/{id} {
+      allow read, write: if admin();
+    }
+
+    match /salaries/{id} {
+      allow read, write: if admin();
+    }
+
+    match /expenses/{id} {
+      allow read, write: if admin();
+    }
+
+    match /info/centre {
+      allow read, write: if staff();
+    }
+
+    match /photos/{id} {
+      allow read, write: if staff();
+    }
+
+    // Parent links are bearer links: parents can read only the single
+    // parentView document addressed by their private code. They cannot list
+    // the collection or write parent records.
+    match /parentView/{code} {
+      allow get: if true;
+      allow list: if false;
+      allow create, update, delete: if staff();
+    }
+
+    // The parent portal stores a small daily GK snapshot for backup.
+    // Parents may create/update a backup only when the supplied code maps to
+    // an existing parentView document. Staff retain full archive access.
+    match /gkBackup/{backupId} {
+      allow get, list: if staff();
+
+      allow create, update: if
+        staff()
+        || (
+          !signedIn()
+          && request.resource.data.code is string
+          && request.resource.data.date is string
+          && request.resource.data.questions is list
+          && request.resource.data.questions.size() <= 5
+          && exists(/databases/$(database)/documents/parentView/$(request.resource.data.code))
+        );
+
+      allow delete: if staff();
+    }
+
+    // Explicit deny-by-default for every other collection/document.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
