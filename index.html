@@ -936,7 +936,7 @@ function homeworkBackupHTML(){
 function gkBackupHTML(){
   if(gkBackupLoading)return `<div class="card"><p class="sub">Loading GK backup…</p></div>`;
   if(!gkBackupRows.length)return `<div class="empty">No GK backup records yet. New daily questions will appear here automatically.</div>`;
-  return `<div class="list">`+gkBackupRows.slice(0,30).map(x=>`<div class="card" style="margin:0"><div class="row" style="justify-content:space-between"><b>${esc(x.name||"Student")}</b><span class="tag n">${nice(x.date)}${x.cls?` · ${clsLabel(x.cls)}`:""}</span></div><ol style="margin:10px 0 0;padding-left:22px">${BT}+(x.questions||[]).map(q=>`<li style="margin:5px 0">${esc(q.q)}<div class="sub">${esc(q.a)}</div></li>`).join("")+`</ol></div>`).join("")+`</div>`;
+  return `<div class="list">`+gkBackupRows.slice(0,30).map(x=>`<div class="card" style="margin:0"><div class="row" style="justify-content:space-between"><b>${esc(x.name||"Student")}</b><span class="tag n">${nice(x.date)}${x.cls?` · ${clsLabel(x.cls)}`:""}</span></div><ol style="margin:10px 0 0;padding-left:22px">`+(x.questions||[]).map(q=>`<li style="margin:5px 0">${esc(q.q)}<div class="sub">${esc(q.a)}</div></li>`).join("")+`</ol></div>`).join("")+`</div>`;
 }
 function vBackup(){
   ensureGKBackup();
