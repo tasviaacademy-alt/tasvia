@@ -2,16 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex">
   <title>TASVIA Academy – Parent</title>
-  <meta http-equiv="refresh" content="0;url=/parent">
   <script>
-    location.replace("/parent" + location.search + location.hash);
+    (function () {
+      var target = "./parent/index.html" + window.location.search + window.location.hash;
+      window.location.replace(target);
+    })();
   </script>
+  <meta http-equiv="refresh" content="0;url=./parent/index.html">
 </head>
-<body>
+<body style="font-family:system-ui,sans-serif;padding:24px">
   <p>Opening TASVIA Parents Portal…</p>
-  <a id="go" href="/parent">Continue</a>
-  <script>document.getElementById("go").href="/parent"+location.search+location.hash;</script>
+  <p><a id="continue" href="./parent/index.html">Continue to Parents Portal</a></p>
+  <script>
+    document.getElementById("continue").href =
+      "./parent/index.html" + window.location.search + window.location.hash;
+  </script>
 </body>
 </html>
