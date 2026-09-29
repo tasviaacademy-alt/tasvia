@@ -24,6 +24,35 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Validate application
+        shell: bash
+        run: |
+          set -euo pipefail
+          node - <<'NODE'
+          const fs = require('fs');
+          const files = ['index.html','parent.html','parent/index.html'];
+          for (const file of files) {
+            const html = fs.readFileSync(file, 'utf8');
+            const scripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)]
+              .map(m => m[1])
+              .filter(s => s.trim());
+            if (!scripts.length) throw new Error('No inline JavaScript found in '+file);
+            scripts.forEach((code, i) => {
+              const out = '/tmp/tasvia-'+file.replace(/[^a-z0-9]/gi,'-')+'-'+i+'.js';
+              fs.writeFileSync(out, code);
+              require('child_process').execFileSync(process.execPath, ['--check', out], {stdio:'inherit'});
+            });
+            console.log('JS syntax OK:', file);
+          }
+          for (const file of ['manifest.json','twa-manifest.json','vercel.json']) {
+            JSON.parse(fs.readFileSync(file,'utf8'));
+            console.log('JSON OK:', file);
+          }
+          if (!fs.existsSync('firebase-config.js')) throw new Error('Missing firebase-config.js');
+          if (!fs.existsSync('CNAME')) throw new Error('Missing CNAME');
+          console.log('TASVIA static audit passed.');
+          NODE
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
