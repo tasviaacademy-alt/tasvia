@@ -160,8 +160,13 @@ function render(){
   const yt=(v.yr||{}).p+(v.yr||{}).a,ypc=yt?Math.round(v.yr.p*100/yt):null;
   let h="";
   if(c.notice)h+=`<div class="card"><h2>📢 ${esc(t.notice)}</h2><div class="notice">${esc(c.notice)}</div></div>`;
-  // homework
-  h+=`<div class="card"><h2>${esc(t.hw)}</h2>`+((v.hw||[]).length?v.hw.map(x=>`<div class="hw"><b>${esc(dL(x.d))}</b><div>${esc(x.hw)}</div>${x.note?`<div class="sub">${esc(t.note)}: ${esc(x.note)}</div>`:""}</div>`).join(""):`<p class="sub">${esc(t.noHw)}</p>`)+`</div>`;
+  // homework — keep Firestore data as the backup source; show only the latest 7 days.
+  const hwNow=Date.now(),hwWeek=7*24*60*60*1000;
+  const allHw=Array.isArray(v.hw)?v.hw:[];
+  const activeHw=allHw.filter(x=>{const tm=Date.parse(String(x.d||""));return Number.isFinite(tm)&&hwNow-tm>=0&&hwNow-tm<hwWeek;});
+  const archivedHw=allHw.filter(x=>{const tm=Date.parse(String(x.d||""));return Number.isFinite(tm)&&hwNow-tm>=hwWeek;});
+  try{const bk=JSON.parse(localStorage.getItem("tasvia-homework-backup")||"[]");const key=String(location.hash||"").replace("#","").trim().toUpperCase()||"portal";localStorage.setItem("tasvia-homework-backup",JSON.stringify([...bk.filter(z=>z.key!==key),{key,backedUpAt:new Date().toISOString(),homework:archivedHw}].slice(-20)))}catch(_){ }
+  h+=`<div class="card"><h2>${esc(t.hw)}</h2>`+(activeHw.length?activeHw.sort((a,b)=>String(b.d).localeCompare(String(a.d))).map(x=>`<div class="hw"><b>${esc(dL(x.d))}</b><div>${esc(x.hw)}</div>${x.note?`<div class="sub">${esc(t.note)}: ${esc(x.note)}</div>`:""}</div>`).join(""):`<p class="sub">${esc(t.noHw)}</p>`)+`</div>`;
   // attendance
   h+=`<div class="card"><h2>${esc(t.att)} · ${esc(cm?mN(cm):"")}</h2><div class="stats"><div><b class="ok">${a.p}</b><small>${esc(t.present)}</small></div><div><b class="bad">${a.a}</b><small>${esc(t.absent)}</small></div><div><b>${pc!=null?pc+"%":"–"}</b><small>${esc(t.pct)}</small></div></div>`;
   if(pc!=null)h+=`<div class="bar"><i style="width:${pc}%"></i></div>`;
