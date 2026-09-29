@@ -913,10 +913,38 @@ function vCards(){
   h+=`<p class="sub">Open the downloaded file and tap Print, or choose "Save as PDF". For one student's report card as a picture for WhatsApp, open the student and tap "Report card image".</p>`;
   return h;
 }
+let gkBackupRows=[],gkBackupLoaded=false,gkBackupLoading=false;
+function ensureGKBackup(){
+  if(!db||gkBackupLoaded||gkBackupLoading)return;
+  gkBackupLoading=true;
+  db.collection("gkBackup").orderBy("date","desc").limit(100).get().then(snap=>{
+    gkBackupRows=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")));
+    gkBackupLoaded=true;gkBackupLoading=false;render();
+  }).catch(e=>{gkBackupLoading=false;console.warn("GK backup load",e);toast("GK backup could not be loaded")});
+}
+function homeworkBackupHTML(){
+  const rows=[];
+  Object.keys(S.diary||{}).sort().reverse().forEach(d=>{
+    const ent=((S.diary[d]||{}).entries)||{};
+    Object.entries(ent).forEach(([sid,e])=>{
+      if(e&&e.hw&&S.students[sid])rows.push({date:d,name:S.students[sid].name,cls:S.students[sid].cls,hw:e.hw,note:e.note||""});
+    });
+  });
+  const recent=rows.slice(0,80);
+  return `<div class="list">`+recent.map(x=>`<div class="card" style="margin:0"><div class="row" style="justify-content:space-between"><b>${esc(x.name)}</b><span class="tag n">${nice(x.date)} · ${clsLabel(x.cls)}</span></div><div class="hw">${esc(x.hw)}</div>${x.note?`<div class="notice" style="margin:0">${esc(x.note)}</div>`:""}</div>`).join("")+`</div>`:`<div class="empty">No homework backup records found.</div>`;
+}
+function gkBackupHTML(){
+  if(gkBackupLoading)return `<div class="card"><p class="sub">Loading GK backup…</p></div>`;
+  if(!gkBackupRows.length)return `<div class="empty">No GK backup records yet. New daily questions will appear here automatically.</div>`;
+  return `<div class="list">`+gkBackupRows.slice(0,30).map(x=>`<div class="card" style="margin:0"><div class="row" style="justify-content:space-between"><b>${esc(x.name||"Student")}</b><span class="tag n">${nice(x.date)}${x.cls?` · ${clsLabel(x.cls)}`:""}</span></div><ol style="margin:10px 0 0;padding-left:22px">${BT}+(x.questions||[]).map(q=>`<li style="margin:5px 0">${esc(q.q)}<div class="sub">${esc(q.a)}</div></li>`).join("")+`</ol></div>`).join("")+`</div>`;
+}
 function vBackup(){
-  let h=mhead("Backup spreadsheets","Keep a copy every month");
-  if(!downloads)return h+`<div class="empty">Downloads aren't available in this view.</div>`;
-  return h+`<div class="card"><p class="sub" style="margin:0 0 10px">These open in Excel or Google Sheets.</p><div class="acts">${[["students","Students"],["payments","Fee payments"],["marks","Test marks"],["money","Salaries & expenses"],["tattendance","Teacher attendance"]].map(([k,l])=>`<button class="btn ghost" data-act="export" data-k="${k}">${l}</button>`).join("")}</div></div>`;
+  ensureGKBackup();
+  let h=mhead("Backups","Permanent staff backup of homework & daily GK");
+  h+=`<div class="seg" role="tablist"><button class="${UI.backupTab!=="gk"?"on":""}" data-act="backupTab" data-k="homework">Homework archive</button><button class="${UI.backupTab==="gk"?"on":""}" data-act="backupTab" data-k="gk">Daily GK archive</button></div>`;
+  h+=UI.backupTab==="gk"?gkBackupHTML():`<div class="notice">Homework remains in Firebase diary records. The parent portal only shows the active recent homework; staff can use this archive to recover older entries.</div>`+homeworkBackupHTML();
+  if(downloads)h+=`<div class="card" style="margin-top:14px"><h3>Spreadsheet backup</h3><p class="sub" style="margin:0 0 10px">Keep a copy in Excel or Google Sheets.</p><div class="acts">`+[["students","Students"],["payments","Fee payments"],["marks","Test marks"],["money","Salaries & expenses"],["tattendance","Teacher attendance"]].map(([k,l])=>`<button class="btn ghost" data-act="export" data-k="${k}">${l}</button>`).join("")+`</div></div>`;
+  return h;
 }
 function vStudents(){
   let h=`<div class="hd"><div><h2>Students</h2><div class="sub">${studentsOf("all").length} studying now</div></div>${isAdmin()?`<button class="btn gold" data-act="addStudent">Add student</button>`:""}</div>`;
@@ -1262,7 +1290,8 @@ document.addEventListener("click",e=>{
       markAllT(UI.date,teachersList());
       toast("Remaining teachers marked present");
       break;
-    case "more":UI.more=b.dataset.k||null;render();window.scrollTo(0,0);break;
+    case "more":UI.more=b.dataset.k||null;if(UI.more==="backup")ensureGKBackup();render();window.scrollTo(0,0);break;
+    case "backupTab":UI.backupTab=b.dataset.k==="gk"?"gk":"homework";render();break;
     case "markT":markT(UI.date,id,b.dataset.v);break;
     case "addTeacher":teacherForm();break;
     case "editTeacher":teacherForm(id);break;
