@@ -895,7 +895,7 @@ function vMoney(){
   h+=`<div class="board"><div class="pp"><b style="font-size:1.4rem">${rs(fees)}</b><small>Fees in</small></div><div class="aa"><b style="font-size:1.4rem">${rs(sal+exT)}</b><small>Spent</small></div><div><b style="font-size:1.4rem;color:${net>=0?"#8FD9A8":"#F3A08E"}">${net<0?"−":""}${rs(Math.abs(net))}</b><small>${net>=0?"Profit":"Loss"}</small></div></div>`;
   h+=`<div class="card"><h3>Where the money went</h3><div class="money"><span>Salaries</span><b>${rs(sal)}</b>${Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([c,v])=>`<span>${esc(c)}</span><b>${rs(v)}</b>`).join("")}<span class="tot">Total spent</span><b class="tot">${rs(sal+exT)}</b></div><p class="sub" style="margin:10px 0 0">Fees in = fees recorded for ${monthName(m)}. Salaries come from Staff & salaries.</p></div>`;
   h+=`<h3 style="margin:16px 0 8px">Expenses (${ex.length})</h3>`;
-  h+=ex.length?`<div class="list">`+ex.map(e=>`<div class="item"><div class="grow"><div class="nm">${esc(e.cat)} · ${rs(e.amount)}</div><div class="mt">${nice(e.date)}${e.note?" · "+esc(e.note):""}</div></div><button class="btn sm danger" data-act="delExp" data-id="${esc(e.id)}" aria-label="Remove expense">×</button></div>`).join("")+`</div>`:`<div class="empty">No expenses added for this month.</div>`;
+  h+=ex.length?`<div class="list">`+ex.map(e=>`<div class="item"><div class="grow"><div class="nm">${esc(e.cat)} · ${rs(e.amount)}</div><div class="mt">${nice(e.date)}${e.spentBy&&S.teachers[e.spentBy]?" · Spent by "+esc(S.teachers[e.spentBy].name):""}${e.note?" · "+esc(e.note):""}</div></div><button class="btn sm danger" data-act="delExp" data-id="${esc(e.id)}" aria-label="Remove expense">×</button></div>`).join("")+`</div>`:`<div class="empty">No expenses added for this month.</div>`;
   return h;
 }
 function vCards(){
@@ -1116,9 +1116,11 @@ function salaryForm(id){
 }
 const EXP_CATS=["Rent","Electricity","Water","Internet & phone","Stationery & printing","Books & materials","Maintenance & repairs","Cleaning","Advertising","Snacks & tea","Other"];
 function expenseForm(){
+  const ts=Object.entries(S.teachers||{}).filter(([,t])=>t&&t.active!==false).sort((a,b)=>String(a[1].name||"").localeCompare(String(b[1].name||"")));
   openSheet("Add expense",`<form id="fExp">
   <div class="two"><label class="f">Category<select name="cat">${EXP_CATS.map(c=>opt(c,"Rent")).join("")}</select></label>
   <label class="f">Amount (₹)<input name="amount" inputmode="numeric" required></label></div>
+  <label class="f">Spent by teacher/staff<select name="spentBy"><option value="">Select teacher/staff</option>${ts.map(([id,t])=>`<option value="${esc(id)}">${esc(t.name)}</option>`).join("")}</select></label>
   <label class="f">Date<input name="date" type="date" required value="${UI.moneyMonth===today().slice(0,7)?today():UI.moneyMonth+"-01"}"></label>
   <label class="f">Note (optional)<input name="note" placeholder="September rent, printer ink…"></label>
   <div class="acts"><button class="btn gold" type="submit">Save expense</button></div></form>`);
@@ -1261,9 +1263,9 @@ async function exportCSV(kind){
   else if(kind==="payments"){rows=[["Paid on","Student","Class","For month","Amount","Mode","Note"]];
     Object.keys(S.fees).forEach(id=>{const s=S.students[id];if(!s)return;payList(id).forEach(p=>rows.push([p.date,s.name,clsLabel(s.cls),p.month,p.amount,p.mode,p.note||""]))});
     rows=[rows[0],...rows.slice(1).sort((a,b)=>String(b[0]).localeCompare(a[0]))];name="tasvia-payments-"+today()+".csv"}
-  else if(kind==="money"){rows=[["Date","Type","Category / teacher","For month","Amount","Mode","Note"]];
-    Object.keys(S.salaries).forEach(id=>{const t=S.teachers[id];salList(id).forEach(p=>rows.push([p.date,"Salary",t?t.name:"(removed)",p.month,p.amount,p.mode,p.note||""]))});
-    Object.keys(S.expenses).forEach(m=>expList(m).forEach(e=>rows.push([e.date,"Expense",e.cat,m,e.amount,"",e.note||""])));
+  else if(kind==="money"){rows=[["Date","Type","Category / teacher","Spent by","For month","Amount","Mode","Note"]];
+    Object.keys(S.salaries).forEach(id=>{const t=S.teachers[id];salList(id).forEach(p=>rows.push([p.date,"Salary",t?t.name:"(removed)","",p.month,p.amount,p.mode,p.note||""]))});
+    Object.keys(S.expenses).forEach(m=>expList(m).forEach(e=>rows.push([e.date,"Expense",e.cat,e.spentBy&&S.teachers[e.spentBy]?S.teachers[e.spentBy].name:"",m,e.amount,"",e.note||""])));
     rows=[rows[0],...rows.slice(1).sort((a,b)=>String(b[0]).localeCompare(a[0]))];name="tasvia-salaries-expenses-"+today()+".csv"}
   else if(kind==="tattendance"){const ts=teachersList(true);rows=[["Date",...ts.map(t=>t.name)]];
     datesOf("tatt").sort().reverse().forEach(dt=>{const m=getMarksK("tatt",dt);rows.push([dt,...ts.map(t=>({P:"Present",A:"Absent",H:"Half day"})[m[t.id]]||"")])});name="tasvia-teacher-attendance-"+today()+".csv"}
@@ -1451,7 +1453,7 @@ document.addEventListener("submit",e=>{
   }
   if(f.id==="fExp"){
     const amt=Number(d.amount);if(!(amt>0))return toast("Enter an amount");
-    const m=d.date.slice(0,7),e={id:uid("e"),date:d.date,cat:d.cat,amount:amt,note:(d.note||"").trim()};
+    const m=d.date.slice(0,7),e={id:uid("e"),date:d.date,cat:d.cat,amount:amt,spentBy:(d.spentBy||"").trim(),note:(d.note||"").trim()};
     const cur=Object.fromEntries(expList(m).map(x=>[x.id,x]));cur[e.id]=e;S.expenses[m]={month:m,items:cur};
     if(db)mergeWrite("expenses/"+m,{items:{[e.id]:e}},{month:m});else saveLocal();
     UI.moneyMonth=m;closeSheet();render();toast("Expense saved");
