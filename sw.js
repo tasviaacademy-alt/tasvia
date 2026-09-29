@@ -1,7 +1,7 @@
 // TASVIA Academy service worker
 // HTML is network-first so production fixes are not hidden behind stale cache.
 // Firebase/Auth/API traffic is never cached.
-const CACHE = "tasvia-v10";
+const CACHE = "tasvia-v11";
 const STATIC_SHELL = [
   "/",
   "/index.html",
@@ -61,17 +61,33 @@ self.addEventListener("fetch", event => {
   }
 
   if (isStaticAsset) {
-    event.respondWith(
-      caches.match(request).then(cached =>
-        cached ||
-        fetch(request).then(response => {
-          if (response.ok) {
-            const copy = response.clone();
-            caches.open(CACHE).then(cache => cache.put(request, copy));
-          }
-          return response;
-        })
-      )
-    );
+    const isCode = /\\.(?:js|json)$/i.test(url.pathname);
+    if (isCode) {
+      // Always prefer fresh application code/config. Fall back to cache only offline.
+      event.respondWith(
+        fetch(request)
+          .then(response => {
+            if (response.ok) {
+              const copy = response.clone();
+              caches.open(CACHE).then(cache => cache.put(request, copy));
+            }
+            return response;
+          })
+          .catch(() => caches.match(request))
+      );
+    } else {
+      event.respondWith(
+        caches.match(request).then(cached =>
+          cached ||
+          fetch(request).then(response => {
+            if (response.ok) {
+              const copy = response.clone();
+              caches.open(CACHE).then(cache => cache.put(request, copy));
+            }
+            return response;
+          })
+        )
+      );
+    }
   }
 });
