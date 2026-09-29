@@ -1534,7 +1534,7 @@ function startFirebase(){
           }
           const staff=snap.data()||{},role=(staff.role||"staff").toLowerCase();
           window.currentUser={uid:u.uid,email:email,name:staff.name||email,role:role};
-          db=fs;gate.hidden=true;setSync("Staff verified · loading data…");subscribe();netStatus();
+          db=fs;gate.hidden=true;setSync("Staff verified · loading data…");render();subscribe();netStatus();
         }catch(err){
           console.error("TASVIA staff verification:",err);
           setSync(err&&err.message==="Staff verification timed out"?"Staff verification timed out":"Firebase staff verification failed");
