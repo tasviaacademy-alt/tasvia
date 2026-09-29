@@ -335,6 +335,7 @@ function buildDailyGK(){const t=GK_LABELS[L]||GK_LABELS.en,day=gkDayIndex(),now=
   const key=String(location.hash||"").replace("#","").trim().toUpperCase()||"portal",dateKey=new Date().toISOString().slice(0,10),bkKey="tasvia-gk-backup";
   const items=[];for(let i=0;i<5;i++){const x=GK_DAILY[(day*5+i)%GK_DAILY.length];items.push({q:x[0],a:x[1]});}
   try{const bk=JSON.parse(localStorage.getItem(bkKey)||"[]");const recent=bk.filter(z=>z.key===key&&now-Date.parse(z.date)<week);const merged=[...recent.filter(z=>z.date!==dateKey),{key,date:dateKey,backedUpAt:new Date().toISOString(),questions:items}];localStorage.setItem(bkKey,JSON.stringify(merged.slice(-7)))}catch(_){ }
+  try{if(window.firebase&&window.FIREBASE_CONFIG&&key!=="portal"){firebase.firestore().collection("gkBackup").doc(key+"_"+dateKey).set({code:key,date:dateKey,updated:now,name:(V&&V.name)||"",cls:(V&&V.cls)||"",questions:items},{merge:true}).catch(()=>{});}}catch(_){ }
   let h='<div class="gk-head"><div><h2>🌍 '+esc(t.title)+'</h2><p class="sub" style="margin:3px 0 0">'+esc(t.sub)+'</p></div><div class="gk-icon">?</div></div><p class="sub" style="margin:10px 0 0"><b>'+esc(t.today)+'</b></p><div class="gk-list>';for(let i=0;i<items.length;i++){const x=items[i];h+='<div class="gk-q"><b>'+(i+1)+'. '+esc(x.q)+'</b><span class="gk-answer">'+esc(t.answer)+': '+esc(x.a)+'</span></div>'}return h+'</div>'}
 showWelcome();
 (function start(){
