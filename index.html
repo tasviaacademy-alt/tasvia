@@ -917,9 +917,9 @@ let gkBackupRows=[],gkBackupLoaded=false,gkBackupLoading=false;
 function ensureGKBackup(){
   if(!db||gkBackupLoaded||gkBackupLoading)return;
   gkBackupLoading=true;
-  // Read the archive without a Firestore orderBy. This avoids query/index failures
-  // when older backup documents have mixed/missing date fields.
-  db.collection("gkBackup").limit(200).get().then(snap=>{
+  // Date is a single indexed field in Firestore, so keep the archive query bounded
+  // while reliably loading the newest records first.
+  db.collection("gkBackup").orderBy("date","desc").limit(500).get().then(snap=>{
     gkBackupRows=snap.docs.map(d=>({id:d.id,...d.data()}))
       .filter(x=>x&&Array.isArray(x.questions))
       .sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")));
