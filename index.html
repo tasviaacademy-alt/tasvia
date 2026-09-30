@@ -375,6 +375,14 @@ main .card:nth-child(5),main .item:nth-child(5){animation-delay:.18s}
 /* Attendance marking must stay visually stable while each tap re-renders the list. */
 .attendance-live main .hd,.attendance-live main .board,.attendance-live main .chips,.attendance-live main .card,.attendance-live main .item,.attendance-live main .menu .item,.attendance-live main .hd::after{animation:none!important;transition:none!important}
 .attendance-live main{scroll-behavior:auto}
+
+/* TASVIA ACTION VISIBILITY / MOBILE SAFE LAYER */
+button,.btn,a.btn{visibility:visible;}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-width:40px;min-height:40px;white-space:normal;text-align:center;line-height:1.25;}
+.acts{display:flex;flex-wrap:wrap;align-items:center;gap:8px;width:100%;overflow:visible;}
+.acts > .btn,.acts > a.btn,.acts > button{flex:0 0 auto;max-width:100%;}
+.item{overflow:visible;}
+@media(max-width:520px){.acts > .btn,.acts > a.btn,.acts > button{min-height:42px}.acts > .btn.sm,.acts > a.btn.sm,.acts > button.btn.sm{min-height:38px}}
 </style>
 </head>
 <body>
