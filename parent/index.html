@@ -334,9 +334,10 @@ function bodmasCheck(){
 /* DAILY GENERAL KNOWLEDGE */
 const GK_DAILY=[["Which planet is known as the Red Planet?","Mars"],["What is the largest ocean on Earth?","Pacific Ocean"],["How many days are there in a leap year?","366 days"],["What is the capital of India?","New Delhi"],["Which gas do plants absorb for photosynthesis?","Carbon dioxide"],["How many continents are there?","7"],["Which is the largest mammal?","Blue whale"],["What is H2O commonly called?","Water"],["How many sides does a hexagon have?","6"],["Which is the nearest star to Earth?","The Sun"],["Which organ pumps blood?","Heart"],["What is the fastest land animal?","Cheetah"],["What is the smallest prime number?","2"],["What is the currency of Japan?","Yen"],["Which is the largest planet?","Jupiter"],["What is India's national bird?","Peacock"],["How many colors are traditionally in a rainbow?","7"],["Which festival is called the Festival of Lights?","Diwali"],["What is the largest continent?","Asia"],["Which ocean is between Africa and Australia?","Indian Ocean"]];
 const GK_LABELS={en:{title:"Daily General Knowledge",sub:"5 questions every day · Learn something new",today:"Today's Questions",answer:"Answer"},te:{title:"రోజువారీ జనరల్ నాలెడ్జ్",sub:"ప్రతి రోజు 5 ప్రశ్నలు",today:"ఈ రోజు ప్రశ్నలు",answer:"జవాబు"},hi:{title:"दैनिक सामान्य ज्ञान",sub:"हर दिन 5 प्रश्न",today:"आज के प्रश्न",answer:"उत्तर"}};
+function localDateKey(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 function gkDayIndex(){const d=new Date();return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000)}
 function buildDailyGK(){const t=GK_LABELS[L]||GK_LABELS.en,day=gkDayIndex(),now=Date.now(),week=7*24*60*60*1000;
-  const key=String(location.hash||"").replace("#","").trim().toUpperCase()||"portal",dateKey=new Date().toISOString().slice(0,10),bkKey="tasvia-gk-backup";
+  const key=String(location.hash||"").replace("#","").trim().toUpperCase()||"portal",dateKey=localDateKey(),bkKey="tasvia-gk-backup";
   const makeItems=()=>{const out=[];for(let i=0;i<5;i++){const x=GK_DAILY[(day*5+i)%GK_DAILY.length];out.push({q:x[0],a:x[1]});}return out;};
   let items=makeItems(),backupStatus="";
   try{
@@ -344,10 +345,14 @@ function buildDailyGK(){const t=GK_LABELS[L]||GK_LABELS.en,day=gkDayIndex(),now=
     const bk=raw?JSON.parse(raw):{};
     const byKey=(bk&&typeof bk==="object"&&!Array.isArray(bk))?bk:{};
     const studentBackups=Array.isArray(byKey[key])?byKey[key]:[];
-    const valid=studentBackups.filter(z=>z&&z.date&&Array.isArray(z.questions)&&z.questions.length>=5&&now-Date.parse(z.date)<week);
+    const valid=studentBackups.filter(z=>{
+      const ts=z&&z.date?Date.parse(z.date+"T00:00:00"):NaN;
+      return z&&z.date&&Array.isArray(z.questions)&&z.questions.length>=5&&Number.isFinite(ts)&&now-ts<week;
+    }).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
     const existing=valid.find(z=>z.date===dateKey);
     if(existing)items=existing.questions.slice(0,5);
-    const updated=[...valid.filter(z=>z.date!==dateKey),{key,date:dateKey,backedUpAt:new Date().toISOString(),questions:items}].slice(-7);
+    const updated=[...valid.filter(z=>z.date!==dateKey),{key,date:dateKey,backedUpAt:new Date().toISOString(),questions:items}]
+      .sort((a,b)=>String(a.date).localeCompare(String(b.date))).slice(-7);
     byKey[key]=updated;
     localStorage.setItem(bkKey,JSON.stringify(byKey));
   }catch(e){backupStatus="";try{localStorage.removeItem(bkKey);localStorage.setItem(bkKey,JSON.stringify({[key]:[{key,date:dateKey,backedUpAt:new Date().toISOString(),questions:items}]}))}catch(_){backupStatus="";}}
