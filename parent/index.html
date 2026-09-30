@@ -337,8 +337,20 @@ const GK_LABELS={en:{title:"Daily General Knowledge",sub:"5 questions every day 
 function gkDayIndex(){const d=new Date();return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000)}
 function buildDailyGK(){const t=GK_LABELS[L]||GK_LABELS.en,day=gkDayIndex(),now=Date.now(),week=7*24*60*60*1000;
   const key=String(location.hash||"").replace("#","").trim().toUpperCase()||"portal",dateKey=new Date().toISOString().slice(0,10),bkKey="tasvia-gk-backup";
-  const items=[];for(let i=0;i<5;i++){const x=GK_DAILY[(day*5+i)%GK_DAILY.length];items.push({q:x[0],a:x[1]});}
-  try{const bk=JSON.parse(localStorage.getItem(bkKey)||"[]");const recent=bk.filter(z=>z.key===key&&now-Date.parse(z.date)<week);const merged=[...recent.filter(z=>z.date!==dateKey),{key,date:dateKey,backedUpAt:new Date().toISOString(),questions:items}];localStorage.setItem(bkKey,JSON.stringify(merged.slice(-7)))}catch(_){ }
+  const makeItems=()=>{const out=[];for(let i=0;i<5;i++){const x=GK_DAILY[(day*5+i)%GK_DAILY.length];out.push({q:x[0],a:x[1]});}return out;};
+  let items=makeItems(),backupStatus="";
+  try{
+    const raw=localStorage.getItem(bkKey);
+    const bk=raw?JSON.parse(raw):{};
+    const byKey=(bk&&typeof bk==="object"&&!Array.isArray(bk))?bk:{};
+    const studentBackups=Array.isArray(byKey[key])?byKey[key]:[];
+    const valid=studentBackups.filter(z=>z&&z.date&&Array.isArray(z.questions)&&z.questions.length>=5&&now-Date.parse(z.date)<week);
+    const existing=valid.find(z=>z.date===dateKey);
+    if(existing)items=existing.questions.slice(0,5);
+    const updated=[...valid.filter(z=>z.date!==dateKey),{key,date:dateKey,backedUpAt:new Date().toISOString(),questions:items}].slice(-7);
+    byKey[key]=updated;
+    localStorage.setItem(bkKey,JSON.stringify(byKey));
+  }catch(e){backupStatus="";try{localStorage.removeItem(bkKey);localStorage.setItem(bkKey,JSON.stringify({[key]:[{key,date:dateKey,backedUpAt:new Date().toISOString(),questions:items}]}))}catch(_){backupStatus="";}}
   try{if(window.firebase&&window.FIREBASE_CONFIG&&key!=="portal"){firebase.firestore().collection("gkBackup").doc(key+"_"+dateKey).set({code:key,date:dateKey,updated:now,name:(V&&V.name)||"",cls:(V&&V.cls)||"",questions:items},{merge:true}).catch(()=>{});}}catch(_){ }
   let h='<div class="gk-head"><div><h2>🌍 '+esc(t.title)+'</h2><p class="sub" style="margin:3px 0 0">'+esc(t.sub)+'</p></div><div class="gk-icon">?</div></div><p class="sub" style="margin:10px 0 0"><b>'+esc(t.today)+'</b></p><div class="gk-list>';for(let i=0;i<items.length;i++){const x=items[i];h+='<div class="gk-q"><b>'+(i+1)+'. '+esc(x.q)+'</b><span class="gk-answer">'+esc(t.answer)+': '+esc(x.a)+'</span></div>'}return h+'</div>'}
 showWelcome();
