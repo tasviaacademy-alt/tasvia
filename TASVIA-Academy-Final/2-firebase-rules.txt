@@ -1,82 +1,104 @@
 rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
+
     function signedIn() {
-      return request.auth != null && request.auth.token.email != null;
+      return request.auth != null;
     }
-    function staffDoc() {
-      return exists(/databases/$(database)/documents/Staff/$(request.auth.token.email.lower()));
-    }
-    function isStaff() {
+
+    function staff() {
       return signedIn()
-        && staffDoc()
-        && get(/databases/$(database)/documents/Staff/$(request.auth.token.email.lower())).data.role in ["staff", "admin"];
-    }
-    function isAdmin() {
-      return isStaff()
-        && get(/databases/$(database)/documents/Staff/$(request.auth.token.email.lower())).data.role == "admin";
+        && request.auth.token.email != null
+        && exists(/databases/$(database)/documents/Staff/$(request.auth.token.email));
     }
 
+    function admin() {
+      return staff()
+        && get(/databases/$(database)/documents/Staff/$(request.auth.token.email)).data.role == "admin";
+    }
+
+    // Staff accounts are controlled from the Staff collection.
+    // A staff member can read their own account; only admins can manage staff.
     match /Staff/{email} {
-      allow read: if signedIn()
-        && request.auth.token.email.lower() == email.lower()
-        && isStaff();
-      allow write: if false;
+      allow get: if staff() && request.auth.token.email == email;
+      allow list: if admin();
+      allow create, update, delete: if admin();
     }
 
+    // Main academic/operational data is available only to authenticated staff.
+    match /students/{id} {
+      allow read, write: if staff();
+    }
+
+    match /tests/{id} {
+      allow read, write: if staff();
+    }
+
+    match /attendance/{id} {
+      allow read, write: if staff();
+    }
+
+    match /diary/{id} {
+      allow read, write: if staff();
+    }
+
+    match /staffattendance/{id} {
+      allow read, write: if staff();
+    }
+
+    match /teachers/{id} {
+      allow read, write: if admin();
+    }
+
+    match /salaries/{id} {
+      allow read, write: if admin();
+    }
+
+    match /expenses/{id} {
+      allow read, write: if admin();
+    }
+
+    match /info/centre {
+      allow read, write: if staff();
+    }
+
+    match /photos/{id} {
+      allow read, write: if staff();
+    }
+
+    // Parent links are bearer links: parents can read only the single
+    // parentView document addressed by their private code. They cannot list
+    // the collection or write parent records.
     match /parentView/{code} {
       allow get: if true;
-      allow list, write: if isStaff();
-      // Parent portal is read-only; only authenticated TASVIA staff may update views.
+      allow list: if false;
+      allow create, update, delete: if staff();
     }
 
-    match /photos/{docId} {
-      allow read, write: if isStaff();
+    // The parent portal stores a small daily GK snapshot for backup.
+    // Parents may create/update a backup only when the supplied code maps to
+    // an existing parentView document. Staff retain full archive access.
+    match /gkBackup/{backupId} {
+      allow get, list: if staff();
+
+      allow create, update: if
+        staff()
+        || (
+          !signedIn()
+          && request.resource.data.code is string
+          && request.resource.data.date is string
+          && request.resource.data.questions is list
+          && request.resource.data.questions.size() <= 5
+          && backupId == request.resource.data.code + "_" + request.resource.data.date
+          && exists(/databases/$(database)/documents/parentView/$(request.resource.data.code))
+        );
+
+      allow delete: if staff();
     }
 
-    match /students/{docId} {
-      allow read: if isStaff();
-      allow write: if isAdmin();
-    }
-
-    match /fees/{docId} {
-      allow read, write: if isAdmin();
-    }
-
-    match /teachers/{docId} {
-      allow read, write: if isAdmin();
-    }
-
-    match /salaries/{docId} {
-      allow read, write: if isAdmin();
-    }
-
-    match /expenses/{docId} {
-      allow read, write: if isAdmin();
-    }
-
-    match /info/{docId} {
-      allow read: if isStaff();
-      allow write: if isAdmin();
-    }
-
-    match /attendance/{docId} {
-      allow read, write: if isStaff();
-    }
-
-    match /staffattendance/{docId} {
-      allow read, write: if isStaff();
-    }
-
-    match /tests/{docId} {
-      allow read, write: if isStaff();
-    }
-
-    match /diary/{docId} {
-      allow read, write: if isStaff();
-    }
-
-    match /{collection}/{docId} {
+    // Explicit deny-by-default for every other collection/document.
+    match /{document=**} {
       allow read, write: if false;
     }
   }
