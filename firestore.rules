@@ -90,6 +90,7 @@ service cloud.firestore {
           && request.resource.data.date is string
           && request.resource.data.questions is list
           && request.resource.data.questions.size() <= 5
+          && backupId == request.resource.data.code + "_" + request.resource.data.date
           && exists(/databases/$(database)/documents/parentView/$(request.resource.data.code))
         );
 
