@@ -917,10 +917,24 @@ let gkBackupRows=[],gkBackupLoaded=false,gkBackupLoading=false;
 function ensureGKBackup(){
   if(!db||gkBackupLoaded||gkBackupLoading)return;
   gkBackupLoading=true;
-  db.collection("gkBackup").orderBy("date","desc").limit(100).get().then(snap=>{
-    gkBackupRows=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")));
-    gkBackupLoaded=true;gkBackupLoading=false;render();
-  }).catch(e=>{gkBackupLoading=false;console.warn("GK backup load",e);toast("GK backup could not be loaded")});
+  // Read the archive without a Firestore orderBy. This avoids query/index failures
+  // when older backup documents have mixed/missing date fields.
+  db.collection("gkBackup").limit(200).get().then(snap=>{
+    gkBackupRows=snap.docs.map(d=>({id:d.id,...d.data()}))
+      .filter(x=>x&&Array.isArray(x.questions))
+      .sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")));
+    gkBackupLoaded=true;
+    gkBackupLoading=false;
+    render();
+  }).catch(e=>{
+    gkBackupLoading=false;
+    console.error("GK backup load failed:",e);
+    // Keep the page usable even if the archive is temporarily unavailable.
+    gkBackupRows=[];
+    gkBackupLoaded=true;
+    render();
+    toast("GK backup is temporarily unavailable");
+  });
 }
 function homeworkBackupHTML(){
   const rows=[];
