@@ -130,7 +130,15 @@ td.r,th.r{text-align:right;white-space:nowrap}
 .bodmas-result strong{font-family:"Baloo 2",sans-serif;font-size:1.8rem}
 @media(max-width:380px){.bodmas-input-row{flex-direction:column}.bodmas-submit{width:100%}}
 
-.gk-card{border:1px solid rgba(242,172,16,.3);background:linear-gradient(145deg,var(--card),color-mix(in srgb,var(--gold) 5%,var(--card)));overflow:hidden}.gk-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.gk-icon{width:46px;height:46px;border-radius:14px;background:var(--board);color:#fff;display:grid;place-items:center;font-size:24px}.gk-list{display:grid;gap:9px;margin-top:10px}.gk-q{padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--chip)}.gk-q b{display:block}.gk-answer{display:block;color:var(--p);font-weight:700;font-size:.9rem;margin-top:3px}\n</style>
+.gk-card{border:1px solid rgba(242,172,16,.3);background:linear-gradient(145deg,var(--card),color-mix(in srgb,var(--gold) 5%,var(--card)));overflow:hidden}.gk-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.gk-icon{width:46px;height:46px;border-radius:14px;background:var(--board);color:#fff;display:grid;place-items:center;font-size:24px}.gk-list{display:grid;gap:9px;margin-top:10px}.gk-q{padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--chip)}.gk-q b{display:block}.gk-answer{display:block;color:var(--p);font-weight:700;font-size:.9rem;margin-top:3px}\n
+/* TASVIA ACTION VISIBILITY / MOBILE SAFE LAYER */
+button,.btn,a.btn{visibility:visible;}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-width:40px;min-height:40px;white-space:normal;text-align:center;line-height:1.25;}
+.acts{display:flex;flex-wrap:wrap;align-items:center;gap:8px;width:100%;overflow:visible;}
+.acts > .btn,.acts > a.btn,.acts > button{flex:0 0 auto;max-width:100%;}
+.item{overflow:visible;}
+@media(max-width:520px){.acts > .btn,.acts > a.btn,.acts > button{min-height:42px}.acts > .btn.sm,.acts > a.btn.sm,.acts > button.btn.sm{min-height:38px}}
+</style>
 </head>
 <body>
 <header><div class="top"><div class="brand"><img class="hlogo" src="/icon-512.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
