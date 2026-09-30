@@ -414,7 +414,7 @@ let S={students:{},att:{},fees:{},tests:{},info:null,teachers:{},tatt:{},salarie
 let db=null,unsubs=[];
 const UI={tab:"today",seg:"students",more:null,date:today(),cls:"all",feeMonth:today().slice(0,7),moneyMonth:today().slice(0,7),q:"",testCls:"all",cardCls:null,rcFrom:null,rcTo:null};
 
-function today(){return new Date().toLocaleDateString("en-CA")}
+function today(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 function monthName(m){const [y,mo]=m.split("-");return new Date(+y,+mo-1,1).toLocaleDateString("en-IN",{month:"long",year:"numeric"})}
 function nice(d){return new Date(d+"T00:00").toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
@@ -740,7 +740,7 @@ const PC_ALPH="ABCDEFGHJKMNPQRSTUVWXYZ23456789";
 function newCode(){const a=new Uint32Array(16);crypto.getRandomValues(a);return Array.from(a,x=>PC_ALPH[x%PC_ALPH.length]).join("")}
 function stable(v){if(Array.isArray(v))return "["+v.map(stable).join(",")+"]";if(v&&typeof v==="object")return "{"+Object.keys(v).sort().map(k=>JSON.stringify(k)+":"+stable(v[k])).join(",")+"}";return JSON.stringify(v===undefined?null:v)}
 function parentURL(code){return location.origin+location.pathname.replace(/[^/]*$/,"")+"parent#"+code}
-function lastMonths(n){const out=[],d=new Date();d.setDate(1);for(let i=0;i<n;i++){out.push(d.toLocaleDateString("en-CA").slice(0,7));d.setMonth(d.getMonth()-1)}return out}
+function lastMonths(n){const out=[],d=new Date();d.setDate(1);for(let i=0;i<n;i++){out.push(d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"));d.setMonth(d.getMonth()-1)}return out}
 function buildParentView(s){
   const i=info();
   if(!active(s))return {left:true,name:s.name,centre:{name:i.name,phone:i.phone}};
