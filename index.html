@@ -933,7 +933,7 @@ function ensureGKBackup(){
     gkBackupRows=[];
     gkBackupLoaded=true;
     render();
-    toast("GK backup is temporarily unavailable");
+    toast(e&&e.code==="permission-denied"?"GK archive access denied — publish current Firestore rules":"GK backup is temporarily unavailable");
   });
 }
 function homeworkBackupHTML(){
