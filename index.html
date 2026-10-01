@@ -404,7 +404,7 @@ button,.btn,a.btn{visibility:visible;}
 <nav><div class="in" id="nav"></div></nav>
 <div class="scrim" id="scrim"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
 <div class="toast" id="toast"></div>
-<div class="gate" id="gate" hidden><form id="fLogin" autocomplete="on">
+<div class="gate" id="gate"><form id="fLogin" autocomplete="on">
   <img class="glogo" src="logo.png" alt="TASVIA Academy logo">
   <h1>TASVIA <span>Academy</span></h1><p class="tag">Inspire • Learn • Grow • Succeed</p><p id="gateMsg">Staff sign in</p>
   <label>Email<input name="email" type="email" autocomplete="username" required></label>
@@ -1657,6 +1657,19 @@ function startFirebase(){
 render();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
 else startFirebase();
+if(!auth){
+  const lf=document.getElementById("fLogin");
+  if(lf&&!lf.dataset.fallbackBound){
+    lf.dataset.fallbackBound="1";
+    lf.addEventListener("submit",e=>{
+      if(auth)return;
+      e.preventDefault();e.stopImmediatePropagation();
+      const ge=document.getElementById("gateErr");
+      if(ge)ge.textContent="Starting secure sign-in…";
+      try{startFirebase()}catch(err){if(ge)ge.textContent="TASVIA could not start. Please reload."}
+    },true);
+  }
+}
 if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js",{scope:"./"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
 </body>
