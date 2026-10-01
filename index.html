@@ -1618,8 +1618,8 @@ function startFirebase(){
           setSync("Checking staff account…");
           const snap=await withTimeout(fs.collection("Staff").doc(email).get(),10000,"Staff verification timed out");
           if(!snap.exists){
-            await auth.signOut();
-            gErr.textContent="This account is not registered as TASVIA staff.";
+            setSync("Staff account check failed");
+            gErr.textContent="Login succeeded, but this email is not registered in TASVIA Staff. Check the Staff record.";
             return;
           }
           const staff=snap.data()||{},role=(staff.role||"staff").toLowerCase();
@@ -1629,7 +1629,7 @@ function startFirebase(){
           console.error("TASVIA staff verification:",err);
           setSync(err&&err.message==="Staff verification timed out"?"Staff verification timed out":"Firebase staff verification failed");
           gErr.textContent=err&&err.message==="Staff verification timed out"?"Firebase did not respond within 10 seconds.":"Unable to verify staff account.";
-          await auth.signOut();
+          /* Keep the authenticated session so the actual Firebase error remains visible. */
         }
       }else{
         setSync("Signed out · login required");
