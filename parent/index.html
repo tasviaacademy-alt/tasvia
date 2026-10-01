@@ -151,7 +151,7 @@ button,.btn,a.btn{visibility:visible;}
     <h2>Welcome to <span>TASVIA</span></h2>
     <p id="welcomeGreeting">Let’s inspire, learn, grow and succeed together.</p>
     <p class="welcome-tag">INSPIRE • LEARN • GROW • SUCCEED</p>
-    <button id="welcomeEnter" class="welcome-enter" type="button" onclick="var w=document.getElementById('welcomeBackdrop');if(w){w.classList.add('hide');w.style.display='none';w.style.pointerEvents='none';}">Enter Parents Portal</button>
+    <button id="welcomeEnter" class="welcome-enter" type="button" onclick="var w=document.getElementById('welcomeBackdrop');if(w){w.classList.add('hide');w.style.display='none';w.style.pointerEvents='none';}window.tasviaWelcomeEntered=true;setTimeout(function(){var p=document.querySelector('.fee-popup-backdrop');if(p)p.classList.add('show');},120);">Enter Parents Portal</button>
   </div>
 </div>
 
