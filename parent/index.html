@@ -143,6 +143,17 @@ button,.btn,a.btn{visibility:visible;}
 /* DAILY CURRENT AFFAIRS */
 
 /* Parent portal 2x2 quick-action grid */
+.parent-dashboard{margin-top:12px;padding:14px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,var(--card),color-mix(in srgb,var(--board) 4%,var(--card)));box-shadow:0 4px 18px rgba(11,36,85,.06)}
+.parent-dashboard-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.parent-dashboard-title{font-weight:800;font-size:1.05rem}
+.parent-dashboard-sub{color:var(--muted);font-size:.8rem}
+.parent-dashboard-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.parent-dashboard-item{min-width:0;padding:10px 7px;border:1px solid var(--line);border-radius:12px;background:var(--chip);text-align:center}
+.parent-dashboard-item b{display:block;font-family:"Baloo 2",sans-serif;font-size:1.35rem;line-height:1.15}
+.parent-dashboard-item small{display:block;color:var(--muted);font-size:.76rem;margin-top:2px}
+.parent-dashboard-item.ok b{color:var(--p)}.parent-dashboard-item.bad b{color:var(--a)}.parent-dashboard-item.gold b{color:#B8820A}
+.parent-empty{padding:12px;border:1px dashed var(--line);border-radius:12px;background:var(--chip);color:var(--muted);text-align:center}
+@media(max-width:360px){.parent-dashboard-grid{grid-template-columns:1fr 1fr}.parent-dashboard-item:last-child{grid-column:1/-1}}
 .parent-action-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 2px}
 .parent-action{min-height:78px;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 10px;border:1px solid var(--line);border-radius:15px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:700;text-align:center;box-shadow:0 3px 12px rgba(11,36,85,.06);transition:transform .15s ease,box-shadow .15s ease}
 .parent-action:active{transform:scale(.98)}
@@ -285,7 +296,22 @@ function render(){
   yr.p=Number(yr.p)||0;yr.a=Number(yr.a)||0;
   const tot=a.p+a.a,pc=tot?Math.round(a.p*100/tot):null;
   const yt=yr.p+yr.a,ypc=yt?Math.round(yr.p*100/yt):null;
+  const quickTests=Array.isArray(v.tests)?v.tests.filter(x=>x&&typeof x==="object"):[];
+  const quickFees=Array.isArray(v.fees)?v.fees.filter(x=>x&&typeof x==="object"):[];
+  const quickHw=Array.isArray(v.hw)?v.hw.filter(x=>x&&typeof x==="object"):[];
+  const quickTestCount=quickTests.length;
+  const quickTestAvg=quickTests.length?Math.round(quickTests.reduce((sum,x)=>sum+(Number(x.x)?(Number(x.m)||0)*100/Number(x.x):0),0)/quickTests.length):null;
+  const quickFeeDue=quickFees.reduce((sum,f)=>sum+Math.max(0,(Number(f.fee)||0)-(Number(f.paid)||0)),0);
+  const quickFeePending=quickFees.some(f=>["due","part"].includes(String(f.status||"").toLowerCase()))||quickFeeDue>0;
   let h="";
+  h+=`<section class="parent-dashboard" aria-label="Parent dashboard summary">
+    <div class="parent-dashboard-head"><div><div class="parent-dashboard-title">📊 Parent Dashboard</div><div class="parent-dashboard-sub">${esc(v.year||"")} · ${esc(t.updated)} ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}</div></div></div>
+    <div class="parent-dashboard-grid">
+      <div class="parent-dashboard-item ${ypc!=null&&ypc>=75?"ok":ypc!=null&&ypc<60?"bad":""}"><b>${ypc!=null?ypc+"%":"–"}</b><small>Attendance</small></div>
+      <div class="parent-dashboard-item"><b>${quickTestAvg!=null?quickTestAvg+"%":"–"}</b><small>Test Average</small></div>
+      <div class="parent-dashboard-item ${quickFeePending?"bad":"ok"}"><b>${quickFeePending?(quickFeeDue?rs(quickFeeDue):"Due"):"Paid"}</b><small>Fees</small></div>
+    </div>
+  </section>`;
   if(c.notice)h+=`<div class="card"><h2>📢 ${esc(t.notice)}</h2><div class="notice">${esc(c.notice)}</div></div>`;
   // homework — show only the latest 7 days; keep older entries as a local backup.
   const hwNow=Date.now(),hwWeek=7*24*60*60*1000;
@@ -303,7 +329,7 @@ function render(){
   <button type="button" class="parent-action" onclick="openParentSection('feesSection')"><span class="parent-action-icon">💳</span><span>Fees</span></button>
   <button type="button" class="parent-action" onclick="openParentSection('contactSection')"><span class="parent-action-icon">📞</span><span>Contact</span></button>
 </div>
-  <div id="homeworkSection" class="card"><h2>${esc(t.hw)}</h2>`+(activeHw.length?activeHw.sort((a,b)=>String(b.d).localeCompare(String(a.d))).map(x=>`<div class="hw"><b>${esc(dL(x.d))}</b><div>${esc(x.hw)}</div>${x.note?`<div class="sub">${esc(t.note)}: ${esc(x.note)}</div>`:""}</div>`).join(""):`<p class="sub">${esc(t.noHw)}</p>`)+`</div>`;
+  <div id="homeworkSection" class="card"><h2>${esc(t.hw)}</h2>`+(activeHw.length?activeHw.sort((a,b)=>String(b.d).localeCompare(String(a.d))).map(x=>`<div class="hw"><b>${esc(dL(x.d))}</b><div>${esc(x.hw)}</div>${x.note?`<div class="sub">${esc(t.note)}: ${esc(x.note)}</div>`:""}</div>`).join(""):`<div class="parent-empty">📚 ${esc(t.noHw)}</div>`)+`</div>`;
   // BODMAS practice
   h+=buildBodmasCard();
   h+=`<div id="gkSection" class="card gk-card">${buildDailyGK()}</div>`;
@@ -314,7 +340,7 @@ function render(){
   h+=`<p class="sub" style="margin:6px 0 0">${esc(t.year)}: ${ypc!=null?`${yr.p}/${yt} ${esc(t.days)} (${ypc}%)`:"–"}</p>`;
   if(months.length>1)h+=`<div class="chips" style="margin-top:8px">${months.slice(1).map(m=>{const x=v.att[m],tt=x.p+x.a;return `<span>${esc(mN(m))}: ${tt?Math.round(x.p*100/tt)+"%":"–"}</span>`}).join("")}</div>`;
   const absDays=Array.isArray(v.abs)?v.abs.filter(d=>d!==null&&d!==undefined&&d!==""):[];
-  h+=`<p class="sub" style="margin:10px 0 4px"><b>${esc(t.abs)}</b></p>`+(absDays.length?`<div class="chips">${absDays.map(d=>`<span class="bad">${esc(dN(d))}</span>`).join("")}</div>`:`<p class="sub" style="margin:0">${esc(t.none)} ✓</p>`)+`</div>`;
+  h+=`<p class="sub" style="margin:10px 0 4px"><b>${esc(t.abs)}</b></p>`+(absDays.length?`<div class="chips">${absDays.map(d=>`<span class="bad">${esc(dN(d))}</span>`).join("")}</div>`:`<div class="parent-empty">📅 ${esc(t.none)} ✓</div>`)+`</div>`;
   // tests
   const tests=Array.isArray(v.tests)?v.tests.filter(x=>x&&typeof x==="object").map(x=>Object.assign({},x,{m:Number(x.m)||0,x:Number(x.x)||0,s:String(x.s||""),n:String(x.n||""),d:String(x.d||"")})):[];
   h+=`<div id="testsSection" class="card"><h2>${esc(t.tests)}</h2>`;
@@ -322,7 +348,7 @@ function render(){
     const got=tests.reduce((s,x)=>s+x.m,0),mx=tests.reduce((s,x)=>s+x.x,0),op=mx?Math.round(got*100/mx):0;
     h+=`<p class="sub" style="margin:0 0 6px">${esc(t.overall)}: <b style="color:var(--ink)">${op}%</b> · ${esc(t.grade)} <b class="gold">${grade(op)}</b></p><table><tr><th>${esc(t.test)}</th><th class="r">${esc(t.marks)}</th><th class="r">${esc(t.grade)}</th></tr>`+
       tests.map(x=>{const p=x.x?Math.round(x.m*100/x.x):0;return `<tr><td>${esc(x.s)} – ${esc(x.n)}<br><span class="sub">${esc(dN(x.d))}</span></td><td class="r">${x.m}/${x.x}</td><td class="r"><b class="gold">${grade(p)}</b></td></tr>`}).join("")+`</table>`;
-  }else h+=`<p class="sub">${esc(t.noTests)}</p>`;
+  }else h+=`<div class="parent-empty">📝 ${esc(t.noTests)}</div>`;
   h+=`</div>`;
   // fees
   const fees=Array.isArray(v.fees)?v.fees.filter(f=>f&&typeof f==="object").map(f=>Object.assign({},f,{m:String(f.m||""),fee:Number(f.fee)||0,paid:Number(f.paid)||0,dueDate:f.dueDate?String(f.dueDate):""})):[]; 
