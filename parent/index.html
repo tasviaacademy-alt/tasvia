@@ -443,12 +443,19 @@ showWelcome();
   }
   function finish(data){
     if(loaded)return;
-    loaded=true;
-    applyData(data);
+    try{
+      if(!data){loaded=true;msg(T[L].invalid,true);return}
+      applyData(data);
+      loaded=true;
+      closeWelcome();
+    }catch(err){
+      console.error("TASVIA Parent Portal render error:",err);
+      loaded=true;
+      msg("TASVIA Parent Portal opened, but the student data could not be displayed. Please tap Try again.",true);
+    }
   }
   loadREST().then(data=>{
-    if(!data){finish(null);return}
-    finish(data);
+    if(!data){finish(null);return}    finish(data);
     try{
       if(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey){
         if(!firebase.apps.length)firebase.initializeApp(window.FIREBASE_CONFIG);
