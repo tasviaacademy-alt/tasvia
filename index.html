@@ -768,7 +768,7 @@ function buildParentView(s){
   const yr=attStats(s.id,"",ay.from,today());
   const abs=datesOf("att").filter(d=>d>=ay.from&&getMarks(d)[s.id]==="A").sort().reverse().slice(0,8);
   const tests=Object.values(S.tests).filter(t=>t.date>=ay.from&&t.marks&&t.marks[s.id]!=null).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,25).map(t=>({d:t.date,s:t.subject,n:t.name,m:+t.marks[s.id],x:+t.max}));
-  const fees=s.fee?months.filter(m=>enrolledIn(s,m)).map(m=>({m,fee:+s.fee,paid:feeStatus(s,m).paid})):[];
+  const fees=s.fee?months.filter(m=>enrolledIn(s,m)).map(m=>{const fs=feeStatus(s,m);return {m,fee:+s.fee,paid:fs.paid,dueDate:fs.dueDate,status:fs.k};}):[];
   const pays=payList(s.id).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,6).map(p=>({d:p.date,a:+p.amount,m:p.month,mode:p.mode}));
   const hw=Object.keys(S.diary).sort().reverse().map(d=>{const e=((S.diary[d]||{}).entries||{})[s.id];return e&&e.hw?{d,hw:e.hw,note:e.note||""}:null}).filter(Boolean).slice(0,5);
   return {name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,
