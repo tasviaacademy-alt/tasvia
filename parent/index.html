@@ -301,15 +301,22 @@ function render(){
   const quickHw=Array.isArray(v.hw)?v.hw.filter(x=>x&&typeof x==="object"):[];
   const quickTestCount=quickTests.length;
   const quickTestAvg=quickTests.length?Math.round(quickTests.reduce((sum,x)=>sum+(Number(x.x)?(Number(x.m)||0)*100/Number(x.x):0),0)/quickTests.length):null;
-  const quickFeeDue=quickFees.reduce((sum,f)=>sum+Math.max(0,(Number(f.fee)||0)-(Number(f.paid)||0)),0);
-  const quickFeePending=quickFees.some(f=>["due","part"].includes(String(f.status||"").toLowerCase()))||quickFeeDue>0;
+  const quickFeeRows=quickFees.map(f=>Object.assign({},f,{fee:Number(f.fee)||0,paid:Number(f.paid)||0,dueDate:f.dueDate?String(f.dueDate):""}));
+  const quickFeePendingRows=quickFeeRows.filter(f=>{
+    const st=String(f.status||"").toLowerCase();
+    if(st==="due"||st==="part")return true;
+    if(st==="upcoming"||!f.dueDate)return false;
+    return today()>=f.dueDate;
+  });
+  const quickFeeDue=quickFeePendingRows.reduce((sum,f)=>sum+Math.max(0,f.fee-f.paid),0);
+  const quickFeePending=quickFeePendingRows.length>0;
   let h="";
   h+=`<section class="parent-dashboard" aria-label="Parent dashboard summary">
     <div class="parent-dashboard-head"><div><div class="parent-dashboard-title">📊 Parent Dashboard</div><div class="parent-dashboard-sub">${esc(v.year||"")} · ${esc(t.updated)} ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}</div></div></div>
     <div class="parent-dashboard-grid">
       <div class="parent-dashboard-item ${ypc!=null&&ypc>=75?"ok":ypc!=null&&ypc<60?"bad":""}"><b>${ypc!=null?ypc+"%":"–"}</b><small>Attendance</small></div>
       <div class="parent-dashboard-item"><b>${quickTestAvg!=null?quickTestAvg+"%":"–"}</b><small>Test Average</small></div>
-      <div class="parent-dashboard-item ${quickFeePending?"bad":"ok"}"><b>${quickFeePending?(quickFeeDue?rs(quickFeeDue):"Due"):"Paid"}</b><small>Fees</small></div>
+      <div class="parent-dashboard-item ${quickFeePending?"bad":"ok"}"><b>${quickFeePending?(quickFeeDue?rs(quickFeeDue):"Due"):"Paid"}</b><small>${quickFeePending?"Fee Due":"Fees Paid"}</small></div>
     </div>
   </section>`;
   if(c.notice)h+=`<div class="card"><h2>📢 ${esc(t.notice)}</h2><div class="notice">${esc(c.notice)}</div></div>`;
