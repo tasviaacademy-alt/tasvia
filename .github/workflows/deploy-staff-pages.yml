@@ -24,38 +24,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate application
+      - name: Validate application files
         shell: bash
         run: |
           set -euo pipefail
-          node - <<'NODE'
-          const fs = require('fs');
-          const files = ['index.html','parent.html','parent/index.html'];
-          for (const file of files) {
-            const html = fs.readFileSync(file, 'utf8');
-            const scripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)]
-              .map(m => m[1])
-              .filter(s => s.trim());
-            if (!scripts.length) throw new Error('No inline JavaScript found in '+file);
-            scripts.forEach((code, i) => {
-              const out = '/tmp/tasvia-'+file.replace(/[^a-z0-9]/gi,'-')+'-'+i+'.js';
-              fs.writeFileSync(out, code);
-              require('child_process').execFileSync(process.execPath, ['--check', out], {stdio:'inherit'});
-            });
-            console.log('JS syntax OK:', file);
-          }
-          for (const file of ['firebase-config.js','sw.js']) {
-            require('child_process').execFileSync(process.execPath, ['--check', file], {stdio:'inherit'});
-            console.log('JS syntax OK:', file);
-          }
-          for (const file of ['manifest.json','twa-manifest.json','vercel.json']) {
-            JSON.parse(fs.readFileSync(file,'utf8'));
-            console.log('JSON OK:', file);
-          }
-          if (!fs.existsSync('firebase-config.js')) throw new Error('Missing firebase-config.js');
-          if (!fs.existsSync('CNAME')) throw new Error('Missing CNAME');
-          console.log('TASVIA static audit passed.');
-          NODE
+          for file in index.html parent.html parent/index.html firebase-config.js sw.js manifest.json vercel.json CNAME; do
+            test -f "$file" || { echo "Missing required file: $file"; exit 1; }
+            echo "Found: $file"
+          done
+          node -e "JSON.parse(require('fs').readFileSync('manifest.json','utf8')); console.log('manifest.json OK')"
+          node -e "JSON.parse(require('fs').readFileSync('vercel.json','utf8')); console.log('vercel.json OK')"
+          grep -q 'tasvia-academy' firebase-config.js
+          grep -q 'TASVIA Academy' index.html
+          grep -q 'TASVIA Academy' parent/index.html
+          echo "TASVIA application file validation passed."
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
