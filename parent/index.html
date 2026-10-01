@@ -151,7 +151,7 @@ button,.btn,a.btn{visibility:visible;}
     <h2>Welcome to <span>TASVIA</span></h2>
     <p id="welcomeGreeting">Let’s inspire, learn, grow and succeed together.</p>
     <p class="welcome-tag">INSPIRE • LEARN • GROW • SUCCEED</p>
-    <button id="welcomeEnter" class="welcome-enter" type="button" onclick="var w=document.getElementById('welcomeBackdrop');if(w){w.classList.add('hide');w.style.display='none';w.style.pointerEvents='none';}window.tasviaWelcomeEntered=true;setTimeout(function(){var p=document.querySelector('.fee-popup-backdrop');if(p)p.classList.add('show');},120);">Enter Parents Portal</button>
+    <button id="welcomeEnter" class="welcome-enter" type="button" onclick="var w=document.getElementById('welcomeBackdrop');if(w){w.classList.add('hide');w.style.display='none';w.style.pointerEvents='none';}window.tasviaWelcomeEntered=true;setTimeout(function(){if(window.V&&Array.isArray(window.V.fees)){var fs=window.V.fees.filter(function(f){return f&&typeof f==='object'});var due=fs.some(function(f){if(['due','part'].includes(f.status))return true;if(f.status==='upcoming'||!f.dueDate)return false;return today()>=String(f.dueDate)});var amt=fs.filter(function(f){if(['due','part'].includes(f.status))return true;if(f.status==='upcoming'||!f.dueDate)return false;return today()>=String(f.dueDate)}).reduce(function(s,f){return s+Math.max(0,Number(f.fee||0)-Number(f.paid||0))},0);if(due&&amt>0)showFeeDuePopup(amt);}},120);">Enter Parents Portal</button>
   </div>
 </div>
 
@@ -204,8 +204,13 @@ function render(){
   if(v.left){msg(t.left);return}
   document.title=v.name+" – TASVIA Academy";
   document.getElementById("kid").innerHTML=`${v.photo&&/^data:image\/jpeg;base64,/.test(v.photo)?`<div class="ph"><img src="${v.photo}" alt=""></div>`:""}<div><h1>${esc(v.name)}</h1><p>${esc(t.cls(v.cls))}${v.board?" · "+esc(v.board):""} · ${esc(v.year||"")}</p></div>`;
-  const months=Object.keys(v.att||{}).sort().reverse(),cm=months[0],a=(v.att||{})[cm]||{p:0,a:0},tot=a.p+a.a,pc=tot?Math.round(a.p*100/tot):null;
-  const yt=(v.yr||{}).p+(v.yr||{}).a,ypc=yt?Math.round(v.yr.p*100/yt):null;
+  const att= v.att && typeof v.att==="object" ? v.att : {};
+  const months=Object.keys(att).filter(m=>/^\d{4}-\d{2}$/.test(m)).sort().reverse(),cm=months[0],a=Object.assign({p:0,a:0},(cm&&att[cm]&&typeof att[cm]==="object")?att[cm]:{});
+  a.p=Number(a.p)||0;a.a=Number(a.a)||0;
+  const yr=Object.assign({p:0,a:0},v.yr&&typeof v.yr==="object"?v.yr:{});
+  yr.p=Number(yr.p)||0;yr.a=Number(yr.a)||0;
+  const tot=a.p+a.a,pc=tot?Math.round(a.p*100/tot):null;
+  const yt=yr.p+yr.a,ypc=yt?Math.round(yr.p*100/yt):null;
   let h="";
   if(c.notice)h+=`<div class="card"><h2>📢 ${esc(t.notice)}</h2><div class="notice">${esc(c.notice)}</div></div>`;
   // homework — show only the latest 7 days; keep older entries as a local backup.
@@ -221,7 +226,7 @@ function render(){
   // attendance
   h+=`<div class="card"><h2>${esc(t.att)} · ${esc(cm?mN(cm):"")}</h2><div class="stats"><div><b class="ok">${a.p}</b><small>${esc(t.present)}</small></div><div><b class="bad">${a.a}</b><small>${esc(t.absent)}</small></div><div><b>${pc!=null?pc+"%":"–"}</b><small>${esc(t.pct)}</small></div></div>`;
   if(pc!=null)h+=`<div class="bar"><i style="width:${pc}%"></i></div>`;
-  h+=`<p class="sub" style="margin:6px 0 0">${esc(t.year)}: ${ypc!=null?`${v.yr.p}/${yt} ${esc(t.days)} (${ypc}%)`:"–"}</p>`;
+  h+=`<p class="sub" style="margin:6px 0 0">${esc(t.year)}: ${ypc!=null?`${yr.p}/${yt} ${esc(t.days)} (${ypc}%)`:"–"}</p>`;
   if(months.length>1)h+=`<div class="chips" style="margin-top:8px">${months.slice(1).map(m=>{const x=v.att[m],tt=x.p+x.a;return `<span>${esc(mN(m))}: ${tt?Math.round(x.p*100/tt)+"%":"–"}</span>`}).join("")}</div>`;
   h+=`<p class="sub" style="margin:10px 0 4px"><b>${esc(t.abs)}</b></p>`+((v.abs||[]).length?`<div class="chips">${v.abs.map(d=>`<span class="bad">${esc(dN(d))}</span>`).join("")}</div>`:`<p class="sub" style="margin:0">${esc(t.none)} ✓</p>`)+`</div>`;
   // tests
@@ -233,11 +238,14 @@ function render(){
   }else h+=`<p class="sub">${esc(t.noTests)}</p>`;
   h+=`</div>`;
   // fees
-  const feeDue=(v.fees||[]).some(f=>{if(["due","part"].includes(f.status))return true;if(f.status==="upcoming")return false;if(!f.dueDate)return false;return today()>=String(f.dueDate);}); const feeDueAmount=(v.fees||[]).filter(f=>{if(["due","part"].includes(f.status))return true;if(f.status==="upcoming")return false;if(!f.dueDate)return false;return today()>=String(f.dueDate);}).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
-  if((v.fees||[]).length||(v.pays||[]).length){
+  const fees=Array.isArray(v.fees)?v.fees.filter(f=>f&&typeof f==="object"):[];
+  const pays=Array.isArray(v.pays)?v.pays.filter(p=>p&&typeof p==="object"):[];
+  const feeDue=fees.some(f=>{if(["due","part"].includes(f.status))return true;if(f.status==="upcoming")return false;if(!f.dueDate)return false;return today()>=String(f.dueDate);});
+  const feeDueAmount=fees.filter(f=>{if(["due","part"].includes(f.status))return true;if(f.status==="upcoming")return false;if(!f.dueDate)return false;return today()>=String(f.dueDate);}).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
+  if(fees.length||pays.length){
     h+=`<div id="feeCard" class="card${feeDue?" fee-due":""}"><h2>${esc(t.fees)}</h2>${feeDue?`<div class="fee-alert"><span class="dot"></span><span>${esc(t.due)} · ${esc(L==="te"?"ఫీజు చెల్లింపు పెండింగ్‌లో ఉంది":L==="hi"?"फ़ीस भुगतान बाकी है":"Fee payment pending")}</span></div>`:""}`;
-    if((v.fees||[]).length)h+=`<table><tr><th>${esc(t.month)}</th><th class="r">${esc(t.status)}</th></tr>`+v.fees.map(f=>{const st=f.status==="upcoming"?`<span class="tag">${esc(t.upcoming)} · ${esc(t.dueOn)} ${esc(dN(f.dueDate))}</span>`:f.paid>=f.fee?`<span class="tag ok">${esc(t.paid)}</span>`:f.paid>0?`<span class="tag gold">${esc(t.part)} · ${esc(t.due)} ${rs(f.fee-f.paid)}</span>`:`<span class="tag bad">${esc(t.due)} ${rs(f.fee)}</span>`;return `<tr><td>${esc(mN(f.m))}<br><span class="sub">${esc(t.dueOn)}: ${esc(dN(f.dueDate))}</span></td><td class="r">${st}</td></tr>`}).join("")+`</table>`;
-    if((v.pays||[]).length)h+=`<p class="sub" style="margin:12px 0 4px"><b>${esc(t.pays)}</b></p><table>`+v.pays.map(p=>`<tr><td>${esc(dN(p.d))}<br><span class="sub">${esc(mN(p.m))}</span></td><td class="r">${rs(p.a)}<br><span class="sub">${esc(p.mode||"")}</span></td></tr>`).join("")+`</table>`;
+    if(fees.length)h+=`<table><tr><th>${esc(t.month)}</th><th class="r">${esc(t.status)}</th></tr>`+fees.map(f=>{const st=f.status==="upcoming"?`<span class="tag">${esc(t.upcoming)} · ${esc(t.dueOn)} ${esc(dN(f.dueDate))}</span>`:f.paid>=f.fee?`<span class="tag ok">${esc(t.paid)}</span>`:f.paid>0?`<span class="tag gold">${esc(t.part)} · ${esc(t.due)} ${rs(f.fee-f.paid)}</span>`:`<span class="tag bad">${esc(t.due)} ${rs(f.fee)}</span>`;return `<tr><td>${esc(mN(f.m))}<br><span class="sub">${esc(t.dueOn)}: ${esc(dN(f.dueDate))}</span></td><td class="r">${st}</td></tr>`}).join("")+`</table>`;
+    if(pays.length)h+=`<p class="sub" style="margin:12px 0 4px"><b>${esc(t.pays)}</b></p><table>`+pays.map(p=>`<tr><td>${esc(dN(p.d))}<br><span class="sub">${esc(mN(p.m))}</span></td><td class="r">${rs(p.a)}<br><span class="sub">${esc(p.mode||"")}</span></td></tr>`).join("")+`</table>`;
     h+=`</div>`;
     if(feeDue&&feeDueAmount>0){const q="pa=badavathpremdas2@ybl&pn=TASVIA%20Academy&am="+encodeURIComponent(feeDueAmount.toFixed(2))+"&cu=INR&tn="+encodeURIComponent("Fee payment - "+(v.name||"Student"));const upi="upi://pay?"+q;h+=`<div class="acts" style="justify-content:center;margin-top:14px"><div style="width:100%;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--chip);text-align:center"><b>UPI Payment</b><div class="sub">Scan the QR code with any UPI app</div><img alt="UPI QR Code" style="width:220px;height:220px;display:block;margin:12px auto;background:#fff;padding:8px;border-radius:12px" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(upi)}"><div class="upi-id">UPI ID: <b>badavathpremdas2@ybl</b></div><button class="btn" type="button" style="border:0;cursor:pointer;margin-top:8px" onclick="navigator.clipboard&&navigator.clipboard.writeText('badavathpremdas2@ybl').then(()=>this.textContent='✓ UPI ID Copied').catch(()=>alert('UPI ID: badavathpremdas2@ybl'))">📋 Copy UPI ID</button><p class="sub" style="margin:10px 0 0">Amount: <b>${rs(feeDueAmount)}</b></p><p class="sub" style="margin:8px 0 0">If this page is open on your phone, use another phone to scan the QR, or copy the UPI ID and pay manually in your UPI app.</p><div class="acts" style="justify-content:center;margin-top:10px"><a class="btn gold" target="_blank" rel="noopener" href="https://wa.me/${esc(ph91)}?text=${encodeURIComponent("I have completed the TASVIA Academy fee payment for "+(v.name||"my child")+". I am sending the payment screenshot for verification. Please update the fee status after verification.")}">📸 ${esc(t.sendScreenshot)}</a></div></div></div>`;}
   }
@@ -249,9 +257,8 @@ function render(){
   h+=`<p class="foot">${esc(t.updated)}: ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}<br>${esc(t.save)}</p>`;
   document.getElementById("main").innerHTML=h;
   renderBodmas();
-  if(feeDue){
-    const dueAmount=(v.fees||[]).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
-    showFeeDuePopup(dueAmount);
+  if(feeDue && window.tasviaWelcomeEntered){
+    showFeeDuePopup(feeDueAmount);
   }
   if(feeDue&&!feeDueScrollDone){
     feeDueScrollDone=true;
