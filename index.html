@@ -771,7 +771,7 @@ function buildParentView(s){
   const fees=s.fee?months.filter(m=>enrolledIn(s,m)).map(m=>{const fs=feeStatus(s,m);return {m,fee:+s.fee,paid:fs.paid,dueDate:fs.dueDate,status:fs.k};}):[];
   const pays=payList(s.id).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,6).map(p=>({d:p.date,a:+p.amount,m:p.month,mode:p.mode}));
   const hw=Object.keys(S.diary).sort().reverse().map(d=>{const e=((S.diary[d]||{}).entries||{})[s.id];return e&&e.hw?{d,hw:e.hw,note:e.note||""}:null}).filter(Boolean).slice(0,5);
-  return {name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,
+  return {studentId:s.id,name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,
     centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||""}};
 }
 function schedulePV(){clearTimeout(pvT);pvT=setTimeout(syncPV,3000)}
@@ -786,7 +786,7 @@ async function syncPV(){
       const v=buildParentView({id,...st}),j=stable(v);
       const hj=hash(j);
       let exists=false;
-      try{const snap=await db.doc("parentView/"+code).get();exists=snap.exists}catch(e){console.warn("parent record check",code,e)}
+      try{const snap=await db.doc("parentView/"+code).get();exists=snap.exists&&snap.data()&&(!snap.data().studentId||snap.data().studentId===id)}catch(e){console.warn("parent record check",code,e)}
       if(!exists||pvCache[code]!==hj){
         await db.doc("parentView/"+code).set(Object.assign({},v,{updated:Date.now()}),{merge:true});
         pvCache[code]=hj;pvSave();
