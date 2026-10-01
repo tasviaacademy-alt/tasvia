@@ -779,17 +779,41 @@ async function syncPV(){
   if(!db||!pvReady)return;
   if(pvBusy){clearTimeout(pvT);pvT=setTimeout(syncPV,1200);return}
   pvBusy=true;
+  const usedCodes=new Set();
   try{
-    for(const [id,st] of Object.entries(S.students)){
-      let code=st.pcode;
-      if(!code){if(!active(st))continue;code=newCode();S.students[id]=Object.assign({},st,{pcode:code});await db.doc("students/"+id).set({pcode:code},{merge:true})}
-      const v=buildParentView({id,...st}),j=stable(v);
-      const hj=hash(j);
-      let exists=false;
-      try{const snap=await db.doc("parentView/"+code).get();exists=snap.exists&&snap.data()&&(!snap.data().studentId||snap.data().studentId===id)}catch(e){console.warn("parent record check",code,e)}
-      if(!exists||pvCache[code]!==hj){
-        await db.doc("parentView/"+code).set(Object.assign({},v,{updated:Date.now()}),{merge:true});
-        pvCache[code]=hj;pvSave();
+    for(const [id,raw] of Object.entries(S.students||{})){
+      try{
+        const st=Object.assign({},raw||{});
+        let code=String(st.pcode||"").trim().toUpperCase();
+        if(!active({id,...st}))continue;
+        if(!/^[A-Z0-9]{8,20}$/.test(code)||usedCodes.has(code)){
+          do{code=newCode()}while(usedCodes.has(code));
+          S.students[id]=Object.assign({},st,{pcode:code});
+          await db.doc("students/"+id).set({pcode:code},{merge:true});
+        }
+        usedCodes.add(code);
+        let v;
+        try{
+          v=buildParentView({id,...st,pcode:code});
+        }catch(err){
+          console.warn("parent view build failed",id,err);
+          const i=info();
+          v={studentId:id,name:st.name||"Student",cls:st.cls||"",board:st.board||"",lang:langOf(st),year:acYear(today()).label,att:{},yr:{p:0,a:0},abs:[],tests:[],fees:[],pays:[],hw:[],centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||""}};
+        }
+        const j=stable(v),hj=hash(j);
+        let exists=false;
+        try{
+          const snap=await db.doc("parentView/"+code).get();
+          const old=snap.exists?snap.data():null;
+          exists=!!(old&&(!old.studentId||old.studentId===id));
+        }catch(e){console.warn("parent record check",code,e)}
+        if(!exists||pvCache[code]!==hj){
+          await db.doc("parentView/"+code).set(Object.assign({},v,{studentId:id,updated:Date.now()}),{merge:true});
+          pvCache[code]=hj;
+          pvSave();
+        }
+      }catch(err){
+        console.warn("parent sync student failed",id,err);
       }
     }
   }catch(e){console.warn("parent sync",e)}
