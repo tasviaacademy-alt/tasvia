@@ -296,16 +296,10 @@ function showFeeDuePopup(amount){
   feeDuePopupShown=true;
   let el=document.getElementById("feePopup");
   if(!el){el=document.createElement("div");el.id="feePopup";document.body.appendChild(el)}
-  const title=L==="te"?"ఫీజు చెల్లింపు పెండింగ్‌లో ఉంది":L==="hi"?"फ़ीस भुगतान बाकी है":"Fee Payment Pending";
-  const note=L==="te"?"దయచేసి బాకీ ఉన్న ఫీజును చెల్లించండి.":L==="hi"?"कृपया बकाया फ़ीस का भुगतान करें।":"Please clear the pending fee payment.";
-  const view=L==="te"?"ఫీజు చూడండి":L==="hi"?"फ़ीस देखें":"View Fees";
-  const close=L==="te"?"తర్వాత":L==="hi"?"बाद में":"Later";
-  el.innerHTML=`<div class="fee-popup-backdrop show" role="dialog" aria-modal="true" aria-labelledby="feePopupTitle"><div class="fee-popup"><div class="fee-popup-icon">🔔</div><h3 id="feePopupTitle">${esc(title)}</h3><div class="due-label">${esc(T[L].due)}</div><div class="due-amount">${rs(amount)}</div><p class="due-note">${esc(note)}</p><div class="acts"><button class="btn" data-fee-close>${esc(close)}</button><button class="btn gold" data-fee-view>${esc(view)}</button></div></div></div>`;
+  el.innerHTML=`<div class="fee-popup-backdrop show" role="dialog" aria-modal="true" aria-label="Fee Due"><div class="fee-popup"><div class="due-amount">Fee Due: ${rs(amount)}</div></div></div>`;
   const backdrop=el.querySelector(".fee-popup-backdrop");
   const closePopup=()=>{backdrop.classList.remove("show");setTimeout(()=>el.remove(),300)};
-  el.querySelector("[data-fee-close]").onclick=closePopup;
-  el.querySelector("[data-fee-view]").onclick=()=>{closePopup();setTimeout(()=>document.getElementById("feeCard")?.scrollIntoView({behavior:"smooth",block:"center"}),80)};
-  backdrop.onclick=e=>{if(e.target===backdrop)closePopup()};
+  backdrop.onclick=closePopup;
 }
 
 
