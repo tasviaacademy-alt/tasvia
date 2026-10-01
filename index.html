@@ -482,7 +482,7 @@ let lazyMoreLoaded=false,lazyTeacherAttLoaded=false;
 function subscribe(){
   unsubs.forEach(u=>u&&u());unsubs=[];lazyMoreLoaded=false;lazyTeacherAttLoaded=false;
   const onErr=e=>setSync(e&&e.code==="permission-denied"?"Not on staff list":"Connection lost. Reopen the app.");
-  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;scheduleRender()},onErr));
+  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;scheduleRender();if(key==="students")schedulePV()},onErr));
   const admin=window.currentUser&&window.currentUser.role==="admin";
   coll("students","students");
   if(admin)coll("fees","fees");
