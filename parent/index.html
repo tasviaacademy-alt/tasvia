@@ -399,42 +399,66 @@ showWelcome();
   let code=qs.get("code")||((location.hash||"").replace(/^#/,""));
   code=String(code||"").trim().toUpperCase();
   if(!/^[A-Z0-9]{8,20}$/.test(code)){msg(T[L].invalid,true);return}
-  if(!window.firebase||!window.FIREBASE_CONFIG||!window.FIREBASE_CONFIG.apiKey){msg(T[L].offline,true);return}
-  try{
-    if(!firebase.apps.length) firebase.initializeApp(window.FIREBASE_CONFIG);
-    const db=firebase.firestore();
-    const ref=db.doc("parentView/"+code);
-    let done=false;
-    let unsub=null;
-    const finish=snap=>{
-      if(done)return;
-      done=true; clearTimeout(fail);
-      if(!snap.exists){msg(T[L].invalid,true);return}
-      V=snap.data();
-      if(!saved&&V.lang&&T[V.lang])L=V.lang;
-      render();
-      if(CURRENT_AFFAIRS===null)loadCurrentAffairs().then(()=>{
-        const el=document.getElementById("currentAffairsCard");
-        if(el)el.innerHTML=buildCurrentAffairsCard();
-      }).catch(()=>{});
-      unsub=ref.onSnapshot(d=>{
-        if(!d.exists)return;
-        const prev=V; V=d.data(); render();
-        changes(prev,V).forEach(([a,b],i)=>setTimeout(()=>alertParent(a,b),i*1800));
-      },e=>console.warn("TASVIA live sync unavailable:",e));
-    };
-    const fail=setTimeout(()=>{
-      if(!done){
-        done=true;
-        if(unsub)unsub();
-        msg("TASVIA Parent Portal could not connect. Please check your internet connection and tap Try Again.",true);
-      }
-    },10000);
-    ref.get().then(finish).catch(e=>{
-      console.error("TASVIA parent data error:",e);
-      if(!done){clearTimeout(fail);done=true;msg(T[L].offline,true)}
+
+  function fv(v){
+    if(!v||typeof v!=="object")return v;
+    if(Object.prototype.hasOwnProperty.call(v,"stringValue"))return v.stringValue;
+    if(Object.prototype.hasOwnProperty.call(v,"integerValue"))return Number(v.integerValue);
+    if(Object.prototype.hasOwnProperty.call(v,"doubleValue"))return Number(v.doubleValue);
+    if(Object.prototype.hasOwnProperty.call(v,"booleanValue"))return v.booleanValue;
+    if(Object.prototype.hasOwnProperty.call(v,"timestampValue"))return v.timestampValue;
+    if(Object.prototype.hasOwnProperty.call(v,"nullValue"))return null;
+    if(Object.prototype.hasOwnProperty.call(v,"arrayValue"))return (v.arrayValue.values||[]).map(fv);
+    if(Object.prototype.hasOwnProperty.call(v,"mapValue")){const o={};Object.entries(v.mapValue.fields||{}).forEach(([k,x])=>o[k]=fv(x));return o}
+    return v;
+  }
+  function restDoc(){
+    const url="https://firestore.googleapis.com/v1/projects/"+encodeURIComponent("tasvia-academy")+"/databases/(default)/documents/parentView/"+encodeURIComponent(code);
+    return fetch(url,{cache:"no-store"}).then(r=>{if(r.status===404)return null;if(!r.ok)throw new Error("Firestore HTTP "+r.status);return r.json()}).then(d=>{
+      if(!d)return null;
+      const o={};Object.entries(d.fields||{}).forEach(([k,v])=>o[k]=fv(v));return o;
     });
-  }catch(e){console.error(e);msg(T[L].offline,true)}
+  }
+  function applyData(data){
+    if(!data){msg(T[L].invalid,true);return false}
+    const prev=V;V=data;
+    if(!saved&&V.lang&&T[V.lang])L=V.lang;
+    render();
+    if(CURRENT_AFFAIRS===null)loadCurrentAffairs().then(()=>{
+      const el=document.getElementById("currentAffairsCard");
+      if(el)el.innerHTML=buildCurrentAffairsCard();
+    }).catch(()=>{});
+    if(prev)changes(prev,V).forEach(([a,b],i)=>setTimeout(()=>alertParent(a,b),i*1800));
+    return true;
+  }
+
+  let loaded=false;
+  try{
+    if(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey){
+      if(!firebase.apps.length)firebase.initializeApp(window.FIREBASE_CONFIG);
+      const ref=firebase.firestore().doc("parentView/"+code);
+      const timer=setTimeout(()=>{
+        if(!loaded){
+          restDoc().then(d=>{if(!loaded){loaded=true;applyData(d);if(!d)msg(T[L].invalid,true)}})
+            .catch(()=>msg("TASVIA Parent Portal could not connect. Please check your internet connection and tap Try Again.",true));
+        }
+      },6000);
+      ref.get().then(snap=>{
+        if(loaded)return;
+        clearTimeout(timer);loaded=true;
+        if(!applyData(snap.exists?snap.data():null))return;
+        ref.onSnapshot(d=>{if(d.exists)applyData(d.data())},()=>{});
+      }).catch(()=>{
+        clearTimeout(timer);
+        if(!loaded)restDoc().then(d=>{if(!loaded){loaded=true;applyData(d)}}).catch(()=>msg(T[L].offline,true));
+      });
+    }else{
+      restDoc().then(d=>{loaded=true;applyData(d)}).catch(e=>{console.error(e);msg(T[L].offline,true)});
+    }
+  }catch(e){
+    console.error("TASVIA Parent Portal startup:",e);
+    restDoc().then(d=>{loaded=true;applyData(d)}).catch(()=>msg(T[L].offline,true));
+  }
 })();
 if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("/sw.js",{scope:"/"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
