@@ -1,7 +1,7 @@
 // TASVIA Academy service worker
 // HTML is network-first so production fixes are not hidden behind stale cache.
 // Firebase/Auth/API traffic is never cached.
-const CACHE = "tasvia-v15";
+const CACHE = "tasvia-v16";
 const STATIC_SHELL = [
   "/",
   "/index.html",
@@ -43,7 +43,7 @@ self.addEventListener("fetch", event => {
 
   if (isHtml) {
     event.respondWith(
-      fetch(request)
+      fetch(new Request(request, {cache:"no-store"}))
         .then(response => {
           if (response.ok) {
             const copy = response.clone();
@@ -65,7 +65,7 @@ self.addEventListener("fetch", event => {
     if (isCode) {
       // Always prefer fresh application code/config. Fall back to cache only offline.
       event.respondWith(
-        fetch(request)
+        fetch(new Request(request, {cache:"no-store"}))
           .then(response => {
             if (response.ok) {
               const copy = response.clone();
