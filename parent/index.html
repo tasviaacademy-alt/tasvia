@@ -225,7 +225,8 @@ function render(){
   let h="";
   if(c.notice)h+=`<div class="card"><h2>📢 ${esc(t.notice)}</h2><div class="notice">${esc(c.notice)}</div></div>`;
   // homework — show only the latest 7 days; keep older entries as a local backup.
-  const hwNow=Date.now(),hwWeek=7*24*60*60*1000,allHw=Array.isArray(v.hw)?v.hw:[];
+  const hwNow=Date.now(),hwWeek=7*24*60*60*1000;
+  const allHw=Array.isArray(v.hw)?v.hw.filter(x=>x&&typeof x==="object"):[];
   const activeHw=allHw.filter(x=>{const tm=Date.parse(String(x.d||""));return Number.isFinite(tm)&&hwNow-tm>=0&&hwNow-tm<hwWeek;});
   const archivedHw=allHw.filter(x=>{const tm=Date.parse(String(x.d||""));return Number.isFinite(tm)&&hwNow-tm>=hwWeek;});
   try{const bk=JSON.parse(localStorage.getItem("tasvia-homework-backup")||"[]");const key=String(location.hash||"").replace("#","").trim().toUpperCase()||"portal";localStorage.setItem("tasvia-homework-backup",JSON.stringify([...bk.filter(z=>z.key!==key),{key,backedUpAt:new Date().toISOString(),homework:archivedHw}].slice(-20)))}catch(_){}
@@ -239,13 +240,15 @@ function render(){
   if(pc!=null)h+=`<div class="bar"><i style="width:${pc}%"></i></div>`;
   h+=`<p class="sub" style="margin:6px 0 0">${esc(t.year)}: ${ypc!=null?`${yr.p}/${yt} ${esc(t.days)} (${ypc}%)`:"–"}</p>`;
   if(months.length>1)h+=`<div class="chips" style="margin-top:8px">${months.slice(1).map(m=>{const x=v.att[m],tt=x.p+x.a;return `<span>${esc(mN(m))}: ${tt?Math.round(x.p*100/tt)+"%":"–"}</span>`}).join("")}</div>`;
-  h+=`<p class="sub" style="margin:10px 0 4px"><b>${esc(t.abs)}</b></p>`+((v.abs||[]).length?`<div class="chips">${v.abs.map(d=>`<span class="bad">${esc(dN(d))}</span>`).join("")}</div>`:`<p class="sub" style="margin:0">${esc(t.none)} ✓</p>`)+`</div>`;
+  const absDays=Array.isArray(v.abs)?v.abs.filter(d=>d!==null&&d!==undefined&&d!==""):[];
+  h+=`<p class="sub" style="margin:10px 0 4px"><b>${esc(t.abs)}</b></p>`+(absDays.length?`<div class="chips">${absDays.map(d=>`<span class="bad">${esc(dN(d))}</span>`).join("")}</div>`:`<p class="sub" style="margin:0">${esc(t.none)} ✓</p>`)+`</div>`;
   // tests
+  const tests=Array.isArray(v.tests)?v.tests.filter(x=>x&&typeof x==="object").map(x=>Object.assign({},x,{m:Number(x.m)||0,x:Number(x.x)||0,s:String(x.s||""),n:String(x.n||""),d:String(x.d||"")})):[];
   h+=`<div class="card"><h2>${esc(t.tests)}</h2>`;
-  if((v.tests||[]).length){
-    const got=v.tests.reduce((s,x)=>s+x.m,0),mx=v.tests.reduce((s,x)=>s+x.x,0),op=mx?Math.round(got*100/mx):0;
+  if(tests.length){
+    const got=tests.reduce((s,x)=>s+x.m,0),mx=tests.reduce((s,x)=>s+x.x,0),op=mx?Math.round(got*100/mx):0;
     h+=`<p class="sub" style="margin:0 0 6px">${esc(t.overall)}: <b style="color:var(--ink)">${op}%</b> · ${esc(t.grade)} <b class="gold">${grade(op)}</b></p><table><tr><th>${esc(t.test)}</th><th class="r">${esc(t.marks)}</th><th class="r">${esc(t.grade)}</th></tr>`+
-      v.tests.map(x=>{const p=x.x?Math.round(x.m*100/x.x):0;return `<tr><td>${esc(x.s)} – ${esc(x.n)}<br><span class="sub">${esc(dN(x.d))}</span></td><td class="r">${x.m}/${x.x}</td><td class="r"><b class="gold">${grade(p)}</b></td></tr>`}).join("")+`</table>`;
+      tests.map(x=>{const p=x.x?Math.round(x.m*100/x.x):0;return `<tr><td>${esc(x.s)} – ${esc(x.n)}<br><span class="sub">${esc(dN(x.d))}</span></td><td class="r">${x.m}/${x.x}</td><td class="r"><b class="gold">${grade(p)}</b></td></tr>`}).join("")+`</table>`;
   }else h+=`<p class="sub">${esc(t.noTests)}</p>`;
   h+=`</div>`;
   // fees
