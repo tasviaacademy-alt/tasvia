@@ -151,7 +151,7 @@ button,.btn,a.btn{visibility:visible;}
     <h2>Welcome to <span>TASVIA</span></h2>
     <p id="welcomeGreeting">Let’s inspire, learn, grow and succeed together.</p>
     <p class="welcome-tag">INSPIRE • LEARN • GROW • SUCCEED</p>
-    <button id="welcomeEnter" class="welcome-enter" type="button" onclick="var b=document.getElementById('welcomeEnter');if(!window.tasviaWelcomeReady){window.tasviaWelcomeReady=true;if(b)b.textContent='Continue';return;}var w=document.getElementById('welcomeBackdrop');if(w){w.classList.add('hide');w.style.display='none';w.style.pointerEvents='none';}window.tasviaWelcomeEntered=true;setTimeout(openFeeDueAfterWelcome,120);">Enter Parents Portal</button>
+    <button id="welcomeEnter" class="welcome-enter" type="button" onclick="var b=document.getElementById('welcomeEnter');if(!window.tasviaWelcomeReady){window.tasviaWelcomeReady=true;if(b)b.textContent='Continue';return;}var w=document.getElementById('welcomeBackdrop');if(w){w.classList.add('hide');w.style.display='none';w.style.pointerEvents='none';}window.tasviaWelcomeEntered=true;setTimeout(function(){if(window.V){} if(typeof V!=='undefined'&&V){openFeeDueAfterWelcome();}else{feeDuePopupPending=true;}},150);">Continue</button>
   </div>
 </div>
 
@@ -186,7 +186,7 @@ const LN={en:"English",te:"తెలుగు",hi:"हिन्दी"};
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const rs=n=>"₹"+Number(n||0).toLocaleString("en-IN");
 const grade=p=>p>=90?"A+":p>=80?"A":p>=70?"B+":p>=60?"B":p>=50?"C":p>=35?"D":"E";
-let V=null,L="en",feeDueScrollDone=false,feeDuePopupShown=false;
+let V=null,L="en",feeDueScrollDone=false,feeDuePopupShown=false,feeDuePopupPending=false;
 function store(k,v){try{v===undefined?localStorage.getItem(k):localStorage.setItem(k,v)}catch(e){}}
 function load(k){try{return localStorage.getItem(k)}catch(e){return null}}
 const mN=m=>{
@@ -275,6 +275,7 @@ function render(){
   renderBodmas();
   if(feeDue && window.tasviaWelcomeEntered){
     showFeeDuePopup(feeDueAmount);
+    feeDuePopupPending=false;
   }
   if(feeDue&&!feeDueScrollDone){
     feeDueScrollDone=true;
@@ -288,7 +289,10 @@ function openFeeDueAfterWelcome(){
   const fs=Array.isArray(V?.fees)?V.fees.filter(f=>f&&typeof f==="object"):[];
   const due=fs.some(f=>{if(["due","part"].includes(f.status))return true;if(f.status==="upcoming"||!f.dueDate)return false;return today()>=String(f.dueDate)});
   const amt=fs.filter(f=>{if(["due","part"].includes(f.status))return true;if(f.status==="upcoming"||!f.dueDate)return false;return today()>=String(f.dueDate)}).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
-  if(due&&amt>0)showFeeDuePopup(amt);
+  if(due&&amt>0){
+    if(window.tasviaWelcomeEntered)showFeeDuePopup(amt);
+    else feeDuePopupPending=true;
+  }
 }
 
 function showFeeDuePopup(amount){
