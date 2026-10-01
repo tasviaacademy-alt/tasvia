@@ -203,6 +203,7 @@ const safeDate=d=>{
 };
 const dN=d=>{const dt=safeDate(d);return dt?dt.toLocaleDateString(T[L].loc,{day:"numeric",month:"short"}):String(d||"—")};
 const dL=d=>{const dt=safeDate(d);return dt?dt.toLocaleDateString(T[L].loc,{weekday:"long",day:"numeric",month:"long"}):String(d||"—")};
+const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
 
 function langs(){document.getElementById("langs").innerHTML=Object.keys(LN).map(k=>`<button class="${k===L?"on":""}" data-l="${k}" aria-pressed="${k===L}">${LN[k]}</button>`).join("");document.documentElement.lang=k2(L)}
 const k2=l=>({en:"en",te:"te",hi:"hi"})[l];
