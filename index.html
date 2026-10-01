@@ -569,7 +569,7 @@ function tStats(tid,month){
 function payList(sid){const p=(S.fees[sid]||{}).payments;if(!p)return [];return (Array.isArray(p)?p:Object.values(p)).filter(Boolean).map((x,i)=>x.id?x:Object.assign({id:"p"+i},x))}
 function paidFor(sid,month){return payList(sid).filter(x=>x.month===month)}
 function feeDueDate(s,month){
-  if(!s?.joined||!/^\\d{4}-\\d{2}-\\d{2}$/.test(s.joined)||!/^\\d{4}-\\d{2}$/.test(month))return null;
+  if(!s?.joined||!/^\d{4}-\d{2}-\d{2}$/.test(s.joined)||!/^\d{4}-\d{2}$/.test(month))return null;
   const day=Number(s.joined.slice(8,10)),[y,mo]=month.split("-").map(Number);
   if(!day||!y||!mo)return null;
   const last=new Date(y,mo,0).getDate();
