@@ -252,7 +252,7 @@ function render(){
   <div id="homeworkSection" class="card"><h2>${esc(t.hw)}</h2>`+(activeHw.length?activeHw.sort((a,b)=>String(b.d).localeCompare(String(a.d))).map(x=>`<div class="hw"><b>${esc(dL(x.d))}</b><div>${esc(x.hw)}</div>${x.note?`<div class="sub">${esc(t.note)}: ${esc(x.note)}</div>`:""}</div>`).join(""):`<p class="sub">${esc(t.noHw)}</p>`)+`</div>`;
   // BODMAS practice
   h+=buildBodmasCard();
-  h+=`<div class="card gk-card">${buildDailyGK()}</div>`;
+  h+=`<div id="gkSection" class="card gk-card">${buildDailyGK()}</div>`;
   h+=`<div class="card ca-card" id="currentAffairsCard">${buildCurrentAffairsCard()}</div>`;
   // attendance
   h+=`<div class="card"><h2>${esc(t.att)} · ${esc(cm?mN(cm):"")}</h2><div class="stats"><div><b class="ok">${a.p}</b><small>${esc(t.present)}</small></div><div><b class="bad">${a.a}</b><small>${esc(t.absent)}</small></div><div><b>${pc!=null?pc+"%":"–"}</b><small>${esc(t.pct)}</small></div></div>`;
