@@ -1,6 +1,7 @@
 name: Deploy TASVIA Staff App to GitHub Pages
 # Deployment validation fixed
 # Force deployment on every main push
+# Parent portal redirect deployed to stable host
 
 on:
   push:
