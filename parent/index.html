@@ -149,6 +149,15 @@ button,.btn,a.btn{visibility:visible;}
 .parent-action:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .parent-action-icon{font-size:24px;line-height:1;flex:0 0 auto}
 #homeworkSection,#bodmasSection,#gkSection,#currentAffairsCard{scroll-margin-top:14px}
+.parent-action{border:1px solid var(--line);font:inherit;cursor:pointer}
+.parent-section-viewer{position:fixed;inset:0;z-index:2000;background:var(--bg);overflow-y:auto;display:none}
+.parent-section-viewer.show{display:block}
+.parent-view-open{overflow:hidden}
+.parent-section-top{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--board);color:var(--chalk);box-shadow:0 2px 12px rgba(0,0,0,.18)}
+.parent-section-close{width:42px;height:42px;border:0;border-radius:12px;background:rgba(255,255,255,.12);color:#fff;font-size:22px;cursor:pointer}
+.parent-section-title{font-weight:700;font-size:1.05rem}
+.parent-section-body{max-width:640px;margin:0 auto;padding:0 14px 40px}
+.parent-section-body > .card{margin-top:14px}
 @media(max-width:360px){.parent-action{min-height:72px;padding:10px 7px;font-size:.9rem}.parent-action-icon{font-size:21px}}
 
 .ca-card{border:1px solid rgba(11,36,85,.22);background:linear-gradient(145deg,var(--card),color-mix(in srgb,var(--board) 4%,var(--card)));overflow:hidden}.ca-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.ca-icon{width:46px;height:46px;border-radius:14px;background:var(--board);color:#fff;display:grid;place-items:center;font-size:23px;flex:0 0 auto}.ca-list{display:grid;gap:9px;margin-top:10px}.ca-item{padding:11px;border:1px solid var(--line);border-radius:12px;background:var(--chip)}.ca-item .ca-cat{display:inline-block;font-size:.75rem;font-weight:700;color:var(--board);background:rgba(11,36,85,.08);border-radius:999px;padding:3px 8px;margin-bottom:5px}.ca-item b{display:block}.ca-item p{margin:4px 0 0;font-size:.92rem}.ca-source{display:block;color:var(--muted);font-size:.76rem;margin-top:6px}.ca-quiz{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}.ca-quiz-item{padding:8px 0;border-bottom:1px dashed var(--line)}.ca-quiz-item:last-child{border-bottom:0}.ca-quiz-item b{display:block}.ca-quiz-item span{display:block;color:var(--p);font-weight:700;font-size:.88rem}
@@ -222,6 +231,28 @@ document.getElementById("langs").addEventListener("click",e=>{const b=e.target.c
 
 function msg(text,retry){document.getElementById("kid").innerHTML="";document.getElementById("main").innerHTML=`<div class="center">${esc(text)}${retry?`<div class="acts" style="justify-content:center"><a class="btn gold" href="" onclick="location.reload();return false">${esc(T[L].retry)}</a></div>`:""}</div>`}
 
+function openParentSection(id){
+  const source=document.getElementById(id);
+  if(!source)return;
+  let layer=document.getElementById("parentSectionViewer");
+  if(!layer){
+    layer=document.createElement("div");
+    layer.id="parentSectionViewer";
+    layer.className="parent-section-viewer";
+    layer.innerHTML='<div class="parent-section-top"><button type="button" class="parent-section-close" aria-label="Close">✕</button><div class="parent-section-title">TASVIA Academy</div></div><div class="parent-section-body" id="parentSectionBody"></div>';
+    document.body.appendChild(layer);
+    layer.querySelector(".parent-section-close").onclick=closeParentSection;
+  }
+  document.getElementById("parentSectionBody").innerHTML=source.outerHTML;
+  layer.classList.add("show");
+  document.body.classList.add("parent-view-open");
+  layer.scrollTop=0;
+}
+function closeParentSection(){
+  const layer=document.getElementById("parentSectionViewer");
+  if(layer)layer.classList.remove("show");
+  document.body.classList.remove("parent-view-open");
+}
 function render(){
   langs();const t=T[L],v=V;if(!v)return;
   const c=v.centre||{},ph=String(c.phone||"").replace(/\D/g,""),ph91=ph.length===10?"91"+ph:ph;
@@ -244,10 +275,10 @@ function render(){
   const archivedHw=allHw.filter(x=>{const tm=Date.parse(String(x.d||""));return Number.isFinite(tm)&&hwNow-tm>=hwWeek;});
   try{const bk=JSON.parse(localStorage.getItem("tasvia-homework-backup")||"[]");const key=String(location.hash||"").replace("#","").trim().toUpperCase()||"portal";localStorage.setItem("tasvia-homework-backup",JSON.stringify([...bk.filter(z=>z.key!==key),{key,backedUpAt:new Date().toISOString(),homework:archivedHw}].slice(-20)))}catch(_){}
   h+=`<div class="parent-action-grid" aria-label="Parent portal quick access">
-  <a class="parent-action" href="#homeworkSection"><span class="parent-action-icon">📚</span><span>Homework</span></a>
-  <a class="parent-action" href="#bodmasSection"><span class="parent-action-icon">🧮</span><span>BODMAS Practice</span></a>
-  <a class="parent-action" href="#gkSection"><span class="parent-action-icon">🧠</span><span>General Knowledge</span></a>
-  <a class="parent-action" href="#currentAffairsCard"><span class="parent-action-icon">📰</span><span>Current Affairs</span></a>
+  <button type="button" class="parent-action" onclick="openParentSection('homeworkSection')"><span class="parent-action-icon">📚</span><span>Homework</span></button>
+  <button type="button" class="parent-action" onclick="openParentSection('bodmasSection')"><span class="parent-action-icon">🧮</span><span>BODMAS Practice</span></button>
+  <button type="button" class="parent-action" onclick="openParentSection('gkSection')"><span class="parent-action-icon">🧠</span><span>General Knowledge</span></button>
+  <button type="button" class="parent-action" onclick="openParentSection('currentAffairsCard')"><span class="parent-action-icon">📰</span><span>Current Affairs</span></button>
 </div>
   <div id="homeworkSection" class="card"><h2>${esc(t.hw)}</h2>`+(activeHw.length?activeHw.sort((a,b)=>String(b.d).localeCompare(String(a.d))).map(x=>`<div class="hw"><b>${esc(dL(x.d))}</b><div>${esc(x.hw)}</div>${x.note?`<div class="sub">${esc(t.note)}: ${esc(x.note)}</div>`:""}</div>`).join(""):`<p class="sub">${esc(t.noHw)}</p>`)+`</div>`;
   // BODMAS practice
