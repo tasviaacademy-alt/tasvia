@@ -469,7 +469,7 @@ showWelcome();
       }catch(err){console.warn("Current affairs render",err)}
     }).catch(()=>{});
     try{
-      if(prev)changes(prev,V).forEach(([a,b],i=>setTimeout(()=>{try{alertParent(a,b)}catch(_){ }},i*1800)));
+      if(prev)changes(prev,V).forEach(([a,b],i)=>setTimeout(()=>{try{alertParent(a,b)}catch(_){ }},i*1800));
     }catch(err){console.warn("Parent update alerts",err)}
     return true;
   }
