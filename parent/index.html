@@ -395,6 +395,7 @@ showWelcome();
     clearTimeout(timer);
     if(!d.exists){msg(T[L].invalid);return}
     const prev=V;V=d.data();if(!saved&&V.lang&&T[V.lang])L=V.lang;render();
+    if(CURRENT_AFFAIRS===null){loadCurrentAffairs().then(()=>{const el=document.getElementById("currentAffairsCard");if(el)el.innerHTML=buildCurrentAffairsCard()}).catch(()=>{})}
     changes(prev,V).forEach(([a,b],i)=>setTimeout(()=>alertParent(a,b),i*1800));
   },e=>{clearTimeout(timer);msg(e&&e.code==="permission-denied"?T[L].invalid:T[L].offline,e&&e.code!=="permission-denied")});
 })();
