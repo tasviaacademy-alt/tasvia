@@ -291,6 +291,11 @@ input:focus,select:focus,textarea:focus{border-color:#9DAAC1!important;box-shado
 .commercial-kpi.warn{border-color:rgba(185,68,62,.3);background:rgba(185,68,62,.035)}
 .commercial-kpi.warn b{color:var(--a)}
 .commercial-strip{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 12px;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.72);font-size:.76rem;color:var(--muted)}
+.commercial-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 14px}
+.commercial-action{border:1px solid var(--line);background:var(--card);border-radius:13px;padding:10px 6px;font-weight:700;font-size:.8rem;color:var(--ink);box-shadow:0 3px 10px rgba(11,36,85,.05)}
+.commercial-action b{display:block;font-size:1.15rem;line-height:1.1;margin-bottom:3px}
+@media(max-width:520px){.commercial-actions{grid-template-columns:repeat(2,1fr)}}
+
 .commercial-strip span{display:inline-flex;align-items:center;gap:4px}
 .commercial-strip b{color:var(--ink)}
 @media(max-width:620px){.commercial-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.commercial-kpi{padding:10px}.commercial-kpi b{font-size:1.2rem}.commercial-strip{font-size:.72rem}}
@@ -879,6 +884,12 @@ function vToday(){
   const testLabel=testCount===1?"test":"tests";
   const markStatus=nm?`<span class="tag due">${nm} not marked</span>`:`<span class="tag ok">Attendance complete</span>`;
   h+=`<div class="commercial-strip"><span>Academic month: <b>${monthName(m)}</b></span><span>${testCount} ${testLabel} recorded</span>${markStatus}</div>`;
+  h+=`<div class="commercial-actions" aria-label="Quick actions">
+    <button class="commercial-action" data-act="tab" data-k="students"><b>👨‍🎓</b>Students</button>
+    ${admin?'<button class="commercial-action" data-act="tab" data-k="fees"><b>💳</b>Fees</button>':""}
+    <button class="commercial-action" data-act="tab" data-k="tests"><b>📝</b>Tests</button>
+    <button class="commercial-action" data-act="tab" data-k="more"><b>⚙️</b>More</button>
+  </div>`;
   h+=`<div class="seg" role="tablist">${[["students","Students"],["teachers","Teachers"],["homework","Homework"]].map(([k,l])=>`<button role="tab" aria-selected="${UI.seg===k}" data-act="seg" data-k="${k}" class="${UI.seg===k?"on":""}">${l}</button>`).join("")}</div>`;
   if(UI.seg==="teachers")return h+vTeacherAtt();
   if(UI.seg==="homework")return h+vHomework();
