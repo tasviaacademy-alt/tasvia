@@ -79,6 +79,7 @@ td.r,th.r{text-align:right;white-space:nowrap}
 .fee-popup .due-label{color:var(--a);font-weight:700;font-size:.95rem}
 .fee-popup .due-amount{font-family:"Baloo 2",sans-serif;font-size:2rem;font-weight:800;color:var(--a);line-height:1.15;margin:7px 0 15px}
 .fee-popup .due-note{color:var(--muted);font-size:.9rem;margin:0 0 16px}
+.fee-popup .fee-popup-skip{display:block;margin:10px auto 0;border:0;background:transparent;color:var(--muted);font:500 14px Hind,sans-serif;cursor:pointer;padding:6px 14px}
 .fee-popup .acts{justify-content:center;margin-top:0}
 .fee-popup .btn{min-width:125px;cursor:pointer;border:0;font:inherit}
 @keyframes feePopupPulse{50%{transform:scale(1.08);box-shadow:0 0 0 9px rgba(196,67,42,.06)}}
@@ -300,10 +301,12 @@ function showFeeDuePopup(amount){
   feeDuePopupShown=true;
   let el=document.getElementById("feePopup");
   if(!el){el=document.createElement("div");el.id="feePopup";document.body.appendChild(el)}
-  el.innerHTML=`<div class="fee-popup-backdrop show" role="dialog" aria-modal="true" aria-label="Fee Due"><div class="fee-popup"><div class="due-amount">Fee Due: ${rs(amount)}</div></div></div>`;
+  el.innerHTML=`<div class="fee-popup-backdrop show" role="dialog" aria-modal="true" aria-label="Fee Due"><div class="fee-popup"><div class="due-amount">Fee Due: ${rs(amount)}</div><button type="button" class="fee-popup-skip">Skip</button></div></div>`;
   const backdrop=el.querySelector(".fee-popup-backdrop");
   const closePopup=()=>{backdrop.classList.remove("show");setTimeout(()=>el.remove(),300)};
-  backdrop.onclick=closePopup;
+  const skip=el.querySelector(".fee-popup-skip");
+  if(skip)skip.onclick=closePopup;
+  backdrop.onclick=(e)=>{if(e.target===backdrop)closePopup()};
 }
 
 
