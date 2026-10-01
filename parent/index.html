@@ -151,7 +151,7 @@ button,.btn,a.btn{visibility:visible;}
     <h2>Welcome to <span>TASVIA</span></h2>
     <p id="welcomeGreeting">Let’s inspire, learn, grow and succeed together.</p>
     <p class="welcome-tag">INSPIRE • LEARN • GROW • SUCCEED</p>
-    <button id="welcomeEnter" class="welcome-enter" type="button" onclick="var w=document.getElementById('welcomeBackdrop');if(w){w.classList.add('hide');w.style.display='none';w.style.pointerEvents='none';}window.tasviaWelcomeEntered=true;setTimeout(function(){if(window.V&&Array.isArray(window.V.fees)){var fs=window.V.fees.filter(function(f){return f&&typeof f==='object'});var due=fs.some(function(f){if(['due','part'].includes(f.status))return true;if(f.status==='upcoming'||!f.dueDate)return false;return today()>=String(f.dueDate)});var amt=fs.filter(function(f){if(['due','part'].includes(f.status))return true;if(f.status==='upcoming'||!f.dueDate)return false;return today()>=String(f.dueDate)}).reduce(function(s,f){return s+Math.max(0,Number(f.fee||0)-Number(f.paid||0))},0);if(due&&amt>0)showFeeDuePopup(amt);}},120);">Enter Parents Portal</button>
+    <button id="welcomeEnter" class="welcome-enter" type="button" onclick="var w=document.getElementById('welcomeBackdrop');if(w){w.classList.add('hide');w.style.display='none';w.style.pointerEvents='none';}window.tasviaWelcomeEntered=true;setTimeout(openFeeDueAfterWelcome,120);">Enter Parents Portal</button>
   </div>
 </div>
 
@@ -267,6 +267,13 @@ function render(){
 }
 
 let actx=null;
+
+function openFeeDueAfterWelcome(){
+  const fs=Array.isArray(V?.fees)?V.fees.filter(f=>f&&typeof f==="object"):[];
+  const due=fs.some(f=>{if(["due","part"].includes(f.status))return true;if(f.status==="upcoming"||!f.dueDate)return false;return today()>=String(f.dueDate)});
+  const amt=fs.filter(f=>{if(["due","part"].includes(f.status))return true;if(f.status==="upcoming"||!f.dueDate)return false;return today()>=String(f.dueDate)}).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
+  if(due&&amt>0)showFeeDuePopup(amt);
+}
 
 function showFeeDuePopup(amount){
   if(feeDuePopupShown)return;
