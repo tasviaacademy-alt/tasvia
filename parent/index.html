@@ -154,10 +154,12 @@ button,.btn,a.btn{visibility:visible;}
 .parent-section-viewer.show{display:block}
 .parent-view-open{overflow:hidden}
 .parent-section-top{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--board);color:var(--chalk);box-shadow:0 2px 12px rgba(0,0,0,.18)}
-.parent-section-close{width:42px;height:42px;border:0;border-radius:12px;background:rgba(255,255,255,.12);color:#fff;font-size:22px;cursor:pointer}
-.parent-section-title{font-weight:700;font-size:1.05rem}
+.parent-section-close{width:42px;height:42px;border:0;border-radius:12px;background:rgba(255,255,255,.12);color:#fff;font-size:22px;cursor:pointer;flex:0 0 auto}
+.parent-section-close:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.parent-section-title{font-weight:700;font-size:1.05rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .parent-section-body{max-width:640px;margin:0 auto;padding:0 14px 40px}
 .parent-section-body > .card{margin-top:14px}
+.parent-section-body > .card:first-child{margin-top:14px}
 @media(max-width:360px){.parent-action{min-height:72px;padding:10px 7px;font-size:.9rem}.parent-action-icon{font-size:21px}}
 
 .ca-card{border:1px solid rgba(11,36,85,.22);background:linear-gradient(145deg,var(--card),color-mix(in srgb,var(--board) 4%,var(--card)));overflow:hidden}.ca-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.ca-icon{width:46px;height:46px;border-radius:14px;background:var(--board);color:#fff;display:grid;place-items:center;font-size:23px;flex:0 0 auto}.ca-list{display:grid;gap:9px;margin-top:10px}.ca-item{padding:11px;border:1px solid var(--line);border-radius:12px;background:var(--chip)}.ca-item .ca-cat{display:inline-block;font-size:.75rem;font-weight:700;color:var(--board);background:rgba(11,36,85,.08);border-radius:999px;padding:3px 8px;margin-bottom:5px}.ca-item b{display:block}.ca-item p{margin:4px 0 0;font-size:.92rem}.ca-source{display:block;color:var(--muted);font-size:.76rem;margin-top:6px}.ca-quiz{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}.ca-quiz-item{padding:8px 0;border-bottom:1px dashed var(--line)}.ca-quiz-item:last-child{border-bottom:0}.ca-quiz-item b{display:block}.ca-quiz-item span{display:block;color:var(--p);font-weight:700;font-size:.88rem}
@@ -231,6 +233,7 @@ document.getElementById("langs").addEventListener("click",e=>{const b=e.target.c
 
 function msg(text,retry){document.getElementById("kid").innerHTML="";document.getElementById("main").innerHTML=`<div class="center">${esc(text)}${retry?`<div class="acts" style="justify-content:center"><a class="btn gold" href="" onclick="location.reload();return false">${esc(T[L].retry)}</a></div>`:""}</div>`}
 
+let parentSectionPlaceholder=null;
 function openParentSection(id){
   const source=document.getElementById(id);
   if(!source)return;
@@ -239,17 +242,35 @@ function openParentSection(id){
     layer=document.createElement("div");
     layer.id="parentSectionViewer";
     layer.className="parent-section-viewer";
-    layer.innerHTML='<div class="parent-section-top"><button type="button" class="parent-section-close" aria-label="Close">✕</button><div class="parent-section-title">TASVIA Academy</div></div><div class="parent-section-body" id="parentSectionBody"></div>';
+    layer.innerHTML='<div class="parent-section-top"><button type="button" class="parent-section-close" aria-label="Close section">‹</button><div class="parent-section-title">TASVIA Academy</div></div><div class="parent-section-body" id="parentSectionBody"></div>';
     document.body.appendChild(layer);
     layer.querySelector(".parent-section-close").onclick=closeParentSection;
+    layer.addEventListener("click",e=>{if(e.target===layer)closeParentSection()});
   }
-  document.getElementById("parentSectionBody").innerHTML=source.outerHTML;
+  if(parentSectionPlaceholder)closeParentSection();
+  parentSectionPlaceholder=document.createComment("TASVIA_PARENT_SECTION");
+  source.parentNode.insertBefore(parentSectionPlaceholder,source);
+  document.getElementById("parentSectionBody").appendChild(source);
+  const heading=source.querySelector("h2");
+  layer.querySelector(".parent-section-title").textContent=heading?heading.textContent.trim():"TASVIA Academy";
   layer.classList.add("show");
   document.body.classList.add("parent-view-open");
   layer.scrollTop=0;
+  const closeBtn=layer.querySelector(".parent-section-close");
+  if(closeBtn)setTimeout(()=>closeBtn.focus(),0);
 }
 function closeParentSection(){
   const layer=document.getElementById("parentSectionViewer");
+  if(parentSectionPlaceholder){
+    parentSectionPlaceholder.parentNode.insertBefore(document.getElementById(parentSectionPlaceholder.previousSibling?.id||"__none__")||document.createElement("span"),parentSectionPlaceholder);
+  }
+  const body=document.getElementById("parentSectionBody");
+  const moved=body&&body.firstElementChild;
+  if(moved&&parentSectionPlaceholder){
+    parentSectionPlaceholder.parentNode.insertBefore(moved,parentSectionPlaceholder);
+    parentSectionPlaceholder.remove();
+    parentSectionPlaceholder=null;
+  }
   if(layer)layer.classList.remove("show");
   document.body.classList.remove("parent-view-open");
 }
