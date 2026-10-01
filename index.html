@@ -568,11 +568,22 @@ function tStats(tid,month){
 /* Payments are a map keyed by id (older array form still read). */
 function payList(sid){const p=(S.fees[sid]||{}).payments;if(!p)return [];return (Array.isArray(p)?p:Object.values(p)).filter(Boolean).map((x,i)=>x.id?x:Object.assign({id:"p"+i},x))}
 function paidFor(sid,month){return payList(sid).filter(x=>x.month===month)}
+function feeDueDate(s,month){
+  if(!s?.joined||!/^\\d{4}-\\d{2}-\\d{2}$/.test(s.joined)||!/^\\d{4}-\\d{2}$/.test(month))return null;
+  const day=Number(s.joined.slice(8,10)),[y,mo]=month.split("-").map(Number);
+  if(!day||!y||!mo)return null;
+  const last=new Date(y,mo,0).getDate();
+  return month+"-"+String(Math.min(day,last)).padStart(2,"0");
+}
 function feeStatus(s,month){
   const paid=paidFor(s.id,month).reduce((a,b)=>a+ +b.amount,0);
-  if(!s.fee)return {k:"none",paid};
-  if(paid>=s.fee)return {k:"paid",paid,left:0};
-  return {k:paid?"part":"due",paid,left:s.fee-paid};
+  const dueDate=feeDueDate(s,month);
+  if(!s.fee)return {k:"none",paid,dueDate};
+  if(paid>=s.fee)return {k:"paid",paid,left:0,dueDate};
+  const currentMonth=today().slice(0,7);
+  const dueNow=!dueDate||month<currentMonth||(month===currentMonth&&today()>=dueDate);
+  if(!dueNow)return {k:"upcoming",paid,left:s.fee-paid,dueDate};
+  return {k:paid?"part":"due",paid,left:s.fee-paid,dueDate};
 }
 function enrolledIn(s,month){return !s.joined||s.joined.slice(0,7)<=month}
 const active=s=>s.active!==false;
@@ -980,12 +991,12 @@ function vStudents(){
 }
 function vFees(){
   const m=UI.feeMonth,list=byBatch(studentsOf(UI.cls)).filter(s=>s.fee>0&&enrolledIn(s,m));
-  let exp=0,col=0;list.forEach(s=>{exp+=+s.fee;col+=Math.min(feeStatus(s,m).paid,+s.fee)});
+  let exp=0,col=0;list.forEach(s=>{const fs=feeStatus(s,m);if(fs.k!=="upcoming"){exp+=+s.fee;col+=Math.min(fs.paid,+s.fee)}});
   let h=`<div class="hd"><div><h2>Fees</h2><div class="sub">${monthName(m)}</div></div><input type="month" id="feeMonth" value="${m}" aria-label="Month"></div>`;
   if(!Object.keys(S.students).length)return h+noStudents();
-  const due=list.filter(s=>feeStatus(s,m).k!=="paid"),paid=list.filter(s=>feeStatus(s,m).k==="paid");
+  const due=list.filter(s=>["due","part"].includes(feeStatus(s,m).k)),paid=list.filter(s=>feeStatus(s,m).k==="paid"),upcoming=list.filter(s=>feeStatus(s,m).k==="upcoming");
   h+=`<div class="board"><div class="pp"><b style="font-size:1.5rem">${rs(col)}</b><small>Collected</small></div><div class="aa"><b style="font-size:1.5rem">${rs(Math.max(exp-col,0))}</b><small>Pending</small></div><div><b>${due.length}</b><small>Students due</small></div></div>`+classChips("cls")+batchChips();
-  const row=(s,isPaid)=>{const fs=feeStatus(s,m);return `<div class="item"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)} · ${rs(s.fee)}/month${fs.k==="part"?` · paid ${rs(fs.paid)}, <b>${rs(fs.left)} left</b>`:""}</div></div>${isPaid?`<span class="tag ok">Paid</span>`:`<button class="btn sm gold" data-act="pay" data-id="${s.id}">Record</button>`}</div>`};
+  const row=(s,isPaid)=>{const fs=feeStatus(s,m);const due=fs.dueDate?` · due ${nice(fs.dueDate)}`:"";const status=fs.k==="paid"?`<span class="tag ok">Paid</span>`:fs.k==="upcoming"?`<span class="tag n">Upcoming · due ${nice(fs.dueDate)}</span>`:`<button class="btn sm gold" data-act="pay" data-id="${s.id}">Record</button>`;return `<div class="item"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)} · ${rs(s.fee)}/month${fs.k==="part"?` · paid ${rs(fs.paid)}, <b>${rs(fs.left)} left</b>`:""}${due}</div></div>${status}</div>`};
   if(due.length)h+=`<div class="row" style="justify-content:space-between;margin:14px 0 8px"><h3>Due (${due.length})</h3><button class="btn sm ghost" data-act="remindAll">Fee reminders</button></div><div class="list">${due.map(s=>row(s,0)).join("")}</div>`;
   if(paid.length)h+=`<h3 style="margin:18px 0 8px">Paid (${paid.length})</h3><div class="list">${paid.map(s=>row(s,1)).join("")}</div>`;
   if(!list.length)h+=`<div class="empty">Set a monthly fee on a student's profile to track it here.</div>`;
