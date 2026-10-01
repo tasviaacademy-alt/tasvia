@@ -259,14 +259,12 @@ function openParentSection(id){
   const closeBtn=layer.querySelector(".parent-section-close");
   if(closeBtn)setTimeout(()=>closeBtn.focus(),0);
 }
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){const layer=document.getElementById("parentSectionViewer");if(layer&&layer.classList.contains("show"))closeParentSection()}});
 function closeParentSection(){
   const layer=document.getElementById("parentSectionViewer");
-  if(parentSectionPlaceholder){
-    parentSectionPlaceholder.parentNode.insertBefore(document.getElementById(parentSectionPlaceholder.previousSibling?.id||"__none__")||document.createElement("span"),parentSectionPlaceholder);
-  }
   const body=document.getElementById("parentSectionBody");
   const moved=body&&body.firstElementChild;
-  if(moved&&parentSectionPlaceholder){
+  if(moved&&parentSectionPlaceholder&&parentSectionPlaceholder.parentNode){
     parentSectionPlaceholder.parentNode.insertBefore(moved,parentSectionPlaceholder);
     parentSectionPlaceholder.remove();
     parentSectionPlaceholder=null;
