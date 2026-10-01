@@ -161,9 +161,10 @@ button,.btn,a.btn{visibility:visible;}
 (function(){
   try{
     if("serviceWorker" in navigator){
-      navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){r.unregister()})}).catch(function(){});
+      navigator.serviceWorker.getRegistrations().then(function(rs){
+        rs.forEach(function(r){try{r.update()}catch(_){}});
+      }).catch(function(){});
     }
-    if(window.caches){caches.keys().then(function(ks){ks.forEach(function(k){caches.delete(k)})}).catch(function(){});}
   }catch(e){}
 })();
 </script>
@@ -415,8 +416,10 @@ function buildCurrentAffairsCard(){
   const t=CA_LABELS[L]||CA_LABELS.en;
   if(!CURRENT_AFFAIRS)return '<div class="ca-head"><div><h2>📰 '+esc(t.title)+'</h2><p class="sub" style="margin:3px 0 0">'+esc(t.sub)+'</p></div><div class="ca-icon">📰</div></div><p class="sub" style="margin:10px 0 0">Loading today\'s current affairs…</p>';
   let h='<div class="ca-head"><div><h2>📰 '+esc(t.title)+'</h2><p class="sub" style="margin:3px 0 0">'+esc(t.sub)+'</p></div><div class="ca-icon">📰</div></div><p class="sub" style="margin:10px 0 0"><b>'+esc(t.today)+' · '+esc(CURRENT_AFFAIRS.date||"")+'</b></p><div class="ca-list">';
-  (CURRENT_AFFAIRS.items||[]).forEach(x=>{h+='<div class="ca-item"><span class="ca-cat">'+esc(x.icon||"•")+' '+esc(x.category||"Current Affairs")+'</span><b>'+esc(x.title||"")+'</b><p>'+esc(x.text||"")+'</p>'+(x.source?'<span class="ca-source">Source: '+esc(x.source)+'</span>':"")+'</div>';});
-  if((CURRENT_AFFAIRS.quiz||[]).length){h+='<div class="ca-quiz"><b>'+esc(t.quiz)+'</b>'+(CURRENT_AFFAIRS.quiz||[]).map((q,i)=>'<div class="ca-quiz-item"><b>'+String(i+1)+'. '+esc(q.q)+'</b><span>Answer: '+esc(q.a)+'</span></div>').join("")+'</div>';}
+  const caItems=Array.isArray(CURRENT_AFFAIRS.items)?CURRENT_AFFAIRS.items.filter(x=>x&&typeof x==="object"):[];
+  const caQuiz=Array.isArray(CURRENT_AFFAIRS.quiz)?CURRENT_AFFAIRS.quiz.filter(q=>q&&typeof q==="object"):[];
+  caItems.forEach(x=>{h+='<div class="ca-item"><span class="ca-cat">'+esc(x.icon||"•")+' '+esc(x.category||"Current Affairs")+'</span><b>'+esc(x.title||"")+'</b><p>'+esc(x.text||"")+'</p>'+(x.source?'<span class="ca-source">Source: '+esc(x.source)+'</span>':"")+'</div>';});
+  if(caQuiz.length){h+='<div class="ca-quiz"><b>'+esc(t.quiz)+'</b>'+caQuiz.map((q,i)=>'<div class="ca-quiz-item"><b>'+String(i+1)+'. '+esc(q.q||"")+'</b><span>Answer: '+esc(q.a||"")+'</span></div>').join("")+'</div>';}
   return h+'</div>';
 }
 async function loadCurrentAffairs(){try{const r=await fetch('/current-affairs.json',{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);CURRENT_AFFAIRS=await r.json();}catch(e){console.warn('Current affairs unavailable',e);CURRENT_AFFAIRS={date:new Date().toISOString().slice(0,10),items:[],quiz:[]};}}
@@ -449,15 +452,25 @@ showWelcome();
     });
   }
   function applyData(data){
-    if(!data){msg(T[L].invalid,true);return false}
+    if(!data||typeof data!=="object"){msg(T[L].invalid,true);return false}
     const prev=V;V=data;
-    if(!saved&&V.lang&&T[V.lang])L=V.lang;
-    render();
+    try{
+      if(!saved&&V.lang&&T[V.lang])L=V.lang;
+      render();
+    }catch(err){
+      console.error("TASVIA Parent Portal render/update error:",err);
+      msg("TASVIA Parent Portal opened, but some student data could not be displayed. Please tap Try again.",true);
+      return false;
+    }
     if(CURRENT_AFFAIRS===null)loadCurrentAffairs().then(()=>{
-      const el=document.getElementById("currentAffairsCard");
-      if(el)el.innerHTML=buildCurrentAffairsCard();
+      try{
+        const el=document.getElementById("currentAffairsCard");
+        if(el)el.innerHTML=buildCurrentAffairsCard();
+      }catch(err){console.warn("Current affairs render",err)}
     }).catch(()=>{});
-    if(prev)changes(prev,V).forEach(([a,b],i)=>setTimeout(()=>alertParent(a,b),i*1800));
+    try{
+      if(prev)changes(prev,V).forEach(([a,b],i=>setTimeout(()=>{try{alertParent(a,b)}catch(_){ }},i*1800)));
+    }catch(err){console.warn("Parent update alerts",err)}
     return true;
   }
 
