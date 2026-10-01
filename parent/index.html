@@ -405,14 +405,35 @@ showWelcome();
     const db=firebase.firestore();
     const ref=db.doc("parentView/"+code);
     let done=false;
-    const fail=setTimeout(()=>{if(!done){done=true;msg("Unable to connect to TASVIA Parent Portal. Please check internet and tap Try again.",true)}},8000);
-    ref.get({source:"server"}).then(snap=>{
-      if(done)return; done=true; clearTimeout(fail);
+    let unsub=null;
+    const finish=snap=>{
+      if(done)return;
+      done=true; clearTimeout(fail);
       if(!snap.exists){msg(T[L].invalid,true);return}
-      V=snap.data();if(!saved&&V.lang&&T[V.lang])L=V.lang;render();
-      if(CURRENT_AFFAIRS===null)loadCurrentAffairs().then(()=>{const el=document.getElementById("currentAffairsCard");if(el)el.innerHTML=buildCurrentAffairsCard()}).catch(()=>{});
-      ref.onSnapshot(d=>{if(d.exists){const prev=V;V=d.data();render();changes(prev,V).forEach(([a,b],i)=>setTimeout(()=>alertParent(a,b),i*1800));}},()=>{});
-    }).catch(e=>{if(!done){done=true;clearTimeout(fail);console.error(e);msg(T[L].offline,true)}})
+      V=snap.data();
+      if(!saved&&V.lang&&T[V.lang])L=V.lang;
+      render();
+      if(CURRENT_AFFAIRS===null)loadCurrentAffairs().then(()=>{
+        const el=document.getElementById("currentAffairsCard");
+        if(el)el.innerHTML=buildCurrentAffairsCard();
+      }).catch(()=>{});
+      unsub=ref.onSnapshot(d=>{
+        if(!d.exists)return;
+        const prev=V; V=d.data(); render();
+        changes(prev,V).forEach(([a,b],i)=>setTimeout(()=>alertParent(a,b),i*1800));
+      },e=>console.warn("TASVIA live sync unavailable:",e));
+    };
+    const fail=setTimeout(()=>{
+      if(!done){
+        done=true;
+        if(unsub)unsub();
+        msg("TASVIA Parent Portal could not connect. Please check your internet connection and tap Try Again.",true);
+      }
+    },10000);
+    ref.get().then(finish).catch(e=>{
+      console.error("TASVIA parent data error:",e);
+      if(!done){clearTimeout(fail);done=true;msg(T[L].offline,true)}
+    });
   }catch(e){console.error(e);msg(T[L].offline,true)}
 })();
 if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("/sw.js",{scope:"/"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
