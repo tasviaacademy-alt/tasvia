@@ -188,9 +188,20 @@ const grade=p=>p>=90?"A+":p>=80?"A":p>=70?"B+":p>=60?"B":p>=50?"C":p>=35?"D":"E"
 let V=null,L="en",feeDueScrollDone=false,feeDuePopupShown=false;
 function store(k,v){try{v===undefined?localStorage.getItem(k):localStorage.setItem(k,v)}catch(e){}}
 function load(k){try{return localStorage.getItem(k)}catch(e){return null}}
-const mN=m=>{const [y,mo]=m.split("-");return new Date(+y,+mo-1,1).toLocaleDateString(T[L].loc,{month:"long",year:"numeric"})};
-const dN=d=>new Date(d+"T00:00").toLocaleDateString(T[L].loc,{day:"numeric",month:"short"});
-const dL=d=>new Date(d+"T00:00").toLocaleDateString(T[L].loc,{weekday:"long",day:"numeric",month:"long"});
+const mN=m=>{
+  const s=String(m||"");
+  const z=/^(\d{4})-(\d{1,2})$/.exec(s);
+  if(!z)return s||"—";
+  const dt=new Date(Number(z[1]),Number(z[2])-1,1);
+  return Number.isNaN(dt.getTime())?s:dt.toLocaleDateString(T[L].loc,{month:"long",year:"numeric"});
+};
+const safeDate=d=>{
+  const s=String(d||"");
+  const dt=new Date(/^\d{4}-\d{2}-\d{2}$/.test(s)?s+"T00:00":s);
+  return Number.isNaN(dt.getTime())?null:dt;
+};
+const dN=d=>{const dt=safeDate(d);return dt?dt.toLocaleDateString(T[L].loc,{day:"numeric",month:"short"}):String(d||"—")};
+const dL=d=>{const dt=safeDate(d);return dt?dt.toLocaleDateString(T[L].loc,{weekday:"long",day:"numeric",month:"long"}):String(d||"—")};
 
 function langs(){document.getElementById("langs").innerHTML=Object.keys(LN).map(k=>`<button class="${k===L?"on":""}" data-l="${k}" aria-pressed="${k===L}">${LN[k]}</button>`).join("");document.documentElement.lang=k2(L)}
 const k2=l=>({en:"en",te:"te",hi:"hi"})[l];
