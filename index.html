@@ -784,7 +784,13 @@ async function syncPV(){
       let code=st.pcode;
       if(!code){if(!active(st))continue;code=newCode();S.students[id]=Object.assign({},st,{pcode:code});await db.doc("students/"+id).set({pcode:code},{merge:true})}
       const v=buildParentView({id,...st}),j=stable(v);
-      const hj=hash(j);if(pvCache[code]!==hj){await db.doc("parentView/"+code).set(Object.assign({},v,{updated:Date.now()}),{merge:true});pvCache[code]=hj;pvSave()}
+      const hj=hash(j);
+      let exists=false;
+      try{const snap=await db.doc("parentView/"+code).get();exists=snap.exists}catch(e){console.warn("parent record check",code,e)}
+      if(!exists||pvCache[code]!==hj){
+        await db.doc("parentView/"+code).set(Object.assign({},v,{updated:Date.now()}),{merge:true});
+        pvCache[code]=hj;pvSave();
+      }
     }
   }catch(e){console.warn("parent sync",e)}
   pvBusy=false;
