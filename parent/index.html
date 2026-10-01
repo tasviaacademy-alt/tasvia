@@ -148,7 +148,7 @@ button,.btn,a.btn{visibility:visible;}
 .parent-action:active{transform:scale(.98)}
 .parent-action:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .parent-action-icon{font-size:24px;line-height:1;flex:0 0 auto}
-#homeworkSection,#bodmasSection,#gkSection,#currentAffairsCard{scroll-margin-top:14px}
+#homeworkSection,#bodmasSection,#gkSection,#currentAffairsCard,#attendanceSection,#testsSection,#feesSection,#contactSection{scroll-margin-top:14px}
 .parent-action{border:1px solid var(--line);font:inherit;cursor:pointer}
 .parent-section-viewer{position:fixed;inset:0;z-index:2000;background:var(--bg);overflow-y:auto;display:none}
 .parent-section-viewer.show{display:block}
@@ -279,6 +279,10 @@ function render(){
   <button type="button" class="parent-action" onclick="openParentSection('bodmasSection')"><span class="parent-action-icon">🧮</span><span>BODMAS Practice</span></button>
   <button type="button" class="parent-action" onclick="openParentSection('gkSection')"><span class="parent-action-icon">🧠</span><span>General Knowledge</span></button>
   <button type="button" class="parent-action" onclick="openParentSection('currentAffairsCard')"><span class="parent-action-icon">📰</span><span>Current Affairs</span></button>
+  <button type="button" class="parent-action" onclick="openParentSection('attendanceSection')"><span class="parent-action-icon">📅</span><span>Attendance</span></button>
+  <button type="button" class="parent-action" onclick="openParentSection('testsSection')"><span class="parent-action-icon">📝</span><span>Tests</span></button>
+  <button type="button" class="parent-action" onclick="openParentSection('feesSection')"><span class="parent-action-icon">💳</span><span>Fees</span></button>
+  <button type="button" class="parent-action" onclick="openParentSection('contactSection')"><span class="parent-action-icon">📞</span><span>Contact</span></button>
 </div>
   <div id="homeworkSection" class="card"><h2>${esc(t.hw)}</h2>`+(activeHw.length?activeHw.sort((a,b)=>String(b.d).localeCompare(String(a.d))).map(x=>`<div class="hw"><b>${esc(dL(x.d))}</b><div>${esc(x.hw)}</div>${x.note?`<div class="sub">${esc(t.note)}: ${esc(x.note)}</div>`:""}</div>`).join(""):`<p class="sub">${esc(t.noHw)}</p>`)+`</div>`;
   // BODMAS practice
@@ -286,7 +290,7 @@ function render(){
   h+=`<div id="gkSection" class="card gk-card">${buildDailyGK()}</div>`;
   h+=`<div class="card ca-card" id="currentAffairsCard">${buildCurrentAffairsCard()}</div>`;
   // attendance
-  h+=`<div class="card"><h2>${esc(t.att)} · ${esc(cm?mN(cm):"")}</h2><div class="stats"><div><b class="ok">${a.p}</b><small>${esc(t.present)}</small></div><div><b class="bad">${a.a}</b><small>${esc(t.absent)}</small></div><div><b>${pc!=null?pc+"%":"–"}</b><small>${esc(t.pct)}</small></div></div>`;
+  h+=`<div id="attendanceSection" class="card"><h2>${esc(t.att)} · ${esc(cm?mN(cm):"")}</h2><div class="stats"><div><b class="ok">${a.p}</b><small>${esc(t.present)}</small></div><div><b class="bad">${a.a}</b><small>${esc(t.absent)}</small></div><div><b>${pc!=null?pc+"%":"–"}</b><small>${esc(t.pct)}</small></div></div>`;
   if(pc!=null)h+=`<div class="bar"><i style="width:${pc}%"></i></div>`;
   h+=`<p class="sub" style="margin:6px 0 0">${esc(t.year)}: ${ypc!=null?`${yr.p}/${yt} ${esc(t.days)} (${ypc}%)`:"–"}</p>`;
   if(months.length>1)h+=`<div class="chips" style="margin-top:8px">${months.slice(1).map(m=>{const x=v.att[m],tt=x.p+x.a;return `<span>${esc(mN(m))}: ${tt?Math.round(x.p*100/tt)+"%":"–"}</span>`}).join("")}</div>`;
@@ -294,7 +298,7 @@ function render(){
   h+=`<p class="sub" style="margin:10px 0 4px"><b>${esc(t.abs)}</b></p>`+(absDays.length?`<div class="chips">${absDays.map(d=>`<span class="bad">${esc(dN(d))}</span>`).join("")}</div>`:`<p class="sub" style="margin:0">${esc(t.none)} ✓</p>`)+`</div>`;
   // tests
   const tests=Array.isArray(v.tests)?v.tests.filter(x=>x&&typeof x==="object").map(x=>Object.assign({},x,{m:Number(x.m)||0,x:Number(x.x)||0,s:String(x.s||""),n:String(x.n||""),d:String(x.d||"")})):[];
-  h+=`<div class="card"><h2>${esc(t.tests)}</h2>`;
+  h+=`<div id="testsSection" class="card"><h2>${esc(t.tests)}</h2>`;
   if(tests.length){
     const got=tests.reduce((s,x)=>s+x.m,0),mx=tests.reduce((s,x)=>s+x.x,0),op=mx?Math.round(got*100/mx):0;
     h+=`<p class="sub" style="margin:0 0 6px">${esc(t.overall)}: <b style="color:var(--ink)">${op}%</b> · ${esc(t.grade)} <b class="gold">${grade(op)}</b></p><table><tr><th>${esc(t.test)}</th><th class="r">${esc(t.marks)}</th><th class="r">${esc(t.grade)}</th></tr>`+
@@ -307,14 +311,14 @@ function render(){
   const feeDue=fees.some(f=>{if(["due","part"].includes(f.status))return true;if(f.status==="upcoming")return false;if(!f.dueDate)return false;return today()>=String(f.dueDate);});
   const feeDueAmount=fees.filter(f=>{if(["due","part"].includes(f.status))return true;if(f.status==="upcoming")return false;if(!f.dueDate)return false;return today()>=String(f.dueDate);}).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
   if(fees.length||pays.length){
-    h+=`<div id="feeCard" class="card${feeDue?" fee-due":""}"><h2>${esc(t.fees)}</h2>${feeDue?`<div class="fee-alert"><span class="dot"></span><span>${esc(t.due)} · ${esc(L==="te"?"ఫీజు చెల్లింపు పెండింగ్‌లో ఉంది":L==="hi"?"फ़ीस भुगतान बाकी है":"Fee payment pending")}</span></div>`:""}`;
+    h+=`<div id="feesSection" class="card${feeDue?" fee-due":""}"><h2>${esc(t.fees)}</h2>${feeDue?`<div class="fee-alert"><span class="dot"></span><span>${esc(t.due)} · ${esc(L==="te"?"ఫీజు చెల్లింపు పెండింగ్‌లో ఉంది":L==="hi"?"फ़ीस भुगतान बाकी है":"Fee payment pending")}</span></div>`:""}`;
     if(fees.length)h+=`<table><tr><th>${esc(t.month)}</th><th class="r">${esc(t.status)}</th></tr>`+fees.map(f=>{const st=f.status==="upcoming"?`<span class="tag">${esc(t.upcoming)} · ${esc(t.dueOn)} ${esc(dN(f.dueDate))}</span>`:f.paid>=f.fee?`<span class="tag ok">${esc(t.paid)}</span>`:f.paid>0?`<span class="tag gold">${esc(t.part)} · ${esc(t.due)} ${rs(f.fee-f.paid)}</span>`:`<span class="tag bad">${esc(t.due)} ${rs(f.fee)}</span>`;return `<tr><td>${esc(mN(f.m))}<br><span class="sub">${esc(t.dueOn)}: ${esc(dN(f.dueDate))}</span></td><td class="r">${st}</td></tr>`}).join("")+`</table>`;
     if(pays.length)h+=`<p class="sub" style="margin:12px 0 4px"><b>${esc(t.pays)}</b></p><table>`+pays.map(p=>`<tr><td>${esc(dN(p.d))}<br><span class="sub">${esc(mN(p.m))}</span></td><td class="r">${rs(p.a)}<br><span class="sub">${esc(p.mode||"")}</span></td></tr>`).join("")+`</table>`;
     h+=`</div>`;
     if(feeDue&&feeDueAmount>0){const q="pa=badavathpremdas2@ybl&pn=TASVIA%20Academy&am="+encodeURIComponent(feeDueAmount.toFixed(2))+"&cu=INR&tn="+encodeURIComponent("Fee payment - "+(v.name||"Student"));const upi="upi://pay?"+q;h+=`<div class="acts" style="justify-content:center;margin-top:14px"><div style="width:100%;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--chip);text-align:center"><b>UPI Payment</b><div class="sub">Scan the QR code with any UPI app</div><img alt="UPI QR Code" style="width:220px;height:220px;display:block;margin:12px auto;background:#fff;padding:8px;border-radius:12px" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(upi)}"><div class="upi-id">UPI ID: <b>badavathpremdas2@ybl</b></div><button class="btn" type="button" style="border:0;cursor:pointer;margin-top:8px" onclick="navigator.clipboard&&navigator.clipboard.writeText('badavathpremdas2@ybl').then(()=>this.textContent='✓ UPI ID Copied').catch(()=>alert('UPI ID: badavathpremdas2@ybl'))">📋 Copy UPI ID</button><p class="sub" style="margin:10px 0 0">Amount: <b>${rs(feeDueAmount)}</b></p><p class="sub" style="margin:8px 0 0">If this page is open on your phone, use another phone to scan the QR, or copy the UPI ID and pay manually in your UPI app.</p><div class="acts" style="justify-content:center;margin-top:10px"><a class="btn gold" target="_blank" rel="noopener" href="https://wa.me/${esc(ph91)}?text=${encodeURIComponent("I have completed the TASVIA Academy fee payment for "+(v.name||"my child")+". I am sending the payment screenshot for verification. Please update the fee status after verification.")}">📸 ${esc(t.sendScreenshot)}</a></div></div></div>`;}
   }
   // contact
-  h+=`<div class="card"><h2>${esc(t.contact)}</h2><p style="margin:0">${esc(c.name||"TASVIA Academy")}</p>${c.timings?`<p class="sub" style="margin:4px 0 0">${esc(t.timings)}: ${esc(c.timings)}</p>`:""}${c.address?`<p class="sub" style="margin:4px 0 0">${esc(c.address)}</p>`:""}
+  h+=`<div id="contactSection" class="card"><h2>${esc(t.contact)}</h2><p style="margin:0">${esc(c.name||"TASVIA Academy")}</p>${c.timings?`<p class="sub" style="margin:4px 0 0">${esc(t.timings)}: ${esc(c.timings)}</p>`:""}${c.address?`<p class="sub" style="margin:4px 0 0">${esc(c.address)}</p>`:""}
     <div class="acts">${ph?`<a class="btn gold" href="tel:${esc(ph)}">📞 ${esc(t.call)}</a><a class="btn" target="_blank" rel="noopener" href="https://wa.me/${esc(ph91)}">💬 ${esc(t.wa)}</a>`:""}</div></div>`;
   const alertsOn=("Notification" in window&&Notification.permission==="granted")||(function(){try{return localStorage.getItem("tasvia-parent-alerts")==="1"}catch(e){return false}})();
   h+=`<div class="acts" style="justify-content:center">${alertsOn?`<span class="sub">${esc(t.alertsDone)}</span>`:`<button id="alertBtn" class="btn gold" style="border:0;font:inherit;font-weight:600;cursor:pointer">${esc(t.alertsOn)}</button>`}</div>`;
