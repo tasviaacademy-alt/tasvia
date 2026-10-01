@@ -380,10 +380,9 @@ function buildCurrentAffairsCard(){
   if((CURRENT_AFFAIRS.quiz||[]).length){h+='<div class="ca-quiz"><b>'+esc(t.quiz)+'</b>'+(CURRENT_AFFAIRS.quiz||[]).map((q,i)=>'<div class="ca-quiz-item"><b>'+String(i+1)+'. '+esc(q.q)+'</b><span>Answer: '+esc(q.a)+'</span></div>').join("")+'</div>';}
   return h+'</div>';
 }
-async function loadCurrentAffairs(){try{const r=await fetch('/current-affairs.json',{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);CURRENT_AFFAIRS=await r.json();render();}catch(e){console.warn('Current affairs unavailable',e);CURRENT_AFFAIRS={date:new Date().toISOString().slice(0,10),items:[],quiz:[]};render();}}
+async function loadCurrentAffairs(){try{const r=await fetch('/current-affairs.json',{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);CURRENT_AFFAIRS=await r.json();}catch(e){console.warn('Current affairs unavailable',e);CURRENT_AFFAIRS={date:new Date().toISOString().slice(0,10),items:[],quiz:[]};}}
 
 showWelcome();
-loadCurrentAffairs();
 (function start(){
   const saved=load("tasvia-parent-lang");if(saved&&T[saved])L=saved;langs();
   let code=(location.hash||"").replace("#","").trim().toUpperCase();
