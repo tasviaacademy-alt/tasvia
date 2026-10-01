@@ -151,7 +151,7 @@ button,.btn,a.btn{visibility:visible;}
     <h2>Welcome to <span>TASVIA</span></h2>
     <p id="welcomeGreeting">Let’s inspire, learn, grow and succeed together.</p>
     <p class="welcome-tag">INSPIRE • LEARN • GROW • SUCCEED</p>
-    <button id="welcomeEnter" class="welcome-enter" type="button" onclick="var b=document.getElementById('welcomeEnter');if(!window.tasviaWelcomeReady){window.tasviaWelcomeReady=true;if(b)b.textContent='Continue';return;}var w=document.getElementById('welcomeBackdrop');if(w){w.classList.add('hide');w.style.display='none';w.style.pointerEvents='none';}window.tasviaWelcomeEntered=true;setTimeout(function(){if(window.V){} if(typeof V!=='undefined'&&V){openFeeDueAfterWelcome();}else{feeDuePopupPending=true;}},150);">Continue</button>
+    <button id="welcomeEnter" class="welcome-enter" type="button" onclick="var b=document.getElementById('welcomeEnter');if(!window.tasviaWelcomeReady){window.tasviaWelcomeReady=true;if(b)b.textContent='Continue';return;}var w=document.getElementById('welcomeBackdrop');if(w){w.classList.add('hide');w.style.display='none';w.style.pointerEvents='none';}window.tasviaWelcomeEntered=true;setTimeout(function(){if(typeof V!=='undefined'&&V){openFeeDueAfterWelcome();}else{feeDuePopupPending=true;}},150);">Enter Parents Portal</button>
   </div>
 </div>
 
@@ -175,7 +175,7 @@ button,.btn,a.btn{visibility:visible;}
 <script>
 
 function closeWelcome(){const b=document.getElementById("welcomeBackdrop");if(b){b.classList.add("hide");b.setAttribute("aria-hidden","true");b.style.pointerEvents="none";}document.body.classList.remove("welcome-open");}
-function showWelcome(){const b=document.getElementById("welcomeBackdrop");if(b){b.style.display="flex";b.classList.remove("hide");b.setAttribute("aria-hidden","false");}}
+function showWelcome(){const b=document.getElementById("welcomeBackdrop");if(b){b.style.display="flex";b.classList.remove("hide");b.setAttribute("aria-hidden","false");}window.tasviaWelcomeReady=false;window.tasviaWelcomeEntered=false;var btn=document.getElementById("welcomeEnter");if(btn)btn.textContent="Enter Parents Portal";}
 function interLabel(c,y1,y2){const m=/^Inter-(1|2)(?: (.+))?$/.exec(c);if(!m)return null;return (m[1]==="1"?y1:y2)+(m[2]?" · "+m[2]:"")}
 const T={
  en:{loc:"en-IN",newHw:"New homework",newTest:"New test marks",absentToday:"Marked absent",feePaid:"Fee payment recorded",alertsOn:"🔔 Turn on alerts",alertsDone:"🔔 Alerts are on while this page is open",cls:c=>/^\d+$/.test(c)?"Class "+c:(interLabel(c,"Inter 1st Year","Inter 2nd Year")||c),att:"Attendance",thisMonth:"This month",present:"Present",absent:"Absent",pct:"Attendance",year:"This year",days:"days",abs:"Recent absences",none:"No absences",tests:"Test marks",test:"Test",marks:"Marks",grade:"Grade",noTests:"No test marks yet",fees:"Fees",month:"Month",status:"Status",paid:"Paid",due:"Due",part:"Part paid",upcoming:"Upcoming",dueOn:"Due on",pays:"Recent payments",hw:"Homework",noHw:"No homework added yet",note:"Note",notice:"Notice",timings:"Timings",contact:"Contact the academy",call:"Call",wa:"WhatsApp",payFee:"Pay Fee",sendScreenshot:"Send Payment Screenshot",updated:"Updated",left:"This student is no longer enrolled at the academy.",invalid:"This link is not valid. Please ask TASVIA Academy for a new link.",offline:"Couldn't load. Check your internet connection and try again.",retry:"Try again",save:"Tip: add this page to your home screen to open it quickly.",overall:"Overall"},
@@ -488,7 +488,6 @@ showWelcome();
       if(!data){loaded=true;msg(T[L].invalid,true);return}
       applyData(data);
       loaded=true;
-      closeWelcome();
     }catch(err){
       console.error("TASVIA Parent Portal render error:",err);
       loaded=true;
