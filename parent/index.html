@@ -249,8 +249,8 @@ function render(){
   }else h+=`<p class="sub">${esc(t.noTests)}</p>`;
   h+=`</div>`;
   // fees
-  const fees=Array.isArray(v.fees)?v.fees.filter(f=>f&&typeof f==="object"):[];
-  const pays=Array.isArray(v.pays)?v.pays.filter(p=>p&&typeof p==="object"):[];
+  const fees=Array.isArray(v.fees)?v.fees.filter(f=>f&&typeof f==="object").map(f=>Object.assign({},f,{m:String(f.m||""),fee:Number(f.fee)||0,paid:Number(f.paid)||0,dueDate:f.dueDate?String(f.dueDate):""})):[]; 
+  const pays=Array.isArray(v.pays)?v.pays.filter(p=>p&&typeof p==="object").map(p=>Object.assign({},p,{m:String(p.m||""),a:Number(p.a)||0,d:String(p.d||""),mode:String(p.mode||"")})):[];
   const feeDue=fees.some(f=>{if(["due","part"].includes(f.status))return true;if(f.status==="upcoming")return false;if(!f.dueDate)return false;return today()>=String(f.dueDate);});
   const feeDueAmount=fees.filter(f=>{if(["due","part"].includes(f.status))return true;if(f.status==="upcoming")return false;if(!f.dueDate)return false;return today()>=String(f.dueDate);}).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
   if(fees.length||pays.length){
