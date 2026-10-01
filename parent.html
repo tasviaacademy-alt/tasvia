@@ -7,18 +7,18 @@
   <title>TASVIA Academy – Parent</title>
   <script>
     (function () {
-      var target = "./parent/index.html" + window.location.search + window.location.hash;
+      var q = window.location.search || "";
+      var h = window.location.hash || "";
+      var code = new URLSearchParams(q).get("code");
+      if (!code && h) code = h.replace(/^#/, "");
+      var target = "https://apk.tasviaacademy.com/parent/index.html";
+      if (code) target += "?code=" + encodeURIComponent(code);
       window.location.replace(target);
     })();
   </script>
-  <meta http-equiv="refresh" content="0;url=./parent/index.html">
 </head>
 <body style="font-family:system-ui,sans-serif;padding:24px">
   <p>Opening TASVIA Parents Portal…</p>
-  <p><a id="continue" href="./parent/index.html">Continue to Parents Portal</a></p>
-  <script>
-    document.getElementById("continue").href =
-      "./parent/index.html" + window.location.search + window.location.hash;
-  </script>
+  <p><a href="https://apk.tasviaacademy.com/parent/index.html">Continue to Parents Portal</a></p>
 </body>
 </html>
