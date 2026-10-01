@@ -1,0 +1,65 @@
+name: Apply parent portal 2x2 action grid
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/parent-layout-fix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply parent portal layout
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path("parent/index.html")
+          s = p.read_text(encoding="utf-8")
+          tick = chr(96)
+
+          nav = '''<div class="parent-action-grid" aria-label="Parent portal quick access">
+            <a class="parent-action" href="#homeworkSection"><span class="parent-action-icon">📚</span><span>Homework</span></a>
+            <a class="parent-action" href="#bodmasSection"><span class="parent-action-icon">🧮</span><span>BODMAS Practice</span></a>
+            <a class="parent-action" href="#gkSection"><span class="parent-action-icon">🧠</span><span>General Knowledge</span></a>
+            <a class="parent-action" href="#currentAffairsCard"><span class="parent-action-icon">📰</span><span>Current Affairs</span></a>
+          </div>'''
+
+          css = '''
+          /* Parent portal 2x2 quick-action grid */
+          .parent-action-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 2px}
+          .parent-action{min-height:78px;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 10px;border:1px solid var(--line);border-radius:15px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:700;text-align:center;box-shadow:0 3px 12px rgba(11,36,85,.06);transition:transform .15s ease,box-shadow .15s ease}
+          .parent-action:active{transform:scale(.98)}
+          .parent-action:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+          .parent-action-icon{font-size:24px;line-height:1;flex:0 0 auto}
+          #homeworkSection,#bodmasSection,#gkSection,#currentAffairsCard{scroll-margin-top:14px}
+          @media(max-width:360px){.parent-action{min-height:72px;padding:10px 7px;font-size:.9rem}.parent-action-icon{font-size:21px}}
+          '''
+
+          if "parent-action-grid" not in s:
+              marker = ".ca-card{"
+              if marker not in s:
+                  raise SystemExit("Current-affairs CSS marker not found")
+              s = s.replace(marker, css + "\n" + marker, 1)
+
+          homework_old = '<div class="card"><h2>' + "$" + '{esc(t.hw)}</h2>'
+          homework_new = '<div id="homeworkSection" class="card"><h2>' + "$" + '{esc(t.hw)}</h2>'
+          if homework_old in s and 'id="homeworkSection"' not in s:
+              s = s.replace(homework_old, nav + "\n  " + homework_new, 1)
+
+          s = s.replace("return " + tick + '<div class="card bodmas-card">', "return " + tick + '<div id="bodmasSection" class="card bodmas-card">', 1)
+          s = s.replace("h+=" + tick + '<div class="card gk-card>' + "$" + '{buildDailyGK()}</div>' + tick + ";", "h+=" + tick + '<div id="gkSection" class="card gk-card>' + "$" + '{buildDailyGK()}</div>' + tick + ";", 1)
+
+          p.write_text(s, encoding="utf-8")
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add parent/index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Improve parent portal 2x2 quick action grid"
+          git push
