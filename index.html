@@ -1572,12 +1572,25 @@ function startFirebase(){
     document.getElementById("fLogin").innerHTML='<h1>TASVIA <span>Academy</span></h1><p>Firebase could not be loaded. Check your internet connection and reload.</p><button class="btn gold" type="button" onclick="location.reload()">Reload TASVIA</button>';
     return;
   }
-  setSync("Starting Firebase…");
+  setSync("Loading Firebase services…");
+  const startupWatchdog=setTimeout(()=>{
+    const msg="Firebase startup is taking too long. Please reload TASVIA.";
+    setSync(msg);
+    gate.hidden=false;
+    if(gErr) gErr.textContent=msg;
+  },8000);
   try{
-    firebase.initializeApp(window.FIREBASE_CONFIG);
+    // iOS/Safari can retain an existing Firebase app instance after a PWA reload.
+    // Reuse it when present instead of attempting a second initialization.
+    const app = (firebase.apps && firebase.apps.length) ? firebase.app() : firebase.initializeApp(window.FIREBASE_CONFIG);
+    if(!app) throw new Error("Firebase app initialization returned no app");
+    setSync("Firebase app ready · loading sign-in…");
     auth=firebase.auth();
-    setSync("Firebase started · waiting for sign-in…");
+    if(!auth) throw new Error("Firebase Authentication is unavailable");
+    setSync("Firebase sign-in ready · checking session…");
     const fs=firebase.firestore();
+    if(!fs) throw new Error("Firebase Firestore is unavailable");
+    clearTimeout(startupWatchdog);
     fs.enablePersistence({synchronizeTabs:true}).catch(err=>console.warn("Firebase persistence unavailable:",err));
     let authResolved=false;
     const authWatchdog=setTimeout(()=>{if(!authResolved){setSync("Firebase connection timeout");gErr.textContent="Firebase sign-in service did not respond. Check your internet connection and reload."; }},10000);
