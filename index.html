@@ -384,6 +384,19 @@ button,.btn,a.btn{visibility:visible;}
 .item{overflow:visible;}
 @media(max-width:520px){.acts > .btn,.acts > a.btn,.acts > button{min-height:42px}.acts > .btn.sm,.acts > a.btn.sm,.acts > button.btn.sm{min-height:38px}}
 </style>
+<script>
+/* iOS PWA recovery: remove stale Staff App service-worker/cache state once. */
+(function(){
+  if(!("serviceWorker" in navigator)) return;
+  const key="tasvia-sw-recovery-v2";
+  if(localStorage.getItem(key)) return;
+  localStorage.setItem(key,"1");
+  Promise.all([
+    navigator.serviceWorker.getRegistrations().then(rs=>Promise.all(rs.map(r=>r.unregister()))),
+    window.caches ? caches.keys().then(keys=>Promise.all(keys.filter(k=>/^tasvia-v/i.test(k)).map(k=>caches.delete(k)))) : Promise.resolve()
+  ]).catch(()=>{});
+})();
+</script>
 </head>
 <body>
 <header><div class="brand"><h1><img class="hlogo" src="logo.png" alt="">TASVIA <span>Academy</span></h1><div class="sync" id="sync">Starting TASVIA…</div></div></header>
