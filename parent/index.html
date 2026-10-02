@@ -531,7 +531,7 @@ window.tasviaStudentLogin=function(e){
   if(e)e.preventDefault();
   const input=document.getElementById("studentLoginId"),msgEl=document.getElementById("studentLoginMsg");
   const code=String(input?.value||"").trim().toUpperCase();
-  if(^[A-Z0-9]{8,40}$/.test(code)){if(msgEl)msgEl.textContent="Enter a valid Student ID.";return false;}
+  if(!/^(?:TAS-\d{2}-\d{4}|[A-Z0-9]{8,40})$/.test(code)){if(msgEl)msgEl.textContent="Enter a valid Student ID.";return false;}
   if(msgEl)msgEl.textContent="Checking Student ID…";
   window.tasviaLoginCode=code;
   window.tasviaLoginStart(code);
@@ -542,10 +542,10 @@ window.tasviaStudentLogin=function(e){
   const qs=new URLSearchParams(location.search);
   let code=qs.get("code")||((location.hash||"").replace(/^#/,""));
   code=String(code||"").trim().toUpperCase();
-  if(code && ^[A-Z0-9]{8,40}$/.test(code))code="";
+  if(code && !/^(?:TAS-\d{2}-\d{4}|[A-Z0-9]{8,40})$/.test(code))code="";
   window.tasviaLoginStart=async function(loginCode){
     code=String(loginCode||"").trim().toUpperCase();
-    if(^[A-Z0-9]{8,40}$/.test(code)){msg(T[L].invalid,true);return}
+    if(!/^(?:TAS-\d{2}-\d{4}|[A-Z0-9]{8,40})$/.test(code)){msg(T[L].invalid,true);return}
     await loadForStudentId(code);
   };
   if(code) window.tasviaLoginStart(code);
