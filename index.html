@@ -1685,9 +1685,5 @@ if(!auth){
 if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js",{scope:"./"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
 
-<!-- TASVIA VoiceHub Assistant -->
-<dq-voice agent-id="6abf7c991cbee39d59c58e50" env="https://voicehub.dataqueue.ai/"></dq-voice>
-<script src="https://voicehub.dataqueue.ai/DqVoiceWidget.js"></script>
-<!-- End TASVIA VoiceHub Assistant -->
 </body>
 </html>
