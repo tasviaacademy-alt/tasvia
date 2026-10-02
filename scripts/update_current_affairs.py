@@ -68,7 +68,8 @@ for x in selected:
         "icon":icons.get(x["category"],"📰"),
         "title":x["title"],
         "text":summary or x["title"],
-        "source":f"{x['source']}, {date_str}"
+        "source":f"{x['source']}, {date_str}",
+        "url":x["link"]
     })
 
 # If feeds temporarily fail, retain the previous content rather than publishing an empty page.
