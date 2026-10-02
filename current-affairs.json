@@ -1,19 +1,64 @@
 {
-  "date":"2026-10-01",
-  "title":"Daily Current Affairs",
-  "items":[
-    {"category":"Invention","icon":"🔬","title":"MIRA miniaturised space-imaging system receives an Indian patent","text":"Hyderabad-based EON Space Labs received an Indian patent for MIRA, a compact telescope-based imaging system designed for space applications. The system weighs about 502 g.","source":"Hyderabad Mail, 29 Sep 2026"},
-    {"category":"Discovery","icon":"🧪","title":"Scientists observe a predicted solar motion linked to solar flares","text":"Science News reports that scientists have observed a long-predicted motion on the Sun that may help explain how explosive solar flares are triggered.","source":"Science News, Oct 2026"},
-    {"category":"World Record","icon":"🌍","title":"India’s women’s compound archery team equals the world record","text":"Jyothi Surekha Vennam, Chikitha Taniparthi and Prithika Pradeep scored 238–234 against China at the 2026 Asian Games, equalling the world, Asian and Games records.","source":"Jagran Josh, 1 Oct 2026"},
-    {"category":"International Main News","icon":"🌐","title":"US forces complete withdrawal from Iraq","text":"Reports on 1 October 2026 said US forces completed their withdrawal from Iraq after more than two decades, ending the US-led anti-IS mission there.","source":"Jagran Josh, 1 Oct 2026"},
-    {"category":"Sports Record","icon":"🏆","title":"Shubman Gill scores 223 in India’s record ODI chase","text":"Shubman Gill scored an unbeaten 223 as India chased 406 against the West Indies. It was reported as India’s highest successful men’s ODI run chase.","source":"Reuters, 1 Oct 2026"},
-    {"category":"Sports","icon":"🥇","title":"India reaches 60 medals at the Asian Games","text":"India’s tally reached 60 medals at the 2026 Asian Games, including 10 gold, 21 silver and 29 bronze, according to reports on 1 October.","source":"Indian Express, 1 Oct 2026"}
+  "date": "2026-10-02",
+  "month": "October 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "Governance",
+      "icon": "🏛️",
+      "title": "People’s Plan Campaign 2026-27 begins",
+      "text": "Special Gram Sabhas across India are marking 2 October with discussions on governance reforms and the launch of the People’s Plan Campaign 2026-27, Sabki Yojana, Sabka Vikas.",
+      "source": "Press Information Bureau, 1 Oct 2026"
+    },
+    {
+      "category": "Education",
+      "icon": "📚",
+      "title": "UPSC completes 100 years",
+      "text": "The Public Service Commission was established on 1 October 1926. UPSC has marked its centenary with events focused on public service, examination reforms and technology.",
+      "source": "Press Information Bureau / Indian Express, Oct 2026"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏹",
+      "title": "Asian Games 2026 continues in Aichi-Nagoya",
+      "text": "Indian athletes are continuing their campaign at the 2026 Asian Games in Japan, with competitions across multiple disciplines on 2 October.",
+      "source": "Times of India, 2 Oct 2026"
+    },
+    {
+      "category": "Science & Technology",
+      "icon": "🔬",
+      "title": "Indigenous carbon-fibre technology highlighted",
+      "text": "CSIR has unveiled indigenous carbon-fibre manufacturing technology aimed at reducing import dependence for high-performance applications.",
+      "source": "Current Affairs World, 2 Oct 2026"
+    },
+    {
+      "category": "Environment",
+      "icon": "🌱",
+      "title": "Solid Waste Management Rules 2026 discussed",
+      "text": "Special Gram Sabha discussions on 2 October include awareness of the Solid Waste Management Rules, 2026 as part of cleanliness and local governance initiatives.",
+      "source": "Press Information Bureau, 1 Oct 2026"
+    }
   ],
-  "quiz":[
-    {"q":"What is the name of EON Space Labs’ miniaturised space-imaging system?","a":"MIRA"},
-    {"q":"Which sport produced the world-record-equalling 238–234 score?","a":"Women’s compound archery"},
-    {"q":"Which country did India chase 406 against?","a":"West Indies"},
-    {"q":"How many medals had India won at the Asian Games according to the 1 October reports?","a":"60"},
-    {"q":"What is MIRA designed to provide?","a":"Compact space-based imaging"}
+  "quiz": [
+    {
+      "q": "On which date was the Public Service Commission established in India?",
+      "a": "1 October 1926"
+    },
+    {
+      "q": "What is the name of the People’s Plan Campaign 2026-27?",
+      "a": "Sabki Yojana, Sabka Vikas"
+    },
+    {
+      "q": "Where are the 2026 Asian Games being held?",
+      "a": "Aichi-Nagoya, Japan"
+    },
+    {
+      "q": "Which technology is being highlighted by CSIR for reducing import dependence?",
+      "a": "Indigenous carbon-fibre manufacturing technology"
+    },
+    {
+      "q": "Which campaign focuses on cleanliness and related local initiatives on 2 October?",
+      "a": "Swachhata Hi Seva"
+    }
   ]
 }
