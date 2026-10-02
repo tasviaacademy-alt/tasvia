@@ -9,6 +9,16 @@ now = datetime.now(IST)
 date_str = now.strftime("%Y-%m-%d")
 month_str = now.strftime("%B %Y")
 
+HISTORY_DIR = Path("current-affairs-history")
+HISTORY_DIR.mkdir(exist_ok=True)
+TODAY_HISTORY = HISTORY_DIR / f"{date_str}.json"
+
+if TODAY_HISTORY.exists():
+    existing = json.loads(TODAY_HISTORY.read_text(encoding="utf-8"))
+    Path("current-affairs.json").write_text(json.dumps(existing, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"{date_str}: today's current-affairs edition already archived; no change.")
+    raise SystemExit(0)
+
 QUERIES = [
     ("India", "India current affairs India government national news"),
     ("World", "world international current affairs"),
@@ -21,72 +31,73 @@ def clean(s):
     s = html.unescape(re.sub(r"<[^>]+>", " ", s or ""))
     return re.sub(r"\s+", " ", s).strip()
 
+def norm_title(s):
+    return re.sub(r"[^a-z0-9]+", " ", (s or "").lower()).strip()
+
 def rss_items(query):
     url = "https://news.google.com/rss/search?q=" + urllib.parse.quote(query) + "&hl=en-IN&gl=IN&ceid=IN:en"
     req = urllib.request.Request(url, headers={"User-Agent": "TASVIA-Current-Affairs/1.0"})
     with urllib.request.urlopen(req, timeout=20) as r:
         root = ET.fromstring(r.read())
-    out=[]
+    out = []
     for item in root.findall("./channel/item"):
-        title=clean(item.findtext("title"))
-        desc=clean(item.findtext("description"))
-        link=item.findtext("link") or ""
-        pub=item.findtext("pubDate") or ""
-        source=clean((item.find("source").text if item.find("source") is not None else "News source"))
+        title = clean(item.findtext("title"))
+        desc = clean(item.findtext("description"))
+        link = item.findtext("link") or ""
+        source = clean(item.find("source").text if item.find("source") is not None else "News source")
         if title:
-            out.append({"title":title,"description":desc,"link":link,"pubDate":pub,"source":source})
+            out.append({"title": title, "description": desc, "link": link, "source": source})
     return out
 
-all_items=[]
+used_titles = set()
+for archive in HISTORY_DIR.glob("*.json"):
+    try:
+        old = json.loads(archive.read_text(encoding="utf-8"))
+        for item in old.get("items", []):
+            used_titles.add(norm_title(item.get("title")))
+    except Exception:
+        continue
+
+all_items = []
+seen_today = set()
 for category, query in QUERIES:
     try:
         for x in rss_items(query):
-            x["category"]=category
-            if x["title"] not in [a["title"] for a in all_items]:
+            x["category"] = category
+            key = norm_title(x["title"])
+            if key and key not in used_titles and key not in seen_today:
+                seen_today.add(key)
                 all_items.append(x)
     except Exception as e:
         print(f"Feed failed: {category}: {e}")
 
-# Prefer recent, useful stories and avoid duplicate/same-topic headlines.
-selected=[]
-seen=set()
-for x in all_items:
-    key=re.sub(r"[^a-z0-9]","",x["title"].lower())[:90]
-    if key in seen: continue
-    seen.add(key)
-    selected.append(x)
-    if len(selected)>=8: break
-
-icons={"India":"🇮🇳","World":"🌐","Sports":"🏆","Science & Technology":"🔬","Economy":"💹"}
-items=[]
+selected = all_items[:8]
+icons = {"India":"🇮🇳", "World":"🌐", "Sports":"🏆", "Science & Technology":"🔬", "Economy":"💹"}
+items = []
 for x in selected:
-    summary=x["description"]
-    # Google News descriptions can contain the article headline again; keep concise.
-    if len(summary)>420: summary=summary[:417].rsplit(" ",1)[0]+"…"
+    summary = x["description"]
+    if len(summary) > 420:
+        summary = summary[:417].rsplit(" ", 1)[0] + "…"
     items.append({
-        "category":x["category"],
-        "icon":icons.get(x["category"],"📰"),
-        "title":x["title"],
-        "text":summary or x["title"],
-        "source":f"{x['source']}, {date_str}",
-        "url":x["link"]
+        "category": x["category"],
+        "icon": icons.get(x["category"], "📰"),
+        "title": x["title"],
+        "text": summary or x["title"],
+        "source": f"{x['source']}, {date_str}",
+        "url": x["link"]
     })
 
-# If feeds temporarily fail, retain the previous content rather than publishing an empty page.
 if not items:
-    p=Path("current-affairs.json")
+    p = Path("current-affairs.json")
     if p.exists():
-        print("No fresh feed items; retaining existing current-affairs.json")
+        print("No unused fresh feed items; retaining previous content.")
         raise SystemExit(0)
-    items=[{"category":"Current Affairs","icon":"📰","title":"Daily current affairs update","text":"Fresh current-affairs content will be available shortly.","source":"TASVIA Academy"}]
+    raise RuntimeError("No fresh current-affairs items available; refusing to publish empty content.")
 
-quiz=[]
-for x in items[:5]:
-    quiz.append({"q":f"Which topic is covered in today's {x['category']} current affairs?","a":x["title"]})
+quiz = [{"q": f"Which topic is covered in today's {x['category']} current affairs?", "a": x["title"]} for x in items[:5]]
+data = {"date": date_str, "month": month_str, "title": "Daily Current Affairs", "items": items, "quiz": quiz}
 
-data={"date":date_str,"month":month_str,"title":"Daily Current Affairs","items":items,"quiz":quiz}
-Path("current-affairs.json").write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-archive=Path("current-affairs-history")
-archive.mkdir(exist_ok=True)
-(Path(archive)/f"{date_str}.json").write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-print(f"Updated {date_str}: {len(items)} items")
+text = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
+Path("current-affairs.json").write_text(text, encoding="utf-8")
+TODAY_HISTORY.write_text(text, encoding="utf-8")
+print(f"Updated {date_str}: {len(items)} fresh, previously unused current-affairs stories")
