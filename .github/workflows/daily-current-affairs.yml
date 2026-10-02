@@ -18,6 +18,25 @@ jobs:
       - name: Update current affairs
         run: python3 scripts/update_current_affairs.py
 
+      - name: Validate archive uniqueness
+        run: |
+          python3 - <<'PY'
+          import json, re
+          from pathlib import Path
+          def norm(s): return re.sub(r"[^a-z0-9]+", " ", (s or "").lower()).strip()
+          seen = set()
+          for path in sorted(Path("current-affairs-history").glob("*.json")):
+              data = json.loads(path.read_text(encoding="utf-8"))
+              if not data.get("date") or not data.get("items"):
+                  raise SystemExit(f"{path}: invalid/empty archive")
+              for item in data["items"]:
+                  key = norm(item.get("title"))
+                  if key in seen:
+                      raise SystemExit(f"Repeated current-affairs story detected: {item.get('title')}")
+                  seen.add(key)
+          print(f"Validated {len(seen)} unique archived current-affairs stories.")
+          PY
+
       - name: Commit changes
         run: |
           git config user.name "TASVIA Current Affairs Bot"
@@ -26,6 +45,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No current-affairs changes to commit."
           else
-            git commit -m "chore: daily current affairs update"
+            git commit -m "chore: daily non-repeating current affairs update"
             git push
           fi
