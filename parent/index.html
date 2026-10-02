@@ -489,31 +489,17 @@ function bodmasCheck(){
 
 /* DAILY GENERAL KNOWLEDGE */
 const GK_DAILY=[["Which planet is known as the Red Planet?","Mars"],["What is the largest ocean on Earth?","Pacific Ocean"],["How many days are there in a leap year?","366 days"],["What is the capital of India?","New Delhi"],["Which gas do plants absorb for photosynthesis?","Carbon dioxide"],["How many continents are there?","7"],["Which is the largest mammal?","Blue whale"],["What is H2O commonly called?","Water"],["How many sides does a hexagon have?","6"],["Which is the nearest star to Earth?","The Sun"],["Which organ pumps blood?","Heart"],["What is the fastest land animal?","Cheetah"],["What is the smallest prime number?","2"],["What is the currency of Japan?","Yen"],["Which is the largest planet?","Jupiter"],["What is India's national bird?","Peacock"],["How many colors are traditionally in a rainbow?","7"],["Which festival is called the Festival of Lights?","Diwali"],["What is the largest continent?","Asia"],["Which ocean is between Africa and Australia?","Indian Ocean"]];
-const GK_LABELS={en:{title:"Daily General Knowledge",sub:"5 questions every day · Learn something new",today:"Today's Questions",answer:"Answer"},te:{title:"రోజువారీ జనరల్ నాలెడ్జ్",sub:"ప్రతి రోజు 5 ప్రశ్నలు",today:"ఈ రోజు ప్రశ్నలు",answer:"జవాబు"},hi:{title:"दैनिक सामान्य ज्ञान",sub:"हर दिन 5 प्रश्न",today:"आज के प्रश्न",answer:"उत्तर"}};
+let DAILY_GK=null;
+const GK_LABELS={en:{title:"Daily General Knowledge",sub:"5 new questions every day · Learn something new",today:"Today's Questions",answer:"Answer"},te:{title:"రోజువారీ జనరల్ నాలెడ్జ్",sub:"ప్రతి రోజు 5 కొత్త ప్రశ్నలు",today:"ఈ రోజు ప్రశ్నలు",answer:"జవాబు"},hi:{title:"दैनिक सामान्य ज्ञान",sub:"हर दिन 5 नए प्रश्न",today:"आज के प्रश्न",answer:"उत्तर"}};
 function localDateKey(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 function gkDayIndex(){const d=new Date();return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000)}
-function buildDailyGK(){const t=GK_LABELS[L]||GK_LABELS.en,day=gkDayIndex(),now=Date.now(),week=7*24*60*60*1000;
-  const key=String(location.hash||"").replace("#","").trim().toUpperCase()||"portal",dateKey=localDateKey(),bkKey="tasvia-gk-backup";
-  const makeItems=()=>{const out=[];for(let i=0;i<5;i++){const x=GK_DAILY[(day*5+i)%GK_DAILY.length];out.push({q:x[0],a:x[1]});}return out;};
-  let items=makeItems(),backupStatus="";
-  try{
-    const raw=localStorage.getItem(bkKey);
-    const bk=raw?JSON.parse(raw):{};
-    const byKey=(bk&&typeof bk==="object"&&!Array.isArray(bk))?bk:{};
-    const studentBackups=Array.isArray(byKey[key])?byKey[key]:[];
-    const valid=studentBackups.filter(z=>{
-      const ts=z&&z.date?Date.parse(z.date+"T00:00:00"):NaN;
-      return z&&z.date&&Array.isArray(z.questions)&&z.questions.length>=5&&Number.isFinite(ts)&&now-ts<week;
-    }).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
-    const existing=valid.find(z=>z.date===dateKey);
-    if(existing)items=existing.questions.slice(0,5);
-    const updated=[...valid.filter(z=>z.date!==dateKey),{key,date:dateKey,backedUpAt:new Date().toISOString(),questions:items}]
-      .sort((a,b)=>String(a.date).localeCompare(String(b.date))).slice(-7);
-    byKey[key]=updated;
-    localStorage.setItem(bkKey,JSON.stringify(byKey));
-  }catch(e){backupStatus="";try{localStorage.removeItem(bkKey);localStorage.setItem(bkKey,JSON.stringify({[key]:[{key,date:dateKey,backedUpAt:new Date().toISOString(),questions:items}]}))}catch(_){backupStatus="";}}
-  try{if(window.firebase&&window.FIREBASE_CONFIG&&key!=="portal"){firebase.firestore().collection("gkBackup").doc(key+"_"+dateKey).set({code:key,date:dateKey,updated:now,name:(V&&V.name)||"",cls:(V&&V.cls)||"",questions:items},{merge:true}).catch(()=>{});}}catch(_){ }
-  let h='<div class="gk-head"><div><h2>🌍 '+esc(t.title)+'</h2><p class="sub" style="margin:3px 0 0">'+esc(t.sub)+'</p></div><div class="gk-icon">?</div></div><p class="sub" style="margin:10px 0 0"><b>'+esc(t.today)+'</b></p><div class="gk-list>';for(let i=0;i<items.length;i++){const x=items[i];h+='<div class="gk-q"><b>'+(i+1)+'. '+esc(x.q)+'</b><span class="gk-answer">'+esc(t.answer)+': '+esc(x.a)+'</span></div>'}return h+'</div>'}
+function buildDailyGK(){const t=GK_LABELS[L]||GK_LABELS.en,day=gkDayIndex(),now=Date.now(),week=7*24*60*60*1000,key=String(location.hash||"").replace("#","").trim().toUpperCase()||"portal",dateKey=localDateKey(),bkKey="tasvia-gk-backup";
+  const remote=DAILY_GK&&Array.isArray(DAILY_GK.questions)?DAILY_GK.questions.slice(0,5).map(x=>({q:String(x.q||""),a:String(x.a||"")})):[],fallback=()=>{const o=[];for(let i=0;i<5;i++){const x=GK_DAILY[(day*5+i)%GK_DAILY.length];o.push({q:x[0],a:x[1]})}return o};
+  let items=remote.length>=5?remote:fallback();
+  try{const raw=localStorage.getItem(bkKey),bk=raw?JSON.parse(raw):{},byKey=bk&&typeof bk==="object"&&!Array.isArray(bk)?bk:{},arr=Array.isArray(byKey[key])?byKey[key]:[],valid=arr.filter(z=>z&&z.date&&Array.isArray(z.questions)&&z.questions.length>=5&&now-Date.parse(z.date+"T00:00:00")<week),old=valid.find(z=>z.date===dateKey);if(old)items=old.questions.slice(0,5);byKey[key]=[...valid.filter(z=>z.date!==dateKey),{key,date:dateKey,backedUpAt:new Date().toISOString(),questions:items}].sort((a,b)=>String(a.date).localeCompare(String(b.date))).slice(-7);localStorage.setItem(bkKey,JSON.stringify(byKey))}catch(e){}
+  try{if(window.firebase&&window.FIREBASE_CONFIG&&key!=="portal")firebase.firestore().collection("gkBackup").doc(key+"_"+dateKey).set({code:key,date:dateKey,updated:now,name:(V&&V.name)||"",cls:(V&&V.cls)||"",questions:items},{merge:true}).catch(()=>{})}catch(e){}
+  let h='<div class="gk-head"><div><h2>🌍 '+esc(t.title)+'</h2><p class="sub" style="margin:3px 0 0">'+esc(t.sub)+'</p></div><div class="gk-icon">?</div></div><p class="sub" style="margin:10px 0 0"><b>'+esc(t.today)+' · '+esc(dateKey)+'</b></p><div class="gk-list">';items.forEach((x,i)=>h+='<div class="gk-q"><b>'+(i+1)+'. '+esc(x.q)+'</b><span class="gk-answer">'+esc(t.answer)+': '+esc(x.a)+'</span></div>');return h+'</div>'}
+async function loadDailyGK(){try{const r=await fetch('/daily-gk.json',{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);DAILY_GK=await r.json();const el=document.getElementById('gkSection');if(el)el.innerHTML=buildDailyGK()}catch(e){console.warn('Daily GK unavailable; using fallback',e)}}
 /* DAILY CURRENT AFFAIRS */
 let CURRENT_AFFAIRS=null;
 const CA_LABELS={en:{title:"Daily Current Affairs",sub:"Recent events · Learn what is happening around the world",today:"Today",quiz:"Quick Quiz"},te:{title:"రోజువారీ కరెంట్ అఫైర్స్",sub:"ఇటీవలి ముఖ్యమైన సంఘటనలు",today:"ఈ రోజు",quiz:"త్వరిత క్విజ్"},hi:{title:"दैनिक करेंट अफेयर्स",sub:"हाल की महत्वपूर्ण घटनाएँ",today:"आज",quiz:"त्वरित क्विज़"}};
@@ -573,6 +559,7 @@ showWelcome();
         if(el)el.innerHTML=buildCurrentAffairsCard();
       }catch(err){console.warn("Current affairs render",err)}
     }).catch(()=>{});
+    loadDailyGK();
     try{
       if(prev)changes(prev,V).forEach(([a,b],i)=>setTimeout(()=>{try{alertParent(a,b)}catch(_){ }},i*1800));
     }catch(err){console.warn("Parent update alerts",err)}
