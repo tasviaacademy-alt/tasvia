@@ -1,0 +1,29 @@
+name: Daily GK Update
+
+on:
+  schedule:
+    - cron: "20 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-gk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Generate daily GK
+        run: python3 scripts/update_daily_gk.py
+      - name: Commit changes
+        run: |
+          git config user.name "TASVIA GK Bot"
+          git config user.email "actions@github.com"
+          git add daily-gk.json daily-gk-history/
+          if git diff --cached --quiet; then
+            echo "No GK changes to commit."
+          else
+            git commit -m "chore: daily GK update"
+            git push
+          fi
