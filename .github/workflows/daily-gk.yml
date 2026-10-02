@@ -14,16 +14,41 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Generate daily GK
         run: python3 scripts/update_daily_gk.py
+
+      - name: Validate no duplicate questions
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          seen = set()
+          for path in Path("daily-gk-history").glob("*.json"):
+              data = json.loads(path.read_text(encoding="utf-8"))
+              qs = data.get("questions", [])
+              if len(qs) != 5:
+                  raise SystemExit(f"{path}: expected 5 questions")
+              for item in qs:
+                  qid = item.get("id")
+                  if not qid:
+                      raise SystemExit(f"{path}: question missing id")
+                  if qid in seen:
+                      raise SystemExit(f"Duplicate GK question detected: {qid}")
+                  seen.add(qid)
+
+          print(f"Validated {len(seen)} archived non-repeating GK questions.")
+          PY
+
       - name: Commit changes
         run: |
           git config user.name "TASVIA GK Bot"
           git config user.email "actions@github.com"
-          git add daily-gk.json daily-gk-history/
+          git add gk-question-bank.json daily-gk.json daily-gk-history/
           if git diff --cached --quiet; then
             echo "No GK changes to commit."
           else
-            git commit -m "chore: daily GK update"
+            git commit -m "chore: daily non-repeating GK update"
             git push
           fi
