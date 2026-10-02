@@ -500,7 +500,7 @@ function remove(path){
 let lazyMoreLoaded=false,lazyTeacherAttLoaded=false;
 async function migrateLegacyStudentIds(){
   if(!db||!isAdmin()||window._tasviaIdMigrationRunning)return;
-  const legacy=Object.entries(S.students||{}).filter(([id])=>!/^TAS-\\d{2}-\\d{4}$/.test(id));
+  const legacy=Object.entries(S.students||{}).filter(([id])=>!/^TAS-\d{2}-\d{4}$/.test(id));
   if(!legacy.length)return;
   window._tasviaIdMigrationRunning=true;
   try{
@@ -508,9 +508,9 @@ async function migrateLegacyStudentIds(){
     const counters={};
     for(const [oldId,st] of legacy){
       const rawYear=String(st.joined||today()).slice(0,4);
-      const yy=/^\\d{4}$/.test(rawYear)?rawYear.slice(2):String(new Date().getFullYear()).slice(2);
+      const yy=/^\d{4}$/.test(rawYear)?rawYear.slice(2):String(new Date().getFullYear()).slice(2);
       if(counters[yy]==null){
-        const nums=[...allIds].filter(x=>new RegExp("^TAS-"+yy+"-\\\\d{4}$").test(x)).map(x=>Number(x.slice(7))).filter(Number.isFinite);
+        const nums=[...allIds].filter(x=>new RegExp("^TAS-"+yy+"-\\d{4}$").test(x)).map(x=>Number(x.slice(7))).filter(Number.isFinite);
         counters[yy]=nums.length?Math.max(...nums):0;
       }
       let n=++counters[yy],newId="TAS-"+yy+"-"+String(n).padStart(4,"0");
@@ -1165,7 +1165,7 @@ const opt=(v,cur,l)=>`<option value="${esc(v)}" ${v===cur?"selected":""}>${esc(l
 // Meaningful TASVIA Student ID: TAS-YY-0001, where YY is the admission year and the last part is a unique sequence.
 function tasviaStudentId(joined){
   const raw=String(joined||today()), y=/^\\d{4}/.test(raw)?raw.slice(2,4):String(new Date().getFullYear()).slice(2,4);
-  const nums=Object.keys(S.students||{}).map(k=>String(k)).filter(k=>/^TAS-\\d{2}-\\d{4}$/.test(k)&&k.slice(4,6)===y).map(k=>Number(k.slice(7))).filter(Number.isFinite);
+  const nums=Object.keys(S.students||{}).map(k=>String(k)).filter(k=>/^TAS-\d{2}-\d{4}$/.test(k)&&k.slice(4,6)===y).map(k=>Number(k.slice(7))).filter(Number.isFinite);
   const next=(nums.length?Math.max(...nums):0)+1;
   return `TAS-${y}-${String(next).padStart(4,"0")}`;
 }
