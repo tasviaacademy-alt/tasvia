@@ -575,7 +575,7 @@ async function loadForStudentId(code){
     if(!data||typeof data!=="object"){msg(T[L].invalid,true);return false}
     const prev=V;V=data;
     try{
-      if(!saved&&V.lang&&T[V.lang])L=V.lang;
+      const savedLang=load("tasvia-parent-lang"); if(!savedLang&&V.lang&&T[V.lang])L=V.lang;
       render();
     }catch(err){
       console.error("TASVIA Parent Portal render/update error:",err);
@@ -608,8 +608,11 @@ async function loadForStudentId(code){
     if(loaded)return;
     try{
       if(!data){loaded=true;msg(T[L].invalid,true);return}
-      applyData(data);
-      loaded=true;
+      if(applyData(data)){
+        loaded=true;
+        window.tasviaWelcomeEntered=true;
+        closeWelcome();
+      }
     }catch(err){
       console.error("TASVIA Parent Portal render error:",err);
       loaded=true;
@@ -640,8 +643,6 @@ async function loadForStudentId(code){
       msg(T[L].offline,true);
     }
   });
-  window.tasviaWelcomeEntered=true;
-  closeWelcome();
 }
 if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("/sw.js",{scope:"/"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
