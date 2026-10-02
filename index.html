@@ -498,12 +498,72 @@ function remove(path){
   return queues[path]=p;
 }
 let lazyMoreLoaded=false,lazyTeacherAttLoaded=false;
+async function migrateLegacyStudentIds(){
+  if(!db||!isAdmin()||window._tasviaIdMigrationRunning)return;
+  const legacy=Object.entries(S.students||{}).filter(([id])=>!/^TAS-\\d{2}-\\d{4}$/.test(id));
+  if(!legacy.length)return;
+  window._tasviaIdMigrationRunning=true;
+  try{
+    const allIds=new Set(Object.keys(S.students||{}));
+    const counters={};
+    for(const [oldId,st] of legacy){
+      const rawYear=String(st.joined||today()).slice(0,4);
+      const yy=/^\\d{4}$/.test(rawYear)?rawYear.slice(2):String(new Date().getFullYear()).slice(2);
+      if(counters[yy]==null){
+        const nums=[...allIds].filter(x=>new RegExp("^TAS-"+yy+"-\\\\d{4}$").test(x)).map(x=>Number(x.slice(7))).filter(Number.isFinite);
+        counters[yy]=nums.length?Math.max(...nums):0;
+      }
+      let n=++counters[yy],newId="TAS-"+yy+"-"+String(n).padStart(4,"0");
+      while(allIds.has(newId)){n=++counters[yy];newId="TAS-"+yy+"-"+String(n).padStart(4,"0");}
+      allIds.add(newId);
+      const next=Object.assign({},st);
+      const batch=db.batch();
+      batch.set(db.doc("students/"+newId),next);
+      batch.delete(db.doc("students/"+oldId));
+      if(S.fees[oldId]){
+        batch.set(db.doc("fees/"+newId),S.fees[oldId]);
+        batch.delete(db.doc("fees/"+oldId));
+      }
+      const photo=await db.doc("photos/"+oldId).get();
+      if(photo.exists){batch.set(db.doc("photos/"+newId),photo.data());batch.delete(db.doc("photos/"+oldId));}
+      const pv=await db.doc("parentView/"+oldId).get();
+      if(pv.exists){
+        const p=Object.assign({},pv.data(),{studentId:newId,loginId:newId,updated:Date.now()});
+        batch.set(db.doc("parentView/"+newId),p);
+        batch.delete(db.doc("parentView/"+oldId));
+      }
+      await batch.commit();
+      const collections=["attendance","tests","diary"];
+      for(const name of collections){
+        const snap=await db.collection(name).get();
+        for(const d of snap.docs){
+          const data=d.data()||{};
+          if(name==="attendance" && data.marks && Object.prototype.hasOwnProperty.call(data.marks,oldId)){
+            await db.doc(name+"/"+d.id).set({marks:{[oldId]:firebase.firestore.FieldValue.delete(),[newId]:data.marks[oldId]}},{merge:true});
+          }else if(name==="tests" && data.marks && Object.prototype.hasOwnProperty.call(data.marks,oldId)){
+            await db.doc(name+"/"+d.id).set({marks:{[oldId]:firebase.firestore.FieldValue.delete(),[newId]:data.marks[oldId]}},{merge:true});
+          }else if(name==="diary" && data.entries && Object.prototype.hasOwnProperty.call(data.entries,oldId)){
+            await db.doc(name+"/"+d.id).set({entries:{[oldId]:firebase.firestore.FieldValue.delete(),[newId]:data.entries[oldId]}},{merge:true});
+          }
+        }
+      }
+      delete S.students[oldId];S.students[newId]=next;
+      if(S.fees[oldId]){S.fees[newId]=S.fees[oldId];delete S.fees[oldId]}
+      if(photo.exists){photoCache[newId]=photo.data().img||null;delete photoCache[oldId]}
+      delete photoCache[oldId];
+      toast("Updated "+(next.name||"student")+" to "+newId);
+    }
+    scheduleRender();schedulePV();
+  }catch(e){console.error("Student ID migration failed",e);toast("Student ID migration stopped. Check connection and try again.");}
+  finally{window._tasviaIdMigrationRunning=false;}
+}
 function subscribe(){
   unsubs.forEach(u=>u&&u());unsubs=[];lazyMoreLoaded=false;lazyTeacherAttLoaded=false;
   const onErr=e=>setSync(e&&e.code==="permission-denied"?"Not on staff list":"Connection lost. Reopen the app.");
   const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;scheduleRender();if(key==="students")schedulePV()},onErr));
   const admin=window.currentUser&&window.currentUser.role==="admin";
   coll("students","students");
+  setTimeout(()=>migrateLegacyStudentIds(),1500);
   if(admin)coll("fees","fees");
   {const y=+acYear(today()).from.slice(0,4)-1;coll("tests","tests",db.collection("tests").where("date",">=",y+"-06-01"))}
   coll("attendance","att",db.collection("attendance").orderBy("date","desc").limit(400));
