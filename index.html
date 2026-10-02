@@ -1102,6 +1102,14 @@ function printStudentID(id){
   document.getElementById("printIdBtn").onclick=()=>window.print();
 }
 const opt=(v,cur,l)=>`<option value="${esc(v)}" ${v===cur?"selected":""}>${esc(l||v)}</option>`;
+// Meaningful TASVIA Student ID: TAS-YY-0001, where YY is the admission year and the last part is a unique sequence.
+function tasviaStudentId(joined){
+  const raw=String(joined||today()), y=/^\\d{4}/.test(raw)?raw.slice(2,4):String(new Date().getFullYear()).slice(2,4);
+  const nums=Object.keys(S.students||{}).map(k=>String(k)).filter(k=>/^TAS-\\d{2}-\\d{4}$/.test(k)&&k.slice(4,6)===y).map(k=>Number(k.slice(7))).filter(Number.isFinite);
+  const next=(nums.length?Math.max(...nums):0)+1;
+  return `TAS-${y}-${String(next).padStart(4,"0")}`;
+}
+
 
 function studentForm(id){
   const s=id?S.students[id]:{cls:"1",board:"State Board",joined:today()};
@@ -1500,7 +1508,7 @@ document.addEventListener("submit",e=>{
   if(e.target.id==="fLogin")return;
   e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f));
   if(f.id==="fStudent"){
-    const id=f.dataset.id||uid("s");ownIds.add(id);const s={name:d.name.trim().replace(/\s+/g," "),cls:d.cls,board:d.board,parent:d.parent.trim(),phone:d.phone.trim(),fee:Math.max(0,Number(d.fee)||0),joined:d.joined,batch:d.batch||"",lang:d.lang||"en",notes:d.notes.trim(),active:f.dataset.id?d.active==="on":true};
+    const id=f.dataset.id||tasviaStudentId(d.joined);ownIds.add(id);const s={name:d.name.trim().replace(/\s+/g," "),cls:d.cls,board:d.board,parent:d.parent.trim(),phone:d.phone.trim(),fee:Math.max(0,Number(d.fee)||0),joined:d.joined,batch:d.batch||"",lang:d.lang||"en",notes:d.notes.trim(),active:f.dataset.id?d.active==="on":true};
     if(!s.name)return toast("Enter the student's name");
     const digits=s.phone.replace(/\D/g,"");if(s.phone&&!(digits.length===10||(digits.length===12&&digits.startsWith("91"))))return toast("Enter a 10-digit mobile number");
     if(d.fee&&isNaN(Number(d.fee)))return toast("Fee must be a number");
