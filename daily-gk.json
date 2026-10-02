@@ -3,24 +3,29 @@
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "q": "Which answer is correct for: Capital of Spain?",
-      "a": "Madrid"
+      "id": "otq-geography-1",
+      "q": "What is the capital of Afghanistan?",
+      "a": "Kabul"
     },
     {
-      "q": "What is the capital of Portugal?",
-      "a": "Lisbon"
+      "id": "otq-geography-2",
+      "q": "What is the capital of Australia?",
+      "a": "Canberra"
     },
     {
-      "q": "Which answer is correct for: Capital of Portugal?",
-      "a": "Lisbon"
+      "id": "otq-animals-843",
+      "q": "Three of these animals hibernate. Which one does not?",
+      "a": "Sloth"
     },
     {
-      "q": "What is the capital of Japan?",
-      "a": "Tokyo"
+      "id": "otq-animals-844",
+      "q": "All of these animals are omnivorous except one.",
+      "a": "Snail"
     },
     {
-      "q": "Which answer is correct for: Capital of Japan?",
-      "a": "Tokyo"
+      "id": "otq-brain-teasers-2208",
+      "q": "Which of these is true about the sleep of zebras?",
+      "a": "They sleep standing up."
     }
   ]
 }
