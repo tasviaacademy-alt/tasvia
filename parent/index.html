@@ -423,7 +423,10 @@ function render(){
   h+=`<p class="foot">${esc(t.updated)}: ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}<br>${esc(t.save)}</p>`;
   document.getElementById("main").innerHTML=h;
   renderBodmas();
-  const feePastDueForPopup=fees.filter(f=>f&&f.dueDate&&today()>String(f.dueDate)).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
+  // Use the same normalized fee rows as the Fees section. A payment recorded in
+  // Recent Payments must also clear the corresponding month's popup due amount.
+  const feePastDueForPopup=fees.filter(f=>f&&f.dueDate&&today()>String(f.dueDate))
+    .reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
   if(feePastDueForPopup>0 && window.tasviaWelcomeEntered){
     showFeeDuePopup(feePastDueForPopup);
     feeDuePopupPending=false;
@@ -437,10 +440,22 @@ function render(){
 let actx=null;
 
 function openFeeDueAfterWelcome(){
+  // Reconcile each month's fee against the payment history before showing
+  // any popup. This prevents a paid month from being treated as overdue.
   const fs=Array.isArray(V?.fees)?V.fees.filter(f=>f&&typeof f==="object"):[];
-  const due=fs.some(f=>f&&f.dueDate&&today()>String(f.dueDate));
-  const amt=fs.filter(f=>f&&f.dueDate&&today()>String(f.dueDate)).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
-  if(due&&amt>0){
+  const pays=Array.isArray(V?.pays)?V.pays.filter(p=>p&&typeof p==="object"):[];
+  const key=s=>String(s||"").trim().toLowerCase().replace(/[^a-z0-9]/g,"");
+  const totals={};
+  pays.forEach(p=>{const k=key(p.m);if(k)totals[k]=(totals[k]||0)+Math.max(0,Number(p.a||0));});
+  const rows=fs.map(f=>{
+    const fee=Number(f.fee)||0;
+    const recorded=Number(f.paid)||0;
+    const fromPayments=totals[key(f.m)]||0;
+    return Object.assign({},f,{fee,paid:Math.min(fee,Math.max(recorded,fromPayments))});
+  });
+  const overdue=rows.filter(f=>f&&f.dueDate&&today()>String(f.dueDate));
+  const amt=overdue.reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
+  if(amt>0){
     if(window.tasviaWelcomeEntered)showFeeDuePopup(amt);
     else feeDuePopupPending=true;
   }
