@@ -1579,6 +1579,8 @@ document.addEventListener("submit",e=>{
     const p={id:uid("p"),amount:amt,month:d.month,date:d.date,mode:d.mode,note:(d.note||"").trim()};ownIds.add(p.id);
     const legacy=Array.isArray((S.fees[id]||{}).payments);const cur={};payList(id).forEach(x=>cur[x.id]=x);cur[p.id]=p;S.fees[id]={payments:cur};
     if(!db)saveLocal();else if(legacy)put("fees/"+id,S.fees[id]);else mergeWrite("fees/"+id,{payments:{[p.id]:p}},{});pvCache[S.students[id]?.pcode]=null;render();schedulePV();
+    // Refresh the parent-view fingerprint after every fee write so the next sync cannot reuse stale fee data.
+    try{localStorage.removeItem("tasvia-pv")}catch(e){}
     const s={id,...S.students[id]};
     openSheet("Payment saved",`<p>${rs(amt)} from ${esc(s.name)} for ${monthName(d.month)}.</p><pre class="msg">${esc(receiptText(s,p))}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Send receipt on WhatsApp</a><button class="btn ghost" data-act="close">Done</button></div>`);
   }
