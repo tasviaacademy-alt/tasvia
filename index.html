@@ -1692,7 +1692,6 @@ function startFirebase(){
     clearTimeout(startupWatchdog);
     fs.enablePersistence({synchronizeTabs:true}).catch(err=>console.warn("Firebase persistence unavailable:",err));
     let authResolved=false;
-    let loginInProgress=false;
     const authWatchdog=setTimeout(()=>{if(!authResolved){setSync("Firebase connection timeout");gErr.textContent="Firebase sign-in service did not respond. Check your internet connection and reload."; }},10000);
     auth.onAuthStateChanged(async u=>{
       authResolved=true;
@@ -1745,6 +1744,7 @@ function startFirebase(){
     gErr.textContent="TASVIA could not start Firebase. Please reload.";
   }
 }
+let loginInProgress=false;
 const loginForm=document.getElementById("fLogin");
 loginForm.addEventListener("submit",async e=>{
   e.preventDefault();e.stopImmediatePropagation();
