@@ -394,7 +394,7 @@ button,.btn,a.btn{visibility:visible;}
 /* iOS PWA recovery: remove stale Staff App service-worker/cache state once. */
 (function(){
   if(!("serviceWorker" in navigator)) return;
-  const key="tasvia-sw-recovery-v2";
+  const key="tasvia-sw-recovery-v3";
   if(localStorage.getItem(key)) return;
   localStorage.setItem(key,"1");
   Promise.all([
@@ -1642,6 +1642,7 @@ downloads={async save({filename,data}){
   const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();
   setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);return {status:"saved"}}};
 let auth=null;
+let firebaseStarted=false;
 const gate=document.getElementById("gate"),gErr=document.getElementById("gateErr");
 function authMsg(e){const c=(e&&e.code)||"";
   if(/invalid-credential|wrong-password|user-not-found|invalid-email/.test(c))return "Email or password is incorrect.";
@@ -1661,6 +1662,8 @@ window.addEventListener("unhandledrejection",e=>{
   if(ge)ge.textContent="TASVIA startup error: "+((e.reason&&e.reason.message)||e.reason||"Promise error");
 });
 function startFirebase(){
+  if(firebaseStarted)return;
+  firebaseStarted=true;
   if(!window.firebase||!window.FIREBASE_CONFIG||!window.FIREBASE_CONFIG.apiKey){
     setSync("Firebase unavailable");
     gate.hidden=false;
