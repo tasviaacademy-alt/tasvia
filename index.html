@@ -1738,7 +1738,7 @@ const loginForm=document.getElementById("fLogin");
 loginForm.addEventListener("submit",async e=>{
   e.preventDefault();e.stopImmediatePropagation();
   const d=Object.fromEntries(new FormData(e.target)),b=document.getElementById("loginBtn");
-  b.disabled=true;b.textContent="Signing in…";gErr.textContent="";
+  b.disabled=true;b.textContent="Signing in…";gErr.textContent="Connecting to Firebase…";setSync("Signing in…");
   try{
     if(!auth){
       startFirebase();
@@ -1746,7 +1746,7 @@ loginForm.addEventListener("submit",async e=>{
       while(!auth&&Date.now()-started<10000) await new Promise(r=>setTimeout(r,100));
     }
     if(!auth) throw new Error("Firebase sign-in service is not ready. Please reload.");
-    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
     const cred=await auth.signInWithEmailAndPassword((d.email||"").trim(),d.password||"");
     const u=cred&&cred.user;
     if(!u) throw new Error("Firebase sign-in returned no user");
