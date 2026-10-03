@@ -395,7 +395,7 @@ function render(){
   h+=`</div>`;
   // fees
   const pays=Array.isArray(v.pays)?v.pays.filter(p=>p&&typeof p==="object").map(p=>Object.assign({},p,{m:String(p.m||""),a:Number(p.a)||0,d:String(p.d||""),mode:String(p.mode||"")})):[];
-  const monthKey=s=>String(s||"").trim().toLowerCase().replace(/[^a-z0-9]/g,"");
+  const monthKey=s=>{const raw=String(s||"").trim().toLowerCase();const m=raw.match(/(?:^|[^a-z])(?:0?([1-9])|1([0-2]))(?:[^a-z]|$)/);if(m)return "m"+String(Number(m[1]||m[2])).padStart(2,"0");const names={jan:1,january:1,feb:2,february:2,mar:3,march:3,apr:4,april:4,may:5,jun:6,june:6,jul:7,july:7,aug:8,august:8,sep:9,september:9,oct:10,october:10,nov:11,november:11,dec:12,december:12};for(const [n,v] of Object.entries(names))if(raw.includes(n))return "m"+String(v).padStart(2,"0");return raw.replace(/[^a-z0-9]/g,"")};
   const paymentTotals={};
   pays.forEach(p=>{const k=monthKey(p.m);if(k)paymentTotals[k]=(paymentTotals[k]||0)+Math.max(0,Number(p.a||0));});
   const fees=Array.isArray(v.fees)?v.fees.filter(f=>f&&typeof f==="object").map(f=>{
@@ -444,7 +444,7 @@ function openFeeDueAfterWelcome(){
   // any popup. This prevents a paid month from being treated as overdue.
   const fs=Array.isArray(V?.fees)?V.fees.filter(f=>f&&typeof f==="object"):[];
   const pays=Array.isArray(V?.pays)?V.pays.filter(p=>p&&typeof p==="object"):[];
-  const key=s=>String(s||"").trim().toLowerCase().replace(/[^a-z0-9]/g,"");
+  const key=s=>{const raw=String(s||"").trim().toLowerCase();const m=raw.match(/(?:^|[^a-z])(?:0?([1-9])|1([0-2]))(?:[^a-z]|$)/);if(m)return "m"+String(Number(m[1]||m[2])).padStart(2,"0");const names={jan:1,january:1,feb:2,february:2,mar:3,march:3,apr:4,april:4,may:5,jun:6,june:6,jul:7,july:7,aug:8,august:8,sep:9,september:9,oct:10,october:10,nov:11,november:11,dec:12,december:12};for(const [n,v] of Object.entries(names))if(raw.includes(n))return "m"+String(v).padStart(2,"0");return raw.replace(/[^a-z0-9]/g,"")};
   const totals={};
   pays.forEach(p=>{const k=key(p.m);if(k)totals[k]=(totals[k]||0)+Math.max(0,Number(p.a||0));});
   const rows=fs.map(f=>{
