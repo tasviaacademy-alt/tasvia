@@ -1692,6 +1692,7 @@ function startFirebase(){
     clearTimeout(startupWatchdog);
     fs.enablePersistence({synchronizeTabs:true}).catch(err=>console.warn("Firebase persistence unavailable:",err));
     let authResolved=false;
+    let loginInProgress=false;
     const authWatchdog=setTimeout(()=>{if(!authResolved){setSync("Firebase connection timeout");gErr.textContent="Firebase sign-in service did not respond. Check your internet connection and reload."; }},10000);
     auth.onAuthStateChanged(async u=>{
       authResolved=true;
@@ -1717,6 +1718,10 @@ function startFirebase(){
           /* Keep the authenticated session so the actual Firebase error remains visible. */
         }
       }else{
+        if(loginInProgress){
+          setSync("Signing in…");
+          return;
+        }
         setSync("Signed out · login required");
         unsubs.forEach(x=>x&&x());unsubs=[];db=null;window.currentUser=null;
         S={students:{},att:{},fees:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},diary:{}};
@@ -1739,6 +1744,7 @@ loginForm.addEventListener("submit",async e=>{
   e.preventDefault();e.stopImmediatePropagation();
   const d=Object.fromEntries(new FormData(e.target)),b=document.getElementById("loginBtn");
   b.disabled=true;b.textContent="Signing in…";gErr.textContent="Connecting to Firebase…";setSync("Signing in…");
+  loginInProgress=true;
   try{
     if(!auth){
       startFirebase();
@@ -1747,26 +1753,16 @@ loginForm.addEventListener("submit",async e=>{
     }
     if(!auth) throw new Error("Firebase sign-in service is not ready. Please reload.");
     await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
-    const cred=await auth.signInWithEmailAndPassword((d.email||"").trim(),d.password||"");
-    const u=cred&&cred.user;
-    if(!u) throw new Error("Firebase sign-in returned no user");
+    await auth.signInWithEmailAndPassword((d.email||"").trim(),d.password||"");
     setSync("Signed in · verifying staff…");
-    const email=(u.email||d.email||"").trim().toLowerCase();
-    if(!fs) throw new Error("Firebase database is not ready. Please reload.");
-    const snap=await withTimeout(fs.collection("Staff").doc(email).get(),10000,"Staff verification timed out");
-    if(!snap.exists){
-      await auth.signOut();
-      throw new Error("This email is not registered in TASVIA Staff.");
-    }
-    const staff=snap.data()||{},role=(staff.role||"staff").toLowerCase();
-    window.currentUser={uid:u.uid,email:email,name:staff.name||email,role:role};
-    db=fs;gate.hidden=true;setSync("Staff verified · loading data…");render();subscribe();netStatus();
+    /* Post-login verification and UI are handled only by onAuthStateChanged. */
   }catch(err){
     console.error("TASVIA login:",err);
     gErr.textContent=err&&err.message==="Staff verification timed out"?"Firebase did not respond within 10 seconds.":(err&&err.code?authMsg(err):((err&&err.message)||"Unable to sign in."));
     setSync("Sign-in failed");
     gate.hidden=false;
   }finally{
+    loginInProgress=false;
     b.disabled=false;b.textContent="Sign in";
   }
 },true);
@@ -1774,7 +1770,7 @@ loginForm.addEventListener("submit",async e=>{
 render();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
 else startFirebase();
-if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=18",{scope:"./"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=19",{scope:"./"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
 
 </body>
