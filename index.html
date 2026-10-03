@@ -1578,7 +1578,7 @@ document.addEventListener("submit",e=>{
     const id=f.dataset.id,amt=Number(d.amount);if(!(amt>0))return toast("Enter an amount");
     const p={id:uid("p"),amount:amt,month:d.month,date:d.date,mode:d.mode,note:(d.note||"").trim()};ownIds.add(p.id);
     const legacy=Array.isArray((S.fees[id]||{}).payments);const cur={};payList(id).forEach(x=>cur[x.id]=x);cur[p.id]=p;S.fees[id]={payments:cur};
-    const feeWrite=!db?Promise.resolve(saveLocal()):legacy?put("fees/"+id,S.fees[id]):mergeWrite("fees/"+id,{payments:{[p.id]:p}},{});
+    const feeWrite=!db?Promise.resolve(saveLocal()):legacy?put("fees/"+id,S.fees[id]):mergeWrite("fees/"+id,{payments:{[p.id]:p}},{studentId:id,lastPaymentMonth:p.month,lastPaymentAmount:p.amount,lastPaymentDate:p.date});
     render();
     // Build the parent snapshot only AFTER Firebase confirms the fee write.
     // This prevents schedulePV() from racing the write and publishing stale fee data.
