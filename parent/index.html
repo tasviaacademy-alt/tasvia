@@ -389,8 +389,9 @@ function render(){
   h+=`<p class="foot">${esc(t.updated)}: ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}<br>${esc(t.save)}</p>`;
   document.getElementById("main").innerHTML=h;
   renderBodmas();
-  if(feeDue && window.tasviaWelcomeEntered){
-    showFeeDuePopup(feeDueAmount);
+  const feePastDueForPopup=fees.filter(f=>f&&f.dueDate&&today()>String(f.dueDate)).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
+  if(feePastDueForPopup>0 && window.tasviaWelcomeEntered){
+    showFeeDuePopup(feePastDueForPopup);
     feeDuePopupPending=false;
   }
   if(feeDue&&!feeDueScrollDone){
@@ -403,8 +404,8 @@ let actx=null;
 
 function openFeeDueAfterWelcome(){
   const fs=Array.isArray(V?.fees)?V.fees.filter(f=>f&&typeof f==="object"):[];
-  const due=fs.some(f=>{if(["due","part"].includes(f.status))return true;if(f.status==="upcoming"||!f.dueDate)return false;return today()>=String(f.dueDate)});
-  const amt=fs.filter(f=>{if(["due","part"].includes(f.status))return true;if(f.status==="upcoming"||!f.dueDate)return false;return today()>=String(f.dueDate)}).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
+  const due=fs.some(f=>f&&f.dueDate&&today()>String(f.dueDate));
+  const amt=fs.filter(f=>f&&f.dueDate&&today()>String(f.dueDate)).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
   if(due&&amt>0){
     if(window.tasviaWelcomeEntered)showFeeDuePopup(amt);
     else feeDuePopupPending=true;
