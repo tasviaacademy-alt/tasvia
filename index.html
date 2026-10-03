@@ -394,7 +394,7 @@ button,.btn,a.btn{visibility:visible;}
 /* iOS PWA recovery: remove stale Staff App service-worker/cache state once. */
 (function(){
   if(!("serviceWorker" in navigator)) return;
-  const key="tasvia-sw-recovery-v3";
+  const key="tasvia-sw-recovery-v4";
   if(localStorage.getItem(key)) return;
   localStorage.setItem(key,"1");
   Promise.all([
@@ -1720,7 +1720,7 @@ function startFirebase(){
         }catch(err){
           console.error("TASVIA staff verification:",err);
           setSync(err&&err.message==="Staff verification timed out"?"Staff verification timed out":"Firebase staff verification failed");
-          gErr.textContent=err&&err.message==="Staff verification timed out"?"Firebase did not respond within 10 seconds.":"Unable to verify staff account.";
+          gErr.textContent=err&&err.message==="Staff verification timed out"?"Firebase did not respond within 10 seconds.":"Unable to verify staff account: "+((err&&err.code)||"unknown")+" · "+((err&&err.message)||"Unknown error");
           /* Keep the authenticated session so the actual Firebase error remains visible. */
         }
       }else{
@@ -1776,7 +1776,7 @@ loginForm.addEventListener("submit",async e=>{
 render();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
 else startFirebase();
-if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=19",{scope:"./"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=20",{scope:"./"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
 
 </body>
