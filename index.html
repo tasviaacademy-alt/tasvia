@@ -560,7 +560,7 @@ async function migrateLegacyStudentIds(){
 function subscribe(){
   unsubs.forEach(u=>u&&u());unsubs=[];lazyMoreLoaded=false;lazyTeacherAttLoaded=false;
   const onErr=e=>setSync(e&&e.code==="permission-denied"?"Not on staff list":"Connection lost. Reopen the app.");
-  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;scheduleRender();if(key==="students"||key==="fees")schedulePV()},onErr));
+  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;scheduleRender();if(key==="students")schedulePV();if(key==="fees")schedulePV(true)},onErr));
   const admin=window.currentUser&&window.currentUser.role==="admin";
   coll("students","students");
   setTimeout(()=>migrateLegacyStudentIds(),1500);
@@ -838,7 +838,7 @@ function avatarHTML(sid,name){const p=photoCache[sid];return p?`<img src="${p}" 
 
 /* ---------- parent pages ---------- */
 /* Each student gets a long random code. A read-only summary lives at parentView/<code>; parents open parent.html#<code>. */
-let pvCache={},pvReady=false,pvT=null,pvBusy=false;
+let pvCache={},pvReady=false,pvT=null,pvBusy=false,pvForce=false;
 /* Short fingerprint of each parent page this device last wrote, so unchanged pages are never rewritten (saves free-plan quota). */
 function hash(str){let h1=0xdeadbeef,h2=0x41c6ce57;for(let i=0;i<str.length;i++){const c=str.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677)}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return (h2>>>0).toString(36)+(h1>>>0).toString(36)}
 function pvLoad(){try{pvCache=JSON.parse(localStorage.getItem("tasvia-pv")||"{}")}catch(e){pvCache={}}pvReady=true}
@@ -867,12 +867,14 @@ function buildParentView(s){
   return {studentId:s.id,name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,
     centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||""}};
 }
-function schedulePV(){clearTimeout(pvT);pvT=setTimeout(syncPV,3000)}
+function schedulePV(force=false){if(force)pvForce=true;clearTimeout(pvT);pvT=setTimeout(syncPV,3000)}
 async function syncPV(){
   if(!db||!pvReady)return;
   if(pvBusy){clearTimeout(pvT);pvT=setTimeout(syncPV,1200);return}
   pvBusy=true;
   const usedCodes=new Set();
+  const forceWrite=pvForce;
+  pvForce=false;
   try{
     for(const [id,raw] of Object.entries(S.students||{})){
       try{
@@ -900,7 +902,7 @@ async function syncPV(){
           const old=snap.exists?snap.data():null;
           exists=!!(old&&(!old.studentId||old.studentId===id));
         }catch(e){console.warn("parent record check",code,e)}
-        if(!exists||pvCache[code]!==hj){
+        if(forceWrite||!exists||pvCache[code]!==hj){
           await db.doc("parentView/"+code).set(Object.assign({},v,{studentId:id,updated:Date.now()}),{merge:true});
           // Also mirror the parent view under the actual Student ID so parents can log in with Student ID.
           await db.doc("parentView/"+id).set(Object.assign({},v,{studentId:id,loginId:id,updated:Date.now()}),{merge:true});
@@ -1599,7 +1601,7 @@ document.addEventListener("submit",e=>{
     feeWrite.then(()=>{
       pvCache[S.students[id]?.pcode]=null;
       try{localStorage.removeItem("tasvia-pv")}catch(e){}
-      schedulePV();
+      schedulePV(true);
     });
     const s={id,...S.students[id]};
     openSheet("Payment saved",`<p>${rs(amt)} from ${esc(s.name)} for ${monthName(d.month)}.</p><pre class="msg">${esc(receiptText(s,p))}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Send receipt on WhatsApp</a><button class="btn ghost" data-act="close">Done</button></div>`);
