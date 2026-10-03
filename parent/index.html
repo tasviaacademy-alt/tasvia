@@ -378,8 +378,12 @@ function render(){
     const fee=Number(f.fee)||0, recordedPaid=Number(f.paid)||0, paidFromPayments=paymentTotals[monthKey(f.m)]||0;
     return Object.assign({},f,{m:String(f.m||""),fee,paid:Math.min(fee,Math.max(recordedPaid,paidFromPayments)),dueDate:f.dueDate?String(f.dueDate):""});
   }):[];
-  const feeDue=fees.some(f=>f&&f.dueDate&&today()>=String(f.dueDate)&&Number(f.fee||0)>Number(f.paid||0));
-  const feeDueAmount=fees.filter(f=>f&&f.dueDate&&today()>=String(f.dueDate)&&Number(f.fee||0)>Number(f.paid||0)).reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
+  const feeDueRows=fees.filter(f=>{
+    const outstanding=Math.max(0,Number(f.fee||0)-Number(f.paid||0));
+    return outstanding>0 && !!f.dueDate && today()>=String(f.dueDate);
+  });
+  const feeDue=feeDueRows.length>0;
+  const feeDueAmount=feeDueRows.reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
   if(fees.length||pays.length){
     h+=`<div id="feesSection" class="card${feeDue?" fee-due":""}"><h2>${esc(t.fees)}</h2>${feeDue?`<div class="fee-alert"><span class="dot"></span><span>${esc(t.due)} · ${esc(L==="te"?"ఫీజు చెల్లింపు పెండింగ్‌లో ఉంది":L==="hi"?"फ़ीस भुगतान बाकी है":"Fee payment pending")}</span></div>`:""}`;
     if(fees.length)h+=`<table><tr><th>${esc(t.month)}</th><th class="r">${esc(t.status)}</th></tr>`+fees.map(f=>{const outstanding=Math.max(0,Number(f.fee||0)-Number(f.paid||0));const pastDue=!!f.dueDate&&today()>String(f.dueDate);const onDue=!!f.dueDate&&today()===String(f.dueDate);const st=outstanding<=0?`<span class="tag ok">${esc(t.paid)}</span>`:!f.dueDate||today()<String(f.dueDate)?`<span class="tag">${esc(t.upcoming)} · ${esc(t.dueOn)} ${esc(dN(f.dueDate))}</span>`:pastDue?`<span class="tag bad">${esc(t.due)} ${rs(outstanding)}</span>`:`<span class="tag gold">${esc(t.due)} ${rs(outstanding)}</span>`;return `<tr><td>${esc(mN(f.m))}<br><span class="sub">${esc(t.dueOn)}: ${esc(dN(f.dueDate))}</span></td><td class="r">${st}</td></tr>`}).join("")+`</table>`;
