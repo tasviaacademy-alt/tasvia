@@ -1702,10 +1702,16 @@ function startFirebase(){
           setSync("Signed in · verifying staff…");
           const email=u.email.trim().toLowerCase();
           setSync("Checking staff account…");
-          const snap=await withTimeout(fs.collection("Staff").doc(email).get(),10000,"Staff verification timed out");
+          // Staff records may be keyed by email OR use an auto-generated Firestore document ID.
+          // Check the canonical email document first, then fall back to the email field.
+          let snap=await withTimeout(fs.collection("Staff").doc(email).get(),10000,"Staff verification timed out");
+          if(!snap.exists){
+            const q=await withTimeout(fs.collection("Staff").where("email","==",email).limit(1).get(),10000,"Staff lookup timed out");
+            if(!q.empty) snap=q.docs[0];
+          }
           if(!snap.exists){
             setSync("Staff account check failed");
-            gErr.textContent="Login succeeded, but this email is not registered in TASVIA Staff. Check the Staff record.";
+            gErr.textContent="Firebase login succeeded, but no TASVIA Staff record matches this email. Please check the Staff record email.";
             return;
           }
           const staff=snap.data()||{},role=(staff.role||"staff").toLowerCase();
