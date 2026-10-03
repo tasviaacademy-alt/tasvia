@@ -1723,10 +1723,28 @@ function startFirebase(){
       }
     });
     document.getElementById("fLogin").addEventListener("submit",async e=>{
-      e.preventDefault();e.stopPropagation();const d=Object.fromEntries(new FormData(e.target));const b=document.getElementById("loginBtn");
+      e.preventDefault();e.stopImmediatePropagation();
+      const d=Object.fromEntries(new FormData(e.target)),b=document.getElementById("loginBtn");
       b.disabled=true;b.textContent="Signing in…";gErr.textContent="";
-      try{await auth.signInWithEmailAndPassword(d.email.trim(),d.password)}catch(err){gErr.textContent=authMsg(err)}
-      b.disabled=false;b.textContent="Sign in";
+      try{
+        await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+        const cred=await auth.signInWithEmailAndPassword(d.email.trim(),d.password);
+        const u=cred&&cred.user;
+        if(!u)throw new Error("Firebase sign-in returned no user");
+        setSync("Signed in · verifying staff…");
+        const email=(u.email||d.email||"").trim().toLowerCase();
+        const snap=await withTimeout(fs.collection("Staff").doc(email).get(),10000,"Staff verification timed out");
+        if(!snap.exists)throw new Error("This email is not registered in TASVIA Staff.");
+        const staff=snap.data()||{},role=(staff.role||"staff").toLowerCase();
+        window.currentUser={uid:u.uid,email:email,name:staff.name||email,role:role};
+        db=fs;gate.hidden=true;setSync("Staff verified · loading data…");render();subscribe();netStatus();
+      }catch(err){
+        console.error("TASVIA login:",err);
+        gErr.textContent=err&&err.message==="Staff verification timed out"?"Firebase did not respond within 10 seconds.":(err&&err.code?authMsg(err):((err&&err.message)||"Unable to sign in."));
+        setSync("Sign-in failed");
+      }finally{
+        b.disabled=false;b.textContent="Sign in";
+      }
     },true);
     document.getElementById("forgot").addEventListener("click",async()=>{
       const em=document.querySelector("#fLogin [name=email]").value.trim();if(!em){gErr.textContent="Type your email above first.";return}
