@@ -337,7 +337,26 @@ function render(){
   const quickHw=Array.isArray(v.hw)?v.hw.filter(x=>x&&typeof x==="object"):[];
   const quickTestCount=quickTests.length;
   const quickTestAvg=quickTests.length?Math.round(quickTests.reduce((sum,x)=>sum+(Number(x.x)?(Number(x.m)||0)*100/Number(x.x):0),0)/quickTests.length):null;
-  const quickFeeRows=quickFees.map(f=>Object.assign({},f,{fee:Number(f.fee)||0,paid:Number(f.paid)||0,dueDate:f.dueDate?String(f.dueDate):""}));
+  // Reconcile dashboard fee status from payment history as well as the stored fee snapshot.
+  // This prevents a stale parentView.fees value from showing "Fee Due" after staff has recorded payment.
+  const feeMonthKey=s=>{
+    const raw=String(s||"").trim().toLowerCase();
+    if(/^\\d{4}-\\d{2}$/.test(raw))return "m"+raw.slice(5);
+    const names={jan:1,january:1,feb:2,february:2,mar:3,march:3,apr:4,april:4,may:5,jun:6,june:6,jul:7,july:7,aug:8,august:8,sep:9,september:9,oct:10,october:10,nov:11,november:11,dec:12,december:12};
+    for(const [n,v] of Object.entries(names))if(raw.includes(n))return "m"+String(v).padStart(2,"0");
+    const m=raw.match(/(?:^|[^a-z])(?:0?([1-9])|1([0-2]))(?:[^a-z]|$)/);
+    return m?"m"+String(Number(m[1]||m[2])).padStart(2,"0"):raw.replace(/[^a-z0-9]/g,"");
+  };
+  const quickPaymentTotals={};
+  (Array.isArray(v.pays)?v.pays:[]).forEach(p=>{
+    if(!p||typeof p!=="object")return;
+    const k=feeMonthKey(p.m||p.month||p.d);
+    if(k)quickPaymentTotals[k]=(quickPaymentTotals[k]||0)+Math.max(0,Number(p.a||p.amount||0));
+  });
+  const quickFeeRows=quickFees.map(f=>{
+    const fee=Number(f.fee)||0,storedPaid=Number(f.paid)||0,paidFromPayments=quickPaymentTotals[feeMonthKey(f.m)]||0;
+    return Object.assign({},f,{fee,paid:Math.min(fee,Math.max(storedPaid,paidFromPayments)),dueDate:f.dueDate?String(f.dueDate):""});
+  });
   const quickFeePendingRows=quickFeeRows.filter(f=>{
     const outstanding=Math.max(0,Number(f.fee||0)-Number(f.paid||0));
     if(outstanding<=0)return false;
@@ -395,7 +414,7 @@ function render(){
   h+=`</div>`;
   // fees
   const pays=Array.isArray(v.pays)?v.pays.filter(p=>p&&typeof p==="object").map(p=>{const d=String(p.d||"");const m=String(p.m||"")||(/^\d{4}-\d{2}/.test(d)?d.slice(0,7):"");return Object.assign({},p,{m,a:Number(p.a)||0,d,mode:String(p.mode||"")})}):[];
-  const monthKey=s=>{const raw=String(s||"").trim().toLowerCase();const m=raw.match(/(?:^|[^a-z])(?:0?([1-9])|1([0-2]))(?:[^a-z]|$)/);if(m)return "m"+String(Number(m[1]||m[2])).padStart(2,"0");const names={jan:1,january:1,feb:2,february:2,mar:3,march:3,apr:4,april:4,may:5,jun:6,june:6,jul:7,july:7,aug:8,august:8,sep:9,september:9,oct:10,october:10,nov:11,november:11,dec:12,december:12};for(const [n,v] of Object.entries(names))if(raw.includes(n))return "m"+String(v).padStart(2,"0");return raw.replace(/[^a-z0-9]/g,"")};
+  const monthKey=feeMonthKey;
   const paymentTotals={};
   pays.forEach(p=>{const k=monthKey(p.m);if(k)paymentTotals[k]=(paymentTotals[k]||0)+Math.max(0,Number(p.a||0));});
   const fees=Array.isArray(v.fees)?v.fees.filter(f=>f&&typeof f==="object").map(f=>{
