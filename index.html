@@ -646,7 +646,18 @@ function tStats(tid,month){
 }
 /* Payments are a map keyed by id (older array form still read). */
 function payList(sid){const p=(S.fees[sid]||{}).payments;if(!p)return [];return (Array.isArray(p)?p:Object.values(p)).filter(Boolean).map((x,i)=>x.id?x:Object.assign({id:"p"+i},x))}
-function paidFor(sid,month){return payList(sid).filter(x=>x.month===month)}
+function paymentMonth(p){
+  const raw=String(p?.month||"").trim();
+  if(/^\\d{4}-\\d{2}$/.test(raw))return raw;
+  const date=String(p?.date||"").trim();
+  if(/^\\d{4}-\\d{2}-\\d{2}$/.test(date))return date.slice(0,7);
+  const m=raw.toLowerCase().replace(/[^a-z0-9]/g,"");
+  const years=raw.match(/(20\\d{2})/); const y=years?years[1]:"";
+  const names={jan:"01",january:"01",feb:"02",february:"02",mar:"03",march:"03",apr:"04",april:"04",may:"05",jun:"06",june:"06",jul:"07",july:"07",aug:"08",august:"08",sep:"09",sept:"09",september:"09",oct:"10",october:"10",nov:"11",november:"11",dec:"12",december:"12"};
+  const mm=names[m]||names[m.replace(/20\\d{2}/g,"")];
+  return y&&mm?y+"-"+mm:"";
+}
+function paidFor(sid,month){return payList(sid).filter(x=>paymentMonth(x)===month)}
 function feeDueDate(s,month){
   if(!s?.joined||!/^\d{4}-\d{2}-\d{2}$/.test(s.joined)||!/^\d{4}-\d{2}$/.test(month))return null;
   const day=Number(s.joined.slice(8,10)),[y,mo]=month.split("-").map(Number);
@@ -848,7 +859,10 @@ function buildParentView(s){
   const abs=datesOf("att").filter(d=>d>=ay.from&&getMarks(d)[s.id]==="A").sort().reverse().slice(0,8);
   const tests=Object.values(S.tests).filter(t=>t.date>=ay.from&&t.marks&&t.marks[s.id]!=null).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,25).map(t=>({d:t.date,s:t.subject,n:t.name,m:+t.marks[s.id],x:+t.max}));
   const fees=s.fee?months.filter(m=>enrolledIn(s,m)).map(m=>{const fs=feeStatus(s,m);return {m,fee:+s.fee,paid:fs.paid,dueDate:fs.dueDate,status:fs.k};}):[];
-  const pays=payList(s.id).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,6).map(p=>({d:p.date,a:+p.amount,m:p.month,mode:p.mode}));
+  // Keep every payment belonging to the fee months shown above. Do not slice to the latest 6 records:
+  // older monthly payments (especially September) must remain available to the parent portal for reconciliation.
+  const feeMonths=new Set(months);
+  const pays=payList(s.id).filter(p=>feeMonths.has(paymentMonth(p))).sort((a,b)=>String(b.date||"").localeCompare(String(a.date||""))).map(p=>({d:p.date,a:+p.amount,m:paymentMonth(p),mode:p.mode}));
   const hw=Object.keys(S.diary).sort().reverse().map(d=>{const e=((S.diary[d]||{}).entries||{})[s.id];return e&&e.hw?{d,hw:e.hw,note:e.note||""}:null}).filter(Boolean).slice(0,5);
   return {studentId:s.id,name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,
     centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||""}};
