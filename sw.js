@@ -1,7 +1,7 @@
 // TASVIA Academy service worker
 // HTML is network-first so production fixes are not hidden behind stale cache.
 // Firebase/Auth/API traffic is never cached.
-const CACHE = "tasvia-v19";
+const CACHE = "tasvia-v20";
 const STATIC_SHELL = [
   "/",
   "/index.html",
