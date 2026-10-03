@@ -498,7 +498,7 @@ function remove(path){
   return queues[path]=p;
 }
 let lazyMoreLoaded=false,lazyTeacherAttLoaded=false;
-async async function migrateLegacyStudentIds(){
+async function migrateLegacyStudentIds(){
   if(!db||!isAdmin()||window._tasviaIdMigrationRunning)return;
   const legacy=Object.entries(S.students||{}).filter(([id])=>!/^TAS-\d{2}-\d{4}$/.test(id));
   if(!legacy.length)return;
