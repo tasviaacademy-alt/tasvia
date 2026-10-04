@@ -1593,18 +1593,22 @@ document.addEventListener("submit",e=>{
   if(f.id==="fPay"){
     const id=f.dataset.id,amt=Number(d.amount);if(!(amt>0))return toast("Enter an amount");
     const p={id:uid("p"),amount:amt,month:d.month,date:d.date,mode:d.mode,note:(d.note||"").trim()};ownIds.add(p.id);
+    const previousFees=S.fees[id];
     const legacy=Array.isArray((S.fees[id]||{}).payments);const cur={};payList(id).forEach(x=>cur[x.id]=x);cur[p.id]=p;S.fees[id]={payments:cur};
-    const feeWrite=!db?Promise.resolve(saveLocal()):legacy?put("fees/"+id,S.fees[id]):mergeWrite("fees/"+id,{payments:{[p.id]:p}},{studentId:id,lastPaymentMonth:p.month,lastPaymentAmount:p.amount,lastPaymentDate:p.date});
-    render();
-    // Build the parent snapshot only AFTER Firebase confirms the fee write.
-    // This prevents schedulePV() from racing the write and publishing stale fee data.
-    feeWrite.then(()=>{
+    const feeWrite=!db?Promise.resolve(saveLocal()).then(()=>true):legacy?put("fees/"+id,S.fees[id]):mergeWrite("fees/"+id",{payments:{[p.id]:p}},{studentId:id,lastPaymentMonth:p.month,lastPaymentAmount:p.amount,lastPaymentDate:p.date});
+    feeWrite.then(ok=>{
+      if(ok===false){
+        S.fees[id]=previousFees;
+        render();
+        return;
+      }
       pvCache[S.students[id]?.pcode]=null;
       try{localStorage.removeItem("tasvia-pv")}catch(e){}
       schedulePV(true);
+      render();
+      const s={id,...S.students[id]};
+      openSheet("Payment saved",`<p>${rs(amt)} from ${esc(s.name)} for ${monthName(d.month)}.</p><pre class="msg">${esc(receiptText(s,p))}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Send receipt on WhatsApp</a><button class="btn ghost" data-act="close">Done</button></div>`);
     });
-    const s={id,...S.students[id]};
-    openSheet("Payment saved",`<p>${rs(amt)} from ${esc(s.name)} for ${monthName(d.month)}.</p><pre class="msg">${esc(receiptText(s,p))}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Send receipt on WhatsApp</a><button class="btn ghost" data-act="close">Done</button></div>`);
   }
   if(f.id==="fTest"){
     const id=uid("t");ownIds.add(id);const t={name:d.name.trim(),subject:d.subject,cls:d.cls,max:Number(d.max)||100,date:d.date,marks:{}};
