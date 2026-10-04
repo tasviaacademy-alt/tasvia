@@ -1579,7 +1579,33 @@ document.addEventListener("click",e=>{
     case "askNotif":Notification.requestPermission().then(()=>render());break;
     case "copyPL":copy(parentURL(S.students[id].pcode));break;
     case "resetPL":if(confirmDel(b,"Tap again: old link stops")){const st=S.students[id],old=st.pcode,code=newCode();if(old)remove("parentView/"+old);S.students[id]=Object.assign({},st,{pcode:code});if(db){db.doc("students/"+id).set({pcode:code},{merge:true}).catch(e=>toast(errMsg(e)));getPhoto(id).then(p=>{if(p)db.doc("parentView/"+code).set({photo:p},{merge:true}).catch(()=>{})})}schedulePV();studentSheet(id);toast("New link created")}break;
-    case "signOut":if(confirmDel(b,"Tap again to sign out")&&auth)auth.signOut();break;
+    case "signOut":
+      if(confirmDel(b,"Tap again to sign out")&&auth){
+        b.disabled=true;
+        b.textContent="Signing out…";
+        loginInProgress=false;
+        loginGraceUntil=0;
+        loginSessionReady=false;
+        gate.hidden=false;
+        gErr.textContent="";
+        setSync("Signing out…");
+        unsubs.forEach(x=>x&&x());unsubs=[];
+        closeSheet();
+        try{
+          await auth.signOut();
+        }catch(err){
+          console.error("TASVIA sign-out:",err);
+          gErr.textContent="Sign-out failed. Please try again.";
+        }finally{
+          db=null;window.currentUser=null;
+          S={students:{},att:{},fees:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},diary:{}};
+          render();
+          setSync("Signed out");
+          b.disabled=false;
+          b.textContent="Sign out";
+        }
+      }
+      break;
     case "export":exportCSV(b.dataset.k);break;
     case "backupNow":backupNow();break;
     case "restoreBackup":restoreBackupFile();break;
@@ -1780,6 +1806,8 @@ function startFirebase(){
           return;
         }
         loginSessionReady=false;
+        loginInProgress=false;
+        loginGraceUntil=0;
         setSync("Signed out · login required");
         unsubs.forEach(x=>x&&x());unsubs=[];db=null;window.currentUser=null;
         S={students:{},att:{},fees:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},diary:{}};
