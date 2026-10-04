@@ -436,7 +436,7 @@ const DEFAULT_INFO={name:"TASVIA Academy Tuition Centre",notice:"Admissions open
   subjects:"All subjects, LKG to Intermediate (State Board and CBSE)",
   extra:"TASVIA Academy Competitive Coaching: Navodaya (JNVST) and Sainik School entrance."};
 
-let S={students:{},att:{},fees:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},diary:{}};
+let S={students:{},att:{},fees:{},paymentRecords:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},diary:{}};
 let db=null,unsubs=[];
 const UI={tab:"today",seg:"students",more:null,date:today(),cls:"all",feeMonth:today().slice(0,7),moneyMonth:today().slice(0,7),q:"",testCls:"all",cardCls:null,rcFrom:null,rcTo:null};
 
@@ -1604,7 +1604,7 @@ document.addEventListener("click",async e=>{
           gErr.textContent="Sign-out failed. Please try again.";
         }finally{
           db=null;window.currentUser=null;
-          S={students:{},att:{},fees:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},diary:{}};
+          S={students:{},att:{},fees:{},paymentRecords:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},diary:{}};
           render();
           setSync("Signed out");
           b.disabled=false;
@@ -1655,19 +1655,15 @@ document.addEventListener("submit",e=>{
       else if(payments&&typeof payments==="object")Object.entries(payments).forEach(([k,v])=>{if(v!=null)next[k]=v});
       next[p.id]=p;
       tx.set(ref,{studentId:id,payments:next,lastPaymentMonth:p.month,lastPaymentAmount:p.amount,lastPaymentDate:p.date},{merge:true});
+      // Keep the permanent payment ledger atomic with the fee summary. If either
+      // write fails, Firestore rolls back the whole transaction so a payment can
+      // never appear saved temporarily and then disappear later.
+      tx.set(db.doc("paymentRecords/"+p.id),Object.assign({studentId:id},p),{merge:true});
       return true;
     }).catch(e=>{toast(errMsg(e));return false});
     const current={payments:Object.fromEntries(payList(id).map(x=>[x.id,x]))};current.payments[p.id]=p;S.fees[id]=current;
-    feeWrite.then(async ok=>{
+    feeWrite.then(ok=>{
       if(ok===false){if(previousFees===undefined)delete S.fees[id];else S.fees[id]=previousFees;render();return;}
-      // Permanent ledger write is best-effort until its Firestore rule is published.
-      if(db){
-        try{
-          await db.doc("paymentRecords/"+p.id).set(Object.assign({studentId:id},p),{merge:true});
-        }catch(e){
-          console.warn("TASVIA payment ledger write failed:",e);
-        }
-      }
       pvCache[S.students[id]?.pcode]=null;try{localStorage.removeItem("tasvia-pv")}catch(e){}
       schedulePV(true);render();const s={id,...S.students[id]};
       openSheet("Payment saved",`<p>${rs(amt)} from ${esc(s.name)} for ${monthName(d.month)}.</p><pre class="msg">${esc(receiptText(s,p))}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Send receipt on WhatsApp</a><button class="btn ghost" data-act="close">Done</button></div>`);
