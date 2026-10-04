@@ -297,8 +297,7 @@ input:focus,select:focus,textarea:focus{border-color:#9DAAC1!important;box-shado
 @media(max-width:520px){.commercial-actions{grid-template-columns:repeat(2,1fr)}}
 
 .commercial-strip span{display:inline-flex;align-items:center;gap:4px}
-.commercial-strip b{color:var(--ink)}
-@media(max-width:620px){.commercial-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.commercial-kpi{padding:10px}.commercial-kpi b{font-size:1.2rem}.commercial-strip{font-size:.72rem}}
+.commercial-strip b{color:var(--ink)}@media(max-width:620px){.commercial-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.commercial-kpi{padding:10px}.commercial-kpi b{font-size:1.2rem}.commercial-strip{font-size:.72rem}}
 @media(prefers-color-scheme:dark){.commercial-strip{background:rgba(18,28,40,.72)}}
 
 /* TASVIA PREMIUM POLISH */
@@ -597,8 +596,7 @@ function ensureTeacherAttendance(){
     if(s.metadata&&!s.metadata.fromCache)seenFirst.tatt=true;
     scheduleRender();
   },onErr));
-}
-function ensureMoreAdminData(){
+}function ensureMoreAdminData(){
   if(!db||lazyMoreLoaded||!isAdmin())return;
   lazyMoreLoaded=true;
   const onErr=e=>setSync(e&&e.code==="permission-denied"?"Not on staff list":"Connection lost. Reopen the app.");
@@ -897,8 +895,7 @@ async function syncPV(){
   pvBusy=true;
   const usedCodes=new Set();
   const forceWrite=pvForce;
-  pvForce=false;
-  try{
+  pvForce=false;  try{
     for(const [id,raw] of Object.entries(S.students||{})){
       try{
         const st=Object.assign({},raw||{});
@@ -974,7 +971,7 @@ function vToday(){
   const p=list.filter(s=>marks[s.id]==="P").length,a=list.filter(s=>marks[s.id]==="A").length,nm=Math.max(list.length-p-a,0);
   const ent=(S.diary[UI.date]||{}).entries||{},hwDone=list.filter(s=>ent[s.id]&&ent[s.id].hw).length;
   const admin=isAdmin(),m=UI.date.slice(0,7);
-  const feeDue=admin?list.filter(s=>s.fee>0&&enrolledIn(s,m)&&feeStatus(s,m).k!=="paid").length:0;
+  const feeDue=admin?list.filter(s=>s.fee>0&&enrolledIn(s,m)&&["due","part"].includes(feeStatus(s,m).k)).length:0;
   const testCount=Object.values(S.tests).filter(t=>t.date&&t.date.slice(0,7)===m).length;
   h+=`<div class="commercial-kpis">
     <div class="commercial-kpi"><b>${list.length}</b><span>Students</span></div>
@@ -1197,8 +1194,7 @@ function printStudentID(id){
   const html='<div id="printIdCard"><div class="idtop"><b>TASVIA</b> ACADEMY<span>STUDENT ID · '+esc(ay.label)+'</span></div><div class="idbody"><div class="idphoto">'+photo+'</div><div class="idd"><div class="idname">'+esc(s.name)+'</div><div><b>Class</b> '+esc(clsLabel(s.cls))+(s.batch?' · '+esc(s.batch):'')+' · '+esc(s.board||'')+'</div><div><b>Parent</b> '+esc(s.parent||'–')+'</div><div><b>Phone</b> '+esc(s.phone||'–')+'</div></div></div><div class="idsign">Principal</div><div class="idfoot">TASVIA Academy · '+esc(i.phone)+'</div></div>';
   openSheet("Student ID card",html+'<div class="acts" style="margin-top:14px"><button class="btn gold" id="printIdBtn">Print / Save PDF</button><button class="btn ghost" data-act="close">Close</button></div>');
   const st=document.createElement("style");st.id="tasviaIdPrintStyle";st.textContent='@media print{body>*{display:none!important}#scrim{display:block!important;position:static!important;background:#fff!important}#scrim .sheet{display:block!important;position:static!important;width:100%!important;max-width:none!important;box-shadow:none!important;border:0!important}#scrim .top,#scrim .acts,#scrim .x{display:none!important}#printIdCard{display:block!important;margin:20mm auto!important;width:85.6mm!important;height:54mm!important;break-inside:avoid!important}}#printIdCard{background:#fff;border:1px solid #999;border-radius:3mm;overflow:hidden;width:85.6mm;height:54mm;margin:0 auto;font-family:Arial,sans-serif;color:#15201C}#printIdCard .idtop{background:#0B2455;color:#fff;padding:3mm;font-size:12px}#printIdCard .idtop b{color:#F2AC10;font-size:15px}#printIdCard .idtop span{float:right;font-size:8px;margin-top:1mm}.idbody{display:flex;gap:3mm;padding:3mm}.idphoto{width:20mm;height:25mm;border:1px dashed #999;flex:0 0 auto;display:grid;place-items:center;overflow:hidden;font-size:8px;color:#999}.idphoto img{width:100%;height:100%;object-fit:cover}.idd{font-size:9px;line-height:1.6}.idname{font-size:13px;font-weight:700;color:#0B2455;margin-bottom:1mm}.idsign{text-align:right;font-size:8px;padding:0 4mm 1mm}.idfoot{background:#F2AC10;font-size:7px;padding:1.5mm 3mm}';
-  document.head.appendChild(st);
-  document.getElementById("printIdBtn").onclick=()=>window.print();
+  document.head.appendChild(st);  document.getElementById("printIdBtn").onclick=()=>window.print();
 }
 const opt=(v,cur,l)=>`<option value="${esc(v)}" ${v===cur?"selected":""}>${esc(l||v)}</option>`;
 // Meaningful TASVIA Student ID: TAS-YY-0001, where YY is the admission year and the last part is a unique sequence.
@@ -1447,7 +1443,7 @@ async function rcImage(id){
   await saveFile(`report-card-${slug(s.name)}.png`,blob);
 }
 function remindSheet(){
-  const m=UI.feeMonth,list=byBatch(studentsOf(UI.cls)).filter(s=>s.fee>0&&enrolledIn(s,m)&&feeStatus(s,m).k!=="paid");
+  const m=UI.feeMonth,list=byBatch(studentsOf(UI.cls)).filter(s=>s.fee>0&&enrolledIn(s,m)&&["due","part"].includes(feeStatus(s,m).k));
   openSheet("Fee reminders",`<p class="sub" style="margin-top:-8px">${monthName(m)} · tap to send each parent a polite reminder.</p><div class="list">${list.map(s=>`<div class="item"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${rs(feeStatus(s,m).left)} pending · ${esc(s.phone||"No number saved")}</div></div><a class="btn sm gold" target="_blank" rel="noopener" href="${waLink(s.phone,remindText(s,m))}">Remind</a></div>`).join("")}</div>`);
 }
 let downloads=null;
@@ -1497,8 +1493,7 @@ function restoreBackupFile(){
     const f=inp.files&&inp.files[0];if(!f)return;
     try{
       const data=JSON.parse(await f.text()),c=data&&data.collections;
-      if(!c||data.app!=="TASVIA Academy")throw new Error("Invalid backup");
-      if(!confirm("Restore this TASVIA backup? Existing matching records will be overwritten. This cannot be undone."))return;
+      if(!c||data.app!=="TASVIA Academy")throw new Error("Invalid backup");      if(!confirm("Restore this TASVIA backup? Existing matching records will be overwritten. This cannot be undone."))return;
       if(!db)throw new Error("Database unavailable");
       const maps={students:c.students,fees:c.fees,tests:c.tests,attendance:c.attendance,diary:c.diary,teachers:c.teachers,salaries:c.salaries,expenses:c.expenses,staffattendance:c.staffattendance,gkBackup:c.gkBackup};
       for(const [col,docs] of Object.entries(maps)){
@@ -1797,8 +1792,7 @@ function startFirebase(){
   }
 }
 let loginInProgress=false; let loginGraceUntil=0; let loginSessionReady=false;
-const loginForm=document.getElementById("fLogin");
-document.getElementById("loginBtn").addEventListener("click",async e=>{
+const loginForm=document.getElementById("fLogin");document.getElementById("loginBtn").addEventListener("click",async e=>{
   e.preventDefault();e.stopImmediatePropagation();
   const d=Object.fromEntries(new FormData(loginForm)),b=document.getElementById("loginBtn");
   b.disabled=true;b.textContent="Signing in…";gErr.textContent="Connecting to Firebase…";setSync("Signing in…");
