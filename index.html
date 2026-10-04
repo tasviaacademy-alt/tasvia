@@ -1663,10 +1663,17 @@ document.addEventListener("submit",e=>{
       else if(payments&&typeof payments==="object")Object.entries(payments).forEach(([k,v])=>{if(v!=null)next[k]=v});
       next[p.id]=p;
       tx.set(ref,{studentId:id,payments:next,lastPaymentMonth:p.month,lastPaymentAmount:p.amount,lastPaymentDate:p.date},{merge:true});
-      // Keep the permanent payment ledger atomic with the fee summary. If either
-      // write fails, Firestore rolls back the whole transaction so a payment can
-      // never appear saved temporarily and then disappear later.
-      tx.set(db.doc("paymentRecords/"+p.id),Object.assign({studentId:id},p),{merge:true});
+      // The fee record is the authoritative payment history. Do not make a
+      // payment depend on the optional permanent-ledger collection being writable:
+      // older Firestore rules may temporarily deny paymentRecords and must never
+      // cause a successfully saved fee payment to roll back.
+      return true;
+    }).then(async()=>{
+      // Best-effort permanent ledger mirror. A ledger permission error is logged
+      // but never removes or rolls back the authoritative fee payment.
+      try{
+        await db.doc("paymentRecords/"+p.id).set(Object.assign({studentId:id},p),{merge:true});
+      }catch(ledgerErr){console.warn("TASVIA payment ledger mirror:",ledgerErr)}
       return true;
     }).catch(e=>{toast(errMsg(e));return false}).finally(()=>{window._tasviaPaymentSaveRunning=false});
     const current={payments:Object.fromEntries(payList(id).map(x=>[x.id,x]))};current.payments[p.id]=p;S.fees[id]=current;
