@@ -37,6 +37,11 @@ service cloud.firestore {
       allow read, write: if staff();
     }
 
+    // Permanent fee payment ledger. Individual payment records are never dependent on the mutable fee summary document.
+    match /paymentRecords/{id} {
+      allow read, write: if staff();
+    }
+
     match /tests/{id} {
       allow read, write: if staff();
     }
