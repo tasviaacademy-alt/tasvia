@@ -1734,7 +1734,7 @@ function startFirebase(){
       if(u){
         try{
           setSync("Signed in · verifying staff…");
-          const email=u.email.trim().toLowerCase();
+          const email=(u.email||"").trim().toLowerCase();
           setSync("Checking staff account…");
           // Staff records may be keyed by email OR use an auto-generated Firestore document ID.
           // Check the canonical email document first, then fall back to the email field.
@@ -1758,10 +1758,11 @@ function startFirebase(){
           /* Keep the authenticated session so the actual Firebase error remains visible. */
         }
       }else{
-        if(loginInProgress || Date.now()<loginGraceUntil){
+        if(loginInProgress || loginSessionReady || Date.now()<loginGraceUntil){
           setSync("Signing in…");
           return;
         }
+        loginSessionReady=false;
         setSync("Signed out · login required");
         unsubs.forEach(x=>x&&x());unsubs=[];db=null;window.currentUser=null;
         S={students:{},att:{},fees:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},diary:{}};
@@ -1779,7 +1780,7 @@ function startFirebase(){
     gErr.textContent="TASVIA could not start Firebase. Please reload.";
   }
 }
-let loginInProgress=false; let loginGraceUntil=0;
+let loginInProgress=false; let loginGraceUntil=0; let loginSessionReady=false;
 const loginForm=document.getElementById("fLogin");
 document.getElementById("loginBtn").addEventListener("click",async e=>{
   e.preventDefault();e.stopImmediatePropagation();
@@ -1808,6 +1809,7 @@ document.getElementById("loginBtn").addEventListener("click",async e=>{
     if(!snap.exists) throw new Error("Firebase login succeeded, but no TASVIA Staff record matches this email.");
     const staff=snap.data()||{},role=(staff.role||"staff").toLowerCase();
     window.currentUser={uid:u.uid,email,name:staff.name||email,role};
+    loginSessionReady=true; loginGraceUntil=Date.now()+30000;
     db=fs;gate.hidden=true;gErr.textContent="";setSync("Staff verified · loading data…");render();subscribe();netStatus();
   }catch(err){
     console.error("TASVIA login:",err);
@@ -1823,7 +1825,7 @@ document.getElementById("loginBtn").addEventListener("click",async e=>{
 render();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
 else startFirebase();
-if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=22",{scope:"./"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=23",{scope:"./"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
 
 </body>
