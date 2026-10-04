@@ -647,17 +647,22 @@ function tStats(tid,month){
 /* Payments are a map keyed by id (older array form still read). */
 function payList(sid){const p=(S.fees[sid]||{}).payments;if(!p)return [];return (Array.isArray(p)?p:Object.values(p)).filter(Boolean).map((x,i)=>x.id?x:Object.assign({id:"p"+i},x))}
 function paymentMonth(p){
-  const raw=String(p?.month||"").trim();
-  // Always prefer an explicit YYYY-MM value; do not infer a month from the year digits.
-  if(/^\d{4}-\d{2}$/.test(raw))return raw;
-  const date=String(p?.date||"").trim();
-  const dateYear=/^(\d{4})-\d{2}-\d{2}$/.exec(date);
-  if(dateYear&&/^\d{4}-\d{2}-\d{2}$/.test(date))return date.slice(0,7);
-  const m=raw.toLowerCase().replace(/[^a-z0-9]/g,"");
-  const years=raw.match(/(20\\d{2})/); const y=years?years[1]:(dateYear?dateYear[1]:"");
+  const raw=String(p?.month??"").trim();
+  const date=String(p?.date??"").trim();
+  // Normalize every common month format used by old and new payment records.
+  if(/^\d{4}-\d{2}(?:-\d{2})?$/.test(raw))return raw.slice(0,7);
+  if(/^\d{4}[-\/]\d{1,2}$/.test(raw)){const z=raw.split(/[-\/]/);return z[0]+"-"+String(Number(z[1])).padStart(2,"0");}
+  if(/^\d{1,2}[-\/]\d{4}$/.test(raw)){const z=raw.split(/[-\/]/);return z[1]+"-"+String(Number(z[0])).padStart(2,"0");}
+  const dateYear=/^(\d{4})-\d{2}-\d{2}/.exec(date);
+  const yMatch=raw.match(/20\d{2}/);
+  const y=yMatch?yMatch[0]:(dateYear?dateYear[1]:"");
+  const m=raw.toLowerCase().replace(/[^a-z]/g,"");
   const names={jan:"01",january:"01",feb:"02",february:"02",mar:"03",march:"03",apr:"04",april:"04",may:"05",jun:"06",june:"06",jul:"07",july:"07",aug:"08",august:"08",sep:"09",sept:"09",september:"09",oct:"10",october:"10",nov:"11",november:"11",dec:"12",december:"12"};
-  const mm=names[m]||names[m.replace(/20\\d{2}/g,"")];
-  return y&&mm?y+"-"+mm:"";
+  let mm="";
+  for(const [name,num] of Object.entries(names)){if(m.includes(name)){mm=num;break;}}
+  if(y&&mm)return y+"-"+mm;
+  if(dateYear)return dateYear[1]+"-"+date.slice(5,7);
+  return "";
 }
 function paidFor(sid,month){return payList(sid).filter(x=>paymentMonth(x)===month)}
 function feeDueDate(s,month){
