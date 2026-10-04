@@ -1829,7 +1829,7 @@ let loginInProgress=false; let loginGraceUntil=0; let loginSessionReady=false;
 const loginForm=document.getElementById("fLogin");document.getElementById("loginBtn").addEventListener("click",async e=>{
   e.preventDefault();e.stopImmediatePropagation();
   const d=Object.fromEntries(new FormData(loginForm)),b=document.getElementById("loginBtn");
-  b.disabled=true;b.textContent="Signing in…";gErr.textContent="Connecting to Firebase…";setSync("Signing in…");
+  b.disabled=true;b.textContent="Signing in…";gErr.textContent="";setSync("Signing in…");
   loginInProgress=true; loginGraceUntil=Date.now()+15000;
   try{
     if(!auth){
