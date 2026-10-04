@@ -564,6 +564,7 @@ function subscribe(){
   coll("students","students");
   setTimeout(()=>migrateLegacyStudentIds(),1500);
   // Fee data is required for parent-view synchronization on every authorized staff device, not only admin devices.\n  coll("fees","fees");
+  coll("paymentRecords","paymentRecords");
   {const y=+acYear(today()).from.slice(0,4)-1;coll("tests","tests",db.collection("tests").where("date",">=",y+"-06-01"))}
   coll("attendance","att",db.collection("attendance").orderBy("date","desc").limit(400));
   unsubs.push(db.doc("info/centre").onSnapshot(d=>{S.info=d.exists?d.data():null;scheduleRender()},onErr));
@@ -643,7 +644,7 @@ function tStats(tid,month){
   return {p,a,h};
 }
 /* Payments are a map keyed by id (older array form still read). */
-function payList(sid){const p=(S.fees[sid]||{}).payments;if(!p)return [];return (Array.isArray(p)?p:Object.values(p)).filter(Boolean).map((x,i)=>x.id?x:Object.assign({id:"p"+i},x))}
+function payList(sid){const out=new Map();const p=(S.fees[sid]||{}).payments;if(p)(Array.isArray(p)?p:Object.values(p)).filter(Boolean).forEach((x,i)=>{const q=x.id?x:Object.assign({id:"p"+i},x);out.set(q.id,q)});Object.values(S.paymentRecords||{}).filter(x=>x&&x.studentId===sid).forEach(x=>out.set(x.id,x));return [...out.values()]}
 function paymentMonth(p){
   const raw=String(p?.month??"").trim();
   const date=String(p?.date??"").trim();
@@ -1572,7 +1573,7 @@ document.addEventListener("click",e=>{
     case "close":closeSheet();break;
     case "delStudent":if(confirmDel(b,"Tap again: deletes all records")){const pc=(S.students[id]||{}).pcode;if(pc)remove("parentView/"+pc);remove("photos/"+id);delete photoCache[id];delete S.students[id];delete S.fees[id];remove("students/"+id);remove("fees/"+id);closeSheet();render();toast("Student removed")}break;
     case "delPay":if(confirmDel(b,"Remove?")){const pid=b.dataset.p,legacy=Array.isArray((S.fees[id]||{}).payments),cur={};payList(id).forEach(x=>{if(x.id!==pid)cur[x.id]=x});S.fees[id]={payments:cur};
-      if(!db)saveLocal();else if(legacy)put("fees/"+id,S.fees[id]);else mergeWrite("fees/"+id,{payments:{[pid]:null}},{});pvCache[S.students[id]?.pcode]=null;render();schedulePV();studentSheet(id);toast("Payment removed")}break;
+      if(!db)saveLocal();else if(legacy)put("fees/"+id,S.fees[id]);else {mergeWrite("fees/"+id,{payments:{[pid]:null}},{});remove("paymentRecords/"+pid);}pvCache[S.students[id]?.pcode]=null;render();schedulePV();studentSheet(id);toast("Payment removed")}break;
     case "remindAll":remindSheet();break;
     case "testSound":{const was=PREF.sound;PREF.sound=true;SOUND.alert();PREF.sound=was;banner("TASVIA Academy","This is how alerts will look and sound.");break}
     case "askNotif":Notification.requestPermission().then(()=>render());break;
@@ -1622,6 +1623,7 @@ document.addEventListener("submit",e=>{
       else if(payments&&typeof payments==="object")Object.entries(payments).forEach(([k,v])=>{if(v!=null)next[k]=v});
       next[p.id]=p;
       tx.set(ref,{studentId:id,payments:next,lastPaymentMonth:p.month,lastPaymentAmount:p.amount,lastPaymentDate:p.date},{merge:true});
+      tx.set(db.doc("paymentRecords/"+p.id),Object.assign({studentId:id},p),{merge:true});
       return true;
     }).catch(e=>{toast(errMsg(e));return false});
     const current={payments:Object.fromEntries(payList(id).map(x=>[x.id,x]))};current.payments[p.id]=p;S.fees[id]=current;
