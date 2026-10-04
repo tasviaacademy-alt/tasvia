@@ -1,93 +1,85 @@
 {
-  "date": "2026-10-03",
+  "date": "2026-10-04",
   "month": "October 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
       "category": "India",
       "icon": "🇮🇳",
-      "title": "Top 10 Current Affairs June 2025 - Finology Legal",
-      "text": "Top 10 Current Affairs June 2025 Finology Legal",
-      "source": "Finology Legal, 2026-10-03",
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5jOHN4b0xWNE9qOVN3MUhwc25KTnpjSWxFWk1PY0tTWFE5NnJhQUFNd0xWdllIZjlsV2FiRUVFVGY5cGlrTVJSVWNWZE1zRWRFN0o3eHNuRElEeHNJN3dyNmE2ZmZTSHF5MFlEcGZLVHFoNmdjcHhTM3pHbk1iUGs?oc=5"
+      "title": "India finishes fourth in the Asian Games 2026 medal table",
+      "text": "India moved into fourth place after a strong medal-winning day at the Aichi-Nagoya Asian Games.",
+      "source": "The Indian Express, 2026-10-04",
+      "url": "https://indianexpress.com/article/india/today-india-breaking-news-live-updates-04-october-2026-vhp-alok-kumar-ram-mandir-donation-row-sit-probe-gst-arrest-powers-asian-games-10905794/"
     },
     {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "School assembly news headlines today- September 14: Top national, sports and world news curated for you - India Today",
-      "text": "School assembly news headlines today- September 14: Top national, sports and world news curated for you India Today",
-      "source": "India Today, 2026-10-03",
-      "url": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxQVTVWOUtuRVhpNTVqNmdoNnJWUjZMVWwxVnFsNHF4NlM3Uk1qTEI4YnBlZDJYZFIzTlp4NjBualhTUVZyNy1BUlZQMG1aNU93ekpONllBZVBmMENoMEZMMTJTSnl1Q1dSOUVhTm96VmEzbGFhaDR4QzMxRml3Z3F3VURjYlEwSUd0bnZWcGczdnViYW1NSFllYnlMU0ZnZE9qZzd0YWxqZmR0aDdmVkp1eFVkRHdtcUk3SjhlQm1HS2E2YUxFaUZVM1paWjNsNDloNUV6dHp3YVRIellLai1yZk90dzNha3FX?oc=5"
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "India wins Asian Games T20 cricket gold",
+      "text": "India defeated Pakistan by 19 runs in the men's T20 cricket final to win the gold medal at the 2026 Asian Games.",
+      "source": "The Indian Express, 2026-10-04",
+      "url": "https://indianexpress.com/article/sports/cricket/india-beat-pakistan-to-win-asian-games-t20-gold-in-high-scoring-final-10905069/"
     },
     {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "UPSC Mains Current Affairs for 3 August 2026 - vajiramandravi.com",
-      "text": "UPSC Mains Current Affairs for 3 August 2026 vajiramandravi.com",
-      "source": "vajiramandravi.com, 2026-10-03",
-      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNa256RzQwNlBIbzhxd3RsU2Q2S2JWLTlwVnV5c1o4R1A5cWRNNW85VzkxYjI3dGF1a0VKdjBWUk5EVGxFbkp0V0xfRm9mQ1BJaGF4MXFHcU9oQXBiYjA1YVdIQVBxZENqZUtpRFl0NDlSZEFSZ05jR1ZhVVgwOGM2Rmd5TklEMXQt?oc=5"
+      "category": "Sports",
+      "icon": "🏑",
+      "title": "India retains Asian Games men's hockey gold",
+      "text": "India beat Malaysia 5–1 in the final and secured qualification for the 2028 Los Angeles Olympics.",
+      "source": "The Indian Express, 2026-10-04",
+      "url": "https://indianexpress.com/article/sports/india-mens-hockey-gold-asian-games-malaysia-final-defend-title-10905216/"
     },
     {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "Top 20 UPSC Current Affairs Pointers of the past week | August 3 to 9, 2026 - The Indian Express",
-      "text": "Top 20 UPSC Current Affairs Pointers of the past week | August 3 to 9, 2026 The Indian Express",
-      "source": "The Indian Express, 2026-10-03",
-      "url": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxQWUdKTTdQMVlRWk5VenozclZRS2xneHBKaTN4UEx0bzVyS05Hd3pRRWxva3hQNDVjNWlnQjA4U2I1b0FhT2Z0R3R4MW1FWVpIQVkwNVNfaVVHZDJ3d3hUVmVGMDgyb09KTlQ2YU5Ua2NmTVl0NEZlR0VGSXRGc2ZZT1RSRkV5M1UxUmpZS0lFa0FYeFFmYUlZSGxpUUNxOGhXYnZveVZXTmNIVTF6RW01eVVIenRsSGZLRmwxRmFSYTJoem52aDdkSUIwM29pQk1LMTdOQWktRjlxeHZLdkdjLVB6Qy05a1o20gHvAUFVX3lxTE5EeG55MFJYWHBwcGRieWhBMHlYdVN2aTg4eEphc3pxQzJtSkp3TTg4emdTXy1UTGFzemFRZWpCWE9VWXZGQW8wblNiOHJ1czRZNzNmekVRYjEtbVR3d2dSaGdSRmpvYjJUaUVUR1kxdGhGSnpEUXFNbmVINnJ3TXFEQkFzT2F1WHladm1OTjZOMEl4eTV0VEVibFhIalVVd2h1ZDZqOEFETmM4bTVHLVY1UzJna0d0VEVzblhDQUthbDJhelRJeFdlNmoyWVhZQVpHcnhMUzhlMjctSGlabm1fM2FUcHp6aW53M21aNWg4?oc=5"
+      "category": "Sports",
+      "icon": "🥇",
+      "title": "Asian Games 2026 closing ceremony takes place in Nagoya",
+      "text": "The Aichi-Nagoya Asian Games conclude on October 4 after 16 days of competition across Japan.",
+      "source": "India Today, 2026-10-04",
+      "url": "https://www.indiatoday.in/sports/asian-games/story/asian-games-2026-closing-ceremony-date-time-venue-live-streaming-details-3009060-2026-10-04"
     },
     {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "Top 10 Current Affairs of September 2025 for Competitive Exams - Finology Legal",
-      "text": "Top 10 Current Affairs of September 2025 for Competitive Exams Finology Legal",
-      "source": "Finology Legal, 2026-10-03",
-      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxOTUlYR3plWjVWdE9ZT2R6NndSRDVaSm9vci16UVg4Uk9WZmpXTHZtMWdDekJqcEdHTVNTYmd1SXBBLUx0OVdJZUM4TlYtcWNfMnlXRlFhdUpodTRqOWFsa3F6NGoyZkN5TXViTmRUeXJob2d1UGRyR3VvdXBfZEFNOQ?oc=5"
+      "category": "Science & Technology",
+      "icon": "🔬",
+      "title": "NASA highlights October skywatching events",
+      "text": "NASA's October 2026 skywatching guide highlights Saturn at opposition, the Orionid meteor shower and the Moon near the Pleiades.",
+      "source": "NASA, 2026-10-02",
+      "url": "https://science.nasa.gov/solar-system/skywatching/whats-up-october-2026-skywatching-tips-from-nasa/"
     },
     {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "School assembly news headlines today- September 9: Top national, sports and world news curated for you - India Today",
-      "text": "School assembly news headlines today- September 9: Top national, sports and world news curated for you India Today",
-      "source": "India Today, 2026-10-03",
-      "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxOSnJEcHM4cWktMm8weTZoLUJrQVhOSzFCQzBvakhlN0QzVHJadkdIeVFzZ0ZOVzR2SjlZaWpHS0RXU3FYM2k0ZXJNT3JnWi1oMmFnRy1GQndrNzk1WXYtT0lsYXhsUHVjWmpIN2J5dG51SGxqb0NQclVXeXQzN3V3c2t3aFZSWVdUX21tUzMzWV9Jblkyc0pmRGZLYS0xZERObm9vUHhEQkhTVmp6SnB0YjNITVBIcG0zME1mMWRaZy1ZZmtfaTBSZ1NqYjNLWXFyZFYtaTRKT2tkdm5RejJFdlZfb2JfbHc?oc=5"
+      "category": "Economy",
+      "icon": "💹",
+      "title": "RBI rate decision comes into focus amid inflation and growth data",
+      "text": "Recent economic data are increasing attention on the Reserve Bank of India's October policy meeting.",
+      "source": "Reuters, 2026-09-28",
+      "url": "https://www.reuters.com/world/india/broadening-inflation-robust-growth-global-hikes-build-case-india-rbi-tightening-2026-09-28/"
     },
     {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "List of Government Schemes in India 2026, Benefits, Criteria - vajiramandravi.com",
-      "text": "List of Government Schemes in India 2026, Benefits, Criteria vajiramandravi.com",
-      "source": "vajiramandravi.com, 2026-10-03",
-      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTFBDdkt4MUhtX1pQbEgxa3RkXzVrYmdpMUJjcExZVFdiU2RfYXlKWlBsQmpBRFpxNHR1QVN4MlNrMVQtRVFBUUxtY29HX0RxU2tXWG1ZSkpPSUZWTlZKSmlKdmxxRFVpeHR4azhydEk3eEp1NG9kQlA3bTZLUzY?oc=5"
-    },
-    {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "Top 10 Current Affairs December 2025 for UPSC, SSC & Banking Exams - Finology Legal",
-      "text": "Top 10 Current Affairs December 2025 for UPSC, SSC & Banking Exams Finology Legal",
-      "source": "Finology Legal, 2026-10-03",
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE94Q21jdFRzbV9ITG8tUjh5Z2NMaXpaRFF3UE83MGMxd2ZBY0tGbTlsdk5Fb3FtTXMtRzVCeVg4RHhtaE43Rk9KX29SczMzczFkdU5LMVhxZV9NT3lMSTR2aUhTYWRaVTk4Zml4TUdqajdKdFZuaC1NZGJ0SXlVMEE?oc=5"
+      "category": "World",
+      "icon": "🌐",
+      "title": "Munich Security Conference holds Leaders Meeting in New Delhi",
+      "text": "The Munich Security Conference is convening a Munich Leaders Meeting in New Delhi from October 4 to 5.",
+      "source": "Munich Security Conference, 2026-10-04",
+      "url": "https://securityconference.org/en/news/full/msc-hosts-munich-leaders-meeting-in-new-delhi-from-october-4-to-5-2026/"
     }
   ],
   "quiz": [
     {
-      "q": "Which topic is covered in today's India current affairs?",
-      "a": "Top 10 Current Affairs June 2025 - Finology Legal"
+      "q": "Which medal did India win in men's T20 cricket at the 2026 Asian Games?",
+      "a": "Gold"
     },
     {
-      "q": "Which topic is covered in today's India current affairs?",
-      "a": "School assembly news headlines today- September 14: Top national, sports and world news curated for you - India Today"
+      "q": "Which team did India defeat in the Asian Games men's hockey final?",
+      "a": "Malaysia"
     },
     {
-      "q": "Which topic is covered in today's India current affairs?",
-      "a": "UPSC Mains Current Affairs for 3 August 2026 - vajiramandravi.com"
+      "q": "Which astronomical event does NASA highlight for October 2026?",
+      "a": "Saturn at opposition"
     },
     {
-      "q": "Which topic is covered in today's India current affairs?",
-      "a": "Top 20 UPSC Current Affairs Pointers of the past week | August 3 to 9, 2026 - The Indian Express"
+      "q": "Where is the Munich Leaders Meeting being held?",
+      "a": "New Delhi"
     },
     {
-      "q": "Which topic is covered in today's India current affairs?",
-      "a": "Top 10 Current Affairs of September 2025 for Competitive Exams - Finology Legal"
+      "q": "Which position did India reach in the Asian Games medal table?",
+      "a": "Fourth"
     }
   ]
 }
