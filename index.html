@@ -478,7 +478,7 @@ function scheduleRender(){
   clearTimeout(renderT);
   renderT=setTimeout(()=>{renderT=null;render()},0);
 }
-function errMsg(e){if(e&&e.code==="permission-denied")return "This account isn't on the staff list, so changes can't be saved.";if(e&&e.code==="quota_exceeded")return "Storage is full. Delete old tests or students to add more.";if(e&&e.code==="invalid_argument")return "You have view-only access, so changes can't be saved.";return "Couldn't save. Check your connection and try again."}
+function errMsg(e){if(e&&e.code==="permission-denied")return "Firebase denied this save. Staff permissions are not active in Firestore yet.";if(e&&e.code==="quota_exceeded")return "Storage is full. Delete old tests or students to add more.";if(e&&e.code==="invalid_argument")return "You have view-only access, so changes can't be saved.";return "Couldn't save. Check your connection and try again."}
 function put(path,data){
   if(!db){saveLocal();return Promise.resolve(true)}
   const p=(queues[path]||Promise.resolve()).then(async()=>{await db.doc(path).set(data);return true}).catch(e=>{toast(errMsg(e));return false});
@@ -1885,7 +1885,7 @@ const loginForm=document.getElementById("fLogin");document.getElementById("login
 render();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
 else startFirebase();
-if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=26",{scope:"./"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=27",{scope:"./"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
 
 </body>
