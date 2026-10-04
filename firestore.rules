@@ -16,8 +16,15 @@ service cloud.firestore {
         );
     }
     function admin() {
-      return staff()
-        && get(/databases/$(database)/documents/Staff/$(request.auth.token.email)).data.role == "admin";
+      return signedIn()
+        && request.auth.token.email != null
+        && (
+          request.auth.token.email == "tasviaacademy@gmail.com"
+          || (
+            exists(/databases/$(database)/documents/Staff/$(request.auth.token.email))
+            && get(/databases/$(database)/documents/Staff/$(request.auth.token.email)).data.role == "admin"
+          )
+        );
     }
 
     // Staff accounts are controlled from the Staff collection.
