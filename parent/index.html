@@ -342,7 +342,9 @@ function render(){
   const feeMonthKey=(s,fallbackDate)=>{
     const raw=String(s||"").trim().toLowerCase();
     if(/^\d{4}-\d{2}(?:-\d{2})?$/.test(raw))return "m"+raw.slice(5,7);
-    const names={jan:1,january:1,feb:2,february:2,mar:3,march:3,apr:4,april:4,may:5,jun:6,june:6,jul:7,july:7,aug:8,august:8,sep:9,september:9,oct:10,october:10,nov:11,november:11,dec:12,december:12};
+    if(/^\\d{4}[-\\/]\\d{1,2}$/.test(raw)){const z=raw.split(/[-\\/]/);return "m"+String(Number(z[1])).padStart(2,"0");}
+    if(/^\\d{1,2}[-\\/]\\d{4}$/.test(raw)){const z=raw.split(/[-\\/]/);return "m"+String(Number(z[0])).padStart(2,"0");}
+    const names={jan:1,january:1,feb:2,february:2,mar:3,march:3,apr:4,april:4,may:5,jun:6,june:6,jul:7,july:7,aug:8,august:8,sep:9,sept:9,september:9,oct:10,october:10,nov:11,november:11,dec:12,december:12};
     for(const [n,v] of Object.entries(names))if(raw.includes(n))return "m"+String(v).padStart(2,"0");
     const m=raw.match(/(?:^|[^a-z])(?:0?([1-9])|1([0-2]))(?:[^a-z]|$)/);
     if(m)return "m"+String(Number(m[1]||m[2])).padStart(2,"0");
