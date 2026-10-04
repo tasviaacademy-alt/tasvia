@@ -1793,7 +1793,7 @@ loginForm.addEventListener("submit",async e=>{
       while(!auth&&Date.now()-started<10000) await new Promise(r=>setTimeout(r,100));
     }
     if(!auth) throw new Error("Firebase sign-in service is not ready. Please reload.");
-    await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     await auth.signInWithEmailAndPassword((d.email||"").trim(),d.password||"");
     setSync("Signed in · verifying staff…");
     /* Post-login verification and UI are handled only by onAuthStateChanged. */
