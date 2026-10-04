@@ -31,6 +31,12 @@ service cloud.firestore {
       allow read, write: if staff();
     }
 
+    // Monthly fee records and payment history are managed by staff.
+    // Required for the Staff Portal "Record payment" action.
+    match /fees/{id} {
+      allow read, write: if staff();
+    }
+
     match /tests/{id} {
       allow read, write: if staff();
     }
