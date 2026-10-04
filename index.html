@@ -415,7 +415,7 @@ button,.btn,a.btn{visibility:visible;}
   <h1>TASVIA <span>Academy</span></h1><p class="tag">Inspire • Learn • Grow • Succeed</p><p id="gateMsg">Staff sign in</p>
   <label>Email<input name="email" type="email" autocomplete="username" required></label>
   <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
-  <button class="btn gold" type="submit" id="loginBtn">Sign in</button>
+  <button class="btn gold" type="button" id="loginBtn">Sign in</button>
   <button class="link" type="button" id="forgot">Forgot password?</button>
   <div class="err" id="gateErr" role="alert"></div></form></div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -1781,9 +1781,9 @@ function startFirebase(){
 }
 let loginInProgress=false; let loginGraceUntil=0;
 const loginForm=document.getElementById("fLogin");
-loginForm.addEventListener("submit",async e=>{
+document.getElementById("loginBtn").addEventListener("click",async e=>{
   e.preventDefault();e.stopImmediatePropagation();
-  const d=Object.fromEntries(new FormData(e.target)),b=document.getElementById("loginBtn");
+  const d=Object.fromEntries(new FormData(loginForm)),b=document.getElementById("loginBtn");
   b.disabled=true;b.textContent="Signing in…";gErr.textContent="Connecting to Firebase…";setSync("Signing in…");
   loginInProgress=true; loginGraceUntil=Date.now()+15000;
   try{
