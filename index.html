@@ -1808,17 +1808,21 @@ function startFirebase(){
           setSync("Checking staff account…");
           // Staff records may be keyed by email OR use an auto-generated Firestore document ID.
           // Check the canonical email document first, then fall back to the email field.
-          let snap=await withTimeout(fs.collection("Staff").doc(email).get(),10000,"Staff verification timed out");
-          if(!snap.exists){
-            const q=await withTimeout(fs.collection("Staff").where("email","==",email).limit(1).get(),10000,"Staff lookup timed out");
-            if(!q.empty) snap=q.docs[0];
+          const isRootAdmin=email==="tasviaacademy@gmail.com";
+          let snap=null;
+          if(!isRootAdmin){
+            snap=await withTimeout(fs.collection("Staff").doc(email).get(),10000,"Staff verification timed out");
+            if(!snap.exists){
+              const q=await withTimeout(fs.collection("Staff").where("email","==",email).limit(1).get(),10000,"Staff lookup timed out");
+              if(!q.empty) snap=q.docs[0];
+            }
+            if(!snap.exists){
+              setSync("Staff account check failed");
+              gErr.textContent="Firebase login succeeded, but no TASVIA Staff record matches this email. Please check the Staff record email.";
+              return;
+            }
           }
-          if(!snap.exists){
-            setSync("Staff account check failed");
-            gErr.textContent="Firebase login succeeded, but no TASVIA Staff record matches this email. Please check the Staff record email.";
-            return;
-          }
-          const staff=snap.data()||{},role=(staff.role||"staff").toLowerCase();
+          const staff=isRootAdmin?{name:"TASVIA Admin",role:"admin"}:(snap.data()||{}),role=(staff.role||"staff").toLowerCase();
           window.currentUser={uid:u.uid,email:email,name:staff.name||email,role:role};
           db=fs;gate.hidden=true;setSync("Staff verified · loading data…");render();subscribe();netStatus();
         }catch(err){
@@ -1872,13 +1876,17 @@ const loginForm=document.getElementById("fLogin");document.getElementById("login
     setSync("Signed in · verifying staff…");
     const email=(u.email||"").trim().toLowerCase();
     if(!email) throw new Error("Firebase account has no email address.");
-    let snap=await withTimeout(fs.collection("Staff").doc(email).get(),10000,"Staff verification timed out");
-    if(!snap.exists){
-      const q=await withTimeout(fs.collection("Staff").where("email","==",email).limit(1).get(),10000,"Staff lookup timed out");
-      if(!q.empty) snap=q.docs[0];
+    const isRootAdmin=email==="tasviaacademy@gmail.com";
+    let snap=null;
+    if(!isRootAdmin){
+      snap=await withTimeout(fs.collection("Staff").doc(email).get(),10000,"Staff verification timed out");
+      if(!snap.exists){
+        const q=await withTimeout(fs.collection("Staff").where("email","==",email).limit(1).get(),10000,"Staff lookup timed out");
+        if(!q.empty) snap=q.docs[0];
+      }
+      if(!snap.exists) throw new Error("Firebase login succeeded, but no TASVIA Staff record matches this email.");
     }
-    if(!snap.exists) throw new Error("Firebase login succeeded, but no TASVIA Staff record matches this email.");
-    const staff=snap.data()||{},role=(staff.role||"staff").toLowerCase();
+    const staff=isRootAdmin?{name:"TASVIA Admin",role:"admin"}:(snap.data()||{}),role=(staff.role||"staff").toLowerCase();
     window.currentUser={uid:u.uid,email,name:staff.name||email,role};
     loginSessionReady=true; loginGraceUntil=Date.now()+30000;
     db=fs;gate.hidden=true;gErr.textContent="";setSync("Staff verified · loading data…");render();subscribe();netStatus();
