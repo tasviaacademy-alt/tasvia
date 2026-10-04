@@ -10,7 +10,11 @@ service cloud.firestore {
     function staff() {
       return signedIn()
         && request.auth.token.email != null
-        && exists(/databases/$(database)/documents/Staff/$(request.auth.token.email));
+        && (
+          exists(/databases/$(database)/documents/Staff/$(request.auth.token.email))
+          || exists(/databases/$(database)/documents/Staff/$(request.auth.token.email.lower()))
+          || exists(/databases/$(database)/documents/Staff/$(request.auth.token.email.upper()))
+        );
     }
 
     function admin() {
