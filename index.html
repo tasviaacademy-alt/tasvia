@@ -1602,7 +1602,7 @@ document.addEventListener("submit",e=>{
     const p={id:uid("p"),amount:amt,month:d.month,date:d.date,mode:d.mode,note:(d.note||"").trim()};ownIds.add(p.id);
     const previousFees=S.fees[id];
     const legacy=Array.isArray((S.fees[id]||{}).payments);const cur={};payList(id).forEach(x=>cur[x.id]=x);cur[p.id]=p;S.fees[id]={payments:cur};
-    const feeWrite=!db?Promise.resolve(saveLocal()).then(()=>true):legacy?put("fees/"+id,S.fees[id]):mergeWrite("fees/"+id",{payments:{[p.id]:p}},{studentId:id,lastPaymentMonth:p.month,lastPaymentAmount:p.amount,lastPaymentDate:p.date});
+    const feeWrite=!db?Promise.resolve(saveLocal()).then(()=>true):legacy?put("fees/"+id,S.fees[id]):mergeWrite("fees/"+id,{payments:{[p.id]:p}},{studentId:id,lastPaymentMonth:p.month,lastPaymentAmount:p.amount,lastPaymentDate:p.date});
     feeWrite.then(ok=>{
       if(ok===false){
         S.fees[id]=previousFees;
