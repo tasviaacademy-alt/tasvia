@@ -574,7 +574,7 @@ function subscribe(){
   const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;scheduleRender();if(key==="students")schedulePV();if(key==="fees")schedulePV(true)},onErr));
   const admin=window.currentUser&&window.currentUser.role==="admin";
   coll("students","students");
-  setTimeout(()=>migrateLegacyStudentIds(),1500);
+  // Legacy student-ID migration is intentionally NOT automatic. It is a maintenance operation and must never run in the background while staff are recording payments.
   // Fee data is required for parent-view synchronization on every authorized staff device, not only admin devices.\n  coll("fees","fees");
   coll("paymentRecords","paymentRecords");
   {const y=+acYear(today()).from.slice(0,4)-1;coll("tests","tests",db.collection("tests").where("date",">=",y+"-06-01"))}
@@ -1669,6 +1669,15 @@ document.addEventListener("submit",e=>{
       // cause a successfully saved fee payment to roll back.
       return true;
     }).then(async()=>{
+      // Read back the authoritative fee document before telling staff the payment is saved.
+      // This prevents a local/optimistic success message when Firestore did not persist it.
+      const saved=await db.doc("fees/"+id).get();
+      const data=saved.exists?(saved.data()||{}):{};
+      const payments=data.payments||{};
+      const confirmed=Array.isArray(payments)
+        ? payments.some(x=>x&&x.id===p.id)
+        : !!(payments&&payments[p.id]);
+      if(!confirmed)throw new Error("Payment could not be verified in Firestore. Please try again.");
       // Best-effort permanent ledger mirror. A ledger permission error is logged
       // but never removes or rolls back the authoritative fee payment.
       try{
