@@ -1513,7 +1513,7 @@ function restoreBackupFile(){
   inp.click();
 }
 /* ---------- events ---------- */
-document.addEventListener("click",e=>{
+document.addEventListener("click",async e=>{
   const b=e.target.closest("[data-act]");if(!b)return;
   if(!isAdmin()&&["addTeacher","editTeacher","paySal","delSal","delTeacher","addExpense","delExp","addStudent","editStudent","pay","editInfo","delStudent","delPay","resetPL","export","delTest"].includes(b.dataset.act)){toast("Admin access required.");return;}
   const a=b.dataset.act,id=b.dataset.id;
