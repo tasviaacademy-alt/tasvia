@@ -1,0 +1,85 @@
+{
+  "date": "2026-10-04",
+  "month": "October 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "India finishes fourth in the Asian Games 2026 medal table",
+      "text": "India moved into fourth place after a strong medal-winning day at the Aichi-Nagoya Asian Games.",
+      "source": "The Indian Express, 2026-10-04",
+      "url": "https://indianexpress.com/article/india/today-india-breaking-news-live-updates-04-october-2026-vhp-alok-kumar-ram-mandir-donation-row-sit-probe-gst-arrest-powers-asian-games-10905794/"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "India wins Asian Games T20 cricket gold",
+      "text": "India defeated Pakistan by 19 runs in the men's T20 cricket final to win the gold medal at the 2026 Asian Games.",
+      "source": "The Indian Express, 2026-10-04",
+      "url": "https://indianexpress.com/article/sports/cricket/india-beat-pakistan-to-win-asian-games-t20-gold-in-high-scoring-final-10905069/"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏑",
+      "title": "India retains Asian Games men's hockey gold",
+      "text": "India beat Malaysia 5–1 in the final and secured qualification for the 2028 Los Angeles Olympics.",
+      "source": "The Indian Express, 2026-10-04",
+      "url": "https://indianexpress.com/article/sports/india-mens-hockey-gold-asian-games-malaysia-final-defend-title-10905216/"
+    },
+    {
+      "category": "Sports",
+      "icon": "🥇",
+      "title": "Asian Games 2026 closing ceremony takes place in Nagoya",
+      "text": "The Aichi-Nagoya Asian Games conclude on October 4 after 16 days of competition across Japan.",
+      "source": "India Today, 2026-10-04",
+      "url": "https://www.indiatoday.in/sports/asian-games/story/asian-games-2026-closing-ceremony-date-time-venue-live-streaming-details-3009060-2026-10-04"
+    },
+    {
+      "category": "Science & Technology",
+      "icon": "🔬",
+      "title": "NASA highlights October skywatching events",
+      "text": "NASA's October 2026 skywatching guide highlights Saturn at opposition, the Orionid meteor shower and the Moon near the Pleiades.",
+      "source": "NASA, 2026-10-02",
+      "url": "https://science.nasa.gov/solar-system/skywatching/whats-up-october-2026-skywatching-tips-from-nasa/"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "RBI rate decision comes into focus amid inflation and growth data",
+      "text": "Recent economic data are increasing attention on the Reserve Bank of India's October policy meeting.",
+      "source": "Reuters, 2026-09-28",
+      "url": "https://www.reuters.com/world/india/broadening-inflation-robust-growth-global-hikes-build-case-india-rbi-tightening-2026-09-28/"
+    },
+    {
+      "category": "World",
+      "icon": "🌐",
+      "title": "Munich Security Conference holds Leaders Meeting in New Delhi",
+      "text": "The Munich Security Conference is convening a Munich Leaders Meeting in New Delhi from October 4 to 5.",
+      "source": "Munich Security Conference, 2026-10-04",
+      "url": "https://securityconference.org/en/news/full/msc-hosts-munich-leaders-meeting-in-new-delhi-from-october-4-to-5-2026/"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "Which medal did India win in men's T20 cricket at the 2026 Asian Games?",
+      "a": "Gold"
+    },
+    {
+      "q": "Which team did India defeat in the Asian Games men's hockey final?",
+      "a": "Malaysia"
+    },
+    {
+      "q": "Which astronomical event does NASA highlight for October 2026?",
+      "a": "Saturn at opposition"
+    },
+    {
+      "q": "Where is the Munich Leaders Meeting being held?",
+      "a": "New Delhi"
+    },
+    {
+      "q": "Which position did India reach in the Asian Games medal table?",
+      "a": "Fourth"
+    }
+  ]
+}
