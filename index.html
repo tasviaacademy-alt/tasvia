@@ -676,6 +676,13 @@ function feeStatus(s,month){
   const paid=paidFor(s.id,month).reduce((a,b)=>a+ +b.amount,0);
   const dueDate=feeDueDate(s,month);
   if(!s.fee)return {k:"none",paid,dueDate};
+  // Never assess a fee before the student's joining date. The joining date is the
+  // first date from which the monthly fee can become due.
+  if(s.joined&&/^\\d{4}-\\d{2}-\\d{2}$/.test(s.joined)){
+    const joinMonth=s.joined.slice(0,7);
+    if(month<joinMonth)return {k:"not-enrolled",paid,left:Math.max(+s.fee-paid,0),dueDate:null};
+    if(month===joinMonth&&today()<s.joined)return {k:"upcoming",paid,left:Math.max(+s.fee-paid,0),dueDate};
+  }
   if(paid>=s.fee)return {k:"paid",paid,left:0,dueDate};
   const currentMonth=today().slice(0,7);
   const dueNow=!dueDate||month<currentMonth||(month===currentMonth&&today()>=dueDate);
@@ -874,7 +881,8 @@ function buildParentView(s){
   const fees=s.fee?months.filter(m=>enrolledIn(s,m)).map(m=>{
     const fs=feeStatus(s,m),fee=+s.fee||0;
     const paid=Math.min(fee,Math.max(Number(fs.paid)||0,Number(paymentTotals[m])||0));
-    return {m,fee,paid,dueDate:fs.dueDate,status:paid>=fee?"paid":fs.k};
+    const status=paid>=fee?"paid":fs.k;
+    return {m,fee,paid,dueDate:fs.dueDate,status};
   }):[];
   // Keep all recent payment history in the parent view so reconciliation survives cache/snapshot timing.
   const pays=allPayments.filter(p=>months.includes(p.m)).sort((a,b)=>String(b.d||"").localeCompare(String(a.d||"")));
