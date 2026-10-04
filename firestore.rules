@@ -21,7 +21,7 @@ service cloud.firestore {
     // Staff accounts are controlled from the Staff collection.
     // A staff member can read their own account; only admins can manage staff.
     match /Staff/{email} {
-      allow get: if staff() && request.auth.token.email == email;
+      allow get: if signedIn() && request.auth.token.email != null && request.auth.token.email == email;
       allow list: if admin();
       allow create, update, delete: if admin();
     }
