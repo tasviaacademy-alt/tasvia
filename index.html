@@ -523,6 +523,12 @@ async function migrateLegacyStudentIds(){
         batch.set(db.doc("fees/"+newId),S.fees[oldId]);
         batch.delete(db.doc("fees/"+oldId));
       }
+      // Keep permanent payment history attached to the new student ID when a legacy
+      // student ID is migrated by the admin startup routine.
+      const paymentSnap=await db.collection("paymentRecords").where("studentId","==",oldId).get();
+      for(const pd of paymentSnap.docs){
+        batch.set(db.doc("paymentRecords/"+pd.id),Object.assign({},pd.data(),{studentId:newId}),{merge:true});
+      }
       const photo=await db.doc("photos/"+oldId).get();
       if(photo.exists){batch.set(db.doc("photos/"+newId),photo.data());batch.delete(db.doc("photos/"+oldId));}
       const pv=await db.doc("parentView/"+oldId).get();
