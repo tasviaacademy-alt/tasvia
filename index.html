@@ -1813,7 +1813,10 @@ document.getElementById("loginBtn").addEventListener("click",async e=>{
     db=fs;gate.hidden=true;gErr.textContent="";setSync("Staff verified · loading data…");render();subscribe();netStatus();
   }catch(err){
     console.error("TASVIA login:",err);
-    gErr.textContent=err&&err.code?authMsg(err):((err&&err.message)||"Unable to sign in.");
+    const code=err&&err.code?String(err.code):"";
+    const detail=(err&&err.message)||"Unable to sign in.";
+    console.error("TASVIA login failure detail:",{code,message:detail});
+    gErr.textContent=code ? ("Sign-in failed: "+code.replace("auth/","")+". "+detail) : ("Sign-in failed: "+detail);
     setSync("Sign-in failed");
     gate.hidden=false;
   }finally{
