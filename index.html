@@ -575,7 +575,8 @@ function subscribe(){
   const admin=window.currentUser&&window.currentUser.role==="admin";
   coll("students","students");
   // Legacy student-ID migration is intentionally NOT automatic. It is a maintenance operation and must never run in the background while staff are recording payments.
-  // Fee data is required for parent-view synchronization on every authorized staff device, not only admin devices.\n  coll("fees","fees");
+  // Fee data is required for parent-view synchronization on every authorized staff device, not only admin devices.
+  coll("fees","fees");
   {const y=+acYear(today()).from.slice(0,4)-1;coll("tests","tests",db.collection("tests").where("date",">=",y+"-06-01"))}
   coll("attendance","att",db.collection("attendance").orderBy("date","desc").limit(400));
   unsubs.push(db.doc("info/centre").onSnapshot(d=>{S.info=d.exists?d.data():null;scheduleRender()},onErr));
