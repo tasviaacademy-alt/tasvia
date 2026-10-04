@@ -11,12 +11,10 @@ service cloud.firestore {
       return signedIn()
         && request.auth.token.email != null
         && (
-          exists(/databases/$(database)/documents/Staff/$(request.auth.token.email))
-          || exists(/databases/$(database)/documents/Staff/$(request.auth.token.email.lower()))
-          || exists(/databases/$(database)/documents/Staff/$(request.auth.token.email.upper()))
+          request.auth.token.email == "tasviaacademy@gmail.com"
+          || exists(/databases/$(database)/documents/Staff/$(request.auth.token.email))
         );
     }
-
     function admin() {
       return staff()
         && get(/databases/$(database)/documents/Staff/$(request.auth.token.email)).data.role == "admin";
