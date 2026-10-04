@@ -1794,12 +1794,24 @@ document.getElementById("loginBtn").addEventListener("click",async e=>{
     }
     if(!auth) throw new Error("Firebase sign-in service is not ready. Please reload.");
     await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-    await auth.signInWithEmailAndPassword((d.email||"").trim(),d.password||"");
+    const cred=await auth.signInWithEmailAndPassword((d.email||"").trim(),d.password||"");
+    const u=cred&&cred.user?cred.user:auth.currentUser;
+    if(!u) throw new Error("Firebase signed in but returned no user session.");
     setSync("Signed in · verifying staff…");
-    /* Post-login verification and UI are handled only by onAuthStateChanged. */
+    const email=(u.email||"").trim().toLowerCase();
+    if(!email) throw new Error("Firebase account has no email address.");
+    let snap=await withTimeout(fs.collection("Staff").doc(email).get(),10000,"Staff verification timed out");
+    if(!snap.exists){
+      const q=await withTimeout(fs.collection("Staff").where("email","==",email).limit(1).get(),10000,"Staff lookup timed out");
+      if(!q.empty) snap=q.docs[0];
+    }
+    if(!snap.exists) throw new Error("Firebase login succeeded, but no TASVIA Staff record matches this email.");
+    const staff=snap.data()||{},role=(staff.role||"staff").toLowerCase();
+    window.currentUser={uid:u.uid,email,name:staff.name||email,role};
+    db=fs;gate.hidden=true;gErr.textContent="";setSync("Staff verified · loading data…");render();subscribe();netStatus();
   }catch(err){
     console.error("TASVIA login:",err);
-    gErr.textContent=err&&err.message==="Staff verification timed out"?"Firebase did not respond within 10 seconds.":(err&&err.code?authMsg(err):((err&&err.message)||"Unable to sign in."));
+    gErr.textContent=err&&err.code?authMsg(err):((err&&err.message)||"Unable to sign in.");
     setSync("Sign-in failed");
     gate.hidden=false;
   }finally{
@@ -1811,7 +1823,7 @@ document.getElementById("loginBtn").addEventListener("click",async e=>{
 render();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
 else startFirebase();
-if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=21",{scope:"./"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=22",{scope:"./"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
 
 </body>
