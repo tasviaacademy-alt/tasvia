@@ -1679,7 +1679,7 @@ document.addEventListener("submit",e=>{
         : !!(payments&&payments[p.id]);
       if(!confirmed)throw new Error("Payment could not be verified in Firestore. Please try again.");
       return true;
-    }).catch(e=>{toast(errMsg(e));return false}).finally(()=>{window._tasviaPaymentSaveRunning=false});
+    })).catch(e=>{toast(errMsg(e));return false}).finally(()=>{window._tasviaPaymentSaveRunning=false});
     const current={payments:Object.fromEntries(payList(id).map(x=>[x.id,x]))};current.payments[p.id]=p;S.fees[id]=current;
     feeWrite.then(ok=>{
       if(ok===false){if(previousFees===undefined)delete S.fees[id];else S.fees[id]=previousFees;render();return;}
