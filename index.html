@@ -576,7 +576,6 @@ function subscribe(){
   coll("students","students");
   // Legacy student-ID migration is intentionally NOT automatic. It is a maintenance operation and must never run in the background while staff are recording payments.
   // Fee data is required for parent-view synchronization on every authorized staff device, not only admin devices.\n  coll("fees","fees");
-  coll("paymentRecords","paymentRecords");
   {const y=+acYear(today()).from.slice(0,4)-1;coll("tests","tests",db.collection("tests").where("date",">=",y+"-06-01"))}
   coll("attendance","att",db.collection("attendance").orderBy("date","desc").limit(400));
   unsubs.push(db.doc("info/centre").onSnapshot(d=>{S.info=d.exists?d.data():null;scheduleRender()},onErr));
@@ -656,7 +655,7 @@ function tStats(tid,month){
   return {p,a,h};
 }
 /* Payments are a map keyed by id (older array form still read). */
-function payList(sid){const out=new Map();const p=(S.fees[sid]||{}).payments;if(p)(Array.isArray(p)?p:Object.values(p)).filter(Boolean).forEach((x,i)=>{const q=x.id?x:Object.assign({id:"p"+i},x);out.set(q.id,q)});Object.values(S.paymentRecords||{}).filter(x=>x&&x.studentId===sid).forEach(x=>out.set(x.id,x));return [...out.values()]}
+function payList(sid){const out=new Map();const p=(S.fees[sid]||{}).payments;if(p)(Array.isArray(p)?p:Object.values(p)).filter(Boolean).forEach((x,i)=>{const q=x.id?x:Object.assign({id:"p"+i},x);out.set(q.id,q)});return [...out.values()]}
 function paymentMonth(p){
   const raw=String(p?.month??"").trim();
   const date=String(p?.date??"").trim();
@@ -1678,11 +1677,6 @@ document.addEventListener("submit",e=>{
         ? payments.some(x=>x&&x.id===p.id)
         : !!(payments&&payments[p.id]);
       if(!confirmed)throw new Error("Payment could not be verified in Firestore. Please try again.");
-      // Best-effort permanent ledger mirror. A ledger permission error is logged
-      // but never removes or rolls back the authoritative fee payment.
-      try{
-        await db.doc("paymentRecords/"+p.id).set(Object.assign({studentId:id},p),{merge:true});
-      }catch(ledgerErr){console.warn("TASVIA payment ledger mirror:",ledgerErr)}
       return true;
     }).catch(e=>{toast(errMsg(e));return false}).finally(()=>{window._tasviaPaymentSaveRunning=false});
     const current={payments:Object.fromEntries(payList(id).map(x=>[x.id,x]))};current.payments[p.id]=p;S.fees[id]=current;
