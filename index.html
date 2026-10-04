@@ -1758,7 +1758,7 @@ function startFirebase(){
           /* Keep the authenticated session so the actual Firebase error remains visible. */
         }
       }else{
-        if(loginInProgress){
+        if(loginInProgress || Date.now()<loginGraceUntil){
           setSync("Signing in…");
           return;
         }
@@ -1779,13 +1779,13 @@ function startFirebase(){
     gErr.textContent="TASVIA could not start Firebase. Please reload.";
   }
 }
-let loginInProgress=false;
+let loginInProgress=false; let loginGraceUntil=0;
 const loginForm=document.getElementById("fLogin");
 loginForm.addEventListener("submit",async e=>{
   e.preventDefault();e.stopImmediatePropagation();
   const d=Object.fromEntries(new FormData(e.target)),b=document.getElementById("loginBtn");
   b.disabled=true;b.textContent="Signing in…";gErr.textContent="Connecting to Firebase…";setSync("Signing in…");
-  loginInProgress=true;
+  loginInProgress=true; loginGraceUntil=Date.now()+15000;
   try{
     if(!auth){
       startFirebase();
