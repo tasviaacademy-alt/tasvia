@@ -579,7 +579,7 @@ function subscribe(){
       setSync("Connection lost · "+name);
     }
   };
-  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;scheduleRender();if(key==="students")schedulePV();if(key==="fees")schedulePV(true)},e=>onErr(name,e)));
+  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;scheduleRender();if(key==="students"||key==="fees"||key==="tests"||key==="att"||key==="diary")schedulePV(key==="fees")},e=>onErr(name,e)));
   const admin=window.currentUser&&window.currentUser.role==="admin";
   coll("students","students");
   // Legacy student-ID migration is intentionally NOT automatic. It is a maintenance operation and must never run in the background while staff are recording payments.
@@ -1046,7 +1046,7 @@ function vHomework(){
   }).join("");
   return h+`</div>`;
 }
-const ICONS={investments:"M12 2v20M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6",alerts:"M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0",parents:"M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7zM9 12l2 2 4-4",staff:"M16 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 20c0-3 3-5 6-5s6 2 6 5M14 15c3 0 8 1 8 5",money:"M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6",cards:"M3 5h18v14H3zM7 9h4v5H7zM14 10h4M14 13h3",centre:"M3 10l9-6 9 6M5 10v10h14V10M10 20v-5h4v5",backup:"M12 4v11M7 10l5 5 5-5M4 20h16"};
+const ICONS={alerts:"M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0",parents:"M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7zM9 12l2 2 4-4",staff:"M16 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 20c0-3 3-5 6-5s6 2 6 5M14 15c3 0 8 1 8 5",money:"M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6",cards:"M3 5h18v14H3zM7 9h4v5H7zM14 10h4M14 13h3",centre:"M3 10l9-6 9 6M5 10v10h14V10M10 20v-5h4v5",backup:"M12 4v11M7 10l5 5 5-5M4 20h16"};
 function mhead(title,sub,right){return `<button class="back" data-act="more" data-k="">‹ More</button><div class="hd"><div><h2>${title}</h2>${sub?`<div class="sub">${sub}</div>`:""}</div>${right||""}</div>`}
 function vMore(){
   if(UI.more==="staff")return vStaff();
@@ -1201,7 +1201,6 @@ function render(){
   const attendanceScreen=UI.tab==="today"&&UI.seg==="students";
   document.body.classList.toggle("attendance-live",attendanceScreen);
   el.innerHTML=v;
-  schedulePV();
   if(hadQ){const q=document.getElementById("q");q.focus();q.setSelectionRange(q.value.length,q.value.length)}
 }
 
@@ -1723,16 +1722,6 @@ document.addEventListener("submit",e=>{
     const t={id,...S.teachers[id]};
     openSheet("Salary saved",`<p>${rs(amt)} paid to ${esc(t.name)} for ${monthName(p.month)}.</p><pre class="msg">${esc(salaryText(t,p))}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(t.phone,salaryText(t,p))}">Send slip on WhatsApp</a><button class="btn ghost" data-act="close">Done</button></div>`);
   }
-  if(f.id==="fInvestment"){
-    const amt=Number(d.amount);if(!(amt>0))return toast("Enter an amount");
-    const u=window.currentUser||{},au=auth&&auth.currentUser;
-    const uidv=String(u.uid||((au&&au.uid)||"")).trim(),email=String(u.email||((au&&au.email)||"")).trim().toLowerCase();
-    if(!uidv||!email)return toast("Signed-in staff identity is unavailable. Please sign in again.");
-    const m=d.date.slice(0,7),e={id:uid("i"),name:d.name.trim(),amount:amt,date:d.date,category:d.category,mode:d.mode,note:(d.note||"").trim(),addedByUid:uidv,addedByEmail:email,addedByName:String(u.name||email).trim(),createdAt:Date.now()};
-    S.investments[e.id]=e;ownIds.add(e.id);
-    const write=!db?Promise.resolve(saveLocal()).then(()=>true):db.doc("investmentRecords/"+e.id).set(e).then(()=>true).catch(err=>{toast(errMsg(err));return false});
-    write.then(ok=>{if(!ok){delete S.investments[e.id];render();return}UI.moneyMonth=m;closeSheet();render();toast("Investment saved · added by "+e.addedByName)});
-  }
   if(f.id==="fExp"){
     const amt=Number(d.amount);if(!(amt>0))return toast("Enter an amount");
     const m=d.date.slice(0,7),e={id:uid("e"),date:d.date,cat:d.cat,amount:amt,spentBy:(d.spentBy||"").trim(),note:(d.note||"").trim()};
@@ -1795,7 +1784,7 @@ function startFirebase(){
     document.getElementById("fLogin").innerHTML='<h1>TASVIA <span>Academy</span></h1><p>Firebase could not be loaded. Check your internet connection and reload.</p><button class="btn gold" type="button" onclick="location.reload()">Reload TASVIA</button>';
     return;
   }
-  setSync("Loading Firebase services…");
+  setSync("Connecting to TASVIA…");
   const startupWatchdog=setTimeout(()=>{
     const msg="Firebase startup is taking too long. Please reload TASVIA.";
     setSync(msg);
@@ -1860,7 +1849,7 @@ function startFirebase(){
         loginGraceUntil=0;
         setSync("Signed out · login required");
         unsubs.forEach(x=>x&&x());unsubs=[];db=null;window.currentUser=null;
-        S={students:{},att:{},fees:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},investments:{},diary:{}};
+        S={students:{},att:{},fees:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},diary:{}};
         render();gate.hidden=false;setSync("Signed out");
       }
     });
@@ -1926,7 +1915,7 @@ const loginForm=document.getElementById("fLogin");document.getElementById("login
 render();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
 else startFirebase();
-if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=27",{scope:"./"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=28",{scope:"./"}).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
 
 </body>
