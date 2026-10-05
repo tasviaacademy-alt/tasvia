@@ -436,7 +436,7 @@ const DEFAULT_INFO={name:"TASVIA Academy Tuition Centre",notice:"Admissions open
   subjects:"All subjects, LKG to Intermediate (State Board and CBSE)",
   extra:"TASVIA Academy Competitive Coaching: Navodaya (JNVST) and Sainik School entrance."};
 
-let S={students:{},att:{},fees:{},paymentRecords:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},investments:{},diary:{}};
+let S={students:{},att:{},fees:{},paymentRecords:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},diary:{}};
 let db=null,unsubs=[];
 const UI={tab:"today",seg:"students",more:null,date:today(),cls:"all",feeMonth:today().slice(0,7),moneyMonth:today().slice(0,7),q:"",testCls:"all",cardCls:null,rcFrom:null,rcTo:null};
 
@@ -591,7 +591,6 @@ function subscribe(){
   pvLoad();schedulePV();
   /* Staff attendance and admin back-office data are loaded only when those screens are opened. */
   coll("diary","diary",db.collection("diary").orderBy("date","desc").limit(120));
-  coll("investmentRecords","investments");
 }
 function ensureTeacherAttendance(){
   if(!db)return;
@@ -609,7 +608,6 @@ function ensureTeacherAttendance(){
     unsubs.push(db.collection("expenses").onSnapshot(s=>{
       const o={};s.docs.forEach(d=>o[d.id]=d.data());S.expenses=o;scheduleRender();
     },e=>onErr("expenses",e)));
-    unsubs.push(db.collection("investmentRecords").onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());S.investments=o;scheduleRender()},e=>onErr("investmentRecords",e)));
   }
   if(lazyTeacherAttLoaded)return;
   lazyTeacherAttLoaded=true;
@@ -717,7 +715,6 @@ function mapList(obj,field){const p=(obj||{})[field];if(!p)return [];return (Arr
 function salList(tid){return mapList(S.salaries[tid],"payments")}
 function salStatus(t,month){const paid=salList(t.id).filter(x=>x.month===month).reduce((a,b)=>a+ +b.amount,0);if(!t.salary)return {k:"none",paid};return paid>=t.salary?{k:"paid",paid}:{k:paid?"part":"due",paid,left:t.salary-paid}}
 function expList(month){return mapList(S.expenses[month],"items")}
-function invList(month){return Object.values(S.investments||{}).filter(x=>x&&String(x.date||"").slice(0,7)===month)}
 function acYear(d){const y=+d.slice(0,4),m=+d.slice(5,7);const s=m>=6?y:y-1;return {label:`${s}–${String((s+1)%100).padStart(2,"0")}`,from:`${s}-06-01`}}
 function byBatch(list){return UI.batch&&UI.batch!=="all"?list.filter(s=>(s.batch||"")===UI.batch):list}
 function batchChips(){const used=new Set(Object.values(S.students).map(s=>s.batch||"").filter(Boolean));if(!used.size)return "";const bs=BATCHES.filter(b=>used.has(b));
@@ -1054,7 +1051,6 @@ function mhead(title,sub,right){return `<button class="back" data-act="more" dat
 function vMore(){
   if(UI.more==="staff")return vStaff();
   if(UI.more==="money")return vMoney();
-  if(UI.more==="investments")return vInvestments();
   if(UI.more==="cards")return vCards();
   if(UI.more==="centre")return mhead("Centre info","What parents see when you share",`<button class="btn ghost" data-act="editInfo">Edit</button>`)+vCentre();
   if(UI.more==="backup")return vBackup();
@@ -1063,7 +1059,6 @@ function vMore(){
   const m=today().slice(0,7),ts=teachersList(),salDue=ts.filter(t=>t.salary&&salStatus(t,m).k!=="paid").length;
   const items=[["staff","Staff & salaries",`${ts.length} teacher${ts.length===1?"":"s"}${salDue?` · ${salDue} salar${salDue===1?"y":"ies"} due`:""}`],
     ["money","Expenses & profit",`${monthName(m)} summary`],
-    ["investments","Invested","Record and track investments by staff member"],
     ["cards","Report cards & ID cards","Print or share on WhatsApp"],
     ["centre","Centre info & language","Notice, timings, message language"],
     ["parents","Parent page links","Private page for each family"],
@@ -1094,22 +1089,6 @@ function vMoney(){
   h+=`<div class="card"><h3>Where the money went</h3><div class="money"><span>Salaries</span><b>${rs(sal)}</b>${Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([c,v])=>`<span>${esc(c)}</span><b>${rs(v)}</b>`).join("")}<span class="tot">Total spent</span><b class="tot">${rs(sal+exT)}</b></div><p class="sub" style="margin:10px 0 0">Fees in = fees recorded for ${monthName(m)}. Salaries come from Staff & salaries.</p></div>`;
   h+=`<h3 style="margin:16px 0 8px">Expenses (${ex.length})</h3>`;
   h+=ex.length?`<div class="list">`+ex.map(e=>`<div class="item"><div class="grow"><div class="nm">${esc(e.cat)} · ${rs(e.amount)}</div><div class="mt">${nice(e.date)}${e.spentBy&&S.teachers[e.spentBy]?" · Spent by "+esc(S.teachers[e.spentBy].name):""}${e.note?" · "+esc(e.note):""}</div></div><button class="btn sm danger" data-act="delExp" data-id="${esc(e.id)}" aria-label="Remove expense">×</button></div>`).join("")+`</div>`:`<div class="empty">No expenses added for this month.</div>`;
-  return h;
-}
-function vInvestments(){
-  const m=UI.moneyMonth;
-  const inv=invList(m).sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")));
-  const total=inv.reduce((a,b)=>a+Math.max(0,Number(b.amount)||0),0);
-  const names={};inv.forEach(x=>{const k=x.addedByUid||x.addedByEmail||"unknown";names[k]=x.addedByName||x.addedByEmail||"Unknown staff"});
-  let h=mhead("Investment records",monthName(m),"<button class=\"btn gold\" data-act=\"addInvestment\">Add investment</button>");
-  h+="<div class=\"row\" style=\"margin-bottom:12px\"><input type=\"month\" id=\"moneyMonth\" value=\""+m+"\" aria-label=\"Month\"></div>";
-  h+="<div class=\"board\"><div class=\"pp\"><b style=\"font-size:1.4rem\">"+rs(total)+"</b><small>Invested</small></div><div><b>"+inv.length+"</b><small>Records</small></div><div><b>"+Object.keys(names).length+"</b><small>Staff members</small></div></div>";
-  h+=`<div class="acts" style="margin:12px 0"><button class="btn gold" data-act="addInvestment">Invested</button></div>`;
-  const filters=Object.entries(names).sort((a,b)=>a[1].localeCompare(b[1]));
-  if(filters.length)h+="<div class=\"chips\"><button class=\"chip "+(!UI.investorFilter?"on":"")+"\" data-act=\"investmentFilter\" data-id=\"\">All staff</button>"+filters.map(([k,n])=>"<button class=\"chip "+(UI.investorFilter===k?"on":"")+"\" data-act=\"investmentFilter\" data-id=\""+esc(k)+"\">"+esc(n)+"</button>").join("")+"</div>";
-  const shown=UI.investorFilter?inv.filter(x=>(x.addedByUid||x.addedByEmail)===UI.investorFilter):inv;
-  h+=shown.length?"<div class=\"list\">"+shown.map(x=>"<div class=\"item\"><div class=\"grow\"><div class=\"nm\">"+esc(x.name)+" · "+rs(x.amount)+"</div><div class=\"mt\">"+nice(x.date)+" · "+esc(x.category||"Other")+" · "+esc(x.mode||"")+" · Added by <b>"+esc(x.addedByName||x.addedByEmail||"Unknown")+" </b>"+(x.note?" · "+esc(x.note):"")+"</div></div>"+(isAdmin()?"<button class=\"btn sm danger\" data-act=\"delInvestment\" data-id=\""+esc(x.id)+"\">×</button>":"")+"</div>").join("")+"</div>":"<div class=\"empty\">No investment records for "+monthName(m)+"."+ (UI.investorFilter?" Try All staff.":"")+"</div>";
-  h+="<div class=\"notice\">“Added by” is taken automatically from the signed-in Firebase account and cannot be selected manually.</div>";
   return h;
 }
 function vCards(){
@@ -1350,18 +1329,6 @@ function salaryForm(id){
   <div class="acts"><button class="btn gold" type="submit">Save payment</button></div></form>`);
 }
 const EXP_CATS=["Rent","Electricity","Water","Internet & phone","Stationery & printing","Books & materials","Maintenance & repairs","Cleaning","Advertising","Snacks & tea","Other"];
-function investmentForm(){
-  const cats=["Equipment","Furniture","Technology","Infrastructure","Marketing","Training","Other"];
-  openSheet("Add investment","<form id=\"fInvestment\">"
-  +"<label class=\"f\">Investment name<input name=\"name\" required placeholder=\"Computer, projector, furniture…\"></label>"
-  +"<div class=\"two\"><label class=\"f\">Amount (₹)<input name=\"amount\" inputmode=\"numeric\" required></label>"
-  +"<label class=\"f\">Category<select name=\"category\">"+cats.map(c=>opt(c,"Equipment")).join("")+"</select></label></div>"
-  +"<div class=\"two\"><label class=\"f\">Date<input name=\"date\" type=\"date\" required value=\""+today()+"\"></label>"
-  +"<label class=\"f\">Payment mode<select name=\"mode\">"+["Cash","UPI","Bank transfer","Cheque"].map(x=>opt(x,"UPI")).join("")+"</select></label></div>"
-  +"<label class=\"f\">Notes (optional)<textarea name=\"note\" rows=\"2\" placeholder=\"Purpose or details…\"></textarea></label>"
-  +"<div class=\"notice\">Added by: <b>"+esc((window.currentUser&&window.currentUser.name)||((auth&&auth.currentUser&&auth.currentUser.email)||"Signed-in staff"))+"</b><br><span class=\"sub\">This is automatic and cannot be changed here.</span></div>"
-  +"<div class=\"acts\"><button class=\"btn gold\" type=\"submit\">Save investment</button></div></form>");
-}
 function expenseForm(){
   const ts=Object.entries(S.teachers||{}).filter(([,t])=>t&&t.active!==false).sort((a,b)=>String(a[1].name||"").localeCompare(String(b[1].name||"")));
   openSheet("Add expense",`<form id="fExp">
@@ -1568,7 +1535,7 @@ function restoreBackupFile(){
 /* ---------- events ---------- */
 document.addEventListener("click",async e=>{
   const b=e.target.closest("[data-act]");if(!b)return;
-  if(!isAdmin()&&["addTeacher","editTeacher","paySal","delSal","delTeacher","addExpense","delExp","delInvestment","addStudent","editStudent","pay","editInfo","delStudent","delPay","resetPL","export","delTest"].includes(b.dataset.act)){toast("Admin access required.");return;}
+  if(!isAdmin()&&["addTeacher","editTeacher","paySal","delSal","delTeacher","addExpense","delExp" ,"addStudent","editStudent","pay","editInfo","delStudent","delPay","resetPL","export","delTest"].includes(b.dataset.act)){toast("Admin access required.");return;}
   const a=b.dataset.act,id=b.dataset.id;
     switch(a){
     case "tab":
@@ -1594,9 +1561,6 @@ document.addEventListener("click",async e=>{
       if(db)mergeWrite("salaries/"+id,{payments:{[pid]:null}},{});else saveLocal();render();teacherSheet(id);toast("Payment removed")}break;
     case "delTeacher":if(confirmDel(b,"Tap again: deletes all records")){delete S.teachers[id];delete S.salaries[id];remove("teachers/"+id);remove("salaries/"+id);closeSheet();render();toast("Teacher removed")}break;
     case "addExpense":expenseForm();break;
-    case "addInvestment":investmentForm();break;
-    case "investmentFilter":UI.investorFilter=b.dataset.id||"";render();break;
-    case "delInvestment":if(confirmDel(b,"Remove?")){const m=UI.moneyMonth;if(S.investments[id])delete S.investments[id];if(db)remove("investmentRecords/"+id);else saveLocal();render();toast("Investment removed")}break;
     case "delExp":if(confirmDel(b,"Remove?")){const m=UI.moneyMonth;S.expenses[m]={month:m,items:Object.fromEntries(expList(m).filter(x=>x.id!==id).map(x=>[x.id,x]))};
       if(db)mergeWrite("expenses/"+m,{items:{[id]:null}},{month:m});else saveLocal();render();toast("Expense removed")}break;
     case "hwEdit":hwForm(b.dataset.id);break;
