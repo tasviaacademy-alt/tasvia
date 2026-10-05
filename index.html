@@ -570,8 +570,16 @@ async function migrateLegacyStudentIds(){
 }
 function subscribe(){
   unsubs.forEach(u=>u&&u());unsubs=[];lazyMoreLoaded=false;lazyTeacherAttLoaded=false;
-  const onErr=e=>setSync(e&&e.code==="permission-denied"?"Not on staff list":"Connection lost. Reopen the app.");
-  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;scheduleRender();if(key==="students")schedulePV();if(key==="fees")schedulePV(true)},onErr));
+  const onErr=(name,e)=>{
+    if(e&&e.code==="permission-denied"){
+      const who=window.currentUser&&window.currentUser.role==="admin"?"admin":"staff";
+      console.warn("TASVIA Firestore permission denied:",name,who,e);
+      setSync("Access issue · "+name);
+    }else{
+      setSync("Connection lost · "+name);
+    }
+  };
+  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;scheduleRender();if(key==="students")schedulePV();if(key==="fees")schedulePV(true)},e=>onErr(name,e)));
   const admin=window.currentUser&&window.currentUser.role==="admin";
   coll("students","students");
   // Legacy student-ID migration is intentionally NOT automatic. It is a maintenance operation and must never run in the background while staff are recording payments.
@@ -579,7 +587,7 @@ function subscribe(){
   coll("fees","fees");
   {const y=+acYear(today()).from.slice(0,4)-1;coll("tests","tests",db.collection("tests").where("date",">=",y+"-06-01"))}
   coll("attendance","att",db.collection("attendance").orderBy("date","desc").limit(400));
-  unsubs.push(db.doc("info/centre").onSnapshot(d=>{S.info=d.exists?d.data():null;scheduleRender()},onErr));
+  unsubs.push(db.doc("info/centre").onSnapshot(d=>{S.info=d.exists?d.data():null;scheduleRender()},e=>onErr("staffattendance",e)));
   pvLoad();schedulePV();
   /* Staff attendance and admin back-office data are loaded only when those screens are opened. */
   coll("diary","diary",db.collection("diary").orderBy("date","desc").limit(120));
@@ -587,21 +595,21 @@ function subscribe(){
 }
 function ensureTeacherAttendance(){
   if(!db)return;
-  const onErr=e=>setSync(e&&e.code==="permission-denied"?"Not on staff list":"Connection lost. Reopen the app.");
+  const onErr=(name,e)=>{if(e&&e.code==="permission-denied"){console.warn("TASVIA Firestore permission denied:",name,e);setSync("Access issue · "+name)}else setSync("Connection lost · "+name)};
   /* Teacher attendance needs both the teacher roster and attendance records.
      The performance optimization made both lazy; load them together when this tab opens. */
   if(isAdmin()&&!lazyMoreLoaded){
     lazyMoreLoaded=true;
     unsubs.push(db.collection("teachers").onSnapshot(s=>{
       const o={};s.docs.forEach(d=>o[d.id]=d.data());S.teachers=o;scheduleRender();
-    },onErr));
+    },e=>onErr("staffattendance",e)));
     unsubs.push(db.collection("salaries").onSnapshot(s=>{
       const o={};s.docs.forEach(d=>o[d.id]=d.data());S.salaries=o;scheduleRender();
-    },onErr));
+    },e=>onErr("staffattendance",e)));
     unsubs.push(db.collection("expenses").onSnapshot(s=>{
       const o={};s.docs.forEach(d=>o[d.id]=d.data());S.expenses=o;scheduleRender();
-    },onErr));
-    unsubs.push(db.collection("investmentRecords").onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());S.investments=o;scheduleRender()},onErr));
+    },e=>onErr("staffattendance",e)));
+    unsubs.push(db.collection("investmentRecords").onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());S.investments=o;scheduleRender()},e=>onErr("staffattendance",e)));
   }
   if(lazyTeacherAttLoaded)return;
   lazyTeacherAttLoaded=true;
@@ -610,14 +618,14 @@ function ensureTeacherAttendance(){
     if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert("tatt",old||{},o);
     if(s.metadata&&!s.metadata.fromCache)seenFirst.tatt=true;
     scheduleRender();
-  },onErr));
+  },e=>onErr("staffattendance",e)));
 }function ensureMoreAdminData(){
   if(!db||lazyMoreLoaded||!isAdmin())return;
   lazyMoreLoaded=true;
-  const onErr=e=>setSync(e&&e.code==="permission-denied"?"Not on staff list":"Connection lost. Reopen the app.");
+  const onErr=(name,e)=>{if(e&&e.code==="permission-denied"){console.warn("TASVIA Firestore permission denied:",name,e);setSync("Access issue · "+name)}else setSync("Connection lost · "+name)};
   const collLazy=(name,key)=>unsubs.push(db.collection(name).onSnapshot(s=>{
     const o={};s.docs.forEach(d=>o[d.id]=d.data());S[key]=o;scheduleRender();
-  },onErr));
+  },e=>onErr("staffattendance",e)));
   collLazy("teachers","teachers");
   collLazy("salaries","salaries");
   collLazy("expenses","expenses");
