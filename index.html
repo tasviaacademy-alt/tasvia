@@ -300,6 +300,27 @@ input:focus,select:focus,textarea:focus{border-color:#9DAAC1!important;box-shado
 .commercial-strip b{color:var(--ink)}@media(max-width:620px){.commercial-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.commercial-kpi{padding:10px}.commercial-kpi b{font-size:1.2rem}.commercial-strip{font-size:.72rem}}
 @media(prefers-color-scheme:dark){.commercial-strip{background:rgba(18,28,40,.72)}}
 
+/* TASVIA DASHBOARD TILE SYSTEM */
+.dashboard-welcome{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:0 0 14px;padding:18px 18px;border-radius:16px;background:linear-gradient(135deg,#071C42,#0D2A5C);color:#fff;border:1px solid rgba(201,154,61,.32);box-shadow:0 10px 28px rgba(7,28,66,.12)}
+.dashboard-eyebrow{display:block;color:#D9AE59;font-size:.68rem;font-weight:800;letter-spacing:.14em;margin-bottom:3px}
+.dashboard-welcome h3{font-size:1.18rem;margin:0 0 3px;color:#fff}
+.dashboard-welcome p{margin:0;color:#DCE3EF;font-size:.8rem}
+.dashboard-role{flex:0 0 auto;border:1px solid rgba(217,174,89,.5);background:rgba(255,255,255,.08);border-radius:999px;padding:6px 10px;font-size:.68rem;font-weight:800;letter-spacing:.08em;color:#F1D28D}
+.dashboard-section{margin:14px 0}
+.dashboard-section-head{display:flex;justify-content:space-between;align-items:end;margin:0 0 9px}
+.dashboard-section-head h3{font-size:1rem;margin:0}
+.dashboard-section-head span{display:block;color:var(--muted);font-size:.75rem;margin-top:2px}
+.dashboard-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.dashboard-tile{min-width:0;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:13px 12px;box-shadow:0 3px 12px rgba(20,32,51,.045);display:flex;flex-direction:column;align-items:flex-start;gap:5px;color:var(--ink);transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
+.dashboard-tile:hover{transform:translateY(-2px);border-color:rgba(201,154,61,.7);box-shadow:0 9px 20px rgba(20,32,51,.09)}
+.dashboard-icon{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(145deg,#071C42,#10336E);color:#F1D28D;font-size:1.05rem;font-weight:800;box-shadow:inset 0 0 0 1px rgba(217,174,89,.22)}
+.dashboard-tile strong{font-size:.83rem;line-height:1.2}
+.dashboard-tile small{color:var(--muted);font-size:.69rem;line-height:1.3}
+.attendance-section{margin-top:16px;margin-bottom:8px}
+@media(max-width:900px){.dashboard-tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.dashboard-welcome{padding:15px}.dashboard-tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.dashboard-tile{padding:11px}.dashboard-icon{width:35px;height:35px}.dashboard-welcome p{font-size:.74rem}}
+@media(prefers-reduced-motion:reduce){.dashboard-tile{transition:none}.dashboard-tile:hover{transform:none}}
+
 /* TASVIA PREMIUM POLISH */
 body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 header{border-bottom:1px solid rgba(217,171,80,.22);box-shadow:0 2px 14px rgba(0,0,0,.08)}
@@ -980,20 +1001,25 @@ function vParents(){
 }
 
 /* ---------- views ---------- */
-const TABS=[["today","Today","M4 5h16v15H4zM4 9h16M9 3v4M15 3v4M8 14l2.5 2.5L16 12"],["students","Students","M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 4-6 8-6s8 2 8 6"],["fees","Fees","M4 6h16v12H4zM4 10h16M8 15h3"],["tests","Tests","M6 3h9l4 4v14H6zM9 12h7M9 16h5M9 8h3"],["more","More","M4 6h16M4 12h16M4 18h16"]];
+const TABS=[["today","Dashboard","M3 11.5 12 4l9 7.5v8a1.5 1.5 0 0 1-1.5 1.5H4.5A1.5 1.5 0 0 1 3 19.5zM9 21v-6h6v6"],["students","Students","M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 4-6 8-6s8 2 8 6"],["fees","Fees","M4 6h16v12H4zM4 10h16M8 15h3"],["tests","Tests","M6 3h9l4 4v14H6zM9 12h7M9 16h5M9 8h3"],["more","More","M4 6h16M4 12h16M4 18h16"]];
 function renderNav(){const tabs=TABS.filter(([k])=>k!=="fees"||isAdmin());document.getElementById("nav").innerHTML=tabs.map(([k,l,d])=>`<button data-act="tab" data-k="${k}" class="${UI.tab===k?"on":""}" aria-current="${UI.tab===k?"page":"false"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>${l}</button>`).join("")}{document.getElementById("nav").innerHTML=TABS.map(([k,l,d])=>`<button data-act="tab" data-k="${k}" class="${UI.tab===k?"on":""}" aria-current="${UI.tab===k?"page":"false"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>${l}</button>`).join("")}
 function classChips(key){const used=new Set(Object.values(S.students).map(s=>s.cls));const cs=CLASSES.filter(c=>used.has(c));return `<div class="chips"><button class="chip ${UI[key]==="all"?"on":""}" data-act="cls" data-key="${key}" data-c="all">All</button>`+cs.map(c=>`<button class="chip ${UI[key]===c?"on":""}" data-act="cls" data-key="${key}" data-c="${c}">${clsLabel(c)}</button>`).join("")+`</div>`}
 function noStudents(){return `<div class="empty"><p>No students yet. Add your first student to start marking attendance, fees and tests.</p><button class="btn gold" data-act="addStudent">Add student</button></div>`}
 
 function vToday(){
   const title={students:"Attendance",teachers:"Teacher attendance",homework:"Homework"}[UI.seg];
-  let h=`<div class="hd"><div><h2>${title}</h2><div class="sub">${new Date(UI.date+"T00:00").toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long"})}</div></div><input type="date" id="attDate" value="${UI.date}" max="${today()}" aria-label="Date"></div>`;
+  let h=UI.seg==="students"
+    ? `<div class="hd"><div><h2>Dashboard</h2><div class="sub">TASVIA Academy · ${new Date(UI.date+"T00:00").toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long"})}</div></div><input type="date" id="attDate" value="${UI.date}" max="${today()}" aria-label="Date"></div>`
+    : `<div class="hd"><div><h2>${title}</h2><div class="sub">${new Date(UI.date+"T00:00").toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long"})}</div></div><input type="date" id="attDate" value="${UI.date}" max="${today()}" aria-label="Date"></div>`;
   const list=byBatch(studentsOf(UI.cls)),marks=getMarks(UI.date);
   const p=list.filter(s=>marks[s.id]==="P").length,a=list.filter(s=>marks[s.id]==="A").length,nm=Math.max(list.length-p-a,0);
   const ent=(S.diary[UI.date]||{}).entries||{},hwDone=list.filter(s=>ent[s.id]&&ent[s.id].hw).length;
   const admin=isAdmin(),m=UI.date.slice(0,7);
   const feeDue=admin?list.filter(s=>s.fee>0&&enrolledIn(s,m)&&["due","part"].includes(feeStatus(s,m).k)).length:0;
   const testCount=Object.values(S.tests).filter(t=>t.date&&t.date.slice(0,7)===m).length;
+  if(UI.seg==="students"){
+    h+=`<div class="dashboard-welcome"><div><span class="dashboard-eyebrow">TASVIA ACADEMY</span><h3>Welcome back, ${esc((window.currentUser&&window.currentUser.name)||"Staff")}</h3><p>Everything you need for today's academy operations, in one place.</p></div><span class="dashboard-role">${admin?"ADMIN":"STAFF"}</span></div>`;
+  }
   h+=`<div class="commercial-kpis">
     <div class="commercial-kpi"><b>${list.length}</b><span>Students</span></div>
     <div class="commercial-kpi"><b>${p}</b><span>Present</span></div>
@@ -1003,13 +1029,27 @@ function vToday(){
   const testLabel=testCount===1?"test":"tests";
   const markStatus=nm?`<span class="tag due">${nm} not marked</span>`:`<span class="tag ok">Attendance complete</span>`;
   h+=`<div class="commercial-strip"><span>Academic month: <b>${monthName(m)}</b></span><span>${testCount} ${testLabel} recorded</span>${markStatus}</div>`;
-  h+=`<div class="commercial-actions" aria-label="Quick actions">
-    <button class="commercial-action" data-act="tab" data-k="students"><b>👨‍🎓</b>Students</button>
-    ${admin?'<button class="commercial-action" data-act="tab" data-k="fees"><b>💳</b>Fees</button>':""}
-    <button class="commercial-action" data-act="tab" data-k="tests"><b>📝</b>Tests</button>
-    <button class="commercial-action" data-act="tab" data-k="more"><b>⚙️</b>More</button>
-  </div>`;
-  h+=`<div class="seg" role="tablist">${[["students","Students"],["teachers","Teachers"],["homework","Homework"]].map(([k,l])=>`<button role="tab" aria-selected="${UI.seg===k}" data-act="seg" data-k="${k}" class="${UI.seg===k?"on":""}">${l}</button>`).join("")}</div>`;
+  if(UI.seg==="students"){
+    h+=`<section class="dashboard-section"><div class="dashboard-section-head"><div><h3>Quick access</h3><span>Open the most-used TASVIA modules instantly.</span></div></div>
+      <div class="dashboard-tiles">
+        <button class="dashboard-tile" data-act="seg" data-k="students"><span class="dashboard-icon">✓</span><strong>Attendance</strong><small>Mark today's attendance</small></button>
+        <button class="dashboard-tile" data-act="tab" data-k="students"><span class="dashboard-icon">👨‍🎓</span><strong>Students</strong><small>Student list & profiles</small></button>
+        <button class="dashboard-tile" data-act="seg" data-k="homework"><span class="dashboard-icon">📚</span><strong>Homework</strong><small>Add & send homework</small></button>
+        <button class="dashboard-tile" data-act="tab" data-k="tests"><span class="dashboard-icon">📝</span><strong>Tests & Marks</strong><small>Tests, marks & reports</small></button>
+        ${admin?`<button class="dashboard-tile" data-act="tab" data-k="fees"><span class="dashboard-icon">₹</span><strong>Fees</strong><small>Payments & pending fees</small></button>
+        <button class="dashboard-tile" data-act="more" data-k="staff"><span class="dashboard-icon">👩‍🏫</span><strong>Staff</strong><small>Attendance & salaries</small></button>
+        <button class="dashboard-tile" data-act="more" data-k="money"><span class="dashboard-icon">📊</span><strong>Expenses</strong><small>Spending & profit</small></button>`:""}
+        <button class="dashboard-tile" data-act="more" data-k="parents"><span class="dashboard-icon">👪</span><strong>Parent Links</strong><small>Share private parent pages</small></button>
+        <button class="dashboard-tile" data-act="more" data-k="alerts"><span class="dashboard-icon">🔔</span><strong>Alerts</strong><small>Sounds & notifications</small></button>
+      </div>
+    </section>`;
+    h+=`<div class="dashboard-section attendance-section"><div class="dashboard-section-head"><div><h3>Today's attendance</h3><span>${nm?`${nm} student${nm===1?"":"s"} still need marking.`:"All students are marked for today."}</span></div></div></div>`;
+  }
+  if(UI.seg!=="students"){
+    h+=`<div class="seg" role="tablist">${[["students","Attendance"],["teachers","Teachers"],["homework","Homework"]].map(([k,l])=>`<button role="tab" aria-selected="${UI.seg===k}" data-act="seg" data-k="${k}" class="${UI.seg===k?"on":""}">${l}</button>`).join("")}</div>`;
+  }else{
+    h+=`<div class="seg" role="tablist">${[["students","Attendance"],["teachers","Teachers"],["homework","Homework"]].map(([k,l])=>`<button role="tab" aria-selected="${UI.seg===k}" data-act="seg" data-k="${k}" class="${UI.seg===k?"on":""}">${l}</button>`).join("")}</div>`;
+  }
   if(UI.seg==="teachers")return h+vTeacherAtt();
   if(UI.seg==="homework")return h+vHomework();
   if(!Object.keys(S.students).length)return h+noStudents();
