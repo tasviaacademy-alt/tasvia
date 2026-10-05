@@ -587,7 +587,7 @@ function subscribe(){
   coll("fees","fees");
   {const y=+acYear(today()).from.slice(0,4)-1;coll("tests","tests",db.collection("tests").where("date",">=",y+"-06-01"))}
   coll("attendance","att",db.collection("attendance").orderBy("date","desc").limit(400));
-  unsubs.push(db.doc("info/centre").onSnapshot(d=>{S.info=d.exists?d.data():null;scheduleRender()},e=>onErr("staffattendance",e)));
+  unsubs.push(db.doc("info/centre").onSnapshot(d=>{S.info=d.exists?d.data():null;scheduleRender()},e=>onErr("info/centre",e)));
   pvLoad();schedulePV();
   /* Staff attendance and admin back-office data are loaded only when those screens are opened. */
   coll("diary","diary",db.collection("diary").orderBy("date","desc").limit(120));
