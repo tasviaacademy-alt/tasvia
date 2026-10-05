@@ -1050,7 +1050,7 @@ const ICONS={investments:"M12 2v20M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6",ale
 function mhead(title,sub,right){return `<button class="back" data-act="more" data-k="">‹ More</button><div class="hd"><div><h2>${title}</h2>${sub?`<div class="sub">${sub}</div>`:""}</div>${right||""}</div>`}
 function vMore(){
   if(UI.more==="staff")return vStaff();
-  if(UI.more==="money")return vMoney();
+  if(UI.more==="money"){if(!isAdmin()){UI.more=null;return vMore()}return vMoney();}
   if(UI.more==="cards")return vCards();
   if(UI.more==="centre")return mhead("Centre info","What parents see when you share",`<button class="btn ghost" data-act="editInfo">Edit</button>`)+vCentre();
   if(UI.more==="backup")return vBackup();
@@ -1058,7 +1058,7 @@ function vMore(){
   if(UI.more==="alerts")return vAlerts();
   const m=today().slice(0,7),ts=teachersList(),salDue=ts.filter(t=>t.salary&&salStatus(t,m).k!=="paid").length;
   const items=[["staff","Staff & salaries",`${ts.length} teacher${ts.length===1?"":"s"}${salDue?` · ${salDue} salar${salDue===1?"y":"ies"} due`:""}`],
-    ["money","Expenses & profit",`${monthName(m)} summary`],
+    ...(isAdmin()?[["money","Expenses & profit",`${monthName(m)} summary`]]:[]),
     ["cards","Report cards & ID cards","Print or share on WhatsApp"],
     ["centre","Centre info & language","Notice, timings, message language"],
     ["parents","Parent page links","Private page for each family"],
@@ -1550,7 +1550,7 @@ document.addEventListener("click",async e=>{
       markAllT(UI.date,teachersList());
       toast("Remaining teachers marked present");
       break;
-    case "more":UI.more=b.dataset.k||null;if(UI.more==="backup")ensureGKBackup();render();window.scrollTo(0,0);break;
+    case "more":UI.more=b.dataset.k||null;if(UI.more==="money"&&!isAdmin()){UI.more=null;toast("Admin access required.");break;}if(UI.more==="backup")ensureGKBackup();render();window.scrollTo(0,0);break;
     case "backupTab":UI.backupTab=b.dataset.k==="gk"?"gk":"homework";render();break;
     case "markT":markT(UI.date,id,b.dataset.v);break;
     case "addTeacher":teacherForm();break;
