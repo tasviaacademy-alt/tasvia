@@ -1915,7 +1915,7 @@ const loginForm=document.getElementById("fLogin");document.getElementById("login
       while(!auth&&Date.now()-started<10000) await new Promise(r=>setTimeout(r,100));
     }
     if(!auth) throw new Error("Firebase sign-in service is not ready. Please reload.");
-    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    try{await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)}catch(pErr){console.warn("Firebase LOCAL persistence unavailable; using session persistence:",pErr);try{await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)}catch(sErr){console.warn("Firebase session persistence unavailable; continuing with in-memory auth:",sErr)}}
     const cred=await auth.signInWithEmailAndPassword((d.email||"").trim(),d.password||"");
     const u=cred&&cred.user?cred.user:auth.currentUser;
     if(!u) throw new Error("Firebase signed in but returned no user session.");
