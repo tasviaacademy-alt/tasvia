@@ -464,7 +464,7 @@ function infoText(){
 }
 function grade(p){return p>=90?"A+":p>=80?"A":p>=70?"B+":p>=60?"B":p>=50?"C":p>=35?"D":"E"}
 function studentsOf(cls,incLeft){return Object.entries(S.students).map(([id,s])=>({id,...s})).filter(s=>(incLeft||active(s))&&(cls==="all"||s.cls===cls)).sort((a,b)=>CLASSES.indexOf(a.cls)-CLASSES.indexOf(b.cls)||a.name.localeCompare(b.name))}
-function isAdmin(){return !!(window.currentUser&&window.currentUser.role==="admin")}
+function isAdmin(){return !!(window.currentUser&&String(window.currentUser.email||"").trim().toLowerCase()==="tasviaacademy@gmail.com")}
 function isStaff(){return !!(window.currentUser&&(window.currentUser.role==="staff"||window.currentUser.role==="admin"))}
 function requireAdmin(){if(isAdmin())return true;toast("Admin access required.");return false}
 
