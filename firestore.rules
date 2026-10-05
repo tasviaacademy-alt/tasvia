@@ -79,6 +79,25 @@ service cloud.firestore {
       allow read, write: if admin();
     }
 
+    // Investment ledger. Any authenticated TASVIA staff member may create a record,
+    // but the creator identity must come from Firebase Auth and is immutable to staff.
+    // Only admins can edit or delete an existing investment record.
+    match /investmentRecords/{id} {
+      allow read: if staff();
+      allow create: if staff()
+        && request.resource.data.addedByUid == request.auth.uid
+        && request.resource.data.addedByEmail == request.auth.token.email
+        && (
+          request.auth.token.email == "tasviaacademy@gmail.com"
+          || (
+            exists(/databases/$(database)/documents/Staff/$(request.auth.token.email))
+            && request.resource.data.addedByName
+              == get(/databases/$(database)/documents/Staff/$(request.auth.token.email)).data.name
+          )
+        );
+      allow update, delete: if admin();
+    }
+
     match /info/centre {
       allow read, write: if staff();
     }
