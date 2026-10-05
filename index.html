@@ -602,14 +602,14 @@ function ensureTeacherAttendance(){
     lazyMoreLoaded=true;
     unsubs.push(db.collection("teachers").onSnapshot(s=>{
       const o={};s.docs.forEach(d=>o[d.id]=d.data());S.teachers=o;scheduleRender();
-    },e=>onErr("staffattendance",e)));
+    },e=>onErr("teachers",e)));
     unsubs.push(db.collection("salaries").onSnapshot(s=>{
       const o={};s.docs.forEach(d=>o[d.id]=d.data());S.salaries=o;scheduleRender();
-    },e=>onErr("staffattendance",e)));
+    },e=>onErr("salaries",e)));
     unsubs.push(db.collection("expenses").onSnapshot(s=>{
       const o={};s.docs.forEach(d=>o[d.id]=d.data());S.expenses=o;scheduleRender();
-    },e=>onErr("staffattendance",e)));
-    unsubs.push(db.collection("investmentRecords").onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());S.investments=o;scheduleRender()},e=>onErr("staffattendance",e)));
+    },e=>onErr("expenses",e)));
+    unsubs.push(db.collection("investmentRecords").onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());S.investments=o;scheduleRender()},e=>onErr("investmentRecords",e)));
   }
   if(lazyTeacherAttLoaded)return;
   lazyTeacherAttLoaded=true;
@@ -625,7 +625,7 @@ function ensureTeacherAttendance(){
   const onErr=(name,e)=>{if(e&&e.code==="permission-denied"){console.warn("TASVIA Firestore permission denied:",name,e);setSync("Access issue · "+name)}else setSync("Connection lost · "+name)};
   const collLazy=(name,key)=>unsubs.push(db.collection(name).onSnapshot(s=>{
     const o={};s.docs.forEach(d=>o[d.id]=d.data());S[key]=o;scheduleRender();
-  },e=>onErr("staffattendance",e)));
+  },e=>onErr(name,e)));
   collLazy("teachers","teachers");
   collLazy("salaries","salaries");
   collLazy("expenses","expenses");
