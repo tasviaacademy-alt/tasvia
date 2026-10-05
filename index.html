@@ -1083,9 +1083,33 @@ function vMoney(){
   const sal=Object.keys(S.salaries).reduce((a,id)=>a+salList(id).filter(p=>p.month===m).reduce((x,p)=>x+ +p.amount,0),0);
   const ex=expList(m).sort((a,b)=>b.date.localeCompare(a.date)),exT=ex.reduce((a,b)=>a+ +b.amount,0),net=fees-sal-exT;
   const cats={};ex.forEach(e=>cats[e.cat]=(cats[e.cat]||0)+ +e.amount);
+
+  // Calculate staff spending across every saved expense month from the source records.
+  const staffSpend={};
+  Object.keys(S.expenses||{}).forEach(month=>{
+    expList(month).forEach(e=>{
+      const key=(e.spentBy||"").trim()||"__unassigned";
+      if(!staffSpend[key])staffSpend[key]={total:0,months:{}};
+      const amt=+e.amount||0;
+      staffSpend[key].total+=amt;
+      staffSpend[key].months[month]=(staffSpend[key].months[month]||0)+amt;
+    });
+  });
+  const staffRows=Object.entries(staffSpend).sort((a,b)=>b[1].total-a[1].total);
+  const allStaffTotal=staffRows.reduce((a,[,x])=>a+x.total,0);
+
   let h=mhead("Expenses & profit",monthName(m),`<button class="btn gold" data-act="addExpense">Add expense</button>`);
   h+=`<div class="row" style="margin-bottom:12px"><input type="month" id="moneyMonth" value="${m}" aria-label="Month"></div>`;
   h+=`<div class="board"><div class="pp"><b style="font-size:1.4rem">${rs(fees)}</b><small>Fees in</small></div><div class="aa"><b style="font-size:1.4rem">${rs(sal+exT)}</b><small>Spent</small></div><div><b style="font-size:1.4rem;color:${net>=0?"#8FD9A8":"#F3A08E"}">${net<0?"−":""}${rs(Math.abs(net))}</b><small>${net>=0?"Profit":"Loss"}</small></div></div>`;
+
+  h+=`<div class="card"><h3>Staff expense — all months</h3><p class="sub" style="margin:0 0 10px">Total spent by each staff member across every saved month.</p>`;
+  h+=staffRows.length?`<div class="list">`+staffRows.map(([id,x])=>{
+    const name=id==="__unassigned"?"Unassigned":(S.teachers[id]?.name||"Removed staff");
+    const monthly=Object.entries(x.months).sort((a,b)=>b[0].localeCompare(a[0])).map(([mm,v])=>`<span>${esc(monthName(mm))}</span><b>${rs(v)}</b>`).join("");
+    return `<div class="card" style="margin:0;padding:12px"><div class="row" style="justify-content:space-between"><strong>${esc(name)}</strong><b>${rs(x.total)}</b></div><div class="money" style="margin-top:8px">${monthly}</div></div>`;
+  }).join("")+`</div>`:`<div class="empty">No staff-linked expenses recorded yet.</div>`;
+  h+=`<div class="money" style="margin-top:10px"><span class="tot">All staff-linked expenses</span><b class="tot">${rs(allStaffTotal)}</b></div></div>`;
+
   h+=`<div class="card"><h3>Where the money went</h3><div class="money"><span>Salaries</span><b>${rs(sal)}</b>${Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([c,v])=>`<span>${esc(c)}</span><b>${rs(v)}</b>`).join("")}<span class="tot">Total spent</span><b class="tot">${rs(sal+exT)}</b></div><p class="sub" style="margin:10px 0 0">Fees in = fees recorded for ${monthName(m)}. Salaries come from Staff & salaries.</p></div>`;
   h+=`<h3 style="margin:16px 0 8px">Expenses (${ex.length})</h3>`;
   h+=ex.length?`<div class="list">`+ex.map(e=>`<div class="item"><div class="grow"><div class="nm">${esc(e.cat)} · ${rs(e.amount)}</div><div class="mt">${nice(e.date)}${e.spentBy&&S.teachers[e.spentBy]?" · Spent by "+esc(S.teachers[e.spentBy].name):""}${e.note?" · "+esc(e.note):""}</div></div><button class="btn sm danger" data-act="delExp" data-id="${esc(e.id)}" aria-label="Remove expense">×</button></div>`).join("")+`</div>`:`<div class="empty">No expenses added for this month.</div>`;
