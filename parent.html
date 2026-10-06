@@ -366,6 +366,7 @@ const grade=p=>p>=90?"A+":p>=80?"A":p>=70?"B+":p>=60?"B":p>=50?"C":p>=35?"D":"E"
 let V=null,L="en",feeDueScrollDone=false,feeDuePopupShown=false,feeDuePopupPending=false;
 let parentHomeworkFilterMode="all";
 let parentStudentCode="";
+function load(key){try{return localStorage.getItem(String(key));}catch(_){return null}}
 function homeworkCompletionKey(x){
   const raw=[x?.id,x?.d,x?.subject,x?.hw,x?.note].map(v=>String(v??"").trim()).join("|");
   let h=2166136261;
