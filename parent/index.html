@@ -412,42 +412,46 @@ function render(){
   // the first day of the fee month and the configured due date (inclusive).
   // Example: Sep 1 → Oct 1; any valid payment dated Sep 1 through Oct 1
   // is applied to the September fee row.
-  const feePeriodPaymentTotal=(feeRow,payments)=>{
+  const feePeriodPaymentInfo=(feeRow,payments)=>{
     const rawMonth=String(feeRow?.m||"").trim();
-    const ym=/^(\\d{4})-(\\d{1,2})/.exec(rawMonth);
-    if(!ym)return 0;
+    const ym=/^(\d{4})-(\d{1,2})/.exec(rawMonth);
+    if(!ym)return {amount:0,hasDatedAssociation:false};
     const year=Number(ym[1]),month=Number(ym[2]);
-    if(!year||month<1||month>12)return 0;
+    if(!year||month<1||month>12)return {amount:0,hasDatedAssociation:false};
     const start=new Date(year,month-1,1);
     const configuredEnd=String(feeRow?.dueDate||"").trim();
-    const end=/^\\d{4}-\\d{2}-\\d{2}$/.test(configuredEnd)
+    const end=/^\d{4}-\d{2}-\d{2}$/.test(configuredEnd)
       ? new Date(configuredEnd+"T00:00:00")
       : new Date(year,month,1);
-    if(Number.isNaN(start.getTime())||Number.isNaN(end.getTime()))return 0;
+    if(Number.isNaN(start.getTime())||Number.isNaN(end.getTime()))return {amount:0,hasDatedAssociation:false};
 
-    let datedTotal=0,undatedTotal=0,hasDated=false;
+    let datedTotal=0,undatedTotal=0,hasDatedAssociation=false;
+    const feeKey=feeMonthKey(feeRow.m);
     (Array.isArray(payments)?payments:[]).forEach(p=>{
       if(!p||typeof p!=="object")return;
       const amount=Math.max(0,Number(p.a??p.amount??0)||0);
       if(!amount)return;
       const rawDate=String(p.d||p.date||p.paidOn||p.paymentDate||"").trim();
       const pd=safeDate(rawDate);
+      const paymentKey=feeMonthKey(p.m||p.month);
+      const dateMatchesFeeMonth=pd && pd.getFullYear()===year && pd.getMonth()===month-1;
+      const associated=paymentKey===feeKey || dateMatchesFeeMonth || (pd && configuredEnd && rawDate.slice(0,10)===configuredEnd);
       if(pd){
-        hasDated=true;
+        if(associated)hasDatedAssociation=true;
         const day=new Date(pd.getFullYear(),pd.getMonth(),pd.getDate());
-        if(day>=start&&day<=end)datedTotal+=amount;
-      }else if(feeMonthKey(p.m||p.month)===feeMonthKey(feeRow.m)){
+        if(associated && day>=start&&day<=end)datedTotal+=amount;
+      }else if(paymentKey===feeKey){
         undatedTotal+=amount;
       }
     });
-    return hasDated?datedTotal:undatedTotal;
+    return {amount:hasDatedAssociation?datedTotal:undatedTotal,hasDatedAssociation};
   };
-
   const quickPayments=Array.isArray(v.pays)?v.pays.filter(p=>p&&typeof p==="object"):[];
   const quickFeeRows=quickFees.map(f=>{
     const fee=Number(f.fee)||0,storedPaid=Number(f.paid)||0;
-    const paidFromPayments=feePeriodPaymentTotal(f,quickPayments);
-    return Object.assign({},f,{fee,paid:Math.min(fee,Math.max(storedPaid,paidFromPayments)),dueDate:f.dueDate?String(f.dueDate):""});
+    const paymentInfo=feePeriodPaymentInfo(f,quickPayments);
+    const paidBase=paymentInfo.hasDatedAssociation?paymentInfo.amount:Math.max(storedPaid,paymentInfo.amount);
+    return Object.assign({},f,{fee,paid:Math.min(fee,Math.max(0,paidBase)),dueDate:f.dueDate?String(f.dueDate):""});
   });
   const currentMonth=today().slice(0,7);
   const currentFee=quickFeeRows.find(f=>String(f.m||"").slice(0,7)===currentMonth)||null;
@@ -807,8 +811,13 @@ async function loadForStudentId(code){
         const currentMonth=today().slice(0,7);
         const currentFee=fees.find(f=>String(f.m||"").slice(0,7)===currentMonth)||null;
         const currentFeeAmount=currentFee?Number(currentFee.fee)||0:0;
-        const currentFeePeriodPaid=currentFee?feePeriodPaymentTotal(currentFee,pays):0;
-        const currentFeePaid=currentFee?Math.min(currentFeeAmount,Math.max(Number(currentFee.paid)||0,currentFeePeriodPaid)):0;
+        const currentFeePaymentInfo=currentFee?feePeriodPaymentInfo(currentFee,pays):{amount:0,hasDatedAssociation:false};
+        const currentFeePaid=currentFee?Math.min(
+          currentFeeAmount,
+          currentFeePaymentInfo.hasDatedAssociation
+            ? currentFeePaymentInfo.amount
+            : Math.max(Number(currentFee.paid)||0,currentFeePaymentInfo.amount)
+        ):0;
         const currentFeeDue=Math.max(0,currentFeeAmount-currentFeePaid);
         const currentFeeDate=currentFee&&currentFee.dueDate?String(currentFee.dueDate):"";
         const currentFeeIsDue=!!currentFee&&currentFeeDue>0&&(!currentFeeDate||today()>=currentFeeDate);
