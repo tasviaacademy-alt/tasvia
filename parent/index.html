@@ -295,7 +295,15 @@ function toggleHomeworkCompleted(index){
     localStorage.setItem("tasvia-homework-completed",JSON.stringify(db));
   }catch(_){}
   render();
-  setTimeout(()=>document.getElementById("homeworkSection")?.scrollIntoView({behavior:"smooth",block:"start"}),30);
+  // Keep the parent inside Homework after toggling completion.
+  // render() rebuilds the dashboard, so reopen the same section after the DOM settles.
+  setTimeout(()=>{
+    try{
+      openParentSection("homeworkSection");
+      const btn=document.querySelector(".parent-section-body .hw-complete-btn");
+      if(btn)btn.focus();
+    }catch(_){}
+  },40);
 }
 function store(k,v){try{v===undefined?localStorage.getItem(k):localStorage.setItem(k,v)}catch(e){}}
 function load(k){try{return localStorage.getItem(k)}catch(e){return null}}
