@@ -254,7 +254,7 @@ td,th{padding:10px 5px}th{font-size:.78rem;text-transform:uppercase;letter-spaci
 <script>
 
 function closeWelcome(){const b=document.getElementById("welcomeBackdrop");if(b){b.classList.add("hide");b.setAttribute("aria-hidden","true");b.style.pointerEvents="none";}document.body.classList.remove("welcome-open");}
-function showWelcome(){const b=document.getElementById("welcomeBackdrop");if(b){b.style.display="flex";b.classList.remove("hide");b.setAttribute("aria-hidden","false");}window.tasviaWelcomeReady=false;window.tasviaWelcomeEntered=false;const input=document.getElementById("studentLoginId");if(input){input.value="";setTimeout(()=>input.focus(),120)}const msgEl=document.getElementById("studentLoginMsg");if(msgEl)msgEl.textContent="";}
+function showWelcome(opts){opts=opts||{};const b=document.getElementById("welcomeBackdrop");if(b){b.style.display="flex";b.classList.remove("hide");b.setAttribute("aria-hidden","false");}window.tasviaWelcomeReady=false;window.tasviaWelcomeEntered=false;const input=document.getElementById("studentLoginId");if(input){if(!opts.keepInput)input.value="";if(opts.focus!==false)setTimeout(()=>input.focus(),120)}const msgEl=document.getElementById("studentLoginMsg");if(msgEl&&!opts.keepMessage)msgEl.textContent="";}
 function interLabel(c,y1,y2){const m=/^Inter-(1|2)(?: (.+))?$/.exec(c);if(!m)return null;return (m[1]==="1"?y1:y2)+(m[2]?" · "+m[2]:"")}
 const T={
  en:{loc:"en-IN",newHw:"New homework",hwSchool:"School-assigned homework · Complete it with your student",all:"All",pending:"Pending",completed:"Completed",markCompleted:"Mark as Completed",completedLabel:"Homework completed",noPending:"No pending homework",noCompleted:"No completed homework",overdue:"Overdue",markPending:"Mark as Pending",newTest:"New test marks",absentToday:"Marked absent",feePaid:"Fee payment recorded",alertsOn:"🔔 Turn on alerts",alertsDone:"🔔 Alerts are on while this page is open",cls:c=>/^\d+$/.test(c)?"Class "+c:(interLabel(c,"Inter 1st Year","Inter 2nd Year")||c),att:"Attendance",thisMonth:"This month",present:"Present",absent:"Absent",pct:"Attendance",year:"This year",days:"days",abs:"Recent absences",none:"No absences",tests:"Test marks",test:"Test",marks:"Marks",grade:"Grade",noTests:"No test marks yet",fees:"Fees",month:"Month",status:"Status",paid:"Paid",due:"Due",part:"Part paid",upcoming:"Upcoming",dueOn:"Due on",pays:"Recent payments",hw:"Homework",noHw:"No homework added yet",note:"Note",notice:"Notice",timings:"Timings",contact:"Contact the academy",call:"Call",wa:"WhatsApp",payFee:"Pay Fee",sendScreenshot:"Send Payment Screenshot",updated:"Updated",left:"This student is no longer enrolled at the academy.",invalid:"This link is not valid. Please ask TASVIA Academy for a new link.",offline:"Couldn't load. Check your internet connection and try again.",retry:"Try again",save:"Tip: add this page to your home screen to open it quickly.",overall:"Overall"},
@@ -658,7 +658,7 @@ window.tasviaStudentLogin=function(e){
   if(e)e.preventDefault();
   const input=document.getElementById("studentLoginId"),msgEl=document.getElementById("studentLoginMsg");
   const code=String(input?.value||"").trim().toUpperCase();
-  if(!/^(?:TAS-\d{2}-\d{4}|[A-Z0-9]{8,40})$/.test(code)){if(msgEl)msgEl.textContent="Enter a valid Student ID.";return false;}
+  if(!/^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(code)){if(msgEl)msgEl.textContent="Enter a valid Student ID.";return false;}
   if(msgEl)msgEl.textContent="Checking Student ID…";
   window.tasviaLoginCode=code; parentStudentCode=code;
   window.tasviaLoginStart(code);
@@ -669,10 +669,10 @@ window.tasviaStudentLogin=function(e){
   const qs=new URLSearchParams(location.search);
   let code=qs.get("code")||((location.hash||"").replace(/^#/,""));
   code=String(code||"").trim().toUpperCase();
-  if(code && !/^(?:TAS-\d{2}-\d{4}|[A-Z0-9]{8,40})$/.test(code))code="";
+  if(code && !/^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(code))code="";
   window.tasviaLoginStart=async function(loginCode){
-    code=String(loginCode||"").trim().toUpperCase(); parentStudentCode=code;
-    if(!/^(?:TAS-\d{2}-\d{4}|[A-Z0-9]{8,40})$/.test(code)){msg(T[L].invalid,true);return}
+    code=String(loginCode||"").trim().toUpperCase().replace(/\s+/g,""); parentStudentCode=code;
+    if(!/^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(code)){const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Enter a valid Student ID.";showWelcome({keepInput:true,keepMessage:true});return}
     await loadForStudentId(code);
   };
   if(code) window.tasviaLoginStart(code);
@@ -734,7 +734,7 @@ async function loadForStudentId(code){
   function finish(data){
     if(loaded)return;
     try{
-      if(!data){loaded=true;msg(T[L].invalid,true);return}
+      if(!data){loaded=true;const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Student ID not found. Please check the ID or ask TASVIA staff to sync the parent portal.";showWelcome({keepInput:true,keepMessage:true});return}
       if(applyData(data)){
         loaded=true;
         window.tasviaWelcomeEntered=true;
@@ -747,7 +747,7 @@ async function loadForStudentId(code){
     }
   }
   loadREST().then(data=>{
-    if(!data){if(!loaded){const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Student ID not found. Please check the ID.";showWelcome();}return}    finish(data);
+    if(!data){if(!loaded){const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Student ID not found. Please check the ID or ask TASVIA staff to sync the parent portal.";showWelcome({keepInput:true,keepMessage:true});}return}    finish(data);
     try{
       if(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey){
         if(!firebase.apps.length)firebase.initializeApp(window.FIREBASE_CONFIG);
@@ -761,7 +761,7 @@ async function loadForStudentId(code){
       if(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey){
         if(!firebase.apps.length)firebase.initializeApp(window.FIREBASE_CONFIG);
         const ref=firebase.firestore().doc("parentView/"+code);
-        ref.get().then(snap=>finish(snap.exists?snap.data():null)).catch(()=>msg("TASVIA Parent Portal could not connect. Please check your internet connection and tap Try Again.",true));
+        ref.get().then(snap=>finish(snap.exists?snap.data():null)).catch(()=>const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Could not connect to TASVIA. Check your internet connection and try again.");
       }else{
         msg(T[L].offline,true);
       }
