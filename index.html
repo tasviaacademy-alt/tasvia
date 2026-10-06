@@ -485,7 +485,7 @@ function infoText(){
 }
 function grade(p){return p>=90?"A+":p>=80?"A":p>=70?"B+":p>=60?"B":p>=50?"C":p>=35?"D":"E"}
 function studentsOf(cls,incLeft){return Object.entries(S.students).map(([id,s])=>({id,...s})).filter(s=>(incLeft||active(s))&&(cls==="all"||s.cls===cls)).sort((a,b)=>CLASSES.indexOf(a.cls)-CLASSES.indexOf(b.cls)||a.name.localeCompare(b.name))}
-function isAdmin(){return !!(window.currentUser&&String(window.currentUser.email||"").trim().toLowerCase()==="tasviaacademy@gmail.com")}
+function isAdmin(){const u=window.currentUser;return !!(u&&(String(u.email||"").trim().toLowerCase()==="tasviaacademy@gmail.com"||String(u.role||"").toLowerCase()==="admin"))}
 function isStaff(){return !!(window.currentUser&&(window.currentUser.role==="staff"||window.currentUser.role==="admin"))}
 function requireAdmin(){if(isAdmin())return true;toast("Admin access required.");return false}
 
@@ -718,7 +718,7 @@ function feeStatus(s,month){
   if(!s.fee)return {k:"none",paid,dueDate};
   // Never assess a fee before the student's joining date. The joining date is the
   // first date from which the monthly fee can become due.
-  if(s.joined&&/^\\d{4}-\\d{2}-\\d{2}$/.test(s.joined)){
+  if(s.joined&&/^\d{4}-\d{2}-\d{2}$/.test(s.joined)){
     const joinMonth=s.joined.slice(0,7);
     if(month<joinMonth)return {k:"not-enrolled",paid,left:Math.max(+s.fee-paid,0),dueDate:null};
     if(month===joinMonth&&today()<s.joined)return {k:"upcoming",paid,left:Math.max(+s.fee-paid,0),dueDate};
@@ -1119,7 +1119,7 @@ function vStaff(){
 }
 function vMoney(){
   const m=UI.moneyMonth;
-  const fees=Object.keys(S.fees).reduce((a,id)=>a+payList(id).filter(p=>p.month===m).reduce((x,p)=>x+ +p.amount,0),0);
+  const fees=Object.keys(S.fees).reduce((a,id)=>a+payList(id).filter(p=>paymentMonth(p)===m).reduce((x,p)=>x+ +p.amount,0),0);
   const sal=Object.keys(S.salaries).reduce((a,id)=>a+salList(id).filter(p=>p.month===m).reduce((x,p)=>x+ +p.amount,0),0);
   const ex=expList(m).sort((a,b)=>b.date.localeCompare(a.date)),exT=ex.reduce((a,b)=>a+ +b.amount,0),net=fees-sal-exT;
   const cats={};ex.forEach(e=>cats[e.cat]=(cats[e.cat]||0)+ +e.amount);
@@ -1283,7 +1283,7 @@ function printStudentID(id){
 const opt=(v,cur,l)=>`<option value="${esc(v)}" ${v===cur?"selected":""}>${esc(l||v)}</option>`;
 // Meaningful TASVIA Student ID: TAS-YY-0001, where YY is the admission year and the last part is a unique sequence.
 function tasviaStudentId(joined){
-  const raw=String(joined||today()), y=/^\\d{4}/.test(raw)?raw.slice(2,4):String(new Date().getFullYear()).slice(2,4);
+  const raw=String(joined||today()), y=/^\d{4}/.test(raw)?raw.slice(2,4):String(new Date().getFullYear()).slice(2,4);
   const nums=Object.keys(S.students||{}).map(k=>String(k)).filter(k=>/^TAS-\d{2}-\d{4}$/.test(k)&&k.slice(4,6)===y).map(k=>Number(k.slice(7))).filter(Number.isFinite);
   const next=(nums.length?Math.max(...nums):0)+1;
   return `TAS-${y}-${String(next).padStart(4,"0")}`;
