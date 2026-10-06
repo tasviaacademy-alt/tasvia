@@ -377,24 +377,23 @@ function parentFeePeriodPaymentInfo(feeRow,payments){
   const year=Number(ym[1]),month=Number(ym[2]);
   if(!year||month<1||month>12)return {amount:0,hasDatedAssociation:false};
   const start=new Date(year,month-1,1);
-  const configuredEnd=String(feeRow?.dueDate||"").trim();
-  const end=/^\d{4}-\d{2}-\d{2}$/.test(configuredEnd)?new Date(configuredEnd+"T00:00:00"):new Date(year,month,1);
-  const feeKey=String(feeRow?.m||"").slice(0,7);
-  let datedTotal=0,undatedTotal=0,hasDatedAssociation=false;
+  const next=new Date(year,month,1);
+  const feeKey=rawMonth.slice(0,7);
+  let total=0,hasDatedAssociation=false;
   (Array.isArray(payments)?payments:[]).forEach(p=>{
     if(!p||typeof p!=="object")return;
     const amount=Math.max(0,Number(p.a??p.amount??0)||0); if(!amount)return;
     const rawDate=String(p.d||p.date||"").trim();
     const paymentKey=String(p.m||"").slice(0,7);
     const pd=/^\d{4}-\d{2}-\d{2}$/.test(rawDate)?new Date(rawDate+"T00:00:00"):null;
-    const dateMatchesFeeMonth=!!pd&&pd.getFullYear()===year&&pd.getMonth()===month-1;
-    const associated=paymentKey===feeKey||dateMatchesFeeMonth||(pd&&configuredEnd&&rawDate===configuredEnd);
-    if(pd){
-      if(associated)hasDatedAssociation=true;
-      if(associated&&pd>=start&&pd<=end)datedTotal+=amount;
-    }else if(paymentKey===feeKey)undatedTotal+=amount;
+    const explicit=paymentKey===feeKey;
+    const dated=!!pd&&pd>=start&&pd<=next;
+    if(explicit||dated){
+      total+=amount;
+      if(pd)hasDatedAssociation=true;
+    }
   });
-  return {amount:hasDatedAssociation?datedTotal:undatedTotal,hasDatedAssociation};
+  return {amount:total,hasDatedAssociation};
 }
 function parentActiveHomework(){
   const all=Array.isArray(V?.hw)?V.hw.filter(x=>x&&typeof x==="object"):[];
@@ -610,11 +609,10 @@ function render(){
   h+=`</div>`;
   // fees
   const pays=Array.isArray(v.pays)?v.pays.filter(p=>p&&typeof p==="object").map(p=>{const d=String(p.d||"");const m=String(p.m||"")||(/^\d{4}-\d{2}/.test(d)?d.slice(0,7):"");return Object.assign({},p,{m,a:Number(p.a)||0,d,mode:String(p.mode||"")})}):[];
-  const monthKey=feeMonthKey;
-  const paymentTotals={};
-  pays.forEach(p=>{const k=monthKey(p.m,p.d);if(k)paymentTotals[k]=(paymentTotals[k]||0)+Math.max(0,Number(p.a||0));});
   const fees=Array.isArray(v.fees)?v.fees.filter(f=>f&&typeof f==="object").map(f=>{
-    const fee=Number(f.fee)||0, recordedPaid=Number(f.paid)||0, paidFromPayments=paymentTotals[monthKey(f.m)]||0;
+    const fee=Number(f.fee)||0, recordedPaid=Number(f.paid)||0;
+    const paymentInfo=parentFeePeriodPaymentInfo(f,pays);
+    const paidFromPayments=paymentInfo.amount;
     return Object.assign({},f,{m:String(f.m||""),fee,paid:Math.min(fee,Math.max(recordedPaid,paidFromPayments)),dueDate:f.dueDate?String(f.dueDate):""});
   }):[];
   const feeDueRows=fees.filter(f=>{
