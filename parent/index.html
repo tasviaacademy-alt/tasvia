@@ -746,7 +746,7 @@ async function loadForStudentId(code){
         V=clean;
         render();
       }catch(retryErr){
-        console.warn("TASVIA normalized render retry failed:",retryErr);
+        console.warn("TASVIA normalized render retry failed:",retryErr); if(new URLSearchParams(location.search).get("debug")==="1"){msg("Render debug: "+String(retryErr&&retryErr.name||"Error")+" — "+String(retryErr&&retryErr.message||retryErr),true)}
       }
       // Never leave a valid Student ID stuck on "Checking Student ID".
       // If an optional dashboard section contains malformed data, render a
