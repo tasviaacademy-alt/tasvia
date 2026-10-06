@@ -772,6 +772,14 @@ async function loadForStudentId(code){
         const fees=Array.isArray(safe.fees)?safe.fees.filter(x=>x&&typeof x==="object"):[];
         const pays=Array.isArray(safe.pays)?safe.pays.filter(x=>x&&typeof x==="object"):[];
         const hw=Array.isArray(safe.hw)?safe.hw.filter(x=>x&&typeof x==="object"):[];
+        const currentMonth=today().slice(0,7);
+        const currentFee=fees.find(f=>String(f.m||"").slice(0,7)===currentMonth)||null;
+        const currentFeeAmount=currentFee?Number(currentFee.fee)||0:0;
+        const currentFeePaid=currentFee?Math.min(currentFeeAmount,Math.max(Number(currentFee.paid)||0,0)):0;
+        const currentFeeDue=Math.max(0,currentFeeAmount-currentFeePaid);
+        const currentFeeDate=currentFee&&currentFee.dueDate?String(currentFee.dueDate):"";
+        const currentFeeIsDue=!!currentFee&&currentFeeDue>0&&(!currentFeeDate||today()>=currentFeeDate);
+        const currentFeeStatus=currentFeeIsDue?"Due":currentFee&&currentFeeDue<=0?"Paid":currentFee?"Upcoming":"No fee";
         const feeTotal=fees.reduce((n,f)=>n+(Number(f.fee)||0),0);
         const feePaid=fees.reduce((n,f)=>n+(Number(f.paid)||0),0);
         const testAvg=tests.length?Math.round(tests.reduce((n,x)=>n+(Number(x.x)?(Number(x.m)||0)*100/Number(x.x):0),0)/tests.length):null;
@@ -783,7 +791,7 @@ async function loadForStudentId(code){
           '<section class="parent-dashboard card"><div class="parent-dashboard-title">📊 Parent Dashboard</div><div class="parent-dashboard-grid">'+
           '<div class="parent-dashboard-item"><b>'+(ypc!=null?ypc+"%":"–")+'</b><small>Attendance</small></div>'+
           '<div class="parent-dashboard-item"><b>'+(testAvg!=null?testAvg+"%":"–")+'</b><small>Test Average</small></div>'+
-          '<div class="parent-dashboard-item"><b>'+(feeTotal>0?(feePaid>=feeTotal?"Paid":rs(Math.max(0,feeTotal-feePaid))):"–")+'</b><small>Fees</small></div></div></section>'+
+          '<div class="parent-dashboard-item '+(currentFeeIsDue?"bad":currentFeeStatus==="Paid"?"ok":"")+'"><b>'+(currentFeeStatus==="Due"?rs(currentFeeDue):currentFeeStatus)+'</b><small>Current Month · '+currentFeeStatus+(currentFeeDate?' · '+new Date(currentFeeDate+"T00:00:00").toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}):"")+'</small></div></div></section>'+
           '<div class="parent-action-grid" aria-label="Parent portal quick access">'+
           '<button type="button" class="parent-action" onclick="openParentSection(\'homeworkSection\')"><span class="parent-action-icon">📚</span><span>Homework</span></button>'+
           '<button type="button" class="parent-action" onclick="openParentSection(\'attendanceSection\')"><span class="parent-action-icon">📅</span><span>Attendance</span></button>'+
