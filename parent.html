@@ -6,8 +6,8 @@
 <title>TASVIA Academy – Parent</title>
 <meta name="theme-color" content="#0B2455">
 <meta name="robots" content="noindex">
-<link rel="icon" href="/icon-192.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="TASVIA">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -337,10 +337,10 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
 </style>
 </head>
 <body>
-<header><div class="top"><div class="brand"><img class="hlogo" src="/icon-512.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
+<header><div class="top"><div class="brand"><img class="hlogo" src="./icon-512.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
 <main id="main"><div class="center" id="msg">Loading…</div></main><div id="welcomeBackdrop" class="welcome-backdrop" role="dialog" aria-label="TASVIA Academy welcome">
   <div class="welcome-card">
-    <div class="welcome-logo-wrap"><img class="welcome-logo" src="/icon-512.png" alt="TASVIA Academy"></div>
+    <div class="welcome-logo-wrap"><img class="welcome-logo" src="./icon-512.png" alt="TASVIA Academy"></div>
     <h2>Welcome to <span>TASVIA</span></h2>
     <p id="welcomeGreeting">Let’s inspire, learn, grow and succeed together.</p>
     <p class="welcome-tag">INSPIRE • LEARN • GROW • SUCCEED</p>
@@ -369,7 +369,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
 <script>
 </script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="/firebase-config.js"></script>
+<script src="./firebase-config.js"></script>
 <script>
 
 function closeWelcome(){const b=document.getElementById("welcomeBackdrop");if(b){b.classList.add("hide");b.setAttribute("aria-hidden","true");b.style.pointerEvents="none";}document.body.classList.remove("welcome-open");}
@@ -971,7 +971,7 @@ function buildCurrentAffairsCard(){
   if(caQuiz.length){h+='<div class="ca-quiz"><b>'+esc(t.quiz)+'</b>'+caQuiz.map((q,i)=>'<div class="ca-quiz-item"><b>'+String(i+1)+'. '+esc(q.q||"")+'</b><span>Answer: '+esc(q.a||"")+'</span></div>').join("")+'</div>';}
   return h+'</div>';
 }
-async function loadCurrentAffairs(){try{const r=await fetch('/current-affairs.json',{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);CURRENT_AFFAIRS=await r.json();}catch(e){console.warn('Current affairs unavailable',e);CURRENT_AFFAIRS={date:new Date().toISOString().slice(0,10),items:[],quiz:[]};}}
+async function loadCurrentAffairs(){try{const r=await fetch('./current-affairs.json',{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);CURRENT_AFFAIRS=await r.json();}catch(e){console.warn('Current affairs unavailable',e);CURRENT_AFFAIRS={date:new Date().toISOString().slice(0,10),items:[],quiz:[]};}}
 
 (function bootParentEntry(){
   const raw=(()=>{try{
@@ -1190,7 +1190,7 @@ async function loadForStudentId(code){
       if(api && api.fields){
         const o={};Object.entries(api.fields).forEach(([k,v])=>o[k]=fv(v));return o;
       }
-      if(api===null)return null;
+      // GitHub Pages has no /api/parent endpoint; continue to Firestore REST when it returns 404.
     }catch(e){
       console.warn("Same-origin parent API unavailable; trying Firestore REST:",e);
     }
