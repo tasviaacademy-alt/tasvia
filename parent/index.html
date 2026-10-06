@@ -518,7 +518,7 @@ function render(){
   renderBodmas();
   // Use the same normalized fee rows as the Fees section. A payment recorded in
   // Recent Payments must also clear the corresponding month's popup due amount.
-          '<div class="parent-dashboard-item fee-status-card '+(currentFeeStatus==="Paid"?"ok":currentFeeStatus==="Due"?"bad":"gold")+'"><small>Current Month Fee</small><b>'+(currentFeeStatus==="Due"?(currentFeeDue>0?rs(currentFeeDue):"DUE"):currentFeeStatus)+'</b><small>'+(currentFeeStatus==="Not Paid"&&currentFeeDate?"Due Date: "+currentFeeDate:currentFeeStatus==="Due"?"Payment Due":"Payment completed")+'</small></div></div></section>'+
+  const feePastDueForPopup=fees.filter(f=>f&&f.dueDate&&today()>String(f.dueDate))
     .reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
   if(feePastDueForPopup>0 && window.tasviaWelcomeEntered){
     showFeeDuePopup(feePastDueForPopup);
@@ -791,7 +791,7 @@ async function loadForStudentId(code){
           '<section class="parent-dashboard card"><div class="parent-dashboard-title">📊 Parent Dashboard</div><div class="parent-dashboard-grid">'+
           '<div class="parent-dashboard-item"><b>'+(ypc!=null?ypc+"%":"–")+'</b><small>Attendance</small></div>'+
           '<div class="parent-dashboard-item"><b>'+(testAvg!=null?testAvg+"%":"–")+'</b><small>Test Average</small></div>'+
-          '<div class="parent-dashboard-item fee-status-card '+(currentFeeIsDue?"bad":currentFeeStatus==="Paid"?"ok":"gold")+'"><small>Current Month Fee</small><b>'+(currentFeeStatus==="Due"?(currentFeeDue>0?rs(currentFeeDue):"DUE"):currentFeeStatus)+'</b><small>'+(currentFeeStatus==="Not Paid"&&currentFeeDate?"Due Date: "+new Date(currentFeeDate+"T00:00:00").toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}):currentFeeStatus==="Due"?(currentFeeDate?"Due Date: "+new Date(currentFeeDate+"T00:00:00").toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}):"Payment Due"):"Payment completed")+"</small></div></div></section>'+
+          '<div class="parent-dashboard-item '+(currentFeeIsDue?"bad":currentFeeStatus==="Paid"?"ok":"")+'"><b>'+(currentFeeStatus==="Due"?rs(currentFeeDue):currentFeeStatus)+'</b><small>Current Month · '+currentFeeStatus+(currentFeeDate?' · '+new Date(currentFeeDate+"T00:00:00").toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}):"")+'</small></div></div></section>'+
           '<div class="parent-action-grid" aria-label="Parent portal quick access">'+
           '<button type="button" class="parent-action" onclick="openParentSection(\'homeworkSection\')"><span class="parent-action-icon">📚</span><span>Homework</span></button>'+
           '<button type="button" class="parent-action" onclick="openParentSection(\'attendanceSection\')"><span class="parent-action-icon">📅</span><span>Attendance</span></button>'+
