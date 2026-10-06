@@ -406,19 +406,31 @@ function parentActiveHomework(){
 }
 function toggleHomeworkCompletedByKey(key){
   const active=parentActiveHomework();
-  const x=active.find(item=>homeworkCompletionKey(item)===String(key||""));
-  if(!x)return;
-  const code=String(parentStudentCode||"portal").trim().toUpperCase()||"portal",k=homeworkCompletionKey(x);
+  const k=String(key||"");
+  const x=active.find(item=>homeworkCompletionKey(item)===k);
+  if(!x)return false;
+  const code=String(parentStudentCode||"portal").trim().toUpperCase()||"portal";
   try{
     const raw=JSON.parse(localStorage.getItem("tasvia-homework-completed")||"{}");
     const db=raw&&typeof raw==="object"&&!Array.isArray(raw)?raw:{};
     db[code]=db[code]&&typeof db[code]==="object"?db[code]:{};
     if(db[code][k])delete db[code][k];else db[code][k]={completedAt:new Date().toISOString()};
     localStorage.setItem("tasvia-homework-completed",JSON.stringify(db));
-  }catch(_){}
-  render();
-  setTimeout(()=>document.getElementById("homeworkSection")?.scrollIntoView({behavior:"smooth",block:"start"}),30);
+  }catch(err){
+    console.warn("TASVIA homework completion save failed",err);
+    return false;
+  }
+  const activeBtn=document.querySelector("#homeworkSection .hw-filter-btn.active");
+  filterParentHomework(parentHomeworkFilterMode,activeBtn);
+  return true;
 }
+document.addEventListener("click",function(e){
+  const btn=e.target.closest(".hw-complete-btn[data-hw-key]");
+  if(!btn)return;
+  e.preventDefault();
+  e.stopPropagation();
+  toggleHomeworkCompletedByKey(btn.getAttribute("data-hw-key"));
+});
 function renderParentHomeworkItems(items){
   const list=Array.isArray(items)?items:[];
   if(!list.length){
@@ -429,7 +441,7 @@ function renderParentHomeworkItems(items){
     const keyArg=String(key).replace(/\\/g,"\\\\").replace(/'/g,"\\'");
     return '<div class="hw hw-row '+(done?'hw-completed':'')+'" data-hw-status="'+(done?'completed':'pending')+'">'+
       '<div><b>'+esc(dN(x.d))+'</b><div>'+esc(x.hw||x.text||'')+'</div>'+(x.note?'<div class="sub">'+esc(x.note)+'</div>':'')+'</div>'+
-      '<button type="button" class="hw-complete-btn '+(done?'gold':'')+'" onclick="toggleHomeworkCompletedByKey(\''+keyArg+'\')">'+
+      '<button type="button" class="hw-complete-btn '+(done?'gold':'')+'" data-hw-key="'+esc(key)+'">'+
       (done?esc(T[L].markPending):esc(T[L].markCompleted))+'</button></div>';
   }).join('');
 }
