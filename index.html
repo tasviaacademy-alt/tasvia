@@ -459,7 +459,7 @@ const DEFAULT_INFO={name:"TASVIA Academy Tuition Centre",notice:"Admissions open
 
 let S={students:{},att:{},fees:{},paymentRecords:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},diary:{}};
 let db=null,unsubs=[];
-const UI={tab:"today",seg:"students",more:null,date:today(),cls:"all",feeMonth:today().slice(0,7),moneyMonth:today().slice(0,7),q:"",testCls:"all",cardCls:null,rcFrom:null,rcTo:null};
+const UI={tab:"today",seg:"students",dashboardHome:true,more:null,date:today(),cls:"all",feeMonth:today().slice(0,7),moneyMonth:today().slice(0,7),q:"",testCls:"all",cardCls:null,rcFrom:null,rcTo:null};
 
 function today(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 function monthName(m){const [y,mo]=m.split("-");return new Date(+y,+mo-1,1).toLocaleDateString("en-IN",{month:"long",year:"numeric"})}
@@ -1002,7 +1002,7 @@ function vParents(){
 
 /* ---------- views ---------- */
 const TABS=[["today","Dashboard","M3 11.5 12 4l9 7.5v8a1.5 1.5 0 0 1-1.5 1.5H4.5A1.5 1.5 0 0 1 3 19.5zM9 21v-6h6v6"],["students","Students","M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 4-6 8-6s8 2 8 6"],["fees","Fees","M4 6h16v12H4zM4 10h16M8 15h3"],["tests","Tests","M6 3h9l4 4v14H6zM9 12h7M9 16h5M9 8h3"],["more","More","M4 6h16M4 12h16M4 18h16"]];
-function renderNav(){const tabs=TABS.filter(([k])=>k!=="fees"||isAdmin());document.getElementById("nav").innerHTML=tabs.map(([k,l,d])=>`<button data-act="tab" data-k="${k}" class="${UI.tab===k?"on":""}" aria-current="${UI.tab===k?"page":"false"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>${l}</button>`).join("")}{document.getElementById("nav").innerHTML=TABS.map(([k,l,d])=>`<button data-act="tab" data-k="${k}" class="${UI.tab===k?"on":""}" aria-current="${UI.tab===k?"page":"false"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>${l}</button>`).join("")}
+function renderNav(){const tabs=TABS.filter(([k])=>k!=="fees"||isAdmin());document.getElementById("nav").innerHTML=tabs.map(([k,l,d])=>`<button data-act="tab" data-k="${k}" class="${UI.tab===k?"on":""}" aria-current="${UI.tab===k?"page":"false"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>${l}</button>`).join("")}
 function classChips(key){const used=new Set(Object.values(S.students).map(s=>s.cls));const cs=CLASSES.filter(c=>used.has(c));return `<div class="chips"><button class="chip ${UI[key]==="all"?"on":""}" data-act="cls" data-key="${key}" data-c="all">All</button>`+cs.map(c=>`<button class="chip ${UI[key]===c?"on":""}" data-act="cls" data-key="${key}" data-c="${c}">${clsLabel(c)}</button>`).join("")+`</div>`}
 function noStudents(){return `<div class="empty"><p>No students yet. Add your first student to start marking attendance, fees and tests.</p><button class="btn gold" data-act="addStudent">Add student</button></div>`}
 
@@ -1017,7 +1017,7 @@ function vToday(){
   const admin=isAdmin(),m=UI.date.slice(0,7);
   const feeDue=admin?list.filter(s=>s.fee>0&&enrolledIn(s,m)&&["due","part"].includes(feeStatus(s,m).k)).length:0;
   const testCount=Object.values(S.tests).filter(t=>t.date&&t.date.slice(0,7)===m).length;
-  if(UI.seg==="students"){
+  if(UI.seg==="students" && UI.dashboardHome){
     h+=`<div class="dashboard-welcome"><div><span class="dashboard-eyebrow">TASVIA ACADEMY</span><h3>Welcome back, ${esc((window.currentUser&&window.currentUser.name)||"Staff")}</h3><p>Everything you need for today's academy operations, in one place.</p></div><span class="dashboard-role">${admin?"ADMIN":"STAFF"}</span></div>`;
   }
   h+=`<div class="commercial-kpis">
@@ -1029,7 +1029,7 @@ function vToday(){
   const testLabel=testCount===1?"test":"tests";
   const markStatus=nm?`<span class="tag due">${nm} not marked</span>`:`<span class="tag ok">Attendance complete</span>`;
   h+=`<div class="commercial-strip"><span>Academic month: <b>${monthName(m)}</b></span><span>${testCount} ${testLabel} recorded</span>${markStatus}</div>`;
-  if(UI.seg==="students"){
+  if(UI.seg==="students" && UI.dashboardHome){
     h+=`<section class="dashboard-section"><div class="dashboard-section-head"><div><h3>Quick access</h3><span>Open the most-used TASVIA modules instantly.</span></div></div>
       <div class="dashboard-tiles">
         <button class="dashboard-tile" data-act="seg" data-k="students"><span class="dashboard-icon">✓</span><strong>Attendance</strong><small>Mark today's attendance</small></button>
@@ -1603,12 +1603,16 @@ document.addEventListener("click",async e=>{
     switch(a){
     case "tab":
       if(b.dataset.k==="more"){UI.more=null;ensureMoreAdminData()}
-      if(b.dataset.k==="fees"&&isAdmin()){}
-      UI.tab=b.dataset.k;render();window.scrollTo(0,0);break;
+      if(b.dataset.k==="fees"&&!isAdmin()){toast("Admin access required.");break;}
+      UI.tab=b.dataset.k;
+      UI.dashboardHome=(b.dataset.k==="today");
+      if(b.dataset.k!=="more")UI.more=null;
+      render();window.scrollTo(0,0);break;
     case "seg":
       UI.seg=b.dataset.k;
+      UI.dashboardHome=false;
       if(UI.seg==="teachers")ensureTeacherAttendance();
-      render();break;
+      render();window.scrollTo(0,0);break;
     case "allTP":
       markAllT(UI.date,teachersList());
       toast("Remaining teachers marked present");
