@@ -557,15 +557,15 @@ function showFeeDuePopup(amount){
   feeDuePopupShown=true;
   let el=document.getElementById("feePopup");
   if(!el){el=document.createElement("div");el.id="feePopup";document.body.appendChild(el)}
-  el.innerHTML=`<div class="fee-popup-backdrop show" role="dialog" aria-modal="true" aria-label="Fee Due"><div class="fee-popup"><div class="due-amount">Fee Due: ${rs(amount)}</div><button type="button" class="fee-popup-skip">Skip</button></div></div>`;
+  const upi="upi://pay?pa=badavathpremdas2@ybl&pn=TASVIA%20Academy&am="+encodeURIComponent(Number(amount||0).toFixed(2))+"&cu=INR&tn="+encodeURIComponent("TASVIA Academy Fee");
+  const qr="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data="+encodeURIComponent(upi);
+  el.innerHTML='<div class="fee-popup-backdrop show" role="dialog" aria-modal="true" aria-label="Fee Due"><div class="fee-popup"><div class="due-amount">Fee Due: '+rs(amount)+'</div><p class="sub" style="margin:6px 0 10px">Please complete the fee payment.</p><img src="'+qr+'" alt="Fee payment QR code" style="width:190px;height:190px;border-radius:12px;background:#fff;padding:8px;display:block;margin:0 auto"><div class="upi-id">UPI ID: <b>badavathpremdas2@ybl</b></div><p class="sub" style="margin:7px 0 0">Amount: <b>'+rs(amount)+'</b></p><div class="acts" style="justify-content:center;margin-top:10px"><button type="button" class="btn gold fee-popup-skip" style="border:0;cursor:pointer">Pay Later</button></div></div></div>';
   const backdrop=el.querySelector(".fee-popup-backdrop");
   const closePopup=()=>{backdrop.classList.remove("show");setTimeout(()=>el.remove(),300)};
   const skip=el.querySelector(".fee-popup-skip");
   if(skip)skip.onclick=closePopup;
   backdrop.onclick=(e)=>{if(e.target===backdrop)closePopup()};
 }
-
-
 
 /* BODMAS PRACTICE ENGINE */
 let bodmas={level:"easy",questions:[],index:0,score:0,answered:false};
@@ -769,12 +769,14 @@ async function loadForStudentId(code){
         const phone=String(cc.phone||"").replace(/\D/g,"");
         const escList=x=>esc(String(x||""));
         document.title=name+" – TASVIA Academy";
-        document.getElementById("kid").innerHTML='<div><h1>'+esc(name)+'</h1><p>'+esc(cls)+(year?' · '+esc(year):'')+'</p></div>';
+        document.getElementById("kid").innerHTML=(safe.photo&&/^data:image\\/jpeg;base64,/.test(String(safe.photo))?'<div class="ph"><img src="'+safe.photo+'" alt=""></div>':"")+'<div><h1>'+esc(name)+'</h1><p>'+esc(cls)+(year?' · '+esc(year):'')+'</p></div>';
         let safeHtml=
           '<section class="parent-dashboard card"><div class="parent-dashboard-title">📊 Parent Dashboard</div><div class="parent-dashboard-grid">'+
           '<div class="parent-dashboard-item"><b>'+(ypc!=null?ypc+"%":"–")+'</b><small>Attendance</small></div>'+
           '<div class="parent-dashboard-item"><b>'+(testAvg!=null?testAvg+"%":"–")+'</b><small>Test Average</small></div>'+
           '<div class="parent-dashboard-item"><b>'+(feeTotal>0?(feePaid>=feeTotal?"Paid":rs(Math.max(0,feeTotal-feePaid))):"–")+'</b><small>Fees</small></div></div></section>'+
+          '<div class="card gk-card" id="gkSection">'+(typeof buildDailyGK==="function"?buildDailyGK():"<h2>🌍 General Knowledge</h2><p class='sub'>Loading daily GK…</p>")+'</div>'+
+          '<div class="card ca-card" id="currentAffairsCard">'+(typeof buildCurrentAffairsCard==="function"?buildCurrentAffairsCard():"<h2>📰 Daily Current Affairs</h2><p class='sub'>Loading current affairs…</p>")+'</div>'+
           '<div class="card"><h2>📚 Homework</h2>'+
           (hw.length?hw.slice(0,7).map(x=>'<div class="hw-item"><b>'+escList(x.d)+'</b><div>'+escList(x.hw)+'</div>'+(x.note?'<div class="sub">'+escList(x.note)+'</div>':"")+'</div>').join(""):'<div class="parent-empty">No homework added yet</div>')+
           '</div>'+
@@ -793,6 +795,9 @@ async function loadForStudentId(code){
           (phone?'<div class="acts"><a class="btn gold" href="tel:'+esc(phone)+'">📞 '+esc(T[L].call)+'</a><a class="btn" target="_blank" rel="noopener" href="https://wa.me/91'+esc(phone.replace(/^91/,""))+'">💬 '+esc(T[L].wa)+'</a></div>':"")+
           '</div>';
         document.getElementById("main").innerHTML=safeHtml;
+        try{loadDailyGK()}catch(_){}
+        try{loadCurrentAffairs().then(()=>{const el=document.getElementById("currentAffairsCard");if(el)el.innerHTML=buildCurrentAffairsCard()}).catch(()=>{})}catch(_){}
+        try{const dueRows=fees.filter(f=>f&&f.dueDate&&today()>=String(f.dueDate)&&Math.max(0,Number(f.fee||0)-Number(f.paid||0))>0);const dueAmt=dueRows.reduce((n,f)=>n+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);if(dueAmt>0&&typeof showFeeDuePopup==="function")showFeeDuePopup(dueAmt)}catch(_){};
       }catch(fallbackErr){
         console.error("TASVIA Parent Portal safe dashboard error:",fallbackErr);
         msg("Student data was found, but the dashboard could not be displayed. Please try again.",true);
