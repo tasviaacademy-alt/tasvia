@@ -981,9 +981,9 @@ async function loadCurrentAffairs(){try{const r=await fetch('./current-affairs.j
   const entryCode=String(raw||"").trim().toUpperCase();
   const hasDirectParentCode=/^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(entryCode);
   if(hasDirectParentCode){
-    const b=document.getElementById("welcomeBackdrop");
-    if(b){b.classList.add("hide");b.setAttribute("aria-hidden","true");b.style.pointerEvents="none";}
-    const m=document.getElementById("msg"); if(m)m.textContent="Opening Parent Portal…";
+    showWelcome({keepInput:true,keepMessage:true,focus:false});
+    const input=document.getElementById("studentLoginId"); if(input)input.value=entryCode;
+    const m=document.getElementById("studentLoginMsg"); if(m)m.textContent="Opening Parent Portal…";
   }else{
     showWelcome();
   }
@@ -1010,11 +1010,10 @@ window.tasviaStudentLogin=function(e){
     window.tasviaLoginCode=id;
     const input=document.getElementById("studentLoginId");if(input)input.value=id;
     const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Opening Parent Portal…";
-    closeWelcome();
+    showWelcome({keepInput:true,keepMessage:true,focus:false});
     await loadForStudentId(id);
   };
   if(code){
-    closeWelcome();
     window.tasviaLoginStart(code);
   }else{
     showWelcome();
