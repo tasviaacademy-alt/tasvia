@@ -721,6 +721,33 @@ async function loadForStudentId(code){
       render();
     }catch(err){
       console.error("TASVIA Parent Portal render/update error:",err);
+      // Retry once with a strict, JSON-safe normalization of Firestore data.
+      // This handles legacy student records containing unexpected field types.
+      try{
+        const raw=V&&typeof V==="object"?V:{},clean={};
+        clean.name=String(raw.name||"TASVIA Student");
+        clean.cls=String(raw.cls||"");
+        clean.board=String(raw.board||"");
+        clean.year=String(raw.year||"");
+        clean.updated=raw.updated||"";
+        clean.photo=typeof raw.photo==="string"&&/^data:image\\/jpeg;base64,/.test(raw.photo)?raw.photo:"";
+        const rc=raw.centre&&typeof raw.centre==="object"?raw.centre:{};
+        clean.centre={name:String(rc.name||"TASVIA Academy"),phone:String(rc.phone||""),timings:String(rc.timings||""),address:String(rc.address||""),notice:String(rc.notice||"")};
+        clean.att={};
+        if(raw.att&&typeof raw.att==="object")Object.keys(raw.att).forEach(m=>{if(/^\\d{4}-\\d{2}$/.test(m)){const x=raw.att[m]&&typeof raw.att[m]==="object"?raw.att[m]:{};clean.att[m]={p:Number(x.p)||0,a:Number(x.a)||0}}});
+        const ry=raw.yr&&typeof raw.yr==="object"?raw.yr:{};
+        clean.yr={p:Number(ry.p)||0,a:Number(ry.a)||0};
+        clean.abs=Array.isArray(raw.abs)?raw.abs.map(x=>String(x??"")).filter(Boolean):[];
+        clean.tests=Array.isArray(raw.tests)?raw.tests.filter(x=>x&&typeof x==="object").map(x=>({s:String(x.s||""),n:String(x.n||""),m:Number(x.m)||0,x:Number(x.x)||0,d:String(x.d||"")})):[];
+        clean.fees=Array.isArray(raw.fees)?raw.fees.filter(x=>x&&typeof x==="object").map(x=>({m:String(x.m||""),fee:Number(x.fee)||0,paid:Number(x.paid)||0,dueDate:String(x.dueDate||"")})):[];
+        clean.pays=Array.isArray(raw.pays)?raw.pays.filter(x=>x&&typeof x==="object").map(x=>({m:String(x.m||""),a:Number(x.a)||0,d:String(x.d||""),mode:String(x.mode||"")})):[];
+        clean.hw=Array.isArray(raw.hw)?raw.hw.filter(x=>x&&typeof x==="object").map(x=>({d:String(x.d||""),subject:String(x.subject||""),hw:String(x.hw||x.text||""),note:String(x.note||"")})):[];
+        if(Array.isArray(raw.left)&&raw.left.length)clean.left=true;else if(raw.left)clean.left=String(raw.left);
+        V=clean;
+        render();
+      }catch(retryErr){
+        console.warn("TASVIA normalized render retry failed:",retryErr);
+      }
       // Never leave a valid Student ID stuck on "Checking Student ID".
       // If an optional dashboard section contains malformed data, render a
       // minimal safe dashboard from the core student fields instead.
