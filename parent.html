@@ -1182,24 +1182,27 @@ async function loadForStudentId(code){
     }finally{clearTimeout(timer)}
   }
   async function loadREST(){
-    const firestoreUrl="https://firestore.googleapis.com/v1/projects/tasvia-academy/databases/(default)/documents/parentView/"+encodeURIComponent(code);
+    // Always prefer the same-origin parent API. This keeps legacy #STUDENTID
+    // links independent of old Vercel aliases and avoids cross-origin/CORS
+    // failures on the APK parent domain.
     try{
+      const api=await fetchJSON("/api/parent?code="+encodeURIComponent(code),4500);
+      if(api && api.fields){
+        const o={};Object.entries(api.fields).forEach(([k,v])=>o[k]=fv(v));return o;
+      }
+      if(api===null)return null;
+    }catch(e){
+      console.warn("Same-origin parent API unavailable; trying Firestore REST:",e);
+    }
+    try{
+      const firestoreUrl="https://firestore.googleapis.com/v1/projects/tasvia-academy/databases/(default)/documents/parentView/"+encodeURIComponent(code);
       const d=await fetchJSON(firestoreUrl,4500);
       if(d){
         const o={};Object.entries(d.fields||{}).forEach(([k,v])=>o[k]=fv(v));return o;
       }
       return null;
     }catch(e){
-      console.warn("Direct Firestore REST unavailable; trying Vercel parent proxy:",e);
-    }
-    try{
-      const api=await fetchJSON("https://tasvia-app-two.vercel.app/api/parent?code="+encodeURIComponent(code),4500);
-      if(api && api.fields){
-        const o={};Object.entries(api.fields).forEach(([k,v])=>o[k]=fv(v));return o;
-      }
-      return null;
-    }catch(e){
-      console.warn("Vercel parent proxy unavailable:",e);
+      console.warn("Firestore REST unavailable:",e);
       throw e;
     }
   }
