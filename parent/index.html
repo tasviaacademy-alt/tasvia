@@ -417,23 +417,25 @@ function render(){
     const fee=Number(f.fee)||0,storedPaid=Number(f.paid)||0,paidFromPayments=quickPaymentTotals[feeMonthKey(f.m)]||0;
     return Object.assign({},f,{fee,paid:Math.min(fee,Math.max(storedPaid,paidFromPayments)),dueDate:f.dueDate?String(f.dueDate):""});
   });
-  const quickFeePendingRows=quickFeeRows.filter(f=>{
-    const outstanding=Math.max(0,Number(f.fee||0)-Number(f.paid||0));
-    if(outstanding<=0)return false;
-    // Fee state is date-driven; do not trust a stale stored status.
-    return !!f.dueDate && today()>=f.dueDate;
-  });
-  const quickFeeDue=quickFeePendingRows.reduce((sum,f)=>sum+Math.max(0,f.fee-f.paid),0);
-  const quickFeeOutstandingRows=quickFeeRows.filter(f=>Math.max(0,Number(f.fee||0)-Number(f.paid||0))>0);
-  const quickFeeDueDate=(quickFeePendingRows.concat(quickFeeOutstandingRows)).map(f=>String(f.dueDate||"")).filter(Boolean).sort()[0]||"";
-  const quickFeePending=quickFeePendingRows.length>0;
+  const currentMonth=today().slice(0,7);
+  const currentFee=quickFeeRows.find(f=>String(f.m||"").slice(0,7)===currentMonth)||null;
+  const currentOutstanding=currentFee?Math.max(0,Number(currentFee.fee||0)-Number(currentFee.paid||0)):0;
+  const currentDueDate=currentFee&&currentFee.dueDate?String(currentFee.dueDate):"";
+  const currentFeePaid=!!currentFee && currentOutstanding<=0;
+  const currentFeeDue=!!currentFee && currentOutstanding>0 && (!currentDueDate || today()>=currentDueDate);
+  const quickFeePendingRows=currentFeeDue?[currentFee]:[];
+  const quickFeeDue=currentOutstanding;
+  const quickFeeOutstandingRows=currentFee&&currentOutstanding>0?[currentFee]:[];
+  const quickFeeDueDate=currentDueDate;
+  const quickFeePending=currentFeeDue;
+  const currentFeeStatus=currentFeePaid?"Paid":currentFeeDue?"Due":currentFee?"Upcoming":"No fee record";
   let h="";
   h+=`<section class="parent-dashboard" aria-label="Parent dashboard summary">
     <div class="parent-dashboard-head"><div><div class="parent-dashboard-title">📊 Parent Dashboard</div><div class="parent-dashboard-sub">${esc(v.year||"")} · ${esc(t.updated)} ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}</div></div></div>
     <div class="parent-dashboard-grid">
       <div class="parent-dashboard-item ${ypc!=null&&ypc>=75?"ok":ypc!=null&&ypc<60?"bad":""}"><b>${ypc!=null?ypc+"%":"–"}</b><small>Attendance</small></div>
       <div class="parent-dashboard-item"><b>${quickTestAvg!=null?quickTestAvg+"%":"–"}</b><small>Test Average</small></div>
-      <div class="parent-dashboard-item ${quickFeePending?"bad":"ok"}"><b>${quickFeePending?(quickFeeDue?rs(quickFeeDue):"Due"):"Paid"}</b><small>${quickFeePending?("Fee Due"+(quickFeeDueDate?" · "+new Date(quickFeeDueDate+"T00:00:00").toLocaleDateString(T[L].loc,{day:"2-digit",month:"short",year:"numeric"}):"")):(quickFeeDueDate?"Paid · Next Due "+new Date(quickFeeDueDate+"T00:00:00").toLocaleDateString(T[L].loc,{day:"2-digit",month:"short",year:"numeric"}):"Fees Paid")}</small></div>
+      <div class="parent-dashboard-item ${currentFeeDue?"bad":currentFeePaid?"ok":""}"><b>${currentFeeStatus==="Due"?(currentOutstanding?rs(currentOutstanding):"Due"):currentFeeStatus}</b><small>${currentFeeStatus==="Due"?"Current Month · Due"+(currentDueDate?" · "+new Date(currentDueDate+"T00:00:00").toLocaleDateString(T[L].loc,{day:"2-digit",month:"short",year:"numeric"}):""):currentFeeStatus==="Paid"?"Current Month · Paid"+(currentDueDate?" · "+new Date(currentDueDate+"T00:00:00").toLocaleDateString(T[L].loc,{day:"2-digit",month:"short",year:"numeric"}):""):currentFeeStatus==="Upcoming"?"Current Month · Upcoming"+(currentDueDate?" · "+new Date(currentDueDate+"T00:00:00").toLocaleDateString(T[L].loc,{day:"2-digit",month:"short",year:"numeric"}):""):"Current Month"}</small></div>
     </div>
   </section>`;
   if(c.notice)h+=`<div class="card"><h2>📢 ${esc(t.notice)}</h2><div class="notice">${esc(c.notice)}</div></div>`;
