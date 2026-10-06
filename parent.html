@@ -2,19 +2,1157 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TASVIA Academy – Parent</title>
+<meta name="theme-color" content="#0B2455">
 <meta name="robots" content="noindex">
+<link rel="icon" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="TASVIA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Hind:wght@400;500;600&family=Noto+Sans+Telugu:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EDF1EE;--card:#fff;--ink:#15201C;--muted:#5B6A63;--line:#D3DCD7;--chip:#E2E9E5;--board:#0B2455;--chalk:#F3F6F1;--gold:#F2AC10;--p:#2B8A55;--a:#C4432A;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root{--bg:#0E1613;--card:#17221E;--ink:#E6EDE9;--muted:#98A9A1;--line:#29372F;--chip:#213029;--board:#081A3E}}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Hind,"Noto Sans Telugu","Noto Sans Devanagari",system-ui,sans-serif}
+h1,h2,h3{font-family:"Baloo 2",Hind,"Noto Sans Telugu","Noto Sans Devanagari",system-ui,sans-serif;margin:0;line-height:1.2}
+header{background:var(--board);color:var(--chalk);padding:16px 18px 22px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;max-width:640px;margin:0 auto}
+.hlogo{width:36px;height:36px;border-radius:50%;background:#fff;vertical-align:middle;margin:-4px 8px 0 0;box-shadow:0 0 0 2px var(--gold)}
+#banner{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 10px);transform:translate(-50%,-150%);z-index:50;display:flex;gap:10px;align-items:center;background:var(--card);color:var(--ink);border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:14px;padding:10px 14px;box-shadow:0 10px 30px rgba(0,0,0,.25);width:min(92%,420px);transition:transform .35s}#banner.show{transform:translate(-50%,0)}#banner img{width:36px;height:36px;border-radius:50%}#banner b{display:block}#banner span{color:var(--muted);font-size:.9rem}
+.brand{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.3rem;white-space:nowrap}.brand span{color:var(--gold)}
+.langs{display:flex;gap:4px}
+.langs button{border:0;border-radius:999px;padding:4px 10px;background:rgba(255,255,255,.12);color:var(--chalk);font:inherit;font-size:.85rem;cursor:pointer}
+.langs button.on{background:var(--gold);color:#1a1405;font-weight:600}
+.kid{max-width:640px;margin:14px auto 0}
+.kid{display:flex;gap:14px;align-items:center}.kid .ph{width:72px;height:96px;border-radius:12px;overflow:hidden;border:3px solid var(--gold);flex:0 0 auto}.kid .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.kid h1{font-size:1.9rem}.kid p{margin:2px 0 0;opacity:.85}
+main{max-width:640px;margin:-10px auto 0;padding:0 14px 40px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:12px}
+.card h2{font-size:1.2rem;margin-bottom:8px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+.stats b{display:block;font-family:"Baloo 2",sans-serif;font-size:1.9rem;line-height:1.1}
+.stats small{color:var(--muted)}
+.ok{color:var(--p)}.bad{color:var(--a)}.gold{color:#B8820A}
+.bar{height:10px;border-radius:5px;background:var(--chip);overflow:hidden;margin:10px 0 4px}.bar i{display:block;height:100%;background:var(--p)}
+.sub{color:var(--muted);font-size:.9rem}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+td,th{padding:7px 4px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:500;font-size:.85rem}
+td.r,th.r{text-align:right;white-space:nowrap}
+.tag{display:inline-block;font-size:.8rem;font-weight:600;border-radius:999px;padding:2px 10px}
+.tag.ok{background:color-mix(in srgb,var(--p) 16%,transparent)}.tag.bad{background:color-mix(in srgb,var(--a) 14%,transparent)}.tag.gold{background:color-mix(in srgb,var(--gold) 18%,transparent)}
+.hw{border-left:4px solid var(--gold);padding:4px 0 4px 12px;margin:10px 0}
+.hw b{font-size:.9rem;color:var(--muted);font-weight:600}
+.hw div{white-space:pre-wrap}
+.hw-completed{border-left-color:var(--p);background:color-mix(in srgb,var(--p) 5%,var(--card));border-radius:0 10px 10px 0;padding-right:10px}
+.hw-completed>div:first-of-type{text-decoration:line-through;opacity:.72}
+.hw-complete-btn{margin-top:9px;border:0;cursor:pointer;font:600 14px Hind,sans-serif;padding:8px 12px;min-height:38px}
+.hw-complete-btn:not(.gold){background:var(--p);color:#fff}
+.hw-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.hw-count{background:var(--chip);border-radius:999px;padding:4px 10px;font-size:.8rem;font-weight:700;white-space:nowrap}
+.hw-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.hw-status{font-size:.76rem;border-radius:999px;padding:3px 8px;font-weight:700;white-space:nowrap}.hw-status.done{background:color-mix(in srgb,var(--p) 15%,transparent);color:var(--p)}.hw-status.pending{background:color-mix(in srgb,var(--gold) 18%,transparent);color:#9A6A00}
+.hw-overdue{border-left-color:var(--a)}.hw-overdue .hw-status{background:color-mix(in srgb,var(--a) 13%,transparent);color:var(--a)}
+.hw-filter{display:flex;gap:6px;margin:10px 0 4px}.hw-filter-btn{flex:1;border:1px solid var(--line);border-radius:10px;padding:8px 5px;background:var(--chip);color:var(--ink);font:600 13px Hind,sans-serif;cursor:pointer}.hw-filter-btn.active{background:var(--board);color:#fff;border-color:var(--board)}
+.notice{border-left:5px solid var(--gold);background:color-mix(in srgb,var(--gold) 12%,var(--card));padding:10px 14px;border-radius:0 12px 12px 0}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btn{display:inline-block;text-decoration:none;border-radius:12px;padding:10px 16px;font-weight:600;background:var(--board);color:var(--chalk)}
+.btn.gold{background:var(--gold);color:#1a1405}.upi-apps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;margin-top:10px}.upi-app{display:block;text-align:center;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:9px 5px;background:var(--card);color:var(--ink);font-weight:600;font-size:.86rem}.upi-app:active{transform:scale(.98)}
+.center{text-align:center;padding:60px 20px;color:var(--muted)}
+.foot{text-align:center;color:var(--muted);font-size:.8rem;margin-top:18px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips span{background:var(--chip);border-radius:999px;padding:3px 10px;font-size:.88rem}
+
+/* PARENT FEE DUE — premium attention cue */
+@keyframes feeGlow{0%,100%{box-shadow:0 4px 18px rgba(199,71,64,.08)}50%{box-shadow:0 8px 28px rgba(199,71,64,.22)}}
+@keyframes feeSweep{0%{transform:translateX(-120%);opacity:0}12%{opacity:.55}55%{opacity:.15}100%{transform:translateX(260%);opacity:0}}
+.fee-due{position:relative;overflow:hidden;border:1.5px solid rgba(199,71,64,.48);animation:feeGlow 2.4s ease-in-out infinite}
+.fee-due::after{content:"";position:absolute;top:0;bottom:0;left:0;width:38%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.34),transparent);transform:translateX(-120%);animation:feeSweep 3.6s ease-in-out infinite;pointer-events:none}
+.fee-due .fee-alert{display:flex;align-items:center;gap:8px;margin:-3px 0 11px;padding:8px 10px;border-radius:10px;background:rgba(199,71,64,.09);color:var(--a);font-weight:700;font-size:.88rem}
+.fee-due .fee-alert .dot{width:8px;height:8px;border-radius:50%;background:var(--a);box-shadow:0 0 0 5px rgba(199,71,64,.12);animation:feeDot 1.4s ease-in-out infinite}
+@keyframes feeDot{50%{transform:scale(1.35);opacity:.65}}
+@media(prefers-reduced-motion:reduce){
+ .fee-due,.fee-due::after,.fee-due .fee-alert .dot{animation:none!important}
+}
+
+/* PARENT FEE DUE POPUP */
+.fee-popup-backdrop{position:fixed;inset:0;z-index:100;background:rgba(7,18,14,.58);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .28s ease,visibility .28s ease}
+.fee-popup-backdrop.show{opacity:1;visibility:visible}
+.fee-popup{width:min(94%,390px);background:var(--card);border:1px solid rgba(199,71,64,.28);border-top:5px solid var(--a);border-radius:20px;padding:24px 20px 18px;box-shadow:0 22px 60px rgba(0,0,0,.32);transform:translateY(18px) scale(.96);transition:transform .32s cubic-bezier(.22,1,.36,1);text-align:center}
+.fee-popup-backdrop.show .fee-popup{transform:translateY(0) scale(1)}
+.fee-popup-icon{width:54px;height:54px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;background:rgba(196,67,42,.1);font-size:27px;animation:feePopupPulse 1.5s ease-in-out infinite}
+.fee-popup h3{font-size:1.45rem;color:var(--ink);margin-bottom:5px}
+.fee-popup .due-label{color:var(--a);font-weight:700;font-size:.95rem}
+.fee-popup .due-amount{font-family:"Baloo 2",sans-serif;font-size:2rem;font-weight:800;color:var(--a);line-height:1.15;margin:7px 0 15px}
+.fee-popup .due-note{color:var(--muted);font-size:.9rem;margin:0 0 16px}
+.fee-popup .fee-popup-skip{display:block;margin:10px auto 0;border:0;background:transparent;color:var(--muted);font:500 14px Hind,sans-serif;cursor:pointer;padding:6px 14px}
+.fee-popup .acts{justify-content:center;margin-top:0}
+.fee-popup .btn{min-width:125px;cursor:pointer;border:0;font:inherit}
+@keyframes feePopupPulse{50%{transform:scale(1.08);box-shadow:0 0 0 9px rgba(196,67,42,.06)}}
+@media(prefers-reduced-motion:reduce){.fee-popup-backdrop,.fee-popup{transition:none}.fee-popup-icon{animation:none}}
+
+.photo-upload{display:flex;align-items:center;gap:12px;padding:12px;border:1px dashed var(--line);border-radius:14px;background:var(--chip);margin-top:10px}.photo-upload .preview{width:58px;height:72px;border-radius:10px;overflow:hidden;border:2px solid var(--gold);background:var(--chip);display:grid;place-items:center;font-size:24px;flex:0 0 auto}.photo-upload .preview img{width:100%;height:100%;object-fit:cover}.photo-upload input{display:none}
+
+/* PARENT WELCOME EXPERIENCE */
+.welcome-backdrop{position:fixed;inset:0;z-index:999;background:linear-gradient(145deg,#071a3d 0%,#0B2455 58%,#102e68 100%);display:flex;align-items:center;justify-content:center;padding:24px;opacity:1;visibility:visible;transition:opacity .45s ease,visibility .45s ease}
+.welcome-backdrop.hide{opacity:0;visibility:hidden;pointer-events:none}
+.welcome-card{width:min(92%,390px);text-align:center;color:#F3F6F1}
+.welcome-logo-wrap{width:112px;height:112px;margin:0 auto 18px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 0 0 4px #F2AC10,0 14px 45px rgba(0,0,0,.28);animation:welcomeLogoIn .75s cubic-bezier(.22,1,.36,1) both}
+.welcome-logo{width:88px;height:88px;border-radius:50%;object-fit:contain}
+.welcome-card h2{font-family:"Baloo 2",sans-serif;font-size:2rem;line-height:1.05;margin:0 0 7px}
+.welcome-card h2 span{color:#F2AC10}
+.welcome-card p{margin:0 auto;color:rgba(243,246,241,.86);font-size:1rem;max-width:320px}
+.welcome-tag{margin-top:12px!important;font-size:.82rem!important;color:#F2AC10!important;font-weight:600;letter-spacing:.04em}
+.welcome-enter{margin-top:24px;border:1px solid rgba(242,172,16,.7);border-radius:999px;background:#F2AC10;color:#1a1405;padding:11px 24px;font:600 16px Hind,sans-serif;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.welcome-sound{margin-top:12px;border:1px solid rgba(255,255,255,.22);border-radius:999px;background:rgba(255,255,255,.08);color:#F3F6F1;padding:7px 14px;font:500 13px Hind,sans-serif;cursor:pointer}
+.welcome-sound.off{opacity:.72}
+.student-login-form{width:min(100%,340px);margin:22px auto 0;text-align:left}
+.student-login-label{display:block;color:rgba(243,246,241,.9);font-size:.85rem;font-weight:600;margin:0 0 5px 4px}
+.student-login-input{display:block;width:100%;border:1px solid rgba(255,255,255,.22);border-radius:12px;background:#fff;color:#15201C;padding:12px 13px;font:600 16px Hind,sans-serif;text-transform:uppercase;outline:none}
+.student-login-input:focus{border-color:#F2AC10;box-shadow:0 0 0 3px rgba(242,172,16,.2)}
+.student-login-msg{min-height:1.35em;margin-top:8px;text-align:center;color:#F3A08E;font-size:.86rem}
+
+@keyframes welcomeLogoIn{from{opacity:0;transform:scale(.65) rotate(-8deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+@media(prefers-reduced-motion:reduce){.welcome-logo-wrap{animation:none}.welcome-backdrop{transition:none}}
+
+
+.brain-card{border:1px solid rgba(242,172,16,.35);background:linear-gradient(145deg,var(--card),color-mix(in srgb,var(--gold) 6%,var(--card)));overflow:hidden}.brain-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.brain-icon{width:46px;height:46px;border-radius:14px;background:var(--board);display:grid;place-items:center;font-size:25px;flex:0 0 auto}.brain-sub{margin:3px 0 0}.brain-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.brain-chips span{background:var(--chip);border-radius:999px;padding:3px 10px;font-size:.8rem}.brain-start{width:100%;margin-top:12px;border:0;cursor:pointer;font:600 16px Hind,sans-serif}.brain-game{margin-top:12px;padding:13px;border:1px solid var(--line);border-radius:14px;background:var(--chip)}.brain-bar{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:.82rem;color:var(--muted);margin-bottom:10px}.brain-bar b{color:var(--ink)}.memory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:360px;margin:0 auto}.memory-card{aspect-ratio:1;border:0;border-radius:12px;background:var(--board);color:#fff;cursor:pointer;min-width:44px;min-height:44px;font:700 1.45rem/1 Hind,sans-serif;box-shadow:0 3px 7px rgba(0,0,0,.18)}.memory-card.revealed,.memory-card.matched{background:var(--card);color:var(--ink);border:2px solid var(--gold)}.memory-card.matched{opacity:.72}.memory-card:disabled{cursor:default}.memory-card:focus-visible{outline:3px solid var(--gold);outline-offset:2px}.memory-symbol{display:none}.memory-card.revealed .memory-symbol,.memory-card.matched .memory-symbol{display:block}.memory-card.revealed .memory-back,.memory-card.matched .memory-back{display:none}.brain-feedback{text-align:center;font-weight:700;min-height:25px;margin-top:9px}.brain-feedback.ok{color:var(--p)}.brain-feedback.bad{color:var(--a)}.brain-games{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}.brain-game-btn{border:1px solid var(--line);border-radius:12px;padding:11px 8px;background:var(--card);color:var(--ink);font:600 15px Hind,sans-serif;cursor:pointer}.brain-game-btn:active{transform:scale(.98)}.brain-question{font-size:1.35rem;font-weight:800;text-align:center;margin:8px 0 12px}.brain-options{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.brain-option{border:1px solid var(--line);border-radius:12px;padding:11px;background:var(--card);color:var(--ink);font:700 16px Hind,sans-serif;cursor:pointer}.brain-option.correct{border-color:var(--p);background:color-mix(in srgb,var(--p) 14%,var(--card))}.brain-option.wrong{border-color:var(--a);background:color-mix(in srgb,var(--a) 12%,var(--card))}.sequence-box{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:10px 0}.sequence-box span{min-width:42px;padding:8px 10px;border-radius:10px;background:var(--board);color:#fff;font-weight:800;text-align:center}.sequence-box .missing{background:var(--gold);color:#1a1405}
+
+/* BODMAS PRACTICE */
+.bodmas-card{border:1px solid rgba(43,138,85,.28);background:linear-gradient(145deg,var(--card),color-mix(in srgb,var(--p) 5%,var(--card)));overflow:hidden}
+.bodmas-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bodmas-icon{width:46px;height:46px;border-radius:14px;background:var(--board);color:#fff;display:grid;place-items:center;font-size:24px;flex:0 0 auto}
+.bodmas-sub{margin:3px 0 0}
+.bodmas-levels{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:11px}
+.bodmas-level{border:1px solid var(--line);border-radius:10px;padding:8px 5px;background:var(--card);color:var(--ink);font:600 14px Hind,sans-serif;cursor:pointer}
+.bodmas-level.active{background:var(--board);color:#fff;border-color:var(--board)}
+.bodmas-panel{margin-top:11px;padding:13px;border:1px solid var(--line);border-radius:14px;background:var(--chip)}
+.bodmas-meta{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:.84rem}
+.bodmas-question{text-align:center;font-family:"Baloo 2",sans-serif;font-size:1.65rem;font-weight:800;letter-spacing:.02em;margin:12px 0}
+.bodmas-input-row{display:flex;gap:8px;max-width:360px;margin:0 auto}
+.bodmas-input{flex:1;min-width:0;border:2px solid var(--line);border-radius:11px;padding:10px 12px;background:var(--card);color:var(--ink);font:700 18px Hind,sans-serif;text-align:center}
+.bodmas-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(242,172,16,.15)}
+.bodmas-submit{border:0;border-radius:11px;padding:10px 16px;background:var(--board);color:#fff;font:700 15px Hind,sans-serif;cursor:pointer}
+.bodmas-submit:disabled{opacity:.55;cursor:default}
+.bodmas-feedback{text-align:center;min-height:26px;margin-top:9px;font-weight:700}
+.bodmas-feedback.ok{color:var(--p)}.bodmas-feedback.bad{color:var(--a)}
+.bodmas-next{width:100%;margin-top:9px;border:0;cursor:pointer;font:600 15px Hind,sans-serif}
+.bodmas-progress{height:8px;border-radius:5px;background:var(--card);overflow:hidden;margin:8px 0 2px}
+.bodmas-progress i{display:block;height:100%;background:var(--p);transition:width .25s ease}
+.bodmas-result{text-align:center;padding:9px 0 2px}
+.bodmas-result strong{font-family:"Baloo 2",sans-serif;font-size:1.8rem}
+@media(max-width:380px){.bodmas-input-row{flex-direction:column}.bodmas-submit{width:100%}}
+
+.gk-card{border:1px solid rgba(242,172,16,.3);background:linear-gradient(145deg,var(--card),color-mix(in srgb,var(--gold) 5%,var(--card)));overflow:hidden}.gk-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.gk-icon{width:46px;height:46px;border-radius:14px;background:var(--board);color:#fff;display:grid;place-items:center;font-size:24px}.gk-list{display:grid;gap:9px;margin-top:10px}.gk-q{padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--chip)}.gk-q b{display:block}.gk-answer{display:block;color:var(--p);font-weight:700;font-size:.9rem;margin-top:3px}\n
+/* TASVIA ACTION VISIBILITY / MOBILE SAFE LAYER */
+button,.btn,a.btn{visibility:visible;}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-width:40px;min-height:40px;white-space:normal;text-align:center;line-height:1.25;}
+.acts{display:flex;flex-wrap:wrap;align-items:center;gap:8px;width:100%;overflow:visible;}
+.acts > .btn,.acts > a.btn,.acts > button{flex:0 0 auto;max-width:100%;}
+.item{overflow:visible;}
+@media(max-width:520px){.acts > .btn,.acts > a.btn,.acts > button{min-height:42px}.acts > .btn.sm,.acts > a.btn.sm,.acts > button.btn.sm{min-height:38px}}
+
+/* DAILY CURRENT AFFAIRS */
+
+/* Parent portal 2x2 quick-action grid */
+.parent-dashboard{margin-top:12px;padding:14px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,var(--card),color-mix(in srgb,var(--board) 4%,var(--card)));box-shadow:0 4px 18px rgba(11,36,85,.06)}
+.parent-dashboard-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.parent-dashboard-title{font-weight:800;font-size:1.05rem}
+.parent-dashboard-sub{color:var(--muted);font-size:.8rem}
+.parent-dashboard-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.parent-dashboard-item{min-width:0;padding:10px 7px;border:1px solid var(--line);border-radius:12px;background:var(--chip);text-align:center}
+.parent-dashboard-item b{display:block;font-family:"Baloo 2",sans-serif;font-size:1.35rem;line-height:1.15}
+.parent-dashboard-item small{display:block;color:var(--muted);font-size:.76rem;margin-top:2px}
+.parent-dashboard-item.ok b{color:var(--p)}.parent-dashboard-item.bad b{color:var(--a)}.parent-dashboard-item.gold b{color:#B8820A}
+.parent-empty{padding:12px;border:1px dashed var(--line);border-radius:12px;background:var(--chip);color:var(--muted);text-align:center}
+@media(max-width:360px){.parent-dashboard-grid{grid-template-columns:1fr 1fr}.parent-dashboard-item:last-child{grid-column:1/-1}}
+.parent-action-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 2px}
+.parent-action{min-height:78px;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 10px;border:1px solid var(--line);border-radius:15px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:700;text-align:center;box-shadow:0 3px 12px rgba(11,36,85,.06);transition:transform .15s ease,box-shadow .15s ease}
+.parent-action:active{transform:scale(.98)}
+.parent-action:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.parent-action-icon{font-size:24px;line-height:1;flex:0 0 auto}
+#homeworkSection,#bodmasSection,#gkSection,#currentAffairsCard,#attendanceSection,#testsSection,#feesSection,#contactSection{scroll-margin-top:14px}
+/* Dashboard sections open only when their quick-access button is pressed */
+main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentAffairsCard,main > #attendanceSection,main > #testsSection,main > #feesSection,main > #contactSection{display:none}
+.parent-section-body > #homeworkSection,.parent-section-body > #bodmasSection,.parent-section-body > #gkSection,.parent-section-body > #currentAffairsCard,.parent-section-body > #attendanceSection,.parent-section-body > #testsSection,.parent-section-body > #feesSection,.parent-section-body > #contactSection{display:block}
+.parent-action{border:1px solid var(--line);font:inherit;cursor:pointer}
+.parent-section-viewer{position:fixed;inset:0;z-index:2000;background:var(--bg);overflow-y:auto;display:none}
+.parent-section-viewer.show{display:block}
+.parent-view-open{overflow:hidden}
+.parent-section-top{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--board);color:var(--chalk);box-shadow:0 2px 12px rgba(0,0,0,.18)}
+.parent-section-close{width:42px;height:42px;border:0;border-radius:12px;background:rgba(255,255,255,.12);color:#fff;font-size:22px;cursor:pointer;flex:0 0 auto}
+.parent-section-close:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.parent-section-title{font-weight:700;font-size:1.05rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.parent-section-body{max-width:640px;margin:0 auto;padding:0 14px 40px}
+.parent-section-body > .card{margin-top:14px}
+.parent-section-body > .card:first-child{margin-top:14px}
+@media(max-width:360px){.parent-action{min-height:72px;padding:10px 7px;font-size:.9rem}.parent-action-icon{font-size:21px}}
+
+.ca-card{border:1px solid rgba(11,36,85,.22);background:linear-gradient(145deg,var(--card),color-mix(in srgb,var(--board) 4%,var(--card)));overflow:hidden}.ca-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.ca-icon{width:46px;height:46px;border-radius:14px;background:var(--board);color:#fff;display:grid;place-items:center;font-size:23px;flex:0 0 auto}.ca-list{display:grid;gap:9px;margin-top:10px}.ca-item{padding:11px;border:1px solid var(--line);border-radius:12px;background:var(--chip);color:var(--ink)}.ca-item .ca-cat{display:inline-flex;align-items:center;gap:4px;font-size:.78rem;font-weight:700;color:var(--chalk);background:var(--board);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:4px 9px;margin-bottom:6px;line-height:1.2}.ca-item b{display:block;color:var(--ink);font-weight:800}.ca-item p{margin:4px 0 0;font-size:.92rem;color:var(--ink)}.ca-source{display:block;color:var(--muted);font-size:.76rem;margin-top:6px}.ca-explore{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin-top:9px;padding:7px 12px;border-radius:999px;background:var(--board);color:var(--chalk);text-decoration:none;font-size:.8rem;font-weight:700;border:1px solid rgba(255,255,255,.12)}.ca-explore:active{transform:scale(.98)}.ca-quiz{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}.ca-quiz-item{padding:8px 0;border-bottom:1px dashed var(--line)}.ca-quiz-item:last-child{border-bottom:0}.ca-quiz-item b{display:block;color:var(--ink)}.ca-quiz-item span{display:block;color:var(--p);font-weight:700;font-size:.88rem}
+
+
+/* CLASSY COMMERCIAL PARENT PORTAL — visual layer only */
+:root{--bg:#F6F7F9;--card:#FFFFFF;--ink:#172033;--muted:#6B7280;--line:#E6E9EF;--chip:#F3F5F8;--board:#0B2455;--chalk:#F8FAFC;--gold:#C9A227;--p:#18794E;--a:#B42318}
+body{background:linear-gradient(180deg,#F8F9FB 0%,#F3F5F8 100%);font-family:Inter,"Hind","Noto Sans Telugu","Noto Sans Devanagari",system-ui,sans-serif;letter-spacing:.005em}
+h1,h2,h3{font-family:Inter,"Hind","Noto Sans Telugu","Noto Sans Devanagari",system-ui,sans-serif;letter-spacing:-.025em}
+header{background:linear-gradient(135deg,#071A3D 0%,#0B2455 55%,#132F68 100%);padding:18px 18px 30px;box-shadow:0 10px 30px rgba(11,36,85,.16)}
+.top{max-width:760px}.brand{font-size:1.18rem;letter-spacing:.08em;text-transform:uppercase}.brand span{color:#D7B64A}
+.langs button{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);backdrop-filter:blur(8px);padding:5px 11px}.langs button.on{background:#D7B64A;color:#111827;border-color:#D7B64A}
+.kid{max-width:760px;margin-top:20px}.kid .ph{width:78px;height:96px;border-radius:18px;border:2px solid #D7B64A;box-shadow:0 8px 24px rgba(0,0,0,.2)}.kid h1{font-size:2rem;font-weight:800}.kid p{font-size:.92rem;color:rgba(248,250,252,.78)}
+main{max-width:760px;padding:0 16px 48px;margin:-16px auto 0;position:relative}
+.card{border:1px solid rgba(18,32,51,.07);border-radius:20px;padding:19px;margin-top:14px;box-shadow:0 8px 28px rgba(16,24,40,.055)}
+.card h2{font-size:1.12rem;font-weight:800}.sub{font-size:.88rem}
+.stats{gap:10px}.stats>div{padding:12px 7px;border:1px solid var(--line);border-radius:14px;background:#FAFBFC}.stats b{font-size:1.7rem;font-weight:800}
+td,th{padding:10px 5px}th{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}.tag{padding:4px 10px;font-size:.74rem;letter-spacing:.01em}
+.bar{height:8px;border-radius:99px;background:#E9EDF2}.bar i{border-radius:99px}
+.btn{border-radius:12px;padding:10px 17px;font-weight:700;box-shadow:0 4px 12px rgba(11,36,85,.08)}.btn.gold{background:#D7B64A;color:#172033}.acts{gap:9px}
+.notice{border-left:4px solid #D7B64A;background:#FBF8ED;border-radius:12px;padding:12px 14px}
+.parent-dashboard{border-radius:20px;background:linear-gradient(145deg,#fff,#F8FAFC);box-shadow:0 8px 24px rgba(16,24,40,.05)}
+.parent-dashboard-item{border-radius:14px;background:#F8FAFC;padding:12px 8px}.parent-dashboard-item b{font-size:1.3rem}.fee-status-card{min-height:82px;display:flex;flex-direction:column;justify-content:center;gap:2px}.fee-status-card b{font-weight:900;text-transform:uppercase}.fee-status-card small:first-child{font-weight:800;color:var(--ink)}
+.parent-action{border-radius:16px;min-height:82px;background:#fff;box-shadow:0 6px 18px rgba(16,24,40,.06);border-color:#E7EAF0}.parent-action:hover{box-shadow:0 10px 24px rgba(16,24,40,.10);transform:translateY(-1px)}
+.fee-due{border:1px solid rgba(180,35,24,.28);box-shadow:0 10px 30px rgba(180,35,24,.08)}
+.fee-due-badge{display:inline-block;padding:4px 10px;border-radius:999px;background:rgba(196,67,42,.12);color:var(--a);font-weight:800;animation:feeDuePulse 1.5s ease-in-out infinite}
+@keyframes feeDuePulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(196,67,42,.16)}50%{transform:scale(1.06);box-shadow:0 0 0 6px rgba(196,67,42,0)}}
+.fee-popup{border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.28)}
+.foot{padding-top:8px;letter-spacing:.02em}
+@media(max-width:520px){main{padding-left:12px;padding-right:12px}.card{padding:16px;border-radius:18px}.kid h1{font-size:1.72rem}}
+
+/* TASVIA PARENT PORTAL — PREMIUM POLISH 2026-10 */
+:root{
+  --pp-navy:#071C42;--pp-navy2:#0D2A5C;--pp-gold:#C99A3D;--pp-gold2:#E2B85D;
+  --pp-bg:#F6F7F9;--pp-card:#FFFFFF;--pp-ink:#152033;--pp-muted:#667085;
+  --pp-line:#E6E8EC;--pp-green:#16845B;--pp-red:#C83B36;
+}
+html{background:var(--pp-bg);scroll-behavior:smooth}
+body{background:linear-gradient(180deg,#F8F9FB 0,#F3F5F7 100%);color:var(--pp-ink);font-family:Inter,"Segoe UI",system-ui,-apple-system,BlinkMacSystemFont,sans-serif}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle at 85% 8%,rgba(201,154,61,.07),transparent 30%),radial-gradient(circle at 8% 35%,rgba(13,42,92,.045),transparent 28%)}
+header{background:linear-gradient(135deg,var(--pp-navy),var(--pp-navy2));padding:14px 18px 13px;border-bottom:1px solid rgba(226,184,93,.32);box-shadow:0 5px 22px rgba(7,28,66,.14)}
+.brand{max-width:860px;align-items:center}.brand h1{font-size:1.08rem;font-weight:760;letter-spacing:-.025em}.brand h1 span{color:var(--pp-gold2)}
+.hlogo{width:34px;height:34px;border:0;box-shadow:0 0 0 1.5px var(--pp-gold2),0 4px 14px rgba(0,0,0,.18)}
+.sync{font-size:.68rem;letter-spacing:.02em;opacity:.78}
+main{max-width:860px;padding:22px 16px 112px}
+.hd{margin:2px 0 16px}.hd h2{font-size:1.45rem;font-weight:780;letter-spacing:-.035em}.sub{color:var(--pp-muted);font-size:.86rem}
+.card,.item,.board{border-color:var(--pp-line);box-shadow:0 2px 8px rgba(16,24,40,.035);transition:box-shadow .18s ease,transform .18s ease,border-color .18s ease}
+.card{border-radius:16px;padding:17px;margin-bottom:14px;background:rgba(255,255,255,.96)}
+.card h2,.card h3{letter-spacing:-.02em}.card h2{font-size:1.05rem;margin-bottom:10px}
+.card:hover{box-shadow:0 8px 24px rgba(16,24,40,.065);border-color:#D9DDE4}
+.board{border-radius:16px;background:linear-gradient(135deg,var(--pp-navy),var(--pp-navy2));border:1px solid rgba(201,154,61,.24);box-shadow:0 10px 28px rgba(7,28,66,.13)}
+.chips{margin-bottom:14px}.chip{background:#EEF1F5;border:1px solid #E1E5EA;color:#344054;font-weight:650}.chip.on{background:var(--pp-navy);border-color:var(--pp-navy);color:#fff;box-shadow:0 3px 9px rgba(7,28,66,.15)}
+.item{background:var(--pp-card);border-radius:13px}.item:hover{transform:translateY(-1px)}
+.btn{border-radius:10px;font-weight:700}.btn.gold{background:linear-gradient(135deg,var(--pp-gold2),var(--pp-gold));color:#18140B;box-shadow:0 4px 12px rgba(201,154,61,.18)}
+.btn:focus-visible,.chip:focus-visible{outline:3px solid rgba(201,154,61,.45);outline-offset:2px}
+.tag.ok{background:rgba(22,132,91,.11);color:var(--pp-green);border:1px solid rgba(22,132,91,.16)}
+.tag.due{background:rgba(200,59,54,.09);color:var(--pp-red);border:1px solid rgba(200,59,54,.14)}
+nav{background:rgba(255,255,255,.94);border-top:1px solid var(--pp-line);backdrop-filter:blur(16px);box-shadow:0 -7px 24px rgba(16,24,40,.07)}
+nav button{color:#667085}nav button.on{color:var(--pp-gold)!important}
+nav button.on::before{background:var(--pp-gold)}
+.sheet{background:var(--pp-bg);box-shadow:0 -16px 40px rgba(7,28,66,.16)}
+.gate{background:radial-gradient(circle at 50% 12%,#173A76 0,#0B2858 34%,#071A3D 100%)}
+.gate .glogo{box-shadow:0 0 0 3px var(--pp-gold2),0 18px 42px rgba(0,0,0,.28)}
+.gate h1{font-weight:800;letter-spacing:-.04em}.gate .tag{color:var(--pp-gold2)}
+.gate input{box-shadow:0 1px 2px rgba(0,0,0,.08);border:1px solid rgba(255,255,255,.25)}
+.gate .btn{background:linear-gradient(135deg,var(--pp-gold2),var(--pp-gold));color:#17130A;box-shadow:0 8px 20px rgba(0,0,0,.18)}
+.parent-dashboard{background:linear-gradient(145deg,#071C42,#0D2A5C)!important;color:#fff;border:1px solid rgba(201,154,61,.28)!important;box-shadow:0 12px 30px rgba(7,28,66,.16)!important}
+.parent-dashboard-title{font-weight:800;font-size:1rem;letter-spacing:-.02em;margin-bottom:12px}.parent-dashboard-grid{gap:8px!important}.parent-dashboard-item{background:rgba(255,255,255,.075)!important;border:1px solid rgba(255,255,255,.09)!important;border-radius:12px!important;padding:12px 8px!important}.parent-dashboard-item b{font-size:1.28rem!important}.parent-dashboard-item small{color:rgba(255,255,255,.7)!important;font-size:.7rem!important}
+.parent-action-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px!important;margin:0 0 14px}
+.parent-action{min-height:76px;border:1px solid var(--pp-line);background:#fff;border-radius:14px;padding:12px;text-align:left;display:flex;align-items:center;gap:10px;color:var(--pp-ink);font-weight:750;box-shadow:0 2px 8px rgba(16,24,40,.035);transition:.18s ease}
+.parent-action:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(16,24,40,.08);border-color:rgba(201,154,61,.5)}.parent-action-icon{width:38px;height:38px;border-radius:11px;background:#F4F5F7;display:grid;place-items:center;font-size:1.15rem;flex:0 0 auto}
+table{border-collapse:separate!important;border-spacing:0;width:100%}table th{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:#667085;background:#F7F8FA}table th:first-child{border-radius:8px 0 0 8px}table th:last-child{border-radius:0 8px 8px 0}table td,table th{padding:9px 8px!important;border-bottom:1px solid #EEF0F3!important}table tr:last-child td{border-bottom:0!important}
+.hw-item{background:#F8F9FB!important;border:1px solid #E8EAEE!important;border-radius:11px!important;padding:11px 12px!important;margin:8px 0!important}
+.hw-complete-btn{border-radius:9px!important;font-weight:700!important}
+.fee-due-badge{display:inline-flex;align-items:center;border-radius:999px;padding:4px 8px;background:rgba(200,59,54,.08);color:var(--pp-red);font-weight:750;font-size:.72rem}
+.parent-empty{padding:18px 10px!important;text-align:center;color:var(--pp-muted);background:#F8F9FB;border:1px dashed #D9DDE4;border-radius:11px}
+#banner{border-left-color:var(--pp-gold);box-shadow:0 12px 32px rgba(16,24,40,.16)}
+.toast{border:1px solid rgba(255,255,255,.1);box-shadow:0 10px 25px rgba(0,0,0,.2)}
+@media(min-width:650px){.parent-action-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}.parent-action{min-height:82px}.parent-action-icon{width:40px;height:40px}}
+@media(max-width:420px){main{padding-left:13px;padding-right:13px}.card{padding:14px}.parent-action{min-height:70px;padding:10px;font-size:.88rem}.parent-action-icon{width:34px;height:34px;font-size:1rem}}
+@media(prefers-reduced-motion:reduce){.card,.item,.parent-action{transition:none!important}.parent-action:hover,.item:hover{transform:none!important}}
+
+/* TASVIA PARENT PORTAL — PREMIUM SIGNATURE POLISH */
+:root{
+ --sigN:#061A3B;--sigN2:#0B2858;--sigG:#D5A647;--sigG2:#F0C86A;
+ --sigBg:#F5F7FA;--sigCard:#FFF;--sigInk:#172033;--sigMuted:#667085;
+ --sigLine:#E6E9EF;--sigGreen:#16845B;--sigRed:#C83B36;
+}
+body{background:linear-gradient(180deg,#F8F9FB 0%,#F3F5F8 100%);color:var(--sigInk);font-family:Inter,"Segoe UI",system-ui,-apple-system,BlinkMacSystemFont,sans-serif}
+header{background:linear-gradient(135deg,var(--sigN),var(--sigN2));padding:14px 18px 20px;box-shadow:0 7px 25px rgba(6,26,59,.16);border-bottom:1px solid rgba(240,200,106,.3)}
+.brand{letter-spacing:-.03em}.brand span{color:var(--sigG2)}.langs button.on{background:var(--sigG);color:#17120A}
+.kid{padding:2px 2px 4px}.kid h1{font-size:1.82rem;letter-spacing:-.035em}.kid p{font-size:.88rem}
+main{max-width:860px;padding:0 15px 46px}
+.card{border:1px solid var(--sigLine);border-radius:17px;background:rgba(255,255,255,.97);box-shadow:0 3px 12px rgba(16,24,40,.045);padding:17px;transition:transform .18s ease,box-shadow .18s ease}
+.card:hover{box-shadow:0 9px 26px rgba(16,24,40,.075)}
+.parent-dashboard{background:linear-gradient(145deg,var(--sigN),var(--sigN2))!important;border:1px solid rgba(240,200,106,.28)!important;color:#fff;box-shadow:0 13px 30px rgba(6,26,59,.16)!important}
+.parent-dashboard-item{background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.12)!important}.parent-dashboard-item small{color:rgba(255,255,255,.68)!important}.parent-dashboard-item b{color:#fff}
+.parent-dashboard-item.ok b{color:#72D9A7}.parent-dashboard-item.bad b{color:#FF9B92}
+.parent-action-grid{gap:11px;margin-top:14px}
+.parent-action{position:relative;overflow:hidden;min-height:82px;border:1px solid var(--sigLine);border-radius:16px;background:linear-gradient(145deg,#fff,#FAFBFC);box-shadow:0 4px 13px rgba(16,24,40,.045);font-weight:750;justify-content:flex-start;padding:13px}
+.parent-action::after{content:"›";margin-left:auto;color:var(--sigG);font-size:1.45rem;font-weight:400}
+.parent-action-icon{width:40px;height:40px;border-radius:12px;background:#F1F3F6;display:grid;place-items:center;font-size:21px}
+.parent-action:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(16,24,40,.09);border-color:rgba(213,166,71,.45)}
+.hw-section-head{align-items:center}
+.hw-count{background:#F0F2F5;border:1px solid #E4E7EC;color:#475467}
+.hw-row{padding:12px 0;border-bottom:1px solid #EEF0F3}.hw-row:last-child{border-bottom:0}
+.hw-row>div:first-child{min-width:0}.hw-row b{color:#667085;font-size:.76rem}.hw-row .hw-status{margin-top:5px}
+.hw-complete-btn{border-radius:10px!important;min-width:104px;padding:9px 11px!important;box-shadow:0 2px 6px rgba(16,24,40,.08);font-weight:750!important}
+.hw-complete-btn:not(.gold){background:var(--sigGreen)!important}
+.hw-complete-btn.gold{background:#F3F5F7!important;color:#475467!important;border:1px solid #DDE1E7!important}
+.hw-completed{background:linear-gradient(90deg,rgba(22,132,91,.055),transparent)!important}
+.fee-due-badge{border:1px solid rgba(200,59,54,.14);font-weight:750}
+.tag.ok{border:1px solid rgba(22,132,91,.16)}
+.btn.gold{background:linear-gradient(135deg,var(--sigG2),var(--sigG));color:#17120A}
+.acts .btn{box-shadow:0 3px 9px rgba(16,24,40,.08)}
+table th{text-transform:uppercase;letter-spacing:.05em;font-size:.7rem}
+table td,table th{padding:9px 7px!important}
+.parent-empty{border:1px dashed #D7DCE4;background:#FAFBFC}
+#banner{border-left-color:var(--sigG);box-shadow:0 12px 32px rgba(16,24,40,.17)}
+@media(min-width:700px){.parent-action-grid{grid-template-columns:repeat(4,minmax(0,1fr));}.parent-action{min-height:88px}.parent-action::after{display:none}}
+@media(max-width:520px){.parent-action{min-height:74px}.parent-action-icon{width:36px;height:36px;font-size:19px}.hw-row{align-items:flex-start}.hw-complete-btn{min-width:96px}}
+@media(max-width:370px){main{padding-left:11px;padding-right:11px}.parent-action{padding:10px;font-size:.86rem}.parent-action::after{font-size:1.25rem}.card{padding:14px}}
+@media(prefers-reduced-motion:reduce){.card,.parent-action{transition:none}.parent-action:hover{transform:none}}
+</style>
+</head>
+<body>
+<header><div class="top"><div class="brand"><img class="hlogo" src="/icon-512.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
+<main id="main"><div class="center" id="msg">Loading…</div></main><div id="welcomeBackdrop" class="welcome-backdrop" role="dialog" aria-label="TASVIA Academy welcome">
+  <div class="welcome-card">
+    <div class="welcome-logo-wrap"><img class="welcome-logo" src="/icon-512.png" alt="TASVIA Academy"></div>
+    <h2>Welcome to <span>TASVIA</span></h2>
+    <p id="welcomeGreeting">Let’s inspire, learn, grow and succeed together.</p>
+    <p class="welcome-tag">INSPIRE • LEARN • GROW • SUCCEED</p>
+    <form id="studentLoginForm" class="student-login-form" onsubmit="return window.tasviaStudentLogin(event)">
+      <label class="student-login-label" for="studentLoginId">Student ID</label>
+      <input id="studentLoginId" class="student-login-input" type="text" inputmode="text" autocomplete="username" autocapitalize="characters" spellcheck="false" placeholder="Enter Student ID" required>
+      <button id="welcomeEnter" class="welcome-enter" type="submit">Login to Parent Portal</button>
+      <div id="studentLoginMsg" class="student-login-msg" aria-live="polite"></div>
+    </form>
+  </div>
+</div>
+
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script>
 (function(){
-  var q=location.search||"";
-  var h=(location.hash||"").replace(/^#/,"");
-  if(!q && h){
-    q="?code="+encodeURIComponent(h);
-  }
-  location.replace("/parent/index.html"+q);
+  try{
+    if("serviceWorker" in navigator){
+      navigator.serviceWorker.getRegistrations().then(function(rs){
+        rs.forEach(function(r){try{r.update()}catch(_){}});
+      }).catch(function(){});
+    }
+  }catch(e){}
 })();
 </script>
-</head>
-<body>Opening TASVIA Academy Parent Portal…</body>
+<script>
+</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="/firebase-config.js"></script>
+<script>
+
+function closeWelcome(){const b=document.getElementById("welcomeBackdrop");if(b){b.classList.add("hide");b.setAttribute("aria-hidden","true");b.style.pointerEvents="none";}document.body.classList.remove("welcome-open");}
+function showWelcome(opts){opts=opts||{};const b=document.getElementById("welcomeBackdrop");if(b){b.style.display="flex";b.classList.remove("hide");b.setAttribute("aria-hidden","false");}window.tasviaWelcomeReady=false;window.tasviaWelcomeEntered=false;const input=document.getElementById("studentLoginId");if(input){if(!opts.keepInput)input.value="";if(opts.focus!==false)setTimeout(()=>input.focus(),120)}const msgEl=document.getElementById("studentLoginMsg");if(msgEl&&!opts.keepMessage)msgEl.textContent="";}
+function interLabel(c,y1,y2){const m=/^Inter-(1|2)(?: (.+))?$/.exec(c);if(!m)return null;return (m[1]==="1"?y1:y2)+(m[2]?" · "+m[2]:"")}
+const T={
+ en:{loc:"en-IN",newHw:"New homework",hwSchool:"School-assigned homework · Complete it with your student",all:"All",pending:"Pending",completed:"Completed",markCompleted:"Mark as Completed",completedLabel:"Homework completed",noPending:"No pending homework",noCompleted:"No completed homework",overdue:"Overdue",markPending:"Mark as Pending",newTest:"New test marks",absentToday:"Marked absent",feePaid:"Fee payment recorded",alertsOn:"🔔 Turn on alerts",alertsDone:"🔔 Alerts are on while this page is open",cls:c=>/^\d+$/.test(c)?"Class "+c:(interLabel(c,"Inter 1st Year","Inter 2nd Year")||c),att:"Attendance",thisMonth:"This month",present:"Present",absent:"Absent",pct:"Attendance",year:"This year",days:"days",abs:"Recent absences",none:"No absences",tests:"Test marks",test:"Test",marks:"Marks",grade:"Grade",noTests:"No test marks yet",fees:"Fees",month:"Month",status:"Status",paid:"Paid",due:"Due",part:"Part paid",upcoming:"Upcoming",dueOn:"Due on",pays:"Recent payments",hw:"Homework",noHw:"No homework added yet",note:"Note",notice:"Notice",timings:"Timings",contact:"Contact the academy",call:"Call",wa:"WhatsApp",payFee:"Pay Fee",sendScreenshot:"Send Payment Screenshot",updated:"Updated",left:"This student is no longer enrolled at the academy.",invalid:"This link is not valid. Please ask TASVIA Academy for a new link.",offline:"Couldn\'t load. Check your internet connection and try again.",retry:"Try again",save:"Tip: add this page to your home screen to open it quickly.",overall:"Overall"},
+ te:{loc:"te-IN",newHw:"కొత్త హోంవర్క్",hwSchool:"పాఠశాల ఇచ్చిన హోంవర్క్ · విద్యార్థితో కలిసి పూర్తి చేయండి",all:"అన్నీ",pending:"పెండింగ్",completed:"పూర్తైంది",markCompleted:"పూర్తయినట్లు గుర్తించండి",completedLabel:"హోంవర్క్ పూర్తైంది",noPending:"పెండింగ్ హోంవర్క్ లేదు",noCompleted:"పూర్తైన హోంవర్క్ లేదు",overdue:"గడువు దాటింది",markPending:"పెండింగ్‌గా గుర్తించండి",dueOn:"గడువు",newTest:"కొత్త పరీక్ష మార్కులు",absentToday:"గైర్హాజరు నమోదైంది",feePaid:"ఫీజు చెల్లింపు నమోదైంది",alertsOn:"🔔 అలర్ట్‌లు ఆన్ చేయండి",alertsDone:"🔔 ఈ పేజీ తెరిచి ఉన్నప్పుడు అలర్ట్‌లు వస్తాయి",cls:c=>/^\d+$/.test(c)?c+"వ తరగతి":(interLabel(c,"ఇంటర్ 1వ సంవత్సరం","ఇంటర్ 2వ సంవత్సరం")||({Nursery:"నర్సరీ"})[c]||c),att:"హాజరు",thisMonth:"ఈ నెల",present:"హాజరు",absent:"గైర్హాజరు",pct:"హాజరు శాతం",year:"ఈ సంవత్సరం",days:"రోజులు",abs:"ఇటీవలి గైర్హాజరు రోజులు",none:"గైర్హాజరు లేదు",tests:"పరీక్ష మార్కులు",test:"పరీక్ష",marks:"మార్కులు",grade:"గ్రేడ్",noTests:"ఇంకా పరీక్ష మార్కులు లేవు",fees:"ఫీజు",month:"నెల",status:"స్థితి",paid:"చెల్లించారు",due:"బాకీ",part:"కొంత చెల్లించారు",upcoming:"త్వరలో",dueOn:"చెల్లింపు తేదీ",pays:"ఇటీవలి చెల్లింపులు",hw:"హోంవర్క్",noHw:"ఇంకా హోంవర్క్ లేదు",note:"గమనిక",notice:"ప్రకటన",timings:"సమయాలు",contact:"అకాడమీని సంప్రదించండి",call:"కాల్",wa:"వాట్సాప్",payFee:"ఫీజు చెల్లించండి",sendScreenshot:"చెల్లింపు స్క్రీన్‌షాట్ పంపండి",updated:"నవీకరించబడింది",left:"ఈ విద్యార్థి ఇప్పుడు అకాడమీలో నమోదై లేరు.",invalid:"ఈ లింక్ చెల్లదు. దయచేసి TASVIA అకాడమీని కొత్త లింక్ అడగండి.",offline:"లోడ్ కాలేదు. ఇంటర్నెట్ కనెక్షన్ చూసి మళ్లీ ప్రయత్నించండి.",retry:"మళ్లీ ప్రయత్నించండి",save:"సూచన: ఈ పేజీని త్వరగా తెరవడానికి హోమ్ స్క్రీన్‌కు జోడించండి.",overall:"మొత్తం"},
+ hi:{loc:"hi-IN",newHw:"नया गृहकार्य",hwSchool:"स्कूल द्वारा दिया गया गृहकार्य · विद्यार्थी के साथ पूरा करें",all:"सभी",pending:"बाकी",completed:"पूरा हुआ",markCompleted:"पूरा हुआ चिह्नित करें",completedLabel:"गृहकार्य पूरा",noPending:"कोई लंबित गृहकार्य नहीं",noCompleted:"कोई पूरा गृहकार्य नहीं",overdue:"समय सीमा पार",markPending:"लंबित चिह्नित करें",newTest:"नए टेस्ट अंक",absentToday:"अनुपस्थिति दर्ज",feePaid:"फ़ीस भुगतान दर्ज",alertsOn:"🔔 अलर्ट चालू करें",alertsDone:"🔔 पेज खुला रहने पर अलर्ट मिलेंगे",cls:c=>/^\d+$/.test(c)?"कक्षा "+c:(interLabel(c,"इंटर प्रथम वर्ष","इंटर द्वितीय वर्ष")||({Nursery:"नर्सरी"})[c]||c),att:"उपस्थिति",thisMonth:"इस महीने",present:"उपस्थित",absent:"अनुपस्थित",pct:"उपस्थिति",year:"इस वर्ष",days:"दिन",abs:"हाल की अनुपस्थिति",none:"कोई अनुपस्थिति नहीं",tests:"टेस्ट के अंक",test:"टेस्ट",marks:"अंक",grade:"ग्रेड",noTests:"अभी कोई टेस्ट अंक नहीं",fees:"फ़ीस",month:"महीना",status:"स्थिति",paid:"जमा",due:"बाकी",part:"आंशिक जमा",upcoming:"आगामी",dueOn:"जमा तिथि",pays:"हाल के भुगतान",hw:"गृहकार्य",noHw:"अभी कोई गृहकार्य नहीं",note:"सूचना",notice:"सूचना",timings:"समय",contact:"अकादमी से संपर्क करें",call:"कॉल",wa:"व्हाट्सऐप",payFee:"फ़ीस भुगतान",sendScreenshot:"भुगतान स्क्रीनशॉट भेजें",updated:"अपडेट",left:"यह छात्र अब अकादमी में नामांकित नहीं है।",invalid:"यह लिंक मान्य नहीं है। कृपया TASVIA अकादमी से नया लिंक माँगें।",offline:"लोड नहीं हुआ। इंटरनेट कनेक्शन देखकर फिर कोशिश करें।",retry:"फिर कोशिश करें",save:"सुझाव: जल्दी खोलने के लिए इस पेज को होम स्क्रीन पर जोड़ें।",overall:"कुल"}
+};
+const LN={en:"English",te:"తెలుగు",hi:"हिन्दी"};
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const rs=n=>"₹"+Number(n||0).toLocaleString("en-IN");
+const grade=p=>p>=90?"A+":p>=80?"A":p>=70?"B+":p>=60?"B":p>=50?"C":p>=35?"D":"E";
+let V=null,L="en",feeDueScrollDone=false,feeDuePopupShown=false,feeDuePopupPending=false;
+let parentHomeworkFilterMode="all";
+let parentStudentCode="";
+function homeworkCompletionKey(x){
+  const raw=[x?.id,x?.d,x?.subject,x?.hw,x?.note].map(v=>String(v??"").trim()).join("|");
+  let h=2166136261;
+  for(let i=0;i<raw.length;i++){h^=raw.charCodeAt(i);h=Math.imul(h,16777619)}
+  return "hw_"+(h>>>0).toString(36);
+}
+let parentHomeworkCloudMap={};
+let parentHomeworkCloudReady=false;
+function homeworkDoneMap(){
+  const code=String(parentStudentCode||"portal").trim().toUpperCase()||"portal";
+  const cloud=parentHomeworkCloudMap&&typeof parentHomeworkCloudMap==="object"?parentHomeworkCloudMap:{};
+  if(Object.keys(cloud).length)return cloud;
+  try{const raw=JSON.parse(localStorage.getItem("tasvia-homework-completed")||"{}");return raw&&typeof raw==="object"&&!Array.isArray(raw)?(raw[code]||{}):{}}catch(_){return {}}
+}
+function homeworkCompletionDocRef(){
+  try{
+    if(window.firebase&&firebase.firestore&&window.FIREBASE_CONFIG&&FIREBASE_CONFIG.apiKey){
+      if(!firebase.apps.length)firebase.initializeApp(FIREBASE_CONFIG);
+      const code=String(parentStudentCode||"portal").trim().toUpperCase()||"portal";
+      return firebase.firestore().doc("homeworkCompletions/"+code);
+    }
+  }catch(e){console.warn("TASVIA homework cloud init",e)}
+  return null;
+}
+async function loadHomeworkCompletions(){
+  const ref=homeworkCompletionDocRef(); if(!ref)return;
+  try{
+    const snap=await ref.get();
+    if(snap.exists){
+      const d=snap.data()||{};
+      parentHomeworkCloudMap=d.completed&&typeof d.completed==="object"?d.completed:{};
+      parentHomeworkCloudReady=true;
+      try{
+        const code=String(parentStudentCode||"portal").trim().toUpperCase()||"portal";
+        const raw=JSON.parse(localStorage.getItem("tasvia-homework-completed")||"{}");
+        const db=raw&&typeof raw==="object"&&!Array.isArray(raw)?raw:{};
+        db[code]=parentHomeworkCloudMap; localStorage.setItem("tasvia-homework-completed",JSON.stringify(db));
+      }catch(_){}
+      try{filterParentHomework(parentHomeworkFilterMode,document.querySelector("#homeworkSection .hw-filter-btn.active"))}catch(_){}
+    }
+  }catch(e){console.warn("TASVIA homework cloud load failed",e)}
+}
+async function persistHomeworkCompletions(){
+  const ref=homeworkCompletionDocRef(); if(!ref)return false;
+  const code=String(parentStudentCode||"portal").trim().toUpperCase()||"portal";
+  try{
+    await ref.set({code,completed:parentHomeworkCloudMap,updatedAt:new Date().toISOString()},{merge:true});
+    parentHomeworkCloudReady=true;
+    return true;
+  }catch(e){console.warn("TASVIA homework cloud save failed",e);return false}
+}
+function isHomeworkCompleted(x){return !!homeworkDoneMap()[homeworkCompletionKey(x)]}
+async function toggleHomeworkCompleted(index){
+  const all=Array.isArray(V?.hw)?V.hw.filter(x=>x&&typeof x==="object"):[];
+  const now=Date.now(),active=all.filter(x=>{const tm=Date.parse(String(x.d||""));return Number.isFinite(tm)&&now-tm>=0&&now-tm<30*24*60*60*1000;}).sort((a,b)=>String(b.d).localeCompare(String(a.d)));
+  const x=active[index]; if(!x)return;
+  await toggleHomeworkCompletedByKey(homeworkCompletionKey(x));
+  render();
+  setTimeout(()=>{try{openParentSection("homeworkSection")}catch(_){}},0);
+}
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){const layer=document.getElementById("parentSectionViewer");if(layer&&layer.classList.contains("show"))closeParentSection()}});
+function closeParentSection(){
+  const layer=document.getElementById("parentSectionViewer");
+  const body=document.getElementById("parentSectionBody");
+  const moved=body&&body.firstElementChild;
+  if(moved&&parentSectionPlaceholder&&parentSectionPlaceholder.parentNode){
+    parentSectionPlaceholder.parentNode.insertBefore(moved,parentSectionPlaceholder);
+    parentSectionPlaceholder.remove();
+    parentSectionPlaceholder=null;
+  }
+  if(layer)layer.classList.remove("show");
+  document.body.classList.remove("parent-view-open");
+}
+// Parent portal compatibility helpers
+function parentFeePeriodPaymentInfo(feeRow,payments){
+  const rawMonth=String(feeRow?.m||"").trim();
+  const ym=/^(\d{4})-(\d{1,2})/.exec(rawMonth);
+  if(!ym)return {amount:0,hasDatedAssociation:false};
+  const year=Number(ym[1]),month=Number(ym[2]);
+  if(!year||month<1||month>12)return {amount:0,hasDatedAssociation:false};
+  const start=new Date(year,month-1,1);
+  const next=new Date(year,month,1);
+  const feeKey=rawMonth.slice(0,7);
+  let total=0,hasDatedAssociation=false;
+  (Array.isArray(payments)?payments:[]).forEach(p=>{
+    if(!p||typeof p!=="object")return;
+    const amount=Math.max(0,Number(p.a??p.amount??0)||0); if(!amount)return;
+    const rawDate=String(p.d||p.date||"").trim();
+    const paymentKey=String(p.m||"").slice(0,7);
+    const pd=/^\d{4}-\d{2}-\d{2}$/.test(rawDate)?new Date(rawDate+"T00:00:00"):null;
+    const explicit=paymentKey===feeKey;
+    const dated=!!pd&&pd>=start&&pd<=next;
+    if(explicit||dated){
+      total+=amount;
+      if(pd)hasDatedAssociation=true;
+    }
+  });
+  return {amount:total,hasDatedAssociation};
+}
+function parentActiveHomework(){
+  const all=Array.isArray(V?.hw)?V.hw.filter(x=>x&&typeof x==="object"):[];
+  const now=Date.now();
+  return all.filter(x=>{
+    const tm=Date.parse(String(x.d||""));
+    return Number.isFinite(tm)&&now-tm>=0&&now-tm<30*24*60*60*1000;
+  }).sort((a,b)=>String(b.d).localeCompare(String(a.d)));
+}
+async function toggleHomeworkCompletedByKey(key){
+  const active=parentActiveHomework();
+  const k=String(key||"");
+  const x=active.find(item=>homeworkCompletionKey(item)===k);
+  if(!x)return false;
+  const code=String(parentStudentCode||"portal").trim().toUpperCase()||"portal";
+  parentHomeworkCloudMap=parentHomeworkCloudMap&&typeof parentHomeworkCloudMap==="object"?parentHomeworkCloudMap:{};
+  if(parentHomeworkCloudMap[k])delete parentHomeworkCloudMap[k];
+  else parentHomeworkCloudMap[k]={completedAt:new Date().toISOString()};
+  try{
+    const raw=JSON.parse(localStorage.getItem("tasvia-homework-completed")||"{}");
+    const db=raw&&typeof raw==="object"&&!Array.isArray(raw)?raw:{};
+    db[code]=parentHomeworkCloudMap;
+    localStorage.setItem("tasvia-homework-completed",JSON.stringify(db));
+  }catch(_){}
+  const activeBtn=document.querySelector("#homeworkSection .hw-filter-btn.active");
+  filterParentHomework(parentHomeworkFilterMode,activeBtn);
+  const saved=await persistHomeworkCompletions();
+  if(!saved)console.warn("TASVIA: homework kept locally because cloud save failed");
+  return true;
+}
+document.addEventListener("click",function(e){
+  const btn=e.target.closest(".hw-complete-btn[data-hw-key]");
+  if(!btn)return;
+  e.preventDefault();
+  e.stopPropagation();
+  toggleHomeworkCompletedByKey(btn.getAttribute("data-hw-key"));
+});
+function renderParentHomeworkItems(items){
+  const list=Array.isArray(items)?items:[];
+  if(!list.length){
+    return '<div class="parent-empty">📚 '+esc(T[L].noHw||"No homework")+'</div>';
+  }
+  return list.map(x=>{
+    const done=isHomeworkCompleted(x),key=homeworkCompletionKey(x);
+    const keyArg=String(key).replace(/\\/g,"\\\\").replace(/'/g,"\\'");
+    return '<div class="hw hw-row '+(done?'hw-completed':'')+'" data-hw-status="'+(done?'completed':'pending')+'">'+
+      '<div><b>'+esc(dN(x.d))+'</b><div>'+esc(x.hw||x.text||'')+'</div>'+(x.note?'<div class="sub">'+esc(x.note)+'</div>':'')+'</div>'+
+      '<button type="button" class="hw-complete-btn '+(done?'gold':'')+'" data-hw-key="'+esc(key)+'">'+
+      (done?esc(T[L].markPending):esc(T[L].markCompleted))+'</button></div>';
+  }).join('');
+}
+function filterParentHomework(mode,btn){
+  const list=document.getElementById("parentHomeworkList"); if(!list)return;
+  parentHomeworkFilterMode=mode==="pending"||mode==="completed"?mode:"all";
+  const active=parentActiveHomework();
+  const completedCount=active.filter(isHomeworkCompleted).length;
+  const pendingCount=active.length-completedCount;
+  const filtered=mode==="all"?active:mode==="completed"?active.filter(isHomeworkCompleted):active.filter(x=>!isHomeworkCompleted(x));
+  list.innerHTML=renderParentHomeworkItems(filtered);
+  document.querySelectorAll(".hw-filter-btn").forEach(b=>b.classList.toggle("active",b===btn));
+  const count=document.querySelector("#homeworkSection .hw-count");
+  if(count){
+    count.textContent=(mode==="completed"?completedCount:pendingCount)+" "+(mode==="completed"?T[L].completed:T[L].pending);
+  }
+}
+function render(){
+  langs();const t=T[L],v=V;if(!v)return;
+  const c=v.centre||{},ph=String(c.phone||"").replace(/\D/g,""),ph91=ph.length===10?"91"+ph:ph;
+  if(v.left){msg(t.left);return}
+  document.title=v.name+" – TASVIA Academy";
+  document.getElementById("kid").innerHTML=`${v.photo&&/^data:image\/jpeg;base64,/.test(v.photo)?`<div class="ph"><img src="${v.photo}" alt=""></div>`:""}<div><h1>${esc(v.name)}</h1><p>${esc(t.cls(v.cls))}${v.board?" · "+esc(v.board):""} · ${esc(v.year||"")}</p></div>`;
+  const att= v.att && typeof v.att==="object" ? v.att : {};
+  const months=Object.keys(att).filter(m=>/^\d{4}-\d{2}$/.test(m)).sort().reverse(),cm=months[0],a=Object.assign({p:0,a:0},(cm&&att[cm]&&typeof att[cm]==="object")?att[cm]:{});
+  a.p=Number(a.p)||0;a.a=Number(a.a)||0;
+  const yr=Object.assign({p:0,a:0},v.yr&&typeof v.yr==="object"?v.yr:{});
+  yr.p=Number(yr.p)||0;yr.a=Number(yr.a)||0;
+  const tot=a.p+a.a,pc=tot?Math.round(a.p*100/tot):null;
+  const yt=yr.p+yr.a,ypc=yt?Math.round(yr.p*100/yt):null;
+  const quickTests=Array.isArray(v.tests)?v.tests.filter(x=>x&&typeof x==="object"):[];
+  const quickFees=Array.isArray(v.fees)?v.fees.filter(x=>x&&typeof x==="object"):[];
+  const quickHw=Array.isArray(v.hw)?v.hw.filter(x=>x&&typeof x==="object"):[];
+  const quickTestCount=quickTests.length;
+  const quickTestAvg=quickTests.length?Math.round(quickTests.reduce((sum,x)=>sum+(Number(x.x)?(Number(x.m)||0)*100/Number(x.x):0),0)/quickTests.length):null;
+  // Reconcile dashboard fee status from payment history as well as the stored fee snapshot.
+  // This prevents a stale parentView.fees value from showing "Fee Due" after staff has recorded payment.
+  const feeMonthKey=(s,fallbackDate)=>{
+    const raw=String(s||"").trim().toLowerCase();
+    if(/^\d{4}-\d{2}(?:-\d{2})?$/.test(raw))return "m"+raw.slice(5,7);
+    if(/^\\d{4}[-\\/]\\d{1,2}$/.test(raw)){const z=raw.split(/[-\\/]/);return "m"+String(Number(z[1])).padStart(2,"0");}
+    if(/^\\d{1,2}[-\\/]\\d{4}$/.test(raw)){const z=raw.split(/[-\\/]/);return "m"+String(Number(z[0])).padStart(2,"0");}
+    if(/^\\d{1,2}$/.test(raw))return "m"+String(Number(raw)).padStart(2,"0");
+    const names={jan:1,january:1,feb:2,february:2,mar:3,march:3,apr:4,april:4,may:5,jun:6,june:6,jul:7,july:7,aug:8,august:8,sep:9,sept:9,september:9,oct:10,october:10,nov:11,november:11,dec:12,december:12};
+    for(const [n,v] of Object.entries(names))if(raw.includes(n))return "m"+String(v).padStart(2,"0");
+    const m=raw.match(/(?:^|[^a-z])(?:0?([1-9])|1([0-2]))(?:[^a-z]|$)/);
+    if(m)return "m"+String(Number(m[1]||m[2])).padStart(2,"0");
+    return raw.replace(/[^a-z0-9]/g,"");
+  };
+  // Fee-period payment reconciliation:
+  // A payment counts for a fee period when its payment date falls between
+  // the first day of the fee month and the configured due date (inclusive).
+  // Example: Sep 1 → Oct 1; any valid payment dated Sep 1 through Oct 1
+  // is applied to the September fee row.
+  const feePeriodPaymentInfo=(feeRow,payments)=>{
+    const rawMonth=String(feeRow?.m||"").trim();
+    const ym=/^(\d{4})-(\d{1,2})/.exec(rawMonth);
+    if(!ym)return {amount:0,hasDatedAssociation:false};
+    const year=Number(ym[1]),month=Number(ym[2]);
+    if(!year||month<1||month>12)return {amount:0,hasDatedAssociation:false};
+    const start=new Date(year,month-1,1);
+    const configuredEnd=String(feeRow?.dueDate||"").trim();
+    const end=/^\d{4}-\d{2}-\d{2}$/.test(configuredEnd)
+      ? new Date(configuredEnd+"T00:00:00")
+      : new Date(year,month,1);
+    if(Number.isNaN(start.getTime())||Number.isNaN(end.getTime()))return {amount:0,hasDatedAssociation:false};
+
+    let datedTotal=0,undatedTotal=0,hasDatedAssociation=false;
+    const feeKey=feeMonthKey(feeRow.m);
+    (Array.isArray(payments)?payments:[]).forEach(p=>{
+      if(!p||typeof p!=="object")return;
+      const amount=Math.max(0,Number(p.a??p.amount??0)||0);
+      if(!amount)return;
+      const rawDate=String(p.d||p.date||p.paidOn||p.paymentDate||"").trim();
+      const pd=safeDate(rawDate);
+      const paymentKey=feeMonthKey(p.m||p.month);
+      const dateMatchesFeeMonth=pd && pd.getFullYear()===year && pd.getMonth()===month-1;
+      const associated=paymentKey===feeKey || dateMatchesFeeMonth || (pd && configuredEnd && rawDate.slice(0,10)===configuredEnd);
+      if(pd){
+        if(associated)hasDatedAssociation=true;
+        const day=new Date(pd.getFullYear(),pd.getMonth(),pd.getDate());
+        if(associated && day>=start&&day<=end)datedTotal+=amount;
+      }else if(paymentKey===feeKey){
+        undatedTotal+=amount;
+      }
+    });
+    return {amount:hasDatedAssociation?datedTotal:undatedTotal,hasDatedAssociation};
+  };
+  const quickPayments=Array.isArray(v.pays)?v.pays.filter(p=>p&&typeof p==="object"):[];
+  const quickFeeRows=quickFees.map(f=>{
+    const fee=Number(f.fee)||0,storedPaid=Number(f.paid)||0;
+    const paymentInfo=feePeriodPaymentInfo(f,quickPayments);
+    const paidBase=paymentInfo.hasDatedAssociation?paymentInfo.amount:Math.max(storedPaid,paymentInfo.amount);
+    return Object.assign({},f,{fee,paid:Math.min(fee,Math.max(0,paidBase)),dueDate:f.dueDate?String(f.dueDate):""});
+  });
+  const currentMonth=today().slice(0,7);
+  const currentFee=quickFeeRows.find(f=>String(f.m||"").slice(0,7)===currentMonth)||null;
+  const currentOutstanding=currentFee?Math.max(0,Number(currentFee.fee||0)-Number(currentFee.paid||0)):0;
+  const currentDueDate=currentFee&&currentFee.dueDate?String(currentFee.dueDate):"";
+  const currentFeePaid=!!currentFee && currentOutstanding<=0;
+  const currentFeeDue=!!currentFee && currentOutstanding>0 && (!currentDueDate || today()>=currentDueDate);
+  const quickFeePendingRows=currentFeeDue?[currentFee]:[];
+  const quickFeeDue=currentOutstanding;
+  const quickFeeOutstandingRows=currentFee&&currentOutstanding>0?[currentFee]:[];
+  const quickFeeDueDate=currentDueDate;
+  const quickFeePending=currentFeeDue;
+  const currentFeeStatus=currentFeePaid?"Paid":currentFeeDue?"Due":currentFee?"Not Paid":"Not Paid";
+  let h="";
+  h+=`<section class="parent-dashboard" aria-label="Parent dashboard summary">
+    <div class="parent-dashboard-head"><div><div class="parent-dashboard-title">📊 Parent Dashboard</div><div class="parent-dashboard-sub">${esc(v.year||"")} · ${esc(t.updated)} ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}</div></div></div>
+    <div class="parent-dashboard-grid">
+      <div class="parent-dashboard-item ${ypc!=null&&ypc>=75?"ok":ypc!=null&&ypc<60?"bad":""}"><b>${ypc!=null?ypc+"%":"–"}</b><small>Attendance</small></div>
+      <div class="parent-dashboard-item"><b>${quickTestAvg!=null?quickTestAvg+"%":"–"}</b><small>Test Average</small></div>
+      <div class="parent-dashboard-item fee-status-card ${currentFeeStatus==="Paid"?"ok":currentFeeStatus==="Due"?"bad":"gold"}"><small>Current Month Fee</small><b>${currentFeeStatus==="Due"?(currentOutstanding?rs(currentOutstanding):"DUE"):currentFeeStatus}</b><small>${currentFeeStatus==="Not Paid"&&currentDueDate?"Due Date: "+new Date(currentDueDate+"T00:00:00").toLocaleDateString(T[L].loc,{day:"2-digit",month:"short",year:"numeric"}):currentFeeStatus==="Due"?(currentDueDate?"Due Date: "+new Date(currentDueDate+"T00:00:00").toLocaleDateString(T[L].loc,{day:"2-digit",month:"short",year:"numeric"}):"Payment Due"):"Payment completed"}</small></div>
+    </div>
+  </section>`;
+  if(c.notice)h+=`<div class="card"><h2>📢 ${esc(t.notice)}</h2><div class="notice">${esc(c.notice)}</div></div>`;
+  // homework — show only the latest 7 days; keep older entries as a local backup.
+  const hwNow=Date.now(),hwWeek=30*24*60*60*1000;
+  const allHw=Array.isArray(v.hw)?v.hw.filter(x=>x&&typeof x==="object"):[];
+  const activeHw=allHw.filter(x=>{const tm=Date.parse(String(x.d||""));return Number.isFinite(tm)&&hwNow-tm>=0&&hwNow-tm<hwWeek;});
+  const archivedHw=allHw.filter(x=>{const tm=Date.parse(String(x.d||""));return Number.isFinite(tm)&&hwNow-tm>=hwWeek;});
+  try{const bk=JSON.parse(localStorage.getItem("tasvia-homework-backup")||"[]");const key=String(location.hash||"").replace("#","").trim().toUpperCase()||"portal";localStorage.setItem("tasvia-homework-backup",JSON.stringify([...bk.filter(z=>z.key!==key),{key,backedUpAt:new Date().toISOString(),homework:archivedHw}].slice(-20)))}catch(_){}
+  h+=`<div class="parent-action-grid" aria-label="Parent portal quick access">
+  <button type="button" class="parent-action" onclick="openParentSection('homeworkSection')"><span class="parent-action-icon">📚</span><span>Homework</span></button>
+  <button type="button" class="parent-action" onclick="openParentSection('bodmasSection')"><span class="parent-action-icon">🧮</span><span>BODMAS Practice</span></button>
+  <button type="button" class="parent-action" onclick="openParentSection('gkSection')"><span class="parent-action-icon">🧠</span><span>General Knowledge</span></button>
+  <button type="button" class="parent-action" onclick="openParentSection('currentAffairsCard')"><span class="parent-action-icon">📰</span><span>Current Affairs</span></button>
+  <button type="button" class="parent-action" onclick="openParentSection('attendanceSection')"><span class="parent-action-icon">📅</span><span>Attendance</span></button>
+  <button type="button" class="parent-action" onclick="openParentSection('testsSection')"><span class="parent-action-icon">📝</span><span>Tests</span></button>
+  <button type="button" class="parent-action" onclick="openParentSection('feesSection')"><span class="parent-action-icon">💳</span><span>Fees</span></button>
+  <button type="button" class="parent-action" onclick="openParentSection('contactSection')"><span class="parent-action-icon">📞</span><span>Contact</span></button>
+</div>`;
+  const homeworkList=activeHw.slice().sort((a,b)=>String(b.d).localeCompare(String(a.d)));
+  const completedCount=homeworkList.filter(isHomeworkCompleted).length;
+  const pendingCount=homeworkList.length-completedCount;
+  h+=`<div id="homeworkSection" class="card"><div class="hw-section-head"><div><h2>📚 ${esc(t.hw)}</h2><p class="sub" style="margin:3px 0 0">${esc(t.hwSchool)}</p></div><span class="hw-count">${pendingCount} ${esc(t.pending)}</span></div>`;
+  if(homeworkList.length){
+    const pct=Math.round(completedCount*100/homeworkList.length);
+    h+=`<div class="sub"><b>${completedCount} / ${homeworkList.length} ${esc(t.completedLabel)}</b> · ${pct}%</div><div class="bar"><i style="width:${pct}%"></i></div>`;
+    const hwMode=parentHomeworkFilterMode==="pending"||parentHomeworkFilterMode==="completed"?parentHomeworkFilterMode:"all";
+    const hwFiltered=hwMode==="all"?homeworkList:hwMode==="completed"?homeworkList.filter(isHomeworkCompleted):homeworkList.filter(x=>!isHomeworkCompleted(x));
+    h+=`<div class="hw-filter" role="tablist"><button type="button" class="hw-filter-btn ${hwMode==="all"?"active":""}" onclick="filterParentHomework('all',this)">${esc(t.all)}</button><button type="button" class="hw-filter-btn ${hwMode==="pending"?"active":""}" onclick="filterParentHomework('pending',this)">${esc(t.pending)}</button><button type="button" class="hw-filter-btn ${hwMode==="completed"?"active":""}" onclick="filterParentHomework('completed',this)">${esc(t.completed)}</button></div>`;
+    h+=`<div id="parentHomeworkList">${renderParentHomeworkItems(hwFiltered)}</div>`;
+  }else h+=`<div class="parent-empty">📚 ${esc(t.noHw)}</div>`;
+  h+=`</div>`;
+  // BODMAS practice
+  h+=buildBodmasCard();
+  h+=`<div id="gkSection" class="card gk-card">${buildDailyGK()}</div>`;
+  h+=`<div class="card ca-card" id="currentAffairsCard">${buildCurrentAffairsCard()}</div>`;
+  // attendance
+  h+=`<div id="attendanceSection" class="card"><h2>${esc(t.att)} · ${esc(cm?mN(cm):"")}</h2><div class="stats"><div><b class="ok">${a.p}</b><small>${esc(t.present)}</small></div><div><b class="bad">${a.a}</b><small>${esc(t.absent)}</small></div><div><b>${pc!=null?pc+"%":"–"}</b><small>${esc(t.pct)}</small></div></div>`;
+  if(pc!=null)h+=`<div class="bar"><i style="width:${pc}%"></i></div>`;
+  h+=`<p class="sub" style="margin:6px 0 0">${esc(t.year)}: ${ypc!=null?`${yr.p}/${yt} ${esc(t.days)} (${ypc}%)`:"–"}</p>`;
+  if(months.length>1)h+=`<div class="chips" style="margin-top:8px">${months.slice(1).map(m=>{const x=v.att[m],tt=x.p+x.a;return `<span>${esc(mN(m))}: ${tt?Math.round(x.p*100/tt)+"%":"–"}</span>`}).join("")}</div>`;
+  const absDays=Array.isArray(v.abs)?v.abs.filter(d=>d!==null&&d!==undefined&&d!==""):[];
+  h+=`<p class="sub" style="margin:10px 0 4px"><b>${esc(t.abs)}</b></p>`+(absDays.length?`<div class="chips">${absDays.map(d=>`<span class="bad">${esc(dN(d))}</span>`).join("")}</div>`:`<div class="parent-empty">📅 ${esc(t.none)} ✓</div>`)+`</div>`;
+  // tests
+  const tests=Array.isArray(v.tests)?v.tests.filter(x=>x&&typeof x==="object").map(x=>Object.assign({},x,{m:Number(x.m)||0,x:Number(x.x)||0,s:String(x.s||""),n:String(x.n||""),d:String(x.d||"")})):[];
+  h+=`<div id="testsSection" class="card"><h2>${esc(t.tests)}</h2>`;
+  if(tests.length){
+    const got=tests.reduce((s,x)=>s+x.m,0),mx=tests.reduce((s,x)=>s+x.x,0),op=mx?Math.round(got*100/mx):0;
+    h+=`<p class="sub" style="margin:0 0 6px">${esc(t.overall)}: <b style="color:var(--ink)">${op}%</b> · ${esc(t.grade)} <b class="gold">${grade(op)}</b></p><table><tr><th>${esc(t.test)}</th><th class="r">${esc(t.marks)}</th><th class="r">${esc(t.grade)}</th></tr>`+
+      tests.map(x=>{const p=x.x?Math.round(x.m*100/x.x):0;return `<tr><td>${esc(x.s)} – ${esc(x.n)}<br><span class="sub">${esc(dN(x.d))}</span></td><td class="r">${x.m}/${x.x}</td><td class="r"><b class="gold">${grade(p)}</b></td></tr>`}).join("")+`</table>`;
+  }else h+=`<div class="parent-empty">📝 ${esc(t.noTests)}</div>`;
+  h+=`</div>`;
+  // fees
+  const pays=Array.isArray(v.pays)?v.pays.filter(p=>p&&typeof p==="object").map(p=>{const d=String(p.d||"");const m=String(p.m||"")||(/^\d{4}-\d{2}/.test(d)?d.slice(0,7):"");return Object.assign({},p,{m,a:Number(p.a)||0,d,mode:String(p.mode||"")})}):[];
+  const fees=Array.isArray(v.fees)?v.fees.filter(f=>f&&typeof f==="object").map(f=>{
+    const fee=Number(f.fee)||0, recordedPaid=Number(f.paid)||0;
+    const paymentInfo=parentFeePeriodPaymentInfo(f,pays);
+    const paidFromPayments=paymentInfo.amount;
+    return Object.assign({},f,{m:String(f.m||""),fee,paid:Math.min(fee,Math.max(recordedPaid,paidFromPayments)),dueDate:f.dueDate?String(f.dueDate):""});
+  }):[];
+  // Final safety reconciliation: a fully paid fee must always render as Paid,
+  // regardless of the status string stored in the cached fee snapshot.
+  fees.forEach(f=>{
+    if(Number(f.paid||0)>=Number(f.fee||0))f.status="paid";
+  });
+  const feeDueRows=fees.filter(f=>{
+    const outstanding=Math.max(0,Number(f.fee||0)-Number(f.paid||0));
+    return outstanding>0 && !!f.dueDate && today()>=String(f.dueDate);
+  });
+  const feeDue=feeDueRows.length>0;
+  const feeDueAmount=feeDueRows.reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
+  if(fees.length||pays.length){
+    h+=`<div id="feesSection" class="card${feeDue?" fee-due":""}"><h2>${esc(t.fees)}</h2>${feeDue?`<div class="fee-alert"><span class="dot"></span><span>${esc(t.due)} · ${esc(L==="te"?"ఫీజు చెల్లింపు పెండింగ్‌లో ఉంది":L==="hi"?"फ़ीस भुगतान बाकी है":"Fee payment pending")}</span></div>`:""}`;
+    if(fees.length)h+=`<table><tr><th>${esc(t.month)}</th><th class="r">${esc(t.status)}</th></tr>`+fees.map(f=>{const outstanding=Math.max(0,Number(f.fee||0)-Number(f.paid||0));const pastDue=!!f.dueDate&&today()>String(f.dueDate);const onDue=!!f.dueDate&&today()===String(f.dueDate);const st=outstanding<=0?`<span class="tag ok">${esc(t.paid)}</span>`:!f.dueDate||today()<String(f.dueDate)?`<span class="tag">${esc(t.upcoming)} · ${esc(t.dueOn)} ${esc(dN(f.dueDate))}</span>`:pastDue?`<span class="tag bad">${esc(t.due)} ${rs(outstanding)}</span>`:`<span class="tag gold">${esc(t.due)} ${rs(outstanding)}</span>`;return `<tr><td>${esc(mN(f.m))}<br><span class="sub">${esc(t.dueOn)}: ${esc(dN(f.dueDate))}</span></td><td class="r">${st}</td></tr>`}).join("")+`</table>`;
+    if(pays.length)h+=`<p class="sub" style="margin:12px 0 4px"><b>${esc(t.pays)}</b></p><table>`+pays.map(p=>`<tr><td>${esc(dN(p.d))}<br><span class="sub">${esc(mN(p.m))}</span></td><td class="r">${rs(p.a)}<br><span class="sub">${esc(p.mode||"")}</span></td></tr>`).join("")+`</table>`;
+    h+=`</div>`;
+    if(feeDue&&feeDueAmount>0){const q="pa=badavathpremdas2@ybl&pn=TASVIA%20Academy&am="+encodeURIComponent(feeDueAmount.toFixed(2))+"&cu=INR&tn="+encodeURIComponent("Fee payment - "+(v.name||"Student"));const upi="upi://pay?"+q;h+=`<div class="acts" style="justify-content:center;margin-top:14px"><div style="width:100%;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--chip);text-align:center"><b>UPI Payment</b><div class="sub">Scan the QR code with any UPI app</div><img alt="UPI QR Code" style="width:220px;height:220px;display:block;margin:12px auto;background:#fff;padding:8px;border-radius:12px" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(upi)}"><div class="upi-id">UPI ID: <b>badavathpremdas2@ybl</b></div><button class="btn" type="button" style="border:0;cursor:pointer;margin-top:8px" onclick="navigator.clipboard&&navigator.clipboard.writeText('badavathpremdas2@ybl').then(()=>this.textContent='✓ UPI ID Copied').catch(()=>alert('UPI ID: badavathpremdas2@ybl'))">📋 Copy UPI ID</button><p class="sub" style="margin:10px 0 0">Amount: <b>${rs(feeDueAmount)}</b></p><p class="sub" style="margin:8px 0 0">If this page is open on your phone, use another phone to scan the QR, or copy the UPI ID and pay manually in your UPI app.</p><div class="acts" style="justify-content:center;margin-top:10px"><a class="btn gold" target="_blank" rel="noopener" href="https://wa.me/${esc(ph91)}?text=${encodeURIComponent("I have completed the TASVIA Academy fee payment for "+(v.name||"my child")+". I am sending the payment screenshot for verification. Please update the fee status after verification.")}">📸 ${esc(t.sendScreenshot)}</a></div></div></div>`;}
+  }
+  // contact
+  h+=`<div id="contactSection" class="card"><h2>${esc(t.contact)}</h2><p style="margin:0">${esc(c.name||"TASVIA Academy")}</p>${c.timings?`<p class="sub" style="margin:4px 0 0">${esc(t.timings)}: ${esc(c.timings)}</p>`:""}${c.address?`<p class="sub" style="margin:4px 0 0">${esc(c.address)}</p>`:""}
+    <div class="acts">${ph?`<a class="btn gold" href="tel:${esc(ph)}">📞 ${esc(t.call)}</a><a class="btn" target="_blank" rel="noopener" href="https://wa.me/${esc(ph91)}">💬 ${esc(t.wa)}</a>`:""}</div></div>`;
+  const alertsOn=("Notification" in window&&Notification.permission==="granted")||(function(){try{return localStorage.getItem("tasvia-parent-alerts")==="1"}catch(e){return false}})();
+  h+=`<div class="acts" style="justify-content:center">${alertsOn?`<span class="sub">${esc(t.alertsDone)}</span>`:`<button id="alertBtn" class="btn gold" style="border:0;font:inherit;font-weight:600;cursor:pointer">${esc(t.alertsOn)}</button>`}</div>`;
+  h+=`<p class="foot">${esc(t.updated)}: ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}<br>${esc(t.save)}</p>`;
+  document.getElementById("main").innerHTML=h;
+  renderBodmas();
+  // Use the same normalized fee rows as the Fees section. A payment recorded in
+  // Recent Payments must also clear the corresponding month's popup due amount.
+  const feePastDueForPopup=fees.filter(f=>f&&f.dueDate&&today()>String(f.dueDate))
+    .reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
+  if(feePastDueForPopup>0 && window.tasviaWelcomeEntered){
+    showFeeDuePopup(feePastDueForPopup);
+    feeDuePopupPending=false;
+  }
+  if(feeDue&&!feeDueScrollDone){
+    feeDueScrollDone=true;
+    setTimeout(()=>{const el=document.getElementById("feesSection");if(el)el.scrollIntoView({behavior:"smooth",block:"center"})},850);
+  }
+}
+
+let actx=null;
+
+function openFeeDueAfterWelcome(){
+  // Reconcile each month's fee against the payment history before showing
+  // any popup. This prevents a paid month from being treated as overdue.
+  const fs=Array.isArray(V?.fees)?V.fees.filter(f=>f&&typeof f==="object"):[];
+  const pays=Array.isArray(V?.pays)?V.pays.filter(p=>p&&typeof p==="object"):[];
+  const key=s=>{
+    const raw=String(s||"").trim().toLowerCase();
+    if(/^\d{4}-\d{2}(?:-\d{2})?$/.test(raw))return "m"+raw.slice(5,7);
+    const names={jan:1,january:1,feb:2,february:2,mar:3,march:3,apr:4,april:4,may:5,jun:6,june:6,jul:7,july:7,aug:8,august:8,sep:9,september:9,oct:10,october:10,nov:11,november:11,dec:12,december:12};
+    for(const [n,v] of Object.entries(names))if(raw.includes(n))return "m"+String(v).padStart(2,"0");
+    const m=raw.match(/(?:^|[^a-z])(?:0?([1-9])|1([0-2]))(?:[^a-z]|$)/);
+    return m?"m"+String(Number(m[1]||m[2])).padStart(2,"0"):raw.replace(/[^a-z0-9]/g,"");
+  };
+  const totals={};
+  pays.forEach(p=>{const k=key(p.m);if(k)totals[k]=(totals[k]||0)+Math.max(0,Number(p.a||0));});
+  const rows=fs.map(f=>{
+    const fee=Number(f.fee)||0;
+    const recorded=Number(f.paid)||0;
+    const fromPayments=totals[key(f.m)]||0;
+    return Object.assign({},f,{fee,paid:Math.min(fee,Math.max(recorded,fromPayments))});
+  });
+  const overdue=rows.filter(f=>f&&f.dueDate&&today()>String(f.dueDate));
+  const amt=overdue.reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
+  if(amt>0){
+    if(window.tasviaWelcomeEntered)showFeeDuePopup(amt);
+    else feeDuePopupPending=true;
+  }
+}
+
+function showFeeDuePopup(amount){
+  if(feeDuePopupShown)return;
+  feeDuePopupShown=true;
+  let el=document.getElementById("feePopup");
+  if(!el){el=document.createElement("div");el.id="feePopup";document.body.appendChild(el)}
+  const upi="upi://pay?pa=badavathpremdas2@ybl&pn=TASVIA%20Academy&am="+encodeURIComponent(Number(amount||0).toFixed(2))+"&cu=INR&tn="+encodeURIComponent("TASVIA Academy Fee");
+  const qr="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data="+encodeURIComponent(upi);
+  el.innerHTML='<div class="fee-popup-backdrop show" role="dialog" aria-modal="true" aria-label="Fee Due"><div class="fee-popup"><div class="due-amount">Fee Due: '+rs(amount)+'</div><p class="sub" style="margin:6px 0 10px">Please complete the fee payment.</p><img src="'+qr+'" alt="Fee payment QR code" style="width:190px;height:190px;border-radius:12px;background:#fff;padding:8px;display:block;margin:0 auto"><div class="upi-id">UPI ID: <b>badavathpremdas2@ybl</b></div><p class="sub" style="margin:7px 0 0">Amount: <b>'+rs(amount)+'</b></p><div class="acts" style="justify-content:center;margin-top:10px"><button type="button" class="btn gold fee-popup-skip" style="border:0;cursor:pointer">Pay Later</button></div></div></div>';
+  const backdrop=el.querySelector(".fee-popup-backdrop");
+  const closePopup=()=>{backdrop.classList.remove("show");setTimeout(()=>el.remove(),300)};
+  const skip=el.querySelector(".fee-popup-skip");
+  if(skip)skip.onclick=closePopup;
+  backdrop.onclick=(e)=>{if(e.target===backdrop)closePopup()};
+}
+
+/* BODMAS PRACTICE ENGINE */
+let bodmas={level:"easy",questions:[],index:0,score:0,answered:false};
+const BODMAS_LEVELS={
+  easy:[
+    ["8 + 6 × 2",20],["18 − 4 × 3",6],["24 ÷ 6 + 7",11],["15 − 9 ÷ 3",12],["5 × 3 + 4",19],
+    ["20 ÷ 5 × 2",8],["7 + 12 ÷ 4",10],["9 × 2 − 5",13],["16 ÷ 4 + 9",13],["6 + 5 × 3",21],
+    ["30 − 6 × 4",6],["4 × 7 − 8",20],["36 ÷ 6 + 5",11],["11 + 3 × 4",23],["28 ÷ 7 + 8",12]
+  ],
+  medium:[
+    ["(12 + 8) ÷ 4",5],["18 − (3 × 4)",6],["(7 + 5) × 2",24],["30 ÷ (2 + 3)",6],["8 + 4 × (6 − 2)",24],
+    ["(15 − 3) ÷ 4",3],["6 × (5 + 2) − 8",34],["42 ÷ 6 + 3 × 2",13],["(9 + 3) × 2 − 5",19],["50 − 6 × (4 + 2)",14],
+    ["(18 ÷ 3) + (5 × 2)",16],["7 × (8 − 3) + 4",39],["64 ÷ (4 + 4) + 6",14],["(20 + 4) ÷ 6 + 3",7],["9 + (12 ÷ 3) × 2",17]
+  ],
+  hard:[
+    ["18 + 6 ÷ (3 × 2)",19],["(24 − 8) ÷ 4 + 7",11],["5 × (12 − 4) ÷ 2",20],["72 ÷ (6 + 3) × 2",16],["(15 + 9) ÷ 3 − 2",6],
+    ["7 + 4 × (9 − 5) ÷ 2",15],["(36 ÷ 6) × (8 − 3)",30],["48 ÷ (2 × 4) + 9",15],["6 × (7 + 3) − 18 ÷ 3",54],["(40 − 16) ÷ 3 + 5",13],
+    ["8 + (24 ÷ 6) × (5 − 2)",20],["(9 + 7) × 3 − 20",28],["60 ÷ (5 + 5) + 4 × 3",18],["(32 − 8) ÷ 4 × 3 + 2",20],["54 ÷ (3 × 3) + 7 × 2",20]
+  ]
+};
+const BODMAS_LABELS={
+  en:{title:"BODMAS Practice",sub:"Basic Mathematics · Practice the correct order of operations",easy:"Easy",medium:"Medium",hard:"Hard",start:"Start Practice",question:"Question",score:"Score",check:"Check Answer",next:"Next Question",correct:"Correct! 🎉",wrong:"Not quite. Try again.",answer:"Correct answer",finished:"Practice complete!",again:"Practice Again",tip:"Remember: Brackets → Orders → Division/Multiplication → Addition/Subtraction."},
+  te:{title:"BODMAS ప్రాక్టీస్",sub:"ప్రాథమిక గణితం · గణిత క్రమాన్ని సరిగ్గా అభ్యసించండి",easy:"సులభం",medium:"మధ్యస్థం",hard:"కష్టం",start:"ప్రాక్టీస్ ప్రారంభించండి",question:"ప్రశ్న",score:"స్కోర్",check:"జవాబు తనిఖీ",next:"తదుపరి ప్రశ్న",correct:"సరైన జవాబు! 🎉",wrong:"ఇంకా సరైనది కాదు. మళ్లీ ప్రయత్నించండి.",answer:"సరైన జవాబు",finished:"ప్రాక్టీస్ పూర్తైంది!",again:"మళ్లీ ప్రాక్టీస్",tip:"గుర్తుంచుకోండి: Brackets → Orders → Division/Multiplication → Addition/Subtraction."},
+  hi:{title:"BODMAS अभ्यास",sub:"बुनियादी गणित · गणना का सही क्रम अभ्यास करें",easy:"आसान",medium:"मध्यम",hard:"कठिन",start:"अभ्यास शुरू करें",question:"प्रश्न",score:"स्कोर",check:"उत्तर जाँचें",next:"अगला प्रश्न",correct:"सही उत्तर! 🎉",wrong:"अभी सही नहीं। फिर कोशिश करें।",answer:"सही उत्तर",finished:"अभ्यास पूरा!",again:"फिर अभ्यास करें",tip:"याद रखें: Brackets → Orders → Division/Multiplication → Addition/Subtraction."}
+};
+function bodmasShuffle(a){
+  const x=a.slice();
+  for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}
+  return x;
+}
+function bodmasStart(level=bodmas.level){
+  bodmas={level,questions:bodmasShuffle(BODMAS_LEVELS[level]).slice(0,10),index:0,score:0,answered:false};
+  renderBodmas();
+}
+function buildBodmasCard(){
+  const t=BODMAS_LABELS[L]||BODMAS_LABELS.en;
+  return `<div id="bodmasSection" class="card bodmas-card"><div class="bodmas-head"><div><h2>🧠 ${esc(t.title)}</h2><p class="sub bodmas-sub">${esc(t.sub)}</p></div><div class="bodmas-icon">÷</div></div><div class="bodmas-levels">
+    <button class="bodmas-level ${bodmas.level==="easy"?"active":""}" type="button" onclick="bodmasStart('easy')">${esc(t.easy)}</button>
+    <button class="bodmas-level ${bodmas.level==="medium"?"active":""}" type="button" onclick="bodmasStart('medium')">${esc(t.medium)}</button>
+    <button class="bodmas-level ${bodmas.level==="hard"?"active":""}" type="button" onclick="bodmasStart('hard')">${esc(t.hard)}</button>
+  </div><div id="bodmasPanel"></div></div>`;
+}
+function renderBodmas(){
+  const p=document.getElementById("bodmasPanel");if(!p)return;
+  const t=BODMAS_LABELS[L]||BODMAS_LABELS.en;
+  if(!bodmas.questions.length){
+    p.innerHTML=`<div class="center" style="padding:20px 8px"><p class="sub">${esc(t.tip)}</p><button class="btn gold bodmas-next" type="button" onclick="bodmasStart()">${esc(t.start)}</button></div>`;
+    return;
+  }
+  if(bodmas.index>=bodmas.questions.length){
+    const pct=Math.round(bodmas.score*100/bodmas.questions.length);
+    p.innerHTML=`<div class="bodmas-result"><p class="sub">${esc(t.finished)}</p><strong>${bodmas.score}/${bodmas.questions.length}</strong><div class="bar"><i style="width:${pct}%"></i></div><p class="sub">${pct}%</p><button class="btn gold bodmas-next" type="button" onclick="bodmasStart()">${esc(t.again)}</button></div>`;
+    return;
+  }
+  const q=bodmas.questions[bodmas.index];
+  p.innerHTML=`<div class="bodmas-meta"><span>${esc(t.question)} ${bodmas.index+1}/${bodmas.questions.length}</span><span>${esc(t.score)}: <b>${bodmas.score}</b></span></div><div class="bodmas-progress"><i style="width:${Math.round(bodmas.index*100/bodmas.questions.length)}%"></i></div><div class="bodmas-question">${esc(q[0])} = ?</div><div class="bodmas-input-row"><input id="bodmasAnswer" class="bodmas-input" type="number" inputmode="numeric" autocomplete="off" aria-label="${esc(t.answer)}"><button id="bodmasCheck" class="bodmas-submit" type="button" onclick="bodmasCheck()">${esc(t.check)}</button></div><div id="bodmasFeedback" class="bodmas-feedback" aria-live="polite"></div>`;
+  const inp=document.getElementById("bodmasAnswer");if(inp)inp.addEventListener("keydown",e=>{if(e.key==="Enter")bodmasCheck()});setTimeout(()=>inp&&inp.focus(),0);
+}
+function bodmasCheck(){
+  if(bodmas.answered)return;
+  const inp=document.getElementById("bodmasAnswer"),fb=document.getElementById("bodmasFeedback"),btn=document.getElementById("bodmasCheck");
+  if(!inp||!fb)return;
+  const value=Number(inp.value);if(inp.value.trim()===""){inp.focus();return}
+  const answer=bodmas.questions[bodmas.index][1];
+  bodmas.answered=true;inp.disabled=true;if(btn)btn.disabled=true;
+  if(value===answer){bodmas.score++;fb.className="bodmas-feedback ok";fb.innerHTML=esc((BODMAS_LABELS[L]||BODMAS_LABELS.en).correct)}
+  else{fb.className="bodmas-feedback bad";fb.innerHTML=esc((BODMAS_LABELS[L]||BODMAS_LABELS.en).wrong)+"<br>"+esc((BODMAS_LABELS[L]||BODMAS_LABELS.en).answer)+": <b>"+answer+"</b>"}
+  const t=BODMAS_LABELS[L]||BODMAS_LABELS.en;
+  const next=document.createElement("button");next.className="btn gold bodmas-next";next.type="button";next.textContent=bodmas.index+1>=bodmas.questions.length?t.finished:t.next;
+  next.onclick=()=>{bodmas.index++;bodmas.answered=false;renderBodmas()};
+  document.getElementById("bodmasPanel").appendChild(next);
+}
+
+
+/* DAILY GENERAL KNOWLEDGE */
+const GK_DAILY=[["Which planet is known as the Red Planet?","Mars"],["What is the largest ocean on Earth?","Pacific Ocean"],["How many days are there in a leap year?","366 days"],["What is the capital of India?","New Delhi"],["Which gas do plants absorb for photosynthesis?","Carbon dioxide"],["How many continents are there?","7"],["Which is the largest mammal?","Blue whale"],["What is H2O commonly called?","Water"],["How many sides does a hexagon have?","6"],["Which is the nearest star to Earth?","The Sun"],["Which organ pumps blood?","Heart"],["What is the fastest land animal?","Cheetah"],["What is the smallest prime number?","2"],["What is the currency of Japan?","Yen"],["Which is the largest planet?","Jupiter"],["What is India's national bird?","Peacock"],["How many colors are traditionally in a rainbow?","7"],["Which festival is called the Festival of Lights?","Diwali"],["What is the largest continent?","Asia"],["Which ocean is between Africa and Australia?","Indian Ocean"]];
+let DAILY_GK=null;
+const GK_LABELS={en:{title:"Daily General Knowledge",sub:"5 new questions every day · Learn something new",today:"Today's Questions",answer:"Answer"},te:{title:"రోజువారీ జనరల్ నాలెడ్జ్",sub:"ప్రతి రోజు 5 కొత్త ప్రశ్నలు",today:"ఈ రోజు ప్రశ్నలు",answer:"జవాబు"},hi:{title:"दैनिक सामान्य ज्ञान",sub:"हर दिन 5 नए प्रश्न",today:"आज के प्रश्न",answer:"उत्तर"}};
+function localDateKey(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function gkDayIndex(){const d=new Date();return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000)}
+function buildDailyGK(){const t=GK_LABELS[L]||GK_LABELS.en,day=gkDayIndex(),now=Date.now(),week=7*24*60*60*1000,key=String(location.hash||"").replace("#","").trim().toUpperCase()||"portal",dateKey=localDateKey(),bkKey="tasvia-gk-backup";
+  const remote=DAILY_GK&&Array.isArray(DAILY_GK.questions)?DAILY_GK.questions.slice(0,5).map(x=>({q:String(x.q||""),a:String(x.a||"")})):[],fallback=()=>{const o=[];for(let i=0;i<5;i++){const x=GK_DAILY[(day*5+i)%GK_DAILY.length];o.push({q:x[0],a:x[1]})}return o};
+  let items=remote.length>=5?remote:fallback();
+  try{const raw=localStorage.getItem(bkKey),bk=raw?JSON.parse(raw):{},byKey=bk&&typeof bk==="object"&&!Array.isArray(bk)?bk:{},arr=Array.isArray(byKey[key])?byKey[key]:[],valid=arr.filter(z=>z&&z.date&&Array.isArray(z.questions)&&z.questions.length>=5&&now-Date.parse(z.date+"T00:00:00")<week),old=valid.find(z=>z.date===dateKey);if(old)items=old.questions.slice(0,5);byKey[key]=[...valid.filter(z=>z.date!==dateKey),{key,date:dateKey,backedUpAt:new Date().toISOString(),questions:items}].sort((a,b)=>String(a.date).localeCompare(String(b.date))).slice(-7);localStorage.setItem(bkKey,JSON.stringify(byKey))}catch(e){}
+  try{if(window.firebase&&window.FIREBASE_CONFIG&&key!=="portal")firebase.firestore().collection("gkBackup").doc(key+"_"+dateKey).set({code:key,date:dateKey,updated:now,name:(V&&V.name)||"",cls:(V&&V.cls)||"",questions:items},{merge:true}).catch(()=>{})}catch(e){}
+  let h='<div class="gk-head"><div><h2>🌍 '+esc(t.title)+'</h2><p class="sub" style="margin:3px 0 0">'+esc(t.sub)+'</p></div><div class="gk-icon">?</div></div><p class="sub" style="margin:10px 0 0"><b>'+esc(t.today)+' · '+esc(dateKey)+'</b></p><div class="gk-list">';items.forEach((x,i)=>h+='<div class="gk-q"><b>'+(i+1)+'. '+esc(x.q)+'</b><span class="gk-answer">'+esc(t.answer)+': '+esc(x.a)+'</span></div>');return h+'</div>'}
+async function loadDailyGK(){try{const r=await fetch('/daily-gk.json',{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);DAILY_GK=await r.json();const el=document.getElementById('gkSection');if(el)el.innerHTML=buildDailyGK()}catch(e){console.warn('Daily GK unavailable; using fallback',e)}}
+/* DAILY CURRENT AFFAIRS */
+let CURRENT_AFFAIRS=null;
+const CA_LABELS={en:{title:"Daily Current Affairs",sub:"Recent events · Learn what is happening around the world",today:"Today",quiz:"Quick Quiz"},te:{title:"రోజువారీ కరెంట్ అఫైర్స్",sub:"ఇటీవలి ముఖ్యమైన సంఘటనలు",today:"ఈ రోజు",quiz:"త్వరిత క్విజ్"},hi:{title:"दैनिक करेंट अफेयर्स",sub:"हाल की महत्वपूर्ण घटनाएँ",today:"आज",quiz:"त्वरित क्विज़"}};
+function buildCurrentAffairsCard(){
+  const t=CA_LABELS[L]||CA_LABELS.en;
+  if(!CURRENT_AFFAIRS)return '<div class="ca-head"><div><h2>📰 '+esc(t.title)+'</h2><p class="sub" style="margin:3px 0 0">'+esc(t.sub)+'</p></div><div class="ca-icon">📰</div></div><p class="sub" style="margin:10px 0 0">Loading today\'s current affairs…</p>';
+  let h='<div class="ca-head"><div><h2>📰 '+esc(t.title)+'</h2><p class="sub" style="margin:3px 0 0">'+esc(t.sub)+'</p></div><div class="ca-icon">📰</div></div><p class="sub" style="margin:10px 0 0"><b>'+esc(t.today)+' · '+esc(CURRENT_AFFAIRS.date||"")+'</b></p><div class="ca-list">';
+  const caItems=Array.isArray(CURRENT_AFFAIRS.items)?CURRENT_AFFAIRS.items.filter(x=>x&&typeof x==="object"):[];
+  const caQuiz=Array.isArray(CURRENT_AFFAIRS.quiz)?CURRENT_AFFAIRS.quiz.filter(q=>q&&typeof q==="object"):[];
+  caItems.forEach(x=>{h+='<div class="ca-item"><span class="ca-cat">'+esc(x.icon||"•")+' '+esc(x.category||"Current Affairs")+'</span><b>'+esc(x.title||"")+'</b><p>'+esc(x.text||"")+'</p>'+(x.source?'<span class="ca-source">Source: '+esc(x.source)+'</span>':"")+(x.url?'<a class="ca-explore" href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer">🔎 Explore / Read More</a>':"")+'</div>';});
+  if(caQuiz.length){h+='<div class="ca-quiz"><b>'+esc(t.quiz)+'</b>'+caQuiz.map((q,i)=>'<div class="ca-quiz-item"><b>'+String(i+1)+'. '+esc(q.q||"")+'</b><span>Answer: '+esc(q.a||"")+'</span></div>').join("")+'</div>';}
+  return h+'</div>';
+}
+async function loadCurrentAffairs(){try{const r=await fetch('/current-affairs.json',{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);CURRENT_AFFAIRS=await r.json();}catch(e){console.warn('Current affairs unavailable',e);CURRENT_AFFAIRS={date:new Date().toISOString().slice(0,10),items:[],quiz:[]};}}
+
+showWelcome();
+window.tasviaStudentLogin=function(e){
+  if(e)e.preventDefault();
+  const input=document.getElementById("studentLoginId"),msgEl=document.getElementById("studentLoginMsg");
+  const code=String(input?.value||"").trim().toUpperCase();
+  if(!/^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(code)){if(msgEl)msgEl.textContent="Enter a valid Student ID.";return false;}
+  if(msgEl)msgEl.textContent="Checking Student ID…";
+  window.tasviaLoginCode=code; parentStudentCode=code;
+  window.tasviaLoginStart(code);
+  return false;
+};
+(function start(){
+  const saved=load("tasvia-parent-lang");if(saved&&T[saved])L=saved;langs();
+  const qs=new URLSearchParams(location.search);
+  let code=qs.get("code")||((location.hash||"").replace(/^#/,""));
+  code=String(code||"").trim().toUpperCase();
+  if(code && !/^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(code))code="";
+  window.tasviaLoginStart=async function(loginCode){
+    code=String(loginCode||"").trim().toUpperCase().replace(/\s+/g,""); parentStudentCode=code;
+    if(!/^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(code)){const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Enter a valid Student ID.";showWelcome({keepInput:true,keepMessage:true});return}
+    await loadForStudentId(code);
+  };
+  if(code) window.tasviaLoginStart(code);
+})();
+async function loadForStudentId(code){
+
+  function fv(v){
+    if(!v||typeof v!=="object")return v;
+    if(Object.prototype.hasOwnProperty.call(v,"stringValue"))return v.stringValue;
+    if(Object.prototype.hasOwnProperty.call(v,"integerValue"))return Number(v.integerValue);
+    if(Object.prototype.hasOwnProperty.call(v,"doubleValue"))return Number(v.doubleValue);
+    if(Object.prototype.hasOwnProperty.call(v,"booleanValue"))return v.booleanValue;
+    if(Object.prototype.hasOwnProperty.call(v,"timestampValue"))return v.timestampValue;
+    if(Object.prototype.hasOwnProperty.call(v,"nullValue"))return null;
+    if(Object.prototype.hasOwnProperty.call(v,"arrayValue"))return (v.arrayValue.values||[]).map(fv);
+    if(Object.prototype.hasOwnProperty.call(v,"mapValue")){const o={};Object.entries(v.mapValue.fields||{}).forEach(([k,x])=>o[k]=fv(x));return o}
+    return v;
+  }
+  function restDoc(){
+    const url="https://firestore.googleapis.com/v1/projects/"+encodeURIComponent("tasvia-academy")+"/databases/(default)/documents/parentView/"+encodeURIComponent(code);
+    return fetch(url,{cache:"no-store"}).then(r=>{if(r.status===404)return null;if(!r.ok)throw new Error("Firestore HTTP "+r.status);return r.json()}).then(d=>{
+      if(!d)return null;
+      const o={};Object.entries(d.fields||{}).forEach(([k,v])=>o[k]=fv(v));return o;
+    });
+  }
+  function applyData(data){
+    if(!data||typeof data!=="object"){msg(T[L].invalid,true);return false}
+    const prev=V;V=data;
+    try{
+      const savedLang=load("tasvia-parent-lang"); if(!savedLang&&V.lang&&T[V.lang])L=V.lang;
+      render();
+    }catch(err){
+      console.error("TASVIA Parent Portal render/update error:",err);
+      // Retry once with a strict, JSON-safe normalization of Firestore data.
+      // This handles legacy student records containing unexpected field types.
+      try{
+        const raw=V&&typeof V==="object"?V:{},clean={};
+        clean.name=String(raw.name||"TASVIA Student");
+        clean.cls=String(raw.cls||"");
+        clean.board=String(raw.board||"");
+        clean.year=String(raw.year||"");
+        clean.updated=raw.updated||"";
+        clean.photo=typeof raw.photo==="string"&&/^data:image\/jpeg;base64,/.test(raw.photo)?raw.photo:"";
+        const rc=raw.centre&&typeof raw.centre==="object"?raw.centre:{};
+        clean.centre={name:String(rc.name||"TASVIA Academy"),phone:String(rc.phone||""),timings:String(rc.timings||""),address:String(rc.address||""),notice:String(rc.notice||"")};
+        clean.att={};
+        if(raw.att&&typeof raw.att==="object")Object.keys(raw.att).forEach(m=>{if(/^\d{4}-\d{2}$/.test(m)){const x=raw.att[m]&&typeof raw.att[m]==="object"?raw.att[m]:{};clean.att[m]={p:Number(x.p)||0,a:Number(x.a)||0}}});
+        const ry=raw.yr&&typeof raw.yr==="object"?raw.yr:{};
+        clean.yr={p:Number(ry.p)||0,a:Number(ry.a)||0};
+        clean.abs=Array.isArray(raw.abs)?raw.abs.map(x=>String(x??"")).filter(Boolean):[];
+        clean.tests=Array.isArray(raw.tests)?raw.tests.filter(x=>x&&typeof x==="object").map(x=>({s:String(x.s||""),n:String(x.n||""),m:Number(x.m)||0,x:Number(x.x)||0,d:String(x.d||"")})):[];
+        clean.fees=Array.isArray(raw.fees)?raw.fees.filter(x=>x&&typeof x==="object").map(x=>({m:String(x.m||""),fee:Number(x.fee)||0,paid:Number(x.paid)||0,dueDate:String(x.dueDate||"")})):[];
+        clean.pays=Array.isArray(raw.pays)?raw.pays.filter(x=>x&&typeof x==="object").map(x=>({m:String(x.m||""),a:Number(x.a)||0,d:String(x.d||""),mode:String(x.mode||"")})):[];
+        clean.hw=Array.isArray(raw.hw)?raw.hw.filter(x=>x&&typeof x==="object").map(x=>({d:String(x.d||""),subject:String(x.subject||""),hw:String(x.hw||x.text||""),note:String(x.note||"")})):[];
+        if(Array.isArray(raw.left)&&raw.left.length)clean.left=true;else if(raw.left)clean.left=String(raw.left);
+        V=clean;
+        render();
+      }catch(retryErr){
+        console.warn("TASVIA normalized render retry failed:",retryErr);
+      }
+      // Never leave a valid Student ID stuck on "Checking Student ID".
+      // If an optional dashboard section contains malformed data, render a
+      // minimal safe dashboard from the core student fields instead.
+      try{
+        const safe=V&&typeof V==="object"?V:{},cc=safe.centre&&typeof safe.centre==="object"?safe.centre:{};
+        const name=String(safe.name||"TASVIA Student"),cls=String(safe.cls||""),year=String(safe.year||"");
+        const att=safe.att&&typeof safe.att==="object"?safe.att:{};
+        const months=Object.keys(att).filter(m=>/^\d{4}-\d{2}$/.test(m)).sort().reverse();
+        const cm=months[0]||"",a=cm&&att[cm]&&typeof att[cm]==="object"?att[cm]:{};
+        const ap=Number(a.p)||0,aa=Number(a.a)||0,at=ap+aa,apc=at?Math.round(ap*100/at):null;
+        const yr=safe.yr&&typeof safe.yr==="object"?safe.yr:{},yp=Number(yr.p)||0,ya=Number(yr.a)||0,yt=yp+ya,ypc=yt?Math.round(yp*100/yt):null;
+        const tests=Array.isArray(safe.tests)?safe.tests.filter(x=>x&&typeof x==="object"):[];
+        const fees=Array.isArray(safe.fees)?safe.fees.filter(x=>x&&typeof x==="object"):[];
+        const pays=Array.isArray(safe.pays)?safe.pays.filter(x=>x&&typeof x==="object"):[];
+        const hw=Array.isArray(safe.hw)?safe.hw.filter(x=>x&&typeof x==="object"):[];
+        const currentMonth=today().slice(0,7);
+        const currentFee=fees.find(f=>String(f.m||"").slice(0,7)===currentMonth)||null;
+        const currentFeeAmount=currentFee?Number(currentFee.fee)||0:0;
+        const currentFeePaymentInfo=currentFee?parentFeePeriodPaymentInfo(currentFee,pays):{amount:0,hasDatedAssociation:false};
+        const currentFeePaid=currentFee?Math.min(
+          currentFeeAmount,
+          currentFeePaymentInfo.hasDatedAssociation
+            ? currentFeePaymentInfo.amount
+            : Math.max(Number(currentFee.paid)||0,currentFeePaymentInfo.amount)
+        ):0;
+        const currentFeeDue=Math.max(0,currentFeeAmount-currentFeePaid);
+        const currentFeeDate=currentFee&&currentFee.dueDate?String(currentFee.dueDate):"";
+        const currentFeeIsDue=!!currentFee&&currentFeeDue>0&&(!currentFeeDate||today()>=currentFeeDate);
+        const currentFeeStatus=currentFeeIsDue?"Due":currentFee&&currentFeeDue<=0?"Paid":currentFee?"Not Paid":"Not Paid";
+        const feeTotal=fees.reduce((n,f)=>n+(Number(f.fee)||0),0);
+        const feePaid=fees.reduce((n,f)=>n+(Number(f.paid)||0),0);
+        const testAvg=tests.length?Math.round(tests.reduce((n,x)=>n+(Number(x.x)?(Number(x.m)||0)*100/Number(x.x):0),0)/tests.length):null;
+        const phone=String(cc.phone||"").replace(/\D/g,"");
+        const escList=x=>esc(String(x||""));
+        document.title=name+" – TASVIA Academy";
+        document.getElementById("kid").innerHTML=(safe.photo&&/^data:image\/jpeg;base64,/.test(String(safe.photo))?'<div class="ph"><img src="'+safe.photo+'" alt=""></div>':"")+'<div><h1>'+esc(name)+'</h1><p>'+esc(cls)+(year?' · '+esc(year):'')+'</p></div>';
+        let safeHtml=
+          '<section class="parent-dashboard card"><div class="parent-dashboard-title">📊 Parent Dashboard</div><div class="parent-dashboard-grid">'+
+          '<div class="parent-dashboard-item"><b>'+(ypc!=null?ypc+"%":"–")+'</b><small>Attendance</small></div>'+
+          '<div class="parent-dashboard-item"><b>'+(testAvg!=null?testAvg+"%":"–")+'</b><small>Test Average</small></div>'+
+          '<div class="parent-dashboard-item '+(currentFeeIsDue?"bad":currentFeeStatus==="Paid"?"ok":"")+'"><b>'+(currentFeeStatus==="Due"?rs(currentFeeDue):currentFeeStatus)+'</b><small>Current Month · '+currentFeeStatus+(currentFeeDate?' · '+new Date(currentFeeDate+"T00:00:00").toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}):"")+'</small></div></div></section>'+
+          '<div class="parent-action-grid" aria-label="Parent portal quick access">'+
+          '<button type="button" class="parent-action" onclick="openParentSection(\'homeworkSection\')"><span class="parent-action-icon">📚</span><span>Homework</span></button>'+
+          '<button type="button" class="parent-action" onclick="openParentSection(\'attendanceSection\')"><span class="parent-action-icon">📅</span><span>Attendance</span></button>'+
+          '<button type="button" class="parent-action" onclick="openParentSection(\'feesSection\')"><span class="parent-action-icon">💳</span><span>Fee Details</span></button>'+
+          '<button type="button" class="parent-action" onclick="openParentSection(\'gkSection\')"><span class="parent-action-icon">🧠</span><span>General Knowledge</span></button>'+
+          '<button type="button" class="parent-action" onclick="openParentSection(\'currentAffairsCard\')"><span class="parent-action-icon">📰</span><span>Current Affairs</span></button>'+
+          '<button type="button" class="parent-action" onclick="openParentSection(\'testsSection\')"><span class="parent-action-icon">📝</span><span>Tests</span></button>'+
+          '<button type="button" class="parent-action" onclick="openParentSection(\'bodmasSection\')"><span class="parent-action-icon">🧮</span><span>BODMAS Practice</span></button>'+
+          '<button type="button" class="parent-action" onclick="openParentSection(\'contactSection\')"><span class="parent-action-icon">📞</span><span>Contact</span></button>'+
+          '</div>'+
+          '<div class="card gk-card" id="gkSection">'+(typeof buildDailyGK==="function"?buildDailyGK():"<h2>🌍 General Knowledge</h2><p class='sub'>Loading daily GK…</p>")+'</div>'+
+          '<div class="card ca-card" id="currentAffairsCard">'+(typeof buildCurrentAffairsCard==="function"?buildCurrentAffairsCard():"<h2>📰 Daily Current Affairs</h2><p class='sub'>Loading current affairs…</p>")+'</div>'+
+          '<div class="card" id="homeworkSection"><h2>📚 Homework</h2>'+
+          (hw.length?hw.slice(0,7).map(x=>'<div class="hw-item"><b>'+escList(x.d)+'</b><div>'+escList(x.hw)+'</div>'+(x.note?'<div class="sub">'+escList(x.note)+'</div>':"")+'</div>').join(""):'<div class="parent-empty">No homework added yet</div>')+
+          '</div>'+
+          buildBodmasCard()+
+          '<div class="card" id="attendanceSection"><h2>📅 Attendance'+(cm?' · '+esc(cm):"")+'</h2><div class="stats"><div><b class="ok">'+ap+'</b><small>Present</small></div><div><b class="bad">'+aa+'</b><small>Absent</small></div><div><b>'+(apc!=null?apc+"%":"–")+'</b><small>Attendance</small></div></div>'+
+          (safe.abs&&Array.isArray(safe.abs)&&safe.abs.length?'<p class="sub"><b>Recent absences:</b> '+safe.abs.slice(0,8).map(escList).join(", ")+'</p>':"")+
+          '</div>'+
+          '<div class="card" id="testsSection"><h2>📝 Test marks</h2>'+
+          (tests.length?'<table><tr><th>Test</th><th class="r">Marks</th></tr>'+tests.map(x=>'<tr><td>'+escList(x.s)+' – '+escList(x.n)+'</td><td class="r">'+(Number(x.m)||0)+'/'+(Number(x.x)||0)+'</td></tr>').join("")+'</table>':'<div class="parent-empty">No test marks yet</div>')+
+          '</div>'+
+          '<div class="card" id="feesSection"><h2>💳 Fees</h2>'+
+          (fees.length?'<table><tr><th>Month</th><th>Due Date</th><th class="r">Status</th></tr>'+fees.map(f=>{const due=Math.max(0,(Number(f.fee)||0)-(Number(f.paid)||0));const dd=f.dueDate?String(f.dueDate):"";let dateText="—";if(dd){const d=new Date(dd+"T00:00:00");dateText=Number.isNaN(d.getTime())?"—":d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});}return '<tr><td>'+escList(f.m)+'</td><td>'+dateText+'</td><td class="r">'+(due>0?'<span class="fee-due-badge">Due: '+rs(due)+'</span>':'<span class="tag ok">Paid</span>')+'</td></tr>'}).join("")+'</table>':'<div class="parent-empty">No fee records</div>')+
+          (pays.length?'<p class="sub"><b>Recent payments</b></p><table>'+pays.slice().reverse().slice(0,10).map(p=>'<tr><td>'+escList(p.d)+'<br><span class="sub">'+escList(p.m)+' · '+escList(p.mode)+'</span></td><td class="r">'+rs(p.a)+'</td></tr>').join("")+'</table>':"")+
+          '</div>'+
+          '<div class="card" id="contactSection"><h2>📞 '+esc(T[L].contact)+'</h2><p style="margin:0">'+esc(cc.name||"TASVIA Academy")+'</p>'+
+          (cc.address?'<p class="sub">'+esc(cc.address)+'</p>':"")+
+          (phone?'<div class="acts"><a class="btn gold" href="tel:'+esc(phone)+'">📞 '+esc(T[L].call)+'</a><a class="btn" target="_blank" rel="noopener" href="https://wa.me/91'+esc(phone.replace(/^91/,""))+'">💬 '+esc(T[L].wa)+'</a></div>':"")+
+          '</div>';
+        document.getElementById("main").innerHTML=safeHtml;
+        try{loadDailyGK()}catch(_){}
+        try{loadCurrentAffairs().then(()=>{const el=document.getElementById("currentAffairsCard");if(el)el.innerHTML=buildCurrentAffairsCard()}).catch(()=>{})}catch(_){}
+        try{const dueRows=fees.filter(f=>f&&f.dueDate&&today()>=String(f.dueDate)&&Math.max(0,Number(f.fee||0)-Number(f.paid||0))>0);const dueAmt=dueRows.reduce((n,f)=>n+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);if(dueAmt>0&&typeof showFeeDuePopup==="function")showFeeDuePopup(dueAmt)}catch(_){};
+      }catch(fallbackErr){
+        console.error("TASVIA Parent Portal safe dashboard error:",fallbackErr);
+        msg("Student data was found, but the dashboard could not be displayed. Please try again.",true);
+        return false;
+      }
+    }
+    if(CURRENT_AFFAIRS===null)loadCurrentAffairs().then(()=>{
+      try{
+        const el=document.getElementById("currentAffairsCard");
+        if(el)el.innerHTML=buildCurrentAffairsCard();
+      }catch(err){console.warn("Current affairs render",err)}
+    }).catch(()=>{});
+    loadDailyGK();
+    try{
+      if(prev)changes(prev,V).forEach(([a,b],i)=>setTimeout(()=>{try{alertParent(a,b)}catch(_){ }},i*1800));
+    }catch(err){console.warn("Parent update alerts",err)}
+    return true;
+  }
+
+  let loaded=false;
+  async function fetchJSON(url,ms){
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),ms);
+    try{
+      const r=await fetch(url,{cache:"no-store",signal:controller.signal,credentials:"same-origin"});
+      if(r.status===404)return null;
+      if(!r.ok)throw new Error("HTTP "+r.status);
+      return await r.json();
+    }finally{clearTimeout(timer)}
+  }
+  async function loadREST(){
+    // Use the Vercel API proxy first. The apk.tasviaacademy.com host may be
+    // served by a static host, while this API runs reliably on Vercel.
+    let d=null;
+    try{
+      const api=await fetchJSON("https://tasvia-app-two.vercel.app/api/parent?code="+encodeURIComponent(code),5000);
+      if(api && api.fields){
+        const o={};Object.entries(api.fields).forEach(([k,v])=>o[k]=fv(v));return o;
+      }
+      if(api===null)throw new Error("Student not found");
+    }catch(e){console.warn("TASVIA parent API unavailable; trying Firestore REST:",e)}
+    d=await fetchJSON("https://firestore.googleapis.com/v1/projects/tasvia-academy/databases/(default)/documents/parentView/"+encodeURIComponent(code),5000);
+    if(!d)return null;
+    const o={};Object.entries(d.fields||{}).forEach(([k,v])=>o[k]=fv(v));return o;
+  }
+  function finish(data){
+    if(loaded)return;
+    try{
+      if(!data){loaded=true;const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Student ID not found. Please check the ID or ask TASVIA staff to sync the parent portal.";showWelcome({keepInput:true,keepMessage:true});return}
+      if(applyData(data)){
+        loaded=true;
+        window.tasviaWelcomeEntered=true;
+        closeWelcome();
+      }
+    }catch(err){
+      console.error("TASVIA Parent Portal render error:",err);
+      loaded=true;
+      msg("TASVIA Parent Portal opened, but the student data could not be displayed. Please tap Try again.",true);
+    }
+  }
+  // Never leave a valid login stuck on "Checking Student ID".
+  // REST gets a short timeout; Firebase fallback gets its own timeout too.
+  const startupTimeout=setTimeout(()=>{
+    if(!loaded){
+      const m=document.getElementById("studentLoginMsg");
+      if(m)m.textContent="Taking too long to connect. Please tap Login again.";
+      showWelcome({keepInput:true,keepMessage:true});
+    }
+  },10000);
+  loadREST().then(data=>{
+    clearTimeout(startupTimeout);
+    if(!data){
+      if(!loaded){
+        const m=document.getElementById("studentLoginMsg");
+        if(m)m.textContent="Student ID not found. Please check the ID or ask TASVIA staff to sync the parent portal.";
+        showWelcome({keepInput:true,keepMessage:true});
+      }
+      return;
+    }
+    finish(data);
+    try{
+      if(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey){
+        if(!firebase.apps.length)firebase.initializeApp(window.FIREBASE_CONFIG);
+        const ref=firebase.firestore().doc("parentView/"+code);
+        loadHomeworkCompletions().catch(()=>{});
+        ref.onSnapshot(d=>{if(d.exists)applyData(d.data())},()=>{});
+      }
+    }catch(e){console.warn("TASVIA live sync unavailable:",e)}
+  }).catch(e=>{
+    console.error("TASVIA Parent Portal REST startup:",e);
+    try{
+      if(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey){
+        if(!firebase.apps.length)firebase.initializeApp(window.FIREBASE_CONFIG);
+        const ref=firebase.firestore().doc("parentView/"+code);
+        loadHomeworkCompletions().catch(()=>{});
+        let done=false;
+        const timer=setTimeout(()=>{
+          if(done||loaded)return;
+          done=true;
+          const m=document.getElementById("studentLoginMsg");
+          if(m)m.textContent="Could not connect to TASVIA. Please check your internet connection and tap Login again.";
+          showWelcome({keepInput:true,keepMessage:true});
+        },5000);
+        ref.get().then(snap=>{
+          if(done||loaded)return;
+          done=true; clearTimeout(timer);
+          finish(snap.exists?snap.data():null);
+        }).catch(()=>{
+          if(done||loaded)return;
+          done=true; clearTimeout(timer);
+          const m=document.getElementById("studentLoginMsg");
+          if(m)m.textContent="Could not connect to TASVIA. Please check your internet connection and tap Login again.";
+          showWelcome({keepInput:true,keepMessage:true});
+        });
+      }else{
+        clearTimeout(startupTimeout);
+        msg(T[L].offline,true);
+      }
+    }catch(err){
+      clearTimeout(startupTimeout);
+      console.error("TASVIA Parent Portal SDK fallback:",err);
+      msg(T[L].offline,true);
+    }
+  });
+}
+</script>
+</body>
 </html>
