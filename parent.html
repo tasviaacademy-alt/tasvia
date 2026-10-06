@@ -355,7 +355,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
 </div>
 
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script>
 (function(){
   try{
@@ -369,8 +369,8 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
 </script>
 <script>
 </script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js" defer></script>
-<script src="./firebase-config.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="./firebase-config.js"></script>
 <script>
 
 function closeWelcome(){const b=document.getElementById("welcomeBackdrop");if(b){b.classList.add("hide");b.setAttribute("aria-hidden","true");b.style.pointerEvents="none";}document.body.classList.remove("welcome-open");}
@@ -1189,6 +1189,14 @@ async function loadForStudentId(code){
     }
     return !!(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey);
   }
+  async function loadFirebaseDirect(){
+    try{
+      if(!(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey))return null;
+      if(!firebase.apps.length)firebase.initializeApp(window.FIREBASE_CONFIG);
+      const snap=await firebase.firestore().doc("parentView/"+code).get();
+      return snap.exists?snap.data():null;
+    }catch(e){console.warn("TASVIA direct Firebase login failed:",e);return null}
+  }
   async function loadREST(){
     // GitHub Pages has no server-side /api/parent endpoint.
     // Legacy parent links use #STUDENTID, so load the single matching
@@ -1229,26 +1237,24 @@ async function loadForStudentId(code){
       showWelcome({keepInput:true,keepMessage:true});
     }
   },10000);
-  loadREST().then(async data=>{
-    clearTimeout(startupTimeout);
-    if(!data){
-      // REST 404 can occur when the Firestore document is temporarily unavailable.
-      // Give the deferred Firebase SDK a chance before declaring the ID invalid.
-      try{
-        if(await waitForFirebase(8000)){
-          if(!firebase.apps.length)firebase.initializeApp(window.FIREBASE_CONFIG);
-          const snap=await firebase.firestore().doc("parentView/"+code).get();
-          if(snap.exists){finish(snap.data());return;}
-        }
-      }catch(e){console.warn("TASVIA Firebase document fallback:",e)}
-      if(!loaded){
+  loadFirebaseDirect().then(async firebaseData=>{
+    if(firebaseData){
+      clearTimeout(startupTimeout);
+      finish(firebaseData);
+      return;
+    }
+    try{
+      const data=await loadREST();
+      clearTimeout(startupTimeout);
+      if(data){finish(data);return;}
+    }catch(e){console.warn("TASVIA REST fallback:",e)}
+    if(!loaded){
         const m=document.getElementById("studentLoginMsg");
         if(m)m.textContent="Student ID not found. Please check the ID or ask TASVIA staff to sync the parent portal.";
         showWelcome({keepInput:true,keepMessage:true});
       }
       return;
     }
-    finish(data);
     try{
       if(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey){
         if(!firebase.apps.length)firebase.initializeApp(window.FIREBASE_CONFIG);
