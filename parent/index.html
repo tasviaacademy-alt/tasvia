@@ -730,11 +730,11 @@ async function loadForStudentId(code){
         clean.board=String(raw.board||"");
         clean.year=String(raw.year||"");
         clean.updated=raw.updated||"";
-        clean.photo=typeof raw.photo==="string"&&/^data:image\\/jpeg;base64,/.test(raw.photo)?raw.photo:"";
+        clean.photo=typeof raw.photo==="string"&&/^data:image\/jpeg;base64,/.test(raw.photo)?raw.photo:"";
         const rc=raw.centre&&typeof raw.centre==="object"?raw.centre:{};
         clean.centre={name:String(rc.name||"TASVIA Academy"),phone:String(rc.phone||""),timings:String(rc.timings||""),address:String(rc.address||""),notice:String(rc.notice||"")};
         clean.att={};
-        if(raw.att&&typeof raw.att==="object")Object.keys(raw.att).forEach(m=>{if(/^\\d{4}-\\d{2}$/.test(m)){const x=raw.att[m]&&typeof raw.att[m]==="object"?raw.att[m]:{};clean.att[m]={p:Number(x.p)||0,a:Number(x.a)||0}}});
+        if(raw.att&&typeof raw.att==="object")Object.keys(raw.att).forEach(m=>{if(/^\d{4}-\d{2}$/.test(m)){const x=raw.att[m]&&typeof raw.att[m]==="object"?raw.att[m]:{};clean.att[m]={p:Number(x.p)||0,a:Number(x.a)||0}}});
         const ry=raw.yr&&typeof raw.yr==="object"?raw.yr:{};
         clean.yr={p:Number(ry.p)||0,a:Number(ry.a)||0};
         clean.abs=Array.isArray(raw.abs)?raw.abs.map(x=>String(x??"")).filter(Boolean):[];
