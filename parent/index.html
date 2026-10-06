@@ -271,6 +271,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const rs=n=>"₹"+Number(n||0).toLocaleString("en-IN");
 const grade=p=>p>=90?"A+":p>=80?"A":p>=70?"B+":p>=60?"B":p>=50?"C":p>=35?"D":"E";
 let V=null,L="en",feeDueScrollDone=false,feeDuePopupShown=false,feeDuePopupPending=false;
+let parentHomeworkFilterMode="all";
 let parentStudentCode="";
 function homeworkCompletionKey(x){
   const raw=[x?.id,x?.d,x?.subject,x?.hw,x?.note].map(v=>String(v??"").trim()).join("|");
@@ -434,6 +435,7 @@ function renderParentHomeworkItems(items){
 }
 function filterParentHomework(mode,btn){
   const list=document.getElementById("parentHomeworkList"); if(!list)return;
+  parentHomeworkFilterMode=mode==="pending"||mode==="completed"?mode:"all";
   const active=parentActiveHomework();
   const completedCount=active.filter(isHomeworkCompleted).length;
   const pendingCount=active.length-completedCount;
@@ -568,8 +570,10 @@ function render(){
   if(homeworkList.length){
     const pct=Math.round(completedCount*100/homeworkList.length);
     h+=`<div class="sub"><b>${completedCount} / ${homeworkList.length} ${esc(t.completedLabel)}</b> · ${pct}%</div><div class="bar"><i style="width:${pct}%"></i></div>`;
-    h+=`<div class="hw-filter" role="tablist"><button type="button" class="hw-filter-btn active" onclick="filterParentHomework('all',this)">${esc(t.all)}</button><button type="button" class="hw-filter-btn" onclick="filterParentHomework('pending',this)">${esc(t.pending)}</button><button type="button" class="hw-filter-btn" onclick="filterParentHomework('completed',this)">${esc(t.completed)}</button></div>`;
-    h+=`<div id="parentHomeworkList">${renderParentHomeworkItems(homeworkList)}</div>`;
+    const hwMode=parentHomeworkFilterMode==="pending"||parentHomeworkFilterMode==="completed"?parentHomeworkFilterMode:"all";
+    const hwFiltered=hwMode==="all"?homeworkList:hwMode==="completed"?homeworkList.filter(isHomeworkCompleted):homeworkList.filter(x=>!isHomeworkCompleted(x));
+    h+=`<div class="hw-filter" role="tablist"><button type="button" class="hw-filter-btn ${hwMode==="all"?"active":""}" onclick="filterParentHomework('all',this)">${esc(t.all)}</button><button type="button" class="hw-filter-btn ${hwMode==="pending"?"active":""}" onclick="filterParentHomework('pending',this)">${esc(t.pending)}</button><button type="button" class="hw-filter-btn ${hwMode==="completed"?"active":""}" onclick="filterParentHomework('completed',this)">${esc(t.completed)}</button></div>`;
+    h+=`<div id="parentHomeworkList">${renderParentHomeworkItems(hwFiltered)}</div>`;
   }else h+=`<div class="parent-empty">📚 ${esc(t.noHw)}</div>`;
   h+=`</div>`;
   // BODMAS practice
