@@ -360,6 +360,51 @@ function closeParentSection(){
   if(layer)layer.classList.remove("show");
   document.body.classList.remove("parent-view-open");
 }
+// Parent portal compatibility helpers
+function parentFeePeriodPaymentInfo(feeRow,payments){
+  const rawMonth=String(feeRow?.m||"").trim();
+  const ym=/^(\d{4})-(\d{1,2})/.exec(rawMonth);
+  if(!ym)return {amount:0,hasDatedAssociation:false};
+  const year=Number(ym[1]),month=Number(ym[2]);
+  if(!year||month<1||month>12)return {amount:0,hasDatedAssociation:false};
+  const start=new Date(year,month-1,1);
+  const configuredEnd=String(feeRow?.dueDate||"").trim();
+  const end=/^\d{4}-\d{2}-\d{2}$/.test(configuredEnd)?new Date(configuredEnd+"T00:00:00"):new Date(year,month,1);
+  const feeKey=String(feeRow?.m||"").slice(0,7);
+  let datedTotal=0,undatedTotal=0,hasDatedAssociation=false;
+  (Array.isArray(payments)?payments:[]).forEach(p=>{
+    if(!p||typeof p!=="object")return;
+    const amount=Math.max(0,Number(p.a??p.amount??0)||0); if(!amount)return;
+    const rawDate=String(p.d||p.date||"").trim();
+    const paymentKey=String(p.m||"").slice(0,7);
+    const pd=/^\d{4}-\d{2}-\d{2}$/.test(rawDate)?new Date(rawDate+"T00:00:00"):null;
+    const dateMatchesFeeMonth=!!pd&&pd.getFullYear()===year&&pd.getMonth()===month-1;
+    const associated=paymentKey===feeKey||dateMatchesFeeMonth||(pd&&configuredEnd&&rawDate===configuredEnd);
+    if(pd){
+      if(associated)hasDatedAssociation=true;
+      if(associated&&pd>=start&&pd<=end)datedTotal+=amount;
+    }else if(paymentKey===feeKey)undatedTotal+=amount;
+  });
+  return {amount:hasDatedAssociation?datedTotal:undatedTotal,hasDatedAssociation};
+}
+function renderParentHomeworkItems(items){
+  const list=Array.isArray(items)?items:[];
+  return list.map((x,i)=>{
+    const done=isHomeworkCompleted(x);
+    return '<div class="hw hw-row '+(done?'hw-completed':'')+'" data-hw-status="'+(done?'completed':'pending')+'">'+
+      '<div><b>'+esc(dN(x.d))+'</b><div>'+esc(x.hw||x.text||'')+'</div>'+(x.note?'<div class="sub">'+esc(x.note)+'</div>':'')+'</div>'+
+      '<button type="button" class="hw-complete-btn '+(done?'gold':'')+'" onclick="toggleHomeworkCompleted('+i+')">'+
+      (done?esc(T[L].markPending):esc(T[L].markCompleted))+'</button></div>';
+  }).join('');
+}
+function filterParentHomework(mode,btn){
+  const list=document.getElementById("parentHomeworkList"); if(!list)return;
+  const all=Array.isArray(V?.hw)?V.hw.filter(x=>x&&typeof x==="object"):[], now=Date.now();
+  const active=all.filter(x=>{const tm=Date.parse(String(x.d||""));return Number.isFinite(tm)&&now-tm>=0&&now-tm<30*24*60*60*1000;}).sort((a,b)=>String(b.d).localeCompare(String(a.d)));
+  const filtered=mode==="all"?active:active.filter(x=>mode==="completed"?isHomeworkCompleted(x):!isHomeworkCompleted(x));
+  list.innerHTML=renderParentHomeworkItems(filtered);
+  document.querySelectorAll(".hw-filter-btn").forEach(b=>b.classList.toggle("active",b===btn));
+}
 function render(){
   langs();const t=T[L],v=V;if(!v)return;
   const c=v.centre||{},ph=String(c.phone||"").replace(/\D/g,""),ph91=ph.length===10?"91"+ph:ph;
@@ -796,7 +841,7 @@ async function loadForStudentId(code){
         const currentMonth=today().slice(0,7);
         const currentFee=fees.find(f=>String(f.m||"").slice(0,7)===currentMonth)||null;
         const currentFeeAmount=currentFee?Number(currentFee.fee)||0:0;
-        const currentFeePaymentInfo=currentFee?feePeriodPaymentInfo(currentFee,pays):{amount:0,hasDatedAssociation:false};
+        const currentFeePaymentInfo=currentFee?parentFeePeriodPaymentInfo(currentFee,pays):{amount:0,hasDatedAssociation:false};
         const currentFeePaid=currentFee?Math.min(
           currentFeeAmount,
           currentFeePaymentInfo.hasDatedAssociation
