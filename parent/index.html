@@ -212,7 +212,7 @@ td,th{padding:10px 5px}th{font-size:.78rem;text-transform:uppercase;letter-spaci
 .btn{border-radius:12px;padding:10px 17px;font-weight:700;box-shadow:0 4px 12px rgba(11,36,85,.08)}.btn.gold{background:#D7B64A;color:#172033}.acts{gap:9px}
 .notice{border-left:4px solid #D7B64A;background:#FBF8ED;border-radius:12px;padding:12px 14px}
 .parent-dashboard{border-radius:20px;background:linear-gradient(145deg,#fff,#F8FAFC);box-shadow:0 8px 24px rgba(16,24,40,.05)}
-.parent-dashboard-item{border-radius:14px;background:#F8FAFC;padding:12px 8px}.parent-dashboard-item b{font-size:1.3rem}
+.parent-dashboard-item{border-radius:14px;background:#F8FAFC;padding:12px 8px}.parent-dashboard-item b{font-size:1.3rem}.fee-status-card{min-height:82px;display:flex;flex-direction:column;justify-content:center;gap:2px}.fee-status-card b{font-weight:900;text-transform:uppercase}.fee-status-card small:first-child{font-weight:800;color:var(--ink)}
 .parent-action{border-radius:16px;min-height:82px;background:#fff;box-shadow:0 6px 18px rgba(16,24,40,.06);border-color:#E7EAF0}.parent-action:hover{box-shadow:0 10px 24px rgba(16,24,40,.10);transform:translateY(-1px)}
 .fee-due{border:1px solid rgba(180,35,24,.28);box-shadow:0 10px 30px rgba(180,35,24,.08)}
 .fee-due-badge{display:inline-block;padding:4px 10px;border-radius:999px;background:rgba(196,67,42,.12);color:var(--a);font-weight:800;animation:feeDuePulse 1.5s ease-in-out infinite}
@@ -435,7 +435,7 @@ function render(){
     <div class="parent-dashboard-grid">
       <div class="parent-dashboard-item ${ypc!=null&&ypc>=75?"ok":ypc!=null&&ypc<60?"bad":""}"><b>${ypc!=null?ypc+"%":"–"}</b><small>Attendance</small></div>
       <div class="parent-dashboard-item"><b>${quickTestAvg!=null?quickTestAvg+"%":"–"}</b><small>Test Average</small></div>
-      <div class="parent-dashboard-item ${currentFeeDue?"bad":currentFeePaid?"ok":""}"><b>${currentFeeStatus==="Due"?(currentOutstanding?rs(currentOutstanding):"Due"):currentFeeStatus}</b><small>${currentFeeStatus==="Due"?"Current Month · Due"+(currentDueDate?" · "+new Date(currentDueDate+"T00:00:00").toLocaleDateString(T[L].loc,{day:"2-digit",month:"short",year:"numeric"}):""):currentFeeStatus==="Paid"?"Current Month · Paid"+(currentDueDate?" · "+new Date(currentDueDate+"T00:00:00").toLocaleDateString(T[L].loc,{day:"2-digit",month:"short",year:"numeric"}):""):currentFeeStatus==="Not Paid"?"Current Month · Not Paid"+(currentDueDate?" · Due "+new Date(currentDueDate+"T00:00:00").toLocaleDateString(T[L].loc,{day:"2-digit",month:"short",year:"numeric"}):""):"Current Month"}</small></div>
+      <div class="parent-dashboard-item fee-status-card ${currentFeeStatus==="Paid"?"ok":currentFeeStatus==="Due"?"bad":"gold"}"><small>Current Month Fee</small><b>${currentFeeStatus==="Due"?(currentOutstanding?rs(currentOutstanding):"DUE"):currentFeeStatus}</b><small>${currentFeeStatus==="Not Paid"&&currentDueDate?"Due Date: "+new Date(currentDueDate+"T00:00:00").toLocaleDateString(T[L].loc,{day:"2-digit",month:"short",year:"numeric"}):currentFeeStatus==="Due"?(currentDueDate?"Due Date: "+new Date(currentDueDate+"T00:00:00").toLocaleDateString(T[L].loc,{day:"2-digit",month:"short",year:"numeric"}):"Payment Due"):"Payment completed"}</small></div>
     </div>
   </section>`;
   if(c.notice)h+=`<div class="card"><h2>📢 ${esc(t.notice)}</h2><div class="notice">${esc(c.notice)}</div></div>`;
@@ -791,7 +791,7 @@ async function loadForStudentId(code){
           '<section class="parent-dashboard card"><div class="parent-dashboard-title">📊 Parent Dashboard</div><div class="parent-dashboard-grid">'+
           '<div class="parent-dashboard-item"><b>'+(ypc!=null?ypc+"%":"–")+'</b><small>Attendance</small></div>'+
           '<div class="parent-dashboard-item"><b>'+(testAvg!=null?testAvg+"%":"–")+'</b><small>Test Average</small></div>'+
-          '<div class="parent-dashboard-item '+(currentFeeIsDue?"bad":currentFeeStatus==="Paid"?"ok":"")+'"><b>'+(currentFeeStatus==="Due"?rs(currentFeeDue):currentFeeStatus)+'</b><small>Current Month · '+currentFeeStatus+(currentFeeDate?' · '+new Date(currentFeeDate+"T00:00:00").toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}):"")+'</small></div></div></section>'+
+          '<div class="parent-dashboard-item fee-status-card '+(currentFeeIsDue?"bad":currentFeeStatus==="Paid"?"ok":"gold")+'"><small>Current Month Fee</small><b>'+(currentFeeStatus==="Due"?(currentFeeDue>0?rs(currentFeeDue):"DUE"):currentFeeStatus)+'</b><small>'+(currentFeeStatus==="Not Paid"&&currentFeeDate?"Due Date: "+new Date(currentFeeDate+"T00:00:00").toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}):currentFeeStatus==="Due"?(currentFeeDate?"Due Date: "+new Date(currentFeeDate+"T00:00:00").toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}):"Payment Due"):"Payment completed")+"</small></div></div></section>'+
           '<div class="parent-action-grid" aria-label="Parent portal quick access">'+
           '<button type="button" class="parent-action" onclick="openParentSection(\'homeworkSection\')"><span class="parent-action-icon">📚</span><span>Homework</span></button>'+
           '<button type="button" class="parent-action" onclick="openParentSection(\'attendanceSection\')"><span class="parent-action-icon">📅</span><span>Attendance</span></button>'+
