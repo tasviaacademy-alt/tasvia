@@ -886,16 +886,24 @@ window.tasviaStudentLogin=function(e){
 };
 (function start(){
   const saved=load("tasvia-parent-lang");if(saved&&T[saved])L=saved;langs();
-  const qs=new URLSearchParams(location.search);
-  let code=qs.get("code")||((location.hash||"").replace(/^#/,""));
-  code=String(code||"").trim().toUpperCase();
-  if(code && !/^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(code))code="";
+  const validCode=v=>{try{v=decodeURIComponent(String(v||"")).trim().toUpperCase()}catch(_){v=String(v||"").trim().toUpperCase()}return /^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(v)?v:""};
+  const urlCode=()=>{const qs=new URLSearchParams(location.search);return validCode(qs.get("code"))||validCode((location.hash||"").replace(/^#/,""));};
+  let code=urlCode();
+  let loginStarted=false;
   window.tasviaLoginStart=async function(loginCode){
-    code=String(loginCode||"").trim().toUpperCase().replace(/\s+/g,""); parentStudentCode=code;
-    if(!/^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(code)){const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Enter a valid Student ID.";showWelcome({keepInput:true,keepMessage:true});return}
+    code=validCode(loginCode)||"";
+    if(!code){const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Enter a valid Student ID.";showWelcome({keepInput:true,keepMessage:true});return}
+    if(loginStarted && window.tasviaLoginCode===code)return;
+    loginStarted=true;
+    window.tasviaLoginCode=code; parentStudentCode=code;
+    const input=document.getElementById("studentLoginId");if(input)input.value=code;
+    const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Opening Parent Portal…";
     await loadForStudentId(code);
   };
-  if(code) window.tasviaLoginStart(code);
+  const tryAutoLogin=()=>{const discovered=urlCode();if(discovered && (!loginStarted || discovered!==window.tasviaLoginCode))window.tasviaLoginStart(discovered);};
+  window.addEventListener("hashchange",tryAutoLogin);
+  if(code)window.tasviaLoginStart(code);
+  [150,600,1500,3000].forEach(ms=>setTimeout(tryAutoLogin,ms));
 })();
 async function loadForStudentId(code){
 
