@@ -714,7 +714,7 @@ async function loadForStudentId(code){
         const name=String(safe.name||"TASVIA Student"),cls=String(safe.cls||""),year=String(safe.year||"");
         const att=safe.att&&typeof safe.att==="object"?safe.att:{};
         const months=Object.keys(att).filter(m=>/^\\d{4}-\\d{2}$/.test(m)).sort().reverse();
-        const cm=months[0],a=cm&&att[cm]&&typeof att[cm}==="object"?att[cm]:{};
+        const cm=months[0],a=cm&&att[cm]&&typeof att[cm]==="object"?att[cm]:{};
         const ap=Number(a.p)||0,aa=Number(a.a)||0,at=ap+aa,apc=at?Math.round(ap*100/at):null;
         const yr=safe.yr&&typeof safe.yr==="object"?safe.yr:{},yp=Number(yr.p)||0,ya=Number(yr.a)||0,yt=yp+ya,ypc=yt?Math.round(yp*100/yt):null;
         const tests=Array.isArray(safe.tests)?safe.tests.filter(x=>x&&typeof x==="object"):[];
