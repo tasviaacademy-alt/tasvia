@@ -1061,15 +1061,15 @@ async function loadForStudentId(code){
     }finally{clearTimeout(timer)}
   }
   async function loadREST(){
-    // Prefer a same-origin Vercel API proxy. This avoids iOS/TWA connectivity and
-    // CORS edge cases when the device cannot reach Firestore REST directly.
+    // Use the Vercel API proxy first. The apk.tasviaacademy.com host may be
+    // served by a static host, while this API runs reliably on Vercel.
     let d=null;
     try{
-      const api=await fetchJSON("/api/parent?code="+encodeURIComponent(code),5000);
+      const api=await fetchJSON("https://tasvia-app-two.vercel.app/api/parent?code="+encodeURIComponent(code),5000);
       if(api && api.fields){
         const o={};Object.entries(api.fields).forEach(([k,v])=>o[k]=fv(v));return o;
       }
-      if(api===null)return null;
+      if(api===null)throw new Error("Student not found");
     }catch(e){console.warn("TASVIA parent API unavailable; trying Firestore REST:",e)}
     d=await fetchJSON("https://firestore.googleapis.com/v1/projects/tasvia-academy/databases/(default)/documents/parentView/"+encodeURIComponent(code),5000);
     if(!d)return null;
