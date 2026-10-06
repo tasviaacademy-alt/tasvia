@@ -370,7 +370,15 @@ function mN(v){try{const d=new Date(String(v).slice(0,7)+"-01T00:00:00");return 
 function dN(v){try{const d=new Date(String(v));return Number.isNaN(d.getTime())?String(v||""):d.toLocaleDateString((T[L]&&T[L].loc)||"en-IN",{day:"2-digit",month:"short",year:"numeric"});}catch(_){return String(v||"")}}
 function changes(a,b){return []}
 function alertParent(){return null}
-function openParentSection(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
+function openParentSection(id){
+  const el=document.getElementById(String(id||""));
+  if(!el)return false;
+  el.style.display="block";
+  el.hidden=false;
+  el.setAttribute("aria-hidden","false");
+  requestAnimationFrame(()=>el.scrollIntoView({behavior:"smooth",block:"start"}));
+  return false;
+}
 
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const rs=n=>"₹"+Number(n||0).toLocaleString("en-IN");
@@ -440,6 +448,26 @@ async function toggleHomeworkCompleted(index){
   setTimeout(()=>{try{openParentSection("homeworkSection")}catch(_){}},0);
 }
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){const layer=document.getElementById("parentSectionViewer");if(layer&&layer.classList.contains("show"))closeParentSection()}});
+document.addEventListener("click",function(e){
+  const alertBtn=e.target.closest("#alertBtn");
+  if(alertBtn){
+    e.preventDefault();
+    try{
+      if("Notification" in window){
+        Notification.requestPermission().then(p=>{
+          try{localStorage.setItem("tasvia-parent-alerts",p==="granted"?"1":"0")}catch(_){}
+          if(p==="granted"){alertBtn.textContent=T[L].alertsDone||"Alerts enabled";alertBtn.disabled=true}
+          else alertBtn.textContent="Notifications not enabled";
+        });
+      }else{
+        try{localStorage.setItem("tasvia-parent-alerts","1")}catch(_){}
+        alertBtn.textContent=T[L].alertsDone||"Alerts enabled";
+      }
+    }catch(_){}
+    return;
+  }
+});
+
 function closeParentSection(){
   const layer=document.getElementById("parentSectionViewer");
   const body=document.getElementById("parentSectionBody");
