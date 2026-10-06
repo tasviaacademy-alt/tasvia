@@ -377,7 +377,7 @@ let parentHomeworkCloudReady=false;
 function homeworkDoneMap(){
   const code=String(parentStudentCode||"portal").trim().toUpperCase()||"portal";
   const cloud=parentHomeworkCloudMap&&typeof parentHomeworkCloudMap==="object"?parentHomeworkCloudMap:{};
-  if(parentHomeworkCloudReady)return cloud;
+  if(Object.keys(cloud).length)return cloud;
   try{const raw=JSON.parse(localStorage.getItem("tasvia-homework-completed")||"{}");return raw&&typeof raw==="object"&&!Array.isArray(raw)?(raw[code]||{}):{}}catch(_){return {}}
 }
 function homeworkCompletionDocRef(){
@@ -405,10 +405,6 @@ async function loadHomeworkCompletions(){
         db[code]=parentHomeworkCloudMap; localStorage.setItem("tasvia-homework-completed",JSON.stringify(db));
       }catch(_){}
       try{filterParentHomework(parentHomeworkFilterMode,document.querySelector("#homeworkSection .hw-filter-btn.active"))}catch(_){}
-    }else{
-      parentHomeworkCloudMap={};
-      parentHomeworkCloudReady=true;
-      try{localStorage.setItem("tasvia-homework-completed",JSON.stringify(Object.assign({},JSON.parse(localStorage.getItem("tasvia-homework-completed")||"{}"),{[String(parentStudentCode||"portal").trim().toUpperCase()||"PORTAL"]: {}})))}catch(_){}
     }
   }catch(e){console.warn("TASVIA homework cloud load failed",e)}
 }
