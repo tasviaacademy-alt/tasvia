@@ -495,6 +495,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
       if(msg) msg.textContent="Unable to load this student record. Please check internet and try again.";
     });
   }
+  window.__tasviaRescueStart=start;
   document.addEventListener("DOMContentLoaded",function(){
     var qs=new URLSearchParams(location.search);
     var code=valid(qs.get("code"))||valid(String(location.hash||"").replace(/^#/,""));
