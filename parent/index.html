@@ -615,6 +615,11 @@ function render(){
     const paidFromPayments=paymentInfo.amount;
     return Object.assign({},f,{m:String(f.m||""),fee,paid:Math.min(fee,Math.max(recordedPaid,paidFromPayments)),dueDate:f.dueDate?String(f.dueDate):""});
   }):[];
+  // Final safety reconciliation: a fully paid fee must always render as Paid,
+  // regardless of the status string stored in the cached fee snapshot.
+  fees.forEach(f=>{
+    if(Number(f.paid||0)>=Number(f.fee||0))f.status="paid";
+  });
   const feeDueRows=fees.filter(f=>{
     const outstanding=Math.max(0,Number(f.fee||0)-Number(f.paid||0));
     return outstanding>0 && !!f.dueDate && today()>=String(f.dueDate);
