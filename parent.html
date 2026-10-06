@@ -396,36 +396,86 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     var name=String(d.name||"TASVIA Student");
     var cls=String(d.cls||"");
     var year=String(d.year||"");
+    var photo=(typeof d.photo==="string"&&/^data:image\/jpeg;base64,/.test(d.photo))?d.photo:"";
     var att=d.att&&typeof d.att==="object"?d.att:{};
     var months=Object.keys(att).filter(function(k){return /^\d{4}-\d{2}$/.test(k);}).sort().reverse();
-    var cm=months[0]||"",a=att[cm]&&typeof att[cm]==="object"?att[cm]:{};
-    var p=Number(a.p)||0,ab=Number(a.a)||0,total=p+ab,pct=total?Math.round(p*100/total):0;
-    var yr=d.yr&&typeof d.yr==="object"?d.yr:{},yp=Number(yr.p)||0,ya=Number(yr.a)||0,yt=yp+ya,ypct=yt?Math.round(yp*100/yt):0;
+    var cm=months[0]||"";
+    var a=att[cm]&&typeof att[cm]==="object"?att[cm]:{};
+    var mp=Number(a.p)||0,ma=Number(a.a)||0,mt=mp+ma,mpct=mt?Math.round(mp*100/mt):0;
+    var yr=d.yr&&typeof d.yr==="object"?d.yr:{};
+    var yp=Number(yr.p)||0,ya=Number(yr.a)||0,yt=yp+ya,ypct=yt?Math.round(yp*100/yt):0;
     var tests=Array.isArray(d.tests)?d.tests:[];
     var fees=Array.isArray(d.fees)?d.fees:[];
     var hw=Array.isArray(d.hw)?d.hw:[];
-    var pays=Array.isArray(d.pays)?d.pays:[];
     var current=new Date().toISOString().slice(0,7);
     var fee=fees.find(function(x){return String(x&&x.m||"").slice(0,7)===current;});
     var feeAmt=fee?Number(fee.fee)||0:0,paid=fee?Number(fee.paid)||0:0,due=Math.max(0,feeAmt-paid);
-    var feeStatus=fee?(due>0?"Due":"Paid"):"—";
-    var testRows=tests.slice(0,8).map(function(x){return "<tr><td>"+esc(x.s||"Test")+" "+esc(x.n||"")+"</td><td>"+Number(x.m)||0+"/"+Number(x.x)||0+"</td></tr>";}).join("");
-    var feeRows=fees.slice(0,8).map(function(x){var f=Math.max(0,(Number(x.fee)||0)-(Number(x.paid)||0));return "<tr><td>"+esc(x.m||"")+"</td><td>"+(f?"<b class='due'>Due "+money(f)+"</b>":"<b class='paid'>Paid</b>")+"</td></tr>";}).join("");
-    var hwRows=hw.slice(0,7).map(function(x){return "<div class='hw'><b>"+esc(x.d||"")+"</b><div>"+esc(x.hw||x.text||"")+"</div></div>";}).join("");
+    var feePaid=!!fee&&due<=0;
+    var feeLabel=feePaid?"Paid":"Not Paid";
+    var feeDate=fee&&fee.m?String(fee.m):new Date().toLocaleDateString("en-IN",{month:"short",year:"numeric"});
+    var feeClass=feePaid?"paid":"notpaid";
+    var testRows=tests.slice(0,12).map(function(x){
+      var marks=Number(x.m)||0,max=Number(x.x)||0;
+      return "<tr><td>"+esc(x.s||"Test")+" "+esc(x.n||"")+"</td><td>"+marks+(max?"/"+max:"")+"</td></tr>";
+    }).join("");
+    var feeRows=fees.slice(0,12).map(function(x){
+      var f=Math.max(0,(Number(x.fee)||0)-(Number(x.paid)||0));
+      return "<tr><td>"+esc(x.m||"")+"</td><td>"+(f?"<b class='due'>Due "+money(f)+"</b>":"<b class='paid'>Paid</b>")+"</td></tr>";
+    }).join("");
+    var hwRows=hw.slice(0,10).map(function(x){
+      return "<div class='hw-row'><b>"+esc(x.d||"")+"</b><div>"+esc(x.hw||x.text||"")+"</div></div>";
+    }).join("");
+    var photoHtml=photo?'<div class="dash-photo"><img src="'+photo+'" alt="'+esc(name)+'"></div>':'<div class="dash-photo dash-photo-fallback">👤</div>';
+    var testAvg="—";
+    if(tests.length){
+      var vals=tests.map(function(x){return {m:Number(x.m)||0,x:Number(x.x)||0};}).filter(function(x){return x.x>0;});
+      if(vals.length)testAvg=Math.round(vals.reduce(function(s,x){return s+(x.m/x.x)*100;},0)/vals.length)+"%";
+    }
     document.title=name+" - TASVIA Academy";
-    document.body.innerHTML='<style>'+
-      'body{margin:0;background:#edf1ee;color:#15201c;font:16px/1.55 -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif}'+
-      '.rescue-wrap{max-width:720px;margin:auto;padding:0 14px 40px}.rescue-head{background:#0b2455;color:#fff;padding:24px 18px 28px}.rescue-head b{color:#f2ac10}.rescue-name{font-size:27px;font-weight:800;margin:12px 0 2px}.rescue-sub{opacity:.85}.rescue-card{background:#fff;border:1px solid #d3dcd7;border-radius:16px;padding:16px;margin-top:14px;box-shadow:0 4px 16px rgba(11,36,85,.06)}'+
-      '.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:#eef2ef;border-radius:12px;padding:12px;text-align:center}.stat b{display:block;font-size:24px}.stat small{color:#5b6a63}.paid{color:#2b8a55}.due{color:#c4432a}.hw{border-left:4px solid #f2ac10;padding:5px 0 5px 11px;margin:10px 0}.empty{color:#5b6a63}.back{display:inline-block;margin-top:18px;padding:10px 15px;border-radius:10px;background:#f2ac10;color:#1a1405;text-decoration:none;font-weight:700}table{width:100%;border-collapse:collapse}td{padding:8px 4px;border-bottom:1px solid #d3dcd7}td:last-child{text-align:right}'+
-      '</style><header class="rescue-head"><div><b>TASVIA</b> ACADEMY</div><div class="rescue-name">'+esc(name)+'</div><div class="rescue-sub">'+esc(cls)+(year?" · "+esc(year):"")+'</div></header>'+
-      '<main class="rescue-wrap">'+
-      card("📊 Parent Dashboard",'<div class="stats"><div class="stat"><b>'+ypct+'%</b><small>Attendance</small></div><div class="stat"><b>'+tests.length+'</b><small>Tests</small></div><div class="stat"><b class="'+(feeStatus==="Due"?"due":"paid")+'">'+esc(feeStatus==="Due"?money(due):feeStatus)+'</b><small>Current Fee</small></div></div>')+
-      card("📅 Attendance",'<div class="stats"><div class="stat"><b>'+p+'</b><small>Present</small></div><div class="stat"><b>'+ab+'</b><small>Absent</small></div><div class="stat"><b>'+pct+'%</b><small>'+esc(cm||"Latest month")+'</small></div></div>')+
-      card("📚 Homework",hwRows||'<div class="empty">No homework added yet.</div>')+
-      card("📝 Test Marks",testRows?'<table>'+testRows+'</table>':'<div class="empty">No test marks yet.</div>')+
-      card("💳 Fees",feeRows?'<table>'+feeRows+'</table>':'<div class="empty">No fee records.</div>')+
-      '<a class="back" href="'+location.pathname+'">Student ID Login</a>'+
-      '</main>';
+    document.body.innerHTML=
+      '<style>'+
+      'body{margin:0;background:#f5f6f8;color:#182136;font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}'+
+      '.dash-head{background:#102858;color:#fff;padding:38px 28px 42px;min-height:235px;box-sizing:border-box}'+
+      '.dash-head-inner{max-width:680px;margin:auto;display:flex;align-items:center;gap:26px}'+
+      '.dash-photo{width:112px;height:138px;border-radius:25px;overflow:hidden;border:4px solid #d7b44c;flex:0 0 auto;background:#eef1f5;display:grid;place-items:center;font-size:40px;color:#7a8493}'+
+      '.dash-photo img{width:100%;height:100%;object-fit:cover;display:block}'+
+      '.dash-name{font-size:48px;line-height:1.02;font-weight:800;letter-spacing:.5px;margin:0;text-transform:uppercase}'+
+      '.dash-class{font-size:25px;color:#bfc9d8;margin-top:13px}'+
+      '.dash-main{max-width:680px;margin:-3px auto 0;padding:0 28px 50px;box-sizing:border-box}'+
+      '.dash-summary{background:#102858;color:#fff;border:2px solid #263d68;border-radius:28px;padding:25px 30px 31px;box-shadow:0 15px 32px rgba(16,40,88,.18)}'+
+      '.dash-title{font-size:28px;font-weight:800;margin:0 0 24px;display:flex;align-items:center;gap:10px}'+
+      '.dash-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}'+
+      '.dash-stat{background:#263b63;border:1px solid rgba(255,255,255,.14);border-radius:22px;min-height:126px;padding:18px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}'+
+      '.dash-stat b{font-size:31px;line-height:1.1;font-weight:800}.dash-stat small{font-size:18px;color:#c2cad8;margin-top:10px}.dash-stat .notpaid{font-size:29px}.dash-stat .paid{color:#55c78a}.dash-stat .notpaid{color:#ffbf56}'+
+      '.dash-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:26px}'+
+      '.action-detail{background:#fff;border:1px solid #e0e3e8;border-radius:24px;box-shadow:0 5px 20px rgba(20,35,60,.06);overflow:hidden}'+
+      '.action-detail[open]{border-color:#e2c77d;box-shadow:0 8px 25px rgba(20,35,60,.10)}'+
+      '.action-summary{list-style:none;cursor:pointer;min-height:104px;padding:20px 20px;display:flex;align-items:center;gap:15px;font-size:24px;font-weight:750;color:#182136;box-sizing:border-box}'+
+      '.action-summary::-webkit-details-marker{display:none}.action-summary:after{content:"›";margin-left:auto;color:#c9a654;font-size:40px;font-weight:400;line-height:1}'+
+      '.action-icon{width:64px;height:64px;border-radius:20px;background:#f1f3f7;display:grid;place-items:center;font-size:34px;flex:0 0 auto}'+
+      '.action-content{border-top:1px solid #edf0f4;padding:18px 20px 22px;color:#30394a;background:#fbfcfd}'+
+      '.action-content table{width:100%;border-collapse:collapse}.action-content td{padding:9px 3px;border-bottom:1px solid #e4e7eb}.action-content td:last-child{text-align:right;white-space:nowrap}.action-content .paid{color:#2b8a55}.action-content .due{color:#c4432a}'+
+      '.hw-row{padding:10px 0;border-bottom:1px solid #e4e7eb}.hw-row b{display:block;font-size:13px;color:#687386;margin-bottom:3px}.hw-row div{white-space:pre-wrap}'+
+      '.empty{color:#707a89;padding:8px 0}.back-login{display:block;text-align:center;margin:24px auto 0;color:#fff;background:#102858;text-decoration:none;border-radius:14px;padding:12px 18px;font-weight:700;max-width:220px}'+
+      '@media(max-width:560px){.dash-head{padding:30px 20px 38px}.dash-head-inner{gap:18px}.dash-photo{width:105px;height:135px}.dash-name{font-size:39px}.dash-class{font-size:22px}.dash-main{padding-left:20px;padding-right:20px}.dash-summary{padding:21px 17px 24px;border-radius:25px}.dash-title{font-size:25px}.dash-stat{min-height:120px;padding:14px 7px}.dash-stat b{font-size:29px}.dash-stat small{font-size:16px}.dash-actions{gap:14px}.action-summary{min-height:102px;padding:17px 14px;font-size:21px;gap:11px}.action-icon{width:57px;height:57px;font-size:30px;border-radius:18px}}'+
+      '</style>'+
+      '<header class="dash-head"><div class="dash-head-inner">'+photoHtml+'<div><div class="dash-name">'+esc(name)+'</div><div class="dash-class">'+esc(cls)+(year?" · "+esc(year):"")+'</div></div></div></header>'+
+      '<main class="dash-main">'+
+      '<section class="dash-summary"><h2 class="dash-title">📊 Parent Dashboard</h2><div class="dash-stats">'+
+      '<div class="dash-stat"><b>'+ypct+'%</b><small>Attendance</small></div>'+
+      '<div class="dash-stat"><b>'+testAvg+'</b><small>Test Average</small></div>'+
+      '<div class="dash-stat"><b class="'+feeClass+'">'+feeLabel+'</b><small>Current Month · '+esc(feeDate)+'</small></div>'+
+      '</div></section>'+
+      '<div class="dash-actions">'+
+      '<details class="action-detail"><summary class="action-summary"><span class="action-icon">📚</span><span>Homework</span></summary><div class="action-content">'+(hwRows||'<div class="empty">No homework added yet.</div>')+'</div></details>'+
+      '<details class="action-detail"><summary class="action-summary"><span class="action-icon">📅</span><span>Attendance</span></summary><div class="action-content"><div class="dash-stats"><div class="dash-stat"><b>'+mp+'</b><small>Present</small></div><div class="dash-stat"><b>'+ma+'</b><small>Absent</small></div><div class="dash-stat"><b>'+mpct+'%</b><small>'+esc(cm||"Latest")+'</small></div></div></div></details>'+
+      '<details class="action-detail"><summary class="action-summary"><span class="action-icon">💳</span><span>Fee Details</span></summary><div class="action-content">'+(feeRows?'<table>'+feeRows+'</table>':'<div class="empty">No fee records available.</div>')+'</div></details>'+
+      '<details class="action-detail"><summary class="action-summary"><span class="action-icon">🧠</span><span>General Knowledge</span></summary><div class="action-content"><div class="empty">Daily GK questions are available in the Parent Portal.</div></div></details>'+
+      '<details class="action-detail"><summary class="action-summary"><span class="action-icon">📰</span><span>Current Affairs</span></summary><div class="action-content"><div class="empty">Latest current affairs will appear here.</div></div></details>'+
+      '<details class="action-detail"><summary class="action-summary"><span class="action-icon">📝</span><span>Tests</span></summary><div class="action-content">'+(testRows?'<table>'+testRows+'</table>':'<div class="empty">No test marks yet.</div>')+'</div></details>'+
+      '<details class="action-detail"><summary class="action-summary"><span class="action-icon">🧮</span><span>BODMAS Practice</span></summary><div class="action-content"><div class="empty">BODMAS practice is available in the Parent Portal.</div></div></details>'+
+      '<details class="action-detail"><summary class="action-summary"><span class="action-icon">📞</span><span>Contact</span></summary><div class="action-content"><div class="empty">Please contact TASVIA Academy for assistance.</div></div></details>'+
+      '</div><a class="back-login" href="'+location.pathname+'">Student ID Login</a></main>';
   }
   function showLoading(code){
     var msg=document.getElementById("studentLoginMsg");
