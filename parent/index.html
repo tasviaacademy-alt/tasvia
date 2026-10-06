@@ -761,7 +761,7 @@ async function loadForStudentId(code){
       if(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey){
         if(!firebase.apps.length)firebase.initializeApp(window.FIREBASE_CONFIG);
         const ref=firebase.firestore().doc("parentView/"+code);
-        ref.get().then(snap=>finish(snap.exists?snap.data():null)).catch(()=>const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Could not connect to TASVIA. Check your internet connection and try again.");
+        ref.get().then(snap=>finish(snap.exists?snap.data():null)).catch(()=>{const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Could not connect to TASVIA. Check your internet connection and try again.";});
       }else{
         msg(T[L].offline,true);
       }
