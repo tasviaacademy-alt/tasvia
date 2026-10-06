@@ -407,14 +407,46 @@ function render(){
     if(m)return "m"+String(Number(m[1]||m[2])).padStart(2,"0");
     return raw.replace(/[^a-z0-9]/g,"");
   };
-  const quickPaymentTotals={};
-  (Array.isArray(v.pays)?v.pays:[]).forEach(p=>{
-    if(!p||typeof p!=="object")return;
-    const k=feeMonthKey(p.m||p.month||p.d,p.d);
-    if(k)quickPaymentTotals[k]=(quickPaymentTotals[k]||0)+Math.max(0,Number(p.a||p.amount||0));
-  });
+  // Fee-period payment reconciliation:
+  // A payment counts for a fee period when its payment date falls between
+  // the first day of the fee month and the configured due date (inclusive).
+  // Example: Sep 1 → Oct 1; any valid payment dated Sep 1 through Oct 1
+  // is applied to the September fee row.
+  const feePeriodPaymentTotal=(feeRow,payments)=>{
+    const rawMonth=String(feeRow?.m||"").trim();
+    const ym=/^(\\d{4})-(\\d{1,2})/.exec(rawMonth);
+    if(!ym)return 0;
+    const year=Number(ym[1]),month=Number(ym[2]);
+    if(!year||month<1||month>12)return 0;
+    const start=new Date(year,month-1,1);
+    const configuredEnd=String(feeRow?.dueDate||"").trim();
+    const end=/^\\d{4}-\\d{2}-\\d{2}$/.test(configuredEnd)
+      ? new Date(configuredEnd+"T00:00:00")
+      : new Date(year,month,1);
+    if(Number.isNaN(start.getTime())||Number.isNaN(end.getTime()))return 0;
+
+    let datedTotal=0,undatedTotal=0,hasDated=false;
+    (Array.isArray(payments)?payments:[]).forEach(p=>{
+      if(!p||typeof p!=="object")return;
+      const amount=Math.max(0,Number(p.a??p.amount??0)||0);
+      if(!amount)return;
+      const rawDate=String(p.d||p.date||p.paidOn||p.paymentDate||"").trim();
+      const pd=safeDate(rawDate);
+      if(pd){
+        hasDated=true;
+        const day=new Date(pd.getFullYear(),pd.getMonth(),pd.getDate());
+        if(day>=start&&day<=end)datedTotal+=amount;
+      }else if(feeMonthKey(p.m||p.month)===feeMonthKey(feeRow.m)){
+        undatedTotal+=amount;
+      }
+    });
+    return hasDated?datedTotal:undatedTotal;
+  };
+
+  const quickPayments=Array.isArray(v.pays)?v.pays.filter(p=>p&&typeof p==="object"):[];
   const quickFeeRows=quickFees.map(f=>{
-    const fee=Number(f.fee)||0,storedPaid=Number(f.paid)||0,paidFromPayments=quickPaymentTotals[feeMonthKey(f.m)]||0;
+    const fee=Number(f.fee)||0,storedPaid=Number(f.paid)||0;
+    const paidFromPayments=feePeriodPaymentTotal(f,quickPayments);
     return Object.assign({},f,{fee,paid:Math.min(fee,Math.max(storedPaid,paidFromPayments)),dueDate:f.dueDate?String(f.dueDate):""});
   });
   const currentMonth=today().slice(0,7);
@@ -775,7 +807,8 @@ async function loadForStudentId(code){
         const currentMonth=today().slice(0,7);
         const currentFee=fees.find(f=>String(f.m||"").slice(0,7)===currentMonth)||null;
         const currentFeeAmount=currentFee?Number(currentFee.fee)||0:0;
-        const currentFeePaid=currentFee?Math.min(currentFeeAmount,Math.max(Number(currentFee.paid)||0,0)):0;
+        const currentFeePeriodPaid=currentFee?feePeriodPaymentTotal(currentFee,pays):0;
+        const currentFeePaid=currentFee?Math.min(currentFeeAmount,Math.max(Number(currentFee.paid)||0,currentFeePeriodPaid)):0;
         const currentFeeDue=Math.max(0,currentFeeAmount-currentFeePaid);
         const currentFeeDate=currentFee&&currentFee.dueDate?String(currentFee.dueDate):"";
         const currentFeeIsDue=!!currentFee&&currentFeeDue>0&&(!currentFeeDate||today()>=currentFeeDate);
