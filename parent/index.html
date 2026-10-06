@@ -775,6 +775,16 @@ async function loadForStudentId(code){
           '<div class="parent-dashboard-item"><b>'+(ypc!=null?ypc+"%":"–")+'</b><small>Attendance</small></div>'+
           '<div class="parent-dashboard-item"><b>'+(testAvg!=null?testAvg+"%":"–")+'</b><small>Test Average</small></div>'+
           '<div class="parent-dashboard-item"><b>'+(feeTotal>0?(feePaid>=feeTotal?"Paid":rs(Math.max(0,feeTotal-feePaid))):"–")+'</b><small>Fees</small></div></div></section>'+
+          '<div class="parent-action-grid" aria-label="Parent portal quick access">'+
+          '<button type="button" class="parent-action" onclick="openParentSection(\'homeworkSection\')"><span class="parent-action-icon">📚</span><span>Homework</span></button>'+
+          '<button type="button" class="parent-action" onclick="openParentSection(\'attendanceSection\')"><span class="parent-action-icon">📅</span><span>Attendance</span></button>'+
+          '<button type="button" class="parent-action" onclick="openParentSection(\'feesSection\')"><span class="parent-action-icon">💳</span><span>Fee Details</span></button>'+
+          '<button type="button" class="parent-action" onclick="openParentSection(\'gkSection\')"><span class="parent-action-icon">🧠</span><span>General Knowledge</span></button>'+
+          '<button type="button" class="parent-action" onclick="openParentSection(\'currentAffairsCard\')"><span class="parent-action-icon">📰</span><span>Current Affairs</span></button>'+
+          '<button type="button" class="parent-action" onclick="openParentSection(\'testsSection\')"><span class="parent-action-icon">📝</span><span>Tests</span></button>'+
+          '<button type="button" class="parent-action" onclick="openParentSection(\'bodmasSection\')"><span class="parent-action-icon">🧮</span><span>BODMAS Practice</span></button>'+
+          '<button type="button" class="parent-action" onclick="openParentSection(\'contactSection\')"><span class="parent-action-icon">📞</span><span>Contact</span></button>'+
+          '</div>'+
           '<div class="card gk-card" id="gkSection">'+(typeof buildDailyGK==="function"?buildDailyGK():"<h2>🌍 General Knowledge</h2><p class='sub'>Loading daily GK…</p>")+'</div>'+
           '<div class="card ca-card" id="currentAffairsCard">'+(typeof buildCurrentAffairsCard==="function"?buildCurrentAffairsCard():"<h2>📰 Daily Current Affairs</h2><p class='sub'>Loading current affairs…</p>")+'</div>'+
           '<div class="card"><h2>📚 Homework</h2>'+
