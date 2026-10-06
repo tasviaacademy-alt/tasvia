@@ -314,6 +314,26 @@ table td,table th{padding:9px 7px!important}
 @media(max-width:520px){.parent-action{min-height:74px}.parent-action-icon{width:36px;height:36px;font-size:19px}.hw-row{align-items:flex-start}.hw-complete-btn{min-width:96px}}
 @media(max-width:370px){main{padding-left:11px;padding-right:11px}.parent-action{padding:10px;font-size:.86rem}.parent-action::after{font-size:1.25rem}.card{padding:14px}}
 @media(prefers-reduced-motion:reduce){.card,.parent-action{transition:none}.parent-action:hover{transform:none}}
+/* PREMIUM PARENT PORTAL POLISH */
+.parent-dashboard{position:relative;overflow:hidden}
+.parent-dashboard::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--gold),#E8D58A,var(--gold));opacity:.9}
+.parent-action{position:relative;overflow:hidden;min-height:82px;border-color:#E1E6EC;background:linear-gradient(145deg,#fff,#F8FAFC);box-shadow:0 5px 18px rgba(11,36,85,.07)}
+.parent-action::after{content:"";position:absolute;inset:auto 12px 0;height:3px;border-radius:3px;background:var(--gold);transform:scaleX(0);transform-origin:center;transition:transform .2s ease}
+.parent-action:hover::after,.parent-action:focus-visible::after{transform:scaleX(1)}
+.parent-action-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:#EEF2F7}
+.parent-back-dashboard{position:sticky;top:10px;z-index:5;background:linear-gradient(135deg,#0B2455,#163A78);box-shadow:0 8px 22px rgba(11,36,85,.18);font-size:15px}
+main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentAffairsCard,main > #attendanceSection,main > #testsSection,main > #feesSection,main > #contactSection{transition:opacity .2s ease,transform .2s ease}
+@media(max-width:520px){
+  main{padding-left:12px;padding-right:12px}
+  .parent-action-grid{gap:9px}
+  .parent-action{min-height:76px;border-radius:16px}
+  .parent-action span:last-child{font-size:.9rem}
+  .card{padding:16px;border-radius:18px}
+  .stats b{font-size:1.55rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .parent-action,.parent-action::after{transition:none}
+}
 </style>
 </head>
 <body>
@@ -385,10 +405,13 @@ function closeParentSectionView(){
   });
   const main=document.getElementById("main");
   if(main)main.scrollIntoView({behavior:"smooth",block:"start"});
+  window.scrollTo({top:0,behavior:"smooth"});
 }
+
 function openParentSection(id){
   const el=document.getElementById(String(id||""));
   if(!el)return false;
+  document.body.classList.add("parent-view-open");
   const ids=["homeworkSection","bodmasSection","gkSection","currentAffairsCard","attendanceSection","testsSection","feesSection","contactSection"];
   ids.forEach(otherId=>{
     const other=document.getElementById(otherId);
@@ -407,7 +430,7 @@ function openParentSection(id){
     const back=document.createElement("button");
     back.type="button";
     back.className="parent-back-dashboard";
-    back.innerHTML="← Back to Dashboard";
+    back.innerHTML='<span aria-hidden="true">←</span><span>Back to Dashboard</span>';
     back.onclick=closeParentSectionView;
     el.insertBefore(back,el.firstChild);
   }
@@ -504,6 +527,7 @@ document.addEventListener("click",function(e){
 });
 
 function closeParentSection(){
+  closeParentSectionView();
   const layer=document.getElementById("parentSectionViewer");
   const body=document.getElementById("parentSectionBody");
   const moved=body&&body.firstElementChild;
