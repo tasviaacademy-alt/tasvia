@@ -120,6 +120,22 @@ service cloud.firestore {
       allow create, update, delete: if staff();
     }
 
+    // Parents can persist homework completion for their own bearer-code portal.
+    // The code must already exist as a parentView document; collection listing is never allowed.
+    match /homeworkCompletions/{code} {
+      allow get: if
+        code is string
+        && exists(/databases/$(database)/documents/parentView/$(code));
+      allow list: if false;
+      allow create, update: if
+        !signedIn()
+        && request.resource.data.code == code
+        && request.resource.data.completed is map
+        && request.resource.data.completed.size() <= 200
+        && exists(/databases/$(database)/documents/parentView/$(code));
+      allow delete: if staff();
+    }
+
     // The parent portal stores a small daily GK snapshot for backup.
     // Parents may create/update a backup only when the supplied code maps to
     // an existing parentView document. Staff retain full archive access.
