@@ -706,8 +706,40 @@ async function loadForStudentId(code){
       render();
     }catch(err){
       console.error("TASVIA Parent Portal render/update error:",err);
-      msg("TASVIA Parent Portal opened, but some student data could not be displayed. Please tap Try again.",true);
-      return false;
+      // Never leave a valid Student ID stuck on "Checking Student ID".
+      // If an optional dashboard section contains malformed data, render a
+      // minimal safe dashboard from the core student fields instead.
+      try{
+        const safe=V&&typeof V==="object"?V:{},cc=safe.centre&&typeof safe.centre==="object"?safe.centre:{};
+        const name=String(safe.name||"TASVIA Student"),cls=String(safe.cls||""),year=String(safe.year||"");
+        const att=safe.att&&typeof safe.att==="object"?safe.att:{};
+        const months=Object.keys(att).filter(m=>/^\\d{4}-\\d{2}$/.test(m)).sort().reverse();
+        const cm=months[0],a=cm&&att[cm]&&typeof att[cm}==="object"?att[cm]:{};
+        const ap=Number(a.p)||0,aa=Number(a.a)||0,at=ap+aa,apc=at?Math.round(ap*100/at):null;
+        const yr=safe.yr&&typeof safe.yr==="object"?safe.yr:{},yp=Number(yr.p)||0,ya=Number(yr.a)||0,yt=yp+ya,ypc=yt?Math.round(yp*100/yt):null;
+        const tests=Array.isArray(safe.tests)?safe.tests.filter(x=>x&&typeof x==="object"):[];
+        const fees=Array.isArray(safe.fees)?safe.fees.filter(x=>x&&typeof x==="object"):[];
+        const pays=Array.isArray(safe.pays)?safe.pays.filter(x=>x&&typeof x==="object"):[];
+        const feeTotal=fees.reduce((n,f)=>n+(Number(f.fee)||0),0),feePaid=fees.reduce((n,f)=>n+(Number(f.paid)||0),0);
+        const testAvg=tests.length?Math.round(tests.reduce((n,x)=>n+(Number(x.x)?(Number(x.m)||0)*100/Number(x.x):0),0)/tests.length):null;
+        const phone=String(cc.phone||"").replace(/\\D/g,"");
+        document.title=name+" – TASVIA Academy";
+        document.getElementById("kid").innerHTML='<div><h1>'+esc(name)+'</h1><p>'+esc(cls)+(year?' · '+esc(year):'')+'</p></div>';
+        document.getElementById("main").innerHTML=
+          '<div class="card"><h2>📊 Parent Dashboard</h2><div class="stats">'+
+          '<div><b class="ok">'+(ypc!=null?ypc+"%":"–")+'</b><small>Attendance</small></div>'+
+          '<div><b>'+(testAvg!=null?testAvg+"%":"–")+'</b><small>Test Average</small></div>'+
+          '<div><b>'+(feeTotal>0?(feePaid>=feeTotal?"Paid":rs(Math.max(0,feeTotal-feePaid))):"–")+'</b><small>Fees</small></div></div></div>'+
+          '<div class="card"><h2>📅 '+esc(T[L].att)+'</h2><p class="sub">'+(cm?esc(mN(cm)):"")+'</p><div class="stats"><div><b class="ok">'+ap+'</b><small>'+esc(T[L].present)+'</small></div><div><b class="bad">'+aa+'</b><small>'+esc(T[L].absent)+'</small></div><div><b>'+(apc!=null?apc+"%":"–")+'</b><small>'+esc(T[L].pct)+'</small></div></div></div>'+
+          '<div class="card"><h2>📝 '+esc(T[L].tests)+'</h2><p class="sub">'+(tests.length?tests.length+" test record(s)":"No test marks yet")+'</p></div>'+
+          '<div class="card"><h2>💳 '+esc(T[L].fees)+'</h2><p class="sub">'+(feeTotal>0?(feePaid>=feeTotal?esc(T[L].paid):"Due: "+rs(Math.max(0,feeTotal-feePaid))):"No fee records")+'</p></div>'+
+          '<div class="card"><h2>📞 '+esc(T[L].contact)+'</h2><p style="margin:0">'+esc(cc.name||"TASVIA Academy")+'</p>'+(cc.address?'<p class="sub">'+esc(cc.address)+'</p>':"")+(phone?'<div class="acts"><a class="btn gold" href="tel:'+esc(phone)+'">📞 '+esc(T[L].call)+'</a></div>':"")+'</div>'+
+          '<div class="notice" style="margin-top:12px">Student data loaded successfully. Some optional dashboard features are temporarily unavailable.</div>';
+      }catch(fallbackErr){
+        console.error("TASVIA Parent Portal safe dashboard error:",fallbackErr);
+        msg("Student data was found, but the dashboard could not be displayed. Please try again.",true);
+        return false;
+      }
     }
     if(CURRENT_AFFAIRS===null)loadCurrentAffairs().then(()=>{
       try{
