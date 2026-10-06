@@ -1193,12 +1193,17 @@ async function loadForStudentId(code){
     return !!(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey);
   }
   async function loadFirebaseDirect(){
+    // REST-first: parent login must not depend on Firebase SDK/CDN availability.
+    try{
+      const data=await loadREST();
+      if(data)return data;
+    }catch(e){console.warn("TASVIA Firestore REST login failed:",e)}
     try{
       if(!(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey))return null;
       if(!firebase.apps.length)firebase.initializeApp(window.FIREBASE_CONFIG);
       const snap=await firebase.firestore().doc("parentView/"+code).get();
       return snap.exists?snap.data():null;
-    }catch(e){console.warn("TASVIA direct Firebase login failed:",e);return null}
+    }catch(e){console.warn("TASVIA Firebase SDK login failed:",e);return null}
   }
   async function loadREST(){
     // GitHub Pages has no server-side /api/parent endpoint.
@@ -1251,14 +1256,10 @@ async function loadForStudentId(code){
       }catch(e){console.warn("TASVIA live sync unavailable:",e)}
       return;
     }
-    try{
-      const data=await loadREST();
-      clearTimeout(startupTimeout);
-      if(data){finish(data);return;}
-    }catch(e){console.warn("TASVIA REST fallback:",e)}
     if(!loaded){
+      clearTimeout(startupTimeout);
       const m=document.getElementById("studentLoginMsg");
-      if(m)m.textContent="Student ID not found. Please check the ID or ask TASVIA staff to sync the parent portal.";
+      if(m)m.textContent="Unable to load this student record. Please check your internet connection and try Login again.";
       showWelcome({keepInput:true,keepMessage:true});
     }
   }).catch(async e=>{
