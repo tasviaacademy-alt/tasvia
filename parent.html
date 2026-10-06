@@ -179,6 +179,7 @@ button,.btn,a.btn{visibility:visible;}
 /* Dashboard sections open only when their quick-access button is pressed */
 main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentAffairsCard,main > #attendanceSection,main > #testsSection,main > #feesSection,main > #contactSection{display:none}
 .parent-section-body > #homeworkSection,.parent-section-body > #bodmasSection,.parent-section-body > #gkSection,.parent-section-body > #currentAffairsCard,.parent-section-body > #attendanceSection,.parent-section-body > #testsSection,.parent-section-body > #feesSection,.parent-section-body > #contactSection{display:block}
+.parent-back-dashboard{display:flex;align-items:center;gap:7px;width:100%;margin:0 0 14px;padding:11px 14px;border:1px solid var(--line);border-radius:12px;background:var(--board);color:#fff;font:700 15px Inter,"Hind",sans-serif;cursor:pointer;box-shadow:0 4px 12px rgba(11,36,85,.12)}.parent-back-dashboard:active{transform:scale(.99)}.parent-back-dashboard:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .parent-action{border:1px solid var(--line);font:inherit;cursor:pointer}
 .parent-section-viewer{position:fixed;inset:0;z-index:2000;background:var(--bg);overflow-y:auto;display:none}
 .parent-section-viewer.show{display:block}
@@ -370,12 +371,46 @@ function mN(v){try{const d=new Date(String(v).slice(0,7)+"-01T00:00:00");return 
 function dN(v){try{const d=new Date(String(v));return Number.isNaN(d.getTime())?String(v||""):d.toLocaleDateString((T[L]&&T[L].loc)||"en-IN",{day:"2-digit",month:"short",year:"numeric"});}catch(_){return String(v||"")}}
 function changes(a,b){return []}
 function alertParent(){return null}
+function closeParentSectionView(){
+  const ids=["homeworkSection","bodmasSection","gkSection","currentAffairsCard","attendanceSection","testsSection","feesSection","contactSection"];
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){
+      el.style.display="none";
+      el.hidden=true;
+      el.setAttribute("aria-hidden","true");
+      const back=el.querySelector(":scope > .parent-back-dashboard");
+      if(back)back.remove();
+    }
+  });
+  const main=document.getElementById("main");
+  if(main)main.scrollIntoView({behavior:"smooth",block:"start"});
+}
 function openParentSection(id){
   const el=document.getElementById(String(id||""));
   if(!el)return false;
+  const ids=["homeworkSection","bodmasSection","gkSection","currentAffairsCard","attendanceSection","testsSection","feesSection","contactSection"];
+  ids.forEach(otherId=>{
+    const other=document.getElementById(otherId);
+    if(other && other!==el){
+      other.style.display="none";
+      other.hidden=true;
+      other.setAttribute("aria-hidden","true");
+      const back=other.querySelector(":scope > .parent-back-dashboard");
+      if(back)back.remove();
+    }
+  });
   el.style.display="block";
   el.hidden=false;
   el.setAttribute("aria-hidden","false");
+  if(!el.querySelector(":scope > .parent-back-dashboard")){
+    const back=document.createElement("button");
+    back.type="button";
+    back.className="parent-back-dashboard";
+    back.innerHTML="← Back to Dashboard";
+    back.onclick=closeParentSectionView;
+    el.insertBefore(back,el.firstChild);
+  }
   requestAnimationFrame(()=>el.scrollIntoView({behavior:"smooth",block:"start"}));
   return false;
 }
