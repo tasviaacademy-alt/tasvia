@@ -355,6 +355,109 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
 </div>
 
 
+<script>
+(function(){
+  "use strict";
+  var FIRESTORE_ROOT="https://firestore.googleapis.com/v1/projects/tasvia-academy/databases/(default)/documents/parentView/";
+  function valid(v){
+    v=String(v||"").trim().toUpperCase();
+    return /^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(v)?v:"";
+  }
+  function value(v){
+    if(!v||typeof v!=="object") return v;
+    if(Object.prototype.hasOwnProperty.call(v,"stringValue")) return v.stringValue;
+    if(Object.prototype.hasOwnProperty.call(v,"integerValue")) return Number(v.integerValue);
+    if(Object.prototype.hasOwnProperty.call(v,"doubleValue")) return Number(v.doubleValue);
+    if(Object.prototype.hasOwnProperty.call(v,"booleanValue")) return v.booleanValue;
+    if(Object.prototype.hasOwnProperty.call(v,"timestampValue")) return v.timestampValue;
+    if(Object.prototype.hasOwnProperty.call(v,"nullValue")) return null;
+    if(Object.prototype.hasOwnProperty.call(v,"arrayValue")) return (v.arrayValue.values||[]).map(value);
+    if(Object.prototype.hasOwnProperty.call(v,"mapValue")){
+      var o={};Object.keys(v.mapValue.fields||{}).forEach(function(k){o[k]=value(v.mapValue.fields[k]);});return o;
+    }
+    return v;
+  }
+  function read(code){
+    return fetch(FIRESTORE_ROOT+encodeURIComponent(code),{cache:"no-store",mode:"cors",credentials:"omit"}).then(function(r){
+      if(r.status===404) return null;
+      if(!r.ok) throw new Error("HTTP "+r.status);
+      return r.json();
+    }).then(function(d){
+      if(!d) return null;
+      var o={};Object.keys(d.fields||{}).forEach(function(k){o[k]=value(d.fields[k]);});return o;
+    });
+  }
+  function esc(v){
+    return String(v==null?"":v).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});
+  }
+  function money(v){return "₹"+Number(v||0).toLocaleString("en-IN");}
+  function card(title,body){return '<section class="rescue-card"><h2>'+title+'</h2>'+body+'</section>';}
+  function render(d,code){
+    var name=String(d.name||"TASVIA Student");
+    var cls=String(d.cls||"");
+    var year=String(d.year||"");
+    var att=d.att&&typeof d.att==="object"?d.att:{};
+    var months=Object.keys(att).filter(function(k){return /^\d{4}-\d{2}$/.test(k);}).sort().reverse();
+    var cm=months[0]||"",a=att[cm]&&typeof att[cm]==="object"?att[cm]:{};
+    var p=Number(a.p)||0,ab=Number(a.a)||0,total=p+ab,pct=total?Math.round(p*100/total):0;
+    var yr=d.yr&&typeof d.yr==="object"?d.yr:{},yp=Number(yr.p)||0,ya=Number(yr.a)||0,yt=yp+ya,ypct=yt?Math.round(yp*100/yt):0;
+    var tests=Array.isArray(d.tests)?d.tests:[];
+    var fees=Array.isArray(d.fees)?d.fees:[];
+    var hw=Array.isArray(d.hw)?d.hw:[];
+    var pays=Array.isArray(d.pays)?d.pays:[];
+    var current=new Date().toISOString().slice(0,7);
+    var fee=fees.find(function(x){return String(x&&x.m||"").slice(0,7)===current;});
+    var feeAmt=fee?Number(fee.fee)||0:0,paid=fee?Number(fee.paid)||0:0,due=Math.max(0,feeAmt-paid);
+    var feeStatus=fee?(due>0?"Due":"Paid"):"—";
+    var testRows=tests.slice(0,8).map(function(x){return "<tr><td>"+esc(x.s||"Test")+" "+esc(x.n||"")+"</td><td>"+Number(x.m)||0+"/"+Number(x.x)||0+"</td></tr>";}).join("");
+    var feeRows=fees.slice(0,8).map(function(x){var f=Math.max(0,(Number(x.fee)||0)-(Number(x.paid)||0));return "<tr><td>"+esc(x.m||"")+"</td><td>"+(f?"<b class='due'>Due "+money(f)+"</b>":"<b class='paid'>Paid</b>")+"</td></tr>";}).join("");
+    var hwRows=hw.slice(0,7).map(function(x){return "<div class='hw'><b>"+esc(x.d||"")+"</b><div>"+esc(x.hw||x.text||"")+"</div></div>";}).join("");
+    document.title=name+" - TASVIA Academy";
+    document.body.innerHTML='<style>'+
+      'body{margin:0;background:#edf1ee;color:#15201c;font:16px/1.55 -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif}'+
+      '.rescue-wrap{max-width:720px;margin:auto;padding:0 14px 40px}.rescue-head{background:#0b2455;color:#fff;padding:24px 18px 28px}.rescue-head b{color:#f2ac10}.rescue-name{font-size:27px;font-weight:800;margin:12px 0 2px}.rescue-sub{opacity:.85}.rescue-card{background:#fff;border:1px solid #d3dcd7;border-radius:16px;padding:16px;margin-top:14px;box-shadow:0 4px 16px rgba(11,36,85,.06)}'+
+      '.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:#eef2ef;border-radius:12px;padding:12px;text-align:center}.stat b{display:block;font-size:24px}.stat small{color:#5b6a63}.paid{color:#2b8a55}.due{color:#c4432a}.hw{border-left:4px solid #f2ac10;padding:5px 0 5px 11px;margin:10px 0}.empty{color:#5b6a63}.back{display:inline-block;margin-top:18px;padding:10px 15px;border-radius:10px;background:#f2ac10;color:#1a1405;text-decoration:none;font-weight:700}table{width:100%;border-collapse:collapse}td{padding:8px 4px;border-bottom:1px solid #d3dcd7}td:last-child{text-align:right}'+
+      '</style><header class="rescue-head"><div><b>TASVIA</b> ACADEMY</div><div class="rescue-name">'+esc(name)+'</div><div class="rescue-sub">'+esc(cls)+(year?" · "+esc(year):"")+'</div></header>'+
+      '<main class="rescue-wrap">'+
+      card("📊 Parent Dashboard",'<div class="stats"><div class="stat"><b>'+ypct+'%</b><small>Attendance</small></div><div class="stat"><b>'+tests.length+'</b><small>Tests</small></div><div class="stat"><b class="'+(feeStatus==="Due"?"due":"paid")+'">'+esc(feeStatus==="Due"?money(due):feeStatus)+'</b><small>Current Fee</small></div></div>')+
+      card("📅 Attendance",'<div class="stats"><div class="stat"><b>'+p+'</b><small>Present</small></div><div class="stat"><b>'+ab+'</b><small>Absent</small></div><div class="stat"><b>'+pct+'%</b><small>'+esc(cm||"Latest month")+'</small></div></div>')+
+      card("📚 Homework",hwRows||'<div class="empty">No homework added yet.</div>')+
+      card("📝 Test Marks",testRows?'<table>'+testRows+'</table>':'<div class="empty">No test marks yet.</div>')+
+      card("💳 Fees",feeRows?'<table>'+feeRows+'</table>':'<div class="empty">No fee records.</div>')+
+      '<a class="back" href="'+location.pathname+'">Student ID Login</a>'+
+      '</main>';
+  }
+  function showLoading(code){
+    var msg=document.getElementById("studentLoginMsg");
+    var input=document.getElementById("studentLoginId");
+    if(input) input.value=code||"";
+    if(msg) msg.textContent="Opening Parent Portal…";
+  }
+  function start(code){
+    code=valid(code);if(!code)return;
+    showLoading(code);
+    read(code).then(function(d){
+      if(!d) throw new Error("Student record not found");
+      render(d,code);
+    }).catch(function(e){
+      console.warn("TASVIA rescue parent login:",e);
+      var msg=document.getElementById("studentLoginMsg");
+      if(msg) msg.textContent="Unable to load this student record. Please check internet and try again.";
+    });
+  }
+  document.addEventListener("DOMContentLoaded",function(){
+    var qs=new URLSearchParams(location.search);
+    var code=valid(qs.get("code"))||valid(String(location.hash||"").replace(/^#/,""));
+    var form=document.getElementById("studentLoginForm");
+    if(form) form.addEventListener("submit",function(e){
+      e.preventDefault();
+      var input=document.getElementById("studentLoginId");
+      start(input&&input.value);
+    });
+    if(code) start(code);
+  });
+})();
+</script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script>
 (function(){
