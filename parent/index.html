@@ -1,18 +1,4 @@
-<
-function renderParentHomeworkItems(list,mode="all"){
-  const items=list.map((x,originalIndex)=>({x,originalIndex})).filter(o=>mode==="all"||mode==="completed"===isHomeworkCompleted(o.x));
-  if(!items.length)return '<div class="parent-empty">📚 '+esc(mode==="completed"?T[L].noCompleted:T[L].noPending)+'</div>';
-  return items.map(({x,originalIndex})=>{
-    const done=isHomeworkCompleted(x),due=String(x.due||x.dueDate||"").trim(),dt=safeDate(due),overdue=!done&&dt&&dt.getTime()<Date.now();
-    return '<div class="hw '+(done?'hw-completed ':'')+(overdue?'hw-overdue':'')+'"><div class="hw-row"><b>'+esc(dL(x.d))+'</b><span class="hw-status '+(done?'done':'pending')+'">'+(done?'✅ '+esc(T[L].completed):'⏳ '+esc(T[L].pending))+'</span></div><div>'+esc(x.hw)+'</div>'+(x.subject?'<div class="sub">📘 '+esc(x.subject)+'</div>':'')+(due?'<div class="sub">📅 '+esc(T[L].dueOn)+': '+esc(dL(due))+(overdue?' · '+esc(T[L].overdue):'')+'</div>':'')+(x.note?'<div class="sub">'+esc(T[L].note)+': '+esc(x.note)+'</div>':'')+'<button type="button" class="btn '+(done?'':'gold')+' hw-complete-btn" onclick="toggleHomeworkCompleted('+originalIndex+')">'+(done?'↩️ '+esc(T[L].markPending):'☐ '+esc(T[L].markCompleted))+'</button></div>';
-  }).join("");
-}
-function filterParentHomework(mode,button){
-  document.querySelectorAll(".hw-filter-btn").forEach(b=>b.classList.remove("active"));
-  if(button)button.classList.add("active");
-  const all=Array.isArray(V?.hw)?V.hw.filter(x=>x&&typeof x==="object").filter(x=>{const tm=Date.parse(String(x.d||""));return Number.isFinite(tm)&&Date.now()-tm>=0&&Date.now()-tm<30*24*60*60*1000;}).sort((a,b)=>String(b.d).localeCompare(String(a.d))):[];
-  const el=document.getElementById("parentHomeworkList");if(el)el.innerHTML=renderParentHomeworkItems(all,mode);
-}!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
