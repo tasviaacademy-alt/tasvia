@@ -6,6 +6,21 @@
 <title>TASVIA Academy – Parent</title>
 <meta name="theme-color" content="#0B2455">
 <meta name="robots" content="noindex">
+<script>
+/* OLD PARENT LINK RESCUE — preserve #STUDENTCODE even when the APK/TWA or cached shell reloads. */
+(function(){
+  try{
+    const hash=String(location.hash||"").replace(/^#/,"").trim().toUpperCase();
+    const qs=new URLSearchParams(location.search);
+    const code=String(qs.get("code")||"").trim().toUpperCase();
+    const valid=v=>/^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(v);
+    if(valid(hash) && !valid(code)){
+      const target=location.pathname+"?code="+encodeURIComponent(hash)+"&v=41#"+encodeURIComponent(hash);
+      history.replaceState(null,"",target);
+    }
+  }catch(_){}
+})();
+</script>
 <link rel="icon" href="/icon-192.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
