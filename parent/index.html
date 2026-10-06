@@ -790,9 +790,12 @@ async function loadForStudentId(code){
           '</div>'+
           '<div class="card gk-card" id="gkSection">'+(typeof buildDailyGK==="function"?buildDailyGK():"<h2>🌍 General Knowledge</h2><p class='sub'>Loading daily GK…</p>")+'</div>'+
           '<div class="card ca-card" id="currentAffairsCard">'+(typeof buildCurrentAffairsCard==="function"?buildCurrentAffairsCard():"<h2>📰 Daily Current Affairs</h2><p class='sub'>Loading current affairs…</p>")+'</div>'+
-          '<div class="card"><h2>📚 Homework</h2>'+
+          '<div class="card" id="homeworkSection"><h2>📚 Homework</h2>'+
           (hw.length?hw.slice(0,7).map(x=>'<div class="hw-item"><b>'+escList(x.d)+'</b><div>'+escList(x.hw)+'</div>'+(x.note?'<div class="sub">'+escList(x.note)+'</div>':"")+'</div>').join(""):'<div class="parent-empty">No homework added yet</div>')+
           '</div>'+
+          buildBodmasCard()+
+          '<div class="card" id="gkSection">'+(typeof buildDailyGK==="function"?buildDailyGK():"<h2>🌍 General Knowledge</h2><p class=\"sub\">Loading daily GK…</p>")+'</div>'+
+          '<div class="card ca-card" id="currentAffairsCard">'+(typeof buildCurrentAffairsCard==="function"?buildCurrentAffairsCard():"<h2>📰 Daily Current Affairs</h2><p class=\"sub\">Loading current affairs…</p>")+'</div>'+
           '<div class="card" id="attendanceSection"><h2>📅 Attendance'+(cm?' · '+esc(cm):"")+'</h2><div class="stats"><div><b class="ok">'+ap+'</b><small>Present</small></div><div><b class="bad">'+aa+'</b><small>Absent</small></div><div><b>'+(apc!=null?apc+"%":"–")+'</b><small>Attendance</small></div></div>'+
           (safe.abs&&Array.isArray(safe.abs)&&safe.abs.length?'<p class="sub"><b>Recent absences:</b> '+safe.abs.slice(0,8).map(escList).join(", ")+'</p>':"")+
           '</div>'+
