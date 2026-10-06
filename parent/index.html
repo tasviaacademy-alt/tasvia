@@ -428,7 +428,7 @@ function render(){
   const quickFeeOutstandingRows=currentFee&&currentOutstanding>0?[currentFee]:[];
   const quickFeeDueDate=currentDueDate;
   const quickFeePending=currentFeeDue;
-  const currentFeeStatus=currentFeePaid?"Paid":currentFeeDue?"Due":currentFee?"Upcoming":"No fee record";
+  const currentFeeStatus=currentFeePaid?"Paid":currentFeeDue?"Due":currentFee?"Not Paid":"Not Paid";
   let h="";
   h+=`<section class="parent-dashboard" aria-label="Parent dashboard summary">
     <div class="parent-dashboard-head"><div><div class="parent-dashboard-title">📊 Parent Dashboard</div><div class="parent-dashboard-sub">${esc(v.year||"")} · ${esc(t.updated)} ${v.updated?new Date(v.updated).toLocaleString(T[L].loc,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"–"}</div></div></div>
@@ -779,7 +779,7 @@ async function loadForStudentId(code){
         const currentFeeDue=Math.max(0,currentFeeAmount-currentFeePaid);
         const currentFeeDate=currentFee&&currentFee.dueDate?String(currentFee.dueDate):"";
         const currentFeeIsDue=!!currentFee&&currentFeeDue>0&&(!currentFeeDate||today()>=currentFeeDate);
-        const currentFeeStatus=currentFeeIsDue?"Due":currentFee&&currentFeeDue<=0?"Paid":currentFee?"Upcoming":"No fee";
+        const currentFeeStatus=currentFeeIsDue?"Due":currentFee&&currentFeeDue<=0?"Paid":currentFee?"Not Paid":"Not Paid";
         const feeTotal=fees.reduce((n,f)=>n+(Number(f.fee)||0),0);
         const feePaid=fees.reduce((n,f)=>n+(Number(f.paid)||0),0);
         const testAvg=tests.length?Math.round(tests.reduce((n,x)=>n+(Number(x.x)?(Number(x.m)||0)*100/Number(x.x):0),0)/tests.length):null;
