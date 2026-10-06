@@ -518,7 +518,7 @@ function render(){
   renderBodmas();
   // Use the same normalized fee rows as the Fees section. A payment recorded in
   // Recent Payments must also clear the corresponding month's popup due amount.
-          '<div class="parent-dashboard-item fee-status-card '+(currentFeeIsDue?"bad":currentFeeStatus==="Paid"?"ok":"gold")+'"><small>Current Month Fee</small><b>'+(currentFeeStatus==="Due"?(currentFeeDue>0?rs(currentFeeDue):"DUE"):currentFeeStatus)+'</b><small>'+(currentFeeStatus==="Not Paid"&&currentFeeDate?"Due Date: "+new Date(currentFeeDate+"T00:00:00").toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}):currentFeeStatus==="Due"?(currentFeeDate?"Due Date: "+new Date(currentFeeDate+"T00:00:00").toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}):"Payment Due"):"Payment completed")+'</small></div></div></section>'+
+          '<div class="parent-dashboard-item fee-status-card '+(currentFeeStatus==="Paid"?"ok":currentFeeStatus==="Due"?"bad":"gold")+'"><small>Current Month Fee</small><b>'+(currentFeeStatus==="Due"?(currentFeeDue>0?rs(currentFeeDue):"DUE"):currentFeeStatus)+'</b><small>'+(currentFeeStatus==="Not Paid"&&currentFeeDate?"Due Date: "+currentFeeDate:currentFeeStatus==="Due"?"Payment Due":"Payment completed")+'</small></div></div></section>'+
     .reduce((s,f)=>s+Math.max(0,Number(f.fee||0)-Number(f.paid||0)),0);
   if(feePastDueForPopup>0 && window.tasviaWelcomeEntered){
     showFeeDuePopup(feePastDueForPopup);
