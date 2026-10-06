@@ -485,7 +485,7 @@ function infoText(){
 }
 function grade(p){return p>=90?"A+":p>=80?"A":p>=70?"B+":p>=60?"B":p>=50?"C":p>=35?"D":"E"}
 function studentsOf(cls,incLeft){return Object.entries(S.students).map(([id,s])=>({id,...s})).filter(s=>(incLeft||active(s))&&(cls==="all"||s.cls===cls)).sort((a,b)=>CLASSES.indexOf(a.cls)-CLASSES.indexOf(b.cls)||a.name.localeCompare(b.name))}
-function isAdmin(){return !!(window.currentUser&&String(window.currentUser.email||"").trim().toLowerCase()==="tasviaacademy@gmail.com")}
+function isAdmin(){const u=window.currentUser;return !!(u&&(String(u.email||"").trim().toLowerCase()==="tasviaacademy@gmail.com"||String(u.role||"").toLowerCase()==="admin"))}
 function isStaff(){return !!(window.currentUser&&(window.currentUser.role==="staff"||window.currentUser.role==="admin"))}
 function requireAdmin(){if(isAdmin())return true;toast("Admin access required.");return false}
 
@@ -1119,7 +1119,7 @@ function vStaff(){
 }
 function vMoney(){
   const m=UI.moneyMonth;
-  const fees=Object.keys(S.fees).reduce((a,id)=>a+payList(id).filter(p=>p.month===m).reduce((x,p)=>x+ +p.amount,0),0);
+  const fees=Object.keys(S.fees).reduce((a,id)=>a+payList(id).filter(p=>paymentMonth(p)===m).reduce((x,p)=>x+ +p.amount,0),0);
   const sal=Object.keys(S.salaries).reduce((a,id)=>a+salList(id).filter(p=>p.month===m).reduce((x,p)=>x+ +p.amount,0),0);
   const ex=expList(m).sort((a,b)=>b.date.localeCompare(a.date)),exT=ex.reduce((a,b)=>a+ +b.amount,0),net=fees-sal-exT;
   const cats={};ex.forEach(e=>cats[e.cat]=(cats[e.cat]||0)+ +e.amount);
