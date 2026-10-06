@@ -1052,26 +1052,33 @@ async function loadForStudentId(code){
     const controller=new AbortController();
     const timer=setTimeout(()=>controller.abort(),ms);
     try{
-      const r=await fetch(url,{cache:"no-store",signal:controller.signal,credentials:"same-origin"});
+      const r=await fetch(url,{cache:"no-store",signal:controller.signal,mode:"cors",credentials:"omit"});
       if(r.status===404)return null;
       if(!r.ok)throw new Error("HTTP "+r.status);
       return await r.json();
     }finally{clearTimeout(timer)}
   }
   async function loadREST(){
-    // Use the Vercel API proxy first. The apk.tasviaacademy.com host may be
-    // served by a static host, while this API runs reliably on Vercel.
-    let d=null;
+    const firestoreUrl="https://firestore.googleapis.com/v1/projects/tasvia-academy/databases/(default)/documents/parentView/"+encodeURIComponent(code);
     try{
-      const api=await fetchJSON("https://tasvia-app-two.vercel.app/api/parent?code="+encodeURIComponent(code),5000);
+      const d=await fetchJSON(firestoreUrl,4500);
+      if(d){
+        const o={};Object.entries(d.fields||{}).forEach(([k,v])=>o[k]=fv(v));return o;
+      }
+      return null;
+    }catch(e){
+      console.warn("Direct Firestore REST unavailable; trying Vercel parent proxy:",e);
+    }
+    try{
+      const api=await fetchJSON("https://tasvia-app-two.vercel.app/api/parent?code="+encodeURIComponent(code),4500);
       if(api && api.fields){
         const o={};Object.entries(api.fields).forEach(([k,v])=>o[k]=fv(v));return o;
       }
-      if(api===null)throw new Error("Student not found");
-    }catch(e){console.warn("TASVIA parent API unavailable; trying Firestore REST:",e)}
-    d=await fetchJSON("https://firestore.googleapis.com/v1/projects/tasvia-academy/databases/(default)/documents/parentView/"+encodeURIComponent(code),5000);
-    if(!d)return null;
-    const o={};Object.entries(d.fields||{}).forEach(([k,v])=>o[k]=fv(v));return o;
+      return null;
+    }catch(e){
+      console.warn("Vercel parent proxy unavailable:",e);
+      throw e;
+    }
   }
   function finish(data){
     if(loaded)return;
