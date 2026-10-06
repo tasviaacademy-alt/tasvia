@@ -387,23 +387,53 @@ function parentFeePeriodPaymentInfo(feeRow,payments){
   });
   return {amount:hasDatedAssociation?datedTotal:undatedTotal,hasDatedAssociation};
 }
+function parentActiveHomework(){
+  const all=Array.isArray(V?.hw)?V.hw.filter(x=>x&&typeof x==="object"):[];
+  const now=Date.now();
+  return all.filter(x=>{
+    const tm=Date.parse(String(x.d||""));
+    return Number.isFinite(tm)&&now-tm>=0&&now-tm<30*24*60*60*1000;
+  }).sort((a,b)=>String(b.d).localeCompare(String(a.d)));
+}
+function toggleHomeworkCompletedByKey(key){
+  const active=parentActiveHomework();
+  const x=active.find(item=>homeworkCompletionKey(item)===String(key||""));
+  if(!x)return;
+  const code=String(parentStudentCode||"portal").trim().toUpperCase()||"portal",k=homeworkCompletionKey(x);
+  try{
+    const raw=JSON.parse(localStorage.getItem("tasvia-homework-completed")||"{}");
+    const db=raw&&typeof raw==="object"&&!Array.isArray(raw)?raw:{};
+    db[code]=db[code]&&typeof db[code]==="object"?db[code]:{};
+    if(db[code][k])delete db[code][k];else db[code][k]={completedAt:new Date().toISOString()};
+    localStorage.setItem("tasvia-homework-completed",JSON.stringify(db));
+  }catch(_){}
+  render();
+  setTimeout(()=>document.getElementById("homeworkSection")?.scrollIntoView({behavior:"smooth",block:"start"}),30);
+}
 function renderParentHomeworkItems(items){
   const list=Array.isArray(items)?items:[];
-  return list.map((x,i)=>{
-    const done=isHomeworkCompleted(x);
+  if(!list.length){
+    return '<div class="parent-empty">📚 '+esc(T[L].completed===undefined?"No homework":T[L].completed)+"</div>";
+  }
+  return list.map(x=>{
+    const done=isHomeworkCompleted(x),key=homeworkCompletionKey(x);
+    const keyArg=String(key).replace(/\\/g,"\\\\").replace(/'/g,"\\'");
     return '<div class="hw hw-row '+(done?'hw-completed':'')+'" data-hw-status="'+(done?'completed':'pending')+'">'+
       '<div><b>'+esc(dN(x.d))+'</b><div>'+esc(x.hw||x.text||'')+'</div>'+(x.note?'<div class="sub">'+esc(x.note)+'</div>':'')+'</div>'+
-      '<button type="button" class="hw-complete-btn '+(done?'gold':'')+'" onclick="toggleHomeworkCompleted('+i+')">'+
+      '<button type="button" class="hw-complete-btn '+(done?'gold':'')+'" onclick="toggleHomeworkCompletedByKey(\''+keyArg+'\')">'+
       (done?esc(T[L].markPending):esc(T[L].markCompleted))+'</button></div>';
   }).join('');
 }
 function filterParentHomework(mode,btn){
   const list=document.getElementById("parentHomeworkList"); if(!list)return;
-  const all=Array.isArray(V?.hw)?V.hw.filter(x=>x&&typeof x==="object"):[], now=Date.now();
-  const active=all.filter(x=>{const tm=Date.parse(String(x.d||""));return Number.isFinite(tm)&&now-tm>=0&&now-tm<30*24*60*60*1000;}).sort((a,b)=>String(b.d).localeCompare(String(a.d)));
-  const filtered=mode==="all"?active:active.filter(x=>mode==="completed"?isHomeworkCompleted(x):!isHomeworkCompleted(x));
+  const active=parentActiveHomework();
+  const completedCount=active.filter(isHomeworkCompleted).length;
+  const pendingCount=active.length-completedCount;
+  const filtered=mode==="all"?active:mode==="completed"?active.filter(isHomeworkCompleted):active.filter(x=>!isHomeworkCompleted(x));
   list.innerHTML=renderParentHomeworkItems(filtered);
   document.querySelectorAll(".hw-filter-btn").forEach(b=>b.classList.toggle("active",b===btn));
+  const count=document.querySelector("#homeworkSection .hw-count");
+  if(count)count.textContent=(mode==="completed"?completedCount:mode==="pending"?pendingCount:pendingCount)+" "+T[L].pending;
 }
 function render(){
   langs();const t=T[L],v=V;if(!v)return;
