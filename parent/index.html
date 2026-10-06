@@ -330,82 +330,59 @@ function homeworkCompletionKey(x){
   for(let i=0;i<raw.length;i++){h^=raw.charCodeAt(i);h=Math.imul(h,16777619)}
   return "hw_"+(h>>>0).toString(36);
 }
+let parentHomeworkCloudMap={};
+let parentHomeworkCloudReady=false;
 function homeworkDoneMap(){
   const code=String(parentStudentCode||"portal").trim().toUpperCase()||"portal";
+  const cloud=parentHomeworkCloudMap&&typeof parentHomeworkCloudMap==="object"?parentHomeworkCloudMap:{};
+  if(Object.keys(cloud).length)return cloud;
   try{const raw=JSON.parse(localStorage.getItem("tasvia-homework-completed")||"{}");return raw&&typeof raw==="object"&&!Array.isArray(raw)?(raw[code]||{}):{}}catch(_){return {}}
 }
+function homeworkCompletionDocRef(){
+  try{
+    if(window.firebase&&firebase.firestore&&window.FIREBASE_CONFIG&&FIREBASE_CONFIG.apiKey){
+      if(!firebase.apps.length)firebase.initializeApp(FIREBASE_CONFIG);
+      const code=String(parentStudentCode||"portal").trim().toUpperCase()||"portal";
+      return firebase.firestore().doc("homeworkCompletions/"+code);
+    }
+  }catch(e){console.warn("TASVIA homework cloud init",e)}
+  return null;
+}
+async function loadHomeworkCompletions(){
+  const ref=homeworkCompletionDocRef(); if(!ref)return;
+  try{
+    const snap=await ref.get();
+    if(snap.exists){
+      const d=snap.data()||{};
+      parentHomeworkCloudMap=d.completed&&typeof d.completed==="object"?d.completed:{};
+      parentHomeworkCloudReady=true;
+      try{
+        const code=String(parentStudentCode||"portal").trim().toUpperCase()||"portal";
+        const raw=JSON.parse(localStorage.getItem("tasvia-homework-completed")||"{}");
+        const db=raw&&typeof raw==="object"&&!Array.isArray(raw)?raw:{};
+        db[code]=parentHomeworkCloudMap; localStorage.setItem("tasvia-homework-completed",JSON.stringify(db));
+      }catch(_){}
+      try{filterParentHomework(parentHomeworkFilterMode,document.querySelector("#homeworkSection .hw-filter-btn.active"))}catch(_){}
+    }
+  }catch(e){console.warn("TASVIA homework cloud load failed",e)}
+}
+async function persistHomeworkCompletions(){
+  const ref=homeworkCompletionDocRef(); if(!ref)return false;
+  const code=String(parentStudentCode||"portal").trim().toUpperCase()||"portal";
+  try{
+    await ref.set({code,completed:parentHomeworkCloudMap,updatedAt:new Date().toISOString()},{merge:true});
+    parentHomeworkCloudReady=true;
+    return true;
+  }catch(e){console.warn("TASVIA homework cloud save failed",e);return false}
+}
 function isHomeworkCompleted(x){return !!homeworkDoneMap()[homeworkCompletionKey(x)]}
-function toggleHomeworkCompleted(index){
+async function toggleHomeworkCompleted(index){
   const all=Array.isArray(V?.hw)?V.hw.filter(x=>x&&typeof x==="object"):[];
   const now=Date.now(),active=all.filter(x=>{const tm=Date.parse(String(x.d||""));return Number.isFinite(tm)&&now-tm>=0&&now-tm<30*24*60*60*1000;}).sort((a,b)=>String(b.d).localeCompare(String(a.d)));
-  const x=active[index];if(!x)return;
-  const code=String(parentStudentCode||"portal").trim().toUpperCase()||"portal",key=homeworkCompletionKey(x);
-  try{
-    const raw=JSON.parse(localStorage.getItem("tasvia-homework-completed")||"{}"),db=raw&&typeof raw==="object"&&!Array.isArray(raw)?raw:{};
-    db[code]=db[code]&&typeof db[code]==="object"?db[code]:{};
-    if(db[code][key])delete db[code][key];else db[code][key]={completedAt:new Date().toISOString()};
-    localStorage.setItem("tasvia-homework-completed",JSON.stringify(db));
-  }catch(_){}
+  const x=active[index]; if(!x)return;
+  await toggleHomeworkCompletedByKey(homeworkCompletionKey(x));
   render();
-  // Keep the parent inside Homework after toggling completion.
-  // render() rebuilds the dashboard, so reopen the same section after the DOM settles.
-  setTimeout(()=>{
-    try{
-      openParentSection("homeworkSection");
-      const btn=document.querySelector(".parent-section-body .hw-complete-btn");
-      if(btn)btn.focus();
-    }catch(_){}
-  },40);
-}
-function store(k,v){try{v===undefined?localStorage.getItem(k):localStorage.setItem(k,v)}catch(e){}}
-function load(k){try{return localStorage.getItem(k)}catch(e){return null}}
-const mN=m=>{
-  const s=String(m||"");
-  const z=/^(\d{4})-(\d{1,2})$/.exec(s);
-  if(!z)return s||"—";
-  const dt=new Date(Number(z[1]),Number(z[2])-1,1);
-  return Number.isNaN(dt.getTime())?s:dt.toLocaleDateString(T[L].loc,{month:"long",year:"numeric"});
-};
-const safeDate=d=>{
-  const s=String(d||"");
-  const dt=new Date(/^\d{4}-\d{2}-\d{2}$/.test(s)?s+"T00:00":s);
-  return Number.isNaN(dt.getTime())?null:dt;
-};
-const dN=d=>{const dt=safeDate(d);return dt?dt.toLocaleDateString(T[L].loc,{day:"numeric",month:"short"}):String(d||"—")};
-const dL=d=>{const dt=safeDate(d);return dt?dt.toLocaleDateString(T[L].loc,{weekday:"long",day:"numeric",month:"long"}):String(d||"—")};
-const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
-
-function langs(){document.getElementById("langs").innerHTML=Object.keys(LN).map(k=>`<button class="${k===L?"on":""}" data-l="${k}" aria-pressed="${k===L}">${LN[k]}</button>`).join("");document.documentElement.lang=k2(L)}
-const k2=l=>({en:"en",te:"te",hi:"hi"})[l];
-document.getElementById("langs").addEventListener("click",e=>{const b=e.target.closest("[data-l]");if(!b)return;L=b.dataset.l;store("tasvia-parent-lang",L);render()});
-
-function msg(text,retry){document.getElementById("kid").innerHTML="";document.getElementById("main").innerHTML=`<div class="center">${esc(text)}${retry?`<div class="acts" style="justify-content:center"><a class="btn gold" href="" onclick="location.reload();return false">${esc(T[L].retry)}</a></div>`:""}</div>`}
-
-let parentSectionPlaceholder=null;
-function openParentSection(id){
-  const source=document.getElementById(id);
-  if(!source)return;
-  let layer=document.getElementById("parentSectionViewer");
-  if(!layer){
-    layer=document.createElement("div");
-    layer.id="parentSectionViewer";
-    layer.className="parent-section-viewer";
-    layer.innerHTML='<div class="parent-section-top"><button type="button" class="parent-section-close" aria-label="Close section">‹</button><div class="parent-section-title">TASVIA Academy</div></div><div class="parent-section-body" id="parentSectionBody"></div>';
-    document.body.appendChild(layer);
-    layer.querySelector(".parent-section-close").onclick=closeParentSection;
-    layer.addEventListener("click",e=>{if(e.target===layer)closeParentSection()});
-  }
-  if(parentSectionPlaceholder)closeParentSection();
-  parentSectionPlaceholder=document.createComment("TASVIA_PARENT_SECTION");
-  source.parentNode.insertBefore(parentSectionPlaceholder,source);
-  document.getElementById("parentSectionBody").appendChild(source);
-  const heading=source.querySelector("h2");
-  layer.querySelector(".parent-section-title").textContent=heading?heading.textContent.trim():"TASVIA Academy";
-  layer.classList.add("show");
-  document.body.classList.add("parent-view-open");
-  layer.scrollTop=0;
-  const closeBtn=layer.querySelector(".parent-section-close");
-  if(closeBtn)setTimeout(()=>closeBtn.focus(),0);
+  setTimeout(()=>{try{openParentSection("homeworkSection")}catch(_){}},0);
 }
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){const layer=document.getElementById("parentSectionViewer");if(layer&&layer.classList.contains("show"))closeParentSection()}});
 function closeParentSection(){
@@ -454,24 +431,25 @@ function parentActiveHomework(){
     return Number.isFinite(tm)&&now-tm>=0&&now-tm<30*24*60*60*1000;
   }).sort((a,b)=>String(b.d).localeCompare(String(a.d)));
 }
-function toggleHomeworkCompletedByKey(key){
+async function toggleHomeworkCompletedByKey(key){
   const active=parentActiveHomework();
   const k=String(key||"");
   const x=active.find(item=>homeworkCompletionKey(item)===k);
   if(!x)return false;
   const code=String(parentStudentCode||"portal").trim().toUpperCase()||"portal";
+  parentHomeworkCloudMap=parentHomeworkCloudMap&&typeof parentHomeworkCloudMap==="object"?parentHomeworkCloudMap:{};
+  if(parentHomeworkCloudMap[k])delete parentHomeworkCloudMap[k];
+  else parentHomeworkCloudMap[k]={completedAt:new Date().toISOString()};
   try{
     const raw=JSON.parse(localStorage.getItem("tasvia-homework-completed")||"{}");
     const db=raw&&typeof raw==="object"&&!Array.isArray(raw)?raw:{};
-    db[code]=db[code]&&typeof db[code]==="object"?db[code]:{};
-    if(db[code][k])delete db[code][k];else db[code][k]={completedAt:new Date().toISOString()};
+    db[code]=parentHomeworkCloudMap;
     localStorage.setItem("tasvia-homework-completed",JSON.stringify(db));
-  }catch(err){
-    console.warn("TASVIA homework completion save failed",err);
-    return false;
-  }
+  }catch(_){}
   const activeBtn=document.querySelector("#homeworkSection .hw-filter-btn.active");
   filterParentHomework(parentHomeworkFilterMode,activeBtn);
+  const saved=await persistHomeworkCompletions();
+  if(!saved)console.warn("TASVIA: homework kept locally because cloud save failed");
   return true;
 }
 document.addEventListener("click",function(e){
@@ -1077,6 +1055,7 @@ async function loadForStudentId(code){
       if(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey){
         if(!firebase.apps.length)firebase.initializeApp(window.FIREBASE_CONFIG);
         const ref=firebase.firestore().doc("parentView/"+code);
+        loadHomeworkCompletions().catch(()=>{});
         ref.onSnapshot(d=>{if(d.exists)applyData(d.data())},()=>{});
       }
     }catch(e){console.warn("TASVIA live sync unavailable:",e)}
@@ -1086,6 +1065,7 @@ async function loadForStudentId(code){
       if(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey){
         if(!firebase.apps.length)firebase.initializeApp(window.FIREBASE_CONFIG);
         const ref=firebase.firestore().doc("parentView/"+code);
+        loadHomeworkCompletions().catch(()=>{});
         let done=false;
         const timer=setTimeout(()=>{
           if(done||loaded)return;
