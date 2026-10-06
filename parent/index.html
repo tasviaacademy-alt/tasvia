@@ -271,6 +271,48 @@ table{border-collapse:separate!important;border-spacing:0;width:100%}table th{fo
 @media(min-width:650px){.parent-action-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}.parent-action{min-height:82px}.parent-action-icon{width:40px;height:40px}}
 @media(max-width:420px){main{padding-left:13px;padding-right:13px}.card{padding:14px}.parent-action{min-height:70px;padding:10px;font-size:.88rem}.parent-action-icon{width:34px;height:34px;font-size:1rem}}
 @media(prefers-reduced-motion:reduce){.card,.item,.parent-action{transition:none!important}.parent-action:hover,.item:hover{transform:none!important}}
+
+/* TASVIA PARENT PORTAL — PREMIUM SIGNATURE POLISH */
+:root{
+ --sigN:#061A3B;--sigN2:#0B2858;--sigG:#D5A647;--sigG2:#F0C86A;
+ --sigBg:#F5F7FA;--sigCard:#FFF;--sigInk:#172033;--sigMuted:#667085;
+ --sigLine:#E6E9EF;--sigGreen:#16845B;--sigRed:#C83B36;
+}
+body{background:linear-gradient(180deg,#F8F9FB 0%,#F3F5F8 100%);color:var(--sigInk);font-family:Inter,"Segoe UI",system-ui,-apple-system,BlinkMacSystemFont,sans-serif}
+header{background:linear-gradient(135deg,var(--sigN),var(--sigN2));padding:14px 18px 20px;box-shadow:0 7px 25px rgba(6,26,59,.16);border-bottom:1px solid rgba(240,200,106,.3)}
+.brand{letter-spacing:-.03em}.brand span{color:var(--sigG2)}.langs button.on{background:var(--sigG);color:#17120A}
+.kid{padding:2px 2px 4px}.kid h1{font-size:1.82rem;letter-spacing:-.035em}.kid p{font-size:.88rem}
+main{max-width:860px;padding:0 15px 46px}
+.card{border:1px solid var(--sigLine);border-radius:17px;background:rgba(255,255,255,.97);box-shadow:0 3px 12px rgba(16,24,40,.045);padding:17px;transition:transform .18s ease,box-shadow .18s ease}
+.card:hover{box-shadow:0 9px 26px rgba(16,24,40,.075)}
+.parent-dashboard{background:linear-gradient(145deg,var(--sigN),var(--sigN2))!important;border:1px solid rgba(240,200,106,.28)!important;color:#fff;box-shadow:0 13px 30px rgba(6,26,59,.16)!important}
+.parent-dashboard-item{background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.12)!important}.parent-dashboard-item small{color:rgba(255,255,255,.68)!important}.parent-dashboard-item b{color:#fff}
+.parent-dashboard-item.ok b{color:#72D9A7}.parent-dashboard-item.bad b{color:#FF9B92}
+.parent-action-grid{gap:11px;margin-top:14px}
+.parent-action{position:relative;overflow:hidden;min-height:82px;border:1px solid var(--sigLine);border-radius:16px;background:linear-gradient(145deg,#fff,#FAFBFC);box-shadow:0 4px 13px rgba(16,24,40,.045);font-weight:750;justify-content:flex-start;padding:13px}
+.parent-action::after{content:"›";margin-left:auto;color:var(--sigG);font-size:1.45rem;font-weight:400}
+.parent-action-icon{width:40px;height:40px;border-radius:12px;background:#F1F3F6;display:grid;place-items:center;font-size:21px}
+.parent-action:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(16,24,40,.09);border-color:rgba(213,166,71,.45)}
+.hw-section-head{align-items:center}
+.hw-count{background:#F0F2F5;border:1px solid #E4E7EC;color:#475467}
+.hw-row{padding:12px 0;border-bottom:1px solid #EEF0F3}.hw-row:last-child{border-bottom:0}
+.hw-row>div:first-child{min-width:0}.hw-row b{color:#667085;font-size:.76rem}.hw-row .hw-status{margin-top:5px}
+.hw-complete-btn{border-radius:10px!important;min-width:104px;padding:9px 11px!important;box-shadow:0 2px 6px rgba(16,24,40,.08);font-weight:750!important}
+.hw-complete-btn:not(.gold){background:var(--sigGreen)!important}
+.hw-complete-btn.gold{background:#F3F5F7!important;color:#475467!important;border:1px solid #DDE1E7!important}
+.hw-completed{background:linear-gradient(90deg,rgba(22,132,91,.055),transparent)!important}
+.fee-due-badge{border:1px solid rgba(200,59,54,.14);font-weight:750}
+.tag.ok{border:1px solid rgba(22,132,91,.16)}
+.btn.gold{background:linear-gradient(135deg,var(--sigG2),var(--sigG));color:#17120A}
+.acts .btn{box-shadow:0 3px 9px rgba(16,24,40,.08)}
+table th{text-transform:uppercase;letter-spacing:.05em;font-size:.7rem}
+table td,table th{padding:9px 7px!important}
+.parent-empty{border:1px dashed #D7DCE4;background:#FAFBFC}
+#banner{border-left-color:var(--sigG);box-shadow:0 12px 32px rgba(16,24,40,.17)}
+@media(min-width:700px){.parent-action-grid{grid-template-columns:repeat(4,minmax(0,1fr));}.parent-action{min-height:88px}.parent-action::after{display:none}}
+@media(max-width:520px){.parent-action{min-height:74px}.parent-action-icon{width:36px;height:36px;font-size:19px}.hw-row{align-items:flex-start}.hw-complete-btn{min-width:96px}}
+@media(max-width:370px){main{padding-left:11px;padding-right:11px}.parent-action{padding:10px;font-size:.86rem}.parent-action::after{font-size:1.25rem}.card{padding:14px}}
+@media(prefers-reduced-motion:reduce){.card,.parent-action{transition:none}.parent-action:hover{transform:none}}
 </style>
 </head>
 <body>
