@@ -805,7 +805,7 @@ async function loadForStudentId(code){
           (tests.length?'<table><tr><th>Test</th><th class="r">Marks</th></tr>'+tests.map(x=>'<tr><td>'+escList(x.s)+' – '+escList(x.n)+'</td><td class="r">'+(Number(x.m)||0)+'/'+(Number(x.x)||0)+'</td></tr>').join("")+'</table>':'<div class="parent-empty">No test marks yet</div>')+
           '</div>'+
           '<div class="card" id="feesSection"><h2>💳 Fees</h2>'+
-          (fees.length?'<table><tr><th>Month</th><th class="r">Status</th></tr>'+fees.map(f=>{const due=Math.max(0,(Number(f.fee)||0)-(Number(f.paid)||0));return '<tr><td>'+escList(f.m)+'</td><td class="r">'+(due>0?"Due: "+rs(due):"Paid")+'</td></tr>'}).join("")+'</table>':'<div class="parent-empty">No fee records</div>')+
+          (fees.length?'<table><tr><th>Month</th><th>Due Date</th><th class="r">Status</th></tr>'+fees.map(f=>{const due=Math.max(0,(Number(f.fee)||0)-(Number(f.paid)||0));const dd=f.dueDate?String(f.dueDate):"";let dateText="—";if(dd){const d=new Date(dd+"T00:00:00");dateText=Number.isNaN(d.getTime())?"—":d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});}return '<tr><td>'+escList(f.m)+'</td><td>'+dateText+'</td><td class="r">'+(due>0?"Due: "+rs(due):"Paid")+'</td></tr>'}).join("")+'</table>':'<div class="parent-empty">No fee records</div>')+
           (pays.length?'<p class="sub"><b>Recent payments</b></p><table>'+pays.slice().reverse().slice(0,10).map(p=>'<tr><td>'+escList(p.d)+'<br><span class="sub">'+escList(p.m)+' · '+escList(p.mode)+'</span></td><td class="r">'+rs(p.a)+'</td></tr>').join("")+'</table>':"")+
           '</div>'+
           '<div class="card" id="contactSection"><h2>📞 '+esc(T[L].contact)+'</h2><p style="margin:0">'+esc(cc.name||"TASVIA Academy")+'</p>'+
