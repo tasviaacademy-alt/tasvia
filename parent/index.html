@@ -413,7 +413,7 @@ function toggleHomeworkCompletedByKey(key){
 function renderParentHomeworkItems(items){
   const list=Array.isArray(items)?items:[];
   if(!list.length){
-    return '<div class="parent-empty">📚 '+esc(T[L].completed===undefined?"No homework":T[L].completed)+"</div>";
+    return '<div class="parent-empty">📚 '+esc(T[L].noHw||"No homework")+'</div>';
   }
   return list.map(x=>{
     const done=isHomeworkCompleted(x),key=homeworkCompletionKey(x);
@@ -433,7 +433,9 @@ function filterParentHomework(mode,btn){
   list.innerHTML=renderParentHomeworkItems(filtered);
   document.querySelectorAll(".hw-filter-btn").forEach(b=>b.classList.toggle("active",b===btn));
   const count=document.querySelector("#homeworkSection .hw-count");
-  if(count)count.textContent=(mode==="completed"?completedCount:mode==="pending"?pendingCount:pendingCount)+" "+T[L].pending;
+  if(count){
+    count.textContent=(mode==="completed"?completedCount:pendingCount)+" "+(mode==="completed"?T[L].completed:T[L].pending);
+  }
 }
 function render(){
   langs();const t=T[L],v=V;if(!v)return;
