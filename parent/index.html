@@ -176,6 +176,9 @@ button,.btn,a.btn{visibility:visible;}
 .parent-action:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .parent-action-icon{font-size:24px;line-height:1;flex:0 0 auto}
 #homeworkSection,#bodmasSection,#gkSection,#currentAffairsCard,#attendanceSection,#testsSection,#feesSection,#contactSection{scroll-margin-top:14px}
+/* Dashboard sections open only when their quick-access button is pressed */
+main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentAffairsCard,main > #attendanceSection,main > #testsSection,main > #feesSection,main > #contactSection{display:none}
+.parent-section-body > #homeworkSection,.parent-section-body > #bodmasSection,.parent-section-body > #gkSection,.parent-section-body > #currentAffairsCard,.parent-section-body > #attendanceSection,.parent-section-body > #testsSection,.parent-section-body > #feesSection,.parent-section-body > #contactSection{display:block}
 .parent-action{border:1px solid var(--line);font:inherit;cursor:pointer}
 .parent-section-viewer{position:fixed;inset:0;z-index:2000;background:var(--bg);overflow-y:auto;display:none}
 .parent-section-viewer.show{display:block}
