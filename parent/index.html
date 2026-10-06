@@ -240,21 +240,6 @@ td,th{padding:10px 5px}th{font-size:.78rem;text-transform:uppercase;letter-spaci
 </div>
 
 
-<script>
-(function(){
-  // Parent Portal must always load the latest dashboard code. Remove any
-  // previously installed root service worker/cache that can keep an old
-  // parent/index.html active after a production deployment.
-  if(location.pathname.indexOf("/parent/")===0 && "serviceWorker" in navigator){
-    navigator.serviceWorker.getRegistrations().then(function(rs){
-      if(!rs.length)return;
-      return Promise.all(rs.map(function(r){return r.unregister().catch(function(){return false})})).then(function(){
-        try{location.reload()}catch(_){}
-      });
-    }).catch(function(){});
-  }
-})();
-</script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script>
 (function(){
@@ -938,7 +923,6 @@ async function loadForStudentId(code){
     }
   });
 }
-if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("/sw.js",{scope:"/"}).then(r=>r.update()).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
 </body>
 </html>
