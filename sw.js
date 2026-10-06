@@ -45,7 +45,7 @@ self.addEventListener("fetch", event => {
     /* Parent pages must never depend on a stale service-worker HTML shell.
        Existing parent links use #STUDENTCODE, so the page itself must always
        reach the current network version when online. */
-    const isParentPage = /(?:^|\\/)parent(?:\\/index\\.html|\\.html)?$/i.test(url.pathname);
+    const isParentPage = /(?:^|\/)parent(?:\/index\.html|\.html)?$/i.test(url.pathname);
     if(isParentPage){
       event.respondWith(fetch(new Request(request,{cache:"no-store"})));
       return;
