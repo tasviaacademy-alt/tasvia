@@ -902,7 +902,7 @@ const PC_ALPH="ABCDEFGHJKMNPQRSTUVWXYZ23456789";
 // Existing shorter links remain valid until a staff member explicitly regenerates them.
 function newCode(){const a=new Uint32Array(16);crypto.getRandomValues(a);return Array.from(a,x=>PC_ALPH[x%PC_ALPH.length]).join("")}
 function stable(v){if(Array.isArray(v))return "["+v.map(stable).join(",")+"]";if(v&&typeof v==="object")return "{"+Object.keys(v).sort().map(k=>JSON.stringify(k)+":"+stable(v[k])).join(",")+"}";return JSON.stringify(v===undefined?null:v)}
-function parentURL(code){return "https://apk.tasviaacademy.com/parent/index.html?code="+encodeURIComponent(code)}
+function parentURL(code){return "https://apk.tasviaacademy.com/parent.html?code="+encodeURIComponent(code)}
 function lastMonths(n){const out=[],d=new Date();d.setDate(1);for(let i=0;i<n;i++){out.push(d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"));d.setMonth(d.getMonth()-1)}return out}
 function buildParentView(s){
   const i=info();
