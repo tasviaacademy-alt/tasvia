@@ -215,6 +215,8 @@ td,th{padding:10px 5px}th{font-size:.78rem;text-transform:uppercase;letter-spaci
 .parent-dashboard-item{border-radius:14px;background:#F8FAFC;padding:12px 8px}.parent-dashboard-item b{font-size:1.3rem}
 .parent-action{border-radius:16px;min-height:82px;background:#fff;box-shadow:0 6px 18px rgba(16,24,40,.06);border-color:#E7EAF0}.parent-action:hover{box-shadow:0 10px 24px rgba(16,24,40,.10);transform:translateY(-1px)}
 .fee-due{border:1px solid rgba(180,35,24,.28);box-shadow:0 10px 30px rgba(180,35,24,.08)}
+.fee-due-badge{display:inline-block;padding:4px 10px;border-radius:999px;background:rgba(196,67,42,.12);color:var(--a);font-weight:800;animation:feeDuePulse 1.5s ease-in-out infinite}
+@keyframes feeDuePulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(196,67,42,.16)}50%{transform:scale(1.06);box-shadow:0 0 0 6px rgba(196,67,42,0)}}
 .fee-popup{border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.28)}
 .foot{padding-top:8px;letter-spacing:.02em}
 @media(max-width:520px){main{padding-left:12px;padding-right:12px}.card{padding:16px;border-radius:18px}.kid h1{font-size:1.72rem}}
@@ -805,7 +807,7 @@ async function loadForStudentId(code){
           (tests.length?'<table><tr><th>Test</th><th class="r">Marks</th></tr>'+tests.map(x=>'<tr><td>'+escList(x.s)+' – '+escList(x.n)+'</td><td class="r">'+(Number(x.m)||0)+'/'+(Number(x.x)||0)+'</td></tr>').join("")+'</table>':'<div class="parent-empty">No test marks yet</div>')+
           '</div>'+
           '<div class="card" id="feesSection"><h2>💳 Fees</h2>'+
-          (fees.length?'<table><tr><th>Month</th><th>Due Date</th><th class="r">Status</th></tr>'+fees.map(f=>{const due=Math.max(0,(Number(f.fee)||0)-(Number(f.paid)||0));const dd=f.dueDate?String(f.dueDate):"";let dateText="—";if(dd){const d=new Date(dd+"T00:00:00");dateText=Number.isNaN(d.getTime())?"—":d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});}return '<tr><td>'+escList(f.m)+'</td><td>'+dateText+'</td><td class="r">'+(due>0?"Due: "+rs(due):"Paid")+'</td></tr>'}).join("")+'</table>':'<div class="parent-empty">No fee records</div>')+
+          (fees.length?'<table><tr><th>Month</th><th>Due Date</th><th class="r">Status</th></tr>'+fees.map(f=>{const due=Math.max(0,(Number(f.fee)||0)-(Number(f.paid)||0));const dd=f.dueDate?String(f.dueDate):"";let dateText="—";if(dd){const d=new Date(dd+"T00:00:00");dateText=Number.isNaN(d.getTime())?"—":d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});}return '<tr><td>'+escList(f.m)+'</td><td>'+dateText+'</td><td class="r">'+(due>0?'<span class="fee-due-badge">Due: '+rs(due)+'</span>':'<span class="tag ok">Paid</span>')+'</td></tr>'}).join("")+'</table>':'<div class="parent-empty">No fee records</div>')+
           (pays.length?'<p class="sub"><b>Recent payments</b></p><table>'+pays.slice().reverse().slice(0,10).map(p=>'<tr><td>'+escList(p.d)+'<br><span class="sub">'+escList(p.m)+' · '+escList(p.mode)+'</span></td><td class="r">'+rs(p.a)+'</td></tr>').join("")+'</table>':"")+
           '</div>'+
           '<div class="card" id="contactSection"><h2>📞 '+esc(T[L].contact)+'</h2><p style="margin:0">'+esc(cc.name||"TASVIA Academy")+'</p>'+
