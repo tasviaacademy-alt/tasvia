@@ -769,7 +769,7 @@ async function loadForStudentId(code){
         const phone=String(cc.phone||"").replace(/\D/g,"");
         const escList=x=>esc(String(x||""));
         document.title=name+" – TASVIA Academy";
-        document.getElementById("kid").innerHTML=(safe.photo&&/^data:image\\/jpeg;base64,/.test(String(safe.photo))?'<div class="ph"><img src="'+safe.photo+'" alt=""></div>':"")+'<div><h1>'+esc(name)+'</h1><p>'+esc(cls)+(year?' · '+esc(year):'')+'</p></div>';
+        document.getElementById("kid").innerHTML=(safe.photo&&/^data:image\/jpeg;base64,/.test(String(safe.photo))?'<div class="ph"><img src="'+safe.photo+'" alt=""></div>':"")+'<div><h1>'+esc(name)+'</h1><p>'+esc(cls)+(year?' · '+esc(year):'')+'</p></div>';
         let safeHtml=
           '<section class="parent-dashboard card"><div class="parent-dashboard-title">📊 Parent Dashboard</div><div class="parent-dashboard-grid">'+
           '<div class="parent-dashboard-item"><b>'+(ypc!=null?ypc+"%":"–")+'</b><small>Attendance</small></div>'+
