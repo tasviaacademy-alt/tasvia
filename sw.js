@@ -1,12 +1,11 @@
 // TASVIA Academy service worker
 // HTML is network-first so production fixes are not hidden behind stale cache.
 // Firebase/Auth/API traffic is never cached.
-const CACHE = "tasvia-v40";
+const CACHE = "tasvia-v41";
 const STATIC_SHELL = [
   "/",
   "/index.html",
   "/parent/index.html",
-  "/parent.html",
   "/firebase-config.js",
   "/manifest.json",
   "/logo.png",
@@ -43,6 +42,14 @@ self.addEventListener("fetch", event => {
     /\.(?:css|js|png|jpg|jpeg|webp|svg|ico|woff2?)$/i.test(url.pathname);
 
   if (isHtml) {
+    /* Parent pages must never depend on a stale service-worker HTML shell.
+       Existing parent links use #STUDENTCODE, so the page itself must always
+       reach the current network version when online. */
+    const isParentPage = /(?:^|\\/)parent(?:\\/index\\.html|\\.html)?$/i.test(url.pathname);
+    if(isParentPage){
+      event.respondWith(fetch(new Request(request,{cache:"no-store"})));
+      return;
+    }
     event.respondWith(
       fetch(new Request(request, {cache:"no-store"}))
         .then(response => {
