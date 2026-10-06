@@ -1617,7 +1617,7 @@ document.addEventListener("click",async e=>{
       markAllT(UI.date,teachersList());
       toast("Remaining teachers marked present");
       break;
-    case "more":UI.more=b.dataset.k||null;if(UI.more==="money"&&!isAdmin()){UI.more=null;toast("Admin access required.");break;}if(UI.more==="backup")ensureGKBackup();render();window.scrollTo(0,0);break;
+    case "more":UI.more=b.dataset.k||null;UI.tab="more";UI.dashboardHome=false;if(UI.more==="money"&&!isAdmin()){UI.more=null;toast("Admin access required.");break;}if(UI.more==="backup")ensureGKBackup();render();window.scrollTo(0,0);break;
     case "backupTab":UI.backupTab=b.dataset.k==="gk"?"gk":"homework";render();break;
     case "markT":markT(UI.date,id,b.dataset.v);break;
     case "addTeacher":teacherForm();break;
