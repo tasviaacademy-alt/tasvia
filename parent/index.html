@@ -755,28 +755,44 @@ async function loadForStudentId(code){
         const safe=V&&typeof V==="object"?V:{},cc=safe.centre&&typeof safe.centre==="object"?safe.centre:{};
         const name=String(safe.name||"TASVIA Student"),cls=String(safe.cls||""),year=String(safe.year||"");
         const att=safe.att&&typeof safe.att==="object"?safe.att:{};
-        const months=Object.keys(att).filter(m=>/^\\d{4}-\\d{2}$/.test(m)).sort().reverse();
-        const cm=months[0],a=cm&&att[cm]&&typeof att[cm]==="object"?att[cm]:{};
+        const months=Object.keys(att).filter(m=>/^\d{4}-\d{2}$/.test(m)).sort().reverse();
+        const cm=months[0]||"",a=cm&&att[cm]&&typeof att[cm]==="object"?att[cm]:{};
         const ap=Number(a.p)||0,aa=Number(a.a)||0,at=ap+aa,apc=at?Math.round(ap*100/at):null;
         const yr=safe.yr&&typeof safe.yr==="object"?safe.yr:{},yp=Number(yr.p)||0,ya=Number(yr.a)||0,yt=yp+ya,ypc=yt?Math.round(yp*100/yt):null;
         const tests=Array.isArray(safe.tests)?safe.tests.filter(x=>x&&typeof x==="object"):[];
         const fees=Array.isArray(safe.fees)?safe.fees.filter(x=>x&&typeof x==="object"):[];
         const pays=Array.isArray(safe.pays)?safe.pays.filter(x=>x&&typeof x==="object"):[];
-        const feeTotal=fees.reduce((n,f)=>n+(Number(f.fee)||0),0),feePaid=fees.reduce((n,f)=>n+(Number(f.paid)||0),0);
+        const hw=Array.isArray(safe.hw)?safe.hw.filter(x=>x&&typeof x==="object"):[];
+        const feeTotal=fees.reduce((n,f)=>n+(Number(f.fee)||0),0);
+        const feePaid=fees.reduce((n,f)=>n+(Number(f.paid)||0),0);
         const testAvg=tests.length?Math.round(tests.reduce((n,x)=>n+(Number(x.x)?(Number(x.m)||0)*100/Number(x.x):0),0)/tests.length):null;
-        const phone=String(cc.phone||"").replace(/\\D/g,"");
+        const phone=String(cc.phone||"").replace(/\D/g,"");
+        const escList=x=>esc(String(x||""));
         document.title=name+" – TASVIA Academy";
         document.getElementById("kid").innerHTML='<div><h1>'+esc(name)+'</h1><p>'+esc(cls)+(year?' · '+esc(year):'')+'</p></div>';
-        document.getElementById("main").innerHTML=
-          '<div class="card"><h2>📊 Parent Dashboard</h2><div class="stats">'+
-          '<div><b class="ok">'+(ypc!=null?ypc+"%":"–")+'</b><small>Attendance</small></div>'+
-          '<div><b>'+(testAvg!=null?testAvg+"%":"–")+'</b><small>Test Average</small></div>'+
-          '<div><b>'+(feeTotal>0?(feePaid>=feeTotal?"Paid":rs(Math.max(0,feeTotal-feePaid))):"–")+'</b><small>Fees</small></div></div></div>'+
-          '<div class="card"><h2>📅 '+esc(T[L].att)+'</h2><p class="sub">'+(cm?esc(mN(cm)):"")+'</p><div class="stats"><div><b class="ok">'+ap+'</b><small>'+esc(T[L].present)+'</small></div><div><b class="bad">'+aa+'</b><small>'+esc(T[L].absent)+'</small></div><div><b>'+(apc!=null?apc+"%":"–")+'</b><small>'+esc(T[L].pct)+'</small></div></div></div>'+
-          '<div class="card"><h2>📝 '+esc(T[L].tests)+'</h2><p class="sub">'+(tests.length?tests.length+" test record(s)":"No test marks yet")+'</p></div>'+
-          '<div class="card"><h2>💳 '+esc(T[L].fees)+'</h2><p class="sub">'+(feeTotal>0?(feePaid>=feeTotal?esc(T[L].paid):"Due: "+rs(Math.max(0,feeTotal-feePaid))):"No fee records")+'</p></div>'+
-          '<div class="card"><h2>📞 '+esc(T[L].contact)+'</h2><p style="margin:0">'+esc(cc.name||"TASVIA Academy")+'</p>'+(cc.address?'<p class="sub">'+esc(cc.address)+'</p>':"")+(phone?'<div class="acts"><a class="btn gold" href="tel:'+esc(phone)+'">📞 '+esc(T[L].call)+'</a></div>':"")+'</div>'+
-          '<div class="notice" style="margin-top:12px">Student data loaded successfully. Some optional dashboard features are temporarily unavailable.</div>'; if(new URLSearchParams(location.search).get("debug")==="1"){const d=document.querySelector(".notice");if(d)d.textContent+=" Render error: "+String(err&&err.name||"Error")+" — "+String(err&&err.message||err)}
+        let safeHtml=
+          '<section class="parent-dashboard card"><div class="parent-dashboard-title">📊 Parent Dashboard</div><div class="parent-dashboard-grid">'+
+          '<div class="parent-dashboard-item"><b>'+(ypc!=null?ypc+"%":"–")+'</b><small>Attendance</small></div>'+
+          '<div class="parent-dashboard-item"><b>'+(testAvg!=null?testAvg+"%":"–")+'</b><small>Test Average</small></div>'+
+          '<div class="parent-dashboard-item"><b>'+(feeTotal>0?(feePaid>=feeTotal?"Paid":rs(Math.max(0,feeTotal-feePaid))):"–")+'</b><small>Fees</small></div></div></section>'+
+          '<div class="card"><h2>📚 Homework</h2>'+
+          (hw.length?hw.slice(0,7).map(x=>'<div class="hw-item"><b>'+escList(x.d)+'</b><div>'+escList(x.hw)+'</div>'+(x.note?'<div class="sub">'+escList(x.note)+'</div>':"")+'</div>').join(""):'<div class="parent-empty">No homework added yet</div>')+
+          '</div>'+
+          '<div class="card" id="attendanceSection"><h2>📅 Attendance'+(cm?' · '+esc(cm):"")+'</h2><div class="stats"><div><b class="ok">'+ap+'</b><small>Present</small></div><div><b class="bad">'+aa+'</b><small>Absent</small></div><div><b>'+(apc!=null?apc+"%":"–")+'</b><small>Attendance</small></div></div>'+
+          (safe.abs&&Array.isArray(safe.abs)&&safe.abs.length?'<p class="sub"><b>Recent absences:</b> '+safe.abs.slice(0,8).map(escList).join(", ")+'</p>':"")+
+          '</div>'+
+          '<div class="card" id="testsSection"><h2>📝 Test marks</h2>'+
+          (tests.length?'<table><tr><th>Test</th><th class="r">Marks</th></tr>'+tests.map(x=>'<tr><td>'+escList(x.s)+' – '+escList(x.n)+'</td><td class="r">'+(Number(x.m)||0)+'/'+(Number(x.x)||0)+'</td></tr>').join("")+'</table>':'<div class="parent-empty">No test marks yet</div>')+
+          '</div>'+
+          '<div class="card" id="feesSection"><h2>💳 Fees</h2>'+
+          (fees.length?'<table><tr><th>Month</th><th class="r">Status</th></tr>'+fees.map(f=>{const due=Math.max(0,(Number(f.fee)||0)-(Number(f.paid)||0));return '<tr><td>'+escList(f.m)+'</td><td class="r">'+(due>0?"Due: "+rs(due):"Paid")+'</td></tr>'}).join("")+'</table>':'<div class="parent-empty">No fee records</div>')+
+          (pays.length?'<p class="sub"><b>Recent payments</b></p><table>'+pays.slice().reverse().slice(0,10).map(p=>'<tr><td>'+escList(p.d)+'<br><span class="sub">'+escList(p.m)+' · '+escList(p.mode)+'</span></td><td class="r">'+rs(p.a)+'</td></tr>').join("")+'</table>':"")+
+          '</div>'+
+          '<div class="card" id="contactSection"><h2>📞 '+esc(T[L].contact)+'</h2><p style="margin:0">'+esc(cc.name||"TASVIA Academy")+'</p>'+
+          (cc.address?'<p class="sub">'+esc(cc.address)+'</p>':"")+
+          (phone?'<div class="acts"><a class="btn gold" href="tel:'+esc(phone)+'">📞 '+esc(T[L].call)+'</a><a class="btn" target="_blank" rel="noopener" href="https://wa.me/91'+esc(phone.replace(/^91/,""))+'">💬 '+esc(T[L].wa)+'</a></div>':"")+
+          '</div>';
+        document.getElementById("main").innerHTML=safeHtml;
       }catch(fallbackErr){
         console.error("TASVIA Parent Portal safe dashboard error:",fallbackErr);
         msg("Student data was found, but the dashboard could not be displayed. Please try again.",true);
