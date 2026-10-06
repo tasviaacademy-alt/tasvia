@@ -718,7 +718,7 @@ function feeStatus(s,month){
   if(!s.fee)return {k:"none",paid,dueDate};
   // Never assess a fee before the student's joining date. The joining date is the
   // first date from which the monthly fee can become due.
-  if(s.joined&&/^\\d{4}-\\d{2}-\\d{2}$/.test(s.joined)){
+  if(s.joined&&/^\d{4}-\d{2}-\d{2}$/.test(s.joined)){
     const joinMonth=s.joined.slice(0,7);
     if(month<joinMonth)return {k:"not-enrolled",paid,left:Math.max(+s.fee-paid,0),dueDate:null};
     if(month===joinMonth&&today()<s.joined)return {k:"upcoming",paid,left:Math.max(+s.fee-paid,0),dueDate};
@@ -1283,7 +1283,7 @@ function printStudentID(id){
 const opt=(v,cur,l)=>`<option value="${esc(v)}" ${v===cur?"selected":""}>${esc(l||v)}</option>`;
 // Meaningful TASVIA Student ID: TAS-YY-0001, where YY is the admission year and the last part is a unique sequence.
 function tasviaStudentId(joined){
-  const raw=String(joined||today()), y=/^\\d{4}/.test(raw)?raw.slice(2,4):String(new Date().getFullYear()).slice(2,4);
+  const raw=String(joined||today()), y=/^\d{4}/.test(raw)?raw.slice(2,4):String(new Date().getFullYear()).slice(2,4);
   const nums=Object.keys(S.students||{}).map(k=>String(k)).filter(k=>/^TAS-\d{2}-\d{4}$/.test(k)&&k.slice(4,6)===y).map(k=>Number(k.slice(7))).filter(Number.isFinite);
   const next=(nums.length?Math.max(...nums):0)+1;
   return `TAS-${y}-${String(next).padStart(4,"0")}`;
