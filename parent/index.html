@@ -776,7 +776,7 @@ async function loadForStudentId(code){
           '<div class="card"><h2>📝 '+esc(T[L].tests)+'</h2><p class="sub">'+(tests.length?tests.length+" test record(s)":"No test marks yet")+'</p></div>'+
           '<div class="card"><h2>💳 '+esc(T[L].fees)+'</h2><p class="sub">'+(feeTotal>0?(feePaid>=feeTotal?esc(T[L].paid):"Due: "+rs(Math.max(0,feeTotal-feePaid))):"No fee records")+'</p></div>'+
           '<div class="card"><h2>📞 '+esc(T[L].contact)+'</h2><p style="margin:0">'+esc(cc.name||"TASVIA Academy")+'</p>'+(cc.address?'<p class="sub">'+esc(cc.address)+'</p>':"")+(phone?'<div class="acts"><a class="btn gold" href="tel:'+esc(phone)+'">📞 '+esc(T[L].call)+'</a></div>':"")+'</div>'+
-          '<div class="notice" style="margin-top:12px">Student data loaded successfully. Some optional dashboard features are temporarily unavailable.</div>';
+          '<div class="notice" style="margin-top:12px">Student data loaded successfully. Some optional dashboard features are temporarily unavailable.</div>'; if(new URLSearchParams(location.search).get("debug")==="1"){const d=document.querySelector(".notice");if(d)d.textContent+=" Render error: "+String(err&&err.name||"Error")+" — "+String(err&&err.message||err)}
       }catch(fallbackErr){
         console.error("TASVIA Parent Portal safe dashboard error:",fallbackErr);
         msg("Student data was found, but the dashboard could not be displayed. Please try again.",true);
