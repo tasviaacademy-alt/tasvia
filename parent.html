@@ -1181,6 +1181,14 @@ async function loadForStudentId(code){
       return await r.json();
     }finally{clearTimeout(timer)}
   }
+  async function waitForFirebase(timeoutMs=8000){
+    const end=Date.now()+timeoutMs;
+    while(Date.now()<end){
+      if(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey)return true;
+      await new Promise(r=>setTimeout(r,150));
+    }
+    return !!(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey);
+  }
   async function loadREST(){
     // GitHub Pages has no server-side /api/parent endpoint.
     // Legacy parent links use #STUDENTID, so load the single matching
@@ -1221,9 +1229,18 @@ async function loadForStudentId(code){
       showWelcome({keepInput:true,keepMessage:true});
     }
   },10000);
-  loadREST().then(data=>{
+  loadREST().then(async data=>{
     clearTimeout(startupTimeout);
     if(!data){
+      // REST 404 can occur when the Firestore document is temporarily unavailable.
+      // Give the deferred Firebase SDK a chance before declaring the ID invalid.
+      try{
+        if(await waitForFirebase(8000)){
+          if(!firebase.apps.length)firebase.initializeApp(window.FIREBASE_CONFIG);
+          const snap=await firebase.firestore().doc("parentView/"+code).get();
+          if(snap.exists){finish(snap.data());return;}
+        }
+      }catch(e){console.warn("TASVIA Firebase document fallback:",e)}
       if(!loaded){
         const m=document.getElementById("studentLoginMsg");
         if(m)m.textContent="Student ID not found. Please check the ID or ask TASVIA staff to sync the parent portal.";
@@ -1240,10 +1257,13 @@ async function loadForStudentId(code){
         ref.onSnapshot(d=>{if(d.exists)applyData(d.data())},()=>{});
       }
     }catch(e){console.warn("TASVIA live sync unavailable:",e)}
-  }).catch(e=>{
+  }).catch(async e=>{
     console.error("TASVIA Parent Portal REST startup:",e);
     try{
-      if(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey){
+      // Firebase scripts are intentionally deferred so they cannot block page startup.
+      // If Firestore REST is blocked by browser/network policy, wait for those scripts
+      // to finish loading, then use the same parentView document as the fallback.
+      if(await waitForFirebase(8000)){
         if(!firebase.apps.length)firebase.initializeApp(window.FIREBASE_CONFIG);
         const ref=firebase.firestore().doc("parentView/"+code);
         loadHomeworkCompletions().catch(()=>{});
