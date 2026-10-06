@@ -6,21 +6,6 @@
 <title>TASVIA Academy – Parent</title>
 <meta name="theme-color" content="#0B2455">
 <meta name="robots" content="noindex">
-<script>
-/* OLD PARENT LINK RESCUE — preserve #STUDENTCODE even when the APK/TWA or cached shell reloads. */
-(function(){
-  try{
-    const hash=String(location.hash||"").replace(/^#/,"").trim().toUpperCase();
-    const qs=new URLSearchParams(location.search);
-    const code=String(qs.get("code")||"").trim().toUpperCase();
-    const valid=v=>/^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(v);
-    if(valid(hash) && !valid(code)){
-      const target=location.pathname+"?code="+encodeURIComponent(hash)+"&v=41#"+encodeURIComponent(hash);
-      history.replaceState(null,"",target);
-    }
-  }catch(_){}
-})();
-</script>
 <link rel="icon" href="/icon-192.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1016,23 +1001,24 @@ window.tasviaStudentLogin=function(e){
 (function start(){
   const saved=load("tasvia-parent-lang");if(saved&&T[saved])L=saved;langs();
   const validCode=v=>{try{v=decodeURIComponent(String(v||"")).trim().toUpperCase()}catch(_){v=String(v||"").trim().toUpperCase()}return /^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(v)?v:""};
-  const urlCode=()=>{const qs=new URLSearchParams(location.search);return validCode(qs.get("code"))||validCode((location.hash||"").replace(/^#/,""));};
-  let code=urlCode();
-  let loginStarted=false;
+  const qs=new URLSearchParams(location.search);
+  const code=validCode(qs.get("code"))||validCode((location.hash||"").replace(/^#/,""));
   window.tasviaLoginStart=async function(loginCode){
-    code=validCode(loginCode)||"";
-    if(!code){const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Enter a valid Student ID.";showWelcome({keepInput:true,keepMessage:true});return}
-    if(loginStarted && window.tasviaLoginCode===code)return;
-    loginStarted=true;
-    window.tasviaLoginCode=code; parentStudentCode=code;
-    const input=document.getElementById("studentLoginId");if(input)input.value=code;
+    const id=validCode(loginCode);
+    if(!id){showWelcome({keepInput:true,keepMessage:true});return}
+    parentStudentCode=id;
+    window.tasviaLoginCode=id;
+    const input=document.getElementById("studentLoginId");if(input)input.value=id;
     const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Opening Parent Portal…";
-    await loadForStudentId(code);
+    closeWelcome();
+    await loadForStudentId(id);
   };
-  const tryAutoLogin=()=>{const discovered=urlCode();if(discovered && (!loginStarted || discovered!==window.tasviaLoginCode))window.tasviaLoginStart(discovered);};
-  window.addEventListener("hashchange",tryAutoLogin);
-  if(code)window.tasviaLoginStart(code);
-  [150,600,1500,3000].forEach(ms=>setTimeout(tryAutoLogin,ms));
+  if(code){
+    closeWelcome();
+    window.tasviaLoginStart(code);
+  }else{
+    showWelcome();
+  }
 })();
 async function loadForStudentId(code){
 
