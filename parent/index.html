@@ -898,8 +898,26 @@ async function loadForStudentId(code){
       msg("TASVIA Parent Portal opened, but the student data could not be displayed. Please tap Try again.",true);
     }
   }
+  // Never leave a valid login stuck on "Checking Student ID".
+  // REST gets a short timeout; Firebase fallback gets its own timeout too.
+  const startupTimeout=setTimeout(()=>{
+    if(!loaded){
+      const m=document.getElementById("studentLoginMsg");
+      if(m)m.textContent="Taking too long to connect. Please tap Login again.";
+      showWelcome({keepInput:true,keepMessage:true});
+    }
+  },10000);
   loadREST().then(data=>{
-    if(!data){if(!loaded){const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Student ID not found. Please check the ID or ask TASVIA staff to sync the parent portal.";showWelcome({keepInput:true,keepMessage:true});}return}    finish(data);
+    clearTimeout(startupTimeout);
+    if(!data){
+      if(!loaded){
+        const m=document.getElementById("studentLoginMsg");
+        if(m)m.textContent="Student ID not found. Please check the ID or ask TASVIA staff to sync the parent portal.";
+        showWelcome({keepInput:true,keepMessage:true});
+      }
+      return;
+    }
+    finish(data);
     try{
       if(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey){
         if(!firebase.apps.length)firebase.initializeApp(window.FIREBASE_CONFIG);
@@ -913,11 +931,31 @@ async function loadForStudentId(code){
       if(window.firebase&&window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey){
         if(!firebase.apps.length)firebase.initializeApp(window.FIREBASE_CONFIG);
         const ref=firebase.firestore().doc("parentView/"+code);
-        ref.get().then(snap=>finish(snap.exists?snap.data():null)).catch(()=>{const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Could not connect to TASVIA. Check your internet connection and try again.";});
+        let done=false;
+        const timer=setTimeout(()=>{
+          if(done||loaded)return;
+          done=true;
+          const m=document.getElementById("studentLoginMsg");
+          if(m)m.textContent="Could not connect to TASVIA. Please check your internet connection and tap Login again.";
+          showWelcome({keepInput:true,keepMessage:true});
+        },5000);
+        ref.get().then(snap=>{
+          if(done||loaded)return;
+          done=true; clearTimeout(timer);
+          finish(snap.exists?snap.data():null);
+        }).catch(()=>{
+          if(done||loaded)return;
+          done=true; clearTimeout(timer);
+          const m=document.getElementById("studentLoginMsg");
+          if(m)m.textContent="Could not connect to TASVIA. Please check your internet connection and tap Login again.";
+          showWelcome({keepInput:true,keepMessage:true});
+        });
       }else{
+        clearTimeout(startupTimeout);
         msg(T[L].offline,true);
       }
     }catch(err){
+      clearTimeout(startupTimeout);
       console.error("TASVIA Parent Portal SDK fallback:",err);
       msg(T[L].offline,true);
     }
