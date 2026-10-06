@@ -964,13 +964,24 @@ async function syncPV(){
           const old=snap.exists?snap.data():null;
           exists=!!(old&&(!old.studentId||old.studentId===id));
         }catch(e){console.warn("parent record check",code,e)}
-        if(forceWrite||!exists||pvCache[code]!==hj){
+        const codeNeedsWrite=forceWrite||!exists||pvCache[code]!==hj;
+        if(codeNeedsWrite){
           await db.doc("parentView/"+code).set(Object.assign({},v,{studentId:id,updated:Date.now()}),{merge:true});
-          // Also mirror the parent view under the actual Student ID so parents can log in with Student ID.
-          await db.doc("parentView/"+id).set(Object.assign({},v,{studentId:id,loginId:id,updated:Date.now()}),{merge:true});
           pvCache[code]=hj;
           pvSave();
         }
+        // Always verify the Student-ID mirror separately. Older students may have
+        // a valid private parent link but no parentView/<StudentID> document.
+        try{
+          const idSnap=await db.doc("parentView/"+id).get();
+          const idOld=idSnap.exists?idSnap.data():null;
+          let idOldComparable=idOld?Object.assign({},idOld):null;
+          if(idOldComparable)delete idOldComparable.updated;
+          const idNeedsWrite=forceWrite||!idOld||idOld.studentId!==id||hash(stable(idOldComparable))!==hj;
+          if(idNeedsWrite){
+            await db.doc("parentView/"+id).set(Object.assign({},v,{studentId:id,loginId:id,updated:Date.now()}),{merge:true});
+          }
+        }catch(e){console.warn("student ID parent mirror check",id,e)}
       }catch(err){
         console.warn("parent sync student failed",id,err);
       }
