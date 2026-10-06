@@ -430,7 +430,8 @@ function render(){
   <button type="button" class="parent-action" onclick="openParentSection('testsSection')"><span class="parent-action-icon">📝</span><span>Tests</span></button>
   <button type="button" class="parent-action" onclick="openParentSection('feesSection')"><span class="parent-action-icon">💳</span><span>Fees</span></button>
   <button type="button" class="parent-action" onclick="openParentSection('contactSection')"><span class="parent-action-icon">📞</span><span>Contact</span></button>
-</div>.sort((a,b)=>String(b.d).localeCompare(String(a.d)));
+</div>`;
+  const homeworkList=activeHw.slice().sort((a,b)=>String(b.d).localeCompare(String(a.d)));
   const completedCount=homeworkList.filter(isHomeworkCompleted).length;
   const pendingCount=homeworkList.length-completedCount;
   h+=`<div id="homeworkSection" class="card"><div class="hw-section-head"><div><h2>📚 ${esc(t.hw)}</h2><p class="sub" style="margin:3px 0 0">${esc(t.hwSchool)}</p></div><span class="hw-count">${pendingCount} ${esc(t.pending)}</span></div>`;
