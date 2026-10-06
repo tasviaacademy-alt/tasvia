@@ -6,8 +6,8 @@
 <title>TASVIA Academy – Parent</title>
 <meta name="theme-color" content="#0B2455">
 <meta name="robots" content="noindex">
-<link rel="icon" href="/icon-192.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="TASVIA">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -337,10 +337,10 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
 </style>
 </head>
 <body>
-<header><div class="top"><div class="brand"><img class="hlogo" src="/icon-512.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
+<header><div class="top"><div class="brand"><img class="hlogo" src="./icon-512.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
 <main id="main"><div class="center" id="msg">Loading…</div></main><div id="welcomeBackdrop" class="welcome-backdrop" role="dialog" aria-label="TASVIA Academy welcome">
   <div class="welcome-card">
-    <div class="welcome-logo-wrap"><img class="welcome-logo" src="/icon-512.png" alt="TASVIA Academy"></div>
+    <div class="welcome-logo-wrap"><img class="welcome-logo" src="./icon-512.png" alt="TASVIA Academy"></div>
     <h2>Welcome to <span>TASVIA</span></h2>
     <p id="welcomeGreeting">Let’s inspire, learn, grow and succeed together.</p>
     <p class="welcome-tag">INSPIRE • LEARN • GROW • SUCCEED</p>
@@ -354,7 +354,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
 </div>
 
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" defer></script>
 <script>
 (function(){
   try{
@@ -368,8 +368,8 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
 </script>
 <script>
 </script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="/firebase-config.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js" defer></script>
+<script src="./firebase-config.js" defer></script>
 <script>
 
 function closeWelcome(){const b=document.getElementById("welcomeBackdrop");if(b){b.classList.add("hide");b.setAttribute("aria-hidden","true");b.style.pointerEvents="none";}document.body.classList.remove("welcome-open");}
@@ -971,9 +971,23 @@ function buildCurrentAffairsCard(){
   if(caQuiz.length){h+='<div class="ca-quiz"><b>'+esc(t.quiz)+'</b>'+caQuiz.map((q,i)=>'<div class="ca-quiz-item"><b>'+String(i+1)+'. '+esc(q.q||"")+'</b><span>Answer: '+esc(q.a||"")+'</span></div>').join("")+'</div>';}
   return h+'</div>';
 }
-async function loadCurrentAffairs(){try{const r=await fetch('/current-affairs.json',{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);CURRENT_AFFAIRS=await r.json();}catch(e){console.warn('Current affairs unavailable',e);CURRENT_AFFAIRS={date:new Date().toISOString().slice(0,10),items:[],quiz:[]};}}
+async function loadCurrentAffairs(){try{const r=await fetch('./current-affairs.json',{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);CURRENT_AFFAIRS=await r.json();}catch(e){console.warn('Current affairs unavailable',e);CURRENT_AFFAIRS={date:new Date().toISOString().slice(0,10),items:[],quiz:[]};}}
 
-showWelcome();
+(function bootParentEntry(){
+  const raw=(()=>{try{
+    const qs=new URLSearchParams(location.search);
+    return qs.get("code") || String(location.hash||"").replace(/^#/,"");
+  }catch(_){return ""}})();
+  const entryCode=String(raw||"").trim().toUpperCase();
+  const hasDirectParentCode=/^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(entryCode);
+  if(hasDirectParentCode){
+    showWelcome({keepInput:true,keepMessage:true,focus:false});
+    const input=document.getElementById("studentLoginId"); if(input)input.value=entryCode;
+    const m=document.getElementById("studentLoginMsg"); if(m)m.textContent="Opening Parent Portal…";
+  }else{
+    showWelcome();
+  }
+})();
 window.tasviaStudentLogin=function(e){
   if(e)e.preventDefault();
   const input=document.getElementById("studentLoginId"),msgEl=document.getElementById("studentLoginMsg");
@@ -987,23 +1001,23 @@ window.tasviaStudentLogin=function(e){
 (function start(){
   const saved=load("tasvia-parent-lang");if(saved&&T[saved])L=saved;langs();
   const validCode=v=>{try{v=decodeURIComponent(String(v||"")).trim().toUpperCase()}catch(_){v=String(v||"").trim().toUpperCase()}return /^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(v)?v:""};
-  const urlCode=()=>{const qs=new URLSearchParams(location.search);return validCode(qs.get("code"))||validCode((location.hash||"").replace(/^#/,""));};
-  let code=urlCode();
-  let loginStarted=false;
+  const qs=new URLSearchParams(location.search);
+  const code=validCode(qs.get("code"))||validCode((location.hash||"").replace(/^#/,""));
   window.tasviaLoginStart=async function(loginCode){
-    code=validCode(loginCode)||"";
-    if(!code){const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Enter a valid Student ID.";showWelcome({keepInput:true,keepMessage:true});return}
-    if(loginStarted && window.tasviaLoginCode===code)return;
-    loginStarted=true;
-    window.tasviaLoginCode=code; parentStudentCode=code;
-    const input=document.getElementById("studentLoginId");if(input)input.value=code;
+    const id=validCode(loginCode);
+    if(!id){showWelcome({keepInput:true,keepMessage:true});return}
+    parentStudentCode=id;
+    window.tasviaLoginCode=id;
+    const input=document.getElementById("studentLoginId");if(input)input.value=id;
     const m=document.getElementById("studentLoginMsg");if(m)m.textContent="Opening Parent Portal…";
-    await loadForStudentId(code);
+    showWelcome({keepInput:true,keepMessage:true,focus:false});
+    await loadForStudentId(id);
   };
-  const tryAutoLogin=()=>{const discovered=urlCode();if(discovered && (!loginStarted || discovered!==window.tasviaLoginCode))window.tasviaLoginStart(discovered);};
-  window.addEventListener("hashchange",tryAutoLogin);
-  if(code)window.tasviaLoginStart(code);
-  [150,600,1500,3000].forEach(ms=>setTimeout(tryAutoLogin,ms));
+  if(code){
+    window.tasviaLoginStart(code);
+  }else{
+    showWelcome();
+  }
 })();
 async function loadForStudentId(code){
 
@@ -1167,24 +1181,18 @@ async function loadForStudentId(code){
     }finally{clearTimeout(timer)}
   }
   async function loadREST(){
+    // GitHub Pages has no server-side /api/parent endpoint.
+    // Legacy parent links use #STUDENTID, so load the single matching
+    // parentView document directly from the tasvia-academy Firestore REST API.
     const firestoreUrl="https://firestore.googleapis.com/v1/projects/tasvia-academy/databases/(default)/documents/parentView/"+encodeURIComponent(code);
     try{
-      const d=await fetchJSON(firestoreUrl,4500);
+      const d=await fetchJSON(firestoreUrl,6000);
       if(d){
         const o={};Object.entries(d.fields||{}).forEach(([k,v])=>o[k]=fv(v));return o;
       }
       return null;
     }catch(e){
-      console.warn("Direct Firestore REST unavailable; trying Vercel parent proxy:",e);
-    }
-    try{
-      const api=await fetchJSON("https://tasvia-app-two.vercel.app/api/parent?code="+encodeURIComponent(code),4500);
-      if(api && api.fields){
-        const o={};Object.entries(api.fields).forEach(([k,v])=>o[k]=fv(v));return o;
-      }
-      return null;
-    }catch(e){
-      console.warn("Vercel parent proxy unavailable:",e);
+      console.warn("Firestore REST unavailable:",e);
       throw e;
     }
   }
