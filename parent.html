@@ -1182,21 +1182,12 @@ async function loadForStudentId(code){
     }finally{clearTimeout(timer)}
   }
   async function loadREST(){
-    // Always prefer the same-origin parent API. This keeps legacy #STUDENTID
-    // links independent of old Vercel aliases and avoids cross-origin/CORS
-    // failures on the APK parent domain.
+    // GitHub Pages has no server-side /api/parent endpoint.
+    // Legacy parent links use #STUDENTID, so load the single matching
+    // parentView document directly from the tasvia-academy Firestore REST API.
+    const firestoreUrl="https://firestore.googleapis.com/v1/projects/tasvia-academy/databases/(default)/documents/parentView/"+encodeURIComponent(code);
     try{
-      const api=await fetchJSON("/api/parent?code="+encodeURIComponent(code),4500);
-      if(api && api.fields){
-        const o={};Object.entries(api.fields).forEach(([k,v])=>o[k]=fv(v));return o;
-      }
-      // GitHub Pages has no /api/parent endpoint; continue to Firestore REST when it returns 404.
-    }catch(e){
-      console.warn("Same-origin parent API unavailable; trying Firestore REST:",e);
-    }
-    try{
-      const firestoreUrl="https://firestore.googleapis.com/v1/projects/tasvia-academy/databases/(default)/documents/parentView/"+encodeURIComponent(code);
-      const d=await fetchJSON(firestoreUrl,4500);
+      const d=await fetchJSON(firestoreUrl,6000);
       if(d){
         const o={};Object.entries(d.fields||{}).forEach(([k,v])=>o[k]=fv(v));return o;
       }
