@@ -912,20 +912,40 @@ function buildParentView(s){
   const yr=attStats(s.id,"",ay.from,today());
   const abs=datesOf("att").filter(d=>d>=ay.from&&getMarks(d)[s.id]==="A").sort().reverse().slice(0,8);
   const tests=Object.values(S.tests).filter(t=>t.date>=ay.from&&t.marks&&t.marks[s.id]!=null).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,25).map(t=>({d:t.date,s:t.subject,n:t.name,m:+t.marks[s.id],x:+t.max}));
-  // Payment history is the source of truth for parent fee status. Build totals from every
-  // payment record first, then reconcile each displayed month against that total. This prevents
-  // a stale/cached fee snapshot from turning an already-paid month (including September) back to Due.
-  const allPayments=payList(s.id).map(p=>({d:String(p.date||""),a:Math.max(0,Number(p.amount)||0),m:paymentMonth(p),mode:p.mode})).filter(p=>p.m);
-  const paymentTotals={};
-  allPayments.forEach(p=>{paymentTotals[p.m]=(paymentTotals[p.m]||0)+p.a});
+  // Payment history is the source of truth for parent fee status.
+  // A payment belongs to the fee period when its explicit month matches OR its
+  // payment date falls from the first day of that fee month through the first
+  // day of the next month (inclusive). This handles the intended Sep 1 → Oct 1
+  // payment window and prevents a month-boundary payment from showing as unpaid.
+  const allPayments=payList(s.id).map(p=>({
+    d:String(p.date||""),
+    a:Math.max(0,Number(p.amount)||0),
+    m:paymentMonth(p),
+    mode:p.mode
+  })).filter(p=>p.m||p.d);
+  const feePeriodPaid=(month)=>{
+    const start=new Date(month+"-01T00:00:00");
+    const next=new Date(start.getFullYear(),start.getMonth()+1,1);
+    let total=0;
+    allPayments.forEach(p=>{
+      const explicit=p.m===month;
+      const d=/^\d{4}-\d{2}-\d{2}$/.test(p.d)?new Date(p.d+"T00:00:00"):null;
+      const dated=!!d && d>=start && d<=next;
+      if(explicit||dated)total+=p.a;
+    });
+    return total;
+  };
   const fees=s.fee?months.filter(m=>enrolledIn(s,m)).map(m=>{
     const fs=feeStatus(s,m),fee=+s.fee||0;
-    const paid=Math.min(fee,Math.max(Number(fs.paid)||0,Number(paymentTotals[m])||0));
+    const paid=Math.min(fee,Math.max(Number(fs.paid)||0,feePeriodPaid(m)));
     const status=paid>=fee?"paid":fs.k;
     return {m,fee,paid,dueDate:fs.dueDate,status};
   }):[];
-  // Keep all recent payment history in the parent view so reconciliation survives cache/snapshot timing.
-  const pays=allPayments.filter(p=>months.includes(p.m)).sort((a,b)=>String(b.d||"").localeCompare(String(a.d||"")));
+  // Keep recent payment history visible, including a payment made on the first
+  // day of the following month for the previous fee period.
+  const pays=allPayments
+    .filter(p=>p.m&&months.includes(p.m))
+    .sort((a,b)=>String(b.d||"").localeCompare(String(a.d||"")));
   const hw=Object.keys(S.diary).sort().reverse().map(d=>{const e=((S.diary[d]||{}).entries||{})[s.id];return e&&e.hw?{d,hw:e.hw,note:e.note||""}:null}).filter(Boolean).slice(0,5);
   return {studentId:s.id,name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,
     centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||""}};
