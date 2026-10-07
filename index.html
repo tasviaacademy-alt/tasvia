@@ -11,7 +11,7 @@
    This removes the iOS/sessionStorage redirect loop. Parent portal is unaffected. */
 (function(){
   try{
-    if(location.pathname.endsWith("/index.html") && !location.search.includes("staff=1")){
+    if((location.pathname === "/" || location.pathname.endsWith("/index.html")) && !location.search.includes("staff=1")){
       location.replace("./staff-login.html?v=20261007");
     }
   }catch(e){}
