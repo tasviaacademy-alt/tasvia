@@ -414,7 +414,7 @@ button,.btn,a.btn{visibility:visible;}
 /* iOS PWA recovery: remove stale Staff App service-worker/cache state once. */
 (function(){
   if(!("serviceWorker" in navigator)) return;
-  const key="tasvia-sw-recovery-v5";
+  const key="tasvia-sw-recovery-v6";
   if(localStorage.getItem(key)) return;
   localStorage.setItem(key,"1");
   Promise.all([
@@ -2202,7 +2202,7 @@ loginForm.addEventListener("submit",async e=>{
 render();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
 else startFirebase();
-if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=32",{scope:"./"}).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=80",{scope:"./",updateViaCache:"none"}).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
 
 </body>
