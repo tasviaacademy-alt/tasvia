@@ -492,7 +492,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
       '<section class="dash-summary"><h2 class="dash-title">📊 Parent Dashboard</h2><div class="dash-stats">'+
       '<div class="dash-stat"><b>'+ypct+'%</b><small>Attendance</small></div>'+
       '<div class="dash-stat"><b>'+testAvg+'</b><small>Test Average</small></div>'+
-      '<div class="dash-stat"><b class="'+feeClass+'">'+feeLabel+'</b><small>Current Month · '+esc(feeDate)+'</small></div>'+
+      '<div class="dash-stat"><b class="'+feeClass+'">'+feeLabel+'</b><small>'+(feePaid?"Next due":"Due date")+' · '+esc(feeDate)+'</small></div>'+
       '</div></section>'+
       '<div class="dash-actions">'+
       '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">🔔</span><span>Notice</span></button><div class="action-content"><div class="notice-card"><b>Latest Notice</b><p>'+esc(noticeText||"No new notices from TASVIA Academy.")+'</p></div></div></div>'+
@@ -508,7 +508,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
       '<div class="fee-popup" role="dialog" aria-modal="true" aria-labelledby="feeDueTitle">'+
       '<div class="fee-popup-icon">⚠️</div><h3 id="feeDueTitle">Fee Due</h3>'+
       '<div class="due-label">'+esc(name)+'</div><div class="due-amount">'+money(due)+'</div>'+
-      '<p class="due-note">This month&apos;s tuition fee is pending. Please complete the payment to keep the account up to date.</p>'+
+      '<p class="due-note">Your monthly fee is pending. Due date: <b>'+esc(currentFee&&currentFee.dueDate?currentFee.dueDate:"")+'</b>. The next cycle starts one month after the joining-date cycle.</p>'+
       (feeUpiUri?'<div class="fee-qr-wrap"><img class="fee-qr" alt="Fee payment QR code" src="https://quickchart.io/qr?size=220&text='+encodeURIComponent(feeUpiUri)+'"><div class="fee-qr-note">Scan with any UPI app</div></div><div class="fee-popup-pay"><a class="gold" href="'+feeUpiUri+'">Pay Now</a></div>':'<div class="fee-popup-pay"><a href="tel:+917842138739">Call TASVIA</a></div><div class="fee-qr-note">Payment QR will appear once the centre UPI ID is added in Staff → Centre Info.</div>')+
       '<button type="button" class="fee-popup-close" id="feeDueClose">Continue to Parent Portal</button>'+
       '</div></div>'+
