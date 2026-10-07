@@ -1918,15 +1918,22 @@ async function getStaffRecord(email){
   const authEmail=String(email||"").trim().toLowerCase();
   if(!authEmail) return null;
 
-  // Staff authorization is intentionally tied to Staff/{Firebase-auth-email}.
-  // Do not query the whole Staff collection: Firestore rules cannot safely
-  // authorize arbitrary legacy auto-ID documents for a signed-in staff user.
-  const snap=await withTimeout(
+  // Support both canonical email document IDs and legacy auto-ID Staff records.
+  // Firestore rules permit an authenticated Staff lookup limited to one result.
+  // Prefer the canonical document first, then fall back to the legacy email field.
+  const direct=await withTimeout(
     fs.collection("Staff").doc(authEmail).get(),
-    10000,
+    8000,
     "Staff verification timed out"
   );
-  return snap.exists?snap:null;
+  if(direct.exists)return direct;
+
+  const qs=await withTimeout(
+    fs.collection("Staff").where("email","==",authEmail).limit(1).get(),
+    8000,
+    "Staff verification timed out"
+  );
+  return qs.empty?null:qs.docs[0];
 }
 window.addEventListener("online",netStatus);window.addEventListener("offline",netStatus);
 const MIME={csv:"text/csv;charset=utf-8",html:"text/html;charset=utf-8",png:"image/png"};
