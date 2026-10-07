@@ -730,6 +730,33 @@ function feeStatus(s,month){
   return {k:paid?"part":"due",paid,left:s.fee-paid,dueDate};
 }
 function enrolledIn(s,month){return !s.joined||s.joined.slice(0,7)<=month}
+function currentFeeCycle(s){
+  const fee=Number(s&&s.fee)||0;
+  if(!fee)return {status:"none",fee:0,paid:0,due:0,dueDate:null,nextDueDate:null,cycleStart:null};
+  const join=String(s&&s.joined||"");
+  const valid=/^\\d{4}-\\d{2}-\\d{2}$/.test(join);
+  if(!valid)return {status:"due",fee,paid:0,due:fee,dueDate:null,nextDueDate:null,cycleStart:null};
+  const [jy,jm,jd]=join.split("-").map(Number);
+  const todayDate=new Date();
+  const makeAnniv=(year,monthIndex)=>{
+    const last=new Date(year,monthIndex+1,0).getDate();
+    return new Date(year,monthIndex,Math.min(jd,last));
+  };
+  let cycle=makeAnniv(todayDate.getFullYear(),todayDate.getMonth());
+  if(todayDate<cycle)cycle=makeAnniv(todayDate.getFullYear(),todayDate.getMonth()-1);
+  const next=makeAnniv(cycle.getFullYear(),cycle.getMonth()+1);
+  const cycleStart=cycle.getFullYear()+"-"+String(cycle.getMonth()+1).padStart(2,"0")+"-"+String(cycle.getDate()).padStart(2,"0");
+  const nextDueDate=next.getFullYear()+"-"+String(next.getMonth()+1).padStart(2,"0")+"-"+String(next.getDate()).padStart(2,"0");
+  let paid=0;
+  payList(s.id).forEach(p=>{
+    const ds=String(p.date||"");
+    const d=/^\\d{4}-\\d{2}-\\d{2}$/.test(ds)?new Date(ds+"T00:00:00"):null;
+    if(d&&d>=cycle&&d<next)paid+=Number(p.amount)||0;
+    else if(!d&&paymentMonth(p)===cycleStart.slice(0,7))paid+=Number(p.amount)||0;
+  });
+  paid=Math.min(fee,Math.max(0,paid));
+  return {status:paid>=fee?"paid":"due",fee,paid,due:Math.max(0,fee-paid),dueDate:cycleStart,nextDueDate,cycleStart};
+}
 const active=s=>s.active!==false;
 function teachersList(all){return Object.entries(S.teachers).map(([id,t])=>({id,...t})).filter(t=>all||active(t)).sort((a,b)=>(active(b)-active(a))||a.name.localeCompare(b.name))}
 function mapList(obj,field){const p=(obj||{})[field];if(!p)return [];return (Array.isArray(p)?p:Object.values(p)).filter(Boolean)}
@@ -935,7 +962,7 @@ function buildParentView(s){
     });
     return total;
   };
-  const fees=s.fee?months.filter(m=>enrolledIn(s,m)).map(m=>{
+  const currentFee=currentFeeCycle(s);\n  const fees=s.fee?months.filter(m=>enrolledIn(s,m)).map(m=>{
     const fs=feeStatus(s,m),fee=+s.fee||0;
     const paid=Math.min(fee,Math.max(Number(fs.paid)||0,feePeriodPaid(m)));
     const status=paid>=fee?"paid":fs.k;
@@ -951,7 +978,7 @@ function buildParentView(s){
     const text=e&&(e.hw||e.homework||e.text||"");
     return text?{d,hw:text,note:e.note||""}:null;
   }).filter(Boolean).slice(0,10);
-  return {studentId:s.id,name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,
+  return {studentId:s.id,name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,currentFee,
     centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||"",upi:i.upi||DEFAULT_INFO.upi||""}};
 }
 function schedulePV(force=false){if(force)pvForce=true;clearTimeout(pvT);pvT=setTimeout(syncPV,600)}
