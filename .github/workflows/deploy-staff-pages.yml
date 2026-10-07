@@ -1,44 +1,15 @@
-name: Deploy TASVIA Staff App to GitHub Pages
-# Deployment validation fixed
-# Force deployment on every main push
-# Parent portal redirect deployed to stable host
-# Force cache-clear build
+name: Validate TASVIA Site
 
 on:
   push:
     branches: ["main"]
-    # Deploy only when live website content changes.
-    # Workflow/rules/history-only changes do not need a Pages deployment.
-    paths:
-      - '**.html'
-      - '**.js'
-      - '**.css'
-      - '**.json'
-      - '**.png'
-      - '**.jpg'
-      - '**.jpeg'
-      - '**.webp'
-      - '**.svg'
-      - '**.ico'
-      - 'CNAME'
-      - '!current-affairs-history/**'
-      - '!daily-gk-history/**'
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  validate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -48,7 +19,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for file in index.html parent.html parent/index.html firebase-config.js sw.js manifest.json CNAME; do
+          for file in index.html staff-login.html parent.html parent/index.html firebase-config.js sw.js manifest.json CNAME; do
             test -f "$file" || { echo "Missing required file: $file"; exit 1; }
             echo "Found: $file"
           done
@@ -56,16 +27,5 @@ jobs:
           grep -q 'tasvia-academy' firebase-config.js
           grep -q 'TASVIA Academy' index.html
           grep -q 'TASVIA Academy' parent/index.html
-          echo "TASVIA application file validation passed."
-
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload site
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4
+          grep -q 'staff-login' index.html
+          echo "TASVIA validation passed. GitHub Pages deployment is handled by the repository's single Pages deployment workflow."
