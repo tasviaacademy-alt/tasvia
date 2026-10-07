@@ -456,8 +456,16 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     var feeTotalDue=fees.reduce(function(sum,x){var dd=x&&x.dueDate?new Date(String(x.dueDate)+"T00:00:00").getTime():0;var f=Math.max(0,(Number(x&&x.fee)||0)-(Number(x&&x.paid)||0));return sum+(f&&(!dd||dd<=todayTs)?f:0);},0);
     var feeDetailsQr=centreUpi&&feeTotalDue>0?"upi://pay?pa="+encodeURIComponent(centreUpi)+"&pn="+encodeURIComponent("TASVIA Academy")+"&am="+encodeURIComponent(feeTotalDue.toFixed(2))+"&cu=INR":"";
     var feeDetailsPay=feeDetailsQr?'<div class="fee-details-pay"><div class="fee-qr-wrap"><img class="fee-qr" alt="Fee payment QR code" src="https://quickchart.io/qr?size=220&text='+encodeURIComponent(feeDetailsQr)+'"><div class="fee-qr-note">Scan to pay total due • '+money(feeTotalDue)+'</div></div><div class="fee-popup-pay"><a class="gold" href="'+feeDetailsQr+'">Pay Now</a></div></div>':"";
+    window.__tasviaParentCode=code;
+    function hwDoneKey(x){
+      var raw=String(code)+"|"+String(x.d||"")+"|"+String(x.hw||x.text||"");
+      var h=0;for(var i=0;i<raw.length;i++)h=((h<<5)-h)+raw.charCodeAt(i)|0;
+      return "tasvia-hw-done-"+Math.abs(h);
+    }
     var hwRows=hw.slice(0,10).map(function(x){
-      return "<div class='hw-row'><b>"+esc(x.d||"")+"</b><div>"+esc(x.hw||x.text||"")+"</div></div>";
+      var key=hwDoneKey(x),done=false;
+      try{done=localStorage.getItem(key)==="1"}catch(_){}
+      return "<div class='hw-row "+(done?"hw-completed":"")+"'><div style='min-width:0;flex:1'><b>"+esc(x.d||"")+"</b><div>"+esc(x.hw||x.text||"")+"</div></div><button type='button' class='hw-complete-btn "+(done?"gold":"")+" ' data-hw-key='"+esc(key)+"'>"+(done?"✓ Completed":"Mark as completed")+"</button></div>";
     }).join("");
     var feeUpiUri="";
     if(centreUpi&&due>0){feeUpiUri="upi://pay?pa="+encodeURIComponent(centreUpi)+"&pn="+encodeURIComponent("TASVIA Academy")+"&am="+encodeURIComponent(due.toFixed(2))+"&cu=INR";}
@@ -582,6 +590,21 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
   return false;
 }
   window.__tasviaOpenSection=openParentSection;
+  document.addEventListener('click',function(ev){
+    var hb=ev.target&&ev.target.closest?ev.target.closest('.hw-complete-btn'):null;
+    if(hb){
+      ev.preventDefault();
+      ev.stopPropagation();
+      var key=hb.getAttribute('data-hw-key')||"";
+      if(key){
+        try{localStorage.setItem(key,"1")}catch(_){}
+        hb.textContent="✓ Completed";
+        hb.classList.add("gold");
+        var row=hb.closest(".hw-row");if(row)row.classList.add("hw-completed");
+      }
+      return;
+    }
+  },true);
   document.addEventListener('click',function(ev){var b=ev.target&&ev.target.closest?ev.target.closest('.action-summary'):null;if(b){ev.preventDefault();ev.stopPropagation();openParentSection(b);}},true);
   function showLoading(code){
     var msg=document.getElementById("studentLoginMsg");
