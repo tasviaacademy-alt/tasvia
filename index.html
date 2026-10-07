@@ -2082,10 +2082,15 @@ function startFirebase(){
         }
       }else{
         if(loginInProgress || loginSessionReady || Date.now()<loginGraceUntil){
-          setSync("Signing in…");
+          setSync(staffHandoff ? "Restoring Staff session…" : "Signing in…");
+          gate.hidden=!!staffHandoff;
           return;
         }
         loginSessionReady=false;
+        if(staffHandoff){
+          gate.hidden=false;
+          setSync("Staff session expired · login required");
+        }
         loginInProgress=false;
         loginGraceUntil=0;
         setSync("Signed out · login required");
@@ -2105,7 +2110,9 @@ function startFirebase(){
     gErr.textContent="TASVIA could not start Firebase. Please reload.";
   }
 }
-let loginInProgress=false; let loginGraceUntil=0; let loginSessionReady=false;
+const staffHandoff = new URLSearchParams(location.search).get("staff")==="1";
+let loginInProgress=false; let loginGraceUntil=staffHandoff?Date.now()+20000:0; let loginSessionReady=false;
+if(staffHandoff) gate.hidden=true;
 const loginForm=document.getElementById("fLogin");
 loginForm.addEventListener("submit",async e=>{
   e.preventDefault();
