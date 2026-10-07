@@ -1799,7 +1799,6 @@ document.addEventListener("submit",e=>{
     const current={payments:Object.fromEntries(payList(id).map(x=>[x.id,x]))};current.payments[p.id]=p;S.fees[id]=current;
     feeWrite.then(ok=>{
       if(ok===false){if(previousFees===undefined)delete S.fees[id];else S.fees[id]=previousFees;render();return;}
-      pvCache[S.students[id]?.pcode]=null;try{localStorage.removeItem("tasvia-pv")}catch(e){}
       pvCache[S.students[id]?.pcode]=null;try{localStorage.removeItem("tasvia-pv")}catch(e){}schedulePV(true);render();const s={id,...S.students[id]};
       openSheet("Payment saved",`<p>${rs(amt)} from ${esc(s.name)} for ${monthName(d.month)}.</p><pre class="msg">${esc(receiptText(s,p))}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Send receipt on WhatsApp</a><button class="btn ghost" data-act="close">Done</button></div>`);
     });
