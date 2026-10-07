@@ -43,6 +43,7 @@
    try{
      if(!auth)await boot();
      if(!auth)throw new Error("Firebase Authentication is unavailable.");
+     try{await timeout(auth.setPersistence(firebase.auth.Auth.Persistence.SESSION),8000)}catch(_){/* fallback to default */}
      const cred=await timeout(auth.signInWithEmailAndPassword(email,password),15000);
      const u=cred.user||auth.currentUser;
      if(!u)throw new Error("Firebase sign-in completed without a user session.");
@@ -53,7 +54,7 @@
      }
      sessionStorage.setItem("tasviaStaffEntry","1");
      msg("Staff verified. Opening portal…","ok");
-     location.replace("./index.html?staff=1");
+     location.replace("./index.html?staff=1&staffEntry=1&v=20261007");
    }catch(e){
      const c=e&&e.code||"";
      msg(c==="auth/invalid-credential"||c==="auth/wrong-password"||c==="auth/user-not-found"?"Email or password is incorrect.":e.message||"Sign-in failed.","error");
