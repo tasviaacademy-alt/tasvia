@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v54">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v55">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TASVIA Academy – Parent</title>
@@ -499,46 +499,35 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     function openParentSection(btn){
       try{
         var card=btn&&btn.closest?btn.closest(".action-detail"):null;
-        var title=((btn&&btn.getAttribute("data-section"))||"").trim();
-        if(!title&&card){var t=card.querySelector(".action-summary span:nth-child(2)");title=(t&&t.textContent||"").trim();}
-        var idx=card&&actionBox?Array.prototype.indexOf.call(actionBox.children,card):-1;
+        if(!card)return false;
+        var title=((card.querySelector(".action-summary span:nth-child(2)")||{}).textContent||"").trim();
+        var icon=((card.querySelector(".action-icon")||{}).textContent||"");
+        var content=card.querySelector(".action-content");
+        var liveHtml=content?content.innerHTML:"";
+        var idx=actionBox?Array.prototype.indexOf.call(actionBox.children,card):-1;
         var titles=["Notice","Homework","Attendance","Fee Details","General Knowledge","Current Affairs","Tests","BODMAS Practice","Contact"];
         var icons=["🔔","📚","📅","💳","🧠","📰","📝","🧮","📞"];
-        title=title||titles[idx]||"Parent Portal";
-        var icon=(card&&card.querySelector(".action-icon")&&card.querySelector(".action-icon").textContent)||icons[idx]||"";
-        if(sectionTitle)sectionTitle.textContent=title;
-        if(sectionIcon)sectionIcon.textContent=icon;
-        var d=window.__tasviaParentData||{};
-        var escx=window.__tasviaSectionEsc||function(v){return String(v==null?"":v).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});};
-        var html="";
+        title=title||titles[idx]||"Parent Portal"; icon=icon||icons[idx]||"";
         if(title==="Homework"){
-          var hw=Array.isArray(d.hw)?d.hw:[];
-          html=hw.length?hw.slice(0,10).map(function(x){return '<div class="hw-row" style="display:block!important"><b>'+escx(x.d||x.date||"")+'</b><div>'+escx(x.hw||x.homework||x.text||"")+'</div>'+(x.note?'<small class="sub">'+escx(x.note)+'</small>':"")+'</div>';}).join(""):'<div class="empty">No homework has been assigned yet.</div>';
-        }else if(title==="Notice"){
-          var c=d.centre||{};html='<div class="section-note"><b>Latest Notice</b><p>'+escx(c.notice||"No new notices from TASVIA Academy.")+'</p></div>';
-        }else if(title==="Attendance"){
-          var y=d.yr||{},p=Number(y.p)||0,ab=Number(y.a)||0,total=p+ab;html='<div class="learning-card"><h4>Academic Year Attendance</h4><p>Present: <b>'+p+'</b> · Absent: <b>'+ab+'</b> · Attendance: <b>'+(total?Math.round(p*100/total):0)+'%</b></p></div>';
-        }else if(title==="Fee Details"){
-          var fs=Array.isArray(d.fees)?d.fees:[];html=fs.length?fs.slice(0,12).map(function(x){var fee=Number(x.fee)||0,paid=Number(x.paid)||0,due=Math.max(0,fee-paid);return '<div class="learning-card"><h4>'+escx(x.m||"Fee")+'</h4><p>Fee ₹'+fee.toLocaleString("en-IN")+' · Paid ₹'+paid.toLocaleString("en-IN")+' · <b>'+(due?"Due ₹"+due.toLocaleString("en-IN"):"Paid")+'</b></p></div>';}).join(""):'<div class="empty">No fee records available.</div>';
-        }else if(title==="Tests"){
-          var ts=Array.isArray(d.tests)?d.tests:[];html=ts.length?ts.slice(0,25).map(function(x){return '<div class="learning-card"><h4>'+escx(x.s||"Test")+'</h4><p>'+Number(x.m||0)+(x.x?"/"+Number(x.x):"")+(x.d?" · "+escx(x.d):"")+'</p></div>';}).join(""):'<div class="empty">No test marks yet.</div>';
-        }else if(title==="Contact"){
-          var cc=d.centre||{};html='<div class="contact-data"><div><b>Academy</b><br>'+escx(cc.name||"TASVIA Academy")+'</div><div><b>Phone</b><br>'+escx(cc.phone||"Not available")+'</div><div><b>Address</b><br>'+escx(cc.address||"Not available")+'</div><div><b>Timings</b><br>'+escx(cc.timings||"Not available")+'</div></div>';
-        }else{
-          var ce=card&&card.querySelector(".action-content");html=ce?ce.innerHTML:"<div class=\"empty\">Content loading…</div>";
+          var pd=window.__tasviaParentData||{}, list=Array.isArray(pd.hw)?pd.hw:[];
+          liveHtml=list.length?list.slice(0,10).map(function(x){return '<div class="hw-row" style="display:block!important;padding:14px 4px"><b>'+esc(x.d||x.date||"")+'</b><div>'+esc(x.hw||x.homework||x.text||"")+'</div>'+(x.note?'<small class="sub" style="display:block;margin-top:5px">'+esc(x.note)+'</small>':"")+'</div>';}).join(""):'<div class="empty" style="display:block!important;padding:28px 8px;text-align:center">No homework has been assigned yet.</div>';
         }
-        if(sectionBody)sectionBody.innerHTML='<div class="section-live-content" style="display:block!important;visibility:visible!important">'+html+'</div>';
+        if(!liveHtml)liveHtml='<div class="empty" style="display:block!important;padding:28px 8px;text-align:center">No information available yet.</div>';
+        if(sectionView){
+          sectionView.innerHTML='<div class="section-view-head"><span class="section-view-icon">'+icon+'</span><span class="section-view-title">'+esc(title)+'</span></div><div class="section-view-body"><div class="section-live-content" style="display:block!important;visibility:visible!important">'+liveHtml+'</div></div><button class="dashboard-back" type="button" id="dashboardBack"><span>‹</span> Back to Dashboard</button>';
+          sectionView.style.display="block";
+          var back=sectionView.querySelector("#dashboardBack");
+          if(back)back.onclick=function(ev){return window.__tasviaBackDashboard(ev);};
+        }
         if(actionBox)actionBox.style.display="none";
         if(dashHead)dashHead.style.display="none";
         if(dashSummary)dashSummary.style.display="none";
-        if(sectionView)sectionView.style.display="block";
         document.body.classList.add("section-open");
         document.body.style.overflow="hidden";
         window.scrollTo(0,0);
       }catch(err){
-        console.error("TASVIA section render error",err);
-        if(sectionBody)sectionBody.innerHTML='<div class="empty" style="display:block!important;padding:30px;text-align:center">Unable to display this section. Please refresh the portal.</div>';
-        if(sectionView)sectionView.style.display="block";
+        console.error("TASVIA section error",err);
+        if(sectionView){sectionView.innerHTML='<div class="section-view-head"><span class="section-view-icon">⚠️</span><span class="section-view-title">Parent Portal</span></div><div class="section-view-body"><div class="empty" style="display:block!important;padding:30px;text-align:center">Unable to display this section.</div></div><button class="dashboard-back" type="button" id="dashboardBack"><span>‹</span> Back to Dashboard</button>';sectionView.style.display="block";}
       }
       return false;
     }
