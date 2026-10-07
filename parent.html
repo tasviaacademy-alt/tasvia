@@ -453,7 +453,9 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
         var dt=new Date(dd+"T00:00:00");
         dueText=isNaN(dt.getTime())?dd:dt.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
       }
-      return "<tr><td>"+esc(x.m||"")+(dueText?"<small style='display:block;margin-top:4px;color:#667085'>Due date: "+esc(dueText)+"</small>":"")+"</td><td>"+(f?"<b class='due'>Due "+money(f)+"</b>":"<b class='paid'>Paid</b>")+"</td></tr>";
+      var isFutureDue=dd && !isNaN(new Date(dd+"T00:00:00").getTime()) && new Date(dd+"T00:00:00").getTime()>Date.now();
+      var feeState=f?(isFutureDue?"Upcoming "+money(f):"Due "+money(f)):"Paid";
+      return "<tr><td>"+esc(x.m||"")+(dueText?"<small style='display:block;margin-top:4px;color:#667085'>Due date: "+esc(dueText)+"</small>":"")+"</td><td>"+(f?"<b class='"+(isFutureDue?"":"due")+"'>"+esc(feeState)+"</b>":"<b class='paid'>Paid</b>")+"</td></tr>";
     }).join("");
     var centreUpi=centre&&centre.upi?String(centre.upi).trim():"";if(!centreUpi)centreUpi="badavathpremdas2@ybl";
     var todayTs=new Date().getTime();
@@ -537,7 +539,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
 
       '</div></main>';
 
-    if(due>0){
+    if(due>0 && currentFee && currentFee.status!=="paid"){
       var feePopup=document.getElementById("feeDuePopup"),feeClose=document.getElementById("feeDueClose");
       if(feePopup){
         feePopup.classList.add("show");feePopup.setAttribute("aria-hidden","false");
