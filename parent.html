@@ -489,7 +489,8 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     var dashboardBack=document.getElementById("dashboardBack");
     if(actionBox&&sectionView){
       function openSection(card){
-        var summary=card&&card.querySelector(".action-summary");
+        if(!card)return;
+        var summary=card.querySelector(".action-summary");
         if(!summary)return;
         var title=summary.querySelector("span:nth-child(2)");
         var icon=summary.querySelector(".action-icon");
@@ -497,30 +498,34 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
         if(sectionTitle)sectionTitle.textContent=title?title.textContent:"";
         if(sectionIcon)sectionIcon.textContent=icon?icon.textContent:"";
         if(sectionBody)sectionBody.innerHTML=body?body.innerHTML:"";
+        card.removeAttribute("open");
         actionBox.style.display="none";
         if(dashHead)dashHead.style.display="none";
         if(dashSummary)dashSummary.style.display="none";
-        if(sectionBody)sectionBody.scrollTop=0;
         sectionView.style.display="block";
         document.body.classList.add("section-open");
-        setTimeout(function(){window.scrollTo(0,0);},0);
+        window.scrollTo(0,0);
       }
-      actionBox.addEventListener("click",function(ev){
-        var summary=ev.target.closest(".action-summary");
-        if(!summary || !actionBox.contains(summary))return;
-        ev.preventDefault();
-        ev.stopPropagation();
-        var card=summary.closest(".action-detail");
-        openSection(card);
-      },true);
+      actionBox.querySelectorAll(".action-detail").forEach(function(card){
+        var summary=card.querySelector(".action-summary");
+        if(!summary)return;
+        summary.addEventListener("click",function(ev){
+          ev.preventDefault();
+          ev.stopPropagation();
+          openSection(card);
+          return false;
+        });
+      });
       if(dashboardBack)dashboardBack.addEventListener("click",function(ev){
         ev.preventDefault();
+        ev.stopPropagation();
         sectionView.style.display="none";
         if(dashHead)dashHead.style.display="";
         if(dashSummary)dashSummary.style.display="";
         actionBox.style.display="grid";
         document.body.classList.remove("section-open");
         window.scrollTo(0,0);
+        return false;
       });
     }
   function showLoading(code){
