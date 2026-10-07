@@ -1842,7 +1842,7 @@ document.addEventListener("submit",e=>{
     if(db)schedulePV(true);
     closeSheet();render();if(e)hwSendSheet(sid);else toast("Homework cleared");
   }
-  if(f.id==="fInfo"){S.info=Object.assign(info(),d);put("info/centre",S.info);closeSheet();render();toast("Centre info saved")}
+  if(f.id==="fInfo"){S.info=Object.assign(info(),d);put("info/centre",S.info);if(db)schedulePV(true);closeSheet();render();toast("Centre info saved")}
 });
 let tt;function toast(m){if(!/…$/.test(m))(/couldn|can't|must|enter |check |isn't|not |blocked|full|error|before/i.test(m)?SOUND.error:SOUND.save)();const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2200)}
 
