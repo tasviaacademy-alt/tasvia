@@ -407,6 +407,8 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     var tests=Array.isArray(d.tests)?d.tests:[];
     var fees=Array.isArray(d.fees)?d.fees:[];
     var hw=Array.isArray(d.hw)?d.hw:[];
+    var centre=d.centre&&typeof d.centre==='object'?d.centre:{};
+    var noticeText=String(centre.notice||'').trim();
     var nowLocal=new Date();var current=nowLocal.getFullYear()+"-"+String(nowLocal.getMonth()+1).padStart(2,"0");
     var fee=fees.find(function(x){return String(x&&x.m||"").slice(0,7)===current;});
     var feeAmt=fee?Number(fee.fee)||0:0,paid=fee?Number(fee.paid)||0:0,due=Math.max(0,feeAmt-paid);
@@ -448,7 +450,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
       '.dash-stat{background:#263b63;border:1px solid rgba(255,255,255,.14);border-radius:22px;min-height:126px;padding:18px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}'+
       '.dash-stat b{font-size:31px;line-height:1.1;font-weight:800}.dash-stat small{font-size:18px;color:#c2cad8;margin-top:10px}.dash-stat .notpaid{font-size:29px}.dash-stat .paid{color:#55c78a}.dash-stat .notpaid{color:#ffbf56}'+
       '.dash-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:26px}'+
-      '.action-detail{background:linear-gradient(145deg,#fff,#f8fafc);border:1px solid #e1e5eb;border-radius:22px;box-shadow:0 7px 24px rgba(16,40,88,.07);overflow:hidden;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;min-height:142px}.action-detail:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(16,40,88,.11);border-color:#d7b44c}.action-summary:focus-visible,.dashboard-back:focus-visible{outline:3px solid rgba(215,180,76,.55);outline-offset:2px}'+
+      '.notice-card{padding:4px 0}.notice-card b{display:block;color:#102858;font-size:18px;margin-bottom:7px}.notice-card p{margin:0;color:#4b5565;white-space:pre-wrap}.action-detail{background:linear-gradient(145deg,#fff,#f8fafc);border:1px solid #e1e5eb;border-radius:22px;box-shadow:0 7px 24px rgba(16,40,88,.07);overflow:hidden;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;min-height:142px}.action-detail:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(16,40,88,.11);border-color:#d7b44c}.action-summary:focus-visible,.dashboard-back:focus-visible{outline:3px solid rgba(215,180,76,.55);outline-offset:2px}'+
       '.action-detail[open]{border-color:#e2c77d;box-shadow:0 8px 25px rgba(20,35,60,.10)}'+
       '.action-summary{-webkit-appearance:none;appearance:none;border:0;width:100%;height:100%;min-height:142px;background:transparent;text-align:center;font-family:inherit;list-style:none;cursor:pointer;padding:18px 10px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font-size:16px;font-weight:800;line-height:1.18;color:#182136;box-sizing:border-box}'+
       '.action-summary::-webkit-details-marker{display:none}.action-summary:after{content:"›";position:absolute;top:9px;right:12px;color:#c9a654;font-size:27px;font-weight:400;line-height:1}.action-summary{position:relative}'+
@@ -468,6 +470,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
       '<div class="dash-stat"><b class="'+feeClass+'">'+feeLabel+'</b><small>Current Month · '+esc(feeDate)+'</small></div>'+
       '</div></section>'+
       '<div class="dash-actions">'+
+      '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">🔔</span><span>Notice</span></button><div class="action-content"><div class="notice-card"><b>Latest Notice</b><p>'+esc(noticeText||"No new notices from TASVIA Academy.")+'</p></div></div></div>'+
       '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">📚</span><span>Homework</span></button><div class="action-content">'+(hwRows||'<div class="empty">No homework added yet.</div>')+'</div></div>'+
       '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">📅</span><span>Attendance</span></button><div class="action-content"><div class="section-note">Academic year: '+yp+' present, '+ya+' absent ('+ypct+'% overall)</div><div class="dash-stats"><div class="dash-stat"><b>'+mp+'</b><small>Present</small></div><div class="dash-stat"><b>'+ma+'</b><small>Absent</small></div><div class="dash-stat"><b>'+mpct+'%</b><small>'+esc(cm||"Latest")+'</small></div></div></div></div>'+
       '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">💳</span><span>Fee Details</span></button><div class="action-content">'+(feeRows?'<table>'+feeRows+'</table>':'<div class="empty">No fee records available.</div>')+'</div></div>'+
