@@ -1,6 +1,6 @@
-updateParentClock();setInterval(updateParentClock,1000);<!doctype html>
+<!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v72">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v73">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -721,19 +721,29 @@ table{overflow:hidden;border-radius:14px}
     try{
       var qs=new URLSearchParams(location.search||"");
       var rawHash=String(location.hash||"").replace(/^#/,"");
+      var p=String(location.pathname||"");
       var candidates=[
-        qs.get("code"),
-        qs.get("student"),
-        qs.get("id"),
+        qs.get("code"),qs.get("student"),qs.get("studentCode"),qs.get("studentId"),qs.get("id"),
         rawHash,
         (function(){
-          var p=String(location.pathname||"");
-          var m=p.match(/\/parent(?:\/index\.html)?\/([A-Za-z0-9._-]{3,64})\/?$/i);
+          var m=p.match(/\/(?:parent|parents|student)(?:\/index\.html)?\/([A-Za-z0-9._-]{3,64})\/?$/i);
           return m?m[1]:"";
+        })(),
+        (function(){
+          var parts=p.split("/").filter(Boolean);
+          for(var j=parts.length-1;j>=0;j--){
+            var v=valid(parts[j]);
+            if(v && !/^(parent|parents|student|index|index\.html)$/i.test(parts[j]))return v;
+          }
+          return "";
         })()
       ];
       for(var i=0;i<candidates.length;i++){
-        var code=valid(candidates[i]);
+        var raw=candidates[i];
+        if(!raw)continue;
+        try{raw=decodeURIComponent(String(raw)).trim()}catch(_){raw=String(raw).trim()}
+        raw=raw.replace(/^#|\/$/g,"");
+        var code=valid(raw);
         if(code)return code;
       }
     }catch(_){}
