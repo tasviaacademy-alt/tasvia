@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v57">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v58">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TASVIA Academy – Parent</title>
@@ -501,48 +501,29 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     var card=btn&&btn.closest?btn.closest(".action-detail"):null;
     if(!card)return false;
     var title=((card.querySelector(".action-summary span:nth-child(2)")||{}).textContent||"").trim();
-    var icon=((card.querySelector(".action-icon")||{}).textContent||"");
-    var content=card.querySelector(".action-content");
-    var liveHtml=content?content.innerHTML:"";
-    var idx=actionBox?Array.prototype.indexOf.call(actionBox.children,card):-1;
-    var titles=["Notice","Homework","Attendance","Fee Details","General Knowledge","Current Affairs","Tests","BODMAS Practice","Contact"];
-    var icons=["🔔","📚","📅","💳","🧠","📰","📝","🧮","📞"];
-    title=title||titles[idx]||"Parent Portal"; icon=icon||icons[idx]||"";
+    var icon=((card.querySelector(".action-icon")||{}).textContent||"📄").trim();
+    var content=card.querySelector(".action-content"), liveHtml=content?content.innerHTML:"";
+    var esc2=function(v){return String(v==null?"":v).replace(/[&<>"']/g,function(ch){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]})};
     if(title==="Homework"){
-      var pd=window.__tasviaParentData||{}, list=Array.isArray(pd.hw)?pd.hw:[];
-      liveHtml=list.length?list.slice(0,10).map(function(x){
-        return '<div class="hw-row" style="display:block!important;padding:14px 4px"><b>'+esc(x.d||x.date||"")+'</b><div>'+esc(x.hw||x.homework||x.text||"")+'</div>'+(x.note?'<small class="sub" style="display:block;margin-top:5px">'+esc(x.note)+'</small>':"")+'</div>';
-      }).join(""):'<div class="empty" style="display:block!important;padding:28px 8px;text-align:center">No homework has been assigned yet.</div>';
+      var pd=window.__tasviaParentData||{},list=Array.isArray(pd.hw)?pd.hw:[];
+      liveHtml=list.length?list.slice(0,10).map(function(x){return '<div style="padding:14px 4px;border-bottom:1px solid #e1e5eb"><b>'+esc2(x.d||x.date||"")+'</b><div style="margin-top:5px;white-space:pre-wrap">'+esc2(x.hw||x.homework||x.text||"")+'</div>'+(x.note?'<small style="display:block;margin-top:5px;color:#667085">'+esc2(x.note)+'</small>':"")+'</div>'}).join(""):'<div style="padding:30px;text-align:center;color:#667085">No homework has been assigned yet.</div>';
     }
-    if(!liveHtml)liveHtml='<div class="empty" style="display:block!important;padding:28px 8px;text-align:center">No information available yet.</div>';
-    if(sectionView){
-      sectionView.innerHTML='<div class="section-view-head"><span class="section-view-icon">'+icon+'</span><span class="section-view-title">'+esc(title)+'</span></div><div class="section-view-body"><div id="sectionLiveContent" class="section-live-content" style="display:block!important;visibility:visible!important">'+liveHtml+'</div></div><button class="dashboard-back" type="button" id="dashboardBack"><span>‹</span> Back to Dashboard</button>';
-      sectionView.style.cssText='display:block!important;position:fixed;inset:0;z-index:2147483000;width:100%;height:100%;min-height:100dvh;overflow:auto;background:#f5f6f8;padding:max(12px,env(safe-area-inset-top,0px)) 0 max(12px,env(safe-area-inset-bottom,0px));box-sizing:border-box';
-      sectionView.setAttribute("aria-label",title);
-      var back=sectionView.querySelector("#dashboardBack");
-      if(back)back.onclick=function(ev){return window.__tasviaBackDashboard(ev);};
-    }
-    if(actionBox)actionBox.style.display="none";
-    if(dashHead)dashHead.style.display="none";
-    if(dashSummary)dashSummary.style.display="none";
-    document.body.classList.add("section-open");
-    document.body.style.overflow="hidden";
-    if(title==="General Knowledge"&&window.__tasviaLoadLearning)window.__tasviaLoadLearning("gk",document.getElementById("sectionLiveContent"));
-    if(title==="Current Affairs"&&window.__tasviaLoadLearning)window.__tasviaLoadLearning("current",document.getElementById("sectionLiveContent"));
-    if(title==="BODMAS Practice"&&window.__tasviaLoadLearning)window.__tasviaLoadLearning("bodmas",document.getElementById("sectionLiveContent"));
-    window.scrollTo(0,0);
-  }catch(err){
-    console.error("TASVIA section error",err);
-    if(sectionView){
-      sectionView.innerHTML='<div class="section-view-head"><span class="section-view-icon">⚠️</span><span class="section-view-title">Parent Portal</span></div><div class="section-view-body"><div class="empty" style="display:block!important;padding:30px;text-align:center">Unable to display this section.</div></div><button class="dashboard-back" type="button" id="dashboardBack"><span>‹</span> Back to Dashboard</button>';
-      sectionView.style.cssText='display:block!important;position:fixed;inset:0;z-index:2147483000;width:100%;height:100%;min-height:100dvh;overflow:auto;background:#f5f6f8;padding:12px;box-sizing:border-box';
-      var fallbackBack=sectionView.querySelector("#dashboardBack");
-      if(fallbackBack)fallbackBack.onclick=function(ev){return window.__tasviaBackDashboard(ev);};
-    }
-  }
+    if(!liveHtml)liveHtml='<div style="padding:30px;text-align:center;color:#667085">No information available yet.</div>';
+    var old=document.getElementById("tasviaSectionOverlay");if(old)old.remove();
+    var overlay=document.createElement("div");overlay.id="tasviaSectionOverlay";
+    overlay.style.cssText="position:fixed;inset:0;z-index:2147483647;background:#f5f6f8;color:#182136;overflow:auto;-webkit-overflow-scrolling:touch;padding:18px 14px 34px;box-sizing:border-box";
+    overlay.innerHTML='<div style="max-width:640px;margin:0 auto"><div style="display:flex;align-items:center;gap:12px;background:#0B2455;color:#fff;border-radius:18px;padding:16px;margin-bottom:14px"><span style="font-size:30px">'+icon+'</span><b style="font-size:20px">'+esc2(title)+'</b></div><div id="tasviaSectionContent" style="background:#fff;border:1px solid #e1e5eb;border-radius:18px;padding:16px;box-shadow:0 6px 20px rgba(16,40,88,.08);min-height:120px">'+liveHtml+'</div><button id="tasviaOverlayBack" type="button" style="display:block;width:100%;margin:16px 0 0;border:0;border-radius:14px;background:#0B2455;color:#fff;padding:14px;font:700 16px Hind,sans-serif;cursor:pointer">‹ &nbsp; Back to Dashboard</button></div>';
+    document.body.appendChild(overlay);document.body.style.overflow="hidden";
+    var back=document.getElementById("tasviaOverlayBack");if(back)back.onclick=function(){overlay.remove();document.body.style.overflow="";return false;};
+    var target=document.getElementById("tasviaSectionContent");
+    if(title==="General Knowledge"&&window.__tasviaLoadLearning)window.__tasviaLoadLearning("gk",target);
+    if(title==="Current Affairs"&&window.__tasviaLoadLearning)window.__tasviaLoadLearning("current",target);
+    if(title==="BODMAS Practice"&&window.__tasviaLoadLearning)window.__tasviaLoadLearning("bodmas",target);
+  }catch(e){console.error("TASVIA parent section",e);alert("Unable to open this section. Please refresh and try again.");}
   return false;
 }
   window.__tasviaOpenSection=openParentSection;
+  document.addEventListener('click',function(ev){var b=ev.target&&ev.target.closest?ev.target.closest('.action-summary'):null;if(b){ev.preventDefault();ev.stopPropagation();openParentSection(b);}},true);
   function showLoading(code){
     var msg=document.getElementById("studentLoginMsg");
     var input=document.getElementById("studentLoginId");
