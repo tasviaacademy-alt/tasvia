@@ -585,16 +585,26 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     window.__tasviaLoginInFlight=code;
     showLoading(code);
     try{localStorage.setItem("tasvia-parent-code",code);sessionStorage.setItem("tasvia-parent-code",code)}catch(_){}
-    read(code).then(function(d){
-      if(!d) throw new Error("Student record not found");
-      render(d,code);
-      try{history.replaceState(null,"",location.pathname+"#"+encodeURIComponent(code));}catch(_){}
-    }).catch(function(e){
-      console.warn("TASVIA rescue parent login:",e);
-      window.__tasviaLoginInFlight="";
-      var msg=document.getElementById("studentLoginMsg");
-      if(msg) msg.textContent="Unable to load this student record. Please check internet and try again.";
-    });
+    var attempt=0;
+    function load(){
+      attempt++;
+      read(code).then(function(d){
+        if(!d) throw new Error("Student record not found");
+        render(d,code);
+        window.__tasviaLoginInFlight="";
+        try{history.replaceState(null,"",location.pathname+"#"+encodeURIComponent(code));}catch(_){}
+      }).catch(function(e){
+        console.warn("TASVIA parent auto-login attempt "+attempt,e);
+        if(attempt<4){
+          setTimeout(load,Math.min(1500*attempt,4500));
+          return;
+        }
+        window.__tasviaLoginInFlight="";
+        var msg=document.getElementById("studentLoginMsg");
+        if(msg) msg.textContent="Unable to open the Parent Dashboard. Please try the same parent link again.";
+      });
+    }
+    load();
     return true;
   }
   window.__tasviaRescueStart=start;
