@@ -7,15 +7,16 @@
 <title>TASVIA Academy – Parent Portal</title>
 <script>
 (function(){
+  "use strict";
   var q=location.search||"";
   var h=location.hash||"";
-  var target="../parent.html"+q+h;
-  location.replace(target);
+  var p=String(location.pathname||"");
+  var m=p.match(/\/parent(?:\/index\.html)?\/([A-Za-z0-9._-]{3,64})\/?$/i);
+  if(m && !q && !h) q="?code="+encodeURIComponent(m[1]);
+  var target="/parent.html"+q+h;
+  try{location.replace(target)}catch(_){location.href=target}
 })();
 </script>
 </head>
-<body>
-  <p>Opening TASVIA Parent Portal…</p>
-  <noscript>Please enable JavaScript to open the parent portal.</noscript>
-</body>
+<body><p>Opening TASVIA Parent Portal…</p><noscript>Please enable JavaScript to open the parent portal.</noscript></body>
 </html>
