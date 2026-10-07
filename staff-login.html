@@ -43,14 +43,27 @@
    try{
      if(!auth)await boot();
      if(!auth)throw new Error("Firebase Authentication is unavailable.");
-     try{await timeout(auth.setPersistence(firebase.auth.Auth.Persistence.SESSION),8000)}catch(_){/* fallback to default */}
+     try{await timeout(auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL),8000)}catch(_){/* fallback to default */}
      const cred=await timeout(auth.signInWithEmailAndPassword(email,password),15000);
      const u=cred.user||auth.currentUser;
      if(!u)throw new Error("Firebase sign-in completed without a user session.");
      msg("Signed in. Verifying Staff account…");
      if(email!=="tasviaacademy@gmail.com"){
-       const snap=await timeout(firebase.firestore().collection("Staff").doc(email).get(),10000);
-       if(!snap.exists)throw new Error("This email is not registered in TASVIA Staff.");
+       const db=firebase.firestore();
+       // Query by email first so legacy Staff records with auto-generated
+       // document IDs remain compatible with the existing Firestore rules.
+       let snap=null;
+       try{
+         const q=await timeout(db.collection("Staff").where("email","==",email).limit(1).get(),10000);
+         if(!q.empty)snap=q.docs[0];
+       }catch(err){
+         console.warn("Staff email query failed; trying canonical document ID",err);
+       }
+       if(!snap){
+         const direct=await timeout(db.collection("Staff").doc(email).get(),10000);
+         if(direct.exists)snap=direct;
+       }
+       if(!snap)throw new Error("This email is not registered in TASVIA Staff.");
      }
      sessionStorage.setItem("tasviaStaffEntry","1");
      msg("Staff verified. Opening portal…","ok");
