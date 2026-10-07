@@ -418,11 +418,14 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     var centre=d.centre&&typeof d.centre==='object'?d.centre:{};
     var noticeText=String(centre.notice||'').trim();
     var nowLocal=new Date();var current=nowLocal.getFullYear()+"-"+String(nowLocal.getMonth()+1).padStart(2,"0");
+    var currentFee=d.currentFee&&typeof d.currentFee==="object"?d.currentFee:null;
     var fee=fees.find(function(x){return String(x&&x.m||"").slice(0,7)===current;});
-    var feeAmt=fee?Number(fee.fee)||0:0,paid=fee?Number(fee.paid)||0:0,due=Math.max(0,feeAmt-paid);
-    var feePaid=!!fee&&due<=0;
+    var feeAmt=currentFee?Number(currentFee.fee)||0:(fee?Number(fee.fee)||0);
+    var paid=currentFee?Number(currentFee.paid)||0:(fee?Number(fee.paid)||0);
+    var due=currentFee?Math.max(0,Number(currentFee.due)||0):Math.max(0,feeAmt-paid);
+    var feePaid=currentFee?currentFee.status==="paid":(!!fee&&due<=0);
     var feeLabel=feePaid?"Paid":"Not Paid";
-    var feeDate=fee&&fee.m?String(fee.m):new Date().toLocaleDateString("en-IN",{month:"short",year:"numeric"});
+    var feeDate=currentFee&&currentFee.nextDueDate?currentFee.nextDueDate:(fee&&fee.m?String(fee.m):new Date().toLocaleDateString("en-IN",{month:"short",year:"numeric"}));
     var feeClass=feePaid?"paid":"notpaid";
     var testRows=tests.slice(0,12).map(function(x){
       var marks=Number(x.m)||0,max=Number(x.x)||0;
@@ -439,7 +442,8 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
       return "<tr><td>"+esc(x.m||"")+(dueText?"<small style='display:block;margin-top:4px;color:#667085'>Due date: "+esc(dueText)+"</small>":"")+"</td><td>"+(f?"<b class='due'>Due "+money(f)+"</b>":"<b class='paid'>Paid</b>")+"</td></tr>";
     }).join("");
     var centreUpi=centre&&centre.upi?String(centre.upi).trim():"";if(!centreUpi)centreUpi="badavathpremdas2@ybl";
-    var feeTotalDue=fees.reduce(function(sum,x){return sum+Math.max(0,(Number(x&&x.fee)||0)-(Number(x&&x.paid)||0));},0);
+    var todayTs=new Date().getTime();
+    var feeTotalDue=fees.reduce(function(sum,x){var dd=x&&x.dueDate?new Date(String(x.dueDate)+"T00:00:00").getTime():0;var f=Math.max(0,(Number(x&&x.fee)||0)-(Number(x&&x.paid)||0));return sum+(f&&(!dd||dd<=todayTs)?f:0);},0);
     var feeDetailsQr=centreUpi&&feeTotalDue>0?"upi://pay?pa="+encodeURIComponent(centreUpi)+"&pn="+encodeURIComponent("TASVIA Academy")+"&am="+encodeURIComponent(feeTotalDue.toFixed(2))+"&cu=INR":"";
     var feeDetailsPay=feeDetailsQr?'<div class="fee-details-pay"><div class="fee-qr-wrap"><img class="fee-qr" alt="Fee payment QR code" src="https://quickchart.io/qr?size=220&text='+encodeURIComponent(feeDetailsQr)+'"><div class="fee-qr-note">Scan to pay total due • '+money(feeTotalDue)+'</div></div><div class="fee-popup-pay"><a class="gold" href="'+feeDetailsQr+'">Pay Now</a></div></div>':"";
     var hwRows=hw.slice(0,10).map(function(x){
