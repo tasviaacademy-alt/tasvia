@@ -1924,6 +1924,23 @@ function netStatus(){setSync(navigator.onLine?"Synced · "+((auth&&auth.currentU
 function withTimeout(promise,ms,message){
   return Promise.race([promise,new Promise((_,reject)=>setTimeout(()=>reject(new Error(message)),ms))]);
 }
+async function getStaffRecord(email){
+  // Canonical record: Staff document ID = Firebase Auth email.
+  const direct=await withTimeout(
+    fs.collection("Staff").doc(email).get(),
+    10000,
+    "Staff verification timed out"
+  );
+  if(direct.exists) return direct;
+  // Legacy compatibility: some older Staff records used auto IDs but stored email in a field.
+  // This query is limited to one document and is only a fallback after Auth succeeds.
+  const q=await withTimeout(
+    fs.collection("Staff").where("email","==",email).limit(1).get(),
+    10000,
+    "Staff verification timed out"
+  );
+  return q.empty?null:q.docs[0];
+}
 window.addEventListener("online",netStatus);window.addEventListener("offline",netStatus);
 const MIME={csv:"text/csv;charset=utf-8",html:"text/html;charset=utf-8",png:"image/png"};
 downloads={async save({filename,data}){
@@ -2002,8 +2019,8 @@ function startFirebase(){
           const isRootAdmin=email==="tasviaacademy@gmail.com";
           let snap=null;
           if(!isRootAdmin){
-            snap=await withTimeout(fs.collection("Staff").doc(email).get(),10000,"Staff verification timed out");
-            if(!snap.exists){
+            snap=await getStaffRecord(email);
+            if(!snap){
               setSync("Staff account check failed");
               gErr.textContent="Firebase login succeeded, but this email is not registered in TASVIA Staff. Ask the administrator to add the same email to Staff.";
               return;
@@ -2080,8 +2097,8 @@ loginForm.addEventListener("submit",async e=>{
       window.currentUser={uid:u.uid,email:signedEmail,name:"TASVIA Admin",role:"admin"};
     }else{
       setSync("Signed in · verifying staff…");
-      const snap=await withTimeout(fs.collection("Staff").doc(signedEmail).get(),10000,"Staff verification timed out");
-      if(!snap.exists) throw new Error("This Firebase account is not registered in TASVIA Staff. Add this email to Staff or use the TASVIA admin account.");
+      const snap=await getStaffRecord(signedEmail);
+      if(!snap) throw new Error("This Firebase account is not registered in TASVIA Staff. Add this email to Staff or use the TASVIA admin account.");
       const staff=snap.data()||{};
       window.currentUser={uid:u.uid,email:signedEmail,name:staff.name||signedEmail,role:String(staff.role||"staff").toLowerCase()};
     }
