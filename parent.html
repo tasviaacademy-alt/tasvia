@@ -430,7 +430,13 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     }).join("");
     var feeRows=fees.slice(0,12).map(function(x){
       var f=Math.max(0,(Number(x.fee)||0)-(Number(x.paid)||0));
-      return "<tr><td>"+esc(x.m||"")+"</td><td>"+(f?"<b class='due'>Due "+money(f)+"</b>":"<b class='paid'>Paid</b>")+"</td></tr>";
+      var dd=x.dueDate?String(x.dueDate):"";
+      var dueText="";
+      if(dd){
+        var dt=new Date(dd+"T00:00:00");
+        dueText=isNaN(dt.getTime())?dd:dt.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
+      }
+      return "<tr><td>"+esc(x.m||"")+(dueText?"<small style='display:block;margin-top:4px;color:#667085'>Due date: "+esc(dueText)+"</small>":"")+"</td><td>"+(f?"<b class='due'>Due "+money(f)+"</b>":"<b class='paid'>Paid</b>")+"</td></tr>";
     }).join("");
     var centreUpi=centre&&centre.upi?String(centre.upi).trim():"";if(!centreUpi)centreUpi="badavathpremdas2@ybl";
     var feeTotalDue=fees.reduce(function(sum,x){return sum+Math.max(0,(Number(x&&x.fee)||0)-(Number(x&&x.paid)||0));},0);
