@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TASVIA Academy</title>
 <meta name="theme-color" content="#0B2455">
-<!-- deployment-refresh-2026-10-01 -->
+<!-- deployment-refresh-2026-10-07-parent-fee-qr -->
 <meta name="description" content="Attendance, fees, homework, salaries and report cards for TASVIA Academy Tuition Centre, Nizamabad">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
@@ -455,7 +455,7 @@ const DEFAULT_INFO={name:"TASVIA Academy Tuition Centre",notice:"Admissions open
   phone:"78421 38739",email:"tasviaacademy@gmail.com",insta:"@tasviaacademy",
   address:"Srinivasa Nilayam, Road No. 1, Gangasthan Phase 2, Nizamabad, Telangana 503003",
   subjects:"All subjects, LKG to Intermediate (State Board and CBSE)",
-  extra:"TASVIA Academy Competitive Coaching: Navodaya (JNVST) and Sainik School entrance."};
+  extra:"TASVIA Academy Competitive Coaching: Navodaya (JNVST) and Sainik School entrance.",upi:""};
 
 let S={students:{},att:{},fees:{},paymentRecords:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},diary:{}};
 let db=null,unsubs=[];
@@ -671,7 +671,7 @@ async function flush(k,date){
   const key=k+"|"+date,patch=Object.assign({},pend[key]);if(!Object.keys(patch).length)return;
   if(!db){const m=Object.assign({},(S[k][date]||{}).marks);for(const x in patch){if(patch[x]==null)delete m[x];else m[x]=patch[x]}S[k][date]={date,marks:m};pend[key]={};saveLocal();render();return}
   const ok=await mergeWrite(ATTCOLL[k]+"/"+date,{marks:patch},{date});
-  if(ok){for(const x in patch)if(pend[key][x]===patch[x])delete pend[key][x];render()}
+  if(ok){for(const x in patch)if(pend[key][x]===patch[x])delete pend[key][x];if(k==="att")schedulePV(true);render()}
 }
 function datesOf(k){const d=new Set(Object.keys(S[k]));Object.keys(pend).forEach(x=>{if(x.startsWith(k+"|"))d.add(x.slice(k.length+1))});return [...d]}
 function attStats(sid,month,from,to){
@@ -1394,7 +1394,7 @@ function infoForm(){
   <label class="f">Courses<input name="subjects" value="${esc(i.subjects)}"></label>
   <label class="f">Other programmes<textarea name="extra" rows="2">${esc(i.extra)}</textarea></label>
   <div class="two"><label class="f">Phone<input name="phone" value="${esc(i.phone)}"></label><label class="f">Instagram<input name="insta" value="${esc(i.insta)}"></label></div>
-  <label class="f">Email<input name="email" value="${esc(i.email)}"></label>
+  <label class="f">Email<input name="email" value="${esc(i.email)}"></label>\n  <label class="f">UPI ID for Parent Fee QR<input name="upi" value="${esc(i.upi||"")}" placeholder="example@upi"></label>
   <label class="f">Address<textarea name="address" rows="2">${esc(i.address)}</textarea></label>
   <div class="acts"><button class="btn gold" type="submit">Save info</button></div></form>`);
 }
