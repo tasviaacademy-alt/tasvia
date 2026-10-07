@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TASVIA Academy</title>
-<meta name="theme-color" content="#0B2455">
+<meta name="theme-color" content="#0B2455">\n<script>
+/* Staff entry recovery: old Staff bookmarks are routed to the clean login entry. Parent portal is unaffected. */
+(function(){try{if(location.pathname.endsWith("/index.html")&&!location.search.includes("staff=1")&&!sessionStorage.getItem("tasviaStaffEntry")){location.replace("./staff-login.html?v=20261007")}}catch(e){}})();
+</script>
 <!-- deployment-refresh-2026-10-07-parent-fee-qr -->
 <meta name="description" content="Attendance, fees, homework, salaries and report cards for TASVIA Academy Tuition Centre, Nizamabad">
 <link rel="manifest" href="manifest.json">
