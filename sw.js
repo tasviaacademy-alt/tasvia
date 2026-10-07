@@ -5,6 +5,7 @@ const CACHE = "tasvia-v80";
 const STATIC_SHELL = [
   "/",
   "/index.html",
+  "/staff-login.html",
   "/parent/index.html",
   "/firebase-config.js",
   "/manifest.json",
