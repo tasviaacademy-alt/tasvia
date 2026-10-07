@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v52">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v53">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TASVIA Academy – Parent</title>
@@ -394,6 +394,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
   function card(title,body){return '<section class="rescue-card"><h2>'+title+'</h2>'+body+'</section>';}
   function render(d,code){
     window.__tasviaParentData=d;
+    window.__tasviaSectionEsc=esc;
     var name=String(d.name||"TASVIA Student");
     var cls=String(d.cls||"");
     var year=String(d.year||"");
@@ -500,7 +501,6 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
       if(!card)return false;
       var titleEl=card.querySelector(".action-summary span:nth-child(2)");
       var iconEl=card.querySelector(".action-icon");
-      var contentEl=card.querySelector(".action-content");
       var idx=actionBox?Array.prototype.indexOf.call(actionBox.children,card):-1;
       var titles=["Notice","Homework","Attendance","Fee Details","General Knowledge","Current Affairs","Tests","BODMAS Practice","Contact"];
       var icons=["🔔","📚","📅","💳","🧠","📰","📝","🧮","📞"];
@@ -508,30 +508,43 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
       var icon=(iconEl&&iconEl.textContent||"").trim()||icons[idx]||"";
       if(sectionTitle)sectionTitle.textContent=title;
       if(sectionIcon)sectionIcon.textContent=icon;
-      if(sectionBody){
-        var liveHtml=contentEl?contentEl.innerHTML:"";
-        if(title==="Homework"){
-          var pd=window.__tasviaParentData||{};
-          var list=Array.isArray(pd.hw)?pd.hw:[];
-          if(list.length){
-            liveHtml='<div class="homework-direct">'+list.slice(0,10).map(function(x){
-              return '<div class="hw-row"><b>'+esc(x.d||x.date||"")+'</b><div>'+esc(x.hw||x.homework||x.text||"")+'</div>'+(x.note?'<small class="sub" style="display:block;margin-top:4px">'+esc(x.note)+'</small>':'')+'</div>';
-            }).join("")+'</div>';
-          }else{
-            liveHtml='<div class="empty">No homework has been assigned yet.</div>';
-          }
+      var d=window.__tasviaParentData||{};
+      var escx=window.__tasviaSectionEsc||function(v){return String(v==null?"":v).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});};
+      function direct(){
+        var html="";
+        if(title==="Notice"){
+          var n=d.centre&&d.centre.notice?String(d.centre.notice):"";
+          html='<div class="section-note"><b>Latest Notice</b><p style="white-space:pre-wrap;margin:6px 0 0">'+escx(n||"No new notices from TASVIA Academy.")+'</p></div>';
+        }else if(title==="Homework"){
+          var list=Array.isArray(d.hw)?d.hw:[];
+          html=list.length?'<div class="homework-direct">'+list.slice(0,10).map(function(x){
+            return '<div class="hw-row"><b>'+escx(x.d||x.date||"")+'</b><div>'+escx(x.hw||x.homework||x.text||"")+'</div>'+(x.note?'<small class="sub" style="display:block;margin-top:5px">'+escx(x.note)+'</small>':'')+'</div>';
+          }).join("")+'</div>':'<div class="empty">No homework has been assigned yet.</div>';
+        }else if(title==="Attendance"){
+          var yr=d.yr&&typeof d.yr==="object"?d.yr:{},p=Number(yr.p)||0,a=Number(yr.a)||0,total=p+a,pct=total?Math.round(p*100/total):0;
+          html='<div class="section-note">Academic year attendance: <b>'+p+' present</b>, <b>'+a+' absent</b> ('+pct+'%).</div>';
+          var att=d.att&&typeof d.att==="object"?d.att:{},ms=Object.keys(att).sort().reverse();
+          html+='<div class="learning-grid">'+ms.map(function(m){var z=att[m]||{},pp=Number(z.p)||0,aa=Number(z.a)||0,tt=pp+aa,pc=tt?Math.round(pp*100/tt):0;return '<div class="learning-card"><h4>'+escx(m)+'</h4><p>Present: <b>'+pp+'</b> · Absent: <b>'+aa+'</b> · Attendance: <b>'+pc+'%</b></p></div>';}).join("")+'</div>';
+          if(!ms.length)html+='<div class="empty">No attendance records available.</div>';
+        }else if(title==="Fee Details"){
+          var fees=Array.isArray(d.fees)?d.fees:[],pays=Array.isArray(d.pays)?d.pays:[];
+          html=fees.length?'<div class="learning-grid">'+fees.slice(0,12).map(function(f){var fee=Number(f.fee)||0,paid=Number(f.paid)||0,due=Math.max(0,fee-paid);return '<div class="learning-card"><h4>'+escx(f.m||"Fee")+'</h4><p>Fee: ₹'+fee.toLocaleString("en-IN")+' · Paid: ₹'+paid.toLocaleString("en-IN")+' · <b>'+(due?'Due ₹'+due.toLocaleString("en-IN"):'Paid')+'</b></p></div>';}).join("")+'</div>':'<div class="empty">No fee records available.</div>';
+          if(pays.length)html+='<h4 style="margin:18px 0 8px">Payment History</h4><div class="learning-grid">'+pays.slice(0,12).map(function(x){return '<div class="learning-card"><b>'+escx(x.d||"")+'</b><p>₹'+(Number(x.a)||0).toLocaleString("en-IN")+(x.mode?' · '+escx(x.mode):"")+'</p></div>';}).join("")+'</div>';
+        }else if(title==="Tests"){
+          var tests=Array.isArray(d.tests)?d.tests:[];
+          html=tests.length?'<div class="learning-grid">'+tests.slice(0,25).map(function(t){return '<div class="learning-card"><h4>'+escx((t.s||"Test")+(t.n?" · "+t.n:""))+'</h4><p>'+Number(t.m||0)+(t.x?'/'+Number(t.x):"")+(t.d?' · '+escx(t.d):"")+'</p></div>';}).join("")+'</div>':'<div class="empty">No test marks yet.</div>';
+        }else if(title==="Contact"){
+          var c=d.centre&&typeof d.centre==="object"?d.centre:{};
+          html='<div class="contact-data"><div><b>Academy</b><br>'+escx(c.name||"TASVIA Academy")+'</div><div><b>Phone</b><br>'+escx(c.phone||"Not available")+'</div><div><b>Address</b><br>'+escx(c.address||"Not available")+'</div><div><b>Timings</b><br>'+escx(c.timings||"Not available")+'</div></div>';
+        }else{
+          var ce=card.querySelector(".action-content"); html=ce?ce.innerHTML:"";
         }
-        sectionBody.innerHTML='<div class="section-live-content">'+liveHtml+'</div>';
+        return html||'<div class="empty">No information available yet.</div>';
+      }
+      if(sectionBody){
+        sectionBody.innerHTML='<div class="section-live-content">'+direct()+'</div>';
         var live=sectionBody.querySelector(".section-live-content");
         if(live)live.style.display="block";
-        var liveAction=sectionBody.querySelector(".action-content");
-        if(liveAction){
-          liveAction.style.display="block";
-          liveAction.hidden=false;
-        }
-        if(!liveHtml.trim()){
-          sectionBody.innerHTML='<div class="empty">No information available yet.</div>';
-        }
       }
       if(actionBox)actionBox.style.display="none";
       if(dashHead)dashHead.style.display="none";
