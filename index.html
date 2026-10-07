@@ -2212,7 +2212,7 @@ loginForm.addEventListener("submit",async e=>{
 render();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
 else startFirebase();
-if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=80",{scope:"./",updateViaCache:"none"}).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=82",{scope:"./",updateViaCache:"none"}).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
 
 </body>
