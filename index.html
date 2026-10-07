@@ -734,7 +734,7 @@ function currentFeeCycle(s){
   const fee=Number(s&&s.fee)||0;
   if(!fee)return {status:"none",fee:0,paid:0,due:0,dueDate:null,nextDueDate:null,cycleStart:null};
   const join=String(s&&s.joined||"");
-  const valid=/^\\d{4}-\\d{2}-\\d{2}$/.test(join);
+  const valid=/^\d{4}-\d{2}-\d{2}$/.test(join);
   if(!valid)return {status:"due",fee,paid:0,due:fee,dueDate:null,nextDueDate:null,cycleStart:null};
   const [jy,jm,jd]=join.split("-").map(Number);
   const todayDate=new Date();
@@ -750,7 +750,7 @@ function currentFeeCycle(s){
   let paid=0;
   payList(s.id).forEach(p=>{
     const ds=String(p.date||"");
-    const d=/^\\d{4}-\\d{2}-\\d{2}$/.test(ds)?new Date(ds+"T00:00:00"):null;
+    const d=/^\d{4}-\d{2}-\d{2}$/.test(ds)?new Date(ds+"T00:00:00"):null;
     if(d&&d>=cycle&&d<next)paid+=Number(p.amount)||0;
     else if(!d&&paymentMonth(p)===cycleStart.slice(0,7))paid+=Number(p.amount)||0;
   });
