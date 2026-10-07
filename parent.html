@@ -347,11 +347,9 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     <p id="welcomeGreeting">Let’s inspire, learn, grow and succeed together.</p>
     <p class="welcome-tag">INSPIRE • LEARN • GROW • SUCCEED</p>
     <form id="studentLoginForm" class="student-login-form" onsubmit="return window.tasviaStudentLogin(event)">
-      <label class="student-login-label" for="studentLoginId">Student ID</label>
-      <input id="studentLoginId" class="student-login-input" type="text" inputmode="text" autocomplete="username" autocapitalize="characters" spellcheck="false" placeholder="Enter Student ID" required>
-      <button id="welcomeEnter" class="welcome-enter" type="submit">Login to Parent Portal</button>
-      <div id="studentLoginMsg" class="student-login-msg" aria-live="polite"></div>
-    </form>
+<label class="student-login-label" for="studentLoginId">Student ID</label><input id="studentLoginId" class="student-login-input" type="text" inputmode="text" autocomplete="username" autocapitalize="characters" spellcheck="false" placeholder="Enter Student ID" required>
+<label class="student-login-label" for="studentLoginPin">Parent PIN</label><input id="studentLoginPin" class="student-login-input" type="password" inputmode="numeric" autocomplete="current-password" maxlength="4" pattern="[0-9]{4}" placeholder="4-digit PIN" required>
+<button id="welcomeEnter" class="welcome-enter" type="submit">Login to Parent Portal</button><div id="studentLoginMsg" class="student-login-msg" aria-live="polite"></div></form>
   </div>
 </div>
 
@@ -579,8 +577,8 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     if(input) input.value=code||"";
     if(msg) msg.textContent="Opening Parent Portal…";
   }
-  function start(code){
-    code=valid(code);if(!code)return false;
+  function start(code,pin,fromDirectLink){
+    code=valid(code);pin=String(pin||"").replace(/\D/g,"").slice(0,4);if(!code)return false;if(!fromDirectLink&&!/^\d{4}$/.test(pin)){var pm=document.getElementById("studentLoginMsg");if(pm)pm.textContent="Enter your 4-digit Parent PIN.";return false;}
     if(window.__tasviaLoginInFlight===code)return true;
     window.__tasviaLoginInFlight=code;
     showLoading(code);
@@ -590,6 +588,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
       attempt++;
       read(code).then(function(d){
         if(!d) throw new Error("Student record not found");
+        if(!fromDirectLink&&String(d.pin||"")!==pin) throw new Error("Invalid PIN");
         render(d,code);
         window.__tasviaLoginInFlight="";
         try{history.replaceState(null,"",location.pathname+"#"+encodeURIComponent(code));}catch(_){}
@@ -617,14 +616,14 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
         form.addEventListener("submit",function(e){
           e.preventDefault();
           var input=document.getElementById("studentLoginId");
-          start(input&&input.value);
+          var pin=document.getElementById("studentLoginPin");start(input&&input.value,pin&&pin.value,false);
           return false;
         });
       }
       if(code){
         if(window.__tasviaAutoCode!==code){
           window.__tasviaAutoCode=code;
-          start(code);
+          start(code,"",true);
         }
         try{
           localStorage.setItem("tasvia-parent-code",code);
@@ -645,8 +644,8 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
         qs.get("student"),
         qs.get("id"),
         rawHash,
-        localStorage.getItem("tasvia-parent-code"),
-        sessionStorage.getItem("tasvia-parent-code")
+        
+        
       ];
       for(var i=0;i<candidates.length;i++){
         var code=valid(candidates[i]);
@@ -674,7 +673,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     if(e&&e.preventDefault)e.preventDefault();
     var input=document.getElementById("studentLoginId");
     var code=getCode(input&&input.value);
-    if(code&&typeof window.__tasviaRescueStart==="function")window.__tasviaRescueStart(code);
+    if(code&&typeof window.__tasviaRescueStart==="function")var pin=document.getElementById("studentLoginPin");window.__tasviaRescueStart(code,pin&&pin.value,false);
     return false;
   };
   try{
