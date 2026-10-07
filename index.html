@@ -1107,7 +1107,94 @@ function vParents(){
   let h=mhead("Parent page links","Send each family their private link once");
   if(!Object.keys(S.students).length)return h+noStudents();
   h+=classChips("cls")+`<p class="sub" style="margin:0 0 10px">Each link shows only that child's attendance, marks, fees and homework. Parents can view but not change anything.</p><div class="list">`;
-  h+=list.map(s=>{const msg=parentLinkText(s)+"\n\nStudent ID: "+s.pcode+"\nParent PIN: "+(s.pin||"Please wait.");return `<div class="item"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)} · ${esc(s.phone||"No number saved")} · ${LANGS[langOf(s)].split(" (")[0]} · PIN ${esc(s.pin||"…")}</div></div>${s.pcode?`<a class="btn sm gold" target="_blank" rel="noopener" href="${waLink(s.phone,msg)}">Send ID + PIN</a>`:`<span class="tag n">Creating…</span>`}</div>`}).join("");;
+  h+=list.map(s=>`<div class="item"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)} · ${esc(s.phone||"No number saved")} · ${LANGS[langOf(s)].split(" (")[0]} · PIN ${esc(s.pin||"…")}</div></div>${s.pcode?`<a class="btn sm gold" target="_blank" rel="noopener" href="${waLink(s.phone,parentLinkText(s))}">Send</a>`:`<span class="tag n">Creating…</span>`}</div>`).join("");
+  return h+`</div>`;
+}
+
+/* ---------- views ---------- */
+const TABS=[["today","Dashboard","M3 11.5 12 4l9 7.5v8a1.5 1.5 0 0 1-1.5 1.5H4.5A1.5 1.5 0 0 1 3 19.5zM9 21v-6h6v6"],["students","Students","M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 4-6 8-6s8 2 8 6"],["fees","Fees","M4 6h16v12H4zM4 10h16M8 15h3"],["tests","Tests","M6 3h9l4 4v14H6zM9 12h7M9 16h5M9 8h3"],["more","More","M4 6h16M4 12h16M4 18h16"]];
+function renderNav(){const tabs=TABS.filter(([k])=>k!=="fees"||isAdmin());document.getElementById("nav").innerHTML=tabs.map(([k,l,d])=>`<button data-act="tab" data-k="${k}" class="${UI.tab===k?"on":""}" aria-current="${UI.tab===k?"page":"false"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>${l}</button>`).join("")}
+function classChips(key){const used=new Set(Object.values(S.students).map(s=>s.cls));const cs=CLASSES.filter(c=>used.has(c));return `<div class="chips"><button class="chip ${UI[key]==="all"?"on":""}" data-act="cls" data-key="${key}" data-c="all">All</button>`+cs.map(c=>`<button class="chip ${UI[key]===c?"on":""}" data-act="cls" data-key="${key}" data-c="${c}">${clsLabel(c)}</button>`).join("")+`</div>`}
+function noStudents(){return `<div class="empty"><p>No students yet. Add your first student to start marking attendance, fees and tests.</p><button class="btn gold" data-act="addStudent">Add student</button></div>`}
+
+function vToday(){
+  const title={students:"Attendance",teachers:"Teacher attendance",homework:"Homework"}[UI.seg];
+  let h=UI.seg==="students"
+    ? `<div class="hd"><div><h2>Dashboard</h2><div class="sub">TASVIA Academy · ${new Date(UI.date+"T00:00").toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long"})}</div></div><input type="date" id="attDate" value="${UI.date}" max="${today()}" aria-label="Date"></div>`
+    : `<div class="hd"><div><h2>${title}</h2><div class="sub">${new Date(UI.date+"T00:00").toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long"})}</div></div><input type="date" id="attDate" value="${UI.date}" max="${today()}" aria-label="Date"></div>`;
+  const list=byBatch(studentsOf(UI.cls)),marks=getMarks(UI.date);
+  const p=list.filter(s=>marks[s.id]==="P").length,a=list.filter(s=>marks[s.id]==="A").length,nm=Math.max(list.length-p-a,0);
+  const ent=(S.diary[UI.date]||{}).entries||{},hwDone=list.filter(s=>ent[s.id]&&ent[s.id].hw).length;
+  const admin=isAdmin(),m=UI.date.slice(0,7);
+  const feeDue=admin?list.filter(s=>s.fee>0&&enrolledIn(s,m)&&["due","part"].includes(feeStatus(s,m).k)).length:0;
+  const testCount=Object.values(S.tests).filter(t=>t.date&&t.date.slice(0,7)===m).length;
+  if(UI.seg==="students" && UI.dashboardHome){
+    h+=`<div class="dashboard-welcome"><div><span class="dashboard-eyebrow">TASVIA ACADEMY</span><h3>Welcome back, ${esc((window.currentUser&&window.currentUser.name)||"Staff")}</h3><p>Everything you need for today's academy operations, in one place.</p></div><span class="dashboard-role">${admin?"ADMIN":"STAFF"}</span></div>`;
+  }
+  h+=`<div class="commercial-kpis">
+    <div class="commercial-kpi"><b>${list.length}</b><span>Students</span></div>
+    <div class="commercial-kpi"><b>${p}</b><span>Present</span></div>
+    <div class="commercial-kpi ${a?"warn":""}"><b>${a}</b><span>Absent</span></div>
+    ${admin?`<div class="commercial-kpi ${feeDue?"warn":""}"><b>${feeDue}</b><span>Fees pending</span></div>`:`<div class="commercial-kpi"><b>${hwDone}</b><span>Homework</span></div>`}
+  </div>`;
+  const testLabel=testCount===1?"test":"tests";
+  const markStatus=nm?`<span class="tag due">${nm} not marked</span>`:`<span class="tag ok">Attendance complete</span>`;
+  h+=`<div class="commercial-strip"><span>Academic month: <b>${monthName(m)}</b></span><span>${testCount} ${testLabel} recorded</span>${markStatus}</div>`;
+  if(UI.seg==="students" && UI.dashboardHome){
+    h+=`<section class="dashboard-section"><div class="dashboard-section-head"><div><h3>Quick access</h3><span>Open the most-used TASVIA modules instantly.</span></div></div>
+      <div class="dashboard-tiles">
+        <button class="dashboard-tile" data-act="seg" data-k="students"><span class="dashboard-icon">✓</span><strong>Attendance</strong><small>Mark today's attendance</small></button>
+        <button class="dashboard-tile" data-act="tab" data-k="students"><span class="dashboard-icon">👨‍🎓</span><strong>Students</strong><small>Student list & profiles</small></button>
+        <button class="dashboard-tile" data-act="seg" data-k="homework"><span class="dashboard-icon">📚</span><strong>Homework</strong><small>Add & send homework</small></button>
+        <button class="dashboard-tile" data-act="tab" data-k="tests"><span class="dashboard-icon">📝</span><strong>Tests & Marks</strong><small>Tests, marks & reports</small></button>
+        ${admin?`<button class="dashboard-tile" data-act="tab" data-k="fees"><span class="dashboard-icon">₹</span><strong>Fees</strong><small>Payments & pending fees</small></button>
+        <button class="dashboard-tile" data-act="more" data-k="staff"><span class="dashboard-icon">👩‍🏫</span><strong>Staff</strong><small>Attendance & salaries</small></button>
+        <button class="dashboard-tile" data-act="more" data-k="money"><span class="dashboard-icon">📊</span><strong>Expenses</strong><small>Spending & profit</small></button>`:""}
+        <button class="dashboard-tile" data-act="more" data-k="parents"><span class="dashboard-icon">👪</span><strong>Parent Links</strong><small>Share private parent pages</small></button>
+        <button class="dashboard-tile" data-act="more" data-k="alerts"><span class="dashboard-icon">🔔</span><strong>Alerts</strong><small>Sounds & notifications</small></button>
+      </div>
+    </section>`;
+    h+=`<div class="dashboard-section attendance-section"><div class="dashboard-section-head"><div><h3>Today's attendance</h3><span>${nm?`${nm} student${nm===1?"":"s"} still need marking.`:"All students are marked for today."}</span></div></div></div>`;
+  }
+  if(UI.seg!=="students"){
+    h+=`<div class="seg" role="tablist">${[["students","Attendance"],["teachers","Teachers"],["homework","Homework"]].map(([k,l])=>`<button role="tab" aria-selected="${UI.seg===k}" data-act="seg" data-k="${k}" class="${UI.seg===k?"on":""}">${l}</button>`).join("")}</div>`;
+  }else{
+    h+=`<div class="seg" role="tablist">${[["students","Attendance"],["teachers","Teachers"],["homework","Homework"]].map(([k,l])=>`<button role="tab" aria-selected="${UI.seg===k}" data-act="seg" data-k="${k}" class="${UI.seg===k?"on":""}">${l}</button>`).join("")}</div>`;
+  }
+  if(UI.seg==="teachers")return h+vTeacherAtt();
+  if(UI.seg==="homework")return h+vHomework();
+  if(!Object.keys(S.students).length)return h+noStudents();
+  h+=`<div class="board"><div class="pp"><b>${p}</b><small>Present</small></div><div class="aa"><b>${a}</b><small>Absent</small></div><div><b>${nm}</b><small>Not marked</small></div></div>`;
+  h+=classChips("cls")+batchChips();
+  h+=`<div class="row" style="margin-bottom:10px"><button class="btn sm ghost" data-act="allP">Mark rest present</button>${a?`<button class="btn sm ghost" data-act="absentees">Message absent parents (${a})</button>`:""}</div><div class="list">`;
+  h+=list.map(s=>`<div class="item ${marks[s.id]||""}"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)}${s.batch?" · "+s.batch:""} · ${esc(s.board||"")}</div></div><div class="pa"><button aria-label="Present" class="${marks[s.id]==="P"?"onP":""}" data-act="mark" data-id="${s.id}" data-v="P">P</button><button aria-label="Absent" class="${marks[s.id]==="A"?"onA":""}" data-act="mark" data-id="${s.id}" data-v="A">A</button></div></div>`).join("");
+  return h+"</div>";
+}
+function vTeacherAtt(){
+  const list=teachersList(),m=getMarksK("tatt",UI.date);
+  if(!list.length)return `<div class="empty"><p>Add your teachers first. Then mark their attendance here every day.</p><button class="btn gold" data-act="addTeacher">Add teacher</button></div>`;
+  const c=v=>list.filter(t=>m[t.id]===v).length;
+  let h=`<div class="board"><div class="pp"><b>${c("P")}</b><small>Present</small></div><div><b style="color:var(--gold)">${c("H")}</b><small>Half day</small></div><div class="aa"><b>${c("A")}</b><small>Absent</small></div></div><div class="row" style="margin-bottom:10px"><button class="btn sm gold" data-act="allTP">Mark rest present</button></div><div class="list">`;
+  h+=list.map(t=>`<div class="item ${m[t.id]||""}"><div class="grow"><div class="nm">${esc(t.name)}</div><div class="mt">${esc(t.subject||"Teacher")}</div></div><div class="pa">${[["P","P","Present"],["H","½","Half day"],["A","A","Absent"]].map(([v,l,al])=>`<button aria-label="${al}" class="${m[t.id]===v?"on"+v:""}" data-act="markT" data-id="${t.id}" data-v="${v}">${l}</button>`).join("")}</div></div>`).join("");
+  return h+`</div>`;
+}
+function vHomework(){
+  const list=studentsOf(UI.cls);
+  if(!list.length)return noStudents();
+  const ent=(S.diary[UI.date]||{}).entries||{};
+  const done=list.filter(s=>ent[s.id]&&ent[s.id].hw).length;
+  let h=`<div class="hd"><div><h2>Homework</h2><div class="sub">${nice(UI.date)}</div></div><input type="date" id="attDate" value="${UI.date}" aria-label="Homework date"></div>`;
+  h+=classChips("cls");
+  h+=`<p class="sub" style="margin:0 0 10px">${done} of ${list.length} students have individual homework for this day.</p><div class="list">`;
+  h+=list.map(s=>{
+    const e=ent[s.id];
+    return `<div class="card" style="margin:0"><div class="row" style="justify-content:space-between">
+      <div><h3 style="margin:0">${esc(s.name)}</h3><div class="sub">${clsLabel(s.cls)}${s.batch?" · "+esc(s.batch):""}</div></div>
+      ${e&&e.hw?`<span class="tag ok">Added</span>`:`<span class="tag n">None yet</span>`}
+    </div>
+    ${e&&e.hw?`<div class="hw">${esc(e.hw)}</div>${e.note?`<div class="notice" style="margin:0 0 10px">${esc(e.note)}</div>`:""}`:""}
+    <div class="acts"><button class="btn sm ${e&&e.hw?"ghost":"gold"}" data-act="hwEdit" data-id="${s.id}">${e&&e.hw?"Edit":"Add homework"}</button>${e&&e.hw?`<button class="btn sm gold" data-act="hwSend" data-id="${s.id}">Send to parent</button>`:""}</div></div>`;
+  }).join("");
   return h+`</div>`;
 }
 const ICONS={alerts:"M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0",parents:"M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7zM9 12l2 2 4-4",staff:"M16 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 20c0-3 3-5 6-5s6 2 6 5M14 15c3 0 8 1 8 5",money:"M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6",cards:"M3 5h18v14H3zM7 9h4v5H7zM14 10h4M14 13h3",centre:"M3 10l9-6 9 6M5 10v10h14V10M10 20v-5h4v5",backup:"M12 4v11M7 10l5 5 5-5M4 20h16"};
@@ -1336,7 +1423,7 @@ function studentSheet(id){
   const txt=reportText(s);
   if(!(id in photoCache))getPhoto(id).then(p=>{const el=document.getElementById("av-"+id);if(el&&p){el.innerHTML=avatarHTML(id,s.name);const b=document.getElementById("avb-"+id);if(b)b.textContent="Change photo";const rm=document.getElementById("avr-"+id);if(rm)rm.hidden=false}});
   openSheet(esc(s.name),`<div class="pp"><div class="av" id="av-${id}">${avatarHTML(id,s.name)}</div><div><p class="sub" style="margin:0 0 8px">${clsLabel(s.cls)}${s.batch?" · "+esc(s.batch)+" batch":""} · ${esc(s.board)}${s.joined?" · joined "+nice(s.joined):""}${active(s)?"":" · <b>left the centre</b>"}</p><div class="acts" style="margin:0"><button class="btn sm gold" id="avb-${id}" data-act="photo" data-id="${id}">${photoCache[id]?"Change photo":"Add photo"}</button>${photoCache[id]?`<button class="btn sm ghost" data-act="viewPhoto" data-id="${id}">View photo</button>`:""}<button class="btn sm danger" id="avr-${id}" data-act="delPhoto" data-id="${id}" ${photoCache[id]?"":"hidden"}>Remove</button></div></div></div>
-  <div class="card"><dl class="kv"><dt>Student ID</dt><dd><b>${esc(id)}</b></dd><dt>Parent PIN</dt><dd><b style="letter-spacing:.16em">${esc(s.pin||"Creating…")}</b> <button class="btn sm ghost" type="button" data-act="resetPin" data-id="${id}">Generate / Reset PIN</button></dd><dt>Parent</dt><dd>${esc(s.parent||"–")}</dd><dt>Phone</dt><dd>${s.phone?`<a href="tel:${esc(s.phone)}">${esc(s.phone)}</a>`:"–"}</dd>${isAdmin()?`<dt>Monthly fee</dt><dd>${s.fee?rs(s.fee):"–"}</dd>`:""}<dt>This month</dt><dd>${st.t?`${st.p}/${st.t} days present (${st.pct}%)`:"Not marked yet"}</dd><dt>Overall</dt><dd>${(o=>o.t?`${o.p}/${o.t} days (${o.pct}%)`:"–")(attStats(id,""))}</dd></dl>${s.notes?`<p class="sub" style="margin:10px 0 0">${esc(s.notes)}</p>`:""}</div>
+  <div class="card"><dl class="kv"><dt>Student ID</dt><dd><b>${esc(id)}</b></dd><dt>Parent</dt><dd>${esc(s.parent||"–")}</dd><dt>Phone</dt><dd>${s.phone?`<a href="tel:${esc(s.phone)}">${esc(s.phone)}</a>`:"–"}</dd>${isAdmin()?`<dt>Monthly fee</dt><dd>${s.fee?rs(s.fee):"–"}</dd>`:""}<dt>This month</dt><dd>${st.t?`${st.p}/${st.t} days present (${st.pct}%)`:"Not marked yet"}</dd><dt>Overall</dt><dd>${(o=>o.t?`${o.p}/${o.t} days (${o.pct}%)`:"–")(attStats(id,""))}</dd></dl>${s.notes?`<p class="sub" style="margin:10px 0 0">${esc(s.notes)}</p>`:""}</div>
   <div class="card"><h3>Test results</h3>${tests.length?`<table class="t"><tr><th>Test</th><th>Marks</th><th>Grade</th></tr>${tests.map(t=>{const pc=Math.round(t.marks[id]*100/t.max);return `<tr><td>${esc(t.subject)} – ${esc(t.name)}</td><td>${t.marks[id]}/${t.max}</td><td>${grade(pc)}</td></tr>`}).join("")}</table>`:`<p class="sub" style="margin:0">No marks entered yet.</p>`}</div>
   <div class="card"><h3>Send progress to parent</h3>${pays.length?`<table class="t"><tr><th>For</th><th>Amount</th><th></th></tr>${pays.map(p=>`<tr><td>${monthName(p.month)}<br><span class="sub">${nice(p.date)} · ${esc(p.mode)}</span></td><td>${rs(p.amount)}</td><td style="white-space:nowrap"><a class="btn sm ghost" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Receipt</a> <button class="btn sm danger" data-act="delPay" data-id="${id}" data-p="${esc(p.id)}" aria-label="Remove payment">×</button></td></tr>`).join("")}</table>`:`<p class="sub" style="margin:0">No payments recorded.</p>`}<div class="acts" style="margin-top:10px"><button class="btn sm gold" data-act="pay" data-id="${id}">Record payment</button></div></div>
   <div class="card"><h3>Send progress to parent</h3><pre class="msg">${esc(txt)}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,txt)}">Send on WhatsApp</a><button class="btn ghost" data-act="copyReport" data-id="${id}">Copy</button></div><p class="sub" style="margin:10px 0 0">Message language: ${LANGS[langOf(s)]}</p></div>
@@ -1689,7 +1776,6 @@ document.addEventListener("click",async e=>{
     case "testSound":{const was=PREF.sound;PREF.sound=true;SOUND.alert();PREF.sound=was;banner("TASVIA Academy","This is how alerts will look and sound.");break}
     case "askNotif":Notification.requestPermission().then(()=>render());break;
     case "copyPL":copy(parentURL(S.students[id].pcode));break;
-    case "resetPin":if(!isStaff())return toast("Staff access required.");{const st=S.students[id],pin=newParentPin();S.students[id]=Object.assign({},st,{pin});if(db){db.doc("students/"+id).set({pin},{merge:true}).catch(e=>toast(errMsg(e)));if(st.pcode)db.doc("parentView/"+st.pcode).set({pin},{merge:true}).catch(()=>{})}schedulePV(true);studentSheet(id);toast("New Parent PIN generated: "+pin)}break;
     case "resetPL":if(confirmDel(b,"Tap again: old link stops")){const st=S.students[id],old=st.pcode,code=newCode();if(old)remove("parentView/"+old);S.students[id]=Object.assign({},st,{pcode:code});if(db){db.doc("students/"+id).set({pcode:code},{merge:true}).catch(e=>toast(errMsg(e)));getPhoto(id).then(p=>{if(p)db.doc("parentView/"+code).set({photo:p},{merge:true}).catch(()=>{})})}schedulePV();studentSheet(id);toast("New link created")}break;
     case "signOut":
       if(confirmDel(b,"Tap again to sign out")&&auth){
@@ -1741,7 +1827,7 @@ document.addEventListener("submit",e=>{
   if(e.target.id==="fLogin")return;
   e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f));
   if(f.id==="fStudent"){
-    const id=f.dataset.id||tasviaStudentId(d.joined);ownIds.add(id);const existing=S.students[id]||{};const s={name:d.name.trim().replace(/\s+/g," "),cls:d.cls,board:d.board,parent:d.parent.trim(),phone:d.phone.trim(),fee:Math.max(0,Number(d.fee)||0),joined:d.joined,batch:d.batch||"",lang:d.lang||"en",notes:d.notes.trim(),active:f.dataset.id?d.active==="on":true,pcode:existing.pcode||newCode(),pin:/^\d{4}$/.test(String(existing.pin||""))?String(existing.pin):newParentPin()};
+    const id=f.dataset.id||tasviaStudentId(d.joined);ownIds.add(id);const s={name:d.name.trim().replace(/\s+/g," "),cls:d.cls,board:d.board,parent:d.parent.trim(),phone:d.phone.trim(),fee:Math.max(0,Number(d.fee)||0),joined:d.joined,batch:d.batch||"",lang:d.lang||"en",notes:d.notes.trim(),active:f.dataset.id?d.active==="on":true};
     if(!s.name)return toast("Enter the student's name");
     const digits=s.phone.replace(/\D/g,"");if(s.phone&&!(digits.length===10||(digits.length===12&&digits.startsWith("91"))))return toast("Enter a 10-digit mobile number");
     if(d.fee&&isNaN(Number(d.fee)))return toast("Fee must be a number");
@@ -2082,14 +2168,6 @@ loginForm.addEventListener("submit",async e=>{
     loginGraceUntil=0;
     if(code==="auth/invalid-credential"||code==="auth/wrong-password"||code==="auth/user-not-found"||code==="auth/invalid-email")
       fail("Email or password is incorrect.");
-    else if(code==="auth/unauthorized-domain")
-      fail("Firebase blocked this website domain. Add apk.tasviaacademy.com to Firebase Authentication → Settings → Authorized domains.");
-    else if(code==="auth/operation-not-allowed")
-      fail("Email/Password sign-in is disabled in Firebase Authentication. Enable Email/Password in Sign-in method.");
-    else if(code==="auth/network-request-failed")
-      fail("Firebase could not reach the sign-in service. Check internet/VPN and try again.");
-    else if(code==="auth/invalid-api-key")
-      fail("TASVIA Firebase API key is invalid. The Firebase project configuration needs correction.");
     else if(code==="auth/too-many-requests")
       fail("Too many sign-in attempts. Please wait a few minutes and try again.");
     else if(/timed out/i.test(detail))
@@ -2107,7 +2185,7 @@ loginForm.addEventListener("submit",async e=>{
 render();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
 else startFirebase();
-if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=30",{scope:"./"}).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=29",{scope:"./"}).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
 
 </body>
