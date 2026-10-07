@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v61">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v62">
 <!-- Parent portal Pages refresh: 2026-10-07 attendance redesign live-sync -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -513,18 +513,14 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     }
     if(title==="Attendance"){
       var ad=window.__tasviaParentData||{},att=ad.att&&typeof ad.att==="object"?ad.att:{},months=Object.keys(att).filter(function(k){return /^\\d{4}-\\d{2}$/.test(k)}).sort().reverse(),cm=months[0]||"",cur=att[cm]&&typeof att[cm]==="object"?att[cm]:{},cp=Number(cur.p)||0,ca=Number(cur.a)||0,ct=cp+ca,cpct=ct?Math.round(cp*100/ct):0,yr=ad.yr&&typeof ad.yr==="object"?ad.yr:{},yp=Number(yr.p)||0,ya=Number(yr.a)||0,yt=yp+ya,ypct=yt?Math.round(yp*100/yt):0;
-      var monthLabel=cm?new Date(cm+"-01T00:00:00").toLocaleDateString("en-IN",{month:"long",year:"numeric"}):"No monthly record";
-      liveHtml='<div class="attendance-clear">'+
-        '<div class="attendance-clear-head"><span class="attendance-clear-icon">📅</span><div><span>ATTENDANCE</span><b>Academic Attendance</b></div></div>'+
-        '<div class="attendance-clear-card">'+
-          '<div class="attendance-clear-summary"><span>Academic year</span><strong>'+yp+' present, '+ya+' absent <em>('+ypct+'% overall)</em></strong></div>'+
-          '<div class="attendance-clear-grid">'+
-            '<div class="attendance-clear-stat"><b>'+cp+'</b><span>Present</span></div>'+
-            '<div class="attendance-clear-stat"><b>'+ca+'</b><span>Absent</span></div>'+
-            '<div class="attendance-clear-stat"><b>'+cpct+'%</b><span>'+esc2(cm||monthLabel)+'</span></div>'+
+      liveHtml='<div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">'+
+        '<div style="background:#fff;border:1px solid #DDE3EA;border-radius:18px;padding:18px 16px;box-shadow:0 5px 16px rgba(16,40,88,.07)">'+
+          '<div style="font-size:21px;line-height:1.35;color:#182136;margin-bottom:12px">Academic year: <b>'+yp+' present, '+ya+' absent ('+ypct+'% overall)</b></div>'+
+          '<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">'+
+            '<div style="min-height:118px;border-radius:18px;background:#2B426F;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px"><strong style="font-size:36px;line-height:1;color:#07152F">'+cp+'</strong><span style="font-size:16px;margin-top:10px;color:#fff">Present</span></div>'+
+            '<div style="min-height:118px;border-radius:18px;background:#2B426F;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px"><strong style="font-size:36px;line-height:1;color:#07152F">'+ca+'</strong><span style="font-size:16px;margin-top:10px;color:#fff">Absent</span></div>'+
+            '<div style="min-height:118px;border-radius:18px;background:#2B426F;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px"><strong style="font-size:36px;line-height:1;color:#07152F">'+cpct+'%</strong><span style="font-size:16px;margin-top:10px;color:#fff">'+esc2(cm||"Current Month")+'</span></div>'+
           '</div>'+
-          '<div class="attendance-clear-month"><span>Monthly attendance</span><b>'+esc2(monthLabel)+'</b><strong>'+cpct+'%</strong></div>'+
-          '<div class="attendance-clear-bar"><i style="width:'+Math.max(0,Math.min(100,cpct))+'%"></i></div>'+
         '</div>'+
       '</div>';
     }
