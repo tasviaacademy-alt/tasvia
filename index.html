@@ -2122,9 +2122,17 @@ loginForm.addEventListener("submit",async e=>{
       while(!auth&&Date.now()-started<10000) await new Promise(r=>setTimeout(r,100));
     }
     if(!auth) throw new Error("Firebase Authentication is not ready. Please reload the Staff portal.");
-    try{await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)}catch(pErr){
-      console.warn("Firebase LOCAL persistence unavailable:",pErr);
-      try{await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)}catch(sErr){console.warn("Firebase SESSION persistence unavailable:",sErr)}
+    // Do not block sign-in on iOS/PWA storage persistence. Firebase can authenticate
+    // with its default persistence even when IndexedDB/local persistence is unavailable.
+    // Persistence is best-effort only and is never allowed to hold the login transaction.
+    try{
+      await withTimeout(
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL),
+        3000,
+        "Firebase persistence setup timed out"
+      );
+    }catch(pErr){
+      console.warn("Firebase persistence unavailable; continuing with default session:",pErr);
     }
     // Direct Firebase Email/Password authentication. Do not wait for the
     // Auth observer to complete the login transaction.
