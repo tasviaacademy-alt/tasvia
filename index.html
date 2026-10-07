@@ -593,45 +593,6 @@ async function migrateLegacyStudentIds(){
   }catch(e){console.error("Student ID migration failed",e);toast("Student ID migration stopped. Check connection and try again.");}
   finally{window._tasviaIdMigrationRunning=false;}
 }
-async function bulkPayCurrentCycleForAll(){
-  if(!db||!isAdmin()||window.__tasviaBulkFeeRunning)return;
-  window.__tasviaBulkFeeRunning=true;
-  try{
-    let tries=0;
-    while(!Object.keys(S.students||{}).length&&tries++<30)await new Promise(r=>setTimeout(r,1000));
-    const todayStr=today();
-    let done=0,skipped=0;
-    for(const [id,raw] of Object.entries(S.students||{})){
-      const s=Object.assign({id},raw||{});
-      if(!active(s)||!(Number(s.fee)>0))continue;
-      const cycle=currentFeeCycle(s);
-      if(cycle.status==="paid"){skipped++;continue;}
-      const remaining=Math.max(0,Number(cycle.due)||Number(s.fee)||0);
-      if(!(remaining>0)){skipped++;continue;}
-      const marker="bulkPaidCycle_"+String(cycle.cycleStart||todayStr).replace(/[^0-9]/g,"");
-      try{
-        await db.runTransaction(async tx=>{
-          const ref=db.doc("fees/"+id);
-          const snap=await tx.get(ref);
-          const data=snap.exists?(snap.data()||{}):{};
-          if(data[marker])return;
-          const payments=data.payments||{},next={};
-          if(Array.isArray(payments))payments.filter(Boolean).forEach((x,i)=>{const q=x.id?x:Object.assign({id:"p"+i},x);next[q.id]=q});
-          else if(payments&&typeof payments==="object")Object.entries(payments).forEach(([k,v])=>{if(v!=null)next[k]=v});
-          const p={id:"bulk_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,8),amount:remaining,month:(cycle.cycleStart||todayStr).slice(0,7),date:todayStr,mode:"Bulk One-Month Fee",note:"One month fee paid for current joining-date cycle"};
-          next[p.id]=p;
-          tx.set(ref,{studentId:id,payments:next,lastPaymentMonth:p.month,lastPaymentAmount:p.amount,lastPaymentDate:p.date,[marker]:true},{merge:true});
-        });
-        done++;
-      }catch(e){console.warn("TASVIA bulk fee update failed for",id,e);}
-    }
-    try{localStorage.setItem("tasvia-bulk-fee-last-run",todayStr)}catch(e){}
-    schedulePV(true);
-    render();
-    toast("One-month fee marked Paid for "+done+" active students.");
-  }catch(e){console.error("TASVIA bulk fee update",e)}
-  finally{window.__tasviaBulkFeeRunning=false}
-}
 function subscribe(){
   unsubs.forEach(u=>u&&u());unsubs=[];lazyMoreLoaded=false;lazyTeacherAttLoaded=false;
   const onErr=(name,e)=>{
@@ -1933,42 +1894,15 @@ async function getStaffRecord(email){
   const authEmail=String(email||"").trim().toLowerCase();
   if(!authEmail) return null;
 
-  // 1) Query the Staff email field first. Existing Firestore rules allow
-  // a limited list query, and this works for both legacy auto-ID records
-  // and newer records whose document ID is the email.
-  const candidates=[authEmail,String(email||"").trim()].filter((v,i,a)=>v&&a.indexOf(v)===i);
-  for(const value of candidates){
-    const q=await withTimeout(
-      fs.collection("Staff").where("email","==",value).limit(1).get(),
-      10000,
-      "Staff verification timed out"
-    );
-    if(!q.empty) return q.docs[0];
-  }
-
-  // 2) Canonical record fallback: Staff document ID = Firebase Auth email.
-  // This also supports records that intentionally omit the email field.
-  for(const id of candidates){
-    const direct=await withTimeout(
-      fs.collection("Staff").doc(id).get(),
-      10000,
-      "Staff verification timed out"
-    );
-    if(direct.exists) return direct;
-  }
-
-  // 3) Some migrated Staff records identify the Firebase Auth UID instead of email.
-  // This keeps existing staff accounts usable without weakening the Staff rules.
-  const u=auth&&auth.currentUser;
-  if(u&&u.uid){
-    const q=await withTimeout(
-      fs.collection("Staff").where("uid","==",u.uid).limit(1).get(),
-      10000,
-      "Staff verification timed out"
-    );
-    if(!q.empty) return q.docs[0];
-  }
-  return null;
+  // Staff authorization is intentionally tied to Staff/{Firebase-auth-email}.
+  // Do not query the whole Staff collection: Firestore rules cannot safely
+  // authorize arbitrary legacy auto-ID documents for a signed-in staff user.
+  const snap=await withTimeout(
+    fs.collection("Staff").doc(authEmail).get(),
+    10000,
+    "Staff verification timed out"
+  );
+  return snap.exists?snap:null;
 }
 window.addEventListener("online",netStatus);window.addEventListener("offline",netStatus);
 const MIME={csv:"text/csv;charset=utf-8",html:"text/html;charset=utf-8",png:"image/png"};
@@ -2065,7 +1999,7 @@ function startFirebase(){
           window.currentUser={uid:u.uid,email:email,name:staff.name||email,role:role};
           loginSessionReady=true;
           loginGraceUntil=Date.now()+30000;
-          db=fs;gate.hidden=true;setSync("Staff verified · loading data…");render();subscribe();netStatus();if(isAdmin())setTimeout(()=>bulkPayCurrentCycleForAll(),2500);
+          db=fs;gate.hidden=true;setSync("Staff verified · loading data…");render();subscribe();netStatus();
         }catch(err){
           console.error("TASVIA staff verification:",err);
           setSync(err&&err.message==="Staff verification timed out"?"Staff verification timed out":"Firebase staff verification failed");
@@ -2182,7 +2116,7 @@ loginForm.addEventListener("submit",async e=>{
     loginSessionReady=true;loginGraceUntil=Date.now()+30000;
     db=fs;gate.hidden=true;gErr.textContent="";setSync("Staff verified · loading data…");
     render();subscribe();netStatus();
-    if(isAdmin())setTimeout(()=>bulkPayCurrentCycleForAll(),2500);
+    ;
   }catch(err){
     console.error("TASVIA login:",err);
     const code=err&&err.code?String(err.code):"";
