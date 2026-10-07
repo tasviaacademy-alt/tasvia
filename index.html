@@ -967,7 +967,8 @@ function buildParentView(s){
     });
     return total;
   };
-  const currentFee=currentFeeCycle(s);\n  const fees=s.fee?months.filter(m=>enrolledIn(s,m)).map(m=>{
+  const currentFee=currentFeeCycle(s);
+  const fees=s.fee?months.filter(m=>enrolledIn(s,m)).map(m=>{
     const fs=feeStatus(s,m),fee=+s.fee||0;
     const paid=Math.min(fee,Math.max(Number(fs.paid)||0,feePeriodPaid(m)));
     const status=paid>=fee?"paid":fs.k;
