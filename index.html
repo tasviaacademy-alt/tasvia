@@ -1975,6 +1975,7 @@ downloads={async save({filename,data}){
   const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();
   setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);return {status:"saved"}}};
 let auth=null;
+let fs=null;
 let firebaseStarted=false;
 const gate=document.getElementById("gate"),gErr=document.getElementById("gateErr");
 function authMsg(e){const c=(e&&e.code)||"";
