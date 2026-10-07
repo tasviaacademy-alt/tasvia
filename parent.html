@@ -590,7 +590,60 @@ function learningFetch(path){
 function renderLearningError(body,label){body.innerHTML='<div class="learning-card"><h4>'+learningEsc(label)+'</h4><p>Content is temporarily unavailable. Please refresh and try again.</p><button class="practice-btn" type="button" onclick="return window.__tasviaReloadLearning();">Retry</button></div>'}
 window.__tasviaReloadLearning=function(){var t=(document.getElementById("sectionViewTitle")||{}).textContent||"",b=document.getElementById("sectionViewBody"),k=t==="General Knowledge"?"gk":t==="Current Affairs"?"current":t==="BODMAS Practice"?"bodmas":"";if(k)window.__tasviaLoadLearning(k,b);return false};
 function renderGK(body,data){var qs=Array.isArray(data.questions)?data.questions:[],h='<div class="learning-meta"><span class="learning-pill">DAILY GK</span><span>'+learningEsc(data.date||"")+'</span></div><div class="learning-grid">';qs.slice(0,10).forEach(function(x,i){h+='<div class="learning-card"><h4>Q'+(i+1)+'. '+learningEsc(x.q)+'</h4><button class="practice-btn" type="button" data-gk-answer="'+i+'">Show Answer</button><div class="learning-answer" id="gk-answer-'+i+'" hidden>'+learningEsc(x.a)+'</div></div>'});h+='</div>';body.innerHTML=h;body.querySelectorAll("[data-gk-answer]").forEach(function(btn){btn.addEventListener("click",function(){var a=document.getElementById("gk-answer-"+btn.getAttribute("data-gk-answer"));if(a){a.hidden=!a.hidden;btn.textContent=a.hidden?"Show Answer":"Hide Answer"}})})}
-function renderCurrent(body,data){var items=Array.isArray(data.items)?data.items:[],quiz=Array.isArray(data.quiz)?data.quiz:[],h='<div class="learning-meta"><span class="learning-pill">DAILY CURRENT AFFAIRS</span><span>'+learningEsc(data.date||"")+'</span></div><div class="learning-grid">';items.slice(0,10).forEach(function(x){h+='<article class="learning-card"><h4>'+learningEsc(x.category||"News")+' · '+learningEsc(x.title||x.text||"")+'</h4><p>'+learningEsc(x.text||x.title||"")+'</p><div class="learning-source">'+learningEsc(x.source||"")+'</div></article>'});if(!items.length)h+='<div class="empty">No current affairs available today.</div>';h+='</div>';if(quiz.length){var pool=items.map(function(x){return x.title||x.text||""}).filter(Boolean);h+='<div class="learning-card current-quiz" style="margin-top:14px"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><h3 style="margin:0">Current Affairs Quiz</h3><span class="learning-pill">QUIZ</span></div><p style="margin:6px 0 12px;color:var(--muted)">Test yourself from today’s current affairs.</p><div id="currentAffairsQuiz">';quiz.slice(0,5).forEach(function(q,i){var opts=[q.a];pool.forEach(function(v){if(v!==q.a&&opts.length<4)opts.push(v)});for(var j=opts.length-1;j>0;j--){var k=Math.floor(Math.random()*(j+1)),tmp=opts[j];opts[j]=opts[k];opts[k]=tmp}h+='<div class="quiz-q" data-answer="'+learningEsc(q.a)+'" style="margin:0 0 16px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card)"><b>Q'+(i+1)+'. '+learningEsc(q.q)+'</b><div style="display:grid;gap:8px;margin-top:10px">';opts.forEach(function(o){h+='<button type="button" class="quiz-option btn" data-value="'+learningEsc(o)+'" style="text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line)">'+learningEsc(o)+'</button>'});h+='</div></div>'});h+='</div><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><button type="button" id="currentQuizSubmit" class="btn" style="background:var(--board);color:#fff">Submit Quiz</button><b id="currentQuizScore" style="color:var(--board)"></b></div></div>'}body.innerHTML=h;if(quiz.length){var selected={};body.querySelectorAll(".quiz-q").forEach(function(card,qi){card.querySelectorAll(".quiz-option").forEach(function(btn){btn.addEventListener("click",function(){card.querySelectorAll(".quiz-option").forEach(function(b){b.style.outline="";b.style.borderColor="var(--line)"});btn.style.outline="3px solid rgba(11,36,85,.15)";btn.style.borderColor="var(--board)";selected[qi]=btn.getAttribute("data-value")})})});var submit=body.querySelector("#currentQuizSubmit");if(submit)submit.addEventListener("click",function(){var score=0;body.querySelectorAll(".quiz-q").forEach(function(card,qi){var ans=card.getAttribute("data-answer"),picked=selected[qi];card.querySelectorAll(".quiz-option").forEach(function(btn){var v=btn.getAttribute("data-value");btn.disabled=true;if(v===ans){btn.style.borderColor="#18794E";btn.style.background="#EAF7F0"}else if(v===picked){btn.style.borderColor="#B42318";btn.style.background="#FDECEC"}});if(picked===ans)score++});var out=body.querySelector("#currentQuizScore");if(out)out.textContent="Score: "+score+"/"+Math.min(5,quiz.length);submit.disabled=true;submit.textContent="Quiz Completed"})})}
+function renderCurrent(body,data){
+  var items=Array.isArray(data.items)?data.items:[],quiz=Array.isArray(data.quiz)?data.quiz:[];
+  var h='<div class="learning-meta"><span class="learning-pill">DAILY CURRENT AFFAIRS</span><span>'+learningEsc(data.date||"")+'</span></div><div class="learning-grid">';
+  items.slice(0,10).forEach(function(x){
+    h+='<article class="learning-card"><h4>'+learningEsc(x.category||"News")+' · '+learningEsc(x.title||x.text||"")+'</h4><p>'+learningEsc(x.text||x.title||"")+'</p><div class="learning-source">'+learningEsc(x.source||"")+'</div></article>';
+  });
+  if(!items.length)h+='<div class="empty">No current affairs available today.</div>';
+  h+='</div>';
+  if(quiz.length){
+    var pool=items.map(function(x){return x.title||x.text||""}).filter(Boolean);
+    h+='<div class="learning-card current-quiz" style="margin-top:14px"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><h3 style="margin:0">Current Affairs Quiz</h3><span class="learning-pill">QUIZ</span></div><p style="margin:6px 0 12px;color:var(--muted)">Test yourself from today’s current affairs.</p><div id="currentAffairsQuiz">';
+    quiz.slice(0,5).forEach(function(q,i){
+      var opts=[q.a];
+      pool.forEach(function(v){if(v!==q.a&&opts.length<4)opts.push(v)});
+      while(opts.length<4)opts.push("None of the above");
+      for(var j=opts.length-1;j>0;j--){var k=Math.floor(Math.random()*(j+1)),tmp=opts[j];opts[j]=opts[k];opts[k]=tmp}
+      h+='<div class="quiz-q" data-answer="'+learningEsc(q.a)+'" style="margin:0 0 16px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card)"><b>Q'+(i+1)+'. '+learningEsc(q.q)+'</b><div style="display:grid;gap:8px;margin-top:10px">';
+      opts.forEach(function(o){h+='<button type="button" class="quiz-option btn" data-value="'+learningEsc(o)+'" style="text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line)">'+learningEsc(o)+'</button>'});
+      h+='</div></div>';
+    });
+    h+='</div><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><button type="button" id="currentQuizSubmit" class="btn" style="background:var(--board);color:#fff">Submit Quiz</button><b id="currentQuizScore" style="color:var(--board)"></b></div></div>';
+  }
+  body.innerHTML=h;
+  if(!quiz.length)return;
+  var selected={};
+  body.querySelectorAll(".quiz-q").forEach(function(card,qi){
+    card.querySelectorAll(".quiz-option").forEach(function(btn){
+      btn.addEventListener("click",function(){
+        card.querySelectorAll(".quiz-option").forEach(function(b){b.style.outline="";b.style.borderColor="var(--line)"});
+        btn.style.outline="3px solid rgba(11,36,85,.15)";
+        btn.style.borderColor="var(--board)";
+        selected[qi]=btn.getAttribute("data-value");
+      });
+    });
+  });
+  var submit=body.querySelector("#currentQuizSubmit");
+  if(submit)submit.addEventListener("click",function(){
+    var score=0;
+    body.querySelectorAll(".quiz-q").forEach(function(card,qi){
+      var ans=card.getAttribute("data-answer"),picked=selected[qi];
+      card.querySelectorAll(".quiz-option").forEach(function(btn){
+        var v=btn.getAttribute("data-value");
+        btn.disabled=true;
+        if(v===ans){btn.style.borderColor="#18794E";btn.style.background="#EAF7F0"}
+        else if(v===picked){btn.style.borderColor="#B42318";btn.style.background="#FDECEC"}
+      });
+      if(picked===ans)score++;
+    });
+    var out=body.querySelector("#currentQuizScore");
+    if(out)out.textContent="Score: "+score+"/"+Math.min(5,quiz.length);
+    submit.disabled=true;
+    submit.textContent="Quiz Completed";
+  });
+}
 function bodmasSet(){var a=Math.floor(Math.random()*20)+2,b=Math.floor(Math.random()*10)+2,c=Math.floor(Math.random()*9)+1,t=Math.floor(Math.random()*4),e,n;if(t===0){e="("+a+" + "+b+") × "+c;n=(a+b)*c}else if(t===1){e=a+" + "+b+" × "+c;n=a+b*c}else if(t===2){e=(a*b)+" ÷ "+b+" + "+c;n=a+c}else{e="("+a+" + "+b+") - "+c+" × 2";n=a+b-c*2}return{expr:e,ans:n}}
 function renderBodmas(body){
   var level="easy",score=0,total=8,qs=[];
