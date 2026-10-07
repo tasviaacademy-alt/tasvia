@@ -36,7 +36,11 @@ service cloud.firestore {
         && request.auth.token.email != null
         && request.auth.token.email.lower() == email.lower();
 
-      allow list: if admin();
+      // Staff login may need to locate an existing staff record when the
+      // document ID is not the user's email (legacy/auto-ID records).
+      // Listing is restricted to authenticated Firebase users and the client
+      // only requests a single matching email record.
+      allow list: if signedIn() && request.query.limit <= 1;
       allow create, update, delete: if admin();
     }
 
