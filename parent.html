@@ -406,7 +406,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
   function render(d,code){
     var welcome=document.getElementById("welcomeBackdrop");
     if(welcome) welcome.classList.add("hide");
-    window.__tasviaParentData=d;
+    window.__tasviaParentData=Object.assign({},d,{hw:hw});
     window.__tasviaSectionEsc=esc;
     var name=String(d.name||"TASVIA Student");
     var cls=String(d.cls||"");
@@ -554,7 +554,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
       liveHtml=list.length?list.slice(0,10).map(function(x){return '<div style="padding:14px 4px;border-bottom:1px solid #e1e5eb"><b>'+esc2(x.d||x.date||"")+'</b><div style="margin-top:5px;white-space:pre-wrap">'+esc2(x.hw||x.homework||x.text||"")+'</div>'+(x.note?'<small style="display:block;margin-top:5px;color:#667085">'+esc2(x.note)+'</small>':"")+'</div>'}).join(""):'<div style="padding:30px;text-align:center;color:#667085">No homework has been assigned yet.</div>';
     }
     if(title==="Attendance"){
-      var ad=window.__tasviaParentData||{},att=ad.att&&typeof ad.att==="object"?ad.att:{},months=Object.keys(att).filter(function(k){return /^\\d{4}-\\d{2}$/.test(k)}).sort().reverse(),cm=months[0]||"",cur=att[cm]&&typeof att[cm]==="object"?att[cm]:{},cp=Number(cur.p)||0,ca=Number(cur.a)||0,ct=cp+ca,cpct=ct?Math.round(cp*100/ct):0,yr=ad.yr&&typeof ad.yr==="object"?ad.yr:{},yp=Number(yr.p)||0,ya=Number(yr.a)||0,yt=yp+ya,ypct=yt?Math.round(yp*100/yt):0;
+      var ad=window.__tasviaParentData||{},att=ad.att&&typeof ad.att==="object"?ad.att:{},months=Object.keys(att).filter(function(k){return /^\d{4}-\d{2}$/.test(k)}).sort().reverse(),cm=months[0]||"",cur=att[cm]&&typeof att[cm]==="object"?att[cm]:{},cp=Number(cur.p)||0,ca=Number(cur.a)||0,ct=cp+ca,cpct=ct?Math.round(cp*100/ct):0,yr=ad.yr&&typeof ad.yr==="object"?ad.yr:{},yp=Number(yr.p)||0,ya=Number(yr.a)||0,yt=yp+ya,ypct=yt?Math.round(yp*100/yt):0;
       liveHtml='<div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">'+
         '<div style="background:#fff;border:1px solid #DDE3EA;border-radius:18px;padding:18px 16px;box-shadow:0 5px 16px rgba(16,40,88,.07)">'+
           '<div style="font-size:21px;line-height:1.35;color:#182136;margin-bottom:12px">Academic year: <b>'+yp+' present, '+ya+' absent ('+ypct+'% overall)</b></div>'+
