@@ -359,7 +359,8 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
   "use strict";
   var FIRESTORE_ROOT="https://firestore.googleapis.com/v1/projects/tasvia-academy/databases/(default)/documents/parentView/";
   function valid(v){
-    v=String(v||"").trim().toUpperCase();
+    try{v=decodeURIComponent(String(v||""));}catch(_){v=String(v||"");}
+    v=v.trim().toUpperCase();
     return /^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(v)?v:"";
   }
   function value(v){
@@ -377,13 +378,24 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     return v;
   }
   function read(code){
-    return fetch(FIRESTORE_ROOT+encodeURIComponent(code),{cache:"no-store",mode:"cors",credentials:"omit"}).then(function(r){
+    var controller=window.AbortController?new AbortController():null;
+    var timer=controller?setTimeout(function(){try{controller.abort()}catch(_){}},10000):null;
+    return fetch(FIRESTORE_ROOT+encodeURIComponent(code),{
+      cache:"no-store",mode:"cors",credentials:"omit",
+      signal:controller?controller.signal:undefined
+    }).then(function(r){
+      if(timer)clearTimeout(timer);
       if(r.status===404) return null;
-      if(!r.ok) throw new Error("HTTP "+r.status);
+      if(r.status===403) throw new Error("Parent portal access is blocked by Firestore rules.");
+      if(!r.ok) throw new Error("Parent portal server error (HTTP "+r.status+").");
       return r.json();
     }).then(function(d){
       if(!d) return null;
       var o={};Object.keys(d.fields||{}).forEach(function(k){o[k]=value(d.fields[k]);});return o;
+    }).catch(function(e){
+      if(timer)clearTimeout(timer);
+      if(e&&e.name==="AbortError") throw new Error("Parent portal connection timed out. Please try again.");
+      throw e;
     });
   }
   function esc(v){
@@ -593,14 +605,19 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
         window.__tasviaLoginInFlight="";
         try{history.replaceState(null,"",location.pathname+"#"+encodeURIComponent(code));}catch(_){}
       }).catch(function(e){
-        console.warn("TASVIA parent auto-login attempt "+attempt,e);
-        if(attempt<4){
-          setTimeout(load,Math.min(1500*attempt,4500));
+        console.warn("TASVIA parent login attempt "+attempt,e);
+        if(attempt<3 && navigator.onLine!==false){
+          setTimeout(load,Math.min(1200*attempt,3000));
           return;
         }
         window.__tasviaLoginInFlight="";
         var msg=document.getElementById("studentLoginMsg");
-        if(msg) msg.textContent="Unable to open the Parent Dashboard. Please try the same parent link again.";
+        if(msg){
+          var m=String(e&&e.message||"");
+          if(m==="Invalid PIN") msg.textContent="Invalid Parent PIN.";
+          else if(m==="Student record not found") msg.textContent="Student record not found. Please use the original parent link.";
+          else msg.textContent=m||"Unable to open the Parent Dashboard. Please try the same parent link again.";
+        }
       });
     }
     load();
