@@ -2168,6 +2168,14 @@ loginForm.addEventListener("submit",async e=>{
     loginGraceUntil=0;
     if(code==="auth/invalid-credential"||code==="auth/wrong-password"||code==="auth/user-not-found"||code==="auth/invalid-email")
       fail("Email or password is incorrect.");
+    else if(code==="auth/unauthorized-domain")
+      fail("Firebase blocked this website domain. Add apk.tasviaacademy.com to Firebase Authentication → Settings → Authorized domains.");
+    else if(code==="auth/operation-not-allowed")
+      fail("Email/Password sign-in is disabled in Firebase Authentication. Enable Email/Password in Sign-in method.");
+    else if(code==="auth/network-request-failed")
+      fail("Firebase could not reach the sign-in service. Check internet/VPN and try again.");
+    else if(code==="auth/invalid-api-key")
+      fail("TASVIA Firebase API key is invalid. The Firebase project configuration needs correction.");
     else if(code==="auth/too-many-requests")
       fail("Too many sign-in attempts. Please wait a few minutes and try again.");
     else if(/timed out/i.test(detail))
@@ -2185,7 +2193,7 @@ loginForm.addEventListener("submit",async e=>{
 render();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
 else startFirebase();
-if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=29",{scope:"./"}).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=30",{scope:"./"}).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
 
 </body>
