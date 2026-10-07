@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v66">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v67">
 <!-- Parent portal Pages refresh: 2026-10-07 attendance redesign live-sync -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -610,8 +610,6 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
   window.__tasviaRescueStart=start;
   function bootParentPortal(){
     try{
-      var qs=new URLSearchParams(location.search||"");
-      var hash=String(location.hash||"").replace(/^#/,"");
       var code=recoverParentCode();
       var form=document.getElementById("studentLoginForm");
       if(form&&!form.__tasviaBound){
@@ -624,12 +622,14 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
         });
       }
       if(code){
-        var key="tasvia-parent-auto-"+code;
         if(window.__tasviaAutoCode!==code){
           window.__tasviaAutoCode=code;
           start(code);
         }
-        try{sessionStorage.setItem("tasvia-parent-code",code)}catch(_){}
+        try{
+          localStorage.setItem("tasvia-parent-code",code);
+          sessionStorage.setItem("tasvia-parent-code",code);
+        }catch(_){}
       }else{
         var input=document.getElementById("studentLoginId");
         if(input) input.focus();
@@ -639,10 +639,14 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
   function recoverParentCode(){
     try{
       var qs=new URLSearchParams(location.search||"");
+      var rawHash=String(location.hash||"").replace(/^#/,"");
       var candidates=[
         qs.get("code"),
-        String(location.hash||"").replace(/^#/,""),
-        localStorage.getItem("tasvia-parent-code")||sessionStorage.getItem("tasvia-parent-code")
+        qs.get("student"),
+        qs.get("id"),
+        rawHash,
+        localStorage.getItem("tasvia-parent-code"),
+        sessionStorage.getItem("tasvia-parent-code")
       ];
       for(var i=0;i<candidates.length;i++){
         var code=valid(candidates[i]);
