@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v48">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v49">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TASVIA Academy – Parent</title>
@@ -494,19 +494,33 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
       try{
         var card=btn&&btn.closest(".action-detail");
         if(!card)return false;
-        var title=card.querySelector(".action-summary span:nth-child(2)");
-        var icon=card.querySelector(".action-icon");
-        var body=card.querySelector(".action-content");
-        if(sectionTitle)sectionTitle.textContent=title?title.textContent:"";
-        if(sectionIcon)sectionIcon.textContent=icon?icon.textContent:"";
-        if(sectionBody)sectionBody.innerHTML=body?body.innerHTML:"";
+        var titleEl=card.querySelector(".action-summary span:nth-child(2)");
+        var iconEl=card.querySelector(".action-icon");
+        var contentEl=card.querySelector(".action-content");
+        var idx=actionBox?Array.prototype.indexOf.call(actionBox.children,card):-1;
+        var fallbackTitles=["Notice","Homework","Attendance","Fee Details","General Knowledge","Current Affairs","Tests","BODMAS Practice","Contact"];
+        var fallbackIcons=["🔔","📚","📅","💳","🧠","📰","📝","🧮","📞"];
+        var title=titleEl&&titleEl.textContent.trim()?titleEl.textContent.trim():(fallbackTitles[idx]||"Parent Portal");
+        var icon=iconEl&&iconEl.textContent.trim()?iconEl.textContent.trim():(fallbackIcons[idx]||"");
+        var html=contentEl?contentEl.innerHTML:"";
+        if(sectionTitle)sectionTitle.textContent=title;
+        if(sectionIcon)sectionIcon.textContent=icon;
+        if(sectionBody){
+          sectionBody.innerHTML=html;
+          if(!sectionBody.innerHTML.trim()){
+            sectionBody.innerHTML='<div class="empty">No information available yet.</div>';
+          }
+        }
         if(actionBox)actionBox.style.display="none";
         if(dashHead)dashHead.style.display="none";
         if(dashSummary)dashSummary.style.display="none";
         if(sectionView)sectionView.style.display="block";
         document.body.classList.add("section-open");
         window.scrollTo(0,0);
-      }catch(e){console.error("TASVIA section open",e);}
+      }catch(e){
+        console.error("TASVIA section open",e);
+        if(sectionTitle&&!sectionTitle.textContent)sectionTitle.textContent="Parent Portal";
+      }
       return false;
     };
     window.__tasviaBackDashboard=function(ev){
