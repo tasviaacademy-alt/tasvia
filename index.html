@@ -759,6 +759,8 @@ function currentFeeCycle(s){
     else if(!d&&paymentMonth(p)===cycleStart.slice(0,7))paid+=Number(p.amount)||0;
   });
   paid=Math.min(fee,Math.max(0,paid));
+  // The current one-month cycle is authoritative. A payment inside the cycle counts once;
+  // an empty payment history must never inherit an old "paid" snapshot.
   return {status:paid>=fee?"paid":"due",fee,paid,due:Math.max(0,fee-paid),dueDate:cycleStart,nextDueDate,cycleStart};
 }
 const active=s=>s.active!==false;
@@ -962,7 +964,7 @@ function buildParentView(s){
     allPayments.forEach(p=>{
       const explicit=p.m===month;
       const d=/^\d{4}-\d{2}-\d{2}$/.test(p.d)?new Date(p.d+"T00:00:00"):null;
-      const dated=!!d && d>=start && d<=next;
+      const dated=!!d && d>=start && d<next;
       if(explicit||dated)total+=p.a;
     });
     return total;
@@ -1031,7 +1033,15 @@ async function syncPV(){
         }catch(e){console.warn("parent record check",code,e)}
         const codeNeedsWrite=forceWrite||!exists||pvCache[code]!==hj;
         if(codeNeedsWrite){
-          await db.doc("parentView/"+code).set(Object.assign({},v,{studentId:id,updated:Date.now()}),{merge:true});
+          // Fee data is derived state. Always replace the fee-related fields so a
+          // deleted payment can never leave a stale Paid snapshot in parentView.
+          await db.doc("parentView/"+code).set({
+            studentId:id,
+            fees:Array.isArray(v.fees)?v.fees:[],
+            pays:Array.isArray(v.pays)?v.pays:[],
+            currentFee:v.currentFee||null,
+            updated:Date.now()
+          },{merge:true});
           pvCache[code]=hj;
           pvSave();
         }
@@ -1044,7 +1054,14 @@ async function syncPV(){
           if(idOldComparable)delete idOldComparable.updated;
           const idNeedsWrite=forceWrite||!idOld||idOld.studentId!==id||hash(stable(idOldComparable))!==hj;
           if(idNeedsWrite){
-            await db.doc("parentView/"+id).set(Object.assign({},v,{studentId:id,loginId:id,updated:Date.now()}),{merge:true});
+            await db.doc("parentView/"+id).set({
+              studentId:id,
+              loginId:id,
+              fees:Array.isArray(v.fees)?v.fees:[],
+              pays:Array.isArray(v.pays)?v.pays:[],
+              currentFee:v.currentFee||null,
+              updated:Date.now()
+            },{merge:true});
           }
         }catch(e){console.warn("student ID parent mirror check",id,e)}
       }catch(err){
