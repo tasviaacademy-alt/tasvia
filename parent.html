@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v64">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v65">
 <!-- Parent portal Pages refresh: 2026-10-07 attendance redesign live-sync -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -592,21 +592,39 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     });
   }
   window.__tasviaRescueStart=start;
-  document.addEventListener("DOMContentLoaded",function(){
-    var qs=new URLSearchParams(location.search);
-    var code=valid(qs.get("code"))||valid(String(location.hash||"").replace(/^#/,""));
-    var form=document.getElementById("studentLoginForm");
-    if(form) form.addEventListener("submit",function(e){
-      e.preventDefault();
-      var input=document.getElementById("studentLoginId");
-      start(input&&input.value);
-    });
-    if(code) start(code);
-    else {
-      var input=document.getElementById("studentLoginId");
-      if(input) input.focus();
-    }
-  });
+  function bootParentPortal(){
+    try{
+      var qs=new URLSearchParams(location.search||"");
+      var hash=String(location.hash||"").replace(/^#/,"");
+      var code=valid(qs.get("code"))||valid(hash);
+      var form=document.getElementById("studentLoginForm");
+      if(form&&!form.__tasviaBound){
+        form.__tasviaBound=true;
+        form.addEventListener("submit",function(e){
+          e.preventDefault();
+          var input=document.getElementById("studentLoginId");
+          start(input&&input.value);
+          return false;
+        });
+      }
+      if(code){
+        var key="tasvia-parent-auto-"+code;
+        if(window.__tasviaAutoCode!==code){
+          window.__tasviaAutoCode=code;
+          start(code);
+        }
+        try{sessionStorage.setItem("tasvia-parent-code",code)}catch(_){}
+      }else{
+        var input=document.getElementById("studentLoginId");
+        if(input) input.focus();
+      }
+    }catch(e){console.warn("TASVIA parent boot:",e);}
+  }
+  window.__tasviaBootParent=bootParentPortal;
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",bootParentPortal,{once:true});
+  else bootParentPortal();
+  window.addEventListener("pageshow",function(){setTimeout(bootParentPortal,40);});
+  window.addEventListener("hashchange",function(){setTimeout(bootParentPortal,40);});
 })();
 </script>
 <script>
