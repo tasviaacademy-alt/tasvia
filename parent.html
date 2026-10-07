@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v70">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v71">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -844,64 +844,85 @@ function renderCurrent(body,data){
 }
 function bodmasSet(){var a=Math.floor(Math.random()*20)+2,b=Math.floor(Math.random()*10)+2,c=Math.floor(Math.random()*9)+1,t=Math.floor(Math.random()*4),e,n;if(t===0){e="("+a+" + "+b+") × "+c;n=(a+b)*c}else if(t===1){e=a+" + "+b+" × "+c;n=a+b*c}else if(t===2){e=(a*b)+" ÷ "+b+" + "+c;n=a+c}else{e="("+a+" + "+b+") - "+c+" × 2";n=a+b-c*2}return{expr:e,ans:n}}
 function renderBodmas(body){
-  var level="easy",score=0,total=8,qs=[];
+  var level="easy",score=0,total=10,qs=[];
+  function gcd(a,b){while(b){var t=a%b;a=b;b=t}return Math.abs(a)}
+  function frac(n,d){var g=gcd(n,d);return [n/g,d/g]}
   function makeQuestion(lv){
-    var a,b,c,e,n,t;
+    var a,b,c,d,e,n,t,p;
     if(lv==="easy"){
       a=Math.floor(Math.random()*9)+2;b=Math.floor(Math.random()*9)+2;c=Math.floor(Math.random()*5)+1;
-      t=Math.floor(Math.random()*3);
+      t=Math.floor(Math.random()*4);
       if(t===0){e=a+" + "+b+" × "+c;n=a+b*c}
       else if(t===1){e="("+a+" + "+b+") × "+c;n=(a+b)*c}
-      else{e=(a*b)+" ÷ "+b+" + "+c;n=a+c}
-    }else if(lv==="medium"){
-      a=Math.floor(Math.random()*15)+3;b=Math.floor(Math.random()*10)+2;c=Math.floor(Math.random()*8)+2;
-      t=Math.floor(Math.random()*4);
+      else if(t===2){e=(a*b)+" ÷ "+b+" + "+c;n=a+c}
+      else{e=a+" × "+b+" - "+c;n=a*b-c}
+    }else if(lv==="moderate"){
+      a=Math.floor(Math.random()*16)+4;b=Math.floor(Math.random()*10)+2;c=Math.floor(Math.random()*8)+2;
+      t=Math.floor(Math.random()*5);
       if(t===0){e=a+" + "+b+" × "+c+" - 2";n=a+b*c-2}
       else if(t===1){e="("+a+" + "+b+") × "+c+" - 2";n=(a+b)*c-2}
       else if(t===2){e=a+" × "+b+" + "+c+" × 2";n=a*b+c*2}
-      else{e="("+a+" × "+b+") ÷ "+b+" + "+c+" × 2";n=a+c*2}
+      else if(t===3){e="("+a+" × "+b+") ÷ "+b+" + "+c+" × 2";n=a+c*2}
+      else{e=a+" + ("+b+" × "+c+" - 3)";n=a+b*c-3}
     }else{
-      a=Math.floor(Math.random()*20)+5;b=Math.floor(Math.random()*12)+3;c=Math.floor(Math.random()*9)+2;
-      t=Math.floor(Math.random()*4);
-      if(t===0){e="("+a+" + "+b+") × "+c+" - 2";n=(a+b)*c-2}
-      else if(t===1){e=a+" + "+b+" × "+c+" - ("+(c-1)+" + 2)";n=a+b*c-(c-1+2)}
-      else if(t===2){e="("+a+" × "+b+") ÷ "+b+" + "+c+" × 3";n=a+c*3}
-      else{e="("+a+" + "+b+" - 3) × "+c+" ÷ "+c; n=a+b-3}
+      a=Math.floor(Math.random()*18)+6;b=Math.floor(Math.random()*12)+3;c=Math.floor(Math.random()*8)+2;d=Math.floor(Math.random()*7)+2;
+      t=Math.floor(Math.random()*6);
+      if(t===0){e="["+a+" + ("+b+" × "+c+")] - "+d;n=a+b*c-d}
+      else if(t===1){e="("+a+" - "+b+") × "+c+" + "+d;n=(a-b)*c+d}
+      else if(t===2){e="("+a+" + "+b+") × "+c+" ÷ "+c;n=a+b}
+      else if(t===3){p=frac(a*b,c);e="("+a+" × "+b+") ÷ "+c;n=(a*b)/c}
+      else if(t===4){e=a+" + "+b+" × ("+c+" - 2) - "+d;n=a+b*(c-2)-d}
+      else{e="["+a+" - ("+b+" - "+c+")] × "+d;n=(a-b+c)*d}
     }
     return{expr:e,ans:n};
   }
   function build(){
-    score=0;qs=[];for(var i=0;i<total;i++)qs.push(makeQuestion(level));
-    var names={easy:"Easy",medium:"Medium",hard:"Hard"};
-    var h='<div class="learning-meta"><span class="learning-pill">BODMAS PRACTICE</span><span>Choose a level</span></div>'+
+    score=0;qs=[];
+    for(var i=0;i<total;i++){var q=makeQuestion(level);if(!Number.isFinite(q.ans)||Math.floor(q.ans)!==q.ans){i--;continue}qs.push(q)}
+    var names={easy:"Easy",moderate:"Moderate",tough:"Tough"};
+    var h='<div class="learning-meta"><span class="learning-pill">BODMAS PRACTICE</span><span>10 questions</span></div>'+
       '<div class="bodmas-levels" role="group" aria-label="BODMAS difficulty">'+
       '<button type="button" class="bodmas-level '+(level==="easy"?"active":"")+'" data-level="easy">🟢 Easy</button>'+
-      '<button type="button" class="bodmas-level '+(level==="medium"?"active":"")+'" data-level="medium">🟡 Medium</button>'+
-      '<button type="button" class="bodmas-level '+(level==="hard"?"active":"")+'" data-level="hard">🔴 Hard</button>'+
+      '<button type="button" class="bodmas-level '+(level==="moderate"?"active":"")+'" data-level="moderate">🟡 Moderate</button>'+
+      '<button type="button" class="bodmas-level '+(level==="tough"?"active":"")+'" data-level="tough">🔴 Tough</button>'+
       '</div>'+
-      '<div class="learning-meta" style="margin-top:12px"><span><b>'+names[level]+'</b> · 8 questions</span><span id="bodmasScore">Score: 0/8</span></div>'+
-      '<div id="bodmasQuestions"></div>';
+      '<div class="learning-meta" style="margin-top:12px"><span><b>'+names[level]+'</b> · 10 questions</span><span id="bodmasScore">Score: 0/10</span></div>'+
+      '<div class="bodmas-progress"><i id="bodmasProgress" style="width:0%"></i></div>'+
+      '<div id="bodmasQuestions"></div>'+
+      '<button type="button" id="bodmasNewSet" class="btn gold" style="width:100%;margin-top:12px">↻ New Question Set</button>';
     body.innerHTML=h;
     var qwrap=body.querySelector("#bodmasQuestions");
     function renderQuestions(){
       qwrap.innerHTML="";
       qs.forEach(function(x,i){
         var card=document.createElement("div");card.className="practice-q";
-        card.innerHTML='<strong>Q'+(i+1)+'. Solve: '+learningEsc(x.expr)+'</strong><input class="practice-input" inputmode="numeric" autocomplete="off" placeholder="Enter your answer"><button class="practice-btn" type="button">Check Answer</button><div class="practice-result" hidden></div>';
-        var input=card.querySelector("input"),btn=card.querySelector("button"),result=card.querySelector(".practice-result");
+        card.style.margin="10px 0";card.style.padding="12px";card.style.border="1px solid var(--line)";card.style.borderRadius="12px";card.style.background="var(--card)";
+        card.innerHTML='<strong>Q'+(i+1)+'. Solve: '+learningEsc(x.expr)+'</strong><div style="display:flex;gap:8px;margin-top:9px"><input class="practice-input" inputmode="decimal" autocomplete="off" placeholder="Answer" style="flex:1;min-width:0"><button class="practice-btn" type="button">Check</button></div><div class="practice-result" hidden></div><div class="solution" hidden style="margin-top:7px;color:var(--muted);font-size:.88rem"></div>';
+        var input=card.querySelector("input"),btn=card.querySelector("button"),result=card.querySelector(".practice-result"),solution=card.querySelector(".solution");
         btn.addEventListener("click",function(){
-          var raw=String(input.value||"").trim(),num=Number(raw);result.hidden=false;
-          if(raw!==""&&Number.isFinite(num)&&num===x.ans){result.className="practice-result ok";result.textContent="✓ Correct!";if(!card.dataset.done){card.dataset.done="1";score++;}}
-          else{result.className="practice-result no";result.textContent="Not correct. Try again."}
+          var raw=String(input.value||"").trim(),num=Number(raw),correct=Math.abs(num-x.ans)<0.000001;
+          result.hidden=false;
+          if(raw!==""&&Number.isFinite(num)&&correct){
+            result.className="practice-result ok";result.textContent="✓ Correct!";input.disabled=true;btn.disabled=true;
+            if(!card.dataset.done){card.dataset.done="1";score++}
+            solution.hidden=false;solution.textContent="Answer: "+x.ans;
+          }else{
+            result.className="practice-result no";result.textContent="Not correct — try again.";
+            solution.hidden=false;solution.textContent="Tip: Follow Brackets → Orders → Division/Multiplication → Addition/Subtraction.";
+          }
           var sb=body.querySelector("#bodmasScore");if(sb)sb.textContent="Score: "+score+"/"+total;
+          var pg=body.querySelector("#bodmasProgress");if(pg)pg.style.width=((score/total)*100)+"%";
         });
+        input.addEventListener("keydown",function(ev){if(ev.key==="Enter")btn.click()});
         qwrap.appendChild(card);
       });
     }
     renderQuestions();
     body.querySelectorAll(".bodmas-level").forEach(function(btn){
-      btn.addEventListener("click",function(){level=btn.getAttribute("data-level")||"easy";build();});
+      btn.addEventListener("click",function(){level=btn.getAttribute("data-level")||"easy";build()});
     });
+    var fresh=body.querySelector("#bodmasNewSet");
+    if(fresh)fresh.addEventListener("click",function(){build()});
   }
   build();
 }
