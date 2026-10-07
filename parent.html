@@ -435,7 +435,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     var hwRows=hw.slice(0,10).map(function(x){
       return "<div class='hw-row'><b>"+esc(x.d||"")+"</b><div>"+esc(x.hw||x.text||"")+"</div></div>";
     }).join("");
-    var centreUpi=centre&&centre.upi?String(centre.upi).trim():"";
+    var centreUpi=centre&&centre.upi?String(centre.upi).trim():"";if(!centreUpi)centreUpi="badavathpremdas2@ybl";
     var feeUpiUri="";
     if(centreUpi&&due>0){feeUpiUri="upi://pay?pa="+encodeURIComponent(centreUpi)+"&pn="+encodeURIComponent("TASVIA Academy")+"&am="+encodeURIComponent(due.toFixed(2))+"&cu=INR";}
     var photoHtml=photo?'<div class="dash-photo"><img src="'+photo+'" alt="'+esc(name)+'"></div>':'<div class="dash-photo dash-photo-fallback">👤</div>';
