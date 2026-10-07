@@ -580,23 +580,29 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     if(msg) msg.textContent="Opening Parent Portal…";
   }
   function start(code){
-    code=valid(code);if(!code)return;
+    code=valid(code);if(!code)return false;
+    if(window.__tasviaLoginInFlight===code)return true;
+    window.__tasviaLoginInFlight=code;
     showLoading(code);
+    try{sessionStorage.setItem("tasvia-parent-code",code)}catch(_){}
     read(code).then(function(d){
       if(!d) throw new Error("Student record not found");
       render(d,code);
+      try{history.replaceState(null,"",location.pathname+"#"+encodeURIComponent(code));}catch(_){}
     }).catch(function(e){
       console.warn("TASVIA rescue parent login:",e);
+      window.__tasviaLoginInFlight="";
       var msg=document.getElementById("studentLoginMsg");
       if(msg) msg.textContent="Unable to load this student record. Please check internet and try again.";
     });
+    return true;
   }
   window.__tasviaRescueStart=start;
   function bootParentPortal(){
     try{
       var qs=new URLSearchParams(location.search||"");
       var hash=String(location.hash||"").replace(/^#/,"");
-      var code=valid(qs.get("code"))||valid(hash);
+      var code=recoverParentCode();
       var form=document.getElementById("studentLoginForm");
       if(form&&!form.__tasviaBound){
         form.__tasviaBound=true;
@@ -619,6 +625,21 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
         if(input) input.focus();
       }
     }catch(e){console.warn("TASVIA parent boot:",e);}
+  }
+  function recoverParentCode(){
+    try{
+      var qs=new URLSearchParams(location.search||"");
+      var candidates=[
+        qs.get("code"),
+        String(location.hash||"").replace(/^#/,""),
+        sessionStorage.getItem("tasvia-parent-code")
+      ];
+      for(var i=0;i<candidates.length;i++){
+        var code=valid(candidates[i]);
+        if(code)return code;
+      }
+    }catch(_){}
+    return "";
   }
   window.__tasviaBootParent=bootParentPortal;
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",bootParentPortal,{once:true});
