@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v60">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v61">
 <!-- Parent portal Pages refresh: 2026-10-07 attendance redesign live-sync -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -394,6 +394,8 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
   function money(v){return "₹"+Number(v||0).toLocaleString("en-IN");}
   function card(title,body){return '<section class="rescue-card"><h2>'+title+'</h2>'+body+'</section>';}
   function render(d,code){
+    var welcome=document.getElementById("welcomeBackdrop");
+    if(welcome) welcome.classList.add("hide");
     window.__tasviaParentData=d;
     window.__tasviaSectionEsc=esc;
     var name=String(d.name||"TASVIA Student");
@@ -572,6 +574,10 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
       start(input&&input.value);
     });
     if(code) start(code);
+    else {
+      var input=document.getElementById("studentLoginId");
+      if(input) input.focus();
+    }
   });
 })();
 </script>
