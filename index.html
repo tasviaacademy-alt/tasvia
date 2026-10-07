@@ -1925,21 +1925,45 @@ function withTimeout(promise,ms,message){
   return Promise.race([promise,new Promise((_,reject)=>setTimeout(()=>reject(new Error(message)),ms))]);
 }
 async function getStaffRecord(email){
-  // Canonical record: Staff document ID = Firebase Auth email.
-  const direct=await withTimeout(
-    fs.collection("Staff").doc(email).get(),
-    10000,
-    "Staff verification timed out"
-  );
-  if(direct.exists) return direct;
-  // Legacy compatibility: some older Staff records used auto IDs but stored email in a field.
-  // This query is limited to one document and is only a fallback after Auth succeeds.
-  const q=await withTimeout(
-    fs.collection("Staff").where("email","==",email).limit(1).get(),
-    10000,
-    "Staff verification timed out"
-  );
-  return q.empty?null:q.docs[0];
+  if(!fs) throw new Error("Firestore is unavailable");
+  const authEmail=String(email||"").trim().toLowerCase();
+  if(!authEmail) return null;
+
+  // 1) Canonical record: Staff document ID = Firebase Auth email.
+  // Try the exact Auth email first, then the original Auth email spelling.
+  const candidates=[authEmail,String(email||"").trim()].filter((v,i,a)=>v&&a.indexOf(v)===i);
+  for(const id of candidates){
+    const direct=await withTimeout(
+      fs.collection("Staff").doc(id).get(),
+      10000,
+      "Staff verification timed out"
+    );
+    if(direct.exists) return direct;
+  }
+
+  // 2) Legacy records: older versions used auto IDs and stored the email field.
+  // Query by both normalized and exact email where possible.
+  for(const value of candidates){
+    const q=await withTimeout(
+      fs.collection("Staff").where("email","==",value).limit(1).get(),
+      10000,
+      "Staff verification timed out"
+    );
+    if(!q.empty) return q.docs[0];
+  }
+
+  // 3) Some migrated Staff records identify the Firebase Auth UID instead of email.
+  // This keeps existing staff accounts usable without weakening the Staff rules.
+  const u=auth&&auth.currentUser;
+  if(u&&u.uid){
+    const q=await withTimeout(
+      fs.collection("Staff").where("uid","==",u.uid).limit(1).get(),
+      10000,
+      "Staff verification timed out"
+    );
+    if(!q.empty) return q.docs[0];
+  }
+  return null;
 }
 window.addEventListener("online",netStatus);window.addEventListener("offline",netStatus);
 const MIME={csv:"text/csv;charset=utf-8",html:"text/html;charset=utf-8",png:"image/png"};
