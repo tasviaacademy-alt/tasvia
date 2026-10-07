@@ -432,13 +432,13 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
       var f=Math.max(0,(Number(x.fee)||0)-(Number(x.paid)||0));
       return "<tr><td>"+esc(x.m||"")+"</td><td>"+(f?"<b class='due'>Due "+money(f)+"</b>":"<b class='paid'>Paid</b>")+"</td></tr>";
     }).join("");
+    var centreUpi=centre&&centre.upi?String(centre.upi).trim():"";if(!centreUpi)centreUpi="badavathpremdas2@ybl";
     var feeTotalDue=fees.reduce(function(sum,x){return sum+Math.max(0,(Number(x&&x.fee)||0)-(Number(x&&x.paid)||0));},0);
     var feeDetailsQr=centreUpi&&feeTotalDue>0?"upi://pay?pa="+encodeURIComponent(centreUpi)+"&pn="+encodeURIComponent("TASVIA Academy")+"&am="+encodeURIComponent(feeTotalDue.toFixed(2))+"&cu=INR":"";
     var feeDetailsPay=feeDetailsQr?'<div class="fee-details-pay"><div class="fee-qr-wrap"><img class="fee-qr" alt="Fee payment QR code" src="https://quickchart.io/qr?size=220&text='+encodeURIComponent(feeDetailsQr)+'"><div class="fee-qr-note">Scan to pay total due • '+money(feeTotalDue)+'</div></div><div class="fee-popup-pay"><a class="gold" href="'+feeDetailsQr+'">Pay Now</a></div></div>':"";
     var hwRows=hw.slice(0,10).map(function(x){
       return "<div class='hw-row'><b>"+esc(x.d||"")+"</b><div>"+esc(x.hw||x.text||"")+"</div></div>";
     }).join("");
-    var centreUpi=centre&&centre.upi?String(centre.upi).trim():"";if(!centreUpi)centreUpi="badavathpremdas2@ybl";
     var feeUpiUri="";
     if(centreUpi&&due>0){feeUpiUri="upi://pay?pa="+encodeURIComponent(centreUpi)+"&pn="+encodeURIComponent("TASVIA Academy")+"&am="+encodeURIComponent(due.toFixed(2))+"&cu=INR";}
     var photoHtml=photo?'<div class="dash-photo"><img src="'+photo+'" alt="'+esc(name)+'"></div>':'<div class="dash-photo dash-photo-fallback">👤</div>';
