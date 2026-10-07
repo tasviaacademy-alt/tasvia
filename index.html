@@ -2122,18 +2122,11 @@ loginForm.addEventListener("submit",async e=>{
       while(!auth&&Date.now()-started<10000) await new Promise(r=>setTimeout(r,100));
     }
     if(!auth) throw new Error("Firebase Authentication is not ready. Please reload the Staff portal.");
-    // Do not block sign-in on iOS/PWA storage persistence. Firebase can authenticate
-    // with its default persistence even when IndexedDB/local persistence is unavailable.
-    // Persistence is best-effort only and is never allowed to hold the login transaction.
-    try{
-      await withTimeout(
-        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL),
-        3000,
-        "Firebase persistence setup timed out"
-      );
-    }catch(pErr){
-      console.warn("Firebase persistence unavailable; continuing with default session:",pErr);
-    }
+    // LOGIN FIX: do not run setPersistence during sign-in.
+    // On iOS/PWA, IndexedDB/local-storage availability can delay or reject
+    // persistence and make a successful Firebase sign-in appear stuck.
+    // Firebase's default persistence is sufficient to complete this login.
+    console.info("TASVIA login: using Firebase default auth persistence");
     // Direct Firebase Email/Password authentication. Do not wait for the
     // Auth observer to complete the login transaction.
     let cred;
@@ -2156,13 +2149,13 @@ loginForm.addEventListener("submit",async e=>{
     }
     const u=cred&&cred.user?cred.user:auth.currentUser;
     if(!u) throw new Error("Firebase signed in but no user session was returned.");
-    // Firestore is initialized only after Auth succeeds.
+    setSync("Firebase authenticated · opening Staff account…");
+    // Firestore is initialized only after Auth succeeds. Never let offline
+    // persistence setup participate in the login transaction.
     if(!fs){
-      try{
-        fs=firebase.firestore();
-        fs.enablePersistence({synchronizeTabs:true}).catch(()=>{});
-      }catch(_){}
+      try{ fs=firebase.firestore(); }catch(_){ fs=null; }
     }
+    if(!fs) throw new Error("Firebase Authentication succeeded, but Firestore could not be initialized.");
     const signedEmail=(u.email||email).trim().toLowerCase();
     const isRootAdmin=signedEmail==="tasviaacademy@gmail.com";
     if(isRootAdmin){
