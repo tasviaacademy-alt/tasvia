@@ -600,7 +600,7 @@ function subscribe(){
       setSync("Connection lost · "+name);
     }
   };
-  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;scheduleRender();if(key==="students"||key==="fees"||key==="tests"||key==="att"||key==="diary")schedulePV(key==="fees")},e=>onErr(name,e)));
+  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;scheduleRender();if(key==="students"||key==="fees"||key==="tests"||key==="att"||key==="diary")schedulePV(true)},e=>onErr(name,e)));
   const admin=window.currentUser&&window.currentUser.role==="admin";
   coll("students","students");
   // Legacy student-ID migration is intentionally NOT automatic. It is a maintenance operation and must never run in the background while staff are recording payments.
@@ -950,7 +950,7 @@ function buildParentView(s){
   return {studentId:s.id,name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,
     centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||""}};
 }
-function schedulePV(force=false){if(force)pvForce=true;clearTimeout(pvT);pvT=setTimeout(syncPV,3000)}
+function schedulePV(force=false){if(force)pvForce=true;clearTimeout(pvT);pvT=setTimeout(syncPV,600)}
 async function syncPV(){
   if(!db||!pvReady)return;
   if(pvBusy){clearTimeout(pvT);pvT=setTimeout(syncPV,1200);return}
@@ -1839,8 +1839,6 @@ document.addEventListener("submit",e=>{
     ownIds.add("hw:"+UI.date+sid);const e=(d.hw||"").trim()?{hw:d.hw.trim(),note:(d.note||"").trim()}:null;
     const cur=Object.assign({},(S.diary[UI.date]||{}).entries);if(e)cur[sid]=e;else delete cur[sid];S.diary[UI.date]={date:UI.date,entries:cur};
     if(db)mergeWrite("diary/"+UI.date,{entries:{[sid]:e}},{date:UI.date});else saveLocal();
-    // Immediately rebuild the parent-view record from the staff data so parents
-    // see newly saved homework without waiting for the normal sync debounce.
     if(db)schedulePV(true);
     closeSheet();render();if(e)hwSendSheet(sid);else toast("Homework cleared");
   }
