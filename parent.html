@@ -337,7 +337,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
 }
 </style>
 <!-- parent-pages-refresh-2026-10-06 -->
-</head>
+<style>.fee-qr-wrap{margin:14px auto 10px;padding:12px;border:1px solid #E3E7ED;border-radius:16px;background:#F8FAFC;display:inline-block}.fee-qr{display:block;width:190px;height:190px;object-fit:contain;border-radius:10px;background:#fff}.fee-qr-note{font-size:11px;color:#667085;margin-top:7px}.fee-details-pay{margin-top:18px;padding-top:16px;border-top:1px solid rgba(16,40,88,.12)}.fee-popup-pay{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}.fee-popup-pay a{display:inline-flex;align-items:center;justify-content:center;min-width:130px;padding:11px 15px;border-radius:12px;text-decoration:none;font-weight:800;background:#0B2455;color:#fff}.fee-popup-pay a.gold{background:#F2AC10;color:#1a1405}.fee-popup-close{margin-top:10px;border:0;background:transparent;color:#667085;font:600 14px Hind,sans-serif;padding:7px 14px;cursor:pointer}</style></head>
 <body>
 <header><div class="top"><div class="brand"><img class="hlogo" src="./icon-512.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
 <main id="main"><div class="center" id="msg">Loading…</div></main><div id="welcomeBackdrop" class="welcome-backdrop" role="dialog" aria-label="TASVIA Academy welcome">
@@ -502,14 +502,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
       (feeUpiUri?'<div class="fee-qr-wrap"><img class="fee-qr" alt="Fee payment QR code" src="https://quickchart.io/qr?size=220&text='+encodeURIComponent(feeUpiUri)+'"><div class="fee-qr-note">Scan with any UPI app</div></div><div class="fee-popup-pay"><a class="gold" href="'+feeUpiUri+'">Pay Now</a></div>':'<div class="fee-popup-pay"><a href="tel:+917842138739">Call TASVIA</a></div><div class="fee-qr-note">Payment QR will appear once the centre UPI ID is added in Staff → Centre Info.</div>')+
       '<button type="button" class="fee-popup-close" id="feeDueClose">Continue to Parent Portal</button>'+
       '</div></div>'+
-      '<div id="feeDuePopup" class="fee-popup-backdrop" aria-hidden="true">'+
-      '<div class="fee-popup" role="dialog" aria-modal="true" aria-labelledby="feeDueTitle">'+
-      '<div class="fee-popup-icon">⚠️</div><h3 id="feeDueTitle">Fee Due</h3>'+
-      '<div class="due-label">'+esc(name)+'</div><div class="due-amount">'+money(due)+'</div>'+
-      '<p class="due-note">This month&apos;s tuition fee is pending. Please complete the payment to keep the account up to date.</p>'+
-      (feeUpiUri?'<div class="fee-qr-wrap"><img class="fee-qr" alt="Fee payment QR code" src="https://quickchart.io/qr?size=220&text='+encodeURIComponent(feeUpiUri)+'"><div class="fee-qr-note">Scan with any UPI app</div></div><div class="fee-popup-pay"><a class="gold" href="'+feeUpiUri+'">Pay Now</a></div>':'<div class="fee-popup-pay"><a href="tel:+917842138739">Call TASVIA</a></div><div class="fee-qr-note">Payment QR will appear after the UPI ID is saved in Staff → Centre Info.</div>')+
-      '<button type="button" class="fee-popup-close" id="feeDueClose">Continue to Parent Portal</button>'+
-      '</div></div>'+
+
       '</div><div class="section-view" id="sectionView"><div class="section-view-head"><span class="section-view-icon" id="sectionViewIcon"></span><span class="section-view-title" id="sectionViewTitle"></span></div><div class="section-view-body" id="sectionViewBody"></div></div></main>';
 
     if(due>0){
@@ -762,4 +755,4 @@ var originalOpen=window.__tasviaOpenSection;window.__tasviaOpenSection=function(
 })();
 </script>
 </body>
-</html      '<style>.fee-qr-wrap{margin:14px auto 10px;padding:12px;border:1px solid #E3E7ED;border-radius:16px;background:#F8FAFC;display:inline-block}.fee-qr{display:block;width:190px;height:190px;object-fit:contain;border-radius:10px;background:#fff}.fee-qr-note{font-size:11px;color:#667085;margin-top:7px}.fee-details-pay{margin-top:18px;padding-top:16px;border-top:1px solid rgba(16,40,88,.12)}.fee-popup-pay{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}.fee-popup-pay a{display:inline-flex;align-items:center;justify-content:center;min-width:130px;padding:11px 15px;border-radius:12px;text-decoration:none;font-weight:800;background:#0B2455;color:#fff}.fee-popup-pay a.gold{background:#F2AC10;color:#1a1405}.fee-popup-close{margin-top:10px;border:0;background:transparent;color:#667085;font:600 14px Hind,sans-serif;padding:7px 14px;cursor:pointer}</style>'+>
+</html>
