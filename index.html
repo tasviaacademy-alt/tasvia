@@ -2126,11 +2126,26 @@ loginForm.addEventListener("submit",async e=>{
       console.warn("Firebase LOCAL persistence unavailable:",pErr);
       try{await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)}catch(sErr){console.warn("Firebase SESSION persistence unavailable:",sErr)}
     }
-    const cred=await withTimeout(
-      auth.signInWithEmailAndPassword(email,password),
-      15000,
-      "Firebase sign-in timed out. Check your internet connection and try again."
-    );
+    // Direct Firebase Email/Password authentication. Do not wait for the
+    // Auth observer to complete the login transaction.
+    let cred;
+    try{
+      cred=await withTimeout(
+        auth.signInWithEmailAndPassword(email,password),
+        15000,
+        "Firebase sign-in timed out. Check your internet connection and try again."
+      );
+    }catch(authErr){
+      console.error("TASVIA Firebase sign-in:",authErr);
+      const ac=String(authErr&&authErr.code||"");
+      if(ac==="auth/unauthorized-domain")
+        throw new Error("This Staff Portal domain is not authorized in Firebase. Add apk.tasviaacademy.com under Authentication → Settings → Authorized domains.");
+      if(ac==="auth/operation-not-allowed")
+        throw new Error("Email/Password sign-in is disabled in Firebase Authentication.");
+      if(ac==="auth/network-request-failed")
+        throw new Error("Firebase sign-in could not reach the server. Check the internet connection and try again.");
+      throw authErr;
+    }
     const u=cred&&cred.user?cred.user:auth.currentUser;
     if(!u) throw new Error("Firebase signed in but no user session was returned.");
     // Firestore is initialized only after Auth succeeds.
@@ -2185,7 +2200,7 @@ loginForm.addEventListener("submit",async e=>{
 render();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
 else startFirebase();
-if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=29",{scope:"./"}).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=31",{scope:"./"}).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
 
 </body>
