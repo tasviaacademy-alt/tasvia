@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v69">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v70">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -608,9 +608,26 @@ table{overflow:hidden;border-radius:14px}
     var back=document.getElementById("tasviaOverlayBack");if(back)back.onclick=function(){overlay.remove();document.body.style.overflow="";return false;};
     var target=document.getElementById("tasviaSectionContent");
     if(target) target.setAttribute("data-learning", title==="General Knowledge"?"gk":title==="Current Affairs"?"current":title==="BODMAS Practice"?"bodmas":"");
-    if(title==="General Knowledge"&&typeof window.__tasviaLoadLearning==="function")window.__tasviaLoadLearning("gk",target);
-    if(title==="Current Affairs"&&typeof window.__tasviaLoadLearning==="function")window.__tasviaLoadLearning("current",target);
-    if(title==="BODMAS Practice"&&typeof window.__tasviaLoadLearning==="function")window.__tasviaLoadLearning("bodmas",target);
+    function loadLearningSafe(kind){
+      try{
+        if(typeof window.__tasviaLoadLearning==="function"){window.__tasviaLoadLearning(kind,target);return;}
+      }catch(err){console.warn("TASVIA learning loader fallback",err);}
+      if(!target)return;
+      if(kind==="gk"){
+        var qs=[["What two colors are featured on the flag and coat of arms of Malta?","White and red"],["Which animal is least related to the octopus?","Eel"],["Elephants are not bothered by the loss of a stillborn baby because it was never alive.","False"],["What does gambol mean?","To frolic and leap playfully"],["What is the capital city of Washington state?","Olympia"]];
+        target.innerHTML='<div class="learning-meta"><span class="learning-pill">DAILY GK</span><span>07 October 2026</span></div><div class="learning-grid">'+qs.map(function(q,i){return '<div class="learning-card"><h4>Q'+(i+1)+'. '+esc2(q[0])+'</h4><button type="button" class="practice-btn" onclick="this.nextElementSibling.hidden=!this.nextElementSibling.hidden;this.textContent=this.nextElementSibling.hidden?\'Show Answer\':\'Hide Answer\'">Show Answer</button><div class="learning-answer" hidden>'+esc2(q[1])+'</div></div>'}).join("")+'</div>';
+      }else if(kind==="current"){
+        var items=["World Bank raises India’s FY27 growth forecast to 7.1%","School Assembly News Headlines Today — 07 October","Maharashtra’s water crisis puts India’s economic powerhouse under pressure","Switzerland President meets Dr Jitendra","India summons Pak envoy over continued facilitation of illegal cross-border infiltration"];
+        target.innerHTML='<div class="learning-meta"><span class="learning-pill">DAILY CURRENT AFFAIRS</span><span>07 October 2026</span></div><div class="learning-grid">'+items.map(function(x){return '<article class="learning-card"><h4>'+esc2(x)+'</h4><p>'+esc2(x)+'</p></article>'}).join("")+'</div>';
+      }else if(kind==="bodmas"){
+        var questions=[["8 + 4 × 3",20],["(6 + 4) × 2",20],["18 ÷ 3 + 5",11],["12 + 6 × 2 - 4",20],["(15 - 3) × 2",24]];
+        target.innerHTML='<div class="learning-meta"><span class="learning-pill">BODMAS PRACTICE</span><span>Practice</span></div><div class="learning-grid">'+questions.map(function(q,i){return '<div class="learning-card"><h4>Q'+(i+1)+'. Solve: '+q[0]+'</h4><input class="practice-input" inputmode="numeric" placeholder="Enter answer"><button type="button" class="practice-btn">Check Answer</button><div class="practice-result" hidden></div></div>'}).join("")+'</div>';
+        target.querySelectorAll(".learning-card").forEach(function(card,i){card.querySelector(".practice-btn").onclick=function(){var v=Number(card.querySelector("input").value),res=card.querySelector(".practice-result");res.hidden=false;res.textContent=v===questions[i][1]?"✓ Correct!":"Not correct. Try again.";res.className="practice-result "+(v===questions[i][1]?"ok":"no");};});
+      }
+    }
+    if(title==="General Knowledge")loadLearningSafe("gk");
+    if(title==="Current Affairs")loadLearningSafe("current");
+    if(title==="BODMAS Practice")loadLearningSafe("bodmas");
   }catch(e){console.error("TASVIA parent section",e);alert("Unable to open this section. Please refresh and try again.");}
   return false;
 }
