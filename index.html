@@ -2072,7 +2072,17 @@ loginForm.addEventListener("submit",async e=>{
   const password=String(d.password||"");
   b.disabled=true;b.textContent="Signing in…";gErr.textContent="";setSync("Signing in…");
   loginInProgress=true;loginGraceUntil=Date.now()+30000;
-  const fail=(msg)=>{gErr.textContent=msg;setSync("Sign-in failed");gate.hidden=false;};
+  const fail=(msg)=>{
+    loginInProgress=false;
+    loginSessionReady=false;
+    loginGraceUntil=0;
+    gErr.textContent=msg;
+    setSync("Sign-in failed");
+    gate.hidden=false;
+    b.disabled=false;
+    b.textContent="Sign in";
+    try{document.querySelector("#fLogin [name=password]").focus()}catch(_){}
+  };
   try{
     if(!auth){
       startFirebase();
@@ -2110,6 +2120,12 @@ loginForm.addEventListener("submit",async e=>{
     console.error("TASVIA login:",err);
     const code=err&&err.code?String(err.code):"";
     const detail=String((err&&err.message)||"Unable to sign in.");
+    // Always release the login lock on failure. This is critical on iOS:
+    // otherwise one rejected attempt leaves the submit button disabled and
+    // the auth observer in "signing in" state forever.
+    loginInProgress=false;
+    loginSessionReady=false;
+    loginGraceUntil=0;
     if(code==="auth/invalid-credential"||code==="auth/wrong-password"||code==="auth/user-not-found"||code==="auth/invalid-email")
       fail("Email or password is incorrect.");
     else if(code==="auth/too-many-requests")
