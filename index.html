@@ -946,7 +946,11 @@ function buildParentView(s){
   const pays=allPayments
     .filter(p=>p.m&&months.includes(p.m))
     .sort((a,b)=>String(b.d||"").localeCompare(String(a.d||"")));
-  const hw=Object.keys(S.diary).sort().reverse().map(d=>{const e=((S.diary[d]||{}).entries||{})[s.id];return e&&e.hw?{d,hw:e.hw,note:e.note||""}:null}).filter(Boolean).slice(0,5);
+  const hw=Object.keys(S.diary).sort().reverse().map(d=>{
+    const e=((S.diary[d]||{}).entries||{})[s.id];
+    const text=e&&(e.hw||e.homework||e.text||"");
+    return text?{d,hw:text,note:e.note||""}:null;
+  }).filter(Boolean).slice(0,10);
   return {studentId:s.id,name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,
     centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||""}};
 }
