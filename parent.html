@@ -684,8 +684,11 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
         qs.get("student"),
         qs.get("id"),
         rawHash,
-        
-        
+        (function(){
+          var p=String(location.pathname||"");
+          var m=p.match(/\/parent(?:\/index\.html)?\/([A-Za-z0-9._-]{3,64})\/?$/i);
+          return m?m[1]:"";
+        })()
       ];
       for(var i=0;i<candidates.length;i++){
         var code=valid(candidates[i]);
