@@ -1987,6 +1987,9 @@ function startFirebase(){
     const authWatchdog=setTimeout(()=>{if(!authResolved){setSync("Firebase connection timeout");gErr.textContent="Firebase sign-in service did not respond. Check your internet connection and reload."; }},10000);
     auth.onAuthStateChanged(async u=>{
       authResolved=true;
+      // The submit handler owns an active login transaction. Do not let the
+      // asynchronous Auth observer race it on iOS/PWA and hide the gate again.
+      if(loginInProgress || loginSessionReady) return;
       clearTimeout(authWatchdog);
       if(u){
         try{
@@ -2008,6 +2011,8 @@ function startFirebase(){
           }
           const staff=isRootAdmin?{name:"TASVIA Admin",role:"admin"}:(snap.data()||{}),role=(staff.role||"staff").toLowerCase();
           window.currentUser={uid:u.uid,email:email,name:staff.name||email,role:role};
+          loginSessionReady=true;
+          loginGraceUntil=Date.now()+30000;
           db=fs;gate.hidden=true;setSync("Staff verified · loading data…");render();subscribe();netStatus();if(isAdmin())setTimeout(()=>bulkPayCurrentCycleForAll(),2500);
         }catch(err){
           console.error("TASVIA staff verification:",err);
