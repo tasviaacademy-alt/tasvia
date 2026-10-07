@@ -952,7 +952,7 @@ function buildParentView(s){
     return text?{d,hw:text,note:e.note||""}:null;
   }).filter(Boolean).slice(0,10);
   return {studentId:s.id,name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,
-    centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||""}};
+    centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||"",upi:i.upi||""}};
 }
 function schedulePV(force=false){if(force)pvForce=true;clearTimeout(pvT);pvT=setTimeout(syncPV,600)}
 async function syncPV(){
@@ -985,7 +985,7 @@ async function syncPV(){
         }catch(err){
           console.warn("parent view build failed",id,err);
           const i=info();
-          v={studentId:id,name:st.name||"Student",cls:st.cls||"",board:st.board||"",lang:langOf(st),year:acYear(today()).label,att:{},yr:{p:0,a:0},abs:[],tests:[],fees:[],pays:[],hw:[],centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||""}};
+          v={studentId:id,name:st.name||"Student",cls:st.cls||"",board:st.board||"",lang:langOf(st),year:acYear(today()).label,att:{},yr:{p:0,a:0},abs:[],tests:[],fees:[],pays:[],hw:[],centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||"",upi:i.upi||""}};
         }
         const j=stable(v),hj=hash(j);
         let exists=false;
