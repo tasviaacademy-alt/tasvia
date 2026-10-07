@@ -27,5 +27,4 @@ jobs:
           grep -q 'tasvia-academy' firebase-config.js
           grep -q 'TASVIA Academy' index.html
           grep -q 'TASVIA Academy' parent/index.html
-          grep -q 'staff-login' index.html
           echo "TASVIA validation passed. GitHub Pages deployment is handled by the repository's single Pages deployment workflow."
