@@ -506,7 +506,9 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
       }catch(e){console.error("TASVIA section open",e);}
       return false;
     };
-    window.__tasviaBackDashboard=function(){
+    window.__tasviaBackDashboard=function(ev){
+      if(ev&&ev.preventDefault)ev.preventDefault();
+      if(ev&&ev.stopPropagation)ev.stopPropagation();
       if(sectionView)sectionView.style.display="none";
       if(dashHead)dashHead.style.display="";
       if(dashSummary)dashSummary.style.display="";
@@ -515,7 +517,11 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
       window.scrollTo(0,0);
       return false;
     };
-    if(dashboardBack)dashboardBack.onclick=function(){return window.__tasviaBackDashboard();};
+    if(dashboardBack){
+      dashboardBack.type="button";
+      dashboardBack.onclick=function(ev){return window.__tasviaBackDashboard(ev);};
+      dashboardBack.addEventListener("touchend",function(ev){return window.__tasviaBackDashboard(ev);},{passive:false});
+    }
   function showLoading(code){
     var msg=document.getElementById("studentLoginMsg");
     var input=document.getElementById("studentLoginId");
