@@ -12,7 +12,7 @@
   "navigationDividerColorDark": "#00000000",
   "backgroundColor": "#FFFFFF",
   "enableNotifications": true,
-  "startUrl": "/",
+  "startUrl": "/staff-login.html",
   "iconUrl": "https://apk.tasviaacademy.com/icon-512.png",
   "maskableIconUrl": "https://apk.tasviaacademy.com/icon-maskable-512.png",
   "monochromeIconUrl": "",
