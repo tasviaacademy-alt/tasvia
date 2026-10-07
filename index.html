@@ -1996,10 +1996,16 @@ function startFirebase(){
     auth=firebase.auth();
     if(!auth) throw new Error("Firebase Authentication is unavailable");
     setSync("Firebase sign-in ready · checking session…");
-    fs=firebase.firestore();
-    if(!fs) throw new Error("Firebase Firestore is unavailable");
+    // Firebase Authentication must remain independent from Firestore startup.
+    // A Firestore/network issue must never prevent the Staff login transaction.
+    try{
+      fs=firebase.firestore();
+      if(fs) fs.enablePersistence({synchronizeTabs:true}).catch(err=>console.warn("Firebase persistence unavailable:",err));
+    }catch(firestoreErr){
+      console.warn("TASVIA Firestore startup deferred:",firestoreErr);
+      fs=null;
+    }
     clearTimeout(startupWatchdog);
-    fs.enablePersistence({synchronizeTabs:true}).catch(err=>console.warn("Firebase persistence unavailable:",err));
     let authResolved=false;
     const authWatchdog=setTimeout(()=>{if(!authResolved){setSync("Firebase connection timeout");gErr.textContent="Firebase sign-in service did not respond. Check your internet connection and reload."; }},10000);
     auth.onAuthStateChanged(async u=>{
@@ -2089,7 +2095,7 @@ loginForm.addEventListener("submit",async e=>{
       const started=Date.now();
       while((!auth||!fs)&&Date.now()-started<10000) await new Promise(r=>setTimeout(r,100));
     }
-    if(!auth||!fs) throw new Error("Firebase sign-in service is not ready. Please reload the Staff portal.");
+    if(!auth) throw new Error("Firebase Authentication is not ready. Please reload the Staff portal.");
     try{await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)}catch(pErr){
       console.warn("Firebase LOCAL persistence unavailable:",pErr);
       try{await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)}catch(sErr){console.warn("Firebase SESSION persistence unavailable:",sErr)}
@@ -2101,6 +2107,13 @@ loginForm.addEventListener("submit",async e=>{
     );
     const u=cred&&cred.user?cred.user:auth.currentUser;
     if(!u) throw new Error("Firebase signed in but no user session was returned.");
+    // Firestore is initialized only after Auth succeeds.
+    if(!fs){
+      try{
+        fs=firebase.firestore();
+        fs.enablePersistence({synchronizeTabs:true}).catch(()=>{});
+      }catch(_){}
+    }
     const signedEmail=(u.email||email).trim().toLowerCase();
     const isRootAdmin=signedEmail==="tasviaacademy@gmail.com";
     if(isRootAdmin){
@@ -2112,6 +2125,7 @@ loginForm.addEventListener("submit",async e=>{
       const staff=snap.data()||{};
       window.currentUser={uid:u.uid,email:signedEmail,name:staff.name||signedEmail,role:String(staff.role||"staff").toLowerCase()};
     }
+    if(!fs) throw new Error("Firebase Authentication succeeded, but Firestore is unavailable. Reload once and try again.");
     loginSessionReady=true;loginGraceUntil=Date.now()+30000;
     db=fs;gate.hidden=true;gErr.textContent="";setSync("Staff verified · loading data…");
     render();subscribe();netStatus();
