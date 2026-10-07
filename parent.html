@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v67">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v68">
 <!-- Parent portal Pages refresh: 2026-10-07 attendance redesign live-sync -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -336,7 +336,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
   .parent-action,.parent-action::after{transition:none}
 }
 </style>
-<!-- parent-pages-refresh-2026-10-06 -->
+<!-- parent-pages-refresh-2026-10-07-v68-learning-fix -->
 <style>.fee-qr-wrap{margin:14px auto 10px;padding:12px;border:1px solid #E3E7ED;border-radius:16px;background:#F8FAFC;display:inline-block}.fee-qr{display:block;width:190px;height:190px;object-fit:contain;border-radius:10px;background:#fff}.fee-qr-note{font-size:11px;color:#667085;margin-top:7px}.fee-details-pay{margin-top:18px;padding-top:16px;border-top:1px solid rgba(16,40,88,.12)}.fee-popup-pay{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}.fee-popup-pay a{display:inline-flex;align-items:center;justify-content:center;min-width:130px;padding:11px 15px;border-radius:12px;text-decoration:none;font-weight:800;background:#0B2455;color:#fff}.fee-popup-pay a.gold{background:#F2AC10;color:#1a1405}.fee-popup-close{margin-top:10px;border:0;background:transparent;color:#667085;font:600 14px Hind,sans-serif;padding:7px 14px;cursor:pointer}</style></head>
 <body>
 <header><div class="top"><div class="brand"><img class="hlogo" src="./icon-512.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
@@ -589,9 +589,10 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     document.body.appendChild(overlay);document.body.style.overflow="hidden";
     var back=document.getElementById("tasviaOverlayBack");if(back)back.onclick=function(){overlay.remove();document.body.style.overflow="";return false;};
     var target=document.getElementById("tasviaSectionContent");
-    if(title==="General Knowledge"&&window.__tasviaLoadLearning)window.__tasviaLoadLearning("gk",target);
-    if(title==="Current Affairs"&&window.__tasviaLoadLearning)window.__tasviaLoadLearning("current",target);
-    if(title==="BODMAS Practice"&&window.__tasviaLoadLearning)window.__tasviaLoadLearning("bodmas",target);
+    if(target) target.setAttribute("data-learning", title==="General Knowledge"?"gk":title==="Current Affairs"?"current":title==="BODMAS Practice"?"bodmas":"");
+    if(title==="General Knowledge"&&typeof window.__tasviaLoadLearning==="function")window.__tasviaLoadLearning("gk",target);
+    if(title==="Current Affairs"&&typeof window.__tasviaLoadLearning==="function")window.__tasviaLoadLearning("current",target);
+    if(title==="BODMAS Practice"&&typeof window.__tasviaLoadLearning==="function")window.__tasviaLoadLearning("bodmas",target);
   }catch(e){console.error("TASVIA parent section",e);alert("Unable to open this section. Please refresh and try again.");}
   return false;
 }
@@ -736,8 +737,9 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
 function learningEsc(v){return String(v==null?"":v).replace(/[&<>"']/g,function(ch){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]})}
 function learningFetch(path){
   var controller=window.AbortController?new AbortController():null;
-  var timer=controller?setTimeout(function(){try{controller.abort()}catch(_){}},8000):null;
-  return fetch(path,{cache:"no-store",credentials:"omit",signal:controller?controller.signal:undefined}).then(function(r){
+  var timer=controller?setTimeout(function(){try{controller.abort()}catch(_){}},5000):null;
+  var url=new URL(path,window.location.origin).toString();
+  return fetch(url,{cache:"no-store",credentials:"omit",signal:controller?controller.signal:undefined}).then(function(r){
     if(timer)clearTimeout(timer);
     if(!r.ok)throw new Error("HTTP "+r.status);
     return r.json();
@@ -868,7 +870,7 @@ function renderBodmas(body){
   }
   build();
 }
-window.__tasviaLoadLearning=function(kind,body){if(!body)return;if(kind==="bodmas"){renderBodmas(body);return}body.innerHTML='<div class="empty">Loading…</div>';var path=kind==="gk"?"/daily-gk.json":"/current-affairs.json";var fallback=kind==="gk"?{date:"2026-10-07",questions:[{q:"What two colors are featured on the flag and coat of arms of Malta, a country consisting of seven Mediterranean islands?",a:"White and red"},{q:"Which of the following animals is the least related to the octopus?",a:"Eel"},{q:"Elephants sometimes have stillborn births, but are not bothered by the loss since the baby was never alive.",a:"False"},{q:"What does gambol mean in the sentence ‘They began to gambol in the sunshine’?",a:"to frolic and leap playfully"},{q:"Name the capital city of the U.S. state of Washington.",a:"Olympia"}]}:{date:"2026-10-07",items:[{category:"Economy",title:"World Bank raises India's FY27 growth forecast to 7.1%",text:"World Bank raises India's FY27 growth forecast to 7.1%",source:"The Times of India"},{category:"Science & Technology",title:"School Assembly News Headlines Today [07 October]",text:"Top national, business, sports, education, science and technology news headlines for 07 October.",source:"The Sunday Guardian"},{category:"Economy",title:"Maharashtra’s water crisis puts India’s economic powerhouse under pressure",text:"Maharashtra’s water crisis puts India’s economic powerhouse under pressure.",source:"Business Today"},{category:"Science & Technology",title:"Switzerland President meets Dr Jitendra",text:"Discussions focus on strengthening bilateral cooperation.",source:"Daily Excelsior"},{category:"World",title:"The Sick World of Body Camera YouTube",text:"The Sick World of Body Camera YouTube.",source:"Current Affairs.org"},{category:"India",title:"India summons Pak envoy over continued facilitation of illegal cross-border infiltration",text:"India summons the Pakistan envoy to register a strong protest.",source:"News On AIR"}],quiz:[{q:"Which institution raised India’s FY27 growth forecast to 7.1%?",a:"World Bank raises India's FY27 growth forecast to 7.1%"},{q:"Which country’s President met Dr Jitendra according to today’s current affairs?",a:"Switzerland President meets Dr Jitendra"},{q:"Which state is facing the water crisis highlighted in today’s economy news?",a:"Maharashtra’s water crisis puts India’s economic powerhouse under pressure"},{q:"Which country did India summon an envoy from?",a:"India summons Pak envoy over continued facilitation of illegal cross-border infiltration"},{q:"Which topic appears under the World category?",a:"The Sick World of Body Camera YouTube"}]};function showLearning(d){try{if(kind==="gk")renderGK(body,d);else renderCurrent(body,d)}catch(err){console.error("TASVIA learning render",err);if(kind==="gk")renderGK(body,fallback);else renderCurrent(body,fallback)}}learningFetch(path+"?v=20261007").then(showLearning).catch(function(e){console.warn("TASVIA learning fetch",e);showLearning(fallback)});};
+window.__tasviaLoadLearning=function(kind,body){if(!body)return;body.setAttribute("data-learning",kind);if(kind==="bodmas"){renderBodmas(body);return}body.innerHTML='<div class="empty">Loading…</div>';var path=kind==="gk"?"/daily-gk.json":"/current-affairs.json";var fallback=kind==="gk"?{date:"2026-10-07",questions:[{q:"What two colors are featured on the flag and coat of arms of Malta, a country consisting of seven Mediterranean islands?",a:"White and red"},{q:"Which of the following animals is the least related to the octopus?",a:"Eel"},{q:"Elephants sometimes have stillborn births, but are not bothered by the loss since the baby was never alive.",a:"False"},{q:"What does gambol mean in the sentence ‘They began to gambol in the sunshine’?",a:"to frolic and leap playfully"},{q:"Name the capital city of the U.S. state of Washington.",a:"Olympia"}]}:{date:"2026-10-07",items:[{category:"Economy",title:"World Bank raises India's FY27 growth forecast to 7.1%",text:"World Bank raises India's FY27 growth forecast to 7.1%",source:"The Times of India"},{category:"Science & Technology",title:"School Assembly News Headlines Today [07 October]",text:"Top national, business, sports, education, science and technology news headlines for 07 October.",source:"The Sunday Guardian"},{category:"Economy",title:"Maharashtra’s water crisis puts India’s economic powerhouse under pressure",text:"Maharashtra’s water crisis puts India’s economic powerhouse under pressure.",source:"Business Today"},{category:"Science & Technology",title:"Switzerland President meets Dr Jitendra",text:"Discussions focus on strengthening bilateral cooperation.",source:"Daily Excelsior"},{category:"World",title:"The Sick World of Body Camera YouTube",text:"The Sick World of Body Camera YouTube.",source:"Current Affairs.org"},{category:"India",title:"India summons Pak envoy over continued facilitation of illegal cross-border infiltration",text:"India summons the Pakistan envoy to register a strong protest.",source:"News On AIR"}],quiz:[{q:"Which institution raised India’s FY27 growth forecast to 7.1%?",a:"World Bank raises India's FY27 growth forecast to 7.1%"},{q:"Which country’s President met Dr Jitendra according to today’s current affairs?",a:"Switzerland President meets Dr Jitendra"},{q:"Which state is facing the water crisis highlighted in today’s economy news?",a:"Maharashtra’s water crisis puts India’s economic powerhouse under pressure"},{q:"Which country did India summon an envoy from?",a:"India summons Pak envoy over continued facilitation of illegal cross-border infiltration"},{q:"Which topic appears under the World category?",a:"The Sick World of Body Camera YouTube"}]};function showLearning(d){try{if(kind==="gk")renderGK(body,d);else renderCurrent(body,d)}catch(err){console.error("TASVIA learning render",err);if(kind==="gk")renderGK(body,fallback);else renderCurrent(body,fallback)}}learningFetch(path+"?v=20261007-v68").then(showLearning).catch(function(e){console.warn("TASVIA learning fetch",e);showLearning(fallback)});};
 // Learning sections are loaded directly by the active parent-section overlay.
 })();
 </script>
