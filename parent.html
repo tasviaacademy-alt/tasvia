@@ -592,7 +592,68 @@ window.__tasviaReloadLearning=function(){var t=(document.getElementById("section
 function renderGK(body,data){var qs=Array.isArray(data.questions)?data.questions:[],h='<div class="learning-meta"><span class="learning-pill">DAILY GK</span><span>'+learningEsc(data.date||"")+'</span></div><div class="learning-grid">';qs.slice(0,10).forEach(function(x,i){h+='<div class="learning-card"><h4>Q'+(i+1)+'. '+learningEsc(x.q)+'</h4><button class="practice-btn" type="button" data-gk-answer="'+i+'">Show Answer</button><div class="learning-answer" id="gk-answer-'+i+'" hidden>'+learningEsc(x.a)+'</div></div>'});h+='</div>';body.innerHTML=h;body.querySelectorAll("[data-gk-answer]").forEach(function(btn){btn.addEventListener("click",function(){var a=document.getElementById("gk-answer-"+btn.getAttribute("data-gk-answer"));if(a){a.hidden=!a.hidden;btn.textContent=a.hidden?"Show Answer":"Hide Answer"}})})}
 function renderCurrent(body,data){var items=Array.isArray(data.items)?data.items:[],h='<div class="learning-meta"><span class="learning-pill">DAILY CURRENT AFFAIRS</span><span>'+learningEsc(data.date||"")+'</span></div><div class="learning-grid">';items.slice(0,10).forEach(function(x){h+='<article class="learning-card"><h4>'+learningEsc(x.category||"News")+' · '+learningEsc(x.title||x.text||"")+'</h4><p>'+learningEsc(x.text||x.title||"")+'</p><div class="learning-source">'+learningEsc(x.source||"")+'</div></article>'});if(!items.length)h+='<div class="empty">No current affairs available today.</div>';h+='</div>';body.innerHTML=h}
 function bodmasSet(){var a=Math.floor(Math.random()*20)+2,b=Math.floor(Math.random()*10)+2,c=Math.floor(Math.random()*9)+1,t=Math.floor(Math.random()*4),e,n;if(t===0){e="("+a+" + "+b+") × "+c;n=(a+b)*c}else if(t===1){e=a+" + "+b+" × "+c;n=a+b*c}else if(t===2){e=(a*b)+" ÷ "+b+" + "+c;n=a+c}else{e="("+a+" + "+b+") - "+c+" × 2";n=a+b-c*2}return{expr:e,ans:n}}
-function renderBodmas(body){var qs=[];for(var i=0;i<8;i++)qs.push(bodmasSet());var h='<div class="learning-meta"><span class="learning-pill">BODMAS PRACTICE</span><span>8 questions</span></div>';qs.forEach(function(x,i){h+='<div class="practice-q"><strong>Q'+(i+1)+'. Solve: '+learningEsc(x.expr)+'</strong><input class="practice-input" inputmode="numeric" autocomplete="off" placeholder="Enter your answer"><button class="practice-btn" type="button">Check Answer</button><div class="practice-result" hidden></div></div>'});body.innerHTML=h;body.querySelectorAll(".practice-q").forEach(function(card,i){var q=qs[i],input=card.querySelector("input"),result=card.querySelector(".practice-result");card.querySelector("button").addEventListener("click",function(){var raw=String(input.value||"").trim(),num=Number(raw);result.hidden=false;if(raw!==""&&Number.isFinite(num)&&num===q.ans){result.className="practice-result ok";result.textContent="✓ Correct!"}else{result.className="practice-result no";result.textContent="Not correct. Try again."}})})}
+function renderBodmas(body){
+  var level="easy",score=0,total=8,qs=[];
+  function makeQuestion(lv){
+    var a,b,c,e,n,t;
+    if(lv==="easy"){
+      a=Math.floor(Math.random()*9)+2;b=Math.floor(Math.random()*9)+2;c=Math.floor(Math.random()*5)+1;
+      t=Math.floor(Math.random()*3);
+      if(t===0){e=a+" + "+b+" × "+c;n=a+b*c}
+      else if(t===1){e="("+a+" + "+b+") × "+c;n=(a+b)*c}
+      else{e=(a*b)+" ÷ "+b+" + "+c;n=a+c}
+    }else if(lv==="medium"){
+      a=Math.floor(Math.random()*15)+3;b=Math.floor(Math.random()*10)+2;c=Math.floor(Math.random()*8)+2;
+      t=Math.floor(Math.random()*4);
+      if(t===0){e=a+" + "+b+" × "+c+" - 2";n=a+b*c-2}
+      else if(t===1){e="("+a+" + "+b+") × "+c+" - 2";n=(a+b)*c-2}
+      else if(t===2){e=a+" × "+b+" + "+c+" × 2";n=a*b+c*2}
+      else{e="("+a+" × "+b+") ÷ "+b+" + "+c+" × 2";n=a+c*2}
+    }else{
+      a=Math.floor(Math.random()*20)+5;b=Math.floor(Math.random()*12)+3;c=Math.floor(Math.random()*9)+2;
+      t=Math.floor(Math.random()*4);
+      if(t===0){e="("+a+" + "+b+") × "+c+" - 2";n=(a+b)*c-2}
+      else if(t===1){e=a+" + "+b+" × "+c+" - ("+(c-1)+" + 2)";n=a+b*c-(c-1+2)}
+      else if(t===2){e="("+a+" × "+b+") ÷ "+b+" + "+c+" × 3";n=a+c*3}
+      else{e="("+a+" + "+b+" - 3) × "+c+" ÷ "+c; n=a+b-3}
+    }
+    return{expr:e,ans:n};
+  }
+  function build(){
+    score=0;qs=[];for(var i=0;i<total;i++)qs.push(makeQuestion(level));
+    var names={easy:"Easy",medium:"Medium",hard:"Hard"};
+    var h='<div class="learning-meta"><span class="learning-pill">BODMAS PRACTICE</span><span>Choose a level</span></div>'+
+      '<div class="bodmas-levels" role="group" aria-label="BODMAS difficulty">'+
+      '<button type="button" class="bodmas-level '+(level==="easy"?"active":"")+'" data-level="easy">🟢 Easy</button>'+
+      '<button type="button" class="bodmas-level '+(level==="medium"?"active":"")+'" data-level="medium">🟡 Medium</button>'+
+      '<button type="button" class="bodmas-level '+(level==="hard"?"active":"")+'" data-level="hard">🔴 Hard</button>'+
+      '</div>'+
+      '<div class="learning-meta" style="margin-top:12px"><span><b>'+names[level]+'</b> · 8 questions</span><span id="bodmasScore">Score: 0/8</span></div>'+
+      '<div id="bodmasQuestions"></div>';
+    body.innerHTML=h;
+    var qwrap=body.querySelector("#bodmasQuestions");
+    function renderQuestions(){
+      qwrap.innerHTML="";
+      qs.forEach(function(x,i){
+        var card=document.createElement("div");card.className="practice-q";
+        card.innerHTML='<strong>Q'+(i+1)+'. Solve: '+learningEsc(x.expr)+'</strong><input class="practice-input" inputmode="numeric" autocomplete="off" placeholder="Enter your answer"><button class="practice-btn" type="button">Check Answer</button><div class="practice-result" hidden></div>';
+        var input=card.querySelector("input"),btn=card.querySelector("button"),result=card.querySelector(".practice-result");
+        btn.addEventListener("click",function(){
+          var raw=String(input.value||"").trim(),num=Number(raw);result.hidden=false;
+          if(raw!==""&&Number.isFinite(num)&&num===x.ans){result.className="practice-result ok";result.textContent="✓ Correct!";if(!card.dataset.done){card.dataset.done="1";score++;}}
+          else{result.className="practice-result no";result.textContent="Not correct. Try again."}
+          var sb=body.querySelector("#bodmasScore");if(sb)sb.textContent="Score: "+score+"/"+total;
+        });
+        qwrap.appendChild(card);
+      });
+    }
+    renderQuestions();
+    body.querySelectorAll(".bodmas-level").forEach(function(btn){
+      btn.addEventListener("click",function(){level=btn.getAttribute("data-level")||"easy";build();});
+    });
+  }
+  build();
+}
 window.__tasviaLoadLearning=function(kind,body){if(!body)return;if(kind==="bodmas"){renderBodmas(body);return}body.innerHTML='<div class="empty">Loading…</div>';learningFetch(kind==="gk"?"/daily-gk.json":"/current-affairs.json").then(function(d){if(kind==="gk")renderGK(body,d);else renderCurrent(body,d)}).catch(function(e){if(kind==="gk"){learningFetch("/gk-question-bank.json").then(function(d){renderGK(body,{date:"Question Bank",questions:(d.questions||[]).slice(0,10)})}).catch(function(){renderLearningError(body,"General Knowledge")})}else renderLearningError(body,"Current Affairs")})};
 var originalOpen=window.__tasviaOpenSection;window.__tasviaOpenSection=function(btn){var r=originalOpen?originalOpen(btn):false;var t=(document.getElementById("sectionViewTitle")||{}).textContent||"",b=document.getElementById("sectionViewBody"),k=t==="General Knowledge"?"gk":t==="Current Affairs"?"current":t==="BODMAS Practice"?"bodmas":"";if(k)window.__tasviaLoadLearning(k,b);return r};
 })();
