@@ -625,6 +625,8 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
   else bootParentPortal();
   window.addEventListener("pageshow",function(){setTimeout(bootParentPortal,40);});
   window.addEventListener("hashchange",function(){setTimeout(bootParentPortal,40);});
+  [100,500,1200,2500,5000].forEach(function(ms){setTimeout(function(){try{bootParentPortal()}catch(_){ }},ms);});
+  window.addEventListener("online",function(){setTimeout(function(){try{bootParentPortal()}catch(_){ }},100);});
 })();
 </script>
 <script>
