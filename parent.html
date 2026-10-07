@@ -584,7 +584,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
     if(window.__tasviaLoginInFlight===code)return true;
     window.__tasviaLoginInFlight=code;
     showLoading(code);
-    try{sessionStorage.setItem("tasvia-parent-code",code)}catch(_){}
+    try{localStorage.setItem("tasvia-parent-code",code);sessionStorage.setItem("tasvia-parent-code",code)}catch(_){}
     read(code).then(function(d){
       if(!d) throw new Error("Student record not found");
       render(d,code);
@@ -632,7 +632,7 @@ main > #homeworkSection,main > #bodmasSection,main > #gkSection,main > #currentA
       var candidates=[
         qs.get("code"),
         String(location.hash||"").replace(/^#/,""),
-        sessionStorage.getItem("tasvia-parent-code")
+        localStorage.getItem("tasvia-parent-code")||sessionStorage.getItem("tasvia-parent-code")
       ];
       for(var i=0;i<candidates.length;i++){
         var code=valid(candidates[i]);
