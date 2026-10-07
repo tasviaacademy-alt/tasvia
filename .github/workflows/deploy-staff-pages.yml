@@ -7,6 +7,22 @@ name: Deploy TASVIA Staff App to GitHub Pages
 on:
   push:
     branches: ["main"]
+    # Deploy only when live website content changes.
+    # Workflow/rules/history-only changes do not need a Pages deployment.
+    paths:
+      - '**.html'
+      - '**.js'
+      - '**.css'
+      - '**.json'
+      - '**.png'
+      - '**.jpg'
+      - '**.jpeg'
+      - '**.webp'
+      - '**.svg'
+      - '**.ico'
+      - 'CNAME'
+      - '!current-affairs-history/**'
+      - '!daily-gk-history/**'
   workflow_dispatch:
 
 permissions:
