@@ -671,7 +671,7 @@ async function flush(k,date){
   const key=k+"|"+date,patch=Object.assign({},pend[key]);if(!Object.keys(patch).length)return;
   if(!db){const m=Object.assign({},(S[k][date]||{}).marks);for(const x in patch){if(patch[x]==null)delete m[x];else m[x]=patch[x]}S[k][date]={date,marks:m};pend[key]={};saveLocal();render();return}
   const ok=await mergeWrite(ATTCOLL[k]+"/"+date,{marks:patch},{date});
-  if(ok){for(const x in patch)if(pend[key][x]===patch[x])delete pend[key][x];if(k==="att")schedulePV(true);render()}
+  if(ok){for(const x in patch)if(pend[key][x]===patch[x])delete pend[key][x];if(k==="att"){pvCache={};try{localStorage.removeItem("tasvia-pv")}catch(e){}schedulePV(true)}render()}
 }
 function datesOf(k){const d=new Set(Object.keys(S[k]));Object.keys(pend).forEach(x=>{if(x.startsWith(k+"|"))d.add(x.slice(k.length+1))});return [...d]}
 function attStats(sid,month,from,to){
@@ -1800,7 +1800,7 @@ document.addEventListener("submit",e=>{
     feeWrite.then(ok=>{
       if(ok===false){if(previousFees===undefined)delete S.fees[id];else S.fees[id]=previousFees;render();return;}
       pvCache[S.students[id]?.pcode]=null;try{localStorage.removeItem("tasvia-pv")}catch(e){}
-      schedulePV(true);render();const s={id,...S.students[id]};
+      pvCache[S.students[id]?.pcode]=null;try{localStorage.removeItem("tasvia-pv")}catch(e){}schedulePV(true);render();const s={id,...S.students[id]};
       openSheet("Payment saved",`<p>${rs(amt)} from ${esc(s.name)} for ${monthName(d.month)}.</p><pre class="msg">${esc(receiptText(s,p))}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Send receipt on WhatsApp</a><button class="btn ghost" data-act="close">Done</button></div>`);
     });
   }
