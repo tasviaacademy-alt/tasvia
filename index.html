@@ -1839,6 +1839,9 @@ document.addEventListener("submit",e=>{
     ownIds.add("hw:"+UI.date+sid);const e=(d.hw||"").trim()?{hw:d.hw.trim(),note:(d.note||"").trim()}:null;
     const cur=Object.assign({},(S.diary[UI.date]||{}).entries);if(e)cur[sid]=e;else delete cur[sid];S.diary[UI.date]={date:UI.date,entries:cur};
     if(db)mergeWrite("diary/"+UI.date,{entries:{[sid]:e}},{date:UI.date});else saveLocal();
+    // Immediately rebuild the parent-view record from the staff data so parents
+    // see newly saved homework without waiting for the normal sync debounce.
+    if(db)schedulePV(true);
     closeSheet();render();if(e)hwSendSheet(sid);else toast("Homework cleared");
   }
   if(f.id==="fInfo"){S.info=Object.assign(info(),d);put("info/centre",S.info);closeSheet();render();toast("Centre info saved")}
