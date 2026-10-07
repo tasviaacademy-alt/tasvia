@@ -609,7 +609,7 @@ function subscribe(){
   {const y=+acYear(today()).from.slice(0,4)-1;coll("tests","tests",db.collection("tests").where("date",">=",y+"-06-01"))}
   coll("attendance","att",db.collection("attendance").orderBy("date","desc").limit(400));
   unsubs.push(db.doc("info/centre").onSnapshot(d=>{S.info=d.exists?d.data():null;scheduleRender()},e=>onErr("info/centre",e)));
-  pvLoad();schedulePV();
+  pvLoad();schedulePV(true);
   /* Staff attendance and admin back-office data are loaded only when those screens are opened. */
   coll("diary","diary",db.collection("diary").orderBy("date","desc").limit(120));
 }
@@ -895,7 +895,7 @@ function avatarHTML(sid,name){const p=photoCache[sid];return p?`<img src="${p}" 
 let pvCache={},pvReady=false,pvT=null,pvBusy=false,pvForce=false;
 /* Short fingerprint of each parent page this device last wrote, so unchanged pages are never rewritten (saves free-plan quota). */
 function hash(str){let h1=0xdeadbeef,h2=0x41c6ce57;for(let i=0;i<str.length;i++){const c=str.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677)}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return (h2>>>0).toString(36)+(h1>>>0).toString(36)}
-function pvLoad(){try{pvCache=JSON.parse(localStorage.getItem("tasvia-pv")||"{}")}catch(e){pvCache={}}pvReady=true}
+function pvLoad(){try{pvCache=JSON.parse(localStorage.getItem("tasvia-pv")||"{}")}catch(e){pvCache={}}pvReady=true;pvForce=true}
 function pvSave(){try{localStorage.setItem("tasvia-pv",JSON.stringify(pvCache))}catch(e){}}
 const PC_ALPH="ABCDEFGHJKMNPQRSTUVWXYZ23456789";
 // New parent links use 16 cryptographically-random characters (~80 bits of entropy).
