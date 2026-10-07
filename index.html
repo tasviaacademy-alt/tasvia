@@ -6,17 +6,8 @@
 <title>TASVIA Academy</title>
 <meta name="theme-color" content="#0B2455">
 <script>
-/* Staff entry: the dashboard is never used as the login page.
-   Only the verified hand-off URL (?staff=1) may enter the dashboard.
-   This removes the iOS/sessionStorage redirect loop. Parent portal is unaffected. */
-(function(){
-  try{
-    if((location.pathname === "/" || location.pathname.endsWith("/index.html")) && !location.search.includes("staff=1")){
-      location.replace("./staff-login.html?v=20261007");
-    }
-  }catch(e){}
-})();
-</script>
+/* Staff login is handled directly by the dashboard gate. Keeping login and dashboard on one page avoids iOS/PWA auth handoff loops. */
+
 <!-- deployment-refresh-2026-10-07-parent-fee-qr -->
 <meta name="description" content="Attendance, fees, homework, salaries and report cards for TASVIA Academy Tuition Centre, Nizamabad">
 <link rel="manifest" href="manifest.json">
@@ -2110,9 +2101,8 @@ function startFirebase(){
     gErr.textContent="TASVIA could not start Firebase. Please reload.";
   }
 }
-const staffHandoff = new URLSearchParams(location.search).get("staff")==="1";
-let loginInProgress=false; let loginGraceUntil=staffHandoff?Date.now()+20000:0; let loginSessionReady=false;
-if(staffHandoff) gate.hidden=true;
+const staffHandoff = true;
+let loginInProgress=false; let loginGraceUntil=0; let loginSessionReady=false;
 const loginForm=document.getElementById("fLogin");
 loginForm.addEventListener("submit",async e=>{
   e.preventDefault();
