@@ -750,54 +750,66 @@ function currentFeeCycle(s){
   const fee=Number(s&&s.fee)||0;
   if(!fee)return {status:"none",fee:0,paid:0,due:0,dueDate:null,nextDueDate:null,cycleStart:null};
   const join=String(s&&s.joined||"");
-  const valid=/^\d{4}-\d{2}-\d{2}$/.test(join);
-  if(!valid)return {status:"due",fee,paid:0,due:fee,dueDate:null,nextDueDate:null,cycleStart:null};
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(join))
+    return {status:"due",fee,paid:0,due:fee,dueDate:null,nextDueDate:null,cycleStart:null};
+
   const [jy,jm,jd]=join.split("-").map(Number);
   const todayDate=new Date();
+  todayDate.setHours(0,0,0,0);
+
   const makeAnniv=(year,monthIndex)=>{
     const last=new Date(year,monthIndex+1,0).getDate();
     return new Date(year,monthIndex,Math.min(jd,last));
   };
-  // A fee cycle runs from the joining-day anniversary to the next joining-day
-  // anniversary. Payment at any point inside that cycle makes that cycle paid.
-  // The fee becomes due only AFTER the full one-month cycle has ended.
-  let cycleStart=makeAnniv(todayDate.getFullYear(),todayDate.getMonth());
-  if(todayDate<cycleStart)cycleStart=makeAnniv(todayDate.getFullYear(),todayDate.getMonth()-1);
-  let cycleEnd=makeAnniv(cycleStart.getFullYear(),cycleStart.getMonth()+1);
-  // If the current cycle has not ended yet, nothing is overdue.
-  if(todayDate<cycleEnd){
+  const text=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+
+  // The first fee cycle starts on the joining date and ends one month later.
+  const firstEnd=makeAnniv(jy,jm);
+  if(todayDate<firstEnd){
+    // The first full month has not finished, so the fee is not overdue.
     return {
       status:"upcoming",fee,paid:0,due:0,
-      dueDate:cycleEnd.getFullYear()+"-"+String(cycleEnd.getMonth()+1).padStart(2,"0")+"-"+String(cycleEnd.getDate()).padStart(2,"0"),
-      nextDueDate:cycleEnd.getFullYear()+"-"+String(cycleEnd.getMonth()+1).padStart(2,"0")+"-"+String(cycleEnd.getDate()).padStart(2,"0"),
-      cycleStart:cycleStart.getFullYear()+"-"+String(cycleStart.getMonth()+1).padStart(2,"0")+"-"+String(cycleStart.getDate()).padStart(2,"0")
+      dueDate:text(firstEnd),nextDueDate:text(firstEnd),cycleStart:join
     };
   }
+
+  // At/after the first anniversary, evaluate ONLY the most recently completed
+  // joining-date cycle. The newly started cycle must never be marked due early.
+  let currentStart=makeAnniv(todayDate.getFullYear(),todayDate.getMonth());
+  if(todayDate<currentStart)currentStart=makeAnniv(todayDate.getFullYear(),todayDate.getMonth()-1);
+
+  const completedEnd=currentStart;
+  const completedStart=makeAnniv(currentStart.getFullYear(),currentStart.getMonth()-1);
+  const completedMonth=completedStart.toISOString().slice(0,7);
+
   let paid=0;
   payList(s.id).forEach(p=>{
     const amount=Number(p.amount)||0;
     const explicitMonth=String(p.month||"").trim();
-    const cycleMonth=cycleStart.toISOString().slice(0,7);
-    // Staff's selected "Fee for month" is authoritative. A dated fallback is
-    // used only for legacy records that have no month field.
+
+    // Staff's selected "Fee for month" is authoritative.
     if(explicitMonth){
-      if(paymentMonth(p)===cycleMonth)paid+=amount;
+      if(paymentMonth(p)===completedMonth)paid+=amount;
       return;
     }
+
+    // Legacy records without a selected month fall back to their payment date.
     const ds=String(p.date||"");
     const d=/^\d{4}-\d{2}-\d{2}$/.test(ds)?new Date(ds+"T00:00:00"):null;
-    if(d&&d>=cycleStart&&d<cycleEnd)paid+=amount;
+    if(d&&d>=completedStart&&d<completedEnd)paid+=amount;
   });
+
   paid=Math.min(fee,Math.max(0,paid));
-  const cycleStartText=cycleStart.getFullYear()+"-"+String(cycleStart.getMonth()+1).padStart(2,"0")+"-"+String(cycleStart.getDate()).padStart(2,"0");
-  const nextStart=cycleEnd;
-  const nextText=nextStart.getFullYear()+"-"+String(nextStart.getMonth()+1).padStart(2,"0")+"-"+String(nextStart.getDate()).padStart(2,"0");
+  const nextDue=makeAnniv(currentStart.getFullYear(),currentStart.getMonth()+1);
+
   return {
     status:paid>=fee?"paid":"due",
-    fee,paid,due:Math.max(0,fee-paid),
-    dueDate:cycleStartText,
-    nextDueDate:nextText,
-    cycleStart:cycleStartText
+    fee,
+    paid,
+    due:Math.max(0,fee-paid),
+    dueDate:text(completedEnd),
+    nextDueDate:text(nextDue),
+    cycleStart:text(completedStart)
   };
 }
 const active=s=>s.active!==false;
