@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-08-v76">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-08-v77">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -791,16 +791,19 @@ document.body.innerHTML=
         });
       }
       if(code){
-        var cached=loadParentSession(code);
-        // Cached data is only a fast first paint. Always refresh the authoritative
-        // parentView record so new staff attendance is not hidden by an old session.
-        if(cached)render(cached,code);
-        window.__tasviaAutoCode=code;
-        start(code,"",true,!!cached);
-        try{
-          localStorage.setItem("tasvia-parent-code",code);
-          sessionStorage.setItem("tasvia-parent-code",code);
-        }catch(_){}
+        // A direct link may identify the student, but it must NEVER bypass
+        // authentication. Prefill Student ID and require the 4-digit PIN.
+        var input=document.getElementById("studentLoginId");
+        var pinInput=document.getElementById("studentLoginPin");
+        if(input) input.value=code;
+        if(pinInput){
+          pinInput.value="";
+          setTimeout(function(){try{pinInput.focus()}catch(_){}},0);
+        }
+        var msg=document.getElementById("studentLoginMsg");
+        if(msg) msg.textContent="Enter the 4-digit Parent PIN to continue.";
+        window.__tasviaAutoCode="";
+        try{sessionStorage.removeItem("tasvia-parent-session");localStorage.removeItem("tasvia-parent-session")}catch(_){}
       }else{
         var input=document.getElementById("studentLoginId");
         if(input) input.focus();
@@ -851,9 +854,10 @@ document.body.innerHTML=
     }catch(_){}
     return "";
   }
-  // Canonicalize legacy hash parent links before boot. Hash-only links are preserved for compatibility, but the active URL is moved to a query parameter for reliable webview/PWA handling.
+  // Canonicalize legacy hash links to a query parameter, but do not
+  // authenticate or open the dashboard from the URL alone.
   try{
-    var legacyHashCode=location.hostname==="apk.tasviaacademy.com"?valid(String(location.hash||"").replace(/^#/,"")):"";
+    var legacyHashCode=valid(String(location.hash||"").replace(/^#/,""));
     var hasQueryCode=new URLSearchParams(location.search||"").get("code");
     if(legacyHashCode&&!hasQueryCode){
       history.replaceState(null,"",location.pathname+"?code="+encodeURIComponent(legacyHashCode));
