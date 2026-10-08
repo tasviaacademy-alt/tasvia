@@ -1011,6 +1011,15 @@ async function syncPV(){
   const usedCodes=new Set();
   const forceWrite=pvForce;
   pvForce=false;  try{
+    // Before rebuilding parent views, re-read the currently edited homework day
+    // directly from Firestore. This prevents a fast parent sync from using the
+    // older local diary snapshot while the staff listener is still catching up.
+    if(forceWrite&&UI.date){
+      try{
+        const diarySnap=await db.doc("diary/"+UI.date).get();
+        if(diarySnap.exists)S.diary[UI.date]=diarySnap.data();
+      }catch(e){console.warn("authoritative homework refresh",UI.date,e)}
+    }
     for(const [id,raw] of Object.entries(S.students||{})){
       try{
         const st=Object.assign({},raw||{});
