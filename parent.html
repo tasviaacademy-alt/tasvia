@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-08-v78">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-08-v79">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -791,20 +791,17 @@ document.body.innerHTML=
         });
       }
       if(code){
-        // A direct link may identify the student, but it must NEVER bypass
-        // authentication. Prefill Student ID and require the 4-digit PIN.
-        // A parent link should open the Parent Portal login page.
-        // Do not auto-login or reveal the Student ID from the URL.
-        // The parent must enter both Student ID and 4-digit PIN.
-        var input=document.getElementById("studentLoginId");
-        var pinInput=document.getElementById("studentLoginPin");
-        if(input) input.value="";
-        if(pinInput) pinInput.value="";
-        var msg=document.getElementById("studentLoginMsg");
-        if(msg) msg.textContent="Enter your Student ID and 4-digit Parent PIN to continue.";
-        if(input) setTimeout(function(){try{input.focus()}catch(_){}},0);
-        window.__tasviaAutoCode="";
-        try{sessionStorage.removeItem("tasvia-parent-session");localStorage.removeItem("tasvia-parent-session")}catch(_){}
+        // Unique parent links are bearer links: possession of the private
+        // link is the authentication. The normal website (without a code)
+        // still requires Student ID + Parent PIN.
+        window.__tasviaAutoCode=code;
+        var cached=loadParentSession(code);
+        if(cached) render(cached,code);
+        start(code,"",true,!!cached);
+        try{
+          localStorage.setItem("tasvia-parent-code",code);
+          sessionStorage.setItem("tasvia-parent-code",code);
+        }catch(_){}
       }else{
         var input=document.getElementById("studentLoginId");
         if(input) input.focus();
