@@ -675,7 +675,19 @@ async function flush(k,date){
   const key=k+"|"+date,patch=Object.assign({},pend[key]);if(!Object.keys(patch).length)return;
   if(!db){const m=Object.assign({},(S[k][date]||{}).marks);for(const x in patch){if(patch[x]==null)delete m[x];else m[x]=patch[x]}S[k][date]={date,marks:m};pend[key]={};saveLocal();render();return}
   const ok=await mergeWrite(ATTCOLL[k]+"/"+date,{marks:patch},{date});
-  if(ok){for(const x in patch)if(pend[key][x]===patch[x])delete pend[key][x];if(k==="att"){pvCache={};try{localStorage.removeItem("tasvia-pv")}catch(e){}schedulePV(true)}render()}
+  if(ok){
+    // Apply the confirmed server patch locally before rebuilding parentView.
+    const local=Object.assign({},(S[k][date]||{}).marks||{});
+    Object.keys(patch).forEach(x=>{if(patch[x]==null)delete local[x];else local[x]=patch[x]});
+    S[k][date]={date,marks:local};
+    for(const x in patch)if(pend[key][x]===patch[x])delete pend[key][x];
+    if(k==="att"){
+      pvCache={};
+      try{localStorage.removeItem("tasvia-pv")}catch(e){}
+      schedulePV(true);
+    }
+    render();
+  }
 }
 function datesOf(k){const d=new Set(Object.keys(S[k]));Object.keys(pend).forEach(x=>{if(x.startsWith(k+"|"))d.add(x.slice(k.length+1))});return [...d]}
 function attStats(sid,month,from,to){
