@@ -668,7 +668,7 @@ table{overflow:hidden;border-radius:14px}
         if(!fromDirectLink&&String(d.pin||"")!==pin) throw new Error("Invalid PIN");
         render(d,code);
         window.__tasviaLoginInFlight="";
-        try{history.replaceState(null,"",location.pathname+"?code="+encodeURIComponent(code));}catch(_){}
+        try{if(location.hostname==="apk.tasviaacademy.com"){history.replaceState(null,"",location.pathname+"?code="+encodeURIComponent(code));}}catch(_){}
       }).catch(function(e){
         console.warn("TASVIA parent login attempt "+attempt,e);
         if(attempt<3 && navigator.onLine!==false){
@@ -755,7 +755,7 @@ table{overflow:hidden;border-radius:14px}
   }
   // Canonicalize legacy hash parent links before boot. Hash-only links are preserved for compatibility, but the active URL is moved to a query parameter for reliable webview/PWA handling.
   try{
-    var legacyHashCode=valid(String(location.hash||"").replace(/^#/,""));
+    var legacyHashCode=location.hostname==="apk.tasviaacademy.com"?valid(String(location.hash||"").replace(/^#/,"")):"";
     var hasQueryCode=new URLSearchParams(location.search||"").get("code");
     if(legacyHashCode&&!hasQueryCode){
       history.replaceState(null,"",location.pathname+"?code="+encodeURIComponent(legacyHashCode));
