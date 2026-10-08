@@ -1003,6 +1003,26 @@ function buildParentView(s){
   return {studentId:s.id,name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,currentFee,pin:String(s.pin||""),
     centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||"",upi:i.upi||DEFAULT_INFO.upi||""}};
 }
+async function syncParentHomeworkForStudent(sid){
+  if(!db||!sid)return;
+  try{
+    const s=S.students&&S.students[sid];
+    if(!s)return;
+    const code=String(s.pcode||"").trim().toUpperCase();
+    if(!/^[A-Z0-9]{8,20}$/.test(code))return;
+    const snap=await db.collection("diary").orderBy("date","desc").limit(120).get();
+    const hw=[];
+    snap.docs.forEach(function(doc){
+      const d=doc.data()||{},e=((d.entries||{})[sid]);
+      const text=e&&(e.hw||e.homework||e.text||"");
+      if(text)hw.push({d:String(d.date||doc.id),hw:String(text),note:String(e.note||"")});
+    });
+    const patch={hw:hw.slice(0,30),homework:hw.slice(0,30),updated:Date.now(),parentSchemaVersion:2};
+    await db.doc("parentView/"+code).set(patch,{merge:true});
+    try{await db.doc("parentView/"+sid).set(patch,{merge:true});}catch(e){console.warn("parent homework mirror",sid,e)}
+    pvCache[code]="";pvSave();
+  }catch(e){console.warn("direct parent homework sync failed",sid,e)}
+}
 function schedulePV(force=false){if(force)pvForce=true;clearTimeout(pvT);pvT=setTimeout(syncPV,600)}
 async function syncPV(){
   if(!db||!pvReady)return;
@@ -1948,7 +1968,7 @@ document.addEventListener("submit",e=>{
     const cur=Object.assign({},(S.diary[UI.date]||{}).entries);if(e)cur[sid]=e;else delete cur[sid];S.diary[UI.date]={date:UI.date,entries:cur};
     if(db){
       mergeWrite("diary/"+UI.date,{entries:{[sid]:e}},{date:UI.date}).then(function(ok){
-        if(ok){schedulePV(true);setTimeout(function(){schedulePV(true)},1800)}
+        if(ok){syncParentHomeworkForStudent(sid);schedulePV(true);setTimeout(function(){syncParentHomeworkForStudent(sid);schedulePV(true)},1800)}
       });
     }else saveLocal();
     if(db)schedulePV(true);
