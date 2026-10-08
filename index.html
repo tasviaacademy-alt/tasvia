@@ -1045,15 +1045,28 @@ async function syncPV(){
           const old=snap.exists?snap.data():null;
           exists=!!(old&&(!old.studentId||old.studentId===id));
         }catch(e){console.warn("parent record check",code,e)}
-        const codeNeedsWrite=forceWrite||!exists||pvCache[code]!==hj;
+        const codeNeedsWrite=forceWrite||!exists||pvCache[code]!==hj||Number(old&&old.parentSchemaVersion||0)<2;
         if(codeNeedsWrite){
-          // Fee data is derived state. Always replace the fee-related fields so a
-          // deleted payment can never leave a stale Paid snapshot in parentView.
+          // Parent view must be rebuilt from the complete authoritative staff data.
+          // Previously only fee fields were rewritten here, leaving attendance and
+          // homework stale in parentView even after staff changes.
           await db.doc("parentView/"+code).set({
+            parentSchemaVersion:2,
             studentId:id,
+            name:v.name||st.name||"Student",
+            cls:v.cls||st.cls||"",
+            board:v.board||st.board||"",
+            lang:v.lang||langOf(st),
+            year:v.year||acYear(today()).label,
+            att:v.att||{},
+            yr:v.yr||{p:0,a:0},
+            abs:Array.isArray(v.abs)?v.abs:[],
+            tests:Array.isArray(v.tests)?v.tests:[],
+            hw:Array.isArray(v.hw)?v.hw:[],
             fees:Array.isArray(v.fees)?v.fees:[],
             pays:Array.isArray(v.pays)?v.pays:[],
             currentFee:v.currentFee||null,
+            centre:v.centre||null,
             updated:Date.now()
           },{merge:true});
           pvCache[code]=hj;
@@ -1069,11 +1082,23 @@ async function syncPV(){
           const idNeedsWrite=forceWrite||!idOld||idOld.studentId!==id||hash(stable(idOldComparable))!==hj;
           if(idNeedsWrite){
             await db.doc("parentView/"+id).set({
+              parentSchemaVersion:2,
               studentId:id,
               loginId:id,
+              name:v.name||st.name||"Student",
+              cls:v.cls||st.cls||"",
+              board:v.board||st.board||"",
+              lang:v.lang||langOf(st),
+              year:v.year||acYear(today()).label,
+              att:v.att||{},
+              yr:v.yr||{p:0,a:0},
+              abs:Array.isArray(v.abs)?v.abs:[],
+              tests:Array.isArray(v.tests)?v.tests:[],
+              hw:Array.isArray(v.hw)?v.hw:[],
               fees:Array.isArray(v.fees)?v.fees:[],
               pays:Array.isArray(v.pays)?v.pays:[],
               currentFee:v.currentFee||null,
+              centre:v.centre||null,
               updated:Date.now()
             },{merge:true});
           }
