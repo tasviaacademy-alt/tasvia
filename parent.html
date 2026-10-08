@@ -722,23 +722,25 @@ table{overflow:hidden;border-radius:14px}
       var qs=new URLSearchParams(location.search||"");
       var rawHash=String(location.hash||"").replace(/^#/,"");
       var p=String(location.pathname||"");
+      var pathCode=(function(){
+        var m=p.match(/\/(?:parent|parents|student)(?:\/index\.html)?\/([A-Za-z0-9._-]{3,64})\/?$/i);
+        return m?m[1]:"";
+      })();
+      var fallbackPathCode=(function(){
+        var parts=p.split("/").filter(Boolean);
+        for(var j=parts.length-1;j>=0;j--){
+          var v=valid(parts[j]);
+          if(v && !/^(parent|parents|student|index|index\.html)$/i.test(parts[j]))return v;
+        }
+        return "";
+      })();
+      // Always prefer the code explicitly carried by the current parent link.
+      // Only fall back to a saved session when the current URL has no student code.
       var candidates=[
         qs.get("code"),qs.get("student"),qs.get("studentCode"),qs.get("studentId"),qs.get("id"),
-        (function(){try{return localStorage.getItem("tasvia-parent-code")}catch(_){return ""}})(),
+        rawHash,pathCode,fallbackPathCode,
         (function(){try{return sessionStorage.getItem("tasvia-parent-code")}catch(_){return ""}})(),
-        rawHash,
-        (function(){
-          var m=p.match(/\/(?:parent|parents|student)(?:\/index\.html)?\/([A-Za-z0-9._-]{3,64})\/?$/i);
-          return m?m[1]:"";
-        })(),
-        (function(){
-          var parts=p.split("/").filter(Boolean);
-          for(var j=parts.length-1;j>=0;j--){
-            var v=valid(parts[j]);
-            if(v && !/^(parent|parents|student|index|index\.html)$/i.test(parts[j]))return v;
-          }
-          return "";
-        })()
+        (function(){try{return localStorage.getItem("tasvia-parent-code")}catch(_){return ""}})()
       ];
       for(var i=0;i<candidates.length;i++){
         var raw=candidates[i];
@@ -751,6 +753,15 @@ table{overflow:hidden;border-radius:14px}
     }catch(_){}
     return "";
   }
+  // Keep a direct-link student code alive through route rewrites/PWA redirects.
+  // This runs before boot so the current URL always wins over stale storage.
+  try{
+    var initialCode=recoverParentCode();
+    if(initialCode){
+      localStorage.setItem("tasvia-parent-code",initialCode);
+      sessionStorage.setItem("tasvia-parent-code",initialCode);
+    }
+  }catch(_){}
   window.__tasviaBootParent=bootParentPortal;
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",bootParentPortal,{once:true});
   else bootParentPortal();
