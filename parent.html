@@ -698,11 +698,11 @@ document.body.innerHTML=
     if(input) input.value=code||"";
     if(msg) msg.textContent="Opening Parent Portal…";
   }
-  function start(code,pin,fromDirectLink){
+  function start(code,pin,fromDirectLink,silentRefresh){
     code=valid(code);pin=String(pin||"").replace(/\D/g,"").slice(0,4);if(!code)return false;if(!fromDirectLink&&!/^\d{4}$/.test(pin)){var pm=document.getElementById("studentLoginMsg");if(pm)pm.textContent="Enter your 4-digit Parent PIN.";return false;}
     if(window.__tasviaLoginInFlight===code)return true;
     window.__tasviaLoginInFlight=code;
-    showLoading(code);
+    if(!silentRefresh)showLoading(code);
     try{localStorage.setItem("tasvia-parent-code",code);sessionStorage.setItem("tasvia-parent-code",code)}catch(_){}
     var attempt=0;
     function load(){
@@ -733,6 +733,21 @@ document.body.innerHTML=
     return true;
   }
   window.__tasviaRescueStart=start;
+  // Refresh an already-open parent dashboard every 30 seconds.
+  if(!window.__tasviaParentRefreshTimer){
+    window.__tasviaParentRefreshTimer=setInterval(function(){
+      try{
+        if(!window.__tasviaParentDashboardActive)return;
+        var code=valid(window.__tasviaAutoCode||"");
+        if(!code)return;
+        read(code).then(function(fresh){
+          if(!fresh)return;
+          var current=window.__tasviaParentData||{};
+          if(Number(fresh.updated||0)>Number(current.updated||0))render(fresh,code);
+        }).catch(function(){});
+      }catch(_){}
+    },30000);
+  }
   function bootParentPortal(){
     try{
       if(window.__tasviaParentDashboardActive) return;
@@ -749,15 +764,11 @@ document.body.innerHTML=
       }
       if(code){
         var cached=loadParentSession(code);
-        if(cached){
-          window.__tasviaAutoCode=code;
-          render(cached,code);
-          return;
-        }
-        if(window.__tasviaAutoCode!==code){
-          window.__tasviaAutoCode=code;
-          start(code,"",true);
-        }
+        // Cached data is only a fast first paint. Always refresh the authoritative
+        // parentView record so new staff attendance is not hidden by an old session.
+        if(cached)render(cached,code);
+        window.__tasviaAutoCode=code;
+        start(code,"",true,!!cached);
         try{
           localStorage.setItem("tasvia-parent-code",code);
           sessionStorage.setItem("tasvia-parent-code",code);
