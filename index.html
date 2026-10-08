@@ -1040,9 +1040,24 @@ function buildParentView(s){
 }
 async function syncParentHomeworkForStudent(sid,savedDate,savedEntry){
   try{
-    // The student profile is now the single source of truth for homework.
-    // Save there first; the normal parent-view builder will publish it.
+    // Student profile is the canonical record. Also publish the saved entry
+    // directly to this student's parentView document so Parent Portal does not
+    // depend on a background sync/listener race.
     await saveStudentHomeworkCanonical(sid,savedDate,savedEntry);
+    const st=S.students[sid];
+    const code=String(st&&st.pcode||"").trim().toUpperCase();
+    if(db&&/^ [A-Z0-9]{8,20}$/.test(code)){}
+    if(db&&/^[A-Z0-9]{8,20}$/.test(code)){
+      const rows=homeworkListForStudent(st);
+      await db.doc("parentView/"+code).set({
+        hw:rows,
+        homework:rows,
+        homeworkUpdated:Date.now(),
+        updated:Date.now()
+      },{merge:true});
+      pvCache[code]=null;
+      try{localStorage.removeItem("tasvia-pv")}catch(e){}
+    }
     schedulePV(true);
     return true;
   }catch(e){
