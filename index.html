@@ -1042,7 +1042,7 @@ function buildParentView(s){
     const e=((S.diary[d]||{}).entries||{})[s.id];
     const text=e&&(e.hw||e.homework||e.text||"");
     return text?{d,hw:text,note:e.note||""}:null;
-  }).filter(Boolean).slice(0,10);
+  }).filter(Boolean).slice(0,30);
   return {studentId:s.id,name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,currentFee,pin:String(s.pin||""),
     centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||"",upi:i.upi||DEFAULT_INFO.upi||""}};
 }
