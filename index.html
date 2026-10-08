@@ -1978,7 +1978,11 @@ document.addEventListener("submit",e=>{
     const sid=f.dataset.id,s=S.students[sid];if(!s)return;
     ownIds.add("hw:"+UI.date+sid);const e=(d.hw||"").trim()?{hw:d.hw.trim(),note:(d.note||"").trim()}:null;
     const cur=Object.assign({},(S.diary[UI.date]||{}).entries);if(e)cur[sid]=e;else delete cur[sid];S.diary[UI.date]={date:UI.date,entries:cur};
-    if(db)mergeWrite("diary/"+UI.date,{entries:{[sid]:e}},{date:UI.date});else saveLocal();
+    if(db){
+      mergeWrite("diary/"+UI.date,{entries:{[sid]:e}},{date:UI.date}).then(function(ok){
+        if(ok){schedulePV(true);setTimeout(function(){schedulePV(true)},1800)}
+      });
+    }else saveLocal();
     if(db)schedulePV(true);
     closeSheet();render();if(e)hwSendSheet(sid);else toast("Homework cleared");
   }
