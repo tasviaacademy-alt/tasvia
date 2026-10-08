@@ -944,6 +944,45 @@ function stable(v){if(Array.isArray(v))return "["+v.map(stable).join(",")+"]";if
 function parentURL(code){return "https://apk.tasviaacademy.com/parent.html?code="+encodeURIComponent(code)}
 function newParentPin(){const a=new Uint32Array(1);crypto.getRandomValues(a);return String(1000+(a[0]%9000))}
 function lastMonths(n){const out=[],d=new Date();d.setDate(1);for(let i=0;i<n;i++){out.push(d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"));d.setMonth(d.getMonth()-1)}return out}
+function studentHomeworkMap(s){
+  const m=s&&s.homeworkByDate&&typeof s.homeworkByDate==="object"?s.homeworkByDate:{};
+  return Object.assign({},m);
+}
+function homeworkEntry(s,date){
+  const map=studentHomeworkMap(s),key=String(date||"");
+  if(map[key])return map[key];
+  const e=((S.diary[key]||{}).entries||{})[s&&s.id];
+  return e||{};
+}
+function homeworkListForStudent(s){
+  const map=studentHomeworkMap(s),rows=[],seen=new Set();
+  Object.keys(map).sort().reverse().forEach(d=>{
+    const e=map[d]||{},text=e.hw||e.homework||e.text||"";
+    if(text){rows.push({d,hw:String(text),note:String(e.note||"")});seen.add(d)}
+  });
+  Object.keys(S.diary).sort().reverse().forEach(d=>{
+    if(seen.has(d))return;
+    const e=((S.diary[d]||{}).entries||{})[s.id],text=e&&(e.hw||e.homework||e.text||"");
+    if(text)rows.push({d,hw:String(text),note:String(e.note||"")});
+  });
+  return rows.slice(0,30);
+}
+async function saveStudentHomeworkCanonical(sid,date,entry){
+  if(!db||!sid)return true;
+  const day=String(date||"").trim();
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(day))throw new Error("Invalid homework date");
+  const s=S.students[sid];
+  if(!s)throw new Error("Student not found");
+  const map=studentHomeworkMap(s);
+  if(entry&&String(entry.hw||"").trim())map[day]={hw:String(entry.hw).trim(),note:String(entry.note||"").trim()};
+  else delete map[day];
+  const keys=Object.keys(map).sort().reverse().slice(0,90);
+  const trimmed={};keys.forEach(k=>{trimmed[k]=map[k]});
+  const updated=Date.now();
+  await db.doc("students/"+sid).set({homeworkByDate:trimmed,homeworkUpdated:updated},{merge:true});
+  S.students[sid]=Object.assign({},S.students[sid],{homeworkByDate:trimmed,homeworkUpdated:updated});
+  return true;
+}
 function buildParentView(s){
   const i=info();
   if(!active(s))return {left:true,name:s.name,centre:{name:i.name,phone:i.phone}};
@@ -995,11 +1034,7 @@ function buildParentView(s){
   const pays=allPayments
     .filter(p=>p.m&&months.includes(p.m))
     .sort((a,b)=>String(b.d||"").localeCompare(String(a.d||"")));
-  const hw=Object.keys(S.diary).sort().reverse().map(d=>{
-    const e=((S.diary[d]||{}).entries||{})[s.id];
-    const text=e&&(e.hw||e.homework||e.text||"");
-    return text?{d,hw:text,note:e.note||""}:null;
-  }).filter(Boolean).slice(0,30);
+  const hw=homeworkListForStudent(s);
   return {studentId:s.id,name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,currentFee,pin:String(s.pin||""),
     centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||"",upi:i.upi||DEFAULT_INFO.upi||""}};
 }
@@ -1082,6 +1117,16 @@ async function syncPV(){
     for(const [id,raw] of Object.entries(S.students||{})){
       try{
         const st=Object.assign({},raw||{});
+        if(forceWrite){
+          try{
+            const studentSnap=await db.doc("students/"+id).get();
+            if(studentSnap.exists){
+              const freshStudent=studentSnap.data()||{};
+              Object.assign(st,freshStudent);
+              S.students[id]=Object.assign({},S.students[id]||{},freshStudent);
+            }
+          }catch(e){console.warn("authoritative student refresh",id,e)}
+        }
         let code=String(st.pcode||"").trim().toUpperCase();
         if(!active({id,...st}))continue;
         if(!/^[A-Z0-9]{8,20}$/.test(code)||usedCodes.has(code)){
@@ -1517,7 +1562,7 @@ function studentSheet(id){
   if(!(id in photoCache))getPhoto(id).then(p=>{const el=document.getElementById("av-"+id);if(el&&p){el.innerHTML=avatarHTML(id,s.name);const b=document.getElementById("avb-"+id);if(b)b.textContent="Change photo";const rm=document.getElementById("avr-"+id);if(rm)rm.hidden=false}});
   openSheet(esc(s.name),`<div class="pp"><div class="av" id="av-${id}">${avatarHTML(id,s.name)}</div><div><p class="sub" style="margin:0 0 8px">${clsLabel(s.cls)}${s.batch?" · "+esc(s.batch)+" batch":""} · ${esc(s.board)}${s.joined?" · joined "+nice(s.joined):""}${active(s)?"":" · <b>left the centre</b>"}</p><div class="acts" style="margin:0"><button class="btn sm gold" id="avb-${id}" data-act="photo" data-id="${id}">${photoCache[id]?"Change photo":"Add photo"}</button>${photoCache[id]?`<button class="btn sm ghost" data-act="viewPhoto" data-id="${id}">View photo</button>`:""}<button class="btn sm danger" id="avr-${id}" data-act="delPhoto" data-id="${id}" ${photoCache[id]?"":"hidden"}>Remove</button></div></div></div>
   <div class="card"><dl class="kv"><dt>Student ID</dt><dd><b>${esc(id)}</b></dd><dt>Parent</dt><dd>${esc(s.parent||"–")}</dd><dt>Phone</dt><dd>${s.phone?`<a href="tel:${esc(s.phone)}">${esc(s.phone)}</a>`:"–"}</dd>${isAdmin()?`<dt>Monthly fee</dt><dd>${s.fee?rs(s.fee):"–"}</dd>`:""}<dt>This month</dt><dd>${st.t?`${st.p}/${st.t} days present (${st.pct}%)`:"Not marked yet"}</dd><dt>Overall</dt><dd>${(o=>o.t?`${o.p}/${o.t} days (${o.pct}%)`:"–")(attStats(id,""))}</dd></dl>${s.notes?`<p class="sub" style="margin:10px 0 0">${esc(s.notes)}</p>`:""}</div>
-  <div class="card"><h3>Test results</h3>${tests.length?`<table class="t"><tr><th>Test</th><th>Marks</th><th>Grade</th></tr>${tests.map(t=>{const pc=Math.round(t.marks[id]*100/t.max);return `<tr><td>${esc(t.subject)} – ${esc(t.name)}</td><td>${t.marks[id]}/${t.max}</td><td>${grade(pc)}</td></tr>`}).join("")}</table>`:`<p class="sub" style="margin:0">No marks entered yet.</p>`}</div>
+  <div class="card"><h3>Homework</h3><p class="sub" style="margin:0 0 8px">This is the student’s official homework record. Parent Portal reads from this profile record.</p><div class="notice" style="margin:0 0 10px"><b>\${nice(UI.date)}</b><br>\${homeworkEntry(s,UI.date).hw?esc(homeworkEntry(s,UI.date).hw):"No homework saved for this date."}\${homeworkEntry(s,UI.date).note?`<br><span class="sub">\${esc(homeworkEntry(s,UI.date).note)}</span>`:""}</div><div class="acts"><button class="btn sm gold" data-act="profileHw" data-id="\${id}">\${homeworkEntry(s,UI.date).hw?"Edit homework":"Add homework"}</button></div></div>\n  <div class="card"><h3>Test results</h3>${tests.length?`<table class="t"><tr><th>Test</th><th>Marks</th><th>Grade</th></tr>${tests.map(t=>{const pc=Math.round(t.marks[id]*100/t.max);return `<tr><td>${esc(t.subject)} – ${esc(t.name)}</td><td>${t.marks[id]}/${t.max}</td><td>${grade(pc)}</td></tr>`}).join("")}</table>`:`<p class="sub" style="margin:0">No marks entered yet.</p>`}</div>
   <div class="card"><h3>Send progress to parent</h3>${pays.length?`<table class="t"><tr><th>For</th><th>Amount</th><th></th></tr>${pays.map(p=>`<tr><td>${monthName(p.month)}<br><span class="sub">${nice(p.date)} · ${esc(p.mode)}</span></td><td>${rs(p.amount)}</td><td style="white-space:nowrap"><a class="btn sm ghost" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Receipt</a> <button class="btn sm danger" data-act="delPay" data-id="${id}" data-p="${esc(p.id)}" aria-label="Remove payment">×</button></td></tr>`).join("")}</table>`:`<p class="sub" style="margin:0">No payments recorded.</p>`}<div class="acts" style="margin-top:10px"><button class="btn sm gold" data-act="pay" data-id="${id}">Record payment</button></div></div>
   <div class="card"><h3>Send progress to parent</h3><pre class="msg">${esc(txt)}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,txt)}">Send on WhatsApp</a><button class="btn ghost" data-act="copyReport" data-id="${id}">Copy</button></div><p class="sub" style="margin:10px 0 0">Message language: ${LANGS[langOf(s)]}</p></div>
   ${parentCard(s)}
@@ -1610,7 +1655,7 @@ function expenseForm(){
 }
 function hwForm(sid){
   const s=S.students[sid];if(!s)return;
-  const e=((S.diary[UI.date]||{}).entries||{})[sid]||{};
+  const e=homeworkEntry(s,UI.date);
   openSheet("Homework · "+s.name,`<p class="sub" style="margin-top:-8px">${clsLabel(s.cls)} · ${nice(UI.date)}</p><form id="fHw" data-id="${sid}">
   <label class="f">Homework (one subject per line)<textarea name="hw" rows="6" placeholder="Maths: Exercise 3.2, questions 1–5&#10;English: Learn lesson 4 spellings&#10;Science: Draw the plant cell">${esc(e.hw)}</textarea></label>
   <label class="f">Note for parents (optional)<textarea name="note" rows="2" placeholder="Unit test on Monday. Bring geometry box.">${esc(e.note)}</textarea></label>
@@ -1836,7 +1881,7 @@ document.addEventListener("click",async e=>{
     case "addExpense":expenseForm();break;
     case "delExp":if(confirmDel(b,"Remove?")){const m=UI.moneyMonth;S.expenses[m]={month:m,items:Object.fromEntries(expList(m).filter(x=>x.id!==id).map(x=>[x.id,x]))};
       if(db)mergeWrite("expenses/"+m,{items:{[id]:null}},{month:m});else saveLocal();render();toast("Expense removed")}break;
-    case "hwEdit":hwForm(b.dataset.id);break;
+    case "profileHw":hwForm(b.dataset.id);break;\n    case "hwEdit":hwForm(b.dataset.id);break;
     case "hwSend":hwSendSheet(b.dataset.id);break;
     case "hwLang":hwSendSheet(b.dataset.id,b.dataset.l);break;
     case "copyHw":{const s=S.students[b.dataset.id],e=((S.diary[UI.date]||{}).entries||{})[b.dataset.id];if(s&&e)copy(hwText(s,UI.date,e,b.dataset.l));break;}
@@ -2003,26 +2048,23 @@ document.addEventListener("submit",e=>{
   }
   if(f.id==="fHw"){
     const sid=f.dataset.id,s=S.students[sid];if(!s)return;
-    ownIds.add("hw:"+UI.date+sid);const e=(d.hw||"").trim()?{hw:d.hw.trim(),note:(d.note||"").trim()}:null;
-    const cur=Object.assign({},(S.diary[UI.date]||{}).entries);if(e)cur[sid]=e;else delete cur[sid];S.diary[UI.date]={date:UI.date,entries:cur};
+    ownIds.add("hw:"+UI.date+sid);
+    const e=(d.hw||"").trim()?{hw:d.hw.trim(),note:(d.note||"").trim()}:null;
+    const map=studentHomeworkMap(s);
+    if(e)map[UI.date]=e;else delete map[UI.date];
+    S.students[sid]=Object.assign({},s,{homeworkByDate:map});
+    const cur=Object.assign({},(S.diary[UI.date]||{}).entries);if(e)cur[sid]=e;else delete cur[sid];
+    S.diary[UI.date]={date:UI.date,entries:cur};
     if(db){
-      mergeWrite("diary/"+UI.date,{entries:{[sid]:e}},{date:UI.date}).then(function(ok){
-        if(ok){
-          syncParentHomeworkForStudent(sid,UI.date,e).then(function(done){
-            if(!done)toast("Homework saved, but parent portal sync failed");
-          });
-          schedulePV(true);
-          setTimeout(function(){
-            syncParentHomeworkForStudent(sid,UI.date,e).then(function(done){
-              if(!done)console.warn("Delayed parent homework sync failed",sid);
-            });
-            schedulePV(true);
-          },1800);
-        }
+      mergeWrite("diary/"+UI.date,{entries:{[sid]:e}},{date:UI.date}).then(async function(ok){
+        if(!ok)return;
+        const saved=await syncParentHomeworkForStudent(sid,UI.date,e);
+        if(!saved)toast("Homework saved, but student profile save failed");
+        else toast(e?"Homework saved to student profile and Parent Portal":"Homework removed from student profile");
+        render();
       });
-    }else saveLocal();
-    if(db)schedulePV(true);
-    closeSheet();render();if(e)hwSendSheet(sid);else toast("Homework cleared");
+    }else{saveLocal();toast(e?"Homework saved":"Homework cleared");}
+    closeSheet();render();if(e)hwSendSheet(sid);
   }
   if(f.id==="fInfo"){S.info=Object.assign(info(),d);put("info/centre",S.info);if(db)schedulePV(true);closeSheet();render();toast("Centre info saved")}
 });
