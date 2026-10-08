@@ -1125,8 +1125,19 @@ async function syncPV(){
           await db.doc("students/"+id).set({pcode:code},{merge:true});
         }
         usedCodes.add(code);
-        let pin=String(st.pin||"").replace(/\D/g,"").slice(0,4);
-        if(!/^\d{4}$/.test(pin)){pin=newParentPin();S.students[id]=Object.assign({},S.students[id]||st,{pin});await db.doc("students/"+id).set({pin},{merge:true});st.pin=pin}else st.pin=pin;
+        // Parent PIN is canonical on the student profile. Accept legacy field
+        // names too, but never silently replace a valid existing 4-digit PIN.
+        let pinSource=st.pin!=null?st.pin:(st.parentPin!=null?st.parentPin:(st.pinCode!=null?st.pinCode:""));
+        let pin=String(pinSource).trim().replace(/\D/g,"").slice(-4);
+        if(!/^\d{4}$/.test(pin)){
+          pin=newParentPin();
+          S.students[id]=Object.assign({},st,{pin});
+          await db.doc("students/"+id).set({pin},{merge:true});
+          st.pin=pin;
+        }else{
+          st.pin=pin;
+          if(String(st.pin||"")!==String(pinSource||"")) await db.doc("students/"+id).set({pin},{merge:true});
+        }
         // Re-read the authoritative fee document before rebuilding the parent view.
         // This prevents a stale local listener/cache from overwriting a student's freshly paid status.
         try{
@@ -1139,7 +1150,7 @@ async function syncPV(){
         }catch(err){
           console.warn("parent view build failed",id,err);
           const i=info();
-          v={studentId:id,name:st.name||"Student",cls:st.cls||"",board:st.board||"",lang:langOf(st),year:acYear(today()).label,att:{},yr:{p:0,a:0},abs:[],tests:[],fees:[],pays:[],hw:[],centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||"",upi:i.upi||DEFAULT_INFO.upi||""}};
+          v={studentId:id,name:st.name||"Student",cls:st.cls||"",board:st.board||"",lang:langOf(st),year:acYear(today()).label,att:{},yr:{p:0,a:0},abs:[],tests:[],fees:[],pays:[],hw:[],currentFee:null,pin:String(st.pin||pin||""),centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||"",upi:i.upi||DEFAULT_INFO.upi||""}};
         }
         const j=stable(v),hj=hash(j);
         let exists=false;
