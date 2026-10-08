@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-08-v75">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-08-v76">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -649,6 +649,12 @@ document.body.innerHTML=
     }
     if(title==="Attendance"){
       var ad=window.__tasviaParentData||{},att=ad.att&&typeof ad.att==="object"?ad.att:{},months=Object.keys(att).filter(function(k){return /^\d{4}-\d{2}$/.test(k)}).sort().reverse(),cm=months[0]||"",cur=att[cm]&&typeof att[cm]==="object"?att[cm]:{},cp=Number(cur.p)||0,ca=Number(cur.a)||0,ct=cp+ca,cpct=ct?Math.round(cp*100/ct):0,yr=ad.yr&&typeof ad.yr==="object"?ad.yr:{},yp=Number(yr.p)||0,ya=Number(yr.a)||0,yt=yp+ya,ypct=yt?Math.round(yp*100/yt):0;
+      var absent=Array.isArray(ad.abs)?ad.abs.filter(function(x){return /^\d{4}-\d{2}-\d{2}$/.test(String(x));}).sort().reverse():[];
+      var absentList=absent.map(function(x){
+        var dt=new Date(x+"T00:00:00");
+        var label=isNaN(dt.getTime())?x:dt.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
+        return '<div style="display:flex;align-items:center;gap:10px;padding:11px 4px;border-bottom:1px solid #F0E1E1"><span>📅</span><b style="color:#A33A3A">'+esc2(label)+'</b></div>';
+      }).join("");
       liveHtml='<div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">'+
         '<div style="background:#fff;border:1px solid #DDE3EA;border-radius:18px;padding:18px 16px;box-shadow:0 5px 16px rgba(16,40,88,.07)">'+
           '<div style="font-size:21px;line-height:1.35;color:#182136;margin-bottom:12px">Academic year: <b>'+yp+' present, '+ya+' absent ('+ypct+'% overall)</b></div>'+
@@ -656,6 +662,10 @@ document.body.innerHTML=
             '<div style="min-height:118px;border-radius:18px;background:#2B426F;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px"><strong style="font-size:36px;line-height:1;color:#07152F">'+cp+'</strong><span style="font-size:16px;margin-top:10px;color:#fff">Present</span></div>'+
             '<div style="min-height:118px;border-radius:18px;background:#2B426F;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px"><strong style="font-size:36px;line-height:1;color:#07152F">'+ca+'</strong><span style="font-size:16px;margin-top:10px;color:#fff">Absent</span></div>'+
             '<div style="min-height:118px;border-radius:18px;background:#2B426F;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px"><strong style="font-size:36px;line-height:1;color:#07152F">'+cpct+'%</strong><span style="font-size:16px;margin-top:10px;color:#fff">'+esc2(cm||"Current Month")+'</span></div>'+
+          '</div>'+
+          '<div style="margin-top:16px;padding:14px;border:1px solid #F0D7D7;border-radius:16px;background:#FFF8F8">'+
+            '<div style="font-size:15px;font-weight:800;color:#A33A3A;margin-bottom:6px">Absent Dates ('+absent.length+')</div>'+
+            (absentList||'<div style="padding:10px 0;color:#667085">No absent dates recorded.</div>')+
           '</div>'+
         '</div>'+
       '</div>';
