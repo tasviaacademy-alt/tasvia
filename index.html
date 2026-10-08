@@ -1881,7 +1881,8 @@ document.addEventListener("click",async e=>{
     case "addExpense":expenseForm();break;
     case "delExp":if(confirmDel(b,"Remove?")){const m=UI.moneyMonth;S.expenses[m]={month:m,items:Object.fromEntries(expList(m).filter(x=>x.id!==id).map(x=>[x.id,x]))};
       if(db)mergeWrite("expenses/"+m,{items:{[id]:null}},{month:m});else saveLocal();render();toast("Expense removed")}break;
-    case "profileHw":hwForm(b.dataset.id);break;\n    case "hwEdit":hwForm(b.dataset.id);break;
+    case "profileHw":hwForm(b.dataset.id);break;
+    case "hwEdit":hwForm(b.dataset.id);break;
     case "hwSend":hwSendSheet(b.dataset.id);break;
     case "hwLang":hwSendSheet(b.dataset.id,b.dataset.l);break;
     case "copyHw":{const s=S.students[b.dataset.id],e=((S.diary[UI.date]||{}).entries||{})[b.dataset.id];if(s&&e)copy(hwText(s,UI.date,e,b.dataset.l));break;}
