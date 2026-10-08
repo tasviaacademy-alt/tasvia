@@ -885,7 +885,7 @@ window.__tasviaReloadLearning=function(){var b=document.getElementById("tasviaSe
 function renderGK(body,data){var qs=Array.isArray(data.questions)?data.questions:[],h='<div class="learning-meta"><span class="learning-pill">DAILY GK</span><span>'+learningEsc(data.date||"")+'</span></div><div class="learning-grid">';qs.slice(0,10).forEach(function(x,i){h+='<div class="learning-card"><h4>Q'+(i+1)+'. '+learningEsc(x.q)+'</h4><button class="practice-btn" type="button" data-gk-answer="'+i+'">Show Answer</button><div class="learning-answer" id="gk-answer-'+i+'" hidden>'+learningEsc(x.a)+'</div></div>'});h+='</div>';body.innerHTML=h;body.querySelectorAll("[data-gk-answer]").forEach(function(btn){btn.addEventListener("click",function(){var a=document.getElementById("gk-answer-"+btn.getAttribute("data-gk-answer"));if(a){a.hidden=!a.hidden;btn.textContent=a.hidden?"Show Answer":"Hide Answer"}})})}
 function learningUrl(v){
   var u=String(v||"").trim();
-  return /^https?:\\/\\//i.test(u)?u:"";
+  return /^https?:\/\//i.test(u)?u:"";
 }
 function renderCurrent(body,data){
   var items=Array.isArray(data.items)?data.items:[],quiz=Array.isArray(data.quiz)?data.quiz:[];
