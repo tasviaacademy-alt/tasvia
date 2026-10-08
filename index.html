@@ -604,7 +604,7 @@ function subscribe(){
       setSync("Connection lost · "+name);
     }
   };
-  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;scheduleRender();if(key==="students"||key==="fees"||key==="tests"||key==="att"||key==="diary"){schedulePV(true);if(key==="diary")migrateAssignedHomeworkToParentViews() }},e=>onErr(name,e)));
+  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;scheduleRender();if(key==="students"||key==="fees"||key==="tests"||key==="att"||key==="diary"){schedulePV(true)}},e=>onErr(name,e)));
   const admin=window.currentUser&&window.currentUser.role==="admin";
   coll("students","students");
   // Legacy student-ID migration is intentionally NOT automatic. It is a maintenance operation and must never run in the background while staff are recording payments.
@@ -2054,10 +2054,31 @@ document.addEventListener("submit",e=>{
     if(db){
       saveStudentHomeworkCanonical(sid,UI.date,e).then(async function(){
         const diaryOK=await mergeWrite("diary/"+UI.date,{entries:{[sid]:e}},{date:UI.date});
-        const saved=await syncParentHomeworkForStudent(sid,UI.date,e);
-        if(!saved)toast("Homework saved locally but Parent Portal sync failed");
-        else if(!diaryOK)toast(e?"Homework saved to student profile and Parent Portal; diary mirror unavailable":"Homework removed from student profile and Parent Portal; diary mirror unavailable");
-        else toast(e?"Homework saved to student profile and Parent Portal":"Homework removed from student profile");
+        let parentOK=true;
+        try{
+          const fresh=await db.doc("students/"+sid).get();
+          if(!fresh.exists)throw new Error("Student profile not found");
+          const st=Object.assign({id:sid},fresh.data()||{});
+          S.students[sid]=Object.assign({},S.students[sid]||{},st);
+          const code=String(st.pcode||"").trim().toUpperCase();
+          if(!/^[A-Z0-9]{8,20}$/.test(code))throw new Error("Parent link code missing");
+          const rows=homeworkListForStudent(st);
+          await db.doc("parentView/"+code).set({
+            hw:rows,
+            homework:rows,
+            homeworkUpdated:Date.now(),
+            updated:Date.now()
+          },{merge:true});
+          pvCache[code]=null;
+          try{localStorage.removeItem("tasvia-pv")}catch(_){}
+        }catch(err){
+          parentOK=false;
+          console.error("TASVIA direct homework publication:",err);
+        }
+        schedulePV(true);
+        if(!parentOK)toast("Homework saved, but Parent Portal sync failed");
+        else if(!diaryOK)toast(e?"Homework saved and Parent Portal updated; diary mirror unavailable":"Homework removed and Parent Portal updated; diary mirror unavailable");
+        else toast(e?"Homework saved and Parent Portal updated":"Homework removed from student profile");
         render();
       }).catch(function(err){
         console.error("TASVIA canonical homework save:",err);
