@@ -1,9 +1,61 @@
 {
   "rewrites": [
-    {"source": "/parent", "destination": "/parent.html"},
-    {"source": "/parent/", "destination": "/parent.html"},
-    {"source": "/parent/index.html", "destination": "/parent.html"},
-    {"source": "/parent/index.html/:code", "destination": "/parent.html?code=:code"},
-    {"source": "/parent/:code", "destination": "/parent.html?code=:code"}
+    {
+      "source": "/parent",
+      "destination": "/parent.html"
+    },
+    {
+      "source": "/parent/",
+      "destination": "/parent.html"
+    },
+    {
+      "source": "/parent/index.html",
+      "destination": "/parent.html"
+    },
+    {
+      "source": "/parent/index.html/:code",
+      "destination": "/parent.html?code=:code"
+    },
+    {
+      "source": "/parent/:code",
+      "destination": "/parent.html?code=:code"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/parent.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        },
+        {
+          "key": "Expires",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "source": "/parent",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/parent/:code",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"
+        }
+      ]
+    }
   ]
 }
