@@ -421,7 +421,25 @@ table{overflow:hidden;border-radius:14px}
   }
   function money(v){return "₹"+Number(v||0).toLocaleString("en-IN");}
   function card(title,body){return '<section class="rescue-card"><h2>'+title+'</h2>'+body+'</section>';}
+  function saveParentSession(d,code){
+    try{
+      var safe={code:valid(code),data:d,ts:Date.now()};
+      sessionStorage.setItem("tasvia-parent-session",JSON.stringify(safe));
+    }catch(_){ }
+  }
+  function loadParentSession(code){
+    try{
+      var raw=sessionStorage.getItem("tasvia-parent-session");
+      if(!raw)return null;
+      var x=JSON.parse(raw);
+      if(!x||valid(x.code)!==valid(code)||!x.data||typeof x.data!=="object")return null;
+      if(x.ts&&Date.now()-Number(x.ts)>24*60*60*1000)return null;
+      return x.data;
+    }catch(_){return null}
+  }
   function render(d,code){
+    window.__tasviaParentDashboardActive=true;
+    saveParentSession(d,code);
     var welcome=document.getElementById("welcomeBackdrop");
     if(welcome) welcome.classList.add("hide");
     window.__tasviaParentData=Object.assign({},d,{hw:hw});
@@ -691,6 +709,7 @@ table{overflow:hidden;border-radius:14px}
   window.__tasviaRescueStart=start;
   function bootParentPortal(){
     try{
+      if(window.__tasviaParentDashboardActive) return;
       var code=recoverParentCode();
       var form=document.getElementById("studentLoginForm");
       if(form&&!form.__tasviaBound){
@@ -703,6 +722,12 @@ table{overflow:hidden;border-radius:14px}
         });
       }
       if(code){
+        var cached=loadParentSession(code);
+        if(cached){
+          window.__tasviaAutoCode=code;
+          render(cached,code);
+          return;
+        }
         if(window.__tasviaAutoCode!==code){
           window.__tasviaAutoCode=code;
           start(code,"",true);
