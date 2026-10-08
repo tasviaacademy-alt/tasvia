@@ -770,6 +770,17 @@ table{overflow:hidden;border-radius:14px}
       sessionStorage.setItem("tasvia-parent-code",initialCode);
     }
   }catch(_){}
+  // APK DIRECT-LINK RESCUE: capture hash before any delayed PWA/browser boot sequence.
+  if(location.hostname==="apk.tasviaacademy.com"){
+    try{
+      var apkRawHash=String(location.hash||"").replace(/^#/,"").trim();
+      var apkDirectCode=valid(apkRawHash);
+      if(apkDirectCode){
+        window.__tasviaPendingParentCode=apkDirectCode;
+        try{history.replaceState(null,"",location.pathname+"?code="+encodeURIComponent(apkDirectCode));}catch(_){}
+      }
+    }catch(_){ }
+  }
   window.__tasviaBootParent=bootParentPortal;
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",bootParentPortal,{once:true});
   else bootParentPortal();
