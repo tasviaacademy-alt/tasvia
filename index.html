@@ -1046,7 +1046,6 @@ async function syncParentHomeworkForStudent(sid,savedDate,savedEntry){
     await saveStudentHomeworkCanonical(sid,savedDate,savedEntry);
     const st=S.students[sid];
     const code=String(st&&st.pcode||"").trim().toUpperCase();
-    if(db&&/^ [A-Z0-9]{8,20}$/.test(code)){}
     if(db&&/^[A-Z0-9]{8,20}$/.test(code)){
       const rows=homeworkListForStudent(st);
       await db.doc("parentView/"+code).set({
@@ -1230,7 +1229,7 @@ function vToday(){
     : `<div class="hd"><div><h2>${title}</h2><div class="sub">${new Date(UI.date+"T00:00").toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long"})}</div></div><input type="date" id="attDate" value="${UI.date}" max="${today()}" aria-label="Date"></div>`;
   const list=byBatch(studentsOf(UI.cls)),marks=getMarks(UI.date);
   const p=list.filter(s=>marks[s.id]==="P").length,a=list.filter(s=>marks[s.id]==="A").length,nm=Math.max(list.length-p-a,0);
-  const ent=(S.diary[UI.date]||{}).entries||{},hwDone=list.filter(s=>ent[s.id]&&ent[s.id].hw).length;
+  const ent=Object.fromEntries(list.map(s=>[s.id,homeworkEntry(s,UI.date)])),hwDone=list.filter(s=>ent[s.id]&&ent[s.id].hw).length;
   const admin=isAdmin(),m=UI.date.slice(0,7);
   const feeDue=admin?list.filter(s=>s.fee>0&&enrolledIn(s,m)&&["due","part"].includes(feeStatus(s,m).k)).length:0;
   const testCount=Object.values(S.tests).filter(t=>t.date&&t.date.slice(0,7)===m).length;
@@ -1287,7 +1286,8 @@ function vTeacherAtt(){
 function vHomework(){
   const list=studentsOf(UI.cls);
   if(!list.length)return noStudents();
-  const ent=(S.diary[UI.date]||{}).entries||{};
+  // Staff Homework uses the same canonical student-profile record as Parent Portal.
+  const ent=Object.fromEntries(list.map(s=>[s.id,homeworkEntry(s,UI.date)]));
   const done=list.filter(s=>ent[s.id]&&ent[s.id].hw).length;
   let h=`<div class="hd"><div><h2>Homework</h2><div class="sub">${nice(UI.date)}</div></div><input type="date" id="attDate" value="${UI.date}" aria-label="Homework date"></div>`;
   h+=classChips("cls");
@@ -2025,12 +2025,16 @@ document.addEventListener("submit",e=>{
     const cur=Object.assign({},(S.diary[UI.date]||{}).entries);if(e)cur[sid]=e;else delete cur[sid];
     S.diary[UI.date]={date:UI.date,entries:cur};
     if(db){
-      mergeWrite("diary/"+UI.date,{entries:{[sid]:e}},{date:UI.date}).then(async function(ok){
-        if(!ok)return;
+      saveStudentHomeworkCanonical(sid,UI.date,e).then(async function(){
+        const diaryOK=await mergeWrite("diary/"+UI.date,{entries:{[sid]:e}},{date:UI.date});
         const saved=await syncParentHomeworkForStudent(sid,UI.date,e);
-        if(!saved)toast("Homework saved, but student profile save failed");
+        if(!saved)toast("Homework saved locally but Parent Portal sync failed");
+        else if(!diaryOK)toast(e?"Homework saved to student profile and Parent Portal; diary mirror unavailable":"Homework removed from student profile and Parent Portal; diary mirror unavailable");
         else toast(e?"Homework saved to student profile and Parent Portal":"Homework removed from student profile");
         render();
+      }).catch(function(err){
+        console.error("TASVIA canonical homework save:",err);
+        toast("Homework could not be saved to the student profile");
       });
     }else{saveLocal();toast(e?"Homework saved":"Homework cleared");}
     closeSheet();render();if(e)hwSendSheet(sid);
