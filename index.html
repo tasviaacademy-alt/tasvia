@@ -775,10 +775,18 @@ function currentFeeCycle(s){
   }
   let paid=0;
   payList(s.id).forEach(p=>{
+    const amount=Number(p.amount)||0;
+    const explicitMonth=String(p.month||"").trim();
+    const cycleMonth=cycleStart.toISOString().slice(0,7);
+    // Staff's selected "Fee for month" is authoritative. A dated fallback is
+    // used only for legacy records that have no month field.
+    if(explicitMonth){
+      if(paymentMonth(p)===cycleMonth)paid+=amount;
+      return;
+    }
     const ds=String(p.date||"");
     const d=/^\d{4}-\d{2}-\d{2}$/.test(ds)?new Date(ds+"T00:00:00"):null;
-    if(d&&d>=cycleStart&&d<cycleEnd)paid+=Number(p.amount)||0;
-    else if(!d&&paymentMonth(p)===cycleStart.toISOString().slice(0,7))paid+=Number(p.amount)||0;
+    if(d&&d>=cycleStart&&d<cycleEnd)paid+=amount;
   });
   paid=Math.min(fee,Math.max(0,paid));
   const cycleStartText=cycleStart.getFullYear()+"-"+String(cycleStart.getMonth()+1).padStart(2,"0")+"-"+String(cycleStart.getDate()).padStart(2,"0");
@@ -993,17 +1001,23 @@ function buildParentView(s){
     const next=new Date(start.getFullYear(),start.getMonth()+1,1);
     let total=0;
     allPayments.forEach(p=>{
-      const explicit=p.m===month;
+      // The staff-selected "Fee for month" is authoritative. Only fall back
+      // to the payment date when an old payment has no month field.
+      if(p.m){
+        if(p.m===month)total+=p.a;
+        return;
+      }
       const d=/^\d{4}-\d{2}-\d{2}$/.test(p.d)?new Date(p.d+"T00:00:00"):null;
-      const dated=!!d && d>=start && d<next;
-      if(explicit||dated)total+=p.a;
+      if(d&&d>=start&&d<next)total+=p.a;
     });
     return total;
   };
   const currentFee=currentFeeCycle(s);
   const fees=s.fee?months.filter(m=>enrolledIn(s,m)).map(m=>{
     const fs=feeStatus(s,m),fee=+s.fee||0;
-    const paid=Math.min(fee,Math.max(Number(fs.paid)||0,feePeriodPaid(m)));
+    // Parent fee history must mirror the staff-selected fee month exactly.
+    // Never let a payment dated in one month silently pay a different month.
+    const paid=Math.min(fee,Math.max(0,Number(feePeriodPaid(m))||0));
     const status=paid>=fee?"paid":fs.k;
     return {m,fee,paid,dueDate:fs.dueDate,status};
   }):[];
