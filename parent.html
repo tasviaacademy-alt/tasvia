@@ -467,7 +467,7 @@ table{overflow:hidden;border-radius:14px}
     saveParentSession(d,code);
     var welcome=document.getElementById("welcomeBackdrop");
     if(welcome) welcome.classList.add("hide");
-    window.__tasviaParentData=Object.assign({},d,{hw:hw});
+    window.__tasviaParentData=Object.assign({},d,{hw:hw,homework:hw});
     window.__tasviaSectionEsc=esc;
     var name=String(d.name||"TASVIA Student");
     var cls=String(d.cls||"");
@@ -492,6 +492,10 @@ table{overflow:hidden;border-radius:14px}
     var hw=[];
     if(Array.isArray(d.hw)) hw=d.hw;
     else if(d.hw&&typeof d.hw==="object") Object.keys(d.hw).forEach(function(k){var x=d.hw[k];if(x&&typeof x==="object")hw.push(Object.assign({d:k},x));});
+    if(!hw.length){
+      var legacyHw=Array.isArray(d.homework)?d.homework:(d.homework&&typeof d.homework==="object"?Object.keys(d.homework).map(function(k){var x=d.homework[k];return x&&typeof x==="object"?Object.assign({d:k},x):null}).filter(Boolean):[]);
+      hw=legacyHw;
+    }
     hw=hw.map(function(x){return {d:x&&x.d||x&&x.date||x&&x.day||"",hw:x&&x.hw||x&&x.homework||x&&x.text||"",note:x&&x.note||""};}).filter(function(x){return x.hw;});
     var centre=d.centre&&typeof d.centre==='object'?d.centre:{};
     var noticeText=String(centre.notice||'').trim();
