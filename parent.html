@@ -64,7 +64,7 @@ td.r,th.r{text-align:right;white-space:nowrap}
 .btn{display:inline-block;text-decoration:none;border-radius:12px;padding:10px 16px;font-weight:600;background:var(--board);color:var(--chalk)}
 .btn.gold{background:var(--gold);color:#1a1405}.upi-apps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;margin-top:10px}.upi-app{display:block;text-align:center;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:9px 5px;background:var(--card);color:var(--ink);font-weight:600;font-size:.86rem}.upi-app:active{transform:scale(.98)}
 .center{text-align:center;padding:60px 20px;color:var(--muted)}
-.foot{text-align:center;color:var(--muted);font-size:.8rem;margin-top:18px}
+.foot{text-align:center;color:var(--muted);font-size:.8rem;margin-top:18px}.parent-footer-note{margin:18px 0 0;padding:13px 14px;border:1px solid #D8E0EB;border-radius:14px;background:#F7F9FC;color:#4B5870;text-align:center;font-size:13px;line-height:1.5}.parent-footer-note b{display:block;color:#102858;margin-bottom:4px}.parent-footer-updated{margin-top:7px;color:#7A8493;font-size:12px}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
 .chips span{background:var(--chip);border-radius:999px;padding:3px 10px;font-size:.88rem}
 
@@ -495,7 +495,7 @@ table{overflow:hidden;border-radius:14px}
     hw=hw.map(function(x){return {d:x&&x.d||x&&x.date||x&&x.day||"",hw:x&&x.hw||x&&x.homework||x&&x.text||"",note:x&&x.note||""};}).filter(function(x){return x.hw;});
     var centre=d.centre&&typeof d.centre==='object'?d.centre:{};
     var noticeText=String(centre.notice||'').trim();
-    var nowLocal=new Date();var current=nowLocal.getFullYear()+"-"+String(nowLocal.getMonth()+1).padStart(2,"0");
+    var nowLocal=new Date();var current=nowLocal.getFullYear()+"-"+String(nowLocal.getMonth()+1).padStart(2,"0");var parentUpdated=Number(d.updated)||Date.now();var parentUpdatedText=new Date(parentUpdated).toLocaleString("en-IN",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"});
     var currentFee=d.currentFee&&typeof d.currentFee==="object"?d.currentFee:null;
     var fee=null;
     for(var fi=0;fi<fees.length;fi++){
@@ -606,6 +606,7 @@ document.body.innerHTML=
       '<button type="button" class="fee-popup-close" id="feeDueClose">Continue to Parent Portal</button>'+
       '</div></div>'+
 
+      '<div class="parent-footer-note"><b>📌 Save this link to your Home Screen</b><span>Keep the original Parent Portal link saved for quick access.</span><div class="parent-footer-updated">Last updated: '+esc(parentUpdatedText)+'</div></div>'+
       '</div></main>';
 
     if(due>0 && currentFee && currentFee.status!=="paid"){
