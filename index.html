@@ -1040,12 +1040,13 @@ async function syncPV(){
         }
         const j=stable(v),hj=hash(j);
         let exists=false;
+        let oldParent=null;
         try{
           const snap=await db.doc("parentView/"+code).get();
-          const old=snap.exists?snap.data():null;
-          exists=!!(old&&(!old.studentId||old.studentId===id));
+          oldParent=snap.exists?snap.data():null;
+          exists=!!(oldParent&&(!oldParent.studentId||oldParent.studentId===id));
         }catch(e){console.warn("parent record check",code,e)}
-        const codeNeedsWrite=forceWrite||!exists||pvCache[code]!==hj||Number(old&&old.parentSchemaVersion||0)<2;
+        const codeNeedsWrite=forceWrite||!exists||pvCache[code]!==hj||Number(oldParent&&oldParent.parentSchemaVersion||0)<2;
         if(codeNeedsWrite){
           // Parent view must be rebuilt from the complete authoritative staff data.
           // Previously only fee fields were rewritten here, leaving attendance and
