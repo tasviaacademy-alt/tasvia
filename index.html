@@ -604,7 +604,7 @@ function subscribe(){
       setSync("Connection lost · "+name);
     }
   };
-  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;scheduleRender();if(key==="students"||key==="fees"||key==="tests"||key==="att"||key==="diary")schedulePV(true)},e=>onErr(name,e)));
+  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;scheduleRender();if(key==="students"||key==="fees"||key==="tests"||key==="att"||key==="diary"){schedulePV(true);if(key==="diary")migrateAssignedHomeworkToParentViews() }},e=>onErr(name,e)));
   const admin=window.currentUser&&window.currentUser.role==="admin";
   coll("students","students");
   // Legacy student-ID migration is intentionally NOT automatic. It is a maintenance operation and must never run in the background while staff are recording payments.
@@ -1062,6 +1062,26 @@ async function syncParentHomeworkForStudent(sid,savedDate,savedEntry){
   }catch(e){
     console.warn("canonical parent homework save failed",sid,e);
     return false;
+  }
+}
+async function migrateAssignedHomeworkToParentViews(){
+  if(!db||!pvReady)return;
+  try{
+    const entries=Object.entries(S.students||{}).filter(([,st])=>active(st)&&st&&st.pcode);
+    for(const [id,raw] of entries){
+      const st=Object.assign({id},raw||{});
+      const code=String(st.pcode||"").trim().toUpperCase();
+      if(!/^[A-Z0-9]{8,20}$/.test(code))continue;
+      const rows=homeworkListForStudent(st);
+      await db.doc("parentView/"+code).set({
+        hw:rows,
+        homework:rows,
+        homeworkUpdated:Date.now(),
+        updated:Date.now()
+      },{merge:true});
+    }
+  }catch(e){
+    console.warn("TASVIA homework migration to parent views:",e);
   }
 }
 function schedulePV(force=false){if(force)pvForce=true;clearTimeout(pvT);pvT=setTimeout(syncPV,600)}
