@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-08-v80">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-08-v81">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -738,7 +738,18 @@ document.body.innerHTML=
       attempt++;
       read(code).then(function(d){
         if(!d) throw new Error("Student record not found");
-        if(!fromDirectLink&&String(d.pin||"")!==pin) throw new Error("Invalid PIN");
+        if(!fromDirectLink){
+          // Parent PINs are stored as strings, but older parentView records may
+          // contain a number or use the legacy parentPin field. Normalize both
+          // sides before comparing so a valid 4-digit PIN is never rejected
+          // because of Firestore value type/legacy field differences.
+          var storedPin=String(
+            d.pin!=null?d.pin:
+            (d.parentPin!=null?d.parentPin:"")
+          ).replace(/\D/g,"").slice(-4);
+          var enteredPin=String(pin||"").replace(/\D/g,"").slice(-4);
+          if(!/^\d{4}$/.test(storedPin)||storedPin!==enteredPin) throw new Error("Invalid PIN");
+        }
         render(d,code);
         window.__tasviaLoginInFlight="";
         try{if(location.hostname==="apk.tasviaacademy.com"){history.replaceState(null,"",location.pathname+"?code="+encodeURIComponent(code));}}catch(_){}
