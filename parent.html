@@ -397,7 +397,7 @@ table{overflow:hidden;border-radius:14px}
   }
   function read(code){
     var controller=window.AbortController?new AbortController():null;
-    var timer=controller?setTimeout(function(){try{controller.abort()}catch(_){}},10000):null;
+    var timer=controller?setTimeout(function(){try{controller.abort()}catch(_){}},15000):null;
     return fetch(FIRESTORE_ROOT+encodeURIComponent(code),{
       cache:"no-store",mode:"cors",credentials:"omit",
       signal:controller?controller.signal:undefined
@@ -671,8 +671,8 @@ table{overflow:hidden;border-radius:14px}
         try{if(location.hostname==="apk.tasviaacademy.com"){history.replaceState(null,"",location.pathname+"?code="+encodeURIComponent(code));}}catch(_){}
       }).catch(function(e){
         console.warn("TASVIA parent login attempt "+attempt,e);
-        if(attempt<3 && navigator.onLine!==false){
-          setTimeout(load,Math.min(1200*attempt,3000));
+        if(attempt<4 && navigator.onLine!==false){
+          setTimeout(load,Math.min(1500*attempt,4500));
           return;
         }
         window.__tasviaLoginInFlight="";
@@ -681,7 +681,7 @@ table{overflow:hidden;border-radius:14px}
           var m=String(e&&e.message||"");
           if(m==="Invalid PIN") msg.textContent="Invalid Parent PIN.";
           else if(m==="Student record not found") msg.textContent="Student record not found. Please use the original parent link.";
-          else msg.textContent=m||"Unable to open the Parent Dashboard. Please try the same parent link again.";
+          else if(/aborted|timeout/i.test(m)) msg.textContent="Connection is taking too long. Please keep the APK open and try the parent link again."; else msg.textContent=m||"Unable to open the Parent Dashboard. Please try the same parent link again.";
         }
       });
     }
