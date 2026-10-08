@@ -543,7 +543,8 @@ table{overflow:hidden;border-radius:14px}
       if(vals.length)testAvg=Math.round(vals.reduce(function(s,x){return s+(x.m/x.x)*100;},0)/vals.length)+"%";
     }
     document.title=name+" - TASVIA Academy";
-    function updateParentClock(){var el=document.getElementById("tasviaLiveDateTime");if(!el)return;var now=new Date();try{el.textContent=new Intl.DateTimeFormat("en-IN",{timeZone:"Asia/Kolkata",weekday:"short",day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true}).format(now)+" IST";}catch(_){el.textContent=now.toLocaleString("en-IN")+" IST";}}\ndocument.body.innerHTML=
+    function updateParentClock(){var el=document.getElementById("tasviaLiveDateTime");if(!el)return;var now=new Date();try{el.textContent=new Intl.DateTimeFormat("en-IN",{timeZone:"Asia/Kolkata",weekday:"short",day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true}).format(now)+" IST";}catch(_){el.textContent=now.toLocaleString("en-IN")+" IST";}}
+document.body.innerHTML=
       '<style>'+
       'body{margin:0;background:#f5f6f8;color:#182136;font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}'+
       '.dash-head{background:#102858;color:#fff;padding:38px 28px 42px;min-height:235px;box-sizing:border-box}'+
