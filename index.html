@@ -1873,15 +1873,9 @@ document.addEventListener("submit",e=>{
       else if(payments&&typeof payments==="object")Object.entries(payments).forEach(([k,v])=>{if(v!=null)next[k]=v});
       next[p.id]=p;
       tx.set(ref,{studentId:id,payments:next,lastPaymentMonth:p.month,lastPaymentAmount:p.amount,lastPaymentDate:p.date},{merge:true});
-      // APK-only payment ledger: do not change the separate web app's payment path.
-      if(TASVIA_APK_HOST) tx.set(db.doc("paymentRecords/"+p.id),{
-        id:p.id,studentId:id,amount:p.amount,month:p.month,date:p.date,
-        mode:p.mode,note:p.note||"",createdAt:new Date().toISOString()
-      },{merge:true});
-      // The fee record is the authoritative payment history. Do not make a
-      // payment depend on the optional permanent-ledger collection being writable:
-      // older Firestore rules may temporarily deny paymentRecords and must never
-      // cause a successfully saved fee payment to roll back.
+      // The fees document is the authoritative payment history.
+      // Keep the payment transaction limited to /fees so an optional legacy
+      // paymentRecords permission cannot roll back an otherwise valid payment.
       return true;
     }).then(async()=>{
       // Read back the authoritative fee document before telling staff the payment is saved.
@@ -1893,10 +1887,6 @@ document.addEventListener("submit",e=>{
         ? payments.some(x=>x&&x.id===p.id)
         : !!(payments&&payments[p.id]);
       if(!confirmed)throw new Error("Payment could not be verified in Firestore. Please try again.");
-      if(TASVIA_APK_HOST){
-        const ledger=await db.doc("paymentRecords/"+p.id).get();
-        if(!ledger.exists)throw new Error("Payment ledger could not be verified in Firestore. Please try again.");
-      }
       return true;
     })).catch(e=>{toast(errMsg(e));return false}).finally(()=>{window._tasviaPaymentSaveRunning=false});
     const current={payments:Object.fromEntries(payList(id).map(x=>[x.id,x]))};current.payments[p.id]=p;S.fees[id]=current;
