@@ -537,7 +537,7 @@ table{overflow:hidden;border-radius:14px}
       var h=0;for(var i=0;i<raw.length;i++)h=((h<<5)-h)+raw.charCodeAt(i)|0;
       return "tasvia-hw-done-"+Math.abs(h);
     }
-    var hwRows=hw.slice(0,10).map(function(x){
+    var hwRows=hw.slice(0,30).map(function(x){
       var key=hwDoneKey(x),done=false;
       try{done=localStorage.getItem(key)==="1"}catch(_){}
       return "<div class='hw-row "+(done?"hw-completed":"")+"'><div style='min-width:0;flex:1'><b>"+esc(x.d||"")+"</b><div>"+esc(x.hw||x.text||"")+"</div></div><button type='button' class='hw-complete-btn "+(done?"gold":"")+" ' data-hw-key='"+esc(key)+"'>"+(done?"✓ Completed":"Mark as completed")+"</button></div>";
@@ -636,7 +636,7 @@ document.body.innerHTML=
     var esc2=function(v){return String(v==null?"":v).replace(/[&<>"']/g,function(ch){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]})};
     if(title==="Homework"){
       var pd=window.__tasviaParentData||{},list=Array.isArray(pd.hw)?pd.hw:[];
-      liveHtml=list.length?list.slice(0,10).map(function(x){return '<div style="padding:14px 4px;border-bottom:1px solid #e1e5eb"><b>'+esc2(x.d||x.date||"")+'</b><div style="margin-top:5px;white-space:pre-wrap">'+esc2(x.hw||x.homework||x.text||"")+'</div>'+(x.note?'<small style="display:block;margin-top:5px;color:#667085">'+esc2(x.note)+'</small>':"")+'</div>'}).join(""):'<div style="padding:30px;text-align:center;color:#667085">No homework has been assigned yet.</div>';
+      liveHtml=list.length?list.slice(0,30).map(function(x){return '<div style="padding:14px 4px;border-bottom:1px solid #e1e5eb"><b>'+esc2(x.d||x.date||"")+'</b><div style="margin-top:5px;white-space:pre-wrap">'+esc2(x.hw||x.homework||x.text||"")+'</div>'+(x.note?'<small style="display:block;margin-top:5px;color:#667085">'+esc2(x.note)+'</small>':"")+'</div>'}).join(""):'<div style="padding:30px;text-align:center;color:#667085">No homework has been assigned yet.</div>';
     }
     if(title==="Attendance"){
       var ad=window.__tasviaParentData||{},att=ad.att&&typeof ad.att==="object"?ad.att:{},months=Object.keys(att).filter(function(k){return /^\d{4}-\d{2}$/.test(k)}).sort().reverse(),cm=months[0]||"",cur=att[cm]&&typeof att[cm]==="object"?att[cm]:{},cp=Number(cur.p)||0,ca=Number(cur.a)||0,ct=cp+ca,cpct=ct?Math.round(cp*100/ct):0,yr=ad.yr&&typeof ad.yr==="object"?ad.yr:{},yp=Number(yr.p)||0,ya=Number(yr.a)||0,yt=yp+ya,ypct=yt?Math.round(yp*100/yt):0;
