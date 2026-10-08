@@ -1039,61 +1039,14 @@ function buildParentView(s){
     centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||"",upi:i.upi||DEFAULT_INFO.upi||""}};
 }
 async function syncParentHomeworkForStudent(sid,savedDate,savedEntry){
-  if(!db||!sid)return false;
   try{
-    const s=S.students&&S.students[sid];
-    if(!s)return false;
-    const code=String(s.pcode||"").trim().toUpperCase();
-    if(!/^[A-Z0-9]{8,20}$/.test(code))return false;
-    const day=String(savedDate||"").trim();
-    const directText=savedEntry&&(savedEntry.hw||savedEntry.homework||savedEntry.text||"");
-    const direct=day&&directText?{d:day,hw:String(directText),note:String(savedEntry.note||"")}:null;
-
-    // Write the just-saved homework to parentView FIRST. Do not depend on the
-    // diary history query succeeding; that query is only for rebuilding older
-    // homework history.
-    let existing=[];
-    try{
-      const pvSnap=await db.doc("parentView/"+code).get();
-      const pv=pvSnap.exists?pvSnap.data()||{}:{};
-      const raw=Array.isArray(pv.hw)?pv.hw:(Array.isArray(pv.homework)?pv.homework:[]);
-      existing=raw.map(function(x){return {d:String(x&&x.d||x&&x.date||""),hw:String(x&&x.hw||x&&x.homework||x&&x.text||""),note:String(x&&x.note||"")}}).filter(function(x){return x.hw});
-    }catch(e){console.warn("parent homework existing read",code,e)}
-
-    if(day)existing=existing.filter(function(x){return x.d!==day});
-    if(direct)existing.unshift(direct);
-    const immediate=existing.slice(0,30);
-    const patch={hw:immediate,homework:immediate,updated:Date.now(),parentSchemaVersion:2};
-    await db.doc("parentView/"+code).set(patch,{merge:true});
-    try{await db.doc("parentView/"+sid).set(patch,{merge:true})}catch(e){console.warn("parent homework mirror",sid,e)}
-    pvCache[code]="";pvSave();
-
-    // Rebuild the full recent history when the diary query is available.
-    try{
-      const snap=await db.collection("diary").orderBy("date","desc").limit(120).get();
-      const hw=[];
-      snap.docs.forEach(function(doc){
-        const d=doc.data()||{},e=((d.entries||{})[sid]);
-        const text=e&&(e.hw||e.homework||e.text||"");
-        if(text)hw.push({d:String(d.date||doc.id),hw:String(text),note:String(e.note||"")});
-      });
-      const unique=[];const seenDays=new Set();
-      hw.forEach(function(x){if(!x||!x.d||seenDays.has(x.d))return;seenDays.add(x.d);unique.push(x)});
-      // Re-insert the just-saved entry so it remains authoritative even if the
-      // listener/query is briefly behind.
-      if(direct){
-        const rows=[direct].concat(unique.filter(function(x){return x.d!==day}));
-        unique.length=0;rows.forEach(function(x){if(x&&!unique.some(function(y){return y.d===x.d}))unique.push(x)});
-      }
-      const rows=unique.slice(0,30);
-      const fullPatch={hw:rows,homework:rows,updated:Date.now(),parentSchemaVersion:2};
-      await db.doc("parentView/"+code).set(fullPatch,{merge:true});
-      try{await db.doc("parentView/"+sid).set(fullPatch,{merge:true})}catch(e){console.warn("parent homework history mirror",sid,e)}
-      pvCache[code]="";pvSave();
-    }catch(e){console.warn("parent homework history refresh failed",sid,e)}
+    // The student profile is now the single source of truth for homework.
+    // Save there first; the normal parent-view builder will publish it.
+    await saveStudentHomeworkCanonical(sid,savedDate,savedEntry);
+    schedulePV(true);
     return true;
   }catch(e){
-    console.warn("direct parent homework sync failed",sid,e);
+    console.warn("canonical parent homework save failed",sid,e);
     return false;
   }
 }
