@@ -956,7 +956,9 @@ function buildParentView(s){
   const ay=acYear(today()),months=lastMonths(3);
   const att={};months.forEach(m=>{const t=attStats(s.id,m);att[m]={p:t.p,a:t.a}});
   const yr=attStats(s.id,"",ay.from,today());
-  const abs=datesOf("att").filter(d=>d>=ay.from&&getMarks(d)[s.id]==="A").sort().reverse().slice(0,8);
+  // Keep every recorded absent date so the parent portal can show the complete
+  // absence history, not only the latest few dates.
+  const abs=datesOf("att").filter(d=>d>=ay.from&&getMarks(d)[s.id]==="A").sort().reverse();
   const tests=Object.values(S.tests).filter(t=>t.date>=ay.from&&t.marks&&t.marks[s.id]!=null).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,25).map(t=>({d:t.date,s:t.subject,n:t.name,m:+t.marks[s.id],x:+t.max}));
   // Payment history is the source of truth for parent fee status.
   // A payment belongs to the fee period when its explicit month matches OR its
