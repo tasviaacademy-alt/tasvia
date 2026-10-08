@@ -481,7 +481,7 @@ table{overflow:hidden;border-radius:14px}
     var yr=d.yr&&typeof d.yr==="object"?d.yr:{};
     var yp=Number(yr.p)||0,ya=Number(yr.a)||0,yt=yp+ya,ypct=yt?Math.round(yp*100/yt):0;
     // Absent dates are synchronized from staff attendance as d.abs.
-    var absentDates=Array.isArray(d.abs)?d.abs.filter(function(x){return /^\\d{4}-\\d{2}-\\d{2}$/.test(String(x));}).sort().reverse():[];
+    var absentDates=Array.isArray(d.abs)?d.abs.filter(function(x){return /^\d{4}-\d{2}-\d{2}$/.test(String(x));}).sort().reverse():[];
     var absentRows=absentDates.map(function(x){
       var dt=new Date(x+"T00:00:00");
       var label=isNaN(dt.getTime())?x:dt.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
