@@ -758,22 +758,39 @@ function currentFeeCycle(s){
     const last=new Date(year,monthIndex+1,0).getDate();
     return new Date(year,monthIndex,Math.min(jd,last));
   };
-  let cycle=makeAnniv(todayDate.getFullYear(),todayDate.getMonth());
-  if(todayDate<cycle)cycle=makeAnniv(todayDate.getFullYear(),todayDate.getMonth()-1);
-  const next=makeAnniv(cycle.getFullYear(),cycle.getMonth()+1);
-  const cycleStart=cycle.getFullYear()+"-"+String(cycle.getMonth()+1).padStart(2,"0")+"-"+String(cycle.getDate()).padStart(2,"0");
-  const nextDueDate=next.getFullYear()+"-"+String(next.getMonth()+1).padStart(2,"0")+"-"+String(next.getDate()).padStart(2,"0");
+  // A fee cycle runs from the joining-day anniversary to the next joining-day
+  // anniversary. Payment at any point inside that cycle makes that cycle paid.
+  // The fee becomes due only AFTER the full one-month cycle has ended.
+  let cycleStart=makeAnniv(todayDate.getFullYear(),todayDate.getMonth());
+  if(todayDate<cycleStart)cycleStart=makeAnniv(todayDate.getFullYear(),todayDate.getMonth()-1);
+  let cycleEnd=makeAnniv(cycleStart.getFullYear(),cycleStart.getMonth()+1);
+  // If the current cycle has not ended yet, nothing is overdue.
+  if(todayDate<cycleEnd){
+    return {
+      status:"upcoming",fee,paid:0,due:0,
+      dueDate:cycleEnd.getFullYear()+"-"+String(cycleEnd.getMonth()+1).padStart(2,"0")+"-"+String(cycleEnd.getDate()).padStart(2,"0"),
+      nextDueDate:cycleEnd.getFullYear()+"-"+String(cycleEnd.getMonth()+1).padStart(2,"0")+"-"+String(cycleEnd.getDate()).padStart(2,"0"),
+      cycleStart:cycleStart.getFullYear()+"-"+String(cycleStart.getMonth()+1).padStart(2,"0")+"-"+String(cycleStart.getDate()).padStart(2,"0")
+    };
+  }
   let paid=0;
   payList(s.id).forEach(p=>{
     const ds=String(p.date||"");
     const d=/^\d{4}-\d{2}-\d{2}$/.test(ds)?new Date(ds+"T00:00:00"):null;
-    if(d&&d>=cycle&&d<next)paid+=Number(p.amount)||0;
-    else if(!d&&paymentMonth(p)===cycleStart.slice(0,7))paid+=Number(p.amount)||0;
+    if(d&&d>=cycleStart&&d<cycleEnd)paid+=Number(p.amount)||0;
+    else if(!d&&paymentMonth(p)===cycleStart.toISOString().slice(0,7))paid+=Number(p.amount)||0;
   });
   paid=Math.min(fee,Math.max(0,paid));
-  // The current one-month cycle is authoritative. A payment inside the cycle counts once;
-  // an empty payment history must never inherit an old "paid" snapshot.
-  return {status:paid>=fee?"paid":"due",fee,paid,due:Math.max(0,fee-paid),dueDate:cycleStart,nextDueDate,cycleStart};
+  const cycleStartText=cycleStart.getFullYear()+"-"+String(cycleStart.getMonth()+1).padStart(2,"0")+"-"+String(cycleStart.getDate()).padStart(2,"0");
+  const nextStart=cycleEnd;
+  const nextText=nextStart.getFullYear()+"-"+String(nextStart.getMonth()+1).padStart(2,"0")+"-"+String(nextStart.getDate()).padStart(2,"0");
+  return {
+    status:paid>=fee?"paid":"due",
+    fee,paid,due:Math.max(0,fee-paid),
+    dueDate:cycleStartText,
+    nextDueDate:nextText,
+    cycleStart:cycleStartText
+  };
 }
 const active=s=>s.active!==false;
 function teachersList(all){return Object.entries(S.teachers).map(([id,t])=>({id,...t})).filter(t=>all||active(t)).sort((a,b)=>(active(b)-active(a))||a.name.localeCompare(b.name))}
