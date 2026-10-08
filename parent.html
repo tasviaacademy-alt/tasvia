@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-07-v73">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-08-v74">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -724,6 +724,8 @@ table{overflow:hidden;border-radius:14px}
       var p=String(location.pathname||"");
       var candidates=[
         qs.get("code"),qs.get("student"),qs.get("studentCode"),qs.get("studentId"),qs.get("id"),
+        (function(){try{return localStorage.getItem("tasvia-parent-code")}catch(_){return ""}})(),
+        (function(){try{return sessionStorage.getItem("tasvia-parent-code")}catch(_){return ""}})(),
         rawHash,
         (function(){
           var m=p.match(/\/(?:parent|parents|student)(?:\/index\.html)?\/([A-Za-z0-9._-]{3,64})\/?$/i);
