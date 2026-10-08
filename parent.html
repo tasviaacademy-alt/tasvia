@@ -375,6 +375,31 @@ table{overflow:hidden;border-radius:14px}
 <script>
 (function(){
   "use strict";
+  // Deep-link handoff for installed PWA/TWA launches. Some app shells do not
+  // immediately navigate the existing window to an externally opened URL;
+  // Launch Handler preserves the exact target so the legacy #STUDENTCODE link
+  // can still be resolved without changing the parent link.
+  try{
+    if("launchQueue" in window && window.launchQueue && window.launchQueue.setConsumer){
+      window.launchQueue.setConsumer(function(params){
+        try{
+          if(params && params.targetURL){
+            window.__tasviaLaunchTargetURL=String(params.targetURL);
+            var u=new URL(params.targetURL,location.href);
+            var c=u.searchParams.get("code") || String(u.hash||"").replace(/^#/,"");
+            if(c){
+              c=valid(c);
+              if(c){
+                window.__tasviaPendingParentCode=c;
+                try{localStorage.setItem("tasvia-parent-code",c);sessionStorage.setItem("tasvia-parent-code",c)}catch(_){}
+                setTimeout(function(){try{bootParentPortal()}catch(_){}},0);
+              }
+            }
+          }
+        }catch(_){ }
+      });
+    }
+  }catch(_){ }
   var FIRESTORE_ROOT="https://firestore.googleapis.com/v1/projects/tasvia-academy/databases/(default)/documents/parentView/";
   function valid(v){
     try{v=decodeURIComponent(String(v||""));}catch(_){v=String(v||"");}
@@ -761,9 +786,17 @@ table{overflow:hidden;border-radius:14px}
       })();
       // Always prefer the code explicitly carried by the current parent link.
       // Only fall back to a saved session when the current URL has no student code.
+      var launchCode=(function(){
+        try{
+          var t=String(window.__tasviaLaunchTargetURL||"");
+          if(!t)return "";
+          var u=new URL(t,location.href);
+          return u.searchParams.get("code") || String(u.hash||"").replace(/^#/,"");
+        }catch(_){return "";}
+      })();
       var candidates=[
         qs.get("code"),qs.get("student"),qs.get("studentCode"),qs.get("studentId"),qs.get("id"),
-        rawHash,pathCode,fallbackPathCode,
+        launchCode,rawHash,pathCode,fallbackPathCode,
         (function(){try{return sessionStorage.getItem("tasvia-parent-code")}catch(_){return ""}})(),
         (function(){try{return localStorage.getItem("tasvia-parent-code")}catch(_){return ""}})()
       ];
