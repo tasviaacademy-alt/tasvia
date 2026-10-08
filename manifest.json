@@ -1,7 +1,7 @@
 {
   "name": "TASVIA Academy",
   "short_name": "TASVIA",
-  "description": "TASVIA Academy \u2013 Inspire \u2022 Learn \u2022 Grow \u2022 Succeed. Attendance, fees, homework, tests and parent updates.",
+  "description": "TASVIA Academy – Inspire • Learn • Grow • Succeed. Attendance, fees, homework, tests and parent updates.",
   "id": "./",
   "start_url": "./",
   "scope": "./",
@@ -32,5 +32,9 @@
       "type": "image/png",
       "purpose": "maskable"
     }
-  ]
+  ],
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
+  "handle_links": "preferred"
 }
