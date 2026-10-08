@@ -748,69 +748,26 @@ function feeStatus(s,month){
 function enrolledIn(s,month){return !s.joined||s.joined.slice(0,7)<=month}
 function currentFeeCycle(s){
   const fee=Number(s&&s.fee)||0;
-  if(!fee)return {status:"none",fee:0,paid:0,due:0,dueDate:null,nextDueDate:null,cycleStart:null};
+  if(!fee)return {status:"none",fee:0,paid:0,due:0,dueDate:null,nextDueDate:null,cycleStart:null,completedMonth:null};
   const join=String(s&&s.joined||"");
-  if(!/^\d{4}-\d{2}-\d{2}$/.test(join))
-    return {status:"due",fee,paid:0,due:fee,dueDate:null,nextDueDate:null,cycleStart:null};
-
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(join))return {status:"due",fee,paid:0,due:fee,dueDate:null,nextDueDate:null,cycleStart:null,completedMonth:null};
   const [jy,jm,jd]=join.split("-").map(Number);
-  const todayDate=new Date();
-  todayDate.setHours(0,0,0,0);
-
-  const makeAnniv=(year,monthIndex)=>{
-    const last=new Date(year,monthIndex+1,0).getDate();
-    return new Date(year,monthIndex,Math.min(jd,last));
-  };
-  const text=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-
-  // The first fee cycle starts on the joining date and ends one month later.
-  const firstEnd=makeAnniv(jy,jm);
-  if(todayDate<firstEnd){
-    // The first full month has not finished, so the fee is not overdue.
-    return {
-      status:"upcoming",fee,paid:0,due:0,
-      dueDate:text(firstEnd),nextDueDate:text(firstEnd),cycleStart:join
-    };
-  }
-
-  // At/after the first anniversary, evaluate ONLY the most recently completed
-  // joining-date cycle. The newly started cycle must never be marked due early.
-  let currentStart=makeAnniv(todayDate.getFullYear(),todayDate.getMonth());
-  if(todayDate<currentStart)currentStart=makeAnniv(todayDate.getFullYear(),todayDate.getMonth()-1);
-
-  const completedEnd=currentStart;
-  const completedStart=makeAnniv(currentStart.getFullYear(),currentStart.getMonth()-1);
-  const completedMonth=completedStart.toISOString().slice(0,7);
-
+  const makeDate=(year,monthIndex)=>{const last=new Date(year,monthIndex+1,0).getDate();return new Date(year,monthIndex,Math.min(jd,last));};
+  const iso=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  const monthOf=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+  const joinDate=makeDate(jy,jm-1);
+  const firstEnd=makeDate(jy,jm);
+  const todayDate=new Date();todayDate.setHours(0,0,0,0);
+  if(todayDate<firstEnd)return {status:"upcoming",fee,paid:0,due:0,dueDate:iso(firstEnd),nextDueDate:iso(firstEnd),cycleStart:iso(joinDate),completedMonth:null};
+  let cycleEnd=makeDate(todayDate.getFullYear(),todayDate.getMonth());
+  if(todayDate<cycleEnd)cycleEnd=makeDate(todayDate.getFullYear(),todayDate.getMonth()-1);
+  const cycleStart=makeDate(cycleEnd.getFullYear(),cycleEnd.getMonth()-1);
+  const completedMonth=monthOf(cycleStart);
   let paid=0;
-  payList(s.id).forEach(p=>{
-    const amount=Number(p.amount)||0;
-    const explicitMonth=String(p.month||"").trim();
-
-    // Staff's selected "Fee for month" is authoritative.
-    if(explicitMonth){
-      if(paymentMonth(p)===completedMonth)paid+=amount;
-      return;
-    }
-
-    // Legacy records without a selected month fall back to their payment date.
-    const ds=String(p.date||"");
-    const d=/^\d{4}-\d{2}-\d{2}$/.test(ds)?new Date(ds+"T00:00:00"):null;
-    if(d&&d>=completedStart&&d<completedEnd)paid+=amount;
-  });
-
+  payList(s.id).forEach(p=>{const amount=Number(p.amount)||0;const explicitMonth=String(p.month||"").trim();if(explicitMonth){if(paymentMonth(p)===completedMonth)paid+=amount;return;}const ds=String(p.date||"");const d=/^\d{4}-\d{2}-\d{2}$/.test(ds)?new Date(ds+"T00:00:00"):null;if(d&&d>=cycleStart&&d<cycleEnd)paid+=amount;});
   paid=Math.min(fee,Math.max(0,paid));
-  const nextDue=makeAnniv(currentStart.getFullYear(),currentStart.getMonth()+1);
-
-  return {
-    status:paid>=fee?"paid":"due",
-    fee,
-    paid,
-    due:Math.max(0,fee-paid),
-    dueDate:text(completedEnd),
-    nextDueDate:text(nextDue),
-    cycleStart:text(completedStart)
-  };
+  const nextDue=makeDate(cycleEnd.getFullYear(),cycleEnd.getMonth()+1);
+  return {status:paid>=fee?"paid":"due",fee,paid,due:Math.max(0,fee-paid),dueDate:iso(cycleEnd),nextDueDate:iso(nextDue),cycleStart:iso(cycleStart),completedMonth};
 }
 const active=s=>s.active!==false;
 function teachersList(all){return Object.entries(S.teachers).map(([id,t])=>({id,...t})).filter(t=>all||active(t)).sort((a,b)=>(active(b)-active(a))||a.name.localeCompare(b.name))}
@@ -859,7 +816,7 @@ function reportText(s){
   let t=`*${T.repT}*\n${T.stu}: ${s.name} (${T.cls(s.cls)})\n\n`;
   t+=`${T.att(mN(m,l))}: `+(st.t?T.days(st.p,st.t,st.pct):T.nm)+"\n";
   if(tests.length){t+=`\n${T.recent}:\n`;tests.forEach(x=>{const sc=+x.marks[s.id],pc=Math.round(sc*100/x.max);t+=`• ${x.subject} – ${x.name}: ${sc}/${x.max} (${pc}%, ${grade(pc)})\n`})}
-  if(s.fee){const fs=feeStatus(s,m);t+=`\n${T.feeFor(mN(m,l))}: `+(fs.k==="paid"?T.full:fs.k==="part"?T.part(rs(fs.paid),rs(fs.left)):T.due(rs(s.fee)))+"\n"}
+  if(s.fee){const cycle=currentFeeCycle(s);if(cycle.status==="paid"||cycle.status==="part"||cycle.status==="due"){const fm=cycle.completedMonth||m;t+=`\n${T.feeFor(mN(fm,l))}: `+(cycle.status==="paid"?T.full:cycle.status==="part"?T.part(rs(cycle.paid),rs(cycle.due)):T.due(rs(cycle.due)))+"\n"}else{t+=`\nFee for ${mN(m,l)}: not yet due (cycle due ${cycle.nextDueDate||""})\n`}}
   t+=`\n${T.call(inf.phone)}`;return t;
 }
 function absentText(s,date){const l=langOf(s),T=L[l];return T.absent(s.name,T.cls(s.cls),dN(date,l),info().phone)}
