@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-08-v79">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-08-v80">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -404,6 +404,7 @@ table{overflow:hidden;border-radius:14px}
   function valid(v){
     try{v=decodeURIComponent(String(v||""));}catch(_){v=String(v||"");}
     v=v.trim().toUpperCase();
+    if(/^(INDEX(?:\.HTML)?|PARENT(?:\.HTML)?|PARENTS|STUDENT|LOGIN|DASHBOARD)$/.test(v))return "";
     return /^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(v)?v:"";
   }
   function value(v){
