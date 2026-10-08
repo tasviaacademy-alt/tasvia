@@ -1139,7 +1139,6 @@ async function syncPV(){
           st.pin=pin;
           if(String(pinSource).trim()!==String(pin)) await db.doc("students/"+id).set({pin},{merge:true});
         }
-        }
         // Re-read the authoritative fee document before rebuilding the parent view.
         // This prevents a stale local listener/cache from overwriting a student's freshly paid status.
         try{
