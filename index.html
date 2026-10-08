@@ -1092,14 +1092,17 @@ async function syncPV(){
   const usedCodes=new Set();
   const forceWrite=pvForce;
   pvForce=false;  try{
-    // Before rebuilding parent views, re-read the currently edited homework day
-    // directly from Firestore. This prevents a fast parent sync from using the
-    // older local diary snapshot while the staff listener is still catching up.
-    if(forceWrite&&UI.date){
+    // Before rebuilding parent views, re-read the complete recent homework
+    // archive directly from Firestore. The live listener is intentionally limited
+    // to 120 diary documents, and a fast snapshot can otherwise rebuild a parent
+    // record with an empty homework array and overwrite a valid assignment.
+    if(forceWrite){
       try{
-        const diarySnap=await db.doc("diary/"+UI.date).get();
-        if(diarySnap.exists)S.diary[UI.date]=diarySnap.data();
-      }catch(e){console.warn("authoritative homework refresh",UI.date,e)}
+        const diarySnap=await db.collection("diary").orderBy("date","desc").limit(365).get();
+        const freshDiary={};
+        diarySnap.docs.forEach(doc=>{freshDiary[doc.id]=doc.data()||{}});
+        S.diary=Object.assign({},S.diary,freshDiary);
+      }catch(e){console.warn("authoritative homework archive refresh",e)}
     }
     for(const [id,raw] of Object.entries(S.students||{})){
       try{
@@ -1163,8 +1166,12 @@ async function syncPV(){
             yr:v.yr||{p:0,a:0},
             abs:Array.isArray(v.abs)?v.abs:[],
             tests:Array.isArray(v.tests)?v.tests:[],
-            hw:Array.isArray(v.hw)?v.hw:[],
-            homework:Array.isArray(v.hw)?v.hw:[],
+            hw:Array.isArray(v.hw)&&v.hw.length
+              ?v.hw
+              :(oldParent&&Array.isArray(oldParent.hw)&&oldParent.hw.length?oldParent.hw:[]),
+            homework:Array.isArray(v.hw)&&v.hw.length
+              ?v.hw
+              :(oldParent&&Array.isArray(oldParent.homework)&&oldParent.homework.length?oldParent.homework:[]),
             fees:Array.isArray(v.fees)?v.fees:[],
             pays:Array.isArray(v.pays)?v.pays:[],
             currentFee:v.currentFee||null,
@@ -1873,7 +1880,7 @@ document.addEventListener("click",async e=>{
     case "hwEdit":hwForm(b.dataset.id);break;
     case "hwSend":hwSendSheet(b.dataset.id);break;
     case "hwLang":hwSendSheet(b.dataset.id,b.dataset.l);break;
-    case "copyHw":{const s=S.students[b.dataset.id],e=((S.diary[UI.date]||{}).entries||{})[b.dataset.id];if(s&&e)copy(hwText(s,UI.date,e,b.dataset.l));break;}
+    case "copyHw":{const s=S.students[b.dataset.id],e=homeworkEntry(s,UI.date);if(s&&e&&e.hw)copy(hwText(s,UI.date,e,b.dataset.l));break;}
     case "cardCls":UI.cardCls=b.dataset.c;render();break;
     case "printRC":{const l=studentsOf(UI.cardCls);if(!l.length)break;if(UI.rcFrom>UI.rcTo){toast("'From' date must be before 'To' date");break}saveFile(`report-cards-${slug(clsLabel(UI.cardCls))}.html`,rcHTML(l,UI.rcFrom,UI.rcTo));break}
     case "printID":{const l=studentsOf(UI.cardCls);if(!l.length)break;b.disabled=true;b.textContent="Preparing ID cards…";
