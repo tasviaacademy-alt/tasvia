@@ -1128,7 +1128,8 @@ async function syncPV(){
         // Parent PIN is canonical on the student profile. Accept legacy field
         // names too, but never silently replace a valid existing 4-digit PIN.
         let pinSource=st.pin!=null?st.pin:(st.parentPin!=null?st.parentPin:(st.pinCode!=null?st.pinCode:""));
-        let pin=String(pinSource).trim().replace(/\D/g,"").slice(-4);
+        const normalizedPin=String(pinSource).trim().replace(/\D/g,"").slice(-4);
+        let pin=normalizedPin;
         if(!/^\d{4}$/.test(pin)){
           pin=newParentPin();
           S.students[id]=Object.assign({},st,{pin});
@@ -1136,7 +1137,8 @@ async function syncPV(){
           st.pin=pin;
         }else{
           st.pin=pin;
-          if(String(st.pin||"")!==String(pinSource||"")) await db.doc("students/"+id).set({pin},{merge:true});
+          if(String(pinSource).trim()!==String(pin)) await db.doc("students/"+id).set({pin},{merge:true});
+        }
         }
         // Re-read the authoritative fee document before rebuilding the parent view.
         // This prevents a stale local listener/cache from overwriting a student's freshly paid status.
@@ -1186,6 +1188,7 @@ async function syncPV(){
             fees:Array.isArray(v.fees)?v.fees:[],
             pays:Array.isArray(v.pays)?v.pays:[],
             currentFee:v.currentFee||null,
+            pin:String(v.pin||st.pin||pin||""),
             centre:v.centre||null,
             updated:Date.now()
           },{merge:true});
@@ -1219,6 +1222,7 @@ async function syncPV(){
               fees:Array.isArray(v.fees)?v.fees:[],
               pays:Array.isArray(v.pays)?v.pays:[],
               currentFee:v.currentFee||null,
+              pin:String(v.pin||st.pin||pin||""),
               centre:v.centre||null,
               updated:Date.now()
             },{merge:true});
