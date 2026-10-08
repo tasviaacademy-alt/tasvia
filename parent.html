@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-08-v81">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-08-v82">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -849,9 +849,7 @@ document.body.innerHTML=
       })();
       var candidates=[
         qs.get("code"),qs.get("student"),qs.get("studentCode"),qs.get("studentId"),qs.get("id"),
-        launchCode,rawHash,pathCode,fallbackPathCode,
-        (function(){try{return sessionStorage.getItem("tasvia-parent-code")}catch(_){return ""}})(),
-        (function(){try{return localStorage.getItem("tasvia-parent-code")}catch(_){return ""}})()
+        launchCode,rawHash,pathCode,fallbackPathCode
       ];
       for(var i=0;i<candidates.length;i++){
         var raw=candidates[i];
@@ -873,11 +871,12 @@ document.body.innerHTML=
       history.replaceState(null,"",location.pathname+"?code="+encodeURIComponent(legacyHashCode));
     }
   }catch(_){}
-  // Keep a direct-link student code alive through route rewrites/PWA redirects.
-  // This runs before boot so the current URL always wins over stale storage.
+  // Persist only an explicitly supplied direct-link code. Never use an old
+  // stored parent code to auto-open the generic Parent Portal website.
   try{
     var initialCode=recoverParentCode();
-    if(initialCode){
+    var explicitCode=(new URLSearchParams(location.search||"").get("code")||String(location.hash||"").replace(/^#/,"")).trim();
+    if(initialCode&&explicitCode){
       localStorage.setItem("tasvia-parent-code",initialCode);
       sessionStorage.setItem("tasvia-parent-code",initialCode);
     }
