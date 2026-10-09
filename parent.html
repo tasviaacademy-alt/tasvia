@@ -980,8 +980,8 @@ document.body.innerHTML=
         }catch(_){return "";}
       })();
       var candidates=[
-        qs.get("code"),qs.get("student"),qs.get("studentCode"),qs.get("studentId"),qs.get("id"),
-        launchCode,rawHash,pathCode,fallbackPathCode
+        qs.get("code"),qs.get("pcode"),qs.get("parentCode"),qs.get("student"),qs.get("studentCode"),qs.get("studentId"),qs.get("id"),
+        launchCode,window.__tasviaPendingParentCode,rawHash,pathCode,fallbackPathCode
       ];
       for(var i=0;i<candidates.length;i++){
         var raw=candidates[i];
@@ -1007,7 +1007,8 @@ document.body.innerHTML=
   // stored parent code to auto-open the generic Parent Portal website.
   try{
     var initialCode=recoverParentCode();
-    var explicitCode=(new URLSearchParams(location.search||"").get("code")||String(location.hash||"").replace(/^#/,"")).trim();
+    var q=new URLSearchParams(location.search||"");
+    var explicitCode=(q.get("code")||q.get("pcode")||q.get("parentCode")||q.get("student")||q.get("studentCode")||q.get("studentId")||String(location.hash||"").replace(/^#/,"")||String(window.__tasviaPendingParentCode||"")).trim();
     if(initialCode&&explicitCode){
       localStorage.setItem("tasvia-parent-code",initialCode);
       sessionStorage.setItem("tasvia-parent-code",initialCode);
@@ -1030,6 +1031,7 @@ document.body.innerHTML=
   window.addEventListener("pageshow",function(){setTimeout(bootParentPortal,40);});
   window.addEventListener("hashchange",function(){setTimeout(bootParentPortal,40);});
   window.addEventListener("popstate",function(){setTimeout(bootParentPortal,40);});
+  document.addEventListener("visibilitychange",function(){if(!document.hidden)setTimeout(bootParentPortal,80);});
   [100,500,1200,2500,5000].forEach(function(ms){setTimeout(function(){try{bootParentPortal()}catch(_){ }},ms);});
   window.addEventListener("online",function(){setTimeout(function(){try{bootParentPortal()}catch(_){ }},100);});
 })();
