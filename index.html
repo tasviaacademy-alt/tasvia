@@ -762,14 +762,18 @@ function currentFeeCycle(s){
   let cycleEnd=makeDate(todayDate.getFullYear(),todayDate.getMonth());
   if(todayDate<cycleEnd)cycleEnd=makeDate(todayDate.getFullYear(),todayDate.getMonth()-1);
   const cycleStart=makeDate(cycleEnd.getFullYear(),cycleEnd.getMonth()-1);
-  // The fee that falls due on this month's joining-date anniversary belongs to this calendar fee month.
-  // A paid September record must not make the October 8 fee appear paid on October 9.
-  const completedMonth=monthOf(cycleEnd);
-  const paymentMonthStart=new Date(completedMonth+"-01T00:00:00");
-  const [py,pm]=completedMonth.split("-").map(Number);
-  const paymentMonthEnd=new Date(py,pm,1); // first day of the following month
+  // The cycle beginning on the joining-date anniversary belongs to its start month:
+  // e.g. Sep 8–Oct 8 is the September cycle, due from Oct 9 if unpaid.
+  const completedMonth=monthOf(cycleStart);
   let paid=0;
-  payList(s.id).forEach(p=>{const amount=Number(p.amount)||0;const explicitMonth=String(p.month||"").trim();if(explicitMonth){if(paymentMonth(p)===completedMonth)paid+=amount;return;}const ds=String(p.date||"");const d=/^\d{4}-\d{2}-\d{2}$/.test(ds)?new Date(ds+"T00:00:00"):null;if(d&&d>=paymentMonthStart&&d<=paymentMonthEnd)paid+=amount;});
+  payList(s.id).forEach(p=>{
+    const amount=Number(p.amount)||0;
+    const explicitMonth=String(p.month||"").trim();
+    if(explicitMonth){if(paymentMonth(p)===completedMonth)paid+=amount;return;}
+    const ds=String(p.date||"");
+    const d=/^\d{4}-\d{2}-\d{2}$/.test(ds)?new Date(ds+"T00:00:00"):null;
+    if(d&&d>=cycleStart&&d<=cycleEnd)paid+=amount;
+  });
   paid=Math.min(fee,Math.max(0,paid));
   const nextDue=makeDate(cycleEnd.getFullYear(),cycleEnd.getMonth()+1);
   return {status:paid>=fee?"paid":"due",fee,paid,due:Math.max(0,fee-paid),dueDate:iso(cycleEnd),nextDueDate:iso(nextDue),cycleStart:iso(cycleStart),completedMonth};
