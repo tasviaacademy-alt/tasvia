@@ -505,24 +505,27 @@ table{overflow:hidden;border-radius:14px}
     window.__tasviaParentData=Object.assign({},d,{hw:hw,homework:hw});
     var centre=d.centre&&typeof d.centre==='object'?d.centre:{};
     var noticeText=String(centre.notice||'').trim();
-    var nowLocal=new Date();var current=nowLocal.getFullYear()+"-"+String(nowLocal.getMonth()+1).padStart(2,"0");var parentUpdated=Number(d.updated)||Date.now();var parentUpdatedText=new Date(parentUpdated).toLocaleString("en-IN",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"});
+    var nowLocal=new Date();var current=nowLocal.getFullYear()+"-"+String(nowLocal.getMonth()+1).padStart(2,"0");
+    var feeTodayISO=nowLocal.getFullYear()+"-"+String(nowLocal.getMonth()+1).padStart(2,"0")+"-"+String(nowLocal.getDate()).padStart(2,"0");
+    var parentUpdated=Number(d.updated)||Date.now();var parentUpdatedText=new Date(parentUpdated).toLocaleString("en-IN",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"});
     var currentFee=d.currentFee&&typeof d.currentFee==="object"?d.currentFee:null;
+    var cycleMonth=currentFee&&/^\d{4}-\d{2}$/.test(String(currentFee.completedMonth||""))?String(currentFee.completedMonth):current;
     var fee=null;
     for(var fi=0;fi<fees.length;fi++){
       var fx=fees[fi];
-      if(fx&&String(fx.m||"").slice(0,7)===current){fee=fx;break;}
+      if(fx&&String(fx.m||"").slice(0,7)===cycleMonth){fee=fx;break;}
     }
-    // Keep the dashboard summary consistent with the visible month-specific Fee Details row.
-    // The saved currentFee cycle can be stale in an already-issued magic-link snapshot.
-    var feeAmt=fee ? (Number(fee.fee)||0) : (currentFee ? (Number(currentFee.fee)||0) : 0);
-    var paid=fee ? (Number(fee.paid)||0) : (currentFee ? (Number(currentFee.paid)||0) : 0);
-    var due=fee ? Math.max(0,feeAmt-paid) : (currentFee ? Math.max(0,Number(currentFee.due)||0) : 0);
-    var feePaid=fee ? due<=0 : !!(currentFee&&currentFee.status==="paid");
-    var feeUpcoming=fee ? fee.status==="upcoming" : !!(currentFee&&currentFee.status==="upcoming");
+    // The current cycle is based on the student's joining-date anniversary, not
+    // the calendar-month row. Sep 8–Oct 8 is the September cycle.
+    var feeAmt=currentFee ? (Number(currentFee.fee)||0) : (fee ? (Number(fee.fee)||0) : 0);
+    var paid=currentFee ? (Number(currentFee.paid)||0) : (fee ? (Number(fee.paid)||0) : 0);
+    var due=currentFee ? Math.max(0,Number(currentFee.due)||0) : (fee ? Math.max(0,feeAmt-paid) : 0);
+    var feePaid=currentFee ? currentFee.status==="paid" : (!!fee&&due<=0);
+    var feeUpcoming=currentFee ? currentFee.status==="upcoming" : (!!fee&&fee.status==="upcoming");
     var feeLabel=feePaid?"Paid":(feeUpcoming?"Upcoming":"Not Paid");
     var feeDate=feePaid
       ? (currentFee&&currentFee.nextDueDate?String(currentFee.nextDueDate):(fee&&fee.dueDate?String(fee.dueDate):""))
-      : (fee&&fee.dueDate?String(fee.dueDate):(currentFee&&currentFee.dueDate?String(currentFee.dueDate):""));
+      : (currentFee&&currentFee.dueDate?String(currentFee.dueDate):(fee&&fee.dueDate?String(fee.dueDate):""));
     if(!feeDate)feeDate=new Date().toLocaleDateString("en-IN",{month:"short",year:"numeric"});
     var feeClass=feePaid?"paid":(feeUpcoming?"upcoming":"notpaid");
     var testRows=tests.slice(0,12).map(function(x){
@@ -537,13 +540,19 @@ table{overflow:hidden;border-radius:14px}
         var dt=new Date(dd+"T00:00:00");
         dueText=isNaN(dt.getTime())?dd:dt.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
       }
-      var isFutureDue=dd && !isNaN(new Date(dd+"T00:00:00").getTime()) && new Date(dd+"T00:00:00").getTime()>Date.now();
+      // A cycle remains current through its due date; it becomes overdue the next day.
+      var isFutureDue=/^\d{4}-\d{2}-\d{2}$/.test(dd) && feeTodayISO<=dd;
       var feeState=f?(isFutureDue?"Upcoming "+money(f):"Due "+money(f)):"Paid";
       return "<tr><td>"+esc(x.m||"")+(dueText?"<small style='display:block;margin-top:4px;color:#667085'>Due date: "+esc(dueText)+"</small>":"")+"</td><td>"+(f?"<b class='"+(isFutureDue?"":"due")+"'>"+esc(feeState)+"</b>":"<b class='paid'>Paid</b>")+"</td></tr>";
     }).join("");
     var centreUpi=centre&&centre.upi?String(centre.upi).trim():"";if(!centreUpi)centreUpi="badavathpremdas2@ybl";
     var todayTs=new Date().getTime();
-    var feeTotalDue=fees.reduce(function(sum,x){var dd=x&&x.dueDate?new Date(String(x.dueDate)+"T00:00:00").getTime():0;var f=Math.max(0,(Number(x&&x.fee)||0)-(Number(x&&x.paid)||0));return sum+(f&&(!dd||dd<=todayTs)?f:0);},0);
+    var feeTotalDue=fees.reduce(function(sum,x){
+      var dd=x&&x.dueDate?String(x.dueDate):"";
+      var f=Math.max(0,(Number(x&&x.fee)||0)-(Number(x&&x.paid)||0));
+      var overdue=!dd || (/^\d{4}-\d{2}-\d{2}$/.test(dd) && feeTodayISO>dd);
+      return sum+(f&&overdue?f:0);
+    },0);
     var feeDetailsQr=centreUpi&&feeTotalDue>0?"upi://pay?pa="+encodeURIComponent(centreUpi)+"&pn="+encodeURIComponent("TASVIA Academy")+"&am="+encodeURIComponent(feeTotalDue.toFixed(2))+"&cu=INR":"";
     var feeDetailsPay=feeDetailsQr?'<div class="fee-details-pay"><div class="fee-qr-wrap"><img class="fee-qr" alt="Fee payment QR code" src="https://quickchart.io/qr?size=220&text='+encodeURIComponent(feeDetailsQr)+'"><div class="fee-qr-note">Scan to pay total due • '+money(feeTotalDue)+'</div></div><div class="fee-popup-pay"><a class="gold" href="'+feeDetailsQr+'">Pay Now</a></div></div>':"";
     window.__tasviaParentCode=code;
@@ -627,8 +636,8 @@ document.body.innerHTML=
 
     // Show the popup only once the monthly fee cycle has actually reached its due date.
     // Do not show it during the active month before the student's joining-date anniversary.
-    var popupDueDate=fee&&fee.dueDate?String(fee.dueDate):(currentFee&&currentFee.dueDate?String(currentFee.dueDate):"");
-    var todayISO=new Date().getFullYear()+"-"+String(new Date().getMonth()+1).padStart(2,"0")+"-"+String(new Date().getDate()).padStart(2,"0");
+    var popupDueDate=currentFee&&currentFee.dueDate?String(currentFee.dueDate):(fee&&fee.dueDate?String(fee.dueDate):"");
+    var todayISO=feeTodayISO;
     // Due starts the day after the cycle end: Sep 8–Oct 8 is paid through Oct 8;
     // an unpaid next cycle triggers the popup from Oct 9.
     var popupCycleCompleted=/^\d{4}-\d{2}-\d{2}$/.test(popupDueDate) && todayISO > popupDueDate;
