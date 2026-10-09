@@ -512,17 +512,18 @@ table{overflow:hidden;border-radius:14px}
       var fx=fees[fi];
       if(fx&&String(fx.m||"").slice(0,7)===current){fee=fx;break;}
     }
-    // The month-specific fee row is the source of truth for the dashboard card and popup.
-    // currentFee can be stale in an already-issued magic-link parentView snapshot.
-    var feeAmt=currentFee ? (Number(currentFee.fee)||0) : (fee ? (Number(fee.fee)||0) : 0);
-    var paid=currentFee ? (Number(currentFee.paid)||0) : (fee ? (Number(fee.paid)||0) : 0);
-    var due=currentFee?Math.max(0,Number(currentFee.due)||0):Math.max(0,feeAmt-paid);
-    var feePaid=currentFee?currentFee.status==="paid":(!!fee&&due<=0);
-    var feeUpcoming=currentFee&&currentFee.status==="upcoming";
-    // Summary status follows the student's anniversary-based monthly cycle,
-    // not the calendar-month history row (Sep 8–Oct 8 is the September cycle).
+    // Keep the dashboard summary consistent with the visible month-specific Fee Details row.
+    // The saved currentFee cycle can be stale in an already-issued magic-link snapshot.
+    var feeAmt=fee ? (Number(fee.fee)||0) : (currentFee ? (Number(currentFee.fee)||0) : 0);
+    var paid=fee ? (Number(fee.paid)||0) : (currentFee ? (Number(currentFee.paid)||0) : 0);
+    var due=fee ? Math.max(0,feeAmt-paid) : (currentFee ? Math.max(0,Number(currentFee.due)||0) : 0);
+    var feePaid=fee ? due<=0 : !!(currentFee&&currentFee.status==="paid");
+    var feeUpcoming=fee ? fee.status==="upcoming" : !!(currentFee&&currentFee.status==="upcoming");
     var feeLabel=feePaid?"Paid":(feeUpcoming?"Upcoming":"Not Paid");
-    var feeDate=feePaid&&currentFee&&currentFee.nextDueDate?String(currentFee.nextDueDate):(currentFee&&currentFee.dueDate?String(currentFee.dueDate):(fee&&fee.m?String(fee.m):new Date().toLocaleDateString("en-IN",{month:"short",year:"numeric"})));
+    var feeDate=feePaid
+      ? (currentFee&&currentFee.nextDueDate?String(currentFee.nextDueDate):(fee&&fee.dueDate?String(fee.dueDate):""))
+      : (fee&&fee.dueDate?String(fee.dueDate):(currentFee&&currentFee.dueDate?String(currentFee.dueDate):""));
+    if(!feeDate)feeDate=new Date().toLocaleDateString("en-IN",{month:"short",year:"numeric"});
     var feeClass=feePaid?"paid":(feeUpcoming?"upcoming":"notpaid");
     var testRows=tests.slice(0,12).map(function(x){
       var marks=Number(x.m)||0,max=Number(x.x)||0;
@@ -626,7 +627,7 @@ document.body.innerHTML=
 
     // Show the popup only once the monthly fee cycle has actually reached its due date.
     // Do not show it during the active month before the student's joining-date anniversary.
-    var popupDueDate=currentFee&&currentFee.dueDate?String(currentFee.dueDate):"";
+    var popupDueDate=fee&&fee.dueDate?String(fee.dueDate):(currentFee&&currentFee.dueDate?String(currentFee.dueDate):"");
     var todayISO=new Date().getFullYear()+"-"+String(new Date().getMonth()+1).padStart(2,"0")+"-"+String(new Date().getDate()).padStart(2,"0");
     // Due starts the day after the cycle end: Sep 8–Oct 8 is paid through Oct 8;
     // an unpaid next cycle triggers the popup from Oct 9.
