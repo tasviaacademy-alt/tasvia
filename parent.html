@@ -630,7 +630,11 @@ document.body.innerHTML=
       '<div class="parent-footer-note"><b>📌 Save Parent Portal to your Home Screen</b><span>Save this link for quick access to your child’s attendance, homework, fees and updates.</span><div class="parent-footer-updated">✓ Last updated: '+esc(parentUpdatedText)+'</div></div>'+
       '</div></main>';
 
-    if(due>0 && !feePaid && (!feeUpcoming || (monthFee && due>0))){
+    // Show the popup only once the monthly fee cycle has actually reached its due date.
+    // Do not show it during the active month before the student's joining-date anniversary.
+    var popupDueDate=monthFee&&monthFee.dueDate?String(monthFee.dueDate):(currentFee&&currentFee.dueDate?String(currentFee.dueDate):"");
+    var popupCycleCompleted=/^\d{4}-\d{2}-\d{2}$/.test(popupDueDate) && popupDueDate <= new Date().getFullYear()+"-"+String(new Date().getMonth()+1).padStart(2,"0")+"-"+String(new Date().getDate()).padStart(2,"0");
+    if(due>0 && !feePaid && !feeUpcoming && popupCycleCompleted){
       var feePopup=document.getElementById("feeDuePopup"),feeClose=document.getElementById("feeDueClose");
       if(feePopup){
         feePopup.classList.add("show");feePopup.setAttribute("aria-hidden","false");
