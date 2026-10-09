@@ -771,7 +771,9 @@ function currentFeeCycle(s){
     cycleEnd=makeDate(todayDate.getFullYear(),todayDate.getMonth());
     cycleStart=makeDate(cycleEnd.getFullYear(),cycleEnd.getMonth()-1);
   }
-  const completedMonth=monthOf(cycleStart);
+  // The fee is labeled by its due-month: the cycle ending on Oct 8 is the October fee.
+  // This prevents a paid September record from incorrectly marking October as paid.
+  const completedMonth=monthOf(cycleEnd);
   let paid=0;
   payList(s.id).forEach(p=>{
     const amount=Number(p.amount)||0;
