@@ -917,8 +917,13 @@ document.body.innerHTML=
   }
   function bootParentPortal(){
     try{
-      if(window.__tasviaParentDashboardActive) return;
+      // A new magic link must take priority over a dashboard already open in this
+      // document (for example, when a PWA/TWA reuses its existing window).
       var code=recoverParentCode();
+      if(window.__tasviaParentDashboardActive){
+        if(!code || valid(code)===valid(window.__tasviaAutoCode||"")) return;
+        window.__tasviaParentDashboardActive=false;
+      }
       var form=document.getElementById("studentLoginForm");
       if(form&&!form.__tasviaBound){
         form.__tasviaBound=true;
@@ -1024,6 +1029,7 @@ document.body.innerHTML=
   else bootParentPortal();
   window.addEventListener("pageshow",function(){setTimeout(bootParentPortal,40);});
   window.addEventListener("hashchange",function(){setTimeout(bootParentPortal,40);});
+  window.addEventListener("popstate",function(){setTimeout(bootParentPortal,40);});
   [100,500,1200,2500,5000].forEach(function(ms){setTimeout(function(){try{bootParentPortal()}catch(_){ }},ms);});
   window.addEventListener("online",function(){setTimeout(function(){try{bootParentPortal()}catch(_){ }},100);});
 })();
