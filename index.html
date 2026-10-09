@@ -1043,11 +1043,17 @@ function buildParentView(s){
   const currentFee=currentFeeCycle(s);
   const fees=s.fee?months.filter(m=>enrolledIn(s,m)).map(m=>{
     const fs=feeStatus(s,m),fee=+s.fee||0;
-    // Parent fee history must mirror the staff-selected fee month exactly.
-    // Never let a payment dated in one month silently pay a different month.
-    const paid=Math.min(fee,Math.max(0,Number(feePeriodPaid(m))||0));
-    const status=paid>=fee?"paid":fs.k;
-    return {m,fee,paid,dueDate:fs.dueDate,status};
+    // Parent fee history mirrors the current anniversary-based cycle when it is
+    // the same fee month, so the dashboard and Fee Details cannot disagree.
+    const isCurrentCycle=String(currentFee.completedMonth||"")===m;
+    const paid=isCurrentCycle
+      ? Math.min(fee,Math.max(0,Number(currentFee.paid)||0))
+      : Math.min(fee,Math.max(0,Number(feePeriodPaid(m))||0));
+    const status=isCurrentCycle
+      ? currentFee.status
+      : (paid>=fee?"paid":fs.k);
+    const dueDate=isCurrentCycle&&currentFee.dueDate?currentFee.dueDate:fs.dueDate;
+    return {m,fee,paid,dueDate,status};
   }):[];
   // Keep recent payment history visible, including a payment made on the first
   // day of the following month for the previous fee period.
