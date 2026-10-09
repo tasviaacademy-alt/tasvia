@@ -512,13 +512,23 @@ table{overflow:hidden;border-radius:14px}
       var fx=fees[fi];
       if(fx&&String(fx.m||"").slice(0,7)===current){fee=fx;break;}
     }
+    // The month-specific fee row is the source of truth for the dashboard card and popup.
+    // currentFee can be stale in an already-issued magic-link parentView snapshot.
     var feeAmt=currentFee ? (Number(currentFee.fee)||0) : (fee ? (Number(fee.fee)||0) : 0);
     var paid=currentFee ? (Number(currentFee.paid)||0) : (fee ? (Number(fee.paid)||0) : 0);
     var due=currentFee?Math.max(0,Number(currentFee.due)||0):Math.max(0,feeAmt-paid);
     var feePaid=currentFee?currentFee.status==="paid":(!!fee&&due<=0);
     var feeUpcoming=currentFee&&currentFee.status==="upcoming";
+    var monthFee=fees.find(function(x){return x&&String(x.m||"").slice(0,7)===current;});
+    if(monthFee){
+      feeAmt=Math.max(0,Number(monthFee.fee)||0);
+      paid=Math.max(0,Number(monthFee.paid)||0);
+      due=Math.max(0,feeAmt-paid);
+      feePaid=due<=0;
+      feeUpcoming=false;
+    }
     var feeLabel=feePaid?"Paid":(feeUpcoming?"Upcoming":"Not Paid");
-    var feeDate=currentFee&&currentFee.nextDueDate?currentFee.nextDueDate:(fee&&fee.m?String(fee.m):new Date().toLocaleDateString("en-IN",{month:"short",year:"numeric"}));
+    var feeDate=monthFee&&monthFee.dueDate?String(monthFee.dueDate):(currentFee&&currentFee.nextDueDate?currentFee.nextDueDate:(fee&&fee.m?String(fee.m):new Date().toLocaleDateString("en-IN",{month:"short",year:"numeric"})));
     var feeClass=feePaid?"paid":(feeUpcoming?"upcoming":"notpaid");
     var testRows=tests.slice(0,12).map(function(x){
       var marks=Number(x.m)||0,max=Number(x.x)||0;
@@ -620,7 +630,7 @@ document.body.innerHTML=
       '<div class="parent-footer-note"><b>📌 Save Parent Portal to your Home Screen</b><span>Save this link for quick access to your child’s attendance, homework, fees and updates.</span><div class="parent-footer-updated">✓ Last updated: '+esc(parentUpdatedText)+'</div></div>'+
       '</div></main>';
 
-    if(due>0 && currentFee && currentFee.status!=="paid"){
+    if(due>0 && !feePaid && (!feeUpcoming || (monthFee && due>0))){
       var feePopup=document.getElementById("feeDuePopup"),feeClose=document.getElementById("feeDueClose");
       if(feePopup){
         feePopup.classList.add("show");feePopup.setAttribute("aria-hidden","false");
