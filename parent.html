@@ -850,6 +850,22 @@ document.body.innerHTML=
     if(!silentRefresh)showLoading(code);
     try{localStorage.setItem("tasvia-parent-code",code);sessionStorage.setItem("tasvia-parent-code",code)}catch(_){}
     var attempt=0;
+    var settled=false;
+    var watchdog=setTimeout(function(){
+      if(settled)return;
+      var msg=document.getElementById("studentLoginMsg")||document.getElementById("msg");
+      if(msg){
+        msg.textContent="The parent link is taking too long to load. Check your internet connection, then tap Retry.";
+        var retry=document.getElementById("tasviaMagicRetry");
+        if(!retry){
+          retry=document.createElement("button");
+          retry.id="tasviaMagicRetry";retry.type="button";retry.textContent="Retry Parent Link";
+          retry.style.cssText="display:block;margin:14px auto;padding:11px 18px;border:0;border-radius:12px;background:#F2AC10;color:#102858;font-weight:700;cursor:pointer";
+          retry.onclick=function(){clearTimeout(watchdog);window.__tasviaLoginInFlight="";start(code,pin,fromDirectLink,false);};
+          msg.insertAdjacentElement("afterend",retry);
+        }
+      }
+    },20000);
     function load(){
       attempt++;
       read(code).then(function(d){
@@ -866,6 +882,8 @@ document.body.innerHTML=
           var enteredPin=String(pin||"").replace(/\D/g,"").slice(-4);
           if(!/^\d{4}$/.test(storedPin)||storedPin!==enteredPin) throw new Error("Invalid PIN");
         }
+        settled=true;clearTimeout(watchdog);
+        var retryButton=document.getElementById("tasviaMagicRetry");if(retryButton)retryButton.remove();
         render(d,code);
         window.__tasviaLoginInFlight="";
         try{if(location.hostname==="apk.tasviaacademy.com"){history.replaceState(null,"",location.pathname+"?code="+encodeURIComponent(code));}}catch(_){}
@@ -875,8 +893,10 @@ document.body.innerHTML=
           setTimeout(load,Math.min(1500*attempt,4500));
           return;
         }
+        settled=true;clearTimeout(watchdog);
         window.__tasviaLoginInFlight="";
-        var msg=document.getElementById("studentLoginMsg");
+        var msg=document.getElementById("studentLoginMsg")||document.getElementById("msg");
+        var retryButton=document.getElementById("tasviaMagicRetry");if(retryButton)retryButton.remove();
         if(msg){
           var m=String(e&&e.message||"");
           if(m==="Invalid PIN") msg.textContent="Invalid Parent PIN.";
