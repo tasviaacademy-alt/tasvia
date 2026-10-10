@@ -1458,19 +1458,35 @@ let gkBackupRows=[],gkBackupLoaded=false,gkBackupLoading=false;
 function ensureGKBackup(){
   if(!db||gkBackupLoaded||gkBackupLoading)return;
   gkBackupLoading=true;
-  // Date is a single indexed field in Firestore, so keep the archive query bounded
-  // while reliably loading the newest records first.
-  db.collection("gkBackup").orderBy("date","desc").limit(500).get().then(snap=>{
+  const archive=db.collection("gkBackup");
+  // Avoid orderBy so mixed date records cannot break the archive query.
+  archive.limit(500).get().then(async snap=>{
     gkBackupRows=snap.docs.map(d=>({id:d.id,...d.data()}))
       .filter(x=>x&&Array.isArray(x.questions))
       .sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")));
+    // Save the published daily set once per date; never overwrite an existing archive.
+    try{
+      const response=await fetch("./daily-gk.json?backup="+Date.now(),{cache:"no-store",credentials:"omit"});
+      if(response.ok){
+        const daily=await response.json();
+        const date=String(daily&&daily.date||"").trim();
+        const questions=Array.isArray(daily&&daily.questions)?daily.questions:[];
+        if(/^\d{4}-\d{2}-\d{2}$/.test(date)&&questions.length){
+          const id="daily_"+date;
+          if(!snap.docs.some(d=>d.id===id)){
+            const savedQuestions=questions.slice(0,5).map(q=>({q:String(q.q||""),a:String(q.a||"")}));
+            await archive.doc(id).set({name:"Daily GK Archive",date:date,questions:savedQuestions,source:"daily-gk.json",archivedAt:firebase.firestore.FieldValue.serverTimestamp()});
+            gkBackupRows.unshift({id:id,name:"Daily GK Archive",date:date,questions:savedQuestions,source:"daily-gk.json"});
+          }
+        }
+      }
+    }catch(backupError){console.warn("Daily GK snapshot was not saved; existing archive is still available.",backupError);}
     gkBackupLoaded=true;
     gkBackupLoading=false;
     render();
   }).catch(e=>{
     gkBackupLoading=false;
     console.error("GK backup load failed:",e);
-    // Keep the page usable even if the archive is temporarily unavailable.
     gkBackupRows=[];
     gkBackupLoaded=true;
     render();
