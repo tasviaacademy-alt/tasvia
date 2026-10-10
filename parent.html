@@ -1271,5 +1271,59 @@ window.__tasviaLoadLearning=function(kind,body){if(!body)return;body.setAttribut
 // Learning sections are loaded directly by the active parent-section overlay.
 })();
 </script>
+
+<style id="tasvia-sound-toggle-style">
+#tasvia-ambient-sound-toggle{position:fixed;top:calc(env(safe-area-inset-top,0px) + 12px);right:12px;z-index:2147483000;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:40px;padding:9px 13px;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:rgba(11,36,85,.94);color:#fff;font:700 12px/1.2 system-ui,-apple-system,sans-serif;box-shadow:0 5px 18px rgba(0,0,0,.18);cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+#tasvia-ambient-sound-toggle .sound-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#D5A647}
+#tasvia-ambient-sound-toggle[aria-pressed="true"] .sound-dot{background:#67D6A1;box-shadow:0 0 0 3px rgba(103,214,161,.16)}
+@media(max-width:520px){#tasvia-ambient-sound-toggle{top:calc(env(safe-area-inset-top,0px) + 8px);right:8px;min-height:36px;padding:8px 10px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){#tasvia-ambient-sound-toggle{transition:none}}
+</style>
+<script id="tasvia-sound-toggle-script">
+(function(){
+  if(window.__tasviaSoundToggleInstalled)return;
+  window.__tasviaSoundToggleInstalled=true;
+  var audioCtx=null,master=null,oscillators=[],enabled=false;
+  function setLabel(){
+    var b=document.getElementById("tasvia-ambient-sound-toggle");if(!b)return;
+    b.setAttribute("aria-pressed",enabled?"true":"false");
+    b.innerHTML='<span class="sound-dot" aria-hidden="true"></span><span>'+(enabled?"Sound On":"Sound Off")+'</span>';
+    b.setAttribute("aria-label",enabled?"Turn background sound off":"Turn background sound on");
+  }
+  function stopSound(){
+    enabled=false;
+    if(master&&audioCtx){try{master.gain.cancelScheduledValues(audioCtx.currentTime);master.gain.setTargetAtTime(0,audioCtx.currentTime,.25);}catch(e){}}
+    window.setTimeout(function(){oscillators.forEach(function(o){try{o.stop()}catch(e){}});oscillators=[];if(audioCtx){try{audioCtx.close()}catch(e){}audioCtx=null;master=null;}},900);
+    setLabel();
+    try{localStorage.setItem("tasvia-parent-sound","off")}catch(e){}
+  }
+  async function startSound(){
+    var AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC){alert("Background sound is not supported by this browser.");return;}
+    try{
+      if(audioCtx){try{await audioCtx.close()}catch(e){}}
+      audioCtx=new AC();await audioCtx.resume();
+      master=audioCtx.createGain();master.gain.setValueAtTime(.0001,audioCtx.currentTime);master.gain.setTargetAtTime(.018,audioCtx.currentTime,.8);master.connect(audioCtx.destination);
+      // Soft, low-volume ambient chord; starts only after the user taps Sound On.
+      [174.61,220,261.63].forEach(function(freq,i){
+        var o=audioCtx.createOscillator(),g=audioCtx.createGain();
+        o.type="sine";o.frequency.value=freq;g.gain.value=[.42,.27,.16][i];
+        o.connect(g);g.connect(master);o.start();oscillators.push(o);
+      });
+      enabled=true;setLabel();
+      try{localStorage.setItem("tasvia-parent-sound","on")}catch(e){}
+    }catch(err){console.warn("TASVIA background sound unavailable",err);stopSound();alert("Could not start sound. Please try again.");}
+  }
+  function install(){
+    if(!document.body)return;
+    var b=document.getElementById("tasvia-ambient-sound-toggle");
+    if(!b){b=document.createElement("button");b.id="tasvia-ambient-sound-toggle";b.type="button";b.innerHTML='<span class="sound-dot" aria-hidden="true"></span><span>Sound Off</span>';b.setAttribute("aria-pressed","false");b.setAttribute("aria-label","Turn background sound on");document.body.appendChild(b);}
+    b.onclick=function(){if(enabled)stopSound();else startSound();};
+    setLabel();
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});else install();
+})();
+</script>
+
 </body>
 </html>
