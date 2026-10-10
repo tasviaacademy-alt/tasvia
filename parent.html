@@ -853,16 +853,16 @@ document.body.innerHTML=
     var settled=false;
     var watchdog=setTimeout(function(){
       if(settled)return;
-      var msg=document.getElementById("studentLoginMsg")||document.getElementById("msg");
+      var msg=document.getElementById("msg")||document.getElementById("studentLoginMsg");
       if(msg){
-        msg.textContent="The parent link is taking too long to load. Check your internet connection, then tap Retry.";
+        msg.innerHTML="The parent link is taking too long to load. Check your internet connection, then tap Retry.";
         var retry=document.getElementById("tasviaMagicRetry");
         if(!retry){
           retry=document.createElement("button");
           retry.id="tasviaMagicRetry";retry.type="button";retry.textContent="Retry Parent Link";
           retry.style.cssText="display:block;margin:14px auto;padding:11px 18px;border:0;border-radius:12px;background:#F2AC10;color:#102858;font-weight:700;cursor:pointer";
           retry.onclick=function(){clearTimeout(watchdog);window.__tasviaLoginInFlight="";start(code,pin,fromDirectLink,false);};
-          msg.insertAdjacentElement("afterend",retry);
+          msg.appendChild(retry);
         }
       }
     },20000);
@@ -895,7 +895,7 @@ document.body.innerHTML=
         }
         settled=true;clearTimeout(watchdog);
         window.__tasviaLoginInFlight="";
-        var msg=document.getElementById("studentLoginMsg")||document.getElementById("msg");
+        var msg=document.getElementById("msg")||document.getElementById("studentLoginMsg");
         var retryButton=document.getElementById("tasviaMagicRetry");if(retryButton)retryButton.remove();
         if(msg){
           var m=String(e&&e.message||"");
