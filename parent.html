@@ -730,6 +730,7 @@ document.body.innerHTML=
       '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">📝</span><span>Tests'+tasviaUnread("tests",JSON.stringify(tests))+'</span></button><div class="action-content">'+(testRows?'<table>'+testRows+'</table>':'<div class="empty">No test marks yet.</div>')+'</div></div>'+
       '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">🧮</span><span>BODMAS Practice</span></button><div class="action-content"><div class="learning-placeholder" data-learning="bodmas"><div class="empty">Tap to start BODMAS Practice</div></div></div></div>'+
       '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">📞</span><span>Contact</span></button><div class="action-content"><div class="contact-data"><div><b>📞 TASVIA Academy</b><br><span>+91 78421 38739</span></div><div style="margin-top:8px;padding:10px 12px;background:#F7F9FC;border:1px solid var(--line);border-radius:10px"><b>📍 Address</b><br><span>Gangastan Phase 2, Road No. 1,<br>Srinivasa Nilayam, 2nd Floor,<br>Nizamabad, Telangana</span></div><div class="contact-actions" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px"><a href="tel:+917842138739" class="btn" style="background:#0B2455;text-align:center">📞 Call Now</a><a href="https://wa.me/917842138739?text=Hello%20TASVIA%20Academy%2C%20I%20need%20assistance." target="_blank" rel="noopener" class="btn" style="background:#18794E;text-align:center">💬 WhatsApp</a></div></div></div></div>'+
+      '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">💬</span><span>Complaint / Suggestion</span></button><div class="action-content"><div class="section-note">Share feedback, a concern, or an idea with TASVIA Academy. Your message will open in WhatsApp for you to review and send.</div><form class="tasvia-feedback-form" onsubmit="return window.__tasviaSendFeedback(event,this)" style="display:grid;gap:13px"><label style="display:grid;gap:6px;font-weight:700;color:#182136">Feedback type<select name="kind" required style="width:100%;padding:12px;border:1px solid #d5dce6;border-radius:12px;font:inherit;background:#fff"><option value="Suggestion">Suggestion</option><option value="Complaint">Complaint</option><option value="Appreciation">Appreciation</option><option value="Other">Other</option></select></label><label style="display:grid;gap:6px;font-weight:700;color:#182136">Your message<textarea name="message" required minlength="5" maxlength="1500" rows="5" placeholder="Write your complaint or suggestion here..." style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #d5dce6;border-radius:12px;font:inherit;resize:vertical"></textarea></label><button type="submit" class="btn gold" style="border:0;cursor:pointer">Send via WhatsApp</button><small style="color:#667085">Nothing is sent until you confirm sending in WhatsApp.</small></form></div></div>'+
       '<div id="feeDuePopup" class="fee-popup-backdrop" aria-hidden="true">'+
       '<div class="fee-popup" role="dialog" aria-modal="true" aria-labelledby="feeDueTitle">'+
       '<div class="fee-popup-icon">⚠️</div><h3 id="feeDueTitle">Fee Due</h3>'+
@@ -835,6 +836,22 @@ document.body.innerHTML=
   }catch(e){console.error("TASVIA parent section",e);alert("Unable to open this section. Please refresh and try again.");}
   return false;
 }
+  window.__tasviaSendFeedback=function(ev,form){
+    try{
+      if(ev)ev.preventDefault();
+      if(!form||!form.reportValidity())return false;
+      var kind=String(form.elements.kind.value||"Suggestion").trim();
+      var message=String(form.elements.message.value||"").trim();
+      if(message.length<5){alert("Please enter a little more detail.");return false;}
+      var student=(document.querySelector(".dash-name")||{}).textContent||"Parent";
+      var studentClass=(document.querySelector(".dash-class")||{}).textContent||"";
+      var text="TASVIA Academy Parent Portal Feedback%0A".replace("%0A","\\n")+"Type: "+kind+"\\nStudent: "+student.trim()+"\\n"+studentClass.trim()+"\\nMessage: "+message;
+      var url="https://wa.me/917842138739?text="+encodeURIComponent(text);
+      var win=window.open(url,"_blank","noopener,noreferrer");
+      if(!win)window.location.href=url;
+    }catch(err){console.error("TASVIA feedback form",err);alert("Unable to open WhatsApp. Please use the Contact button.");}
+    return false;
+  };
   window.__tasviaOpenSection=openParentSection;
   document.addEventListener('click',function(ev){
     var hb=ev.target&&ev.target.closest?ev.target.closest('.hw-complete-btn'):null;
