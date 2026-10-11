@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-08-v82">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-11-v83-static-gk">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -1267,7 +1267,7 @@ window.__tasviaLoadLearning=function(kind,body){if(!body)return;body.setAttribut
       }
       renderGK(body,d);
     }else renderCurrent(body,d)
-  }catch(err){console.error("TASVIA learning render",err);if(kind==="gk")renderGK(body,fallback);else renderCurrent(body,fallback)}}learningFetch(path+"?v=20261007-v69").then(showLearning).catch(function(e){console.warn("TASVIA learning fetch",e);showLearning(fallback)});};
+  }catch(err){console.error("TASVIA learning render",err);if(kind==="gk")renderGK(body,fallback);else renderCurrent(body,fallback)}}learningFetch(path+"?v=20261011-static-gk-v83").then(showLearning).catch(function(e){console.warn("TASVIA learning fetch",e);showLearning(fallback)});};
 // Learning sections are loaded directly by the active parent-section overlay.
 })();
 </script>
