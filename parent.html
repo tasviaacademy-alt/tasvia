@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-11-v84-static-gk-categories">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-11-v85-current-affairs-categories">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -1119,13 +1119,15 @@ function learningUrl(v){
 }
 function renderCurrent(body,data){
   var items=Array.isArray(data.items)?data.items:[],quiz=Array.isArray(data.quiz)?data.quiz:[];
-  var h='<div class="learning-meta"><span class="learning-pill">DAILY CURRENT AFFAIRS</span><span>'+learningEsc(data.date||"")+'</span></div><div class="learning-grid">';
-  items.slice(0,10).forEach(function(x){
-    var u=learningUrl(x.url);
-    h+='<article class="learning-card"><h4>'+learningEsc(x.category||"News")+' · '+learningEsc(x.title||x.text||"")+'</h4><p>'+learningEsc(x.text||x.title||"")+'</p><div class="learning-source">'+learningEsc(x.source||"")+'</div>'+(u?'<div class="acts" style="margin-top:10px"><a class="btn gold" href="'+learningEsc(u)+'" target="_blank" rel="noopener noreferrer">Learn More →</a></div>':'')+'</article>';
-  });
+  var order=["National","International","Economy","Science & Technology","Environment","Government Schemes","Sports"];
+  var icons={"National":"🇮🇳","International":"🌐","Economy":"💹","Science & Technology":"🔬","Environment":"🌱","Government Schemes":"🏛️","Sports":"🏆"};
+  var groups={};items.slice(0,10).forEach(function(x){var c=String(x.category||"National");if(!groups[c])groups[c]=[];groups[c].push(x)});
+  var h='<div class="learning-meta"><span class="learning-pill">DAILY CURRENT AFFAIRS</span><span>'+learningEsc(data.date||"")+'</span></div>';
+  var categoryOrder=order.concat(Object.keys(groups).filter(function(c){return order.indexOf(c)<0}));
+  categoryOrder.forEach(function(c){if(!groups[c]||!groups[c].length)return;h+='<section class="learning-current-category"><h3 style="margin:14px 0 8px;color:var(--board);font-size:1.05rem">'+(icons[c]||"📰")+' '+learningEsc(c)+'</h3><div class="learning-grid">';
+    groups[c].forEach(function(x){var u=learningUrl(x.url);h+='<article class="learning-card"><h4>'+learningEsc(x.title||x.text||"")+'</h4><p>'+learningEsc(x.text||x.title||"")+'</p><div class="learning-source">'+learningEsc(x.source||"")+'</div>'+(u?'<div class="acts" style="margin-top:10px"><a class="btn gold" href="'+learningEsc(u)+'" target="_blank" rel="noopener noreferrer">Read More →</a></div>':'')+'</article>'});
+    h+='</div></section>'});
   if(!items.length)h+='<div class="empty">No current affairs available today.</div>';
-  h+='</div>';
   if(quiz.length){
     var pool=items.map(function(x){return x.title||x.text||""}).filter(Boolean);
     h+='<div class="learning-card current-quiz" style="margin-top:14px"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><h3 style="margin:0">Current Affairs Quiz</h3><span class="learning-pill">QUIZ</span></div><p style="margin:6px 0 12px;color:var(--muted)">Test yourself from today’s current affairs.</p><div id="currentAffairsQuiz">';
@@ -1267,7 +1269,7 @@ window.__tasviaLoadLearning=function(kind,body){if(!body)return;body.setAttribut
       }
       renderGK(body,d);
     }else renderCurrent(body,d)
-  }catch(err){console.error("TASVIA learning render",err);if(kind==="gk")renderGK(body,fallback);else renderCurrent(body,fallback)}}learningFetch(path+"?v=20261011-static-gk-v84").then(showLearning).catch(function(e){console.warn("TASVIA learning fetch",e);showLearning(fallback)});};
+  }catch(err){console.error("TASVIA learning render",err);if(kind==="gk")renderGK(body,fallback);else renderCurrent(body,fallback)}}learningFetch(path+"?v=20261011-learning-v85").then(showLearning).catch(function(e){console.warn("TASVIA learning fetch",e);showLearning(fallback)});};
 // Learning sections are loaded directly by the active parent-section overlay.
 })();
 </script>
