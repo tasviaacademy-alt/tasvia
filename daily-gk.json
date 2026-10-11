@@ -1,31 +1,31 @@
 {
   "date": "2026-10-11",
-  "title": "Daily General Knowledge",
+  "title": "Daily Static General Knowledge",
   "questions": [
     {
-      "id": "otq-geography-670",
-      "q": "Which of the following organizations is Luxembourg a member of?",
-      "a": "All of these"
+      "id": "static-india-capital-20261011",
+      "q": "What is the capital of India?",
+      "a": "New Delhi."
     },
     {
-      "id": "otq-animals-1290",
-      "q": "Why are pigeon nests or eggs rarely seen?",
-      "a": "Pigeons are cliff dwellers and build their nests in high places."
+      "id": "static-india-bird-20261011",
+      "q": "What is the national bird of India?",
+      "a": "The Indian peacock."
     },
     {
-      "id": "otq-geography-694",
-      "q": "On which of the Philippine islands is the active Taal Volcano located?",
-      "a": "Luzon"
+      "id": "static-science-planet-20261011",
+      "q": "Which is the largest planet in our Solar System?",
+      "a": "Jupiter."
     },
     {
-      "id": "otq-animals-1022",
-      "q": "Is it true that goldfish only have a 3-second memory?",
-      "a": "No"
+      "id": "static-india-president-20261011",
+      "q": "Who was the first President of India?",
+      "a": "Dr. Rajendra Prasad."
     },
     {
-      "id": "otq-brain-teasers-2336",
-      "q": "To ESCHEW something means to be attracted to it.",
-      "a": "False"
+      "id": "static-science-water-20261011",
+      "q": "What is the chemical formula of water?",
+      "a": "H₂O."
     }
   ]
 }
