@@ -1,31 +1,66 @@
 {
   "date": "2026-10-11",
-  "title": "Daily Static General Knowledge",
+  "title": "Static General Knowledge",
   "questions": [
     {
-      "id": "static-india-capital-20261011",
+      "id": "static-india-capital",
+      "category": "Indian General Knowledge",
       "q": "What is the capital of India?",
       "a": "New Delhi."
     },
     {
-      "id": "static-india-bird-20261011",
-      "q": "What is the national bird of India?",
-      "a": "The Indian peacock."
-    },
-    {
-      "id": "static-science-planet-20261011",
-      "q": "Which is the largest planet in our Solar System?",
-      "a": "Jupiter."
-    },
-    {
-      "id": "static-india-president-20261011",
+      "id": "static-india-president",
+      "category": "Indian General Knowledge",
       "q": "Who was the first President of India?",
       "a": "Dr. Rajendra Prasad."
     },
     {
-      "id": "static-science-water-20261011",
+      "id": "static-world-continents",
+      "category": "World GK",
+      "q": "How many continents are there in the commonly taught seven-continent model?",
+      "a": "Seven."
+    },
+    {
+      "id": "static-world-oceans",
+      "category": "World GK",
+      "q": "Which is the largest ocean on Earth?",
+      "a": "The Pacific Ocean."
+    },
+    {
+      "id": "static-science-planet",
+      "category": "Science GK",
+      "q": "Which is the largest planet in our Solar System?",
+      "a": "Jupiter."
+    },
+    {
+      "id": "static-science-water",
+      "category": "Science GK",
       "q": "What is the chemical formula of water?",
       "a": "H₂O."
+    },
+    {
+      "id": "static-maths-triangle",
+      "category": "Mathematics GK",
+      "q": "How many sides does a triangle have?",
+      "a": "Three."
+    },
+    {
+      "id": "static-maths-right-angle",
+      "category": "Mathematics GK",
+      "q": "How many degrees are in a right angle?",
+      "a": "90 degrees."
+    },
+    {
+      "id": "static-competitive-national-bird",
+      "category": "Competitive Exam GK",
+      "q": "What is the national bird of India?",
+      "a": "The Indian peacock."
+    },
+    {
+      "id": "static-competitive-national-animal",
+      "category": "Competitive Exam GK",
+      "q": "What is the national animal of India?",
+      "a": "The Bengal tiger."
     }
   ]
 }
