@@ -1283,7 +1283,7 @@ window.__tasviaLoadLearning=function(kind,body){if(!body)return;body.setAttribut
 (function(){
   if(window.__tasviaSoundToggleInstalled)return;
   window.__tasviaSoundToggleInstalled=true;
-  var audioCtx=null,master=null,oscillators=[],enabled=false;
+  var audioCtx=null,master=null,oscillators=[],enabled=false,stopTimer=null;
   function setLabel(){
     var b=document.getElementById("tasvia-ambient-sound-toggle");if(!b)return;
     b.setAttribute("aria-pressed",enabled?"true":"false");
@@ -1292,12 +1292,20 @@ window.__tasviaLoadLearning=function(kind,body){if(!body)return;body.setAttribut
   }
   function stopSound(){
     enabled=false;
+    if(stopTimer!==null){window.clearTimeout(stopTimer);stopTimer=null;}
     if(master&&audioCtx){try{master.gain.cancelScheduledValues(audioCtx.currentTime);master.gain.setTargetAtTime(0,audioCtx.currentTime,.25);}catch(e){}}
-    window.setTimeout(function(){oscillators.forEach(function(o){try{o.stop()}catch(e){}});oscillators=[];if(audioCtx){try{audioCtx.close()}catch(e){}audioCtx=null;master=null;}},900);
+    stopTimer=window.setTimeout(function(){
+      stopTimer=null;
+      if(enabled)return;
+      oscillators.forEach(function(o){try{o.stop()}catch(e){}});
+      oscillators=[];
+      if(audioCtx){try{audioCtx.close()}catch(e){}audioCtx=null;master=null;}
+    },900);
     setLabel();
     try{localStorage.setItem("tasvia-parent-sound","off")}catch(e){}
   }
   async function startSound(){
+    if(stopTimer!==null){window.clearTimeout(stopTimer);stopTimer=null;}
     var AC=window.AudioContext||window.webkitAudioContext;
     if(!AC){alert("Background sound is not supported by this browser.");return;}
     try{
