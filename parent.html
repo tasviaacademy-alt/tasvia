@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-11-v85-current-affairs-categories">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-11-v86-current-affairs-categories">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -1119,9 +1119,8 @@ function learningUrl(v){
 }
 function renderCurrent(body,data){
   var items=Array.isArray(data.items)?data.items:[],quiz=Array.isArray(data.quiz)?data.quiz:[];
-  var order=["National","International","Economy","Science & Technology","Environment","Government Schemes","Sports"];
-  var icons={"National":"🇮🇳","International":"🌐","Economy":"💹","Science & Technology":"🔬","Environment":"🌱","Government Schemes":"🏛️","Sports":"🏆"};
-  var groups={};items.slice(0,10).forEach(function(x){var c=String(x.category||"National");if(!groups[c])groups[c]=[];groups[c].push(x)});
+  var order=["National Affairs","International Affairs","Government Schemes & Policies","Economy & Banking","Science & Technology","Environment & Ecology","Sports","Awards & Honours","Important Appointments","Important Days & Themes","Education & Youth","Telangana State Affairs","Defence & Security","Reports, Rankings & Indexes","Children’s GK Quiz"];
+  var icons={"National Affairs":"🇮🇳","International Affairs":"🌐","Government Schemes & Policies":"🏛️","Economy & Banking":"💹","Science & Technology":"🔬","Environment & Ecology":"🌱","Sports":"🏆","Awards & Honours":"🏅","Important Appointments":"👔","Important Days & Themes":"🗓️","Education & Youth":"🎓","Telangana State Affairs":"🟣","Defence & Security":"🛡️","Reports, Rankings & Indexes":"📊","Children’s GK Quiz":"💡"};  var groups={};items.slice(0,10).forEach(function(x){var c=String(x.category||"National");if(!groups[c])groups[c]=[];groups[c].push(x)});
   var h='<div class="learning-meta"><span class="learning-pill">DAILY CURRENT AFFAIRS</span><span>'+learningEsc(data.date||"")+'</span></div>';
   var categoryOrder=order.concat(Object.keys(groups).filter(function(c){return order.indexOf(c)<0}));
   categoryOrder.forEach(function(c){if(!groups[c]||!groups[c].length)return;h+='<section class="learning-current-category"><h3 style="margin:14px 0 8px;color:var(--board);font-size:1.05rem">'+(icons[c]||"📰")+' '+learningEsc(c)+'</h3><div class="learning-grid">';
@@ -1269,7 +1268,7 @@ window.__tasviaLoadLearning=function(kind,body){if(!body)return;body.setAttribut
       }
       renderGK(body,d);
     }else renderCurrent(body,d)
-  }catch(err){console.error("TASVIA learning render",err);if(kind==="gk")renderGK(body,fallback);else renderCurrent(body,fallback)}}learningFetch(path+"?v=20261011-learning-v85").then(showLearning).catch(function(e){console.warn("TASVIA learning fetch",e);showLearning(fallback)});};
+  }catch(err){console.error("TASVIA learning render",err);if(kind==="gk")renderGK(body,fallback);else renderCurrent(body,fallback)}}learningFetch(path+"?v=20261011-learning-v86").then(showLearning).catch(function(e){console.warn("TASVIA learning fetch",e);showLearning(fallback)});};
 // Learning sections are loaded directly by the active parent-section overlay.
 })();
 </script>
