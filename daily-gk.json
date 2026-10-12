@@ -3,29 +3,29 @@
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "otq-geography-3",
-      "q": "What is the capital of Belgium?",
-      "a": "Brussels"
+      "id": "static-national-animal",
+      "q": "What is the national animal of India?",
+      "a": "The Bengal tiger."
     },
     {
-      "id": "otq-geography-4",
-      "q": "What is the capital of Greece?",
-      "a": "Athens"
+      "id": "static-india-independence",
+      "q": "On which date did India become independent?",
+      "a": "15 August 1947."
     },
     {
-      "id": "otq-geography-5",
-      "q": "What is the capital of Italy?",
-      "a": "Rome"
+      "id": "static-water-formula",
+      "q": "What is the chemical formula of water?",
+      "a": "H₂O."
     },
     {
-      "id": "otq-geography-6",
-      "q": "What is the capital of Israel?",
-      "a": "Jerusalem"
+      "id": "static-indian-parliament",
+      "q": "What are the two houses of the Parliament of India?",
+      "a": "Lok Sabha and Rajya Sabha."
     },
     {
-      "id": "otq-geography-7",
-      "q": "What is the capital of Germany?",
-      "a": "Berlin"
+      "id": "static-renewable-energy",
+      "q": "Which energy source uses sunlight to generate electricity?",
+      "a": "Solar energy."
     }
   ]
 }
