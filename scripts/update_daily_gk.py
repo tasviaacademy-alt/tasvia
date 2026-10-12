@@ -15,6 +15,9 @@ HISTORY_DIR.mkdir(exist_ok=True)
 TODAY_HISTORY = HISTORY_DIR / f"{date_str}.json"
 
 bank = json.loads(BANK_PATH.read_text(encoding="utf-8"))["questions"]
+EXTRA_BANK_PATH = Path("static-gk-extra.json")
+if EXTRA_BANK_PATH.exists():
+    bank.extend(json.loads(EXTRA_BANK_PATH.read_text(encoding="utf-8")).get("questions", []))
 
 # If today's set already exists, never regenerate it differently.
 if TODAY_HISTORY.exists():
