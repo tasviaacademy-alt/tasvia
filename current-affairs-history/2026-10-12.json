@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-12",
+  "month": "October 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "National Affairs",
+      "icon": "🇮🇳",
+      "title": "Fresh developments on peaceful protests and police detentions in Delhi",
+      "text": "The Indian Express reports on developments around protests in Delhi, police detentions, and the handling of peaceful assemblies. Students should distinguish reported facts from allegations and follow official court updates.",
+      "source": "The Indian Express, 2026-10-12",
+      "url": "https://indianexpress.com/archive/2026/10/12/"
+    },
+    {
+      "category": "Governance",
+      "icon": "⚖️",
+      "title": "Election Commission and public trust remain in focus",
+      "text": "Current reporting highlights calls for accountability and debate over the credibility of election administration. The issue relates to institutional independence, transparency, and electoral processes.",
+      "source": "India Today, 2026-10-12",
+      "url": "https://www.indiatoday.in/magazine/12-10-2026"
+    },
+    {
+      "category": "International Affairs",
+      "icon": "🌐",
+      "title": "India condemns attack on Riyadh airport and expresses solidarity with Saudi Arabia",
+      "text": "Reporting on 12 October says India condemned an attack on Riyadh airport. The incident highlights civilian safety and the wider regional security situation.",
+      "source": "The Indian Express, 2026-10-12",
+      "url": "https://indianexpress.com/section/india/"
+    },
+    {
+      "category": "Economy & Banking",
+      "icon": "💹",
+      "title": "RBI tightens rules for foreign-exchange derivative positions",
+      "text": "Recent business reporting says the Reserve Bank of India has tightened rules relating to foreign-exchange derivative positions amid pressure on the rupee. The development concerns currency-market stability and risk management.",
+      "source": "The Economic Times, 2026-10-12",
+      "url": "https://m.economictimes.com/news/new-updates/school-assembly-news-headlines-october-12-2026-check-national-international-business-sports-updates-and-thought-of-the-day/articleshow/134869511.cms"
+    },
+    {
+      "category": "Economy",
+      "icon": "📈",
+      "title": "Indian equity markets watch corporate earnings and global cues",
+      "text": "Market coverage for 12 October points to attention on early market indicators, upcoming quarterly earnings, and international economic conditions. Market forecasts can change during the trading session.",
+      "source": "Financial Express, 2026-10-12",
+      "url": "https://www.financialexpress.com/market/share-market-today-live-stock-market-sensex-nifty-gold-silver-rate-12th-october-2026-4358924/"
+    },
+    {
+      "category": "Science & Technology",
+      "icon": "🔬",
+      "title": "Digital public infrastructure remains a focus in technology and policy discussions",
+      "text": "Current analysis discusses how digital public infrastructure can help reduce service-delivery costs and expand access, while raising questions about equitable distribution of benefits.",
+      "source": "The Indian Express, 2026-10-12",
+      "url": "https://indianexpress.com/latest-news/?hl=en-IN"
+    },
+    {
+      "category": "Environment",
+      "icon": "🌱",
+      "title": "Agrivoltaics discussed as a way to combine farming and solar power",
+      "text": "A current opinion piece describes agrivoltaics, which combines agricultural production with solar-energy generation on the same land, as a possible way to support farm incomes and clean energy.",
+      "source": "The Indian Express, 2026-10-12",
+      "url": "https://indianexpress.com/latest-news/?hl=en-IN"
+    },
+    {
+      "category": "Education",
+      "icon": "🎓",
+      "title": "Daily school news briefs cover national, international, business and sports updates",
+      "text": "Daily student news briefings provide a concise way to review developments across major topics. Learners should check original reporting before treating a headline as a confirmed fact.",
+      "source": "The Economic Times, 2026-10-12",
+      "url": "https://m.economictimes.com/news/new-updates/school-assembly-news-headlines-october-12-2026-check-national-international-business-sports-updates-and-thought-of-the-day/articleshow/134869511.cms"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "Which Indian institution is reported to have tightened rules for foreign-exchange derivative positions?",
+      "a": "The Reserve Bank of India (RBI)."
+    },
+    {
+      "q": "Which airport was mentioned in reports condemned by India on 12 October 2026?",
+      "a": "Riyadh airport in Saudi Arabia."
+    },
+    {
+      "q": "What is agrivoltaics?",
+      "a": "Combining agriculture and solar-power generation on the same land."
+    },
+    {
+      "q": "Which broad issue is discussed in reporting about election administration in India?",
+      "a": "Institutional accountability, transparency, and public trust in election administration."
+    },
+    {
+      "q": "What major business topics were highlighted in market coverage on 12 October 2026?",
+      "a": "Early market indicators, upcoming corporate earnings, and global economic conditions."
+    }
+  ]
+}
