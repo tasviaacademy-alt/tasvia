@@ -3,6 +3,7 @@ name: Daily GK Update
 on:
   schedule:
     - cron: "20 0 * * *"
+    - cron: "20 3 * * *"
   workflow_dispatch:
 
 permissions:
