@@ -49,27 +49,26 @@ if len(unused) < 5:
 rng = random.Random(date_str)
 rng.shuffle(unused)
 
-# Prefer a balanced daily set: maximum two questions from one category.
-selected = []
-category_counts = {}
+# Choose one question per category in rounds before allowing any category to repeat.
+# This prevents large geography/animal categories from dominating the daily set.
+by_category = {}
 for item in unused:
-    cat = item.get("category", "general")
-    if category_counts.get(cat, 0) >= 2:
-        continue
-    selected.append({"id": item["id"], "q": item["q"], "a": item["a"]})
-    category_counts[cat] = category_counts.get(cat, 0) + 1
+    by_category.setdefault(item.get("category", "general"), []).append(item)
+
+categories = list(by_category)
+rng.shuffle(categories)
+for items in by_category.values():
+    rng.shuffle(items)
+
+selected = []
+for round_index in range(max((len(items) for items in by_category.values()), default=0)):
+    for category in categories:
+        items = by_category[category]
+        if round_index < len(items) and len(selected) < 5:
+            item = items[round_index]
+            selected.append({"id": item["id"], "q": item["q"], "a": item["a"]})
     if len(selected) == 5:
         break
-
-# If category balancing prevented five, fill from remaining unused questions.
-if len(selected) < 5:
-    selected_ids = {x["id"] for x in selected}
-    for item in unused:
-        if item["id"] in selected_ids:
-            continue
-        selected.append({"id": item["id"], "q": item["q"], "a": item["a"]})
-        if len(selected) == 5:
-            break
 
 if len({x["id"] for x in selected}) != 5:
     raise RuntimeError("Duplicate question IDs detected in today's set.")
