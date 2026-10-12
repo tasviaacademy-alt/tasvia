@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-12",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "otq-geography-3",
+      "q": "What is the capital of Belgium?",
+      "a": "Brussels"
+    },
+    {
+      "id": "otq-geography-4",
+      "q": "What is the capital of Greece?",
+      "a": "Athens"
+    },
+    {
+      "id": "otq-geography-5",
+      "q": "What is the capital of Italy?",
+      "a": "Rome"
+    },
+    {
+      "id": "otq-geography-6",
+      "q": "What is the capital of Israel?",
+      "a": "Jerusalem"
+    },
+    {
+      "id": "otq-geography-7",
+      "q": "What is the capital of Germany?",
+      "a": "Berlin"
+    }
+  ]
+}
