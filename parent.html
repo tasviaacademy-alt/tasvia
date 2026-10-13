@@ -13,6 +13,7 @@
 <meta name="apple-mobile-web-app-title" content="TASVIA">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Hind:wght@400;500;600&family=Noto+Sans+Telugu:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
 <style>
 :root{--bg:#EDF1EE;--card:#fff;--ink:#15201C;--muted:#5B6A63;--line:#D3DCD7;--chip:#E2E9E5;--board:#0B2455;--chalk:#F3F6F1;--gold:#F2AC10;--p:#2B8A55;--a:#C4432A;
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -578,6 +579,7 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     }).join("");
     var tests=Array.isArray(d.tests)?d.tests:[];
     var fees=Array.isArray(d.fees)?d.fees:[];
+    var pays=Array.isArray(d.pays)?d.pays.filter(function(p){return p&&Number(p.a)>0&&p.d;}):[];
     var hw=[];
     if(Array.isArray(d.hw)) hw=d.hw;
     else if(d.hw&&typeof d.hw==="object") Object.keys(d.hw).forEach(function(k){var x=d.hw[k];if(x&&typeof x==="object")hw.push(Object.assign({d:k},x));});
@@ -725,7 +727,7 @@ document.body.innerHTML=
       '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">🔔</span><span>Notice'+tasviaUnread("notice",noticeText)+'</span></button><div class="action-content"><div class="notice-card"><b>Latest Notice</b><p>'+esc(noticeText||"No new notices from TASVIA Academy.")+'</p></div></div></div>'+
       '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">📚</span><span>Homework'+tasviaUnread("homework",JSON.stringify(hw))+'</span></button><div class="action-content">'+(hwRows||'<div class="empty">No homework added yet.</div>')+'</div></div>'+
       '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">📅</span><span>Attendance'+tasviaUnread("attendance",JSON.stringify({att:att,abs:absentDates,yr:yr}))+'</span></button><div class="action-content"><div class="section-note">Academic year: '+yp+' present, '+ya+' absent ('+ypct+'% overall)</div><div class="dash-stats"><div class="dash-stat"><b>'+mp+'</b><small>Present</small></div><div class="dash-stat"><b>'+ma+'</b><small>Absent</small></div><div class="dash-stat"><b>'+mpct+'%</b><small>'+esc(cm||"Latest")+'</small></div></div><div class="absent-dates-box"><b>Absent Dates</b>'+(absentRows||'<div class="empty">No absent dates recorded.</div>')+'</div></div></div>'+
-      '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">💳</span><span>Fee Details'+tasviaUnread("fees",JSON.stringify({fees:fees,currentFee:currentFee}))+'</span></button><div class="action-content">'+(feeRows?'<table>'+feeRows+'</table>':'<div class="empty">No fee records available.</div>')+feeDetailsPay+'</div></div>'+
+      '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">💳</span><span>Fee Details'+tasviaUnread("fees",JSON.stringify({fees:fees,currentFee:currentFee}))+'</span></button><div class="action-content">'+(feeRows?'<table>'+feeRows+'</table>':'<div class="empty">No fee records available.</div>')+'<div style="margin-top:14px;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--card)"><h3 style="margin:0 0 6px">🧾 Fee Receipts</h3><p style="margin:0 0 10px;color:var(--muted);font-size:.9rem">Download receipts for confirmed payments recorded by TASVIA Academy.</p>'+(pays.length?'<button type="button" class="btn gold" onclick="window.__tasviaDownloadAllReceipts()">📥 Download All Receipts (PDF)</button><div style="margin-top:10px">'+pays.map(function(p,i){return '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line)"><span><b>'+esc(p.m||"Fee payment")+'</b><small style="display:block;color:var(--muted)">'+esc(p.d)+' · '+esc(money(p.a))+'</small></span><button type="button" class="btn" onclick="window.__tasviaDownloadReceipt('+i+')">Download PDF</button></div>';}).join('')+'</div>':'<div class="empty">No confirmed payment records are available for receipts yet.</div>')+'</div>'+feeDetailsPay+'</div></div>'+
       '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">🧠</span><span>General Knowledge</span></button><div class="action-content"><div class="learning-placeholder" data-learning="gk"><div class="empty">Tap to open today’s General Knowledge</div></div></div></div>'+
       '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">📰</span><span>Current Affairs</span></button><div class="action-content"><div class="learning-placeholder" data-learning="current"><div class="empty">Tap to open today’s Current Affairs</div></div></div></div>'+
       '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">📝</span><span>Tests'+tasviaUnread("tests",JSON.stringify(tests))+'</span></button><div class="action-content">'+(testRows?'<table>'+testRows+'</table>':'<div class="empty">No test marks yet.</div>')+'</div></div>'+
@@ -837,6 +839,23 @@ document.body.innerHTML=
   }catch(e){console.error("TASVIA parent section",e);alert("Unable to open this section. Please refresh and try again.");}
   return false;
 }
+  function tasviaMakeReceiptDoc(p,doc){
+    var data=window.__tasviaParentData||{};if(!doc)doc=new window.jspdf.jsPDF({unit:"mm",format:"a4"});
+    var receipt="TAS-"+String(p.id||((window.__tasviaParentCode||"STUDENT")+"-"+p.m+"-"+p.d+"-"+p.a)).replace(/[^A-Za-z0-9]/g,"").toUpperCase().slice(-18);
+    doc.setFillColor(11,36,85);doc.rect(0,0,210,38,"F");doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.setFontSize(20);doc.text("TASVIA ACADEMY",105,16,{align:"center"});doc.setFontSize(10);doc.setFont("helvetica","normal");doc.text("INSPIRE • LEARN • GROW • SUCCEED",105,25,{align:"center"});doc.setTextColor(242,172,16);doc.setFontSize(15);doc.setFont("helvetica","bold");doc.text("FEE PAYMENT RECEIPT",105,32,{align:"center"});
+    doc.setTextColor(30,40,50);doc.setFontSize(10);doc.setFont("helvetica","normal");var y=52;doc.text("Receipt No.: "+receipt,18,y);doc.text("Payment Date: "+String(p.d||"—"),130,y);y+=13;doc.setDrawColor(210,218,228);doc.line(18,y,192,y);y+=12;
+    function row(label,value){doc.setFont("helvetica","bold");doc.text(label,20,y);doc.setFont("helvetica","normal");doc.text(doc.splitTextToSize(String(value||"—"),105),78,y);y+=12;}
+    row("Student Name",data.name||"Student");row("Class / Section",data.cls||"—");row("Fee Month",p.m||"Not specified");row("Amount Received","INR "+(Number(p.a)||0).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2}));row("Payment Mode",p.mode||"Not specified");row("Transaction Reference",p.id||"Not recorded");
+    y+=3;doc.setFillColor(232,246,237);doc.roundedRect(18,y,174,15,3,3,"F");doc.setTextColor(31,112,65);doc.setFont("helvetica","bold");doc.setFontSize(12);doc.text("PAYMENT RECORDED",105,y+9,{align:"center"});y+=28;doc.setTextColor(80,90,100);doc.setFont("helvetica","normal");doc.setFontSize(9);doc.text("This receipt reflects a payment recorded in the TASVIA Academy fee ledger.",18,y,{maxWidth:174});doc.text("Please retain this receipt for your records.",18,y+8);return {doc:doc,name:receipt+".pdf"};
+  }
+  window.__tasviaDownloadReceipt=function(index){
+    try{var data=window.__tasviaParentData||{},rows=Array.isArray(data.pays)?data.pays.filter(function(p){return p&&Number(p.a)>0&&p.d;}):[],p=rows[Number(index)];if(!p){alert("Payment receipt not found.");return;}if(!window.jspdf||!window.jspdf.jsPDF){alert("PDF generator is still loading. Please try again in a few seconds.");return;}var r=tasviaMakeReceiptDoc(p);r.doc.save(r.name);}
+    catch(e){console.error("Fee receipt PDF",e);alert("Unable to generate receipt. Please try again.");}
+  };
+  window.__tasviaDownloadAllReceipts=function(){
+    try{var data=window.__tasviaParentData||{},rows=Array.isArray(data.pays)?data.pays.filter(function(p){return p&&Number(p.a)>0&&p.d;}):[];if(!rows.length){alert("No confirmed payment records are available.");return;}if(!window.jspdf||!window.jspdf.jsPDF){alert("PDF generator is still loading. Please try again in a few seconds.");return;}var r=tasviaMakeReceiptDoc(rows[0]),doc=r.doc;for(var i=1;i<rows.length;i++){doc.addPage();tasviaMakeReceiptDoc(rows[i],doc);}doc.save("TASVIA-Fee-Receipts.pdf");}
+    catch(e){console.error("All fee receipts PDF",e);alert("Unable to generate receipts. Please try again.");}
+  };
   window.__tasviaSendFeedback=function(ev,form){
     try{
       if(ev)ev.preventDefault();
