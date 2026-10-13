@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TASVIA Academy – Parent</title>
 <meta name="theme-color" content="#0B2455">
+<link rel="manifest" href="./manifest.json">
 <meta name="robots" content="noindex">
 <link rel="icon" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
@@ -459,6 +460,16 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
 @media(hover:hover){.tag.ok:hover,.tag.bad:hover,.tag.gold:hover{filter:brightness(1.06)}}
 @media(prefers-reduced-motion:reduce){.brand::after,.parent-dashboard::before,.parent-dashboard-item::before,.notice::after,.hw-section-head .hw-count::after{animation:none!important}.fee-qr-wrap,.tag.ok,.tag.bad,.tag.gold{transition:none!important}.fee-qr-wrap:hover{transform:none!important}}
 </style>
+
+<style id="tasvia-parent-install-home">
+.install-home-btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:48px;margin:14px 0 0;padding:12px 16px;border:1px solid rgba(213,166,71,.65);border-radius:13px;background:linear-gradient(120deg,#F2AC10,#FFD66B 52%,#F2AC10);background-size:200% 100%;color:#17120A;font:800 15px/1.3 Hind,system-ui,sans-serif;box-shadow:0 6px 18px rgba(213,166,71,.22);cursor:pointer;touch-action:manipulation;transition:transform .18s ease,box-shadow .18s ease}
+.install-home-btn:active{transform:scale(.985)}
+.install-home-btn:focus-visible{outline:3px solid #D5A647;outline-offset:3px}
+.install-home-help{margin:7px 0 12px;color:#667085;font-size:12px;line-height:1.45;text-align:center}
+.install-home-help strong{color:#0B2455}
+@media(prefers-reduced-motion:reduce){.install-home-btn{transition:none}}
+</style>
+
 </head>
 <body>
 <header><div class="top"><div class="brand"><img class="hlogo" src="./icon-512.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
@@ -468,6 +479,8 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     <h2>Welcome to <span>TASVIA</span></h2>
     <p id="welcomeGreeting">Let’s inspire, learn, grow and succeed together.</p>
     <p class="welcome-tag">INSPIRE • LEARN • GROW • SUCCEED</p>
+    <button type="button" id="addToHomeScreenBtn" class="install-home-btn" aria-describedby="installHomeHelp">📲 Add to Home Screen</button>
+    <p id="installHomeHelp" class="install-home-help">Keep TASVIA Academy on your phone for quick access.</p>
     <form id="studentLoginForm" class="student-login-form" onsubmit="return window.tasviaStudentLogin(event)">
 <label class="student-login-label" for="studentLoginId">Student ID</label><input id="studentLoginId" class="student-login-input" type="text" inputmode="text" autocomplete="username" autocapitalize="characters" spellcheck="false" placeholder="Enter Student ID" required>
 <label class="student-login-label" for="studentLoginPin">Parent PIN</label><input id="studentLoginPin" class="student-login-input" type="password" inputmode="numeric" autocomplete="current-password" maxlength="4" pattern="[0-9]{4}" placeholder="4-digit PIN" required>
@@ -475,6 +488,66 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
   </div>
 </div>
 
+
+<script id="tasvia-parent-install-home-script">
+(function(){
+  "use strict";
+  if("serviceWorker" in navigator && location.protocol==="https:"){
+    navigator.serviceWorker.register("./sw.js?v=87",{scope:"./"}).catch(function(){/* Install guidance remains available without a worker. */});
+  }
+  var deferredPrompt=null;
+  var btn=document.getElementById("addToHomeScreenBtn");
+  var help=document.getElementById("installHomeHelp");
+  if(!btn)return;
+  function isIOS(){
+    return /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+      (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
+  }
+  function isStandalone(){
+    return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone===true;
+  }
+  function setInstalled(){
+    btn.textContent="✓ TASVIA Added to Home Screen";
+    btn.disabled=true;
+    btn.style.opacity=".82";
+    if(help)help.textContent="Open TASVIA Academy from its icon on your phone.";
+  }
+  if(isStandalone()){setInstalled();return;}
+  window.addEventListener("beforeinstallprompt",function(event){
+    event.preventDefault();
+    deferredPrompt=event;
+    btn.textContent="📲 Add to Home Screen";
+    if(help)help.textContent="Tap here, then confirm Add or Install.";
+  });
+  window.addEventListener("appinstalled",function(){
+    deferredPrompt=null;
+    setInstalled();
+  });
+  btn.addEventListener("click",async function(){
+    if(isStandalone()){setInstalled();return;}
+    if(deferredPrompt){
+      try{
+        deferredPrompt.prompt();
+        var choice=await deferredPrompt.userChoice;
+        if(choice && choice.outcome==="accepted") {
+          if(help)help.textContent="TASVIA is being added to your home screen.";
+        } else if(help) {
+          help.textContent="You can install TASVIA any time using this button.";
+        }
+      }catch(_){
+        if(help)help.textContent="Use your browser menu and choose Add to Home Screen.";
+      }
+      deferredPrompt=null;
+      return;
+    }
+    if(isIOS()){
+      alert("To add TASVIA Academy to your iPhone home screen:\n\n1. Open this page in Safari.\n2. Tap the Share button (square with an upward arrow).\n3. Choose “Add to Home Screen”.\n4. Tap “Add”.");
+    }else{
+      alert("To add TASVIA Academy to your home screen:\n\n1. Open this page in Chrome.\n2. Tap the ⋮ menu.\n3. Choose “Install app” or “Add to Home screen”.\n4. Confirm Add or Install.\n\nIf the option is missing, open the portal in Chrome and try again.");
+    }
+  });
+})();
+</script>
 
 <script>
 (function(){
