@@ -1139,17 +1139,29 @@ async function syncPV(){
     }
     for(const [id,raw] of Object.entries(S.students||{})){
       try{
-        const st=Object.assign({},raw||{});
-        if(forceWrite){
-          try{
-            const studentSnap=await db.doc("students/"+id).get();
-            if(studentSnap.exists){
-              const freshStudent=studentSnap.data()||{};
-              Object.assign(st,freshStudent);
-              S.students[id]=Object.assign({},S.students[id]||{},freshStudent);
-            }
-          }catch(e){console.warn("authoritative student refresh",id,e)}
+        // Firestore is the source of truth. Never rebuild a parent view from a
+        // stale local student snapshot after that student has been deleted.
+        let studentSnap;
+        try{
+          studentSnap=await db.doc("students/"+id).get();
+        }catch(e){
+          console.warn("authoritative student check failed; skipping parent sync",id,e);
+          continue;
         }
+        if(!studentSnap.exists){
+          const staleCode=String((raw||{}).pcode||"").trim().toUpperCase();
+          if(staleCode){
+            await db.doc("parentView/"+staleCode).delete().catch(e=>console.warn("stale parent link cleanup",staleCode,e));
+            delete pvCache[staleCode];
+          }
+          await db.doc("parentView/"+id).delete().catch(e=>console.warn("stale student-ID parent view cleanup",id,e));
+          delete S.students[id];
+          delete S.fees[id];
+          delete photoCache[id];
+          continue;
+        }
+        const st=Object.assign({},raw||{},studentSnap.data()||{});
+        S.students[id]=Object.assign({},S.students[id]||{},studentSnap.data()||{});
         let code=String(st.pcode||"").trim().toUpperCase();
         if(!active({id,...st}))continue;
         if(!/^[A-Z0-9]{8,20}$/.test(code)||usedCodes.has(code)){
@@ -1970,7 +1982,7 @@ document.addEventListener("click",async e=>{
     case "copyInfo":copy(infoText());break;
     case "copyReport":copy(reportText({id,...S.students[id]}));break;
     case "close":closeSheet();break;
-    case "delStudent":if(confirmDel(b,"Tap again: deletes all records")){const pc=String((S.students[id]||{}).pcode||"").trim().toUpperCase();try{if(db){/* Revoke the bearer parent link before removing the student. Do not swallow failures here. */if(pc)await db.doc("parentView/"+pc).delete().catch(e=>{if(e&&e.code!=="not-found"&&e.code!=="firestore/not-found")throw e});await db.doc("students/"+id).delete();await Promise.all([db.doc("photos/"+id).delete().catch(()=>{}),db.doc("fees/"+id).delete().catch(()=>{})]);}else{if(pc)remove("parentView/"+pc);remove("photos/"+id);remove("students/"+id);remove("fees/"+id);}delete photoCache[id];delete S.students[id];delete S.fees[id];if(pc){delete pvCache[pc];try{localStorage.removeItem("tasvia-pv")}catch(_){}}closeSheet();render();toast("Student removed. Parent access revoked.");}catch(err){console.error("Student removal failed:",err);toast("Could not fully remove student. Check connection and retry; parent link was not confirmed revoked.");}}break;
+    case "delStudent":if(confirmDel(b,"Tap again: deletes all records")){const pc=String((S.students[id]||{}).pcode||"").trim().toUpperCase();try{if(db){/* Delete the student first: Firestore rules use its existence as the access gate. */await db.doc("students/"+id).delete();/* Remove both the private-code link and Student-ID mirror. */await Promise.all([pc?db.doc("parentView/"+pc).delete().catch(e=>{if(e&&e.code!=="not-found"&&e.code!=="firestore/not-found")throw e}):Promise.resolve(),db.doc("parentView/"+id).delete().catch(e=>{if(e&&e.code!=="not-found"&&e.code!=="firestore/not-found")throw e}),db.doc("photos/"+id).delete().catch(()=>{}),db.doc("fees/"+id).delete().catch(()=>{})]);}else{if(pc)remove("parentView/"+pc);remove("parentView/"+id);remove("photos/"+id);remove("students/"+id);remove("fees/"+id);}delete photoCache[id];delete S.students[id];delete S.fees[id];if(pc){delete pvCache[pc];try{localStorage.removeItem("tasvia-pv")}catch(_){}}closeSheet();render();toast("Student removed. Parent access revoked.");}catch(err){console.error("Student removal failed:",err);toast("Student removal incomplete. Check connection and retry. The student record deletion is the access cutoff.");}}break;
     case "delPay":if(confirmDel(b,"Remove?")){const pid=b.dataset.p,legacy=Array.isArray((S.fees[id]||{}).payments),cur={};payList(id).forEach(x=>{if(x.id!==pid)cur[x.id]=x});S.fees[id]={payments:cur};
       if(!db)saveLocal();else if(legacy)put("fees/"+id,S.fees[id]);else {mergeWrite("fees/"+id,{payments:{[pid]:null}},{});remove("paymentRecords/"+pid);}pvCache[S.students[id]?.pcode]=null;render();schedulePV();studentSheet(id);toast("Payment removed")}break;
     case "remindAll":remindSheet();break;
