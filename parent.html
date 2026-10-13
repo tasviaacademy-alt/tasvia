@@ -492,6 +492,9 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
 <script id="tasvia-parent-install-home-script">
 (function(){
   "use strict";
+  if("serviceWorker" in navigator && location.protocol==="https:"){
+    navigator.serviceWorker.register("./sw.js?v=87",{scope:"./"}).catch(function(){/* Install guidance remains available without a worker. */});
+  }
   var deferredPrompt=null;
   var btn=document.getElementById("addToHomeScreenBtn");
   var help=document.getElementById("installHomeHelp");
