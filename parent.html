@@ -833,6 +833,7 @@ document.body.innerHTML=
       var pd=window.__tasviaParentData||{},list=Array.isArray(pd.hw)?pd.hw:[];
       liveHtml=list.length?list.slice(0,30).map(function(x){return '<div style="padding:14px 4px;border-bottom:1px solid #e1e5eb"><b>'+esc2(x.d||x.date||"")+'</b><div style="margin-top:5px;white-space:pre-wrap">'+esc2(x.hw||x.homework||x.text||"")+'</div>'+(x.note?'<small style="display:block;margin-top:5px;color:#667085">'+esc2(x.note)+'</small>':"")+'</div>'}).join(""):'<div style="padding:30px;text-align:center;color:#667085">No homework has been assigned yet.</div>';
     }
+    var renderAttendanceCalendar=null;
     if(title==="Attendance"){
       var ad=window.__tasviaParentData||{},att=ad.att&&typeof ad.att==="object"?ad.att:{},yr=ad.yr&&typeof ad.yr==="object"?ad.yr:{};
       var yp=Number(yr.p)||0,ya=Number(yr.a)||0,yt=yp+ya,ypct=yt?Math.round(yp*100/yt):0;
@@ -843,7 +844,7 @@ document.body.innerHTML=
       Object.keys(dayMarks).forEach(function(k){if(String(k).length===10&&String(k).charAt(4)==="-"&&String(k).charAt(7)==="-")monthSet[k.slice(0,7)]=true;});
       monthSet[todayMonth]=true;
       var calendarMonths=Object.keys(monthSet).sort().reverse(),selectedMonth=calendarMonths[0]||todayMonth;
-      function renderAttendanceCalendar(month){
+      renderAttendanceCalendar=function(month){
         var parts=String(month||todayMonth).split("-"),yy=Number(parts[0]),mm=Number(parts[1]);
         if(!yy||mm<1||mm>12)return '<div class="empty">Attendance calendar is unavailable.</div>';
         var first=new Date(yy,mm-1,1).getDay(),days=new Date(yy,mm,0).getDate(),rec=att[month]&&typeof att[month]==="object"?att[month]:{};
@@ -857,7 +858,7 @@ document.body.innerHTML=
           html+='<div title="'+esc(iso+(mark==="P"?" · Present":mark==="A"?" · Absent":" · No mark recorded"))+'" style="min-height:45px;min-width:0;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:1px solid '+border+';background:'+bg+';color:'+color+';font-size:13px"><b>'+day+'</b><small style="font-size:8px;font-weight:900;letter-spacing:-.02em">'+label+'</small></div>';
         }
         return html+'</div><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:11px;color:#667085"><span>🟩 Present</span><span>🟥 Absent</span><span>⬜ No mark recorded</span></div><div style="margin-top:10px;color:#667085;font-size:12px">Month totals: '+monthP+' present · '+monthA+' absent. Unmarked days are not assumed to be present.</div>';
-      }
+      };
       var monthOptions=calendarMonths.map(function(m){var p=m.split("-"),dt=new Date(Number(p[0]),Number(p[1])-1,1);return '<option value="'+m+'" '+(m===selectedMonth?'selected':'')+'>'+esc(dt.toLocaleDateString("en-IN",{month:"long",year:"numeric"}))+'</option>';}).join("");
       liveHtml='<div style="font-family:Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;display:grid;gap:14px"><div style="padding:18px;border-radius:20px;background:#132D63;color:#fff"><div style="font-size:10px;font-weight:800;letter-spacing:.12em;color:#E7B95D">ATTENDANCE OVERVIEW</div><b style="display:block;font-size:22px;margin-top:3px">Monthly Attendance</b><div style="margin-top:8px">'+yp+' present · '+ya+' absent ('+ypct+'% overall)</div></div><div style="background:#fff;border:1px solid #DDE3EA;border-radius:20px;padding:16px"><label for="tasviaAttendanceMonth" style="display:block;color:#667085;font-size:12px;font-weight:800">SELECT MONTH</label><select id="tasviaAttendanceMonth" aria-label="Select attendance month" style="width:100%;margin:8px 0 12px;padding:10px;border:1px solid #DDE3EA;border-radius:11px;background:#fff;color:#182136;font:inherit">'+monthOptions+'</select><div id="tasviaAttendanceCalendar">'+renderAttendanceCalendar(selectedMonth)+'</div><div style="margin-top:16px;padding:12px;border:1px solid #F0D7D7;border-radius:14px;background:#FFF8F8"><b style="display:block;margin-bottom:8px;color:#A33A3A">Recent Absent Dates ('+absent.length+')</b>'+(absent.slice(0,10).map(function(x){var dt=new Date(x+"T00:00:00"),label=isNaN(dt.getTime())?x:dt.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});return '<div style="padding:7px 0;border-bottom:1px solid #F2E2E2;color:#A33A3A">📅 '+esc(label)+'</div>';}).join("")||'<div style="color:#667085">No absent dates recorded.</div>')+'</div></div></div>';
     }
