@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-13",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-india-constitution",
+      "q": "When did the Constitution of India come into effect?",
+      "a": "26 January 1950."
+    },
+    {
+      "id": "static-national-bird",
+      "q": "What is the national bird of India?",
+      "a": "The Indian peacock."
+    },
+    {
+      "id": "static-space-isro",
+      "q": "What is the name of India's national space agency?",
+      "a": "ISRO (Indian Space Research Organisation)."
+    },
+    {
+      "id": "static-computer-cpu",
+      "q": "What does CPU stand for?",
+      "a": "Central Processing Unit."
+    },
+    {
+      "id": "static-maths-prime",
+      "q": "What is the smallest prime number?",
+      "a": "2."
+    }
+  ]
+}

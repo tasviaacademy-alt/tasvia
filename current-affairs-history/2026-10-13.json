@@ -1,0 +1,85 @@
+{
+  "date": "2026-10-13",
+  "month": "October 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "National Affairs",
+      "icon": "🇮🇳",
+      "title": "India to host the first BIMSTEC Home Ministers' Meeting in New Delhi",
+      "text": "India is scheduled to host the first BIMSTEC Home Ministers' Meeting on 13 October in New Delhi. The meeting is intended to strengthen regional cooperation on security among member countries.",
+      "source": "The Economic Times, 2026-10-13",
+      "url": "https://m.economictimes.com/news/india/india-to-host-historic-bimstec-home-ministers-meeting-on-october-13-strengthening-security-cooperation-in-south-asia/articleshow/134895112.cms"
+    },
+    {
+      "category": "International Affairs",
+      "icon": "🌐",
+      "title": "Canadian Foreign Minister Anita Anand begins a visit to India",
+      "text": "Canadian Foreign Minister Anita Anand is scheduled to visit India and the United Arab Emirates from 13 to 16 October, with bilateral relations and cooperation among the key areas of engagement.",
+      "source": "The Economic Times, 2026-10-13",
+      "url": "https://m.economictimes.com/news/india/canadian-fm-anita-anand-to-visit-india-on-october-13/articleshow/134895980.cms"
+    },
+    {
+      "category": "Economy & Banking",
+      "icon": "💹",
+      "title": "Indian government bond yields rise after RBI liquidity and currency measures",
+      "text": "Business reporting on 13 October says government bond yields reached a roughly three-and-a-half-year high after recent Reserve Bank of India measures. The movement reflects the effect of liquidity and currency-market policy on borrowing costs.",
+      "source": "The Economic Times, 2026-10-13",
+      "url": "https://m.economictimes.com/markets/bonds/bond-yields-rise-to-3-year-high-on-rbi-liquidity-cut/articleshow/134905259.cms"
+    },
+    {
+      "category": "Markets",
+      "icon": "📈",
+      "title": "Markets watch a possible positive opening as crude oil remains above $106",
+      "text": "The 13 October market briefing reported GIFT Nifty pointing to a positive start for Indian equities, while crude oil prices above $106 and elevated global bond yields remained risks for investors.",
+      "source": "Financial Express, 2026-10-13",
+      "url": "https://www.financialexpress.com/market/share-market-today-live-stock-market-sensex-nifty-gold-silver-rate-13th-october-2026-4359804/"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏏",
+      "title": "Abhishek Sharma's 69 off 30 balls powers India's total against West Indies",
+      "text": "In the third T20I, Abhishek Sharma scored 69 from 30 balls as India posted 223. West Indies finished on 209/7, falling 14 runs short in the chase.",
+      "source": "The Indian Express, 2026-10-13",
+      "url": "https://indianexpress.com/article/sports/cricket/shamar-springer-abhishek-sharma-onslaught-west-indies-vs-india-10917713/"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "Kumar Kushagra replaces injured Rishabh Pant for the first two India A matches",
+      "text": "Rishabh Pant has been ruled out of the first two India A matches against New Zealand A after sustaining a side strain. Kumar Kushagra has been named as his replacement for those matches.",
+      "source": "The Times of India, 2026-10-13",
+      "url": "https://timesofindia.indiatimes.com/sports/cricket/india-vs-new-zealand/rishabh-pant-ruled-out-of-first-two-india-a-matches-against-new-zealand-a-kumar-kushagra-named-replacement/articleshow/134895484.cms"
+    },
+    {
+      "category": "Environment & Disaster Preparedness",
+      "icon": "🌏",
+      "title": "International Day for Disaster Risk Reduction is observed on 13 October",
+      "text": "The annual observance highlights disaster preparedness, risk awareness and measures that help communities reduce the impact of natural and human-made hazards.",
+      "source": "Dainik Jagran English, 2026-10-13",
+      "url": "https://english.dainikjagranmpcg.com/national/india-events-on-october-13-bimstec-meeting-brics-games-forum/article-38101"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "Which regional grouping's Home Ministers' Meeting is India scheduled to host on 13 October 2026?",
+      "a": "BIMSTEC."
+    },
+    {
+      "q": "Which Canadian Foreign Minister is scheduled to visit India from 13 to 16 October 2026?",
+      "a": "Anita Anand."
+    },
+    {
+      "q": "Which Indian central bank's recent measures were linked to the rise in government bond yields?",
+      "a": "The Reserve Bank of India (RBI)."
+    },
+    {
+      "q": "Who scored 69 runs from 30 balls in the third T20I against West Indies?",
+      "a": "Abhishek Sharma."
+    },
+    {
+      "q": "Which annual international observance takes place on 13 October?",
+      "a": "The International Day for Disaster Risk Reduction."
+    }
+  ]
+}

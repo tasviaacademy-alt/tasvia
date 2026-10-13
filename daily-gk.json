@@ -1,31 +1,31 @@
 {
-  "date": "2026-10-12",
+  "date": "2026-10-13",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-national-animal",
-      "q": "What is the national animal of India?",
-      "a": "The Bengal tiger."
+      "id": "static-india-constitution",
+      "q": "When did the Constitution of India come into effect?",
+      "a": "26 January 1950."
     },
     {
-      "id": "static-india-independence",
-      "q": "On which date did India become independent?",
-      "a": "15 August 1947."
+      "id": "static-national-bird",
+      "q": "What is the national bird of India?",
+      "a": "The Indian peacock."
     },
     {
-      "id": "static-water-formula",
-      "q": "What is the chemical formula of water?",
-      "a": "H₂O."
+      "id": "static-space-isro",
+      "q": "What is the name of India's national space agency?",
+      "a": "ISRO (Indian Space Research Organisation)."
     },
     {
-      "id": "static-indian-parliament",
-      "q": "What are the two houses of the Parliament of India?",
-      "a": "Lok Sabha and Rajya Sabha."
+      "id": "static-computer-cpu",
+      "q": "What does CPU stand for?",
+      "a": "Central Processing Unit."
     },
     {
-      "id": "static-renewable-energy",
-      "q": "Which energy source uses sunlight to generate electricity?",
-      "a": "Solar energy."
+      "id": "static-maths-prime",
+      "q": "What is the smallest prime number?",
+      "a": "2."
     }
   ]
 }
