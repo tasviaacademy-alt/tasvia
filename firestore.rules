@@ -124,7 +124,7 @@ service cloud.firestore {
       // even if an old parentView document or saved magic link remains.
       allow get: if
         resource != null
-        && exists(/databases/$(database)/documents/students/$(resource.data.studentId is string && resource.data.studentId != "" ? resource.data.studentId : code));
+        && exists(/databases/$(database)/documents/students/$(resource.data.keys().hasAny(['studentId']) && resource.data.studentId is string && resource.data.studentId != "" ? resource.data.studentId : code));
       allow list: if false;
       allow create, update, delete: if staff();
     }
