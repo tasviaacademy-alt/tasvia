@@ -1351,13 +1351,24 @@ window.__tasviaLoadLearning=function(kind,body){if(!body)return;body.setAttribut
       if(audioCtx){try{await audioCtx.close()}catch(e){}}
       audioCtx=new AC();await audioCtx.resume();
       master=audioCtx.createGain();master.gain.setValueAtTime(.0001,audioCtx.currentTime);master.gain.setTargetAtTime(.018,audioCtx.currentTime,.8);master.connect(audioCtx.destination);
-      // Soft, low-volume ambient chord; starts only after the user taps Sound On.
-      [174.61,220,261.63].forEach(function(freq,i){
+      // Soft, low-volume looping melody; starts only after the user taps Sound On.
+      // Short notes with gentle fades keep the parent portal calm and unobtrusive.
+      var melody=[261.63,329.63,392.00,329.63,293.66,349.23,392.00,523.25];
+      function playMelodyNote(index){
+        if(!enabled||!audioCtx||!master)return;
+        var now=audioCtx.currentTime;
         var o=audioCtx.createOscillator(),g=audioCtx.createGain();
-        o.type="sine";o.frequency.value=freq;g.gain.value=[.42,.27,.16][i];
-        o.connect(g);g.connect(master);o.start();oscillators.push(o);
-      });
-      enabled=true;setLabel();
+        o.type="sine";o.frequency.setValueAtTime(melody[index%melody.length],now);
+        g.gain.setValueAtTime(.0001,now);
+        g.gain.exponentialRampToValueAtTime(.22,now+.09);
+        g.gain.setTargetAtTime(.0001,now+.20,.12);
+        o.connect(g);g.connect(master);o.start(now);o.stop(now+.62);
+        oscillators.push(o);
+        stopTimer=window.setTimeout(function(){
+          if(enabled)playMelodyNote((index+1)%melody.length);
+        },760);
+      }
+      enabled=true;playMelodyNote(0);setLabel();
       try{localStorage.setItem("tasvia-parent-sound","on")}catch(e){}
     }catch(err){console.warn("TASVIA background sound unavailable",err);stopSound();alert("Could not start sound. Please try again.");}
   }
