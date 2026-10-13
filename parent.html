@@ -924,6 +924,11 @@ document.body.innerHTML=
   };
   window.__tasviaOpenSection=openParentSection;
   document.addEventListener('click',function(ev){
+    var notifyButton=ev.target&&ev.target.closest?ev.target.closest("[data-notify-section]"):null;
+    if(notifyButton){
+      var targetTitle=notifyButton.getAttribute("data-notify-section")||"",sectionButtons=document.querySelectorAll(".action-summary");
+      for(var ni=0;ni<sectionButtons.length;ni++){if((sectionButtons[ni].textContent||"").trim().indexOf(targetTitle)>=0){sectionButtons[ni].click();return;}}
+    }
     var hb=ev.target&&ev.target.closest?ev.target.closest('.hw-complete-btn'):null;
     if(hb){
       ev.preventDefault();
