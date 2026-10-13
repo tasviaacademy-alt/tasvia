@@ -702,6 +702,36 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
       var vals=tests.map(function(x){return {m:Number(x.m)||0,x:Number(x.x)||0};}).filter(function(x){return x.x>0;});
       if(vals.length)testAvg=Math.round(vals.reduce(function(s,x){return s+(x.m/x.x)*100;},0)/vals.length)+"%";
     }
+    var hwDoneCount=0;
+    hw.forEach(function(x){try{if(localStorage.getItem(hwDoneKey(x))==="1")hwDoneCount++;}catch(_){ }});
+    var progressTests=tests.slice(0,5).map(function(x){
+      var got=Number(x.m)||0,max=Number(x.x)||0,pct=max?Math.max(0,Math.min(100,Math.round(got*100/max))):0;
+      return '<div style="padding:10px 0;border-top:1px solid #EDF0F4"><div style="display:flex;justify-content:space-between;gap:10px;font-size:13px;color:#344054"><span>'+esc((x.s||"Test")+(x.n?" · "+x.n:""))+'</span><b style="color:#102858">'+got+(max?'/'+max:'')+(max?' · '+pct+'%':'')+'</b></div><div style="height:8px;background:#E9EDF2;border-radius:99px;overflow:hidden;margin-top:7px"><i style="display:block;height:100%;width:'+pct+'%;border-radius:99px;background:linear-gradient(90deg,#16845B,#36A874)"></i></div></div>';
+    }).join("");
+    var progressPanelHtml='<section style="margin-top:14px;padding:17px;border:1px solid #E1E7F0;border-radius:20px;background:#fff;box-shadow:0 6px 20px rgba(16,40,88,.06)" aria-labelledby="tasviaProgressTitle"><h3 id="tasviaProgressTitle" style="margin:0 0 5px;color:#102858;font-size:19px">📈 Learning Progress</h3><p style="margin:0 0 13px;color:#667085;font-size:12px">Recent test results and homework follow-through.</p>'+
+      (progressTests||'<div style="padding:10px 12px;border-radius:12px;background:#F1F8F3;color:#26724A;font-size:13px">Test marks will appear here when teachers publish them.</div>')+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><span style="padding:7px 10px;border-radius:999px;background:#F1F4F8;color:#344054;font-size:12px;font-weight:700">Test average: '+esc(testAvg)+'</span><span style="padding:7px 10px;border-radius:999px;background:#F1F4F8;color:#344054;font-size:12px;font-weight:700">Homework completed: '+hwDoneCount+'/'+hw.length+'</span><span style="padding:7px 10px;border-radius:999px;background:#F1F4F8;color:#344054;font-size:12px;font-weight:700">Attendance: '+ypct+'%</span></div></section>';
+    function needsNotification(key,content){
+      var fp=String(content||"").trim();if(!fp)return false;
+      try{return localStorage.getItem("tasvia-parent-seen:"+String(code||"")+":"+key)!==fp;}catch(_){return true;}
+    }
+    var notificationCandidates=[
+      {key:"notice",title:"New notice",detail:noticeText,section:"Notice",content:noticeText},
+      {key:"homework",title:"Homework updated",detail:hw.length+" recent assignment(s)",section:"Homework",content:JSON.stringify(hw)},
+      {key:"attendance",title:"Attendance updated",detail:yp+" present · "+ya+" absent",section:"Attendance",content:JSON.stringify({att:att,abs:absentDates,yr:yr})},
+      {key:"fees",title:"Fee information updated",detail:feePaid?"Fee status: Paid":(feeUpcoming?"Fee status: Upcoming":"Check your fee status"),section:"Fee Details",content:JSON.stringify({fees:fees,currentFee:currentFee})},
+      {key:"tests",title:"Test marks updated",detail:tests.length+" published test result(s)",section:"Tests",content:JSON.stringify(tests)}
+    ];
+    var newNotifications=notificationCandidates.filter(function(n){
+      if(n.key==="notice"&&!noticeText)return false;
+      if(n.key==="homework"&&!hw.length)return false;
+      if(n.key==="attendance"&&!Object.keys(att).length&&!absentDates.length)return false;
+      if(n.key==="fees"&&!fees.length&&!currentFee)return false;
+      if(n.key==="tests"&&!tests.length)return false;
+      return needsNotification(n.key,n.content);
+    });
+    var notificationCenterHtml='<section style="margin-top:14px;padding:16px;border:1px solid #E1E7F0;border-radius:20px;background:linear-gradient(145deg,#fff,#F8FAFD);box-shadow:0 6px 20px rgba(16,40,88,.06)" aria-labelledby="tasviaNotificationTitle"><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px"><b id="tasviaNotificationTitle" style="font-size:18px;color:#102858">🔔 Updates for You</b><span style="border-radius:999px;background:#C62828;color:#fff;padding:4px 9px;font-size:11px;font-weight:900">'+newNotifications.length+' NEW</span></div>'+
+      (newNotifications.length?newNotifications.map(function(n){return '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid #E9EDF3"><div style="min-width:0"><b style="display:block;color:#182136;font-size:14px">'+esc(n.title)+'</b><small style="display:block;color:#667085;font-size:12px">'+esc(n.detail)+'</small></div><button type="button" data-notify-section="'+esc(n.section)+'" style="flex:0 0 auto;border:1px solid #D7B44C;border-radius:10px;background:#102858;color:#fff;padding:8px 10px;font:700 12px sans-serif;cursor:pointer">View</button></div>';}).join(""):'<div style="padding:10px 12px;border-radius:12px;background:#F1F8F3;color:#26724A;font-size:13px">You’re all caught up. New notices, homework, attendance, fees and test updates will appear here.</div>')+'</section>';
     document.title=name+" - TASVIA Academy";
     function updateParentClock(){var el=document.getElementById("tasviaLiveDateTime");if(!el)return;var now=new Date();try{el.textContent=new Intl.DateTimeFormat("en-IN",{timeZone:"Asia/Kolkata",weekday:"short",day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true}).format(now)+" IST";}catch(_){el.textContent=now.toLocaleString("en-IN")+" IST";}}
 document.body.innerHTML=
@@ -741,7 +771,9 @@ document.body.innerHTML=
       '<div class="dash-stat"><b>'+testAvg+'</b><small>Test Average</small></div>'+
       '<div class="dash-stat"><b class="'+feeClass+'">'+feeLabel+'</b><small>'+(feePaid?"Next due":"Due date")+' · '+esc(feeDate)+'</small></div>'+
       '</div></section>'+
-      '<div class="dash-actions">'+
+      notificationCenterHtml+
+       progressPanelHtml+
+       '<div class="dash-actions">'+
       '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">🔔</span><span>Notice'+tasviaUnread("notice",noticeText)+'</span></button><div class="action-content"><div class="notice-card"><b>Latest Notice</b><p>'+esc(noticeText||"No new notices from TASVIA Academy.")+'</p></div></div></div>'+
       '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">📚</span><span>Homework'+tasviaUnread("homework",JSON.stringify(hw))+'</span></button><div class="action-content">'+(hwRows||'<div class="empty">No homework added yet.</div>')+'</div></div>'+
       '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">📅</span><span>Attendance'+tasviaUnread("attendance",JSON.stringify({att:att,abs:absentDates,yr:yr}))+'</span></button><div class="action-content"><div class="section-note">Academic year: '+yp+' present, '+ya+' absent ('+ypct+'% overall)</div><div class="dash-stats"><div class="dash-stat"><b>'+mp+'</b><small>Present</small></div><div class="dash-stat"><b>'+ma+'</b><small>Absent</small></div><div class="dash-stat"><b>'+mpct+'%</b><small>'+esc(cm||"Latest")+'</small></div></div><div class="absent-dates-box"><b>Absent Dates</b>'+(absentRows||'<div class="empty">No absent dates recorded.</div>')+'</div></div></div>'+
@@ -802,27 +834,20 @@ document.body.innerHTML=
       liveHtml=list.length?list.slice(0,30).map(function(x){return '<div style="padding:14px 4px;border-bottom:1px solid #e1e5eb"><b>'+esc2(x.d||x.date||"")+'</b><div style="margin-top:5px;white-space:pre-wrap">'+esc2(x.hw||x.homework||x.text||"")+'</div>'+(x.note?'<small style="display:block;margin-top:5px;color:#667085">'+esc2(x.note)+'</small>':"")+'</div>'}).join(""):'<div style="padding:30px;text-align:center;color:#667085">No homework has been assigned yet.</div>';
     }
     if(title==="Attendance"){
-      var ad=window.__tasviaParentData||{},att=ad.att&&typeof ad.att==="object"?ad.att:{},months=Object.keys(att).filter(function(k){return /^\d{4}-\d{2}$/.test(k)}).sort().reverse(),cm=months[0]||"",cur=att[cm]&&typeof att[cm]==="object"?att[cm]:{},cp=Number(cur.p)||0,ca=Number(cur.a)||0,ct=cp+ca,cpct=ct?Math.round(cp*100/ct):0,yr=ad.yr&&typeof ad.yr==="object"?ad.yr:{},yp=Number(yr.p)||0,ya=Number(yr.a)||0,yt=yp+ya,ypct=yt?Math.round(yp*100/yt):0;
-      var absent=Array.isArray(ad.abs)?ad.abs.filter(function(x){return /^\d{4}-\d{2}-\d{2}$/.test(String(x));}).sort().reverse():[];
-      var absentList=absent.map(function(x){
-        var dt=new Date(x+"T00:00:00");
-        var label=isNaN(dt.getTime())?x:dt.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
-        return '<div style="display:flex;align-items:center;gap:10px;padding:11px 4px;border-bottom:1px solid #F0E1E1"><span>📅</span><b style="color:#A33A3A">'+esc2(label)+'</b></div>';
-      }).join("");
-      liveHtml='<div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">'+
-        '<div style="background:#fff;border:1px solid #DDE3EA;border-radius:18px;padding:18px 16px;box-shadow:0 5px 16px rgba(16,40,88,.07)">'+
-          '<div style="font-size:21px;line-height:1.35;color:#182136;margin-bottom:12px">Academic year: <b>'+yp+' present, '+ya+' absent ('+ypct+'% overall)</b></div>'+
-          '<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">'+
-            '<div style="min-height:118px;border-radius:18px;background:#2B426F;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px"><strong style="font-size:36px;line-height:1;color:#07152F">'+cp+'</strong><span style="font-size:16px;margin-top:10px;color:#fff">Present</span></div>'+
-            '<div style="min-height:118px;border-radius:18px;background:#2B426F;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px"><strong style="font-size:36px;line-height:1;color:#07152F">'+ca+'</strong><span style="font-size:16px;margin-top:10px;color:#fff">Absent</span></div>'+
-            '<div style="min-height:118px;border-radius:18px;background:#2B426F;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px"><strong style="font-size:36px;line-height:1;color:#07152F">'+cpct+'%</strong><span style="font-size:16px;margin-top:10px;color:#fff">'+esc2(cm||"Current Month")+'</span></div>'+
-          '</div>'+
-          '<div style="margin-top:16px;padding:14px;border:1px solid #F0D7D7;border-radius:16px;background:#FFF8F8">'+
-            '<div style="font-size:15px;font-weight:800;color:#A33A3A;margin-bottom:6px">Absent Dates ('+absent.length+')</div>'+
-            (absentList||'<div style="padding:10px 0;color:#667085">No absent dates recorded.</div>')+
-          '</div>'+
-        '</div>'+
-      '</div>';
+      var ad=window.__tasviaParentData||{},att=ad.att&&typeof ad.att==="object"?ad.att:{},months=Object.keys(att).filter(function(k){return String(k).length===7;}).sort().reverse(),cm=months[0]||"",yr=ad.yr&&typeof ad.yr==="object"?ad.yr:{},yp=Number(yr.p)||0,ya=Number(yr.a)||0,yt=yp+ya,ypct=yt?Math.round(yp*100/yt):0;
+      var dayMarks=ad.attendanceDays&&typeof ad.attendanceDays==="object"?ad.attendanceDays:{};
+      var absent=Array.isArray(ad.abs)?ad.abs.filter(function(x){return String(x).length===10&&String(x).charAt(4)==="-"&&String(x).charAt(7)==="-";}).sort().reverse():[];
+      var todayMonth=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Kolkata",year:"numeric",month:"2-digit"}).format(new Date()),calMonth=cm||todayMonth,parts=calMonth.split("-"),yy=Number(parts[0]),mm=Number(parts[1]),first=new Date(yy,mm-1,1).getDay(),days=new Date(yy,mm,0).getDate(),monthRec=att[calMonth]||{},monthP=Number(monthRec.p)||0,monthA=Number(monthRec.a)||0,monthT=monthP+monthA,monthPct=monthT?Math.round(monthP*100/monthT):0;
+      var calendarHtml='<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin:5px 0 12px"><b style="color:#102858">'+esc(new Date(yy,mm-1,1).toLocaleDateString("en-IN",{month:"long",year:"numeric"}))+'</b><span style="font-size:12px;font-weight:800;color:#16845B">'+(monthT?monthPct+"% attendance":"No monthly totals")+'</span></div><div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px">';
+      ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].forEach(function(w){calendarHtml+='<div style="text-align:center;font-size:10px;font-weight:800;color:#667085;padding:4px 0">'+w+'</div>';});
+      for(var z=0;z<first;z++)calendarHtml+='<div></div>';
+      var todayISO=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Kolkata",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
+      for(var day=1;day<=days;day++){
+        var iso=yy+"-"+String(mm).padStart(2,"0")+"-"+String(day).padStart(2,"0"),mark=String(dayMarks[iso]||"").toUpperCase(),future=iso>todayISO,bg=mark==="P"?"#E8F7EE":mark==="A"?"#FFF0F0":future?"#F6F7F9":"#F8FAFC",border=mark==="P"?"#B9E4CA":mark==="A"?"#F0C3C3":"#E6EAF0",color=mark==="P"?"#176B3A":mark==="A"?"#A32F2F":"#667085",label=mark==="P"?"P":mark==="A"?"A":future?"—":"·";
+        calendarHtml+='<div title="'+esc(iso+(mark==="P"?" · Present":mark==="A"?" · Absent":" · No mark recorded"))+'" style="min-height:45px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:1px solid '+border+';background:'+bg+';color:'+color+';font-size:13px"><b>'+day+'</b><small style="font-size:10px;font-weight:900">'+label+'</small></div>';
+      }
+      calendarHtml+='</div><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:11px;color:#667085"><span>🟩 Present</span><span>🟥 Absent</span><span>⬜ No mark recorded</span></div><div style="margin-top:10px;color:#667085;font-size:12px">Month totals: '+monthP+' present · '+monthA+' absent. Unmarked days are not assumed to be present.</div>';
+      liveHtml='<div style="font-family:Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;display:grid;gap:14px"><div style="padding:18px;border-radius:20px;background:#132D63;color:#fff"><div style="font-size:10px;font-weight:800;letter-spacing:.12em;color:#E7B95D">ATTENDANCE OVERVIEW</div><b style="display:block;font-size:22px;margin-top:3px">Monthly Attendance</b><div style="margin-top:8px">'+yp+' present · '+ya+' absent ('+ypct+'% overall)</div></div><div style="background:#fff;border:1px solid #DDE3EA;border-radius:20px;padding:16px">'+calendarHtml+'<div style="margin-top:16px;padding:12px;border:1px solid #F0D7D7;border-radius:14px;background:#FFF8F8"><b style="display:block;margin-bottom:8px;color:#A33A3A">Recent Absent Dates ('+absent.length+')</b>'+(absent.slice(0,10).map(function(x){var dt=new Date(x+"T00:00:00");var label=isNaN(dt.getTime())?x:dt.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});return '<div style="padding:7px 0;border-bottom:1px solid #F2E2E2;color:#A33A3A">📅 '+esc(label)+'</div>';}).join("")||'<div style="color:#667085">No absent dates recorded.</div>')+'</div></div></div>';
     }
     if(!liveHtml)liveHtml='<div style="padding:30px;text-align:center;color:#667085">No information available yet.</div>';
     var old=document.getElementById("tasviaSectionOverlay");if(old)old.remove();
@@ -892,6 +917,11 @@ document.body.innerHTML=
   };
   window.__tasviaOpenSection=openParentSection;
   document.addEventListener('click',function(ev){
+    var notifyButton=ev.target&&ev.target.closest?ev.target.closest("[data-notify-section]"):null;
+    if(notifyButton){
+      var targetTitle=notifyButton.getAttribute("data-notify-section")||"",sectionButtons=document.querySelectorAll(".action-summary");
+      for(var ni=0;ni<sectionButtons.length;ni++){if((sectionButtons[ni].textContent||"").trim().indexOf(targetTitle)>=0){sectionButtons[ni].click();return;}}
+    }
     var hb=ev.target&&ev.target.closest?ev.target.closest('.hw-complete-btn'):null;
     if(hb){
       ev.preventDefault();
