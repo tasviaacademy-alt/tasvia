@@ -1046,20 +1046,27 @@ document.body.innerHTML=
     return true;
   }
   window.__tasviaRescueStart=start;
-  // Refresh an already-open parent dashboard every 30 seconds.
+  // Fast staff-to-parent sync: refresh while open and when the parent returns.
+  var parentRefreshBusy=false;
+  function refreshParentFromServer(){
+    try{
+      if(!window.__tasviaParentDashboardActive||parentRefreshBusy||document.hidden)return;
+      var code=valid(window.__tasviaAutoCode||"");
+      if(!code)return;
+      parentRefreshBusy=true;
+      read(code).then(function(fresh){
+        if(!fresh)return;
+        var current=window.__tasviaParentData||{};
+        if(Number(fresh.updated||0)>Number(current.updated||0))render(fresh,code);
+      }).catch(function(){}).finally(function(){parentRefreshBusy=false;});
+    }catch(_){parentRefreshBusy=false;}
+  }
   if(!window.__tasviaParentRefreshTimer){
-    window.__tasviaParentRefreshTimer=setInterval(function(){
-      try{
-        if(!window.__tasviaParentDashboardActive)return;
-        var code=valid(window.__tasviaAutoCode||"");
-        if(!code)return;
-        read(code).then(function(fresh){
-          if(!fresh)return;
-          var current=window.__tasviaParentData||{};
-          if(Number(fresh.updated||0)>Number(current.updated||0))render(fresh,code);
-        }).catch(function(){});
-      }catch(_){}
-    },30000);
+    window.__tasviaParentRefreshTimer=setInterval(refreshParentFromServer,10000);
+    window.addEventListener("focus",function(){setTimeout(refreshParentFromServer,100);});
+    window.addEventListener("pageshow",function(){setTimeout(refreshParentFromServer,100);});
+    window.addEventListener("online",function(){setTimeout(refreshParentFromServer,100);});
+    document.addEventListener("visibilitychange",function(){if(!document.hidden)setTimeout(refreshParentFromServer,100);});
   }
   function bootParentPortal(){
     try{
