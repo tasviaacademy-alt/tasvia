@@ -119,7 +119,12 @@ service cloud.firestore {
     // parentView document addressed by their private code. They cannot list
     // the collection or write parent records.
     match /parentView/{code} {
-      allow get: if true;
+      // A parent magic link is valid only while its linked student record exists.
+      // Removing a student from the Staff portal therefore revokes parent access
+      // even if an old parentView document or saved magic link remains.
+      allow get: if
+        resource != null
+        && exists(/databases/$(database)/documents/students/$(resource.data.studentId is string && resource.data.studentId != "" ? resource.data.studentId : code));
       allow list: if false;
       allow create, update, delete: if staff();
     }
