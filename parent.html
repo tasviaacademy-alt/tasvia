@@ -937,6 +937,7 @@ document.body.innerHTML=
       for(var ni=0;ni<sectionButtons.length;ni++){
         if((sectionButtons[ni].textContent||"").trim().indexOf(targetTitle)>=0){
           sectionButtons[ni].click();
+          var notificationPanel=notifyButton.closest(".notification-center");
           var notificationRow=notifyButton.closest(".tasvia-notification-row");
           if(notificationRow)notificationRow.remove();
           var notificationCount=document.querySelector(".tasvia-notification-count");
@@ -945,7 +946,6 @@ document.body.innerHTML=
             notificationCount.textContent=remaining?remaining+" NEW":"ALL CAUGHT UP";
             notificationCount.style.background=remaining?"#C62828":"#16845B";
           }
-          var notificationPanel=notifyButton.closest(".notification-center");
           if(notificationPanel&&!document.querySelector(".tasvia-notification-row")){
             var empty=document.createElement("div");
             empty.style.cssText="padding:10px 12px;border-radius:12px;background:#F1F8F3;color:#26724A;font-size:13px";
