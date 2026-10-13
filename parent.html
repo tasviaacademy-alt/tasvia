@@ -1121,6 +1121,17 @@ document.body.innerHTML=
   window.__tasviaRescueStart=start;
   // Fast staff-to-parent sync: refresh while open and when the parent returns.
   var parentRefreshBusy=false;
+  function revokeParentPortalAccess(){
+    try{
+      window.__tasviaParentDashboardActive=false;
+      window.__tasviaAutoCode="";
+      window.__tasviaParentData=null;
+      window.__tasviaPendingParentCode="";
+      localStorage.removeItem("tasvia-parent-code");
+      sessionStorage.removeItem("tasvia-parent-code");
+      document.body.innerHTML='<main class="center" role="alert" style="max-width:520px;margin:12vh auto;padding:28px 22px"><h1 style="color:var(--board);margin-bottom:12px">Parent access disabled</h1><p>This student is no longer active in TASVIA Academy. The parent portal link has been deactivated. Please contact the Academy if you think this is a mistake.</p></main>';
+    }catch(_){}
+  }
   function refreshParentFromServer(){
     try{
       if(!window.__tasviaParentDashboardActive||parentRefreshBusy||document.hidden)return;
@@ -1128,10 +1139,13 @@ document.body.innerHTML=
       if(!code)return;
       parentRefreshBusy=true;
       read(code).then(function(fresh){
-        if(!fresh)return;
+        if(!fresh){revokeParentPortalAccess();return;}
         var current=window.__tasviaParentData||{};
         if(Number(fresh.updated||0)>Number(current.updated||0))render(fresh,code);
-      }).catch(function(){}).finally(function(){parentRefreshBusy=false;});
+      }).catch(function(e){
+        var message=String(e&&e.message||"");
+        if(/access is blocked by Firestore rules|HTTP 403|HTTP 404|Student record not found/i.test(message))revokeParentPortalAccess();
+      }).finally(function(){parentRefreshBusy=false;});
     }catch(_){parentRefreshBusy=false;}
   }
   if(!window.__tasviaParentRefreshTimer){
