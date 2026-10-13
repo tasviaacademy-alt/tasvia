@@ -569,6 +569,7 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
   }
   function render(d,code){
     window.__tasviaParentDashboardActive=true;
+    var mainRegion=document.getElementById("main");if(mainRegion)mainRegion.setAttribute("aria-busy","false");
     saveParentSession(d,code);
     var welcome=document.getElementById("welcomeBackdrop");
     if(welcome) welcome.classList.add("hide");
@@ -964,6 +965,7 @@ document.body.innerHTML=
         }
         settled=true;clearTimeout(watchdog);
         window.__tasviaLoginInFlight="";
+        var mainRegion=document.getElementById("main");if(mainRegion)mainRegion.setAttribute("aria-busy","false");
         var msg=document.getElementById("msg")||document.getElementById("studentLoginMsg");
         var retryButton=document.getElementById("tasviaMagicRetry");if(retryButton)retryButton.remove();
         if(msg){
