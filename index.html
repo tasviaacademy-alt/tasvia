@@ -874,9 +874,9 @@ function tone(seq){
     });
   }catch(e){}
 }
-/* TASVIA sounds: a soft tick, a two-note "saved" chime, a rising three-note alert, a low buzz for problems */
-const SOUND={tap:()=>tone([[1175,0,.05,.07,"triangle"]]),save:()=>tone([[784,0,.16],[1175,.08,.3]]),
-  alert:()=>tone([[784,0,.22,.17],[988,.13,.22,.17],[1319,.26,.45,.15],[1976,.26,.3,.03]]),error:()=>tone([[196,0,.22,.12,"square"],[165,.12,.25,.1,"square"]])};
+/* TASVIA sounds: gentle tap, warm saved chime, soft major-key notification melody, muted error tone */
+const SOUND={tap:()=>tone([[1175,0,.05,.045,"sine"]]),save:()=>tone([[784,0,.18,.075,"sine"],[1175,.10,.28,.06,"sine"]]),
+  alert:()=>tone([[659,0,.28,.075,"sine"],[784,.16,.30,.07,"sine"],[988,.33,.38,.065,"sine"],[1319,.52,.48,.055,"sine"]]),error:()=>tone([[196,0,.22,.07,"sine"],[165,.12,.25,.06,"sine"]])};
 const notifOK=()=>"Notification" in window;
 function notify(title,body){
   SOUND.alert();
