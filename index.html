@@ -1019,6 +1019,7 @@ function buildParentView(s){
   // day of the next month (inclusive). This handles the intended Sep 1 → Oct 1
   // payment window and prevents a month-boundary payment from showing as unpaid.
   const allPayments=payList(s.id).map(p=>({
+    id:String(p.id||""),
     d:String(p.date||""),
     a:Math.max(0,Number(p.amount)||0),
     m:paymentMonth(p),
@@ -1058,7 +1059,7 @@ function buildParentView(s){
   // Keep recent payment history visible, including a payment made on the first
   // day of the following month for the previous fee period.
   const pays=allPayments
-    .filter(p=>p.m&&months.includes(p.m))
+    .filter(p=>p.m||p.d)
     .sort((a,b)=>String(b.d||"").localeCompare(String(a.d||"")));
   const hw=homeworkListForStudent(s);
   return {studentId:s.id,name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,tests,fees,pays,hw,currentFee,pin:String(s.pin||""),
