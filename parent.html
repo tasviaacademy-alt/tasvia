@@ -823,7 +823,7 @@ document.body.innerHTML=
   try{
     var card=btn&&btn.closest?btn.closest(".action-detail"):null;
     if(!card)return false;
-    var title=((card.querySelector(".action-summary span:nth-child(2)")||{}).textContent||"").trim();
+    var title=((card.querySelector(".action-summary span:nth-child(2)")||{}).textContent||"").replace(/\s*NEW\s*$/i,"").trim();
     try{var nb=card.querySelector(".tasvia-unread");if(nb){localStorage.setItem("tasvia-parent-seen:"+String(window.__tasviaAutoCode||"")+":"+nb.getAttribute("data-key"),nb.getAttribute("data-fp")||"");nb.remove();}}catch(_){}
 
     var icon=((card.querySelector(".action-icon")||{}).textContent||"📄").trim();
