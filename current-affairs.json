@@ -1,85 +1,93 @@
 {
-  "date": "2026-10-13",
+  "date": "2026-10-14",
   "month": "October 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
-      "category": "National Affairs",
+      "category": "India",
       "icon": "🇮🇳",
-      "title": "India to host the first BIMSTEC Home Ministers' Meeting in New Delhi",
-      "text": "India is scheduled to host the first BIMSTEC Home Ministers' Meeting on 13 October in New Delhi. The meeting is intended to strengthen regional cooperation on security among member countries.",
-      "source": "The Economic Times, 2026-10-13",
-      "url": "https://m.economictimes.com/news/india/india-to-host-historic-bimstec-home-ministers-meeting-on-october-13-strengthening-security-cooperation-in-south-asia/articleshow/134895112.cms"
+      "title": "Karnataka Expands Anna Seve App for Ration Card e-KYC - GK Today",
+      "text": "Karnataka Expands Anna Seve App for Ration Card e-KYC GK Today",
+      "source": "GK Today, 2026-10-14",
+      "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNN3JvWk5FcEVnLVNqeEF4elNzekxSM0RQWjlId2R0YWFjVnpjd2xrWk4yOXFERzdjVUQ5ZndBUXBXVlpkMk5rZkV5Uk5HM1Z5aWVEV1YtZ0J6d3JzcFpWYktQbmFxWlFnN2k0RngwN1MwZDMwcGJ5aHY2SXN4MndrQjVndw?oc=5"
     },
     {
-      "category": "International Affairs",
+      "category": "World",
       "icon": "🌐",
-      "title": "Canadian Foreign Minister Anita Anand begins a visit to India",
-      "text": "Canadian Foreign Minister Anita Anand is scheduled to visit India and the United Arab Emirates from 13 to 16 October, with bilateral relations and cooperation among the key areas of engagement.",
-      "source": "The Economic Times, 2026-10-13",
-      "url": "https://m.economictimes.com/news/india/canadian-fm-anita-anand-to-visit-india-on-october-13/articleshow/134895980.cms"
+      "title": "‘She was formidable’: Iwi gather to farewell rugby icon Cheryl Waaka - Te Ao Māori News",
+      "text": "‘She was formidable’: Iwi gather to farewell rugby icon Cheryl Waaka Te Ao Māori News",
+      "source": "Te Ao Māori News, 2026-10-14",
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQbnNwa2twZHVvWkFOS2ZqMmM3Q1pZZDJoUGVVOTBFa1d0aGJIMlFWZ05CS0VibFVrcXlsbVlKcHJDVlVGYUVnT1hsRlVLcF82N3l2SVZzeWJNcmtfOWk2ZEpKV0pOQVdfblR5RlZPdnBsZy10cHRCdkQxaVdxb181NXRITjdONjlwREo2MHhSeXg2UzBSWFhsNUVRZGdBQzJBd0NNZGxkZw?oc=5"
     },
     {
-      "category": "Economy & Banking",
-      "icon": "💹",
-      "title": "Indian government bond yields rise after RBI liquidity and currency measures",
-      "text": "Business reporting on 13 October says government bond yields reached a roughly three-and-a-half-year high after recent Reserve Bank of India measures. The movement reflects the effect of liquidity and currency-market policy on borrowing costs.",
-      "source": "The Economic Times, 2026-10-13",
-      "url": "https://m.economictimes.com/markets/bonds/bond-yields-rise-to-3-year-high-on-rbi-liquidity-cut/articleshow/134905259.cms"
+      "category": "Science & Technology",
+      "icon": "🔬",
+      "title": "From imports to innovation: India's quest for homegrown battery technologies - The New Indian Express",
+      "text": "From imports to innovation: India's quest for homegrown battery technologies The New Indian Express",
+      "source": "The New Indian Express, 2026-10-14",
+      "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNZWNmUzktZkVkQ0tVLXN3YnZUYk83bHJUWWxwRDV0QjBFaUttUTlzcWNfd1l2RG9mUTRGMVZnSHZWX0U1Z3FLb0xVaWg0Vm42ZWhWQUdCb0JBM2JqN3FfZjc2T2YtU3YxMlUyekRmUTJNOHRnQTBzUV8ycG9lMjRTVWFYOS1KVkNqbjU4OXh0S0k1ZkkwZjl1YzdpR2tNN3k0QmJ0UzAwS0xoZnItUUtlNVFnekpLRnRjcDNaV3VHVXktcHFZRUpj0gHUAUFVX3lxTE5GNzg3VnIyV3BBUW5VakZybDY2UzFaV2hPYnhTbHVobUpzZ1NKeHZJUHRHMUdtRWYxOEpGbXlFTk94NDBSS1Z4clNfMDVHNnhxMlNQbG1LcjVrd2hOWWFZVHJrb2NidGIzWlViMW1PY3dkLU54UXF4NWVuOE1OLTFpajFnMU5JNVlFMEZnMlE5eDNyMVJSLURDY0FXWmZ1YzR5UHFpSi1LdFRITHJFaU1IN3AyQm94eDRCUWk5SzMtWkpORU5iRkh3NmJ6T2FrVk5jeUpZ?oc=5"
     },
     {
-      "category": "Markets",
-      "icon": "📈",
-      "title": "Markets watch a possible positive opening as crude oil remains above $106",
-      "text": "The 13 October market briefing reported GIFT Nifty pointing to a positive start for Indian equities, while crude oil prices above $106 and elevated global bond yields remained risks for investors.",
-      "source": "Financial Express, 2026-10-13",
-      "url": "https://www.financialexpress.com/market/share-market-today-live-stock-market-sensex-nifty-gold-silver-rate-13th-october-2026-4359804/"
-    },
-    {
-      "category": "Sports",
-      "icon": "🏏",
-      "title": "Abhishek Sharma's 69 off 30 balls powers India's total against West Indies",
-      "text": "In the third T20I, Abhishek Sharma scored 69 from 30 balls as India posted 223. West Indies finished on 209/7, falling 14 runs short in the chase.",
-      "source": "The Indian Express, 2026-10-13",
-      "url": "https://indianexpress.com/article/sports/cricket/shamar-springer-abhishek-sharma-onslaught-west-indies-vs-india-10917713/"
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "CJP's Dipke Slams Activists' Arrest, Backs INDIA Bloc's EC Protest - Deccan Chronicle",
+      "text": "CJP's Dipke Slams Activists' Arrest, Backs INDIA Bloc's EC Protest Deccan Chronicle",
+      "source": "Deccan Chronicle, 2026-10-14",
+      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOVW5lWDJweXlvTDRtN2FaaEE3OVcxZmRRd3h5TDA0Y2F2eHRIVUJvdzJYS0xuc3lqaWdhekNFSkxfYlI3a1NoX2F2VW1LU2pneWdpeUxwcGprRnIzNEs2UV9LTUJFWHVDeFF3N09Kc3R4T3k2c282Uk45RV95bkFFUGp2dTNWV0tPWTRCUDlmMlpia1R1NHVhMi1YN3pRSHV4QVRLTzYtNG03TmlrMHJueVFlMEJJUnFHblRPM1Q3R3dDSEHSAcgBQVVfeXFMTzFobUcxbnVFOTJ6VE41dlN5TE5FTWVIeEI1NmZHSUlJZUNTVHhnUFJpdFZXbURkY2ZZNTJBZVFGMGRWYUVweWZ2LWUzdUJzNFQ4aDNsQ2tBQVhvdVNJd2hfM21ob2wwNGh5V3A3bDhkT2Q3S3p3UzEwNWR6ZW4tbVBQaXE1Mnd0Tmg5TkpDVDk0MGFka1lCV1pCQUxqanJkQUt6d3BsNWJRVEFwTEY1bnk3OURUTkMzb0JuRlhCbTl5cW8tc1N0dGk?oc=5"
     },
     {
       "category": "Sports",
       "icon": "🏆",
-      "title": "Kumar Kushagra replaces injured Rishabh Pant for the first two India A matches",
-      "text": "Rishabh Pant has been ruled out of the first two India A matches against New Zealand A after sustaining a side strain. Kumar Kushagra has been named as his replacement for those matches.",
-      "source": "The Times of India, 2026-10-13",
-      "url": "https://timesofindia.indiatimes.com/sports/cricket/india-vs-new-zealand/rishabh-pant-ruled-out-of-first-two-india-a-matches-against-new-zealand-a-kumar-kushagra-named-replacement/articleshow/134895484.cms"
+      "title": "How can India qualify for the WTC final 2027? Qualification scenario, points and wins required to reach World Test Championship final - Yahoo Sports",
+      "text": "How can India qualify for the WTC final 2027? Qualification scenario, points and wins required to reach World Test Championship final Yahoo Sports",
+      "source": "Yahoo Sports, 2026-10-14",
+      "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNTVp1c3kwVGRaenJWNlc5ckczUWVidWtBZUVjS3VLM0lJOG0wQ3N5YS13aE5JRGNaX0NhaWVma0p6ZE9ya3FtMV9DZ19kWVIwOE1xS0VCOWhHMnJSQmFwaGd6S3lhcEJNSjZkdmFXQWxERV9iX19rMDAwUllMc3dnLUl4WQ?oc=5"
     },
     {
-      "category": "Environment & Disaster Preparedness",
-      "icon": "🌏",
-      "title": "International Day for Disaster Risk Reduction is observed on 13 October",
-      "text": "The annual observance highlights disaster preparedness, risk awareness and measures that help communities reduce the impact of natural and human-made hazards.",
-      "source": "Dainik Jagran English, 2026-10-13",
-      "url": "https://english.dainikjagranmpcg.com/national/india-events-on-october-13-bimstec-meeting-brics-games-forum/article-38101"
+      "category": "Economy",
+      "icon": "💹",
+      "title": "ET Now Live TV: Business News Live TV Online, Finance & Market News Live Streaming - ET Now",
+      "text": "ET Now Live TV: Business News Live TV Online, Finance & Market News Live Streaming ET Now",
+      "source": "ET Now, 2026-10-14",
+      "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTFBvd2FadGE2UE41MGZPci1jSGJhcFNzbUhJd0FRblJGLTA0OEVRUE1sMW1LTlNxV2M1X0MxTTRXVVQwOGNURmpPadIBTkFVX3lxTE1Zb0xqWlh3RkdWaktyM3Njem8wZFB4VFAtd0tuQklxeGM0cXI4VWVmaWVDb2hma2NNVldvUW1FM29oUFZrcElNdjVZZDZTUQ?oc=5"
+    },
+    {
+      "category": "Science & Technology",
+      "icon": "🔬",
+      "title": "From Wings of Fire to Ignited Minds: 32 books by APJ Abdul Kalam every student must read - Moneycontrol.com",
+      "text": "From Wings of Fire to Ignited Minds: 32 books by APJ Abdul Kalam every student must read Moneycontrol.com",
+      "source": "Moneycontrol.com, 2026-10-14",
+      "url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxNTTBUbHV6U0U2U2R6T0hrMkZwcm9qS3pnSE5pZlotS2RLVWh3UDJRUGNXQmEwcTlDaENKNzk4UkJ1bDd1bzRJQkpJUjVmNTBRQTlxQV9aeXg2NWdVWG9hN01lZUt4QVdNWmlrTzJ5aTU0ak9Zb0hnd2pMWUdqM1NGUXZGODVMeWtYTkxUVGRtdzJVMU50QnMyU0U3a2dtY3QxbTZPTWtSWjJHaTg1ZVFjXzkyekFIeVpMT2hvODZmdUhqc0c4TFhwVzRyUVREbzIwZ2ZSRDZmWE9SSEJVOTVTUnRB0gHnAUFVX3lxTE1maXZ3N1hsRm04aXdxRGxpa1J6b2VyNEpHelhyMGZjaFdPWENFS1FtOVZnNGpERTlVYV9FWjhjUDNtdUE4amtwM2swbV9jcVFkTVdYc1llYXpIbUtSeTJ0eFFiZ001REFNNlMyUFcxcnRITVhJamZrNXdFRjBRZGFxWkJ4dTRXWTF6OW9IWEdZTVFMRG1JVzB0d3dUcDI4ejhqXzZVMUNLeFRCMUZHWHNPZzJjQ0Vpd0k3YktlMVdvaEFMTVZRV0gyVVdVMk1jZEZiMXE1eUJfVU5mZ2M5SWhyUHhJWXZoVQ?oc=5"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "India is a key subscription market for Bloomberg: Christine Cook - Exchange4Media",
+      "text": "India is a key subscription market for Bloomberg: Christine Cook Exchange4Media",
+      "source": "Exchange4Media, 2026-10-14",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOdXNCWGREZHdiWVNJQUt0R2dJXy1ocS1HTnFuY1pFY3cxV3Zab1lXY0NZdlR3dzFWaHY0a1lKZVFWSjRaMTJhNk56NmlOQzVqbkdfVXF4NVhWUlpfOElicllSNm5TbVo0YlMtYXdUUUs5WThkdmFHS3dNSzYySno5amJrd2VDejVSX0FWZWMtR0JKN2Q5aHBaTkFpN1cxU1hwX19qdVJ5VlE0eV94aGZzTjJYd3RUTE5feExxbHlSbjFPUQ?oc=5"
     }
   ],
   "quiz": [
     {
-      "q": "Which regional grouping's Home Ministers' Meeting is India scheduled to host on 13 October 2026?",
-      "a": "BIMSTEC."
+      "q": "Which topic is covered in today's India current affairs?",
+      "a": "Karnataka Expands Anna Seve App for Ration Card e-KYC - GK Today"
     },
     {
-      "q": "Which Canadian Foreign Minister is scheduled to visit India from 13 to 16 October 2026?",
-      "a": "Anita Anand."
+      "q": "Which topic is covered in today's World current affairs?",
+      "a": "‘She was formidable’: Iwi gather to farewell rugby icon Cheryl Waaka - Te Ao Māori News"
     },
     {
-      "q": "Which Indian central bank's recent measures were linked to the rise in government bond yields?",
-      "a": "The Reserve Bank of India (RBI)."
+      "q": "Which topic is covered in today's Science & Technology current affairs?",
+      "a": "From imports to innovation: India's quest for homegrown battery technologies - The New Indian Express"
     },
     {
-      "q": "Who scored 69 runs from 30 balls in the third T20I against West Indies?",
-      "a": "Abhishek Sharma."
+      "q": "Which topic is covered in today's India current affairs?",
+      "a": "CJP's Dipke Slams Activists' Arrest, Backs INDIA Bloc's EC Protest - Deccan Chronicle"
     },
     {
-      "q": "Which annual international observance takes place on 13 October?",
-      "a": "The International Day for Disaster Risk Reduction."
+      "q": "Which topic is covered in today's Sports current affairs?",
+      "a": "How can India qualify for the WTC final 2027? Qualification scenario, points and wins required to reach World Test Championship final - Yahoo Sports"
     }
   ]
 }
