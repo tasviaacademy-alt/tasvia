@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-14",
+  "title": "Daily General Knowledge",
+  "questions": [
+    { "id": "static-ganges-dolphin", "q": "What is the national aquatic animal of India?", "a": "The Ganges river dolphin." },
+    { "id": "static-photosynthesis", "q": "Which gas do green plants absorb during photosynthesis?", "a": "Carbon dioxide (CO2)." },
+    { "id": "static-electric-current", "q": "What is the SI unit of electric current?", "a": "Ampere (A)." },
+    { "id": "static-largest-planet", "q": "Which is the largest planet in our Solar System?", "a": "Jupiter." },
+    { "id": "static-url", "q": "What does URL stand for?", "a": "Uniform Resource Locator." }
+  ]
+}
