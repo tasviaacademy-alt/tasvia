@@ -38,7 +38,7 @@ for archive in HISTORY_DIR.glob("*.json"):
     except Exception:
         continue
 
-unused = [q for q in bank if q.get("id") not in used_ids]
+# This portal displays direct answers, not multiple-choice options. Exclude quiz-bank entries\n# whose answer only makes sense when unseen options are available.\nunused = [\n    q for q in bank\n    if q.get("id") not in used_ids\n    and str(q.get("a", "")).strip().casefold() not in {"all of these", "all of the above", "both a and b", "both a and c", "none of these", "none of the above"}\n]
 if len(unused) < 5:
     raise RuntimeError(
         f"GK question bank exhausted: only {len(unused)} unused questions remain; "
