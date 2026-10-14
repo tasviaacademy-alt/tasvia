@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-14",
+  "month": "October 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "Regional Cooperation",
+      "icon": "🤝",
+      "title": "BIMSTEC Home Ministers adopt the Delhi Declaration",
+      "text": "India hosted the first BIMSTEC Home Ministers' meeting in New Delhi. Delegations from all seven member states adopted the Delhi Declaration and agreed to improve regional coordination and cooperation on shared challenges.",
+      "source": "The Indian Express, 2026-10-14",
+      "url": "https://indianexpress.com/article/india/india-hosts-first-bimstec-home-ministers-meeting-delhi-declaration-adopted-10920594/"
+    },
+    {
+      "category": "Economy",
+      "icon": "📊",
+      "title": "IMF raises India's FY2026-27 growth forecast to 7%",
+      "text": "The International Monetary Fund raised its growth forecast for India for the 2026-27 financial year from 6.4% to 7%, citing stronger domestic demand and services activity.",
+      "source": "GK Now, 2026-10-14",
+      "url": "https://gknow.in/current-affairs-14-october-2026/"
+    },
+    {
+      "category": "Science & Society",
+      "icon": "📏",
+      "title": "World Standards Day is observed on 14 October",
+      "text": "World Standards Day recognises the work of experts who develop international standards. The 2026 theme highlights how standards can support affordable and clean energy, linked to Sustainable Development Goal 7.",
+      "source": "International Organization for Standardization (ISO), 2026-10-14",
+      "url": "https://committee.iso.org/sites/wsd/home.html"
+    },
+    {
+      "category": "Transport",
+      "icon": "🚆",
+      "title": "Indian Railways prepares extra services for the festive rush",
+      "text": "Indian Railways has announced plans for about 3.4 lakh regular train trips and more than 8,000 special train trips to help manage travel demand during Durga Puja, Diwali and Chhath.",
+      "source": "The Indian Express, 2026-10-13",
+      "url": "https://indianexpress.com/article/india/indian-railways-3-4-lakh-regular-train-trips-over-8000-special-trips-durga-puja-diwali-chhath-puja-festive-season-10920460/"
+    },
+    {
+      "category": "Markets",
+      "icon": "📈",
+      "title": "Indian markets monitor oil prices and quarterly earnings",
+      "text": "Market coverage on 14 October highlighted elevated crude oil prices and upcoming company earnings as factors investors were watching at the start of the trading session. Market indicators can change during the day.",
+      "source": "Financial Express, 2026-10-14",
+      "url": "https://www.financialexpress.com/market/share-market-today-live-stock-market-sensex-nifty-gold-silver-rate-14th-october-2026-4360714/"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What declaration was adopted at the first BIMSTEC Home Ministers' meeting in New Delhi?",
+      "a": "The Delhi Declaration."
+    },
+    {
+      "q": "What India GDP growth rate did the IMF forecast for FY2026-27 in its 14 October 2026 report?",
+      "a": "7%."
+    },
+    {
+      "q": "On which date is World Standards Day observed each year?",
+      "a": "14 October."
+    },
+    {
+      "q": "Which three festivals were mentioned in connection with Indian Railways' extra services?",
+      "a": "Durga Puja, Diwali and Chhath."
+    },
+    {
+      "q": "Name one factor investors were monitoring in Indian markets on 14 October 2026.",
+      "a": "Crude oil prices or quarterly company earnings."
+    }
+  ]
+}
