@@ -1,31 +1,31 @@
 {
-  "date": "2026-10-13",
+  "date": "2026-10-14",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-india-constitution",
-      "q": "When did the Constitution of India come into effect?",
-      "a": "26 January 1950."
+      "id": "static-national-anthem",
+      "q": "Who wrote the Indian national anthem, Jana Gana Mana?",
+      "a": "Rabindranath Tagore."
     },
     {
-      "id": "static-national-bird",
-      "q": "What is the national bird of India?",
-      "a": "The Indian peacock."
+      "id": "static-national-flower",
+      "q": "What is the national flower of India?",
+      "a": "The lotus."
     },
     {
-      "id": "static-space-isro",
-      "q": "What is the name of India's national space agency?",
-      "a": "ISRO (Indian Space Research Organisation)."
+      "id": "static-ozone",
+      "q": "Which atmospheric layer helps protect Earth from much of the Sun's harmful ultraviolet radiation?",
+      "a": "The ozone layer."
     },
     {
-      "id": "static-computer-cpu",
-      "q": "What does CPU stand for?",
-      "a": "Central Processing Unit."
+      "id": "otq-animals-1417",
+      "q": "Which of these characteristics is generally associated with carnivorous animals, particularly predators?",
+      "a": "All of these"
     },
     {
-      "id": "static-maths-prime",
-      "q": "What is the smallest prime number?",
-      "a": "2."
+      "id": "static-economics-currency",
+      "q": "What is the currency of India?",
+      "a": "The Indian rupee."
     }
   ]
 }
