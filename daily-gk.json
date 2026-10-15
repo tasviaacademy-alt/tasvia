@@ -1,31 +1,31 @@
 {
-  "date": "2026-10-14",
+  "date": "2026-10-15",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-national-anthem",
-      "q": "Who wrote the Indian national anthem, Jana Gana Mana?",
-      "a": "Rabindranath Tagore."
+      "id": "static-maths-triangle",
+      "q": "How many sides does a triangle have?",
+      "a": "Three."
     },
     {
-      "id": "static-national-flower",
-      "q": "What is the national flower of India?",
-      "a": "The lotus."
+      "id": "static-fundamental-rights",
+      "q": "Which part of the Indian Constitution lists Fundamental Rights?",
+      "a": "Part III."
     },
     {
-      "id": "static-ozone",
-      "q": "Which atmospheric layer helps protect Earth from much of the Sun's harmful ultraviolet radiation?",
-      "a": "The ozone layer."
+      "id": "static-literature-mahabharata",
+      "q": "Who is traditionally credited with composing the Mahabharata?",
+      "a": "Vyasa."
     },
     {
-      "id": "otq-animals-1417",
-      "q": "What do carnivorous animals, such as lions, mainly eat?",
-      "a": "They mainly eat the flesh of other animals."
+      "id": "static-biodiversity",
+      "q": "What does biodiversity mean?",
+      "a": "The variety of living organisms in an area or on Earth."
     },
     {
-      "id": "static-economics-currency",
-      "q": "What is the currency of India?",
-      "a": "The Indian rupee."
+      "id": "static-national-animal",
+      "q": "What is the national animal of India?",
+      "a": "The Bengal tiger."
     }
   ]
 }
