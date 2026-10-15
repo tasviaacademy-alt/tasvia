@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-15",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-maths-triangle",
+      "q": "How many sides does a triangle have?",
+      "a": "Three."
+    },
+    {
+      "id": "static-fundamental-rights",
+      "q": "Which part of the Indian Constitution lists Fundamental Rights?",
+      "a": "Part III."
+    },
+    {
+      "id": "static-literature-mahabharata",
+      "q": "Who is traditionally credited with composing the Mahabharata?",
+      "a": "Vyasa."
+    },
+    {
+      "id": "static-biodiversity",
+      "q": "What does biodiversity mean?",
+      "a": "The variety of living organisms in an area or on Earth."
+    },
+    {
+      "id": "static-national-animal",
+      "q": "What is the national animal of India?",
+      "a": "The Bengal tiger."
+    }
+  ]
+}
