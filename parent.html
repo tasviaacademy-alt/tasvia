@@ -13,7 +13,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="TASVIA">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Hind:wght@400;500;600&family=Noto+Sans+Telugu:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+Telugu:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
 <style>
 :root{--bg:#EDF1EE;--card:#fff;--ink:#15201C;--muted:#5B6A63;--line:#D3DCD7;--chip:#E2E9E5;--board:#0B2455;--chalk:#F3F6F1;--gold:#F2AC10;--p:#2B8A55;--a:#C4432A;
@@ -372,6 +372,26 @@ body{background:linear-gradient(180deg,#F6F8FB 0%,#FFFFFF 42%,#F7F9FC 100%)}
 .fee-qr{border-radius:12px!important;border:1px solid #E1E6EC}
 table{overflow:hidden;border-radius:14px}
 @media(max-width:520px){.parent-dashboard{padding:17px!important;border-radius:19px!important}.parent-action{min-height:78px}.learning-card{padding:14px!important}.fee-details-pay{padding:12px!important}}
+
+/* TASVIA parent portal typography polish: clear, consistent and mobile-readable. */
+body{font-family:"DM Sans","Noto Sans Telugu","Noto Sans Devanagari",system-ui,sans-serif!important;font-size:16px;line-height:1.55}
+h1,h2,h3,h4,h5,h6,.brand,.board b,.pa button{font-family:"DM Sans","Noto Sans Telugu","Noto Sans Devanagari",system-ui,sans-serif!important;font-weight:700;letter-spacing:-.015em}
+.kid h1{font-size:clamp(1.45rem,5vw,1.8rem);line-height:1.2}
+.card h2{font-size:1.18rem;line-height:1.35}
+.card h3,.receipt-panel h3{font-size:1.05rem;line-height:1.4}
+.brand{font-size:1.22rem;line-height:1.3}
+.sub,.receipt-intro{font-size:.92rem;line-height:1.55}
+th{font-size:.82rem;line-height:1.4}
+.tag,.hw-status,.hw-count{line-height:1.4}
+button,input,select,textarea,.btn,.hw-complete-btn,.hw-filter-btn,.receipt-download-btn,.receipt-all-btn{font-family:"DM Sans","Noto Sans Telugu","Noto Sans Devanagari",system-ui,sans-serif!important}
+@media(max-width:380px){
+ body{font-size:15.5px}
+ .kid h1{font-size:1.4rem}
+ .card{padding:14px}
+ .card h2{font-size:1.08rem}
+ .brand{font-size:1.08rem}
+}
+
 </style>
 <!-- parent-pages-refresh-2026-10-07-v68-learning-fix -->
 <style>.fee-qr-wrap{margin:14px auto 10px;padding:12px;border:1px solid #E3E7ED;border-radius:16px;background:#F8FAFC;display:inline-block}.fee-qr{display:block;width:190px;height:190px;object-fit:contain;border-radius:10px;background:#fff}.fee-qr-note{font-size:11px;color:#667085;margin-top:7px}.fee-details-pay{margin-top:18px;padding-top:16px;border-top:1px solid rgba(16,40,88,.12)}.fee-popup-pay{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}.fee-popup-pay a{display:inline-flex;align-items:center;justify-content:center;min-width:130px;padding:11px 15px;border-radius:12px;text-decoration:none;font-weight:800;background:#0B2455;color:#fff}.fee-popup-pay a.gold{background:#F2AC10;color:#1a1405}.fee-popup-close{margin-top:10px;border:0;background:transparent;color:#667085;font:600 14px Hind,sans-serif;padding:7px 14px;cursor:pointer}</style>
