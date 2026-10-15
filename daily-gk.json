@@ -3,10 +3,10 @@
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-national-animal",
-      "category": "Indian General Knowledge",
-      "q": "What is the national animal of India?",
-      "a": "The Bengal tiger."
+      "id": "otq-geography-3",
+      "category": "World GK",
+      "q": "What is the capital of Belgium?",
+      "a": "Brussels"
     },
     {
       "id": "static-fundamental-rights",
