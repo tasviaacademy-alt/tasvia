@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-16",
+  "month": "October 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "India introduces windfall tax on petrol and diesel exports",
+      "text": "India announced a windfall tax effective 16 October 2026 of ₹2.50 per litre on petrol exports and ₹8.50 per litre on diesel exports.",
+      "source": "Reuters, 2026-10-15",
+      "url": "https://www.reuters.com/business/india-sets-windfall-tax-petrol-exports-25-rupees-per-litre-2026-10-15/"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "India's September unemployment rate reported at 5%",
+      "text": "Current-affairs reports citing the National Statistics Office say India's overall unemployment rate was 5% in September 2026.",
+      "source": "GK Now, 2026-10-16",
+      "url": "https://gknow.in/current-affairs-16-october-2026/"
+    },
+    {
+      "category": "Environment",
+      "icon": "🌿",
+      "title": "India's Ramsar site tally reaches 103",
+      "text": "The addition of Sukhna Wetland in Chandigarh and Sauj Jheel in Uttar Pradesh takes India's Ramsar wetland site count to 103, according to the daily current-affairs briefing.",
+      "source": "GK Now, 2026-10-16",
+      "url": "https://gknow.in/current-affairs-16-october-2026/"
+    },
+    {
+      "category": "Science & Technology",
+      "icon": "🔬",
+      "title": "Caller name display service planned from 1 November",
+      "text": "The Department of Telecommunications has directed telecom providers to introduce Calling Name Presentation (CNAP), which displays a registered caller name, from 1 November 2026.",
+      "source": "GK Now, 2026-10-16",
+      "url": "https://gknow.in/current-affairs-16-october-2026/"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "Indian wrestler Vishvajit More wins silver at U-23 World Championships",
+      "text": "Indian wrestler Vishvajit Ramchandra More won silver in the men's 55 kg Greco-Roman event at the U-23 World Championships in Las Vegas on 15 October.",
+      "source": "GK Now, 2026-10-16",
+      "url": "https://gknow.in/current-affairs-16-october-2026/"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What was the capital of Afghanistan in today's GK set?",
+      "a": "Kabul"
+    },
+    {
+      "q": "What is the windfall tax announced on petrol exports per litre?",
+      "a": "₹2.50 per litre."
+    },
+    {
+      "q": "What is India's reported overall unemployment rate for September 2026?",
+      "a": "5%."
+    },
+    {
+      "q": "From which date is caller name presentation planned to be introduced?",
+      "a": "1 November 2026."
+    },
+    {
+      "q": "Which medal did Vishvajit Ramchandra More win at the U-23 World Championships?",
+      "a": "Silver."
+    }
+  ]
+}
