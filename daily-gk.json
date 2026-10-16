@@ -1,36 +1,36 @@
 {
-  "date": "2026-10-15",
+  "date": "2026-10-16",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "otq-geography-3",
-      "category": "World GK",
-      "q": "What is the capital of Belgium?",
-      "a": "Brussels"
-    },
-    {
-      "id": "static-fundamental-rights",
-      "category": "Indian General Knowledge",
-      "q": "Which part of the Indian Constitution lists Fundamental Rights?",
-      "a": "Part III."
-    },
-    {
-      "id": "static-maths-triangle",
-      "category": "Mathematics GK",
-      "q": "How many sides does a triangle have?",
-      "a": "Three."
-    },
-    {
-      "id": "static-literature-mahabharata",
-      "category": "Indian General Knowledge",
-      "q": "Who is traditionally credited with composing the Mahabharata?",
-      "a": "Vyasa."
-    },
-    {
-      "id": "static-biodiversity",
+      "id": "oct16-si-electric-current",
       "category": "Science GK",
-      "q": "What does biodiversity mean?",
-      "a": "The variety of living organisms in an area or on Earth."
+      "q": "What is the SI unit of electric current?",
+      "a": "Ampere (A)."
+    },
+    {
+      "id": "oct16-nagaland-capital",
+      "category": "Indian Geography",
+      "q": "Which Indian state has Kohima as its capital?",
+      "a": "Nagaland."
+    },
+    {
+      "id": "oct16-barometer",
+      "category": "Science GK",
+      "q": "Which instrument measures atmospheric pressure?",
+      "a": "A barometer."
+    },
+    {
+      "id": "oct16-pentagon-sides",
+      "category": "Mathematics GK",
+      "q": "How many sides does a pentagon have?",
+      "a": "Five."
+    },
+    {
+      "id": "oct16-liver-largest-gland",
+      "category": "Human Biology",
+      "q": "What is the largest gland in the human body?",
+      "a": "The liver."
     }
   ]
 }
