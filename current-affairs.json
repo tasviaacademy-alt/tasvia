@@ -1,93 +1,81 @@
 {
-  "date": "2026-10-15",
+  "date": "2026-10-16",
   "month": "October 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "SIR Controversy Explained: Election Commission Powers, Voter Rights For CLAT 2027 - Careers360",
-      "text": "SIR Controversy Explained: Election Commission Powers, Voter Rights For CLAT 2027 Careers360",
-      "source": "Careers360, 2026-10-15",
-      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxONmNRS1JDQndqZGNIQ3oza0hOTWc5MWFRMzN2bXg5TC1XZFVINWNzX01vV2hPaF9RUDJzZFA3YkxkRlJjZVQwRmpEVlNFZi0wcXJMZTBZTGk1RjRZTEdtOThqanE0bWN0MlNSMURhaXl2ZFNsbHBZMkE4NWNYLUdQbkVLOHF5Yl9IQWtzajlNNHVLMGdxMXItZC1aWFlrVUh6QW9IRVRCSlNFUDZOVXBnRXZsc181dw?oc=5"
-    },
-    {
-      "category": "Sports",
-      "icon": "🏆",
-      "title": "Have Indian Sports Federations Ruined their sports? Update 20 in Athletics in India by Rupinder Singh - RunBlogRun",
-      "text": "Have Indian Sports Federations Ruined their sports? Update 20 in Athletics in India by Rupinder Singh RunBlogRun",
-      "source": "RunBlogRun, 2026-10-15",
-      "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxObVdTMzcwSFotOVBWX3FYN3lobGZBV0tOdmEzZkdEUll1LUlPTVI5VU84WXZFckRjOHFJeFIxR09mY05aYjFadHdYZzFIbnFBZGhhNTJqSVR1U1dGZ2J4ZjNGRmxLTFZ1d2M0X1FNZDhFUDhsOWlEWWxkNkg4V2oyWkVyWi1kRXdDWFhYU0lXdnRjU3prRkVtOWRJRFFHOXlaZzdyem9pVE9ZTHdrOUpVS3FqUVRkYnJzMFZ3M3BpZC1ZV0UzeV9jQ24xSlkxWm5JWi1iTEhLWQ?oc=5"
-    },
-    {
-      "category": "Science & Technology",
-      "icon": "🔬",
-      "title": "India and Canada explore stronger bilateral partnership as PM Modi meets Foreign Minister Anita Anand - India Shipping News",
-      "text": "India and Canada explore stronger bilateral partnership as PM Modi meets Foreign Minister Anita Anand India Shipping News",
-      "source": "India Shipping News, 2026-10-15",
-      "url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxNRnozWWxyVklzMzhSLXdCRnBnRklIVlJfOEtCSDkwMlRUUzNnTk53VXo3TmpwTzJRSlp4LTBacndrRkRMbUt4YWxhdXNLVFVkUXlkTFhOaDZvX2REbUNJTEhrbGRoc2tiSlJHMElQTFBvcVQwVlVqSko0OFFyZnV1a1otUEhua1VVMFF1ZGw2NnNSOXViWE5JX1VSaGloamcxdHNIRm5vZnEwaDFKQWZCa2RIaUFkN0NOZ0I2TWpXUmIzUEd5N2lEakRvRTBEX2hKYUpPb2VlRXNLOERURTdN?oc=5"
+      "category": "Economy",
+      "icon": "💹",
+      "title": "India introduces windfall tax on petrol and diesel exports",
+      "text": "A government order reported on 15 October set an export duty of ₹2.50 per litre on petrol and ₹8.50 per litre on diesel, effective 16 October 2026.",
+      "source": "Reuters, 2026-10-15",
+      "url": "https://www.reuters.com/business/india-sets-windfall-tax-petrol-exports-25-rupees-per-litre-2026-10-15/"
     },
     {
       "category": "Economy",
-      "icon": "💹",
-      "title": "‘Responded well to shock’: IMF backs India’s economic resilience, sees 7% growth in FY27-28 - The Economic Times",
-      "text": "‘Responded well to shock’: IMF backs India’s economic resilience, sees 7% growth in FY27-28 The Economic Times",
-      "source": "The Economic Times, 2026-10-15",
-      "url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxNUWUyc0hpNWt2YmVfeG9MaEpKY3lHbGJsQk5tblZuNjdSdm9sUFZyNkxFTEY0WGpoa2dPXzJfUy05dmxOb1A1WXVhWGpOa25IOFZCNml1aTA4NlhjcHVGQkRzTjU1RjlvTHd2ZDRJRXFWeUUyVF96ZVd3M0ZEV2NQczJTYmVkUTB2YVA5M2tlZXBYNjk4X3lSUTFXcHpCOWRoTTh3djhRTDUybV9jQ0ZkTnBQZlRwQTBuV1htUGhKdWtVRTdFWWFoS1Z0VUp4Q3ByQW5CV1NIX1hGZFB2aEVySVVR0gHnAUFVX3lxTFBNMmVmQTYxRGFaUFRudkh1eS1BbDF0RlRpQk5YY3MxejhYdEFYdFNjZUk2UXFwT05vVGJjSlV0OW90Wm1Nd25fVzd3YlcydFpaNXNIMjQtcDRNS2pFdzJJTVlfQzRnWW5BZzBoeldTMHFJalVJcFdrUHoydmdpdjAzem9XNlMzeHRPMHpsdzJMZjVfTmd6b1BTMGlPVG92TlA2VUtkNGRpTERYcmlvbTQ5TDNjeWlxVlIwWnBvTUZOQVlvNmVOR3JMVnc3dU1xdU5UQWVuMnNxUC1ZWDZKMHJleHg5WXc5OA?oc=5"
+      "icon": "📊",
+      "title": "IMF projects India could become the world's fourth-largest economy in 2027",
+      "text": "The IMF's October 2026 outlook is reported to project India's nominal GDP at about US$4.52 trillion in 2027, potentially moving it ahead of Japan. GDP rankings depend on nominal dollar values and exchange rates.",
+      "source": "Financial Express, 2026-10-16",
+      "url": "https://www.financialexpress.com/policy/economy/india-to-overtake-japan-as-4th-largest-economy-in-2027-imf-projects-4-52-trillion-gdp/4362280/"
+    },
+    {
+      "category": "Defence",
+      "icon": "⚓",
+      "title": "Indian Navy schedules commissioning of multi-purpose vessel Samarthak at Karwar",
+      "text": "Samarthak, built by Larsen & Toubro under the Make in India initiative, is scheduled to be commissioned at Naval Base Karwar on 16 October. It is the first of four planned multi-purpose vessels and can support patrol, trials, unmanned systems and disaster-relief missions.",
+      "source": "Prompt Innovations, summarising Ministry of Defence information, 2026-10-13",
+      "url": "https://currentaffairs.promptinnovations.net/en/item/indigenously-built-multipurpose-vessel-samarthak-set-to-join-the-indian-navy-at-karwar"
+    },
+    {
+      "category": "Environment & Food Security",
+      "icon": "🌾",
+      "title": "World Food Day 2026 highlights innovation in food systems",
+      "text": "World Food Day is observed on 16 October. The 2026 theme is “Innovate today. Nourish tomorrow.”, highlighting innovation and inclusive approaches to build sustainable, resilient agrifood systems.",
+      "source": "Food and Agriculture Organization of the United Nations, 2026-10-16",
+      "url": "https://www.fao.org/world-food-day/en/"
     },
     {
       "category": "Sports",
-      "icon": "🏆",
-      "title": "Reminds me of courses I grew up on: Rory McIlroy on return to Delhi - Mid-Day",
-      "text": "Reminds me of courses I grew up on: Rory McIlroy on return to Delhi Mid-Day",
-      "source": "Mid-Day, 2026-10-15",
-      "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxNWC1UV3NZNjZlRmRDc0RBWkxqbE81SlR0eXhTdlg0YW1oc0RidnVaS0dZS0ZHX2xPZnpVcTVGeE9yWXBwUEpaa3g5V1dLa3I2TjBLb21vdDg5amUwUmVlM0FrWDBQb3dXeXVYRkRhUXVlNHk1eUdwMURlTGF2Q2ZYSWFiS3BhQ1JzWEZKdW1uVlRBQi1abnl3N05GQTRuclZWN2Y2UkttQjhaV1l4RVhDVVlRTjdtR3hYTkJWLTJkV244ZFNRRUQzSmdueTJhbU5uTkVrRzZpZ1dGX1hhelk5cHZfcXV6U0gtemZVX2Z30gHuAUFVX3lxTE1YLVRXc1k2NmVGZENzREFaTGpsTzVKVHR5eFN2WDRhbWhzRGJ2dVpLR1lLRkdfbE9melVxNUZ4T3JZcHBQSlpreDlXV0trcjZOMEtvbW90ODlqZTBSZWUzQWtYMFBvd1d5dVhGRGFRdWU0eTV5R3AxRGVMYXZDZlhJYWJLcGFDUnNYRkp1bW5WVEFCLVpueXc3TkZBNG5yVlY3ZjZSS21COFpXWXhFWENVWVFON21HeFhOQlYtMmRXbjhkU1FFRDNKZ255MmFtTm5ORWtHNmlnV0ZfWGF6WTlwdl9xdXpTSC16ZlVfZnc?oc=5"
+      "icon": "🏏",
+      "title": "West Indies level the T20I series after defeating India in Hyderabad",
+      "text": "West Indies won the fourth T20 International on 14 October by 24 runs, scoring 247/3 before bowling India out for 223. The result levelled the five-match series at 2–2.",
+      "source": "BCCI Match Centre, 2026-10-14",
+      "url": "https://www.bcci.tv/matches/3385ec17-38fa-47dd-a809-cdacef29fb37/india-vs-west-indies/match-details"
     },
     {
-      "category": "Economy",
-      "icon": "💹",
-      "title": "AI gains may translate into income growth in 5 years for India: Orlik - Business Standard",
-      "text": "AI gains may translate into income growth in 5 years for India: Orlik Business Standard",
-      "source": "Business Standard, 2026-10-15",
-      "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxQdzhLMlB5TzBGa3haU3hQbzN4YU9DZEtYbGpMNzMzdmIxc1d3VDdaN3FfcjNzRGJLTzc1S2ZZVUxvRkdOd3VPRVRTWlhWejRXZ3R5NWtZTmhBeWlWUjAwRjJ0Qi1ZX0ZTTEZ4Qk1RSFc2QXE2VFJuczlHRmRoR24waFVlSFRIZllTQ2o4SWJWVGZDMjJFdzZiUndNVVc4aXI2aU11TlBQZ05EbnNxZkJtZXo2NktaVnVfMGl0LTlVUldCelh2T1ppdkc5R05fNVNKZGd0S1BLQXNPcURDUVHSAd4BQVVfeXFMUHc4SzJQeU8wRmt4WlN4UG8zeGFPQ2RLWGxqTDczM3ZiMXNXd1Q3WjdxX3Izc0RiS083NUtmWVVMb0ZHTnd1T0VUU1pYVno0V2d0eTVrWU5oQXlpVlIwMEYydEItWV9GU0xGeEJNUUhXNkFxNlRSbnM5R0ZkaEduMGhVZUhUSGZZU0NqOEliVlRmQzIyRXc2YlJ3TVVXOGlyNmlNdU5QUGdORG5zcWZCbWV6NjZLWlZ1XzBpdC05VVJXQnpYdk9aaXZHOUdOXzVTSmRndEtQS0FzT3FEQ1FR?oc=5"
-    },
-    {
-      "category": "World",
-      "icon": "🌐",
-      "title": "Saeed Naqvi's Memoir Offers a Front-Row Seat to History - Brighter Kashmir",
-      "text": "Saeed Naqvi's Memoir Offers a Front-Row Seat to History Brighter Kashmir",
-      "source": "Brighter Kashmir, 2026-10-15",
-      "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPbGxpS0RDNlJtVXlmckMwbk9WXzY3Q0lweUZfeXVfeXJsMUlnQmI4RVkxTFhQeUpJNjdoQjFiYXZ0OXJnb29NbDZPWlVsTTFySk4yN2FqdXJjTWF6OUw2Y0NYbjR5d29YeGtYOUF0WDlzZmJreHRUUnJKM1FyYy1zMjRwZWVfYmcwVVE?oc=5"
-    },
-    {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "RRB NTPC Notification 2026 PDF Out For 5,236 UG and Graduate Posts, Apply Online Link - Adda247",
-      "text": "RRB NTPC Notification 2026 PDF Out For 5,236 UG and Graduate Posts, Apply Online Link Adda247",
-      "source": "Adda247, 2026-10-15",
-      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5GN2c4N1VvM1pnNjRIOTBBYXFfSGtaSUtiZVZ1clZvSm1BcFc1dlRYaFpEajB1ekFBRlNOR1IyaDh0THFjSl9jZ0tTVDQtNWNFXy1wbzl6OTZZMnRtdWZ1Q0xCSUkxc0d2N0V5MA?oc=5"
+      "category": "Banking",
+      "icon": "🏦",
+      "title": "Fairfax's proposed majority acquisition of IDBI Bank receives government approval",
+      "text": "Reporting on the CCEA approval says Fairfax Financial Holdings may acquire a 60.72% stake in IDBI Bank. The report notes regulatory conditions involving Fairfax's existing Catholic Syrian Bank holding.",
+      "source": "The Economic Times, 2026-10-16",
+      "url": "https://m.economictimes.com/news/company/corporate-trends/fairfax-must-merge-csb-or-exit-one-bank-within-2-years-dipam-secy-arunish-chawla/articleshow/134980692.cms"
     }
   ],
   "quiz": [
     {
-      "q": "Which topic is covered in today's India current affairs?",
-      "a": "SIR Controversy Explained: Election Commission Powers, Voter Rights For CLAT 2027 - Careers360"
+      "q": "What export duty on petrol was reported to take effect in India on 16 October 2026?",
+      "a": "₹2.50 per litre. The reported diesel export duty was ₹8.50 per litre."
     },
     {
-      "q": "Which topic is covered in today's Sports current affairs?",
-      "a": "Have Indian Sports Federations Ruined their sports? Update 20 in Athletics in India by Rupinder Singh - RunBlogRun"
+      "q": "Which country could India overtake to become the world's fourth-largest economy in 2027, according to the IMF projection reported today?",
+      "a": "Japan."
     },
     {
-      "q": "Which topic is covered in today's Science & Technology current affairs?",
-      "a": "India and Canada explore stronger bilateral partnership as PM Modi meets Foreign Minister Anita Anand - India Shipping News"
+      "q": "Which company built the multi-purpose vessel Samarthak for the Indian Navy?",
+      "a": "Larsen & Toubro (L&T)."
     },
     {
-      "q": "Which topic is covered in today's Economy current affairs?",
-      "a": "‘Responded well to shock’: IMF backs India’s economic resilience, sees 7% growth in FY27-28 - The Economic Times"
+      "q": "What is the theme of World Food Day 2026?",
+      "a": "“Innovate today. Nourish tomorrow.”"
     },
     {
-      "q": "Which topic is covered in today's Sports current affairs?",
-      "a": "Reminds me of courses I grew up on: Rory McIlroy on return to Delhi - Mid-Day"
+      "q": "Which team won the fourth T20I against India in Hyderabad by 24 runs?",
+      "a": "West Indies."
+    },
+    {
+      "q": "Which financial group was reported to have government approval for a proposed 60.72% stake in IDBI Bank?",
+      "a": "Fairfax Financial Holdings."
     }
   ]
 }
