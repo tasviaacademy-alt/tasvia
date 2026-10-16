@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-16",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "otq-geography-1",
+      "category": "World GK",
+      "q": "What is the capital of Afghanistan?",
+      "a": "Kabul"
+    },
+    {
+      "id": "otq-geography-2",
+      "category": "World GK",
+      "q": "What is the capital of Australia?",
+      "a": "Canberra"
+    },
+    {
+      "id": "otq-geography-4",
+      "category": "World GK",
+      "q": "What is the capital of Greece?",
+      "a": "Athens"
+    },
+    {
+      "id": "otq-geography-5",
+      "category": "World GK",
+      "q": "What is the capital of Italy?",
+      "a": "Rome"
+    },
+    {
+      "id": "otq-geography-7",
+      "category": "World GK",
+      "q": "What is the capital of Germany?",
+      "a": "Berlin"
+    }
+  ]
+}
