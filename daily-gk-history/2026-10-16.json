@@ -3,34 +3,34 @@
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "otq-geography-1",
-      "category": "World GK",
-      "q": "What is the capital of Afghanistan?",
-      "a": "Kabul"
+      "id": "static-india-constitution",
+      "category": "Indian Polity",
+      "q": "When did the Constitution of India come into effect?",
+      "a": "26 January 1950."
     },
     {
-      "id": "otq-geography-2",
-      "category": "World GK",
-      "q": "What is the capital of Australia?",
-      "a": "Canberra"
+      "id": "static-india-independence",
+      "category": "Indian History",
+      "q": "On which date did India become independent?",
+      "a": "15 August 1947."
     },
     {
-      "id": "otq-geography-4",
-      "category": "World GK",
-      "q": "What is the capital of Greece?",
-      "a": "Athens"
+      "id": "static-space-isro",
+      "category": "Science & Space",
+      "q": "What is the name of India's national space agency?",
+      "a": "ISRO (Indian Space Research Organisation)."
     },
     {
-      "id": "otq-geography-5",
-      "category": "World GK",
-      "q": "What is the capital of Italy?",
-      "a": "Rome"
+      "id": "static-largest-ocean",
+      "category": "World Geography",
+      "q": "Which is the largest ocean on Earth?",
+      "a": "The Pacific Ocean."
     },
     {
-      "id": "otq-geography-7",
-      "category": "World GK",
-      "q": "What is the capital of Germany?",
-      "a": "Berlin"
+      "id": "static-sports-chess",
+      "category": "Sports",
+      "q": "How many squares are there on a standard chessboard?",
+      "a": "64."
     }
   ]
 }
