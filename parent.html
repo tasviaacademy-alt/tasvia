@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-13-v89-parent-install-audit">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-16-v90-gk-current-affairs-refresh">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -1486,7 +1486,7 @@ window.__tasviaLoadLearning=function(kind,body){if(!body)return;body.setAttribut
       }
       renderGK(body,d);
     }else{var caDate=String(d&&d.date||"").trim();var istToday=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Kolkata",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());if(caDate!==istToday){body.innerHTML='<div class="empty">Today’s Current Affairs are being updated. Please try again shortly.</div>';return;}renderCurrent(body,d)}
-  }catch(err){console.error("TASVIA learning render",err);body.innerHTML='<div class="empty">Learning content is temporarily unavailable. Please check your connection and retry.</div>'}}learningFetch(path+"?v=20261012-learning-v87&ts="+Date.now()).then(showLearning).catch(function(e){console.warn("TASVIA learning fetch",e);body.innerHTML='<div class="empty">Learning content could not be refreshed. Please check your connection and try again.</div>'});};
+  }catch(err){console.error("TASVIA learning render",err);body.innerHTML='<div class="empty">Learning content is temporarily unavailable. Please check your connection and retry.</div>'}}learningFetch(path+"?v=20261016-learning-v90&ts="+Date.now()).then(showLearning).catch(function(e){console.warn("TASVIA learning fetch",e);body.innerHTML='<div class="empty">Learning content could not be refreshed. Please check your connection and try again.</div>'});};
 // Learning sections are loaded directly by the active parent-section overlay.
 })();
 </script>
