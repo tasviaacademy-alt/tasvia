@@ -1,36 +1,36 @@
 {
-  "date": "2026-10-15",
+  "date": "2026-10-16",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "otq-geography-3",
+      "id": "otq-geography-1",
       "category": "World GK",
-      "q": "What is the capital of Belgium?",
-      "a": "Brussels"
+      "q": "What is the capital of Afghanistan?",
+      "a": "Kabul"
     },
     {
-      "id": "static-fundamental-rights",
-      "category": "Indian General Knowledge",
-      "q": "Which part of the Indian Constitution lists Fundamental Rights?",
-      "a": "Part III."
+      "id": "otq-geography-2",
+      "category": "World GK",
+      "q": "What is the capital of Australia?",
+      "a": "Canberra"
     },
     {
-      "id": "static-maths-triangle",
-      "category": "Mathematics GK",
-      "q": "How many sides does a triangle have?",
-      "a": "Three."
+      "id": "otq-geography-4",
+      "category": "World GK",
+      "q": "What is the capital of Greece?",
+      "a": "Athens"
     },
     {
-      "id": "static-literature-mahabharata",
-      "category": "Indian General Knowledge",
-      "q": "Who is traditionally credited with composing the Mahabharata?",
-      "a": "Vyasa."
+      "id": "otq-geography-5",
+      "category": "World GK",
+      "q": "What is the capital of Italy?",
+      "a": "Rome"
     },
     {
-      "id": "static-biodiversity",
-      "category": "Science GK",
-      "q": "What does biodiversity mean?",
-      "a": "The variety of living organisms in an area or on Earth."
+      "id": "otq-geography-7",
+      "category": "World GK",
+      "q": "What is the capital of Germany?",
+      "a": "Berlin"
     }
   ]
 }
