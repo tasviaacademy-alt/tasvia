@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-17-v99-realtime-live-sync">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-17-v100-corporate-live-sync">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -1549,6 +1549,46 @@ window.__tasviaLoadLearning=function(kind,body){if(!body)return;body.setAttribut
 #tasvia-ambient-sound-toggle[aria-pressed="true"] .sound-dot{background:#67D6A1;box-shadow:0 0 0 3px rgba(103,214,161,.16)}
 @media(max-width:520px){#tasvia-ambient-sound-toggle{top:calc(env(safe-area-inset-top,0px) + 8px);right:8px;min-height:36px;padding:8px 10px;font-size:11px}}
 @media(prefers-reduced-motion:reduce){#tasvia-ambient-sound-toggle{transition:none}}
+
+/* TASVIA CORPORATE UI SYSTEM — parent portal */
+:root{color-scheme:light;--bg:#F4F6FA;--card:#FFFFFF;--ink:#17243B;--muted:#64748B;--line:#E0E6EF;--chip:#EEF2F8;--board:#0B2455;--chalk:#F8FAFC;--gold:#D7A83E;--p:#16835D;--a:#C43D4B}
+body{background:#F4F6FA!important;color:#17243B;font-family:Inter,"DM Sans","Noto Sans Telugu","Noto Sans Devanagari",system-ui,sans-serif!important;letter-spacing:0}
+header{background:linear-gradient(110deg,#081B43,#0B2455 62%,#173A75)!important;color:#fff;border-bottom:3px solid #D7A83E;box-shadow:0 8px 24px rgba(11,36,85,.12)}
+header .brand{color:#fff;font-weight:850;letter-spacing:-.035em}
+header .brand span{color:#E8C46D}
+header .langs{color:#fff}
+.kid{color:#fff}
+main{max-width:1200px;margin:0 auto;padding-top:22px;padding-bottom:40px}
+.card,.learning-card,.practice-q,.parent-dashboard,.fee-details-pay{border:1px solid #E1E7F0!important;box-shadow:0 4px 16px rgba(18,38,75,.045)!important;border-radius:16px!important;background:#fff}
+.parent-dashboard{background:linear-gradient(135deg,#fff,#F9FBFE)!important;border-top:3px solid #D7A83E!important}
+.parent-dashboard::before{height:3px;background:linear-gradient(90deg,#D7A83E,#F3DE9D,#D7A83E)}
+.parent-action{background:#fff!important;border:1px solid #E0E6EF!important;border-radius:14px!important;box-shadow:0 3px 12px rgba(11,36,85,.045)!important;color:#17243B!important}
+.parent-action:hover{border-color:#C5A04C!important;box-shadow:0 8px 20px rgba(11,36,85,.09)!important}
+.parent-action-icon{background:#EEF2F8!important;color:#0B2455;border:1px solid #E2E8F0}
+.parent-action::after{background:#D7A83E}
+.parent-back-dashboard{background:linear-gradient(120deg,#0B2455,#173A75)!important;border:1px solid #284A7B;border-radius:11px!important}
+.btn,.practice-btn,.hw-complete-btn,.receipt-download-btn,.receipt-all-btn{border-radius:10px!important;font-weight:700;transition:background .16s ease,transform .16s ease,box-shadow .16s ease}
+.btn.gold,.practice-btn.gold{background:linear-gradient(135deg,#E6C46E,#D7A83E)!important;color:#17243B!important;border:1px solid #C69A32!important}
+button:not(.gold):not(.lang-btn),.btn:not(.gold){font-weight:650}
+input,select,textarea,.practice-input{border:1px solid #D6DFEC!important;border-radius:10px!important;background:#fff!important;color:#17243B!important}
+input:focus,select:focus,textarea:focus,.practice-input:focus{outline:3px solid rgba(215,168,62,.22);border-color:#D7A83E!important}
+table{border:1px solid #E1E7F0;border-radius:12px;background:#fff}
+table th{background:#F0F4FA;color:#42536D}
+table td{border-color:#E8EDF4!important}
+#banner{border-left-color:#D7A83E!important}
+.welcome-backdrop{background:linear-gradient(145deg,rgba(7,22,53,.88),rgba(11,36,85,.76))!important;backdrop-filter:blur(8px)}
+.welcome-card{border:1px solid #E1E7F0!important;border-top:4px solid #D7A83E!important;border-radius:22px!important;box-shadow:0 24px 70px rgba(3,16,42,.28)!important;background:#fff!important}
+.welcome-card h2{color:#0B2455!important;font-weight:850;letter-spacing:-.04em}
+.welcome-card h2 span{color:#B58A2E}
+.student-login-input{min-height:46px!important}
+.welcome-enter{background:linear-gradient(135deg,#0B2455,#173A75)!important;color:#fff!important;border-radius:11px!important;min-height:46px;font-weight:750!important;box-shadow:0 5px 14px rgba(11,36,85,.15)}
+.install-home-btn{border-radius:10px!important;font-weight:700}
+.parent-empty{background:#F8FAFC!important;border:1px dashed #CBD5E1!important;border-radius:14px}
+.fee-details-pay{background:#F9FBFE!important}
+.fee-qr{border-color:#DDE5F0!important}
+@media(max-width:520px){main{padding-top:14px;padding-bottom:28px}.parent-dashboard{padding:16px!important}.parent-action{min-height:76px}.card{padding:15px!important}}
+@media(prefers-reduced-motion:reduce){.parent-action,.btn,.practice-btn{transition:none!important}.parent-action:hover{transform:none}}
+
 </style>
 <script id="tasvia-sound-toggle-script">
 (function(){
