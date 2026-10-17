@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-17-v91-daily-gk-mcq-auto-refresh">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-17-v92-entrance-practice-mocks">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -513,7 +513,7 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
 (function(){
   "use strict";
   if("serviceWorker" in navigator && location.protocol==="https:"){
-    navigator.serviceWorker.register("./sw.js?v=88",{scope:"./"}).catch(function(){/* Install guidance remains available without a worker. */});
+    navigator.serviceWorker.register("./sw.js?v=89",{scope:"./"}).catch(function(){/* Install guidance remains available without a worker. */});
   }
   var deferredPrompt=null;
   var btn=document.getElementById("addToHomeScreenBtn");
@@ -792,16 +792,20 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     var photoHtml=photo?'<div class="dash-photo"><img src="'+photo+'" alt="'+esc(name)+'"></div>':'<div class="dash-photo dash-photo-fallback">👤</div>';
     var testAvg="—";
     if(tests.length){
-      var vals=tests.map(function(x){return {m:Number(x.m)||0,x:Number(x.x)||0};}).filter(function(x){return x.x>0;});
+      var vals=tests.filter(function(x){return x.m!=null;}).map(function(x){return {m:Number(x.m)||0,x:Number(x.x)||0};}).filter(function(x){return x.x>0;});
       if(vals.length)testAvg=Math.round(vals.reduce(function(s,x){return s+(x.m/x.x)*100;},0)/vals.length)+"%";
     }
     var hwDoneCount=0;
     hw.forEach(function(x){try{if(localStorage.getItem(hwDoneKey(x))==="1")hwDoneCount++;}catch(_){ }});
-    var progressTests=tests.slice(0,5).map(function(x){
+    var progressTests=tests.slice(0,8).map(function(x){
       var got=Number(x.m)||0,max=Number(x.x)||0,pct=max?Math.max(0,Math.min(100,Math.round(got*100/max))):0;
-      return '<div style="padding:10px 0;border-top:1px solid #EDF0F4"><div style="display:flex;justify-content:space-between;gap:10px;font-size:13px;color:#344054"><span>'+((x.e==="JNVST"||x.e==="AISSEE")?'<b style="display:inline-block;margin-right:5px;padding:2px 6px;border-radius:6px;background:#FFF1C2;color:#654600;font-size:10px">'+(x.e==="JNVST"?"NAVODAYA JNVST":"SAINIK AISSEE")+'</b>':'')+esc((x.s||"Test")+(x.n?" · "+x.n:""))+'</span><b style="color:#102858">'+got+(max?'/'+max:'')+(max?' · '+pct+'%':'')+'</b></div><div style="height:8px;background:#E9EDF2;border-radius:99px;overflow:hidden;margin-top:7px"><i role="progressbar" aria-label="'+esc(x.s||"Test")+' score" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'" style="display:block;height:100%;width:'+pct+'%;border-radius:99px;background:linear-gradient(90deg,#16845B,#36A874)"></i></div></div>';
+      var badge=(x.e==="JNVST"||x.e==="AISSEE")?'<b style="display:inline-block;margin-right:5px;padding:2px 6px;border-radius:6px;background:#FFF1C2;color:#654600;font-size:10px">'+(x.e==="JNVST"?"NAVODAYA JNVST":"SAINIK AISSEE")+'</b>':'';
+      var score=x.h?'<b style="color:#102858">'+got+'/'+max+' · '+pct+'%</b>':'<b style="color:#667085">Practice assigned</b>';
+      var bar=x.h?'<div style="height:8px;background:#E9EDF2;border-radius:99px;overflow:hidden;margin-top:7px"><i role="progressbar" aria-label="'+esc(x.s||"Test")+' score" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'" style="display:block;height:100%;width:'+pct+'%;border-radius:99px;background:linear-gradient(90deg,#16845B,#36A874)"></i></div>':'';
+      var launch=x.p?'<button type="button" data-entrance-pack="'+x.p+'" style="margin-top:8px;border:0;border-radius:9px;background:#0B2455;color:#fff;padding:8px 12px;font-weight:700;cursor:pointer">▶ Start timed practice</button>':'';
+      return '<div style="padding:10px 0;border-top:1px solid #EDF0F4"><div style="display:flex;justify-content:space-between;gap:10px;font-size:13px;color:#344054"><span>'+badge+esc((x.s||"Test")+(x.n?" · "+x.n:""))+'</span>'+score+'</div>'+bar+launch+'</div>';
     }).join("");
-    var progressPanelHtml='<section style="margin-top:14px;padding:17px;border:1px solid #E1E7F0;border-radius:20px;background:#fff;box-shadow:0 6px 20px rgba(16,40,88,.06)" aria-labelledby="tasviaProgressTitle"><h3 id="tasviaProgressTitle" style="margin:0 0 5px;color:#102858;font-size:19px">📈 Learning Progress</h3><p style="margin:0 0 13px;color:#667085;font-size:12px">Recent test results and homework follow-through.</p>'+
+    var progressPanelHtml='<section style="margin-top:14px;padding:17px;border:1px solid #E1E7F0;border-radius:20px;background:#fff;box-shadow:0 6px 20px rgba(16,40,88,.06)" aria-labelledby="tasviaProgressTitle"><h3 id="tasviaProgressTitle" style="margin:0 0 5px;color:#102858;font-size:19px">📈 Learning Progress</h3><p style="margin:0 0 13px;color:#667085;font-size:12px">Recent test results, assigned entrance practice and homework follow-through.</p>'+
       (progressTests||'<div style="padding:10px 12px;border-radius:12px;background:#F1F8F3;color:#26724A;font-size:13px">Test marks will appear here when teachers publish them.</div>')+
       '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><span style="padding:7px 10px;border-radius:999px;background:#F1F4F8;color:#344054;font-size:12px;font-weight:700">Test average: '+esc(testAvg)+'</span><span style="padding:7px 10px;border-radius:999px;background:#F1F4F8;color:#344054;font-size:12px;font-weight:700">Homework completed: '+hwDoneCount+'/'+hw.length+'</span><span style="padding:7px 10px;border-radius:999px;background:#F1F4F8;color:#344054;font-size:12px;font-weight:700">Attendance: '+ypct+'%</span></div></section>';
     function needsNotification(key,content){
@@ -1516,7 +1520,7 @@ window.__tasviaLoadLearning=function(kind,body){if(!body)return;body.setAttribut
       }
       renderGK(body,d);
     }else{var caDate=String(d&&d.date||"").trim();var istToday=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Kolkata",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());if(caDate!==istToday){body.innerHTML='<div class="empty">Today’s Current Affairs are being updated. Please try again shortly.</div>';return;}renderCurrent(body,d)}
-  }catch(err){console.error("TASVIA learning render",err);body.innerHTML='<div class="empty">Learning content is temporarily unavailable. Please check your connection and retry.</div>'}}learningFetch(path+"?v=20261017-learning-v91&ts="+Date.now()).then(showLearning).catch(function(e){console.warn("TASVIA learning fetch",e);body.innerHTML='<div class="empty">Learning content could not be refreshed. Please check your connection and try again.</div>'});};
+  }catch(err){console.error("TASVIA learning render",err);body.innerHTML='<div class="empty">Learning content is temporarily unavailable. Please check your connection and retry.</div>'}}learningFetch(path+"?v=20261017-learning-v92&ts="+Date.now()).then(showLearning).catch(function(e){console.warn("TASVIA learning fetch",e);body.innerHTML='<div class="empty">Learning content could not be refreshed. Please check your connection and try again.</div>'});};
 // Learning sections are loaded directly by the active parent-section overlay.
 })();
 </script>
@@ -1593,5 +1597,50 @@ window.__tasviaLoadLearning=function(kind,body){if(!body)return;body.setAttribut
 })();
 </script>
 
+<script id="tasvia-entrance-practice-engine">
+(function(){
+  "use strict";
+  var activeTimer=null,activePack=null,remaining=0,selected={},finished=false;
+  function safe(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+  function stopTimer(){if(activeTimer){clearInterval(activeTimer);activeTimer=null}}
+  function closePractice(){stopTimer();var old=document.getElementById("tasviaEntranceModal");if(old)old.remove();activePack=null;selected={};finished=false}
+  function clock(n){return Math.floor(n/60)+":"+String(n%60).padStart(2,"0")}
+  function finishPractice(expired){
+    if(finished||!activePack)return;finished=true;stopTimer();
+    var qs=activePack.questions||[],score=0,topics={};
+    qs.forEach(function(q,i){var ok=Number(selected[i])===Number(q.answer);if(ok)score++;var t=q.topic||"General";if(!topics[t])topics[t]={right:0,total:0};topics[t].total++;if(ok)topics[t].right++;});
+    var pct=qs.length?Math.round(score*100/qs.length):0,weak=Object.keys(topics).filter(function(t){return topics[t].right<topics[t].total}).map(function(t){return t+" ("+topics[t].right+"/"+topics[t].total+")"});
+    var code=String(window.__tasviaAutoCode||"parent").replace(/[^A-Z0-9._-]/gi,"").toUpperCase(),key="tasvia-entrance-results:"+code,history=[];
+    try{history=JSON.parse(localStorage.getItem(key)||"[]");if(!Array.isArray(history))history=[];history.unshift({pack:activePack.id,date:new Date().toISOString(),score:score,total:qs.length,pct:pct,topics:topics});localStorage.setItem(key,JSON.stringify(history.slice(0,30)))}catch(_){}
+    var body=document.getElementById("tasviaEntranceBody");if(!body)return;
+    var h='<div style="padding:14px;border-radius:14px;background:'+(pct>=70?'#EAF7F0':'#FFF4E5')+';text-align:center"><div style="font-size:13px;color:#475467">'+(expired?'Time is up. ':'')+'Practice complete</div><div style="font-size:32px;font-weight:800;color:#102858">'+score+'/'+qs.length+'</div><b>'+pct+'%</b></div><h4 style="margin:16px 0 8px;color:#102858">Review & explanations</h4>';
+    qs.forEach(function(q,i){var ok=Number(selected[i])===Number(q.answer);h+='<div style="padding:12px 0;border-top:1px solid #E4E7EC"><b>Q'+(i+1)+'. '+safe(q.q)+'</b><div style="margin-top:5px;color:'+(ok?'#18794E':'#B42318')+'">Your answer: '+(selected[i]==null?'Not answered':safe(q.options[Number(selected[i])]))+'</div><div style="color:#18794E">Correct: '+safe(q.options[Number(q.answer)])+'</div><div style="font-size:13px;color:#667085;margin-top:4px">'+safe(q.explanation||"")+'</div></div>'});
+    h+='<h4 style="margin:16px 0 8px;color:#102858">Topic review</h4>';Object.keys(topics).forEach(function(t){h+='<div style="font-size:13px;padding:5px 0">'+safe(t)+': <b>'+topics[t].right+'/'+topics[t].total+'</b></div>'});
+    if(weak.length)h+='<p style="padding:10px;border-radius:10px;background:#FFF4E5;color:#7A4D00;font-size:13px"><b>Revise next:</b> '+weak.map(safe).join(", ")+'</p>';
+    h+='<p style="font-size:12px;color:#667085">This practice score is saved on this device only. Staff-entered marks remain in the official portal record.</p><button type="button" id="tasviaPracticeClose" style="width:100%;margin-top:10px;border:0;border-radius:10px;background:#0B2455;color:white;padding:12px;font-weight:700">Close review</button>';
+    body.innerHTML=h;var close=document.getElementById("tasviaPracticeClose");if(close)close.onclick=closePractice;
+  }
+  function renderQuiz(pack){
+    activePack=pack;selected={};finished=false;remaining=Math.max(1,Number(pack.durationMinutes)||12)*60;
+    var modal=document.getElementById("tasviaEntranceModal");if(!modal)return;
+    var h='<div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><div><b style="color:#102858">'+safe(pack.title)+'</b><div style="font-size:12px;color:#667085">'+(pack.questions||[]).length+' questions · timed practice</div></div><b id="tasviaPracticeClock" style="white-space:nowrap;color:#B42318">'+clock(remaining)+'</b></div><p style="font-size:12px;color:#667085">Original starter practice set for learning; not an official or previous-year paper.</p>';
+    (pack.questions||[]).forEach(function(q,i){h+='<fieldset style="border:1px solid #E4E7EC;border-radius:12px;padding:12px;margin:12px 0"><legend style="font-weight:700;color:#15201C">Q'+(i+1)+'. '+safe(q.q)+'</legend><div style="font-size:11px;color:#667085;margin-bottom:7px">'+safe(q.topic||"General")+'</div>'+(q.options||[]).map(function(o,j){return '<label style="display:flex;gap:8px;align-items:flex-start;padding:8px;border-radius:8px;cursor:pointer"><input type="radio" name="tasviaQ'+i+'" value="'+j+'" style="margin-top:4px"><span>'+safe(o)+'</span></label>'}).join("")+'</fieldset>'});
+    h+='<button type="button" id="tasviaPracticeSubmit" style="width:100%;border:0;border-radius:10px;background:#0B2455;color:#fff;padding:13px;font-weight:700">Submit answers</button>';
+    document.getElementById("tasviaEntranceBody").innerHTML=h;
+    modal.querySelectorAll('input[type="radio"]').forEach(function(input){input.addEventListener("change",function(){selected[Number(input.name.replace("tasviaQ",""))]=Number(input.value)})});
+    document.getElementById("tasviaPracticeSubmit").onclick=function(){finishPractice(false)};
+    stopTimer();activeTimer=setInterval(function(){remaining--;var el=document.getElementById("tasviaPracticeClock");if(el)el.textContent=clock(Math.max(0,remaining));if(remaining<=0)finishPractice(true)},1000);
+  }
+  document.addEventListener("click",function(ev){var btn=ev.target&&ev.target.closest?ev.target.closest("[data-entrance-pack]"):null;if(btn){ev.preventDefault();window.__tasviaStartEntrancePractice(btn.getAttribute("data-entrance-pack"));}});
+  window.__tasviaStartEntrancePractice=function(packId,testName){
+    closePractice();var modal=document.createElement("div");modal.id="tasviaEntranceModal";modal.setAttribute("role","dialog");modal.setAttribute("aria-modal","true");modal.setAttribute("aria-label","Entrance practice");
+    modal.style.cssText="position:fixed;inset:0;z-index:2147483001;background:rgba(7,18,14,.72);display:flex;align-items:center;justify-content:center;padding:12px";
+    modal.innerHTML='<div style="width:min(100%,680px);max-height:92vh;overflow:auto;background:#fff;border-radius:18px;padding:16px;color:#15201C;box-shadow:0 20px 60px rgba(0,0,0,.3)"><div style="display:flex;justify-content:flex-end"><button id="tasviaPracticeExit" type="button" aria-label="Close practice" style="border:0;background:#EEF2F6;border-radius:8px;padding:7px 10px;font-weight:700">✕ Close</button></div><div id="tasviaEntranceBody" style="padding-top:4px">Loading practice questions…</div></div>';
+    document.body.appendChild(modal);document.getElementById("tasviaPracticeExit").onclick=closePractice;
+    fetch("./entrance-question-bank.json?v=20261017-1",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json()}).then(function(bank){var pack=(bank.packs||[]).filter(function(p){return p.id===packId})[0];if(!pack)throw new Error("Practice pack not found");if(testName)pack.title=String(testName)+" · "+pack.title;renderQuiz(pack)}).catch(function(){var b=document.getElementById("tasviaEntranceBody");if(b)b.innerHTML='<p style="color:#B42318">Practice questions could not be loaded. Please check your connection and try again.</p>'});
+  };
+  window.addEventListener("pagehide",stopTimer);
+})();
+</script>
 </body>
 </html>
