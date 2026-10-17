@@ -1,36 +1,11 @@
 {
-  "date": "2026-10-16",
-  "title": "Daily General Knowledge",
-  "questions": [
-    {
-      "id": "static-india-constitution",
-      "category": "Indian Polity",
-      "q": "When did the Constitution of India come into effect?",
-      "a": "26 January 1950."
-    },
-    {
-      "id": "static-india-independence",
-      "category": "Indian History",
-      "q": "On which date did India become independent?",
-      "a": "15 August 1947."
-    },
-    {
-      "id": "static-space-isro",
-      "category": "Science & Space",
-      "q": "What is the name of India's national space agency?",
-      "a": "ISRO (Indian Space Research Organisation)."
-    },
-    {
-      "id": "static-largest-ocean",
-      "category": "World Geography",
-      "q": "Which is the largest ocean on Earth?",
-      "a": "The Pacific Ocean."
-    },
-    {
-      "id": "static-sports-chess",
-      "category": "Sports",
-      "q": "How many squares are there on a standard chessboard?",
-      "a": "64."
-    }
+  "date":"2026-10-17",
+  "title":"Daily General Knowledge",
+  "questions":[
+    {"id":"static-constitution-drafting","category":"Indian Polity","q":"Who chaired the Drafting Committee of the Constitution of India?","a":"Dr. B. R. Ambedkar."},
+    {"id":"static-smallest-continent","category":"World Geography","q":"Which is the smallest continent by land area?","a":"Australia."},
+    {"id":"static-sdg-full-form","category":"Environment & Development","q":"What does SDG stand for in the United Nations development agenda?","a":"Sustainable Development Goal."},
+    {"id":"static-vitamin-sunlight","category":"Biology","q":"Which vitamin can the human body produce in the skin after exposure to sunlight?","a":"Vitamin D."},
+    {"id":"static-si-force","category":"Physics","q":"What is the SI unit of force?","a":"The newton (N)."}
   ]
 }
