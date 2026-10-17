@@ -604,7 +604,7 @@ function subscribe(){
       setSync("Connection lost · "+name);
     }
   };
-  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache)seenFirst[key]=true;scheduleRender();if(key==="students"||key==="fees"||key==="tests"||key==="att"||key==="diary"){schedulePV(true)}},e=>onErr(name,e)));
+  const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache){seenFirst[key]=true;setSync("Live · connected")}scheduleRender();if(key==="students"||key==="fees"||key==="tests"||key==="att"||key==="diary"){schedulePV(true)}},e=>onErr(name,e)));
   const admin=window.currentUser&&window.currentUser.role==="admin";
   coll("students","students");
   // Legacy student-ID migration is intentionally NOT automatic. It is a maintenance operation and must never run in the background while staff are recording payments.
@@ -612,7 +612,7 @@ function subscribe(){
   coll("fees","fees");
   {const y=+acYear(today()).from.slice(0,4)-1;coll("tests","tests",db.collection("tests").where("date",">=",y+"-06-01"))}
   coll("attendance","att",db.collection("attendance").orderBy("date","desc").limit(400));
-  unsubs.push(db.doc("info/centre").onSnapshot(d=>{S.info=d.exists?d.data():null;scheduleRender()},e=>onErr("info/centre",e)));
+  unsubs.push(db.doc("info/centre").onSnapshot(d=>{S.info=d.exists?d.data():null;if(d.metadata&&!d.metadata.fromCache)setSync("Live · connected");scheduleRender()},e=>onErr("info/centre",e)));
   pvLoad();schedulePV(true);
   /* Staff attendance and admin back-office data are loaded only when those screens are opened. */
   coll("diary","diary",db.collection("diary").orderBy("date","desc").limit(120));
