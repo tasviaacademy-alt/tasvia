@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "note": "TASVIA Academy original starter practice questions for learning. These are not official NVS/AISSEE papers or reproduced previous-year questions. Confirm current official syllabus and pattern before exam.",
+  "note": "TASVIA Academy original starter practice questions for learning. These are not official NVS/AISSEE papers or reproduced previous-year questions. Confirm current official syllabus and pattern before exam. Expanded with additional original practice questions on 2026-10-17; not official or previous-year papers.",
   "packs": [
     {
       "id": "JNVST-6",
@@ -126,6 +126,222 @@
           ],
           "answer": 2,
           "explanation": "The irregular plural of child is children."
+        },
+        {
+          "topic": "Mental Ability",
+          "q": "Complete the series: 5, 10, 20, 40, __?",
+          "options": [
+            "45",
+            "60",
+            "80",
+            "100"
+          ],
+          "answer": 2,
+          "explanation": "Each term is multiplied by 2; 40 × 2 = 80."
+        },
+        {
+          "topic": "Mental Ability",
+          "q": "Which pair has the same relationship as Bird : Nest?",
+          "options": [
+            "Bee : Hive",
+            "Fish : Tree",
+            "Dog : Feather",
+            "Cow : Kennel"
+          ],
+          "answer": 0,
+          "explanation": "A nest is a bird's home; a hive is a bee's home."
+        },
+        {
+          "topic": "Mental Ability",
+          "q": "If MONDAY is coded as NPOEBZ (each letter moves one step forward), how is SUNDAY coded?",
+          "options": [
+            "TVOEBZ",
+            "RTMCZX",
+            "TVMCBZ",
+            "TVOEAZ"
+          ],
+          "answer": 0,
+          "explanation": "Move each letter one step forward: S→T, U→V, N→O, D→E, A→B, Y→Z."
+        },
+        {
+          "topic": "Mental Ability",
+          "q": "Ravi faces north, turns right, then right again. Which direction is he facing?",
+          "options": [
+            "East",
+            "West",
+            "South",
+            "North"
+          ],
+          "answer": 2,
+          "explanation": "North → East → South."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "What is 864 − 397?",
+          "options": [
+            "457",
+            "467",
+            "477",
+            "487"
+          ],
+          "answer": 1,
+          "explanation": "864 − 400 + 3 = 467."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "A shopkeeper packs 7 pencils in each box. How many pencils are in 9 boxes?",
+          "options": [
+            "56",
+            "63",
+            "72",
+            "79"
+          ],
+          "answer": 1,
+          "explanation": "7 × 9 = 63."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "Which fraction is greatest?",
+          "options": [
+            "2/5",
+            "3/4",
+            "5/8",
+            "1/2"
+          ],
+          "answer": 1,
+          "explanation": "3/4 = 0.75, which is greater than the other listed fractions."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "A ribbon is 3 m 40 cm long. How many centimetres is that?",
+          "options": [
+            "34 cm",
+            "304 cm",
+            "340 cm",
+            "3,400 cm"
+          ],
+          "answer": 2,
+          "explanation": "3 m = 300 cm; 300 + 40 = 340 cm."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "The time is 2:35. What time will it be after 50 minutes?",
+          "options": [
+            "3:15",
+            "3:20",
+            "3:25",
+            "3:35"
+          ],
+          "answer": 2,
+          "explanation": "35 + 50 = 85 minutes, so the time is 3:25."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "A book costs ₹85. What is the cost of 4 books?",
+          "options": [
+            "₹320",
+            "₹330",
+            "₹340",
+            "₹350"
+          ],
+          "answer": 2,
+          "explanation": "85 × 4 = ₹340."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "Find the perimeter of a rectangle 8 cm long and 5 cm wide.",
+          "options": [
+            "13 cm",
+            "26 cm",
+            "40 cm",
+            "80 cm"
+          ],
+          "answer": 1,
+          "explanation": "Perimeter = 2 × (8 + 5) = 26 cm."
+        },
+        {
+          "topic": "Language",
+          "q": "Choose the antonym of “ancient”.",
+          "options": [
+            "Old",
+            "Historic",
+            "Modern",
+            "Early"
+          ],
+          "answer": 2,
+          "explanation": "Modern is the opposite of ancient."
+        },
+        {
+          "topic": "Language",
+          "q": "Choose the correct sentence.",
+          "options": [
+            "She go to school daily.",
+            "She goes to school daily.",
+            "She going to school daily.",
+            "She gone to school daily."
+          ],
+          "answer": 1,
+          "explanation": "With singular subject “she”, the simple present verb is “goes”."
+        },
+        {
+          "topic": "Language",
+          "q": "What is the past tense of “teach”?",
+          "options": [
+            "Teached",
+            "Taught",
+            "Teaching",
+            "Teaches"
+          ],
+          "answer": 1,
+          "explanation": "The past tense of teach is taught."
+        },
+        {
+          "topic": "General Knowledge",
+          "q": "Which is the largest planet in our Solar System?",
+          "options": [
+            "Earth",
+            "Saturn",
+            "Jupiter",
+            "Neptune"
+          ],
+          "answer": 2,
+          "explanation": "Jupiter is the largest planet in the Solar System."
+        },
+        {
+          "topic": "General Knowledge",
+          "q": "The national flower of India is:",
+          "options": [
+            "Rose",
+            "Lotus",
+            "Sunflower",
+            "Jasmine"
+          ],
+          "answer": 1,
+          "explanation": "The lotus is India's national flower."
+        },
+        {
+          "topic": "General Science",
+          "q": "Which part of a plant absorbs most water from soil?",
+          "options": [
+            "Flower",
+            "Leaf",
+            "Root",
+            "Fruit"
+          ],
+          "answer": 2,
+          "explanation": "Roots absorb water and minerals from the soil."
+        },
+        {
+          "topic": "General Science",
+          "q": "Water changes into water vapour by:",
+          "options": [
+            "Freezing",
+            "Condensation",
+            "Evaporation",
+            "Melting"
+          ],
+          "answer": 2,
+          "explanation": "Evaporation changes liquid water into water vapour."
         }
       ]
     },
@@ -253,6 +469,246 @@
           ],
           "answer": 2,
           "explanation": "Only the first premise guarantees that every rose is a flower."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "Solve: 5x + 4 = 39.",
+          "options": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "answer": 2,
+          "explanation": "5x = 35, so x = 7."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The HCF of 24 and 36 is:",
+          "options": [
+            "6",
+            "8",
+            "12",
+            "18"
+          ],
+          "answer": 2,
+          "explanation": "12 is the greatest number that divides both 24 and 36."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The product of (x + 2)(x + 3) is:",
+          "options": [
+            "x² + 5x + 6",
+            "x² + 6x + 5",
+            "x² + x + 6",
+            "x² + 5"
+          ],
+          "answer": 0,
+          "explanation": "Expand: x² + 3x + 2x + 6 = x² + 5x + 6."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "A shirt marked ₹800 is discounted by 10%. Its selling price is:",
+          "options": [
+            "₹700",
+            "₹710",
+            "₹720",
+            "₹780"
+          ],
+          "answer": 2,
+          "explanation": "10% of ₹800 is ₹80; ₹800 − ₹80 = ₹720."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "If two angles of a triangle are 55° and 65°, the third angle is:",
+          "options": [
+            "50°",
+            "60°",
+            "70°",
+            "80°"
+          ],
+          "answer": 1,
+          "explanation": "Angles of a triangle total 180°; 180 − 120 = 60°."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The square root of 2025 is:",
+          "options": [
+            "35",
+            "40",
+            "45",
+            "55"
+          ],
+          "answer": 2,
+          "explanation": "45 × 45 = 2025."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "Simplify: 2³ × 2⁴.",
+          "options": [
+            "2⁷",
+            "2¹²",
+            "4⁷",
+            "2¹"
+          ],
+          "answer": 0,
+          "explanation": "For the same base, add exponents: 2^(3+4) = 2⁷."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The circumference of a circle of radius 7 cm is (use π = 22/7):",
+          "options": [
+            "22 cm",
+            "44 cm",
+            "49 cm",
+            "154 cm"
+          ],
+          "answer": 1,
+          "explanation": "Circumference = 2πr = 2 × 22/7 × 7 = 44 cm."
+        },
+        {
+          "topic": "Science",
+          "q": "Which particle has a negative electric charge?",
+          "options": [
+            "Proton",
+            "Neutron",
+            "Electron",
+            "Nucleus"
+          ],
+          "answer": 2,
+          "explanation": "An electron carries a negative charge."
+        },
+        {
+          "topic": "Science",
+          "q": "Which process releases energy from food in cells?",
+          "options": [
+            "Respiration",
+            "Transpiration",
+            "Pollination",
+            "Filtration"
+          ],
+          "answer": 0,
+          "explanation": "Cellular respiration releases energy from food molecules."
+        },
+        {
+          "topic": "Science",
+          "q": "The pH of a neutral solution at room temperature is approximately:",
+          "options": [
+            "0",
+            "5",
+            "7",
+            "14"
+          ],
+          "answer": 2,
+          "explanation": "A neutral solution has pH 7 at room temperature."
+        },
+        {
+          "topic": "Science",
+          "q": "Which force keeps planets in orbit around the Sun?",
+          "options": [
+            "Friction",
+            "Magnetism",
+            "Gravity",
+            "Buoyancy"
+          ],
+          "answer": 2,
+          "explanation": "Gravity provides the attraction that keeps planets in orbit."
+        },
+        {
+          "topic": "English",
+          "q": "Choose the correct form: “Neither of the answers ___ correct.”",
+          "options": [
+            "are",
+            "were",
+            "is",
+            "be"
+          ],
+          "answer": 2,
+          "explanation": "“Neither” is treated as singular in this sentence; use “is”."
+        },
+        {
+          "topic": "English",
+          "q": "Choose the antonym of “expand”.",
+          "options": [
+            "Enlarge",
+            "Extend",
+            "Contract",
+            "Increase"
+          ],
+          "answer": 2,
+          "explanation": "Contract means to become smaller; it is the opposite of expand."
+        },
+        {
+          "topic": "English",
+          "q": "Identify the adjective: “The diligent student completed the task.”",
+          "options": [
+            "Student",
+            "Completed",
+            "Diligent",
+            "Task"
+          ],
+          "answer": 2,
+          "explanation": "Diligent describes the noun student."
+        },
+        {
+          "topic": "English",
+          "q": "Choose the correct reported speech: She said, “I have finished.”",
+          "options": [
+            "She said that she has finished.",
+            "She said that she had finished.",
+            "She says she finished.",
+            "She said that I had finished."
+          ],
+          "answer": 1,
+          "explanation": "In reported speech, present perfect commonly changes to past perfect."
+        },
+        {
+          "topic": "Reasoning",
+          "q": "Complete the series: 3, 8, 15, 24, 35, __.",
+          "options": [
+            "42",
+            "46",
+            "48",
+            "50"
+          ],
+          "answer": 2,
+          "explanation": "The differences are 5, 7, 9, 11; next difference is 13, giving 48."
+        },
+        {
+          "topic": "Reasoning",
+          "q": "If all pencils are stationery and no stationery is edible, which must be true?",
+          "options": [
+            "Some pencils are edible",
+            "No pencils are edible",
+            "All edible things are pencils",
+            "Some stationery is edible"
+          ],
+          "answer": 1,
+          "explanation": "Pencils belong to stationery, and stationery is not edible."
+        },
+        {
+          "topic": "Social Studies",
+          "q": "The Tropic of Cancer passes through which country?",
+          "options": [
+            "India",
+            "Australia only",
+            "Russia",
+            "Japan"
+          ],
+          "answer": 0,
+          "explanation": "The Tropic of Cancer passes through India."
+        },
+        {
+          "topic": "Social Studies",
+          "q": "Which level of government generally governs a village through a Gram Panchayat?",
+          "options": [
+            "Local self-government",
+            "Union government",
+            "Supreme Court",
+            "Election Commission"
+          ],
+          "answer": 0,
+          "explanation": "A Gram Panchayat is a rural local self-government body."
         }
       ]
     },
@@ -380,6 +836,246 @@
           ],
           "answer": 2,
           "explanation": "The heart pumps blood through the circulatory system."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "What is 3/5 of 45?",
+          "options": [
+            "15",
+            "21",
+            "27",
+            "30"
+          ],
+          "answer": 2,
+          "explanation": "45 ÷ 5 × 3 = 27."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "A train travels 60 km in one hour. How far does it travel in 3 hours at the same speed?",
+          "options": [
+            "120 km",
+            "150 km",
+            "180 km",
+            "240 km"
+          ],
+          "answer": 2,
+          "explanation": "Distance = speed × time = 60 × 3 = 180 km."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The Roman numeral XL represents:",
+          "options": [
+            "30",
+            "40",
+            "50",
+            "60"
+          ],
+          "answer": 1,
+          "explanation": "X before L means 50 − 10 = 40."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "Find the missing number: 144, 121, 100, 81, __.",
+          "options": [
+            "72",
+            "64",
+            "60",
+            "49"
+          ],
+          "answer": 1,
+          "explanation": "These are descending squares: 12², 11², 10², 9², then 8² = 64."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "A water tank holds 250 litres. If 85 litres are used, how much remains?",
+          "options": [
+            "155 L",
+            "165 L",
+            "175 L",
+            "185 L"
+          ],
+          "answer": 1,
+          "explanation": "250 − 85 = 165 litres."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "Convert 2.75 kg into grams.",
+          "options": [
+            "275 g",
+            "750 g",
+            "2,075 g",
+            "2,750 g"
+          ],
+          "answer": 3,
+          "explanation": "1 kg = 1,000 g, so 2.75 kg = 2,750 g."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The average of 12, 16 and 20 is:",
+          "options": [
+            "14",
+            "16",
+            "18",
+            "48"
+          ],
+          "answer": 1,
+          "explanation": "(12 + 16 + 20) ÷ 3 = 16."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "If a square has perimeter 48 cm, each side measures:",
+          "options": [
+            "8 cm",
+            "10 cm",
+            "12 cm",
+            "16 cm"
+          ],
+          "answer": 2,
+          "explanation": "Each side = 48 ÷ 4 = 12 cm."
+        },
+        {
+          "topic": "Intelligence",
+          "q": "Which number does not belong: 2, 3, 5, 9, 11?",
+          "options": [
+            "2",
+            "3",
+            "9",
+            "11"
+          ],
+          "answer": 2,
+          "explanation": "9 is composite; the other numbers are prime."
+        },
+        {
+          "topic": "Intelligence",
+          "q": "Complete the letter pattern: B, D, G, K, P, __.",
+          "options": [
+            "T",
+            "U",
+            "V",
+            "W"
+          ],
+          "answer": 2,
+          "explanation": "Letter jumps are +2, +3, +4, +5; next is +6, giving V."
+        },
+        {
+          "topic": "Intelligence",
+          "q": "A clock shows 6:00. What is the angle between the hands?",
+          "options": [
+            "90°",
+            "120°",
+            "180°",
+            "360°"
+          ],
+          "answer": 2,
+          "explanation": "At 6:00, the hands point in opposite directions: 180°."
+        },
+        {
+          "topic": "Intelligence",
+          "q": "If 4 workers finish a task in 6 days at equal rates, how many worker-days are needed?",
+          "options": [
+            "10",
+            "12",
+            "20",
+            "24"
+          ],
+          "answer": 3,
+          "explanation": "4 workers × 6 days = 24 worker-days."
+        },
+        {
+          "topic": "Language",
+          "q": "Choose the opposite of “victory”.",
+          "options": [
+            "Success",
+            "Defeat",
+            "Prize",
+            "Courage"
+          ],
+          "answer": 1,
+          "explanation": "Defeat is the opposite of victory."
+        },
+        {
+          "topic": "Language",
+          "q": "Choose the correct pronoun: “Rita and ___ went to the library.”",
+          "options": [
+            "me",
+            "I",
+            "mine",
+            "my"
+          ],
+          "answer": 1,
+          "explanation": "Use the subject pronoun “I”: Rita and I went."
+        },
+        {
+          "topic": "Language",
+          "q": "Which word is a verb?",
+          "options": [
+            "Quickly",
+            "Beautiful",
+            "Jump",
+            "Blue"
+          ],
+          "answer": 2,
+          "explanation": "Jump names an action and is a verb."
+        },
+        {
+          "topic": "Language",
+          "q": "Choose the plural of “tooth”.",
+          "options": [
+            "Tooths",
+            "Teeth",
+            "Toothes",
+            "Toothes"
+          ],
+          "answer": 1,
+          "explanation": "The irregular plural of tooth is teeth."
+        },
+        {
+          "topic": "General Knowledge",
+          "q": "Which Indian state is famous for the classical dance Kathakali?",
+          "options": [
+            "Kerala",
+            "Punjab",
+            "Gujarat",
+            "Assam"
+          ],
+          "answer": 0,
+          "explanation": "Kathakali is a classical dance form from Kerala."
+        },
+        {
+          "topic": "General Knowledge",
+          "q": "How many days are there in a leap year?",
+          "options": [
+            "364",
+            "365",
+            "366",
+            "367"
+          ],
+          "answer": 2,
+          "explanation": "A leap year has 366 days."
+        },
+        {
+          "topic": "General Science",
+          "q": "Which gas do humans need for respiration?",
+          "options": [
+            "Carbon dioxide",
+            "Oxygen",
+            "Helium",
+            "Nitrogen only"
+          ],
+          "answer": 1,
+          "explanation": "Humans use oxygen for aerobic respiration."
+        },
+        {
+          "topic": "General Science",
+          "q": "Which material is attracted strongly by a magnet?",
+          "options": [
+            "Wood",
+            "Plastic",
+            "Iron",
+            "Glass"
+          ],
+          "answer": 2,
+          "explanation": "Iron is a magnetic material."
         }
       ]
     },
@@ -507,6 +1203,246 @@
           ],
           "answer": 3,
           "explanation": "Each term is doubled; 40 × 2 = 80."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "Solve: 4(x − 2) = 20.",
+          "options": [
+            "3",
+            "5",
+            "7",
+            "8"
+          ],
+          "answer": 2,
+          "explanation": "x − 2 = 5, so x = 7."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The factorisation of x² + 7x + 12 is:",
+          "options": [
+            "(x+3)(x+4)",
+            "(x+2)(x+6)",
+            "(x−3)(x−4)",
+            "(x+1)(x+12)"
+          ],
+          "answer": 0,
+          "explanation": "3 and 4 multiply to 12 and add to 7."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "A sum of ₹1,500 earns simple interest at 8% per annum for 2 years. Interest is:",
+          "options": [
+            "₹120",
+            "₹180",
+            "₹240",
+            "₹300"
+          ],
+          "answer": 2,
+          "explanation": "SI = 1500 × 8 × 2 / 100 = ₹240."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The value of (−3)² − 2³ is:",
+          "options": [
+            "−17",
+            "−1",
+            "1",
+            "17"
+          ],
+          "answer": 2,
+          "explanation": "9 − 8 = 1."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The median of 3, 7, 9, 12, 15 is:",
+          "options": [
+            "7",
+            "9",
+            "10",
+            "12"
+          ],
+          "answer": 1,
+          "explanation": "The middle value of the ordered list is 9."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "If the corresponding sides of two similar triangles are in ratio 2:3, their areas are in ratio:",
+          "options": [
+            "2:3",
+            "4:9",
+            "8:27",
+            "3:2"
+          ],
+          "answer": 1,
+          "explanation": "Areas of similar triangles are in the square of the side ratio: 4:9."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The slope of the line through (1, 2) and (3, 6) is:",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "answer": 1,
+          "explanation": "Slope = (6 − 2)/(3 − 1) = 2."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "A die is rolled once. The probability of getting an even number is:",
+          "options": [
+            "1/6",
+            "1/3",
+            "1/2",
+            "2/3"
+          ],
+          "answer": 2,
+          "explanation": "The even outcomes are 2, 4 and 6: 3/6 = 1/2."
+        },
+        {
+          "topic": "General Science",
+          "q": "Which lens is commonly used to correct myopia?",
+          "options": [
+            "Convex",
+            "Concave",
+            "Cylindrical only",
+            "Plane glass"
+          ],
+          "answer": 1,
+          "explanation": "A concave lens diverges light to correct myopia."
+        },
+        {
+          "topic": "General Science",
+          "q": "The unit of electrical resistance is:",
+          "options": [
+            "Ampere",
+            "Volt",
+            "Ohm",
+            "Coulomb"
+          ],
+          "answer": 2,
+          "explanation": "Electrical resistance is measured in ohms (Ω)."
+        },
+        {
+          "topic": "General Science",
+          "q": "Which blood vessel carries blood away from the heart?",
+          "options": [
+            "Vein",
+            "Artery",
+            "Capillary only",
+            "Lymph duct"
+          ],
+          "answer": 1,
+          "explanation": "Arteries carry blood away from the heart."
+        },
+        {
+          "topic": "General Science",
+          "q": "Which part of the atom contains protons and neutrons?",
+          "options": [
+            "Electron shell",
+            "Nucleus",
+            "Orbit only",
+            "Molecule"
+          ],
+          "answer": 1,
+          "explanation": "Protons and neutrons are located in the nucleus."
+        },
+        {
+          "topic": "English",
+          "q": "Choose the correct conjunction: “He was tired, ___ he completed the work.”",
+          "options": [
+            "because",
+            "but",
+            "unless",
+            "although"
+          ],
+          "answer": 1,
+          "explanation": "“But” expresses contrast between being tired and completing the work."
+        },
+        {
+          "topic": "English",
+          "q": "Choose the correct passive voice: “They will announce the result tomorrow.”",
+          "options": [
+            "The result will announce tomorrow.",
+            "The result will be announced tomorrow.",
+            "The result is announced yesterday.",
+            "Tomorrow announced the result."
+          ],
+          "answer": 1,
+          "explanation": "Future simple passive uses will be + past participle."
+        },
+        {
+          "topic": "English",
+          "q": "Choose the synonym of “reluctant”.",
+          "options": [
+            "Eager",
+            "Unwilling",
+            "Certain",
+            "Careless"
+          ],
+          "answer": 1,
+          "explanation": "Reluctant means unwilling or hesitant."
+        },
+        {
+          "topic": "English",
+          "q": "Identify the adverb: “The athlete ran swiftly.”",
+          "options": [
+            "Athlete",
+            "Ran",
+            "Swiftly",
+            "The"
+          ],
+          "answer": 2,
+          "explanation": "Swiftly describes how the athlete ran."
+        },
+        {
+          "topic": "Social Studies",
+          "q": "The main purpose of the Preamble to the Indian Constitution is to:",
+          "options": [
+            "List all laws",
+            "State the ideals and objectives",
+            "Name every citizen",
+            "Describe state boundaries"
+          ],
+          "answer": 1,
+          "explanation": "The Preamble declares the Constitution's guiding ideals and objectives."
+        },
+        {
+          "topic": "Social Studies",
+          "q": "Which movement was launched by Mahatma Gandhi in 1942?",
+          "options": [
+            "Non-Cooperation Movement",
+            "Quit India Movement",
+            "Swadeshi Movement",
+            "Civil Disobedience Movement"
+          ],
+          "answer": 1,
+          "explanation": "The Quit India Movement began in August 1942."
+        },
+        {
+          "topic": "Reasoning",
+          "q": "Complete the series: 2, 6, 12, 20, 30, __.",
+          "options": [
+            "36",
+            "40",
+            "42",
+            "44"
+          ],
+          "answer": 2,
+          "explanation": "The differences are 4, 6, 8, 10; next is 12, giving 42."
+        },
+        {
+          "topic": "Reasoning",
+          "q": "If SOUTH is written as HTUOS, how is TRAIN written in the same code?",
+          "options": [
+            "NIART",
+            "NIRAT",
+            "TNIAR",
+            "IARTN"
+          ],
+          "answer": 0,
+          "explanation": "The code reverses the order of letters: TRAIN → NIART."
         }
       ]
     },
