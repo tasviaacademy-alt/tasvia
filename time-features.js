@@ -171,11 +171,7 @@
     patchFirestore();
     wrapParentRender();
     if(!patched||typeof window.__tasviaParentLiveRender!=="function")window.setInterval(function(){patchFirestore();wrapParentRender();},1000);
-    var mo=new MutationObserver(function(){
-      var live=document.getElementById("tasviaLiveSyncStatus");
-      if(live&&/LIVE|connected/i.test(live.textContent||""))setActivity("Parent portal synced",new Date());
-    });
-    mo.observe(document.body,{childList:true,subtree:true,characterData:true});
+    // Parent sync timestamps are updated by the live-render wrapper above; avoid a broad DOM observer.
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();
 })();
