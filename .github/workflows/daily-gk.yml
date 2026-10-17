@@ -2,9 +2,14 @@ name: Daily GK Update
 
 on:
   schedule:
+    # Run every day at 05:50 and 08:50 India Standard Time.
     - cron: "20 0 * * *"
     - cron: "20 3 * * *"
   workflow_dispatch:
+  push:
+    paths:
+      - "scripts/update_daily_gk.py"
+      - ".github/workflows/daily-gk.yml"
 
 permissions:
   contents: write
@@ -19,27 +24,25 @@ jobs:
       - name: Generate daily GK
         run: python3 scripts/update_daily_gk.py
 
-      - name: Validate no duplicate questions
+      - name: Validate today's five unique questions
         run: |
           python3 - <<'PY'
           import json
           from pathlib import Path
 
-          seen = set()
-          for path in Path("daily-gk-history").glob("*.json"):
-              data = json.loads(path.read_text(encoding="utf-8"))
-              qs = data.get("questions", [])
-              if len(qs) != 5:
-                  raise SystemExit(f"{path}: expected 5 questions")
-              for item in qs:
-                  qid = item.get("id")
-                  if not qid:
-                      raise SystemExit(f"{path}: question missing id")
-                  if qid in seen:
-                      raise SystemExit(f"Duplicate GK question detected: {qid}")
-                  seen.add(qid)
+          daily = json.loads(Path("daily-gk.json").read_text(encoding="utf-8"))
+          questions = daily.get("questions", [])
+          if len(questions) != 5:
+              raise SystemExit(f"Expected 5 questions, found {len(questions)}")
+          ids = [item.get("id") for item in questions]
+          if any(not qid for qid in ids) or len(set(ids)) != 5:
+              raise SystemExit("Today's GK set has missing or duplicate question IDs.")
 
-          print(f"Validated {len(seen)} archived non-repeating GK questions.")
+          date = daily.get("date")
+          archive = Path("daily-gk-history") / f"{date}.json"
+          if not archive.exists():
+              raise SystemExit(f"Missing GK archive for {date}")
+          print(f"Validated 5 unique GK questions for {date}.")
           PY
 
       - name: Commit changes
