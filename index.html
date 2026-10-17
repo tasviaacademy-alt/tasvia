@@ -1018,7 +1018,7 @@ function buildParentView(s){
     const mark=getMarks(d)[s.id];
     if(mark==="P"||mark==="A")attendanceDays[d]=mark;
   });
-  const tests=Object.values(S.tests).filter(t=>t.date>=ay.from&&t.marks&&t.marks[s.id]!=null).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,25).map(t=>({d:t.date,s:t.subject,n:t.name,m:+t.marks[s.id],x:+t.max}));
+  const tests=Object.values(S.tests).filter(t=>t.date>=ay.from&&t.marks&&t.marks[s.id]!=null).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,25).map(t=>({d:t.date,s:t.subject,n:t.name,m:+t.marks[s.id],x:+t.max,e:["JNVST","AISSEE"].includes(t.examType)?t.examType:""}));
   // Payment history is the source of truth for parent fee status.
   // A payment belongs to the fee period when its explicit month matches OR its
   // payment date falls from the first day of that fee month through the first
@@ -1567,7 +1567,7 @@ function vTests(){
   h+=classChips("testCls");
   const list=Object.entries(S.tests).map(([id,t])=>({id,...t})).filter(t=>UI.testCls==="all"||t.cls===UI.testCls).sort((a,b)=>b.date.localeCompare(a.date));
   if(!list.length)return h+`<div class="empty"><p>No tests yet. Create one, then enter each student's marks.</p></div>`;
-  return h+`<div class="list">`+list.map(t=>{const v=Object.values(t.marks||{}).filter(x=>x!==""&&x!=null).map(Number);const avg=v.length?Math.round(v.reduce((a,b)=>a+b,0)*100/(v.length*t.max)):null;return `<button class="item" data-act="openTest" data-id="${t.id}"><div class="grow"><div class="nm">${esc(t.subject)} – ${esc(t.name)}</div><div class="mt">${clsLabel(t.cls)} · ${nice(t.date)} · out of ${t.max}</div></div>${avg!=null?`<span class="tag n">Avg ${avg}%</span>`:`<span class="tag due">Enter marks</span>`}</button>`}).join("")+`</div>`;
+  return h+`<div class="list">`+list.map(t=>{const v=Object.values(t.marks||{}).filter(x=>x!==""&&x!=null).map(Number);const avg=v.length?Math.round(v.reduce((a,b)=>a+b,0)*100/(v.length*t.max)):null;return `<button class="item" data-act="openTest" data-id="${t.id}"><div class="grow"><div class="nm">${esc(t.examType==="JNVST"?"Navodaya JNVST":t.examType==="AISSEE"?"Sainik School AISSEE":t.subject)}${t.examType==="general"?" – "+esc(t.name):" · "+esc(t.subject)+" – "+esc(t.name)}</div><div class="mt">${clsLabel(t.cls)} · ${nice(t.date)} · out of ${t.max}</div></div>${avg!=null?`<span class="tag n">Avg ${avg}%</span>`:`<span class="tag due">Enter marks</span>`}</button>`}).join("")+`</div>`;
 }
 function vCentre(){
   const i=info();
@@ -1654,8 +1654,9 @@ function payForm(id){
 }
 function testForm(){
   openSheet("New test",`<form id="fTest">
-  <label class="f">Test name<input name="name" required placeholder="Unit test 2"></label>
-  <div class="two"><label class="f">Subject<select name="subject">${["Mathematics","Science","Physics","Chemistry","Biology","Botany","Zoology","Maths IA","Maths IB","Maths IIA","Maths IIB","Economics","Commerce","Civics","Accountancy","English","Hindi","Telugu","Sanskrit","Social Studies","EVS","Computer","Navodaya prep","Sainik prep"].map(x=>opt(x,"Mathematics")).join("")}</select></label>
+  <label class="f">Test name<input name="name" required placeholder="Weekly mock test"></label>
+  <label class="f">Preparation track<select name="examType"><option value="general">Regular tuition test</option><option value="JNVST">Navodaya Vidyalaya (JNVST)</option><option value="AISSEE">Sainik School (AISSEE)</option></select><span class="sub">Choose the track so parents can identify entrance-preparation results.</span></label>
+  <div class="two"><label class="f">Subject / section<select name="subject">${["Mathematics","Science","Physics","Chemistry","Biology","Botany","Zoology","Maths IA","Maths IB","Maths IIA","Maths IIB","Economics","Commerce","Civics","Accountancy","English","Hindi","Telugu","Sanskrit","Social Studies","EVS","Computer","Navodaya prep","Sainik prep"].map(x=>opt(x,"Mathematics")).join("")}</select></label>
   <label class="f">Class<select name="cls">${(()=>{const def=UI.testCls!=="all"?UI.testCls:(studentsOf("all")[0]||{cls:"1"}).cls;return FORM_CLASSES.map(c=>opt(c,def,clsLabel(c))).join("")})()}</select></label></div>
   <div class="two"><label class="f">Maximum marks<input name="max" inputmode="numeric" required value="50"></label>
   <label class="f">Date<input name="date" type="date" required value="${today()}"></label></div>
@@ -2086,7 +2087,7 @@ document.addEventListener("submit",e=>{
     });
   }
   if(f.id==="fTest"){
-    const id=uid("t");ownIds.add(id);const t={name:d.name.trim(),subject:d.subject,cls:d.cls,max:Number(d.max)||100,date:d.date,marks:{}};
+    const id=uid("t");ownIds.add(id);const t={name:d.name.trim(),subject:d.subject,examType:["JNVST","AISSEE"].includes(d.examType)?d.examType:"general",cls:d.cls,max:Number(d.max)||100,date:d.date,marks:{}};
     S.tests[id]=t;put("tests/"+id,t);render();testSheet(id);
   }
   if(f.id==="fMarks"){
