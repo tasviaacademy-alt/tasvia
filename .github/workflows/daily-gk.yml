@@ -30,9 +30,16 @@ jobs:
         run: |
           python3 - <<'PY'
           import json
+          from datetime import datetime, timezone, timedelta
           from pathlib import Path
 
+          ist = timezone(timedelta(hours=5, minutes=30))
+          expected_date = datetime.now(ist).strftime("%Y-%m-%d")
           daily = json.loads(Path("daily-gk.json").read_text(encoding="utf-8"))
+          date = daily.get("date")
+          if date != expected_date:
+              raise SystemExit(f"Stale GK date: expected {expected_date}, found {date!r}")
+
           questions = daily.get("questions", [])
           if len(questions) != 5:
               raise SystemExit(f"Expected 5 questions, found {len(questions)}")
@@ -40,24 +47,30 @@ jobs:
           if any(not qid for qid in ids) or len(set(ids)) != 5:
               raise SystemExit("Today's GK set has missing or duplicate question IDs.")
 
+          seen_questions = set()
           for number, item in enumerate(questions, start=1):
+              question = " ".join(str(item.get("q", "")).casefold().split())
+              if not question or question in seen_questions:
+                  raise SystemExit(f"Question {number} is blank or duplicates another question.")
+              seen_questions.add(question)
+
               options = item.get("options")
               if not isinstance(options, list) or len(options) != 4:
                   raise SystemExit(f"Question {number} must have exactly four A-D options.")
               normalized = [" ".join(str(value).casefold().split()) for value in options]
-              if len(set(normalized)) != 4:
-                  raise SystemExit(f"Question {number} has duplicate options.")
-              if " ".join(str(item.get("a", "")).casefold().split()) not in set(normalized):
+              if any(not value for value in normalized) or len(set(normalized)) != 4:
+                  raise SystemExit(f"Question {number} has blank or duplicate options.")
+              answer = " ".join(str(item.get("a", "")).casefold().split())
+              if answer not in set(normalized):
                   raise SystemExit(f"Question {number} does not include its correct answer among the options.")
 
-          date = daily.get("date")
           archive = Path("daily-gk-history") / f"{date}.json"
           if not archive.exists():
               raise SystemExit(f"Missing GK archive for {date}")
           archived = json.loads(archive.read_text(encoding="utf-8"))
           if archived != daily:
               raise SystemExit("Today's GK file and its history archive do not match.")
-          print(f"Validated 5 unique A-D GK questions for {date}.")
+          print(f"Validated fresh GK for {date}: 5 unique questions, four distinct options each, and matching archive.")
           PY
 
       - name: Commit changes
