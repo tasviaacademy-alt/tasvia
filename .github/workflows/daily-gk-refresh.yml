@@ -1,0 +1,89 @@
+name: Refresh Daily GK
+on:
+  schedule:
+    - cron: "15 0 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: daily-gk-refresh
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Rotate daily GK set
+        run: |
+          python3 - <<'PY'
+          import json, hashlib
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          from pathlib import Path
+
+          # Curated static GK bank. This rotates daily; it is not a live-news feed.
+          bank = [
+            ("Indian General Knowledge","What is the capital of India?","New Delhi",["New Delhi","Mumbai","Kolkata","Chennai"]),
+            ("Indian General Knowledge","Which is the national animal of India?","Bengal tiger",["Lion","Bengal tiger","Elephant","Leopard"]),
+            ("Indian General Knowledge","What is the national flower of India?","Lotus",["Rose","Lotus","Jasmine","Sunflower"]),
+            ("Indian General Knowledge","Which is the largest Indian state by area?","Rajasthan",["Maharashtra","Madhya Pradesh","Rajasthan","Uttar Pradesh"]),
+            ("Indian General Knowledge","Which river is often called the Ganga of the South?","Godavari",["Krishna","Godavari","Kaveri","Narmada"]),
+            ("Science","Which planet is known as the Red Planet?","Mars",["Venus","Mars","Jupiter","Mercury"]),
+            ("Science","Which gas do plants absorb during photosynthesis?","Carbon dioxide",["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"]),
+            ("Science","What is the chemical symbol for water?","H₂O",["CO₂","H₂O","O₂","NaCl"]),
+            ("Science","Which organ pumps blood around the human body?","The heart",["The lungs","The liver","The heart","The kidneys"]),
+            ("Science","How many bones are typically present in an adult human body?","206",["201","206","212","220"]),
+            ("Computer Basics","What does WWW stand for?","World Wide Web",["Wireless World Web","World Wide Web","World Web Window","Wide World Web"]),
+            ("Computer Basics","Which device is used to point and click on a computer?","Mouse",["Printer","Mouse","Speaker","Scanner"]),
+            ("Mathematics","What is the sum of the angles in a triangle?","180 degrees",["90 degrees","180 degrees","270 degrees","360 degrees"]),
+            ("Mathematics","What is the smallest prime number?","2",["1","2","3","5"]),
+            ("Geography","Which is the largest ocean on Earth?","Pacific Ocean",["Atlantic Ocean","Indian Ocean","Pacific Ocean","Arctic Ocean"]),
+            ("Geography","Which imaginary line divides Earth into Northern and Southern Hemispheres?","Equator",["Prime Meridian","Equator","Tropic of Cancer","Arctic Circle"]),
+            ("Literature & Culture","Who is traditionally credited with composing the Sanskrit Ramayana?","Valmiki",["Vyasa","Kalidasa","Valmiki","Tulsidas"]),
+            ("Literature & Culture","Who wrote India's national anthem Jana Gana Mana?","Rabindranath Tagore",["Bankim Chandra Chatterjee","Rabindranath Tagore","Sarojini Naidu","Subramania Bharati"]),
+            ("Civics","When did the Constitution of India come into effect?","26 January 1950",["15 August 1947","26 January 1950","26 November 1949","2 October 1950"]),
+            ("Sports","How many players from one team are on the field in a standard cricket team?","11",["9","10","11","12"]),
+            ("Sports","How many rings are on the Olympic symbol?","5",["4","5","6","7"]),
+            ("Environment","Which of these is a renewable source of energy?","Solar energy",["Coal","Petrol","Solar energy","Natural gas"]),
+            ("Animals","What is the fastest land animal?","Cheetah",["Lion","Cheetah","Horse","Leopard"]),
+            ("Space","Which star is closest to Earth?","The Sun",["Sirius","Polaris","The Sun","Proxima Centauri"]),
+            ("Health","Which vitamin is produced in the skin with sunlight exposure?","Vitamin D",["Vitamin A","Vitamin B12","Vitamin C","Vitamin D"]),
+            ("History","Who was the first Prime Minister of independent India?","Jawaharlal Nehru",["Sardar Vallabhbhai Patel","Jawaharlal Nehru","Rajendra Prasad","Lal Bahadur Shastri"]),
+            ("Telangana","What is the capital of Telangana?","Hyderabad",["Warangal","Karimnagar","Hyderabad","Nizamabad"]),
+            ("Abacus & Numbers","How many sides does a hexagon have?","6",["5","6","7","8"]),
+            ("Science","At standard atmospheric pressure, water boils at what temperature in Celsius?","100°C",["0°C","50°C","100°C","150°C"]),
+            ("Geography","Which continent is the Sahara Desert located in?","Africa",["Asia","Africa","Australia","South America"]),
+          ]
+          today = datetime.now(ZoneInfo("Asia/Kolkata")).date().isoformat()
+          start = int(hashlib.sha256(today.encode()).hexdigest()[:8], 16) % len(bank)
+          chosen = [bank[(start + i) % len(bank)] for i in range(5)]
+          questions = []
+          for i, (category, q, answer, options) in enumerate(chosen, 1):
+              questions.append({
+                  "id": f"daily-{today}-{i}",
+                  "category": category,
+                  "q": q,
+                  "a": answer,
+                  "options": options
+              })
+          payload = {
+              "schemaVersion": 3,
+              "date": today,
+              "title": "Daily General Knowledge",
+              "questions": questions
+          }
+          Path("daily-gk.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          print(f"Prepared {len(questions)} GK questions for {today}")
+          PY
+      - name: Commit daily GK if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add daily-gk.json
+          if git diff --cached --quiet; then
+            echo "No GK changes to commit."
+          else
+            git commit -m "Refresh daily GK set"
+            git push
+          fi
