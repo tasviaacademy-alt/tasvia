@@ -513,7 +513,7 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
 (function(){
   "use strict";
   if("serviceWorker" in navigator && location.protocol==="https:"){
-    navigator.serviceWorker.register("./sw.js?v=88",{scope:"./"}).catch(function(){/* Install guidance remains available without a worker. */});
+    navigator.serviceWorker.register("./sw.js?v=89",{scope:"./"}).catch(function(){/* Install guidance remains available without a worker. */});
   }
   var deferredPrompt=null;
   var btn=document.getElementById("addToHomeScreenBtn");
@@ -792,7 +792,7 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     var photoHtml=photo?'<div class="dash-photo"><img src="'+photo+'" alt="'+esc(name)+'"></div>':'<div class="dash-photo dash-photo-fallback">👤</div>';
     var testAvg="—";
     if(tests.length){
-      var vals=tests.map(function(x){return {m:Number(x.m)||0,x:Number(x.x)||0};}).filter(function(x){return x.x>0;});
+      var vals=tests.filter(function(x){return x.m!=null;}).map(function(x){return {m:Number(x.m)||0,x:Number(x.x)||0};}).filter(function(x){return x.x>0;});
       if(vals.length)testAvg=Math.round(vals.reduce(function(s,x){return s+(x.m/x.x)*100;},0)/vals.length)+"%";
     }
     var hwDoneCount=0;
