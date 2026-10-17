@@ -1,4 +1,5 @@
 {
+  "schemaVersion": 2,
   "date": "2026-10-17",
   "title": "Daily General Knowledge",
   "questions": [
@@ -8,10 +9,10 @@
       "q": "Who is traditionally credited with composing the Sanskrit Ramayana?",
       "a": "Valmiki.",
       "options": [
+        "15 August 1947.",
+        "Rabindranath Tagore.",
         "Valmiki.",
-        "On its back",
-        "Mesozoic",
-        "Two pointed lobes on each side of the head"
+        "Mahatma Gandhi."
       ]
     },
     {
@@ -20,10 +21,10 @@
       "q": "What is the capital of India?",
       "a": "New Delhi.",
       "options": [
-        "Alaska",
+        "The Bengal tiger.",
         "New Delhi.",
-        "Ecuador",
-        "Nettilling Lake"
+        "Part III.",
+        "The Indian rupee."
       ]
     },
     {
@@ -32,10 +33,10 @@
       "q": "There is a branch with 10 birds on it. I shot 2 of them and then 1 more. How many birds are left on the branch?",
       "a": "0",
       "options": [
-        "Eagle",
+        "allegiance",
         "0",
-        "Such village cannot exist, it is a paradox",
-        "2nd"
+        "playful",
+        "3"
       ]
     },
     {
@@ -44,10 +45,10 @@
       "q": "What does WWW stand for?",
       "a": "World Wide Web.",
       "options": [
-        "Baikal",
         "World Wide Web.",
-        "Meat-lover",
-        "Pat"
+        "ISRO (Indian Space Research Organisation).",
+        "H₂O.",
+        "The heart."
       ]
     },
     {
@@ -56,10 +57,10 @@
       "q": "Which organ pumps blood around the human body?",
       "a": "The heart.",
       "options": [
+        "The Moon.",
         "The heart.",
-        "Loxocemidae bicolor",
-        "Sicily",
-        "Ya lyublyu tebya"
+        "Jupiter.",
+        "Central Processing Unit."
       ]
     }
   ]
