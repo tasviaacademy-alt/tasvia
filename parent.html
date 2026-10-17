@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-17-v100-corporate-live-sync">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-17-v101-live-reconnect">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -1793,7 +1793,9 @@ table td{border-color:#E8EDF4!important}
     });
   }
   window.__tasviaStartParentLive=start;
-  window.addEventListener("online",function(){if(activeCode){stop();loading=false;start(activeCode);}});
+  window.addEventListener("online",function(){if(activeCode){status("Reconnecting to live updates…",false);stop();loading=false;start(activeCode);}});
+  window.addEventListener("offline",function(){if(activeCode)status("OFFLINE · waiting to reconnect",false);});
+  window.addEventListener("pageshow",function(){if(activeCode&&document.visibilityState!=="hidden"&&!unsubscribe){loading=false;start(activeCode);}});
   window.addEventListener("pagehide",stop);
 })();
 </script>
