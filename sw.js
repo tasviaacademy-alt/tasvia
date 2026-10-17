@@ -1,7 +1,7 @@
 // TASVIA Academy service worker
 // HTML is network-first so production fixes are not hidden behind stale cache.
 // Firebase/Auth/API traffic is never cached.
-const CACHE = "tasvia-v88";
+const CACHE = "tasvia-v89";
 const STATIC_SHELL = [
   "/",
   "/index.html",
@@ -40,7 +40,7 @@ self.addEventListener("fetch", event => {
     request.destination === "document";
 
   const isStaticAsset =
-    /\.(?:css|js|png|jpg|jpeg|webp|svg|ico|woff2?)$/i.test(url.pathname);
+    /\.(?:css|js|json|png|jpg|jpeg|webp|svg|ico|woff2?)$/i.test(url.pathname);
 
   if (isHtml) {
     /* Parent pages must never depend on a stale service-worker HTML shell.
