@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-17-v92-entrance-practice-mocks">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-17-v93-timed-practice-visible">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -513,7 +513,7 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
 (function(){
   "use strict";
   if("serviceWorker" in navigator && location.protocol==="https:"){
-    navigator.serviceWorker.register("./sw.js?v=89",{scope:"./"}).catch(function(){/* Install guidance remains available without a worker. */});
+    navigator.serviceWorker.register("./sw.js?v=90",{scope:"./"}).catch(function(){/* Install guidance remains available without a worker. */});
   }
   var deferredPrompt=null;
   var btn=document.getElementById("addToHomeScreenBtn");
@@ -805,8 +805,10 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
       var launch=x.p?'<button type="button" data-entrance-pack="'+x.p+'" style="margin-top:8px;border:0;border-radius:9px;background:#0B2455;color:#fff;padding:8px 12px;font-weight:700;cursor:pointer">▶ Start timed practice</button>':'';
       return '<div style="padding:10px 0;border-top:1px solid #EDF0F4"><div style="display:flex;justify-content:space-between;gap:10px;font-size:13px;color:#344054"><span>'+badge+esc((x.s||"Test")+(x.n?" · "+x.n:""))+'</span>'+score+'</div>'+bar+launch+'</div>';
     }).join("");
+    var quickEntrancePractice='<div style="margin-top:15px;padding-top:14px;border-top:1px solid #E1E7F0"><h4 style="margin:0 0 5px;color:#102858;font-size:16px">⏱️ Timed Entrance Practice</h4><p style="margin:0 0 10px;color:#667085;font-size:12px">Start anytime — no teacher assignment required. Choose your exam and class.</p><div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px"><button type="button" data-entrance-pack="JNVST-6" style="border:0;border-radius:10px;background:#0B2455;color:#fff;padding:11px 8px;font-weight:700;cursor:pointer">Navodaya · Class 6</button><button type="button" data-entrance-pack="JNVST-9" style="border:0;border-radius:10px;background:#0B2455;color:#fff;padding:11px 8px;font-weight:700;cursor:pointer">Navodaya · Class 9</button><button type="button" data-entrance-pack="AISSEE-6" style="border:0;border-radius:10px;background:#B8820A;color:#fff;padding:11px 8px;font-weight:700;cursor:pointer">Sainik · Class 6</button><button type="button" data-entrance-pack="AISSEE-9" style="border:0;border-radius:10px;background:#B8820A;color:#fff;padding:11px 8px;font-weight:700;cursor:pointer">Sainik · Class 9</button></div></div>';
     var progressPanelHtml='<section style="margin-top:14px;padding:17px;border:1px solid #E1E7F0;border-radius:20px;background:#fff;box-shadow:0 6px 20px rgba(16,40,88,.06)" aria-labelledby="tasviaProgressTitle"><h3 id="tasviaProgressTitle" style="margin:0 0 5px;color:#102858;font-size:19px">📈 Learning Progress</h3><p style="margin:0 0 13px;color:#667085;font-size:12px">Recent test results, assigned entrance practice and homework follow-through.</p>'+
       (progressTests||'<div style="padding:10px 12px;border-radius:12px;background:#F1F8F3;color:#26724A;font-size:13px">Test marks will appear here when teachers publish them.</div>')+
+      quickEntrancePractice+
       '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><span style="padding:7px 10px;border-radius:999px;background:#F1F4F8;color:#344054;font-size:12px;font-weight:700">Test average: '+esc(testAvg)+'</span><span style="padding:7px 10px;border-radius:999px;background:#F1F4F8;color:#344054;font-size:12px;font-weight:700">Homework completed: '+hwDoneCount+'/'+hw.length+'</span><span style="padding:7px 10px;border-radius:999px;background:#F1F4F8;color:#344054;font-size:12px;font-weight:700">Attendance: '+ypct+'%</span></div></section>';
     function needsNotification(key,content){
       var fp=String(content||"").trim();if(!fp)return false;
