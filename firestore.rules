@@ -36,11 +36,18 @@ service cloud.firestore {
         && request.auth.token.email != null
         && request.auth.token.email.lower() == email.lower();
 
-      // Staff login may need to locate an existing staff record when the
-      // document ID is not the user's email (legacy/auto-ID records).
-      // Listing is restricted to authenticated Firebase users and the client
-      // only requests a single matching email record.
-      allow list: if signedIn() && request.query.limit <= 1;
+      // Only the root admin may list the staff roster for canonical-record repair.
+      // Other signed-in users may query at most their own matching email record.
+      // Firestore rules are not filters: this document-level email check prevents
+      // a signed-in staff member from probing other staff records with limit=1.
+      allow list: if signedIn() && (
+        request.auth.token.email == "tasviaacademy@gmail.com"
+        || (
+          request.query.limit <= 1
+          && resource.data.email is string
+          && resource.data.email.lower() == request.auth.token.email.lower()
+        )
+      );
       allow create, update, delete: if admin();
     }
 
