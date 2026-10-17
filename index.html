@@ -1778,7 +1778,7 @@ function rcHTML(list,from,to){
   .two{display:grid;grid-template-columns:1fr 1.6fr;gap:10px;margin-top:14px}.box{border:1px solid #ccc;border-radius:6px;padding:8px 10px;font-size:13px}.box p{margin:0}.line{border-bottom:1px dotted #999;height:18px}
   .scale{font-size:10.5px;color:#666;margin:10px 0 0}.none{color:#666;font-size:13px}
   .sig{display:flex;justify-content:space-between;margin-top:46px;font-size:12px}.sig div{border-top:1px solid #333;width:28%;text-align:center;padding-top:4px}</style></head>
-  <body><div class="bar"><span>${list.length} report card${list.length===1?"":"s"} · print on A4</span><button onclick="window.print()">Print / Save PDF</button></div>${pages}<script src="./time-features.js?v=20261017-1"></script>
+  <body><div class="bar"><span>${list.length} report card${list.length===1?"":"s"} · print on A4</span><button onclick="window.print()">Print / Save PDF</button></div>${pages}
 </body></html>`;
 }
 function idHTML(list,photos){photos=photos||{};
@@ -2507,5 +2507,6 @@ else startFirebase();
 if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=89",{scope:"./",updateViaCache:"none"}).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 </script>
 
+<script src="./time-features.js?v=20261017-1"></script>
 </body>
 </html>
