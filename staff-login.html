@@ -80,7 +80,7 @@
      }
      sessionStorage.setItem("tasviaStaffEntry","1");
      msg("Staff verified. Opening portal…","ok");
-     location.replace("./index.html?staff=1&staffEntry=1&v=20261008");
+     location.replace("./index.html?staff=1&staffEntry=1&v=20261017-audit");
    }catch(e){
      const c=e&&e.code||"";
      msg(c==="auth/invalid-credential"||c==="auth/wrong-password"||c==="auth/user-not-found"?"Email or password is incorrect.":e.message||"Sign-in failed.","error");
