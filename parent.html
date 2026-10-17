@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-17-v98-exhaust-pool-before-repeat">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-17-v99-realtime-live-sync">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -661,6 +661,17 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     }catch(_){return null}
   }
   function render(d,code){
+    window.__tasviaParentLiveRender=function(fresh,liveCode){
+      try{
+        if(!fresh||valid(liveCode)!==valid(window.__tasviaAutoCode||""))return;
+        var current=window.__tasviaParentData||{};
+        var keys=["updated","name","cls","year","att","yr","abs","tests","fees","pays","centre","notice","notices","feeStatus","joined","photo","gk","currentAffairs","assignments"];
+        var changed=keys.some(function(k){return JSON.stringify(fresh[k]===undefined?null:fresh[k])!==JSON.stringify(current[k]===undefined?null:current[k]);});
+        if(!changed)return;
+        render(fresh,liveCode);
+      }catch(e){console.warn("TASVIA live parent render:",e);}
+    };
+    if(window.__tasviaStartParentLive)window.__tasviaStartParentLive(code);
     window.__tasviaParentDashboardActive=true;
     var mainRegion=document.getElementById("main");if(mainRegion)mainRegion.setAttribute("aria-busy","false");
     saveParentSession(d,code);
@@ -1649,5 +1660,103 @@ window.__tasviaLoadLearning=function(kind,body){if(!body)return;body.setAttribut
   window.addEventListener("pagehide",stopTimer);
 })();
 </script>
+
+<script>
+/* TASVIA Parent Portal live listener.
+   Firestore onSnapshot delivers changes immediately; the existing REST refresh
+   remains as a fallback for browsers/networks where realtime listeners fail. */
+(function(){
+  "use strict";
+  var activeCode="",unsubscribe=null,loading=false,loadPromise=null,db=null,statusNode=null;
+  function validCode(value){
+    value=String(value||"").trim().toUpperCase();
+    return /^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(value)?value:"";
+  }
+  function status(text,ok){
+    if(!statusNode){
+      statusNode=document.createElement("div");
+      statusNode.id="tasviaLiveSyncStatus";
+      statusNode.setAttribute("role","status");
+      statusNode.setAttribute("aria-live","polite");
+      statusNode.style.cssText="position:fixed;right:12px;bottom:12px;z-index:9998;padding:7px 11px;border-radius:999px;background:#102858;color:#fff;font:700 11px/1.3 system-ui,sans-serif;box-shadow:0 3px 14px #0002;max-width:calc(100vw - 24px)";
+      document.body.appendChild(statusNode);
+    }
+    statusNode.textContent=text;
+    statusNode.style.background=ok?"#176B45":"#7A5200";
+    statusNode.style.display=activeCode?"block":"none";
+  }
+  function loadScript(src){
+    return new Promise(function(resolve,reject){
+      var script=document.createElement("script");
+      script.src=src;
+      script.async=true;
+      script.onload=resolve;
+      script.onerror=function(){reject(new Error("Could not load "+src));};
+      document.head.appendChild(script);
+    });
+  }
+  function ensureFirebase(){
+    if(db)return Promise.resolve(db);
+    if(loadPromise)return loadPromise;
+    loadPromise=(async function(){
+      if(!window.FIREBASE_CONFIG)await loadScript("/firebase-config.js");
+      if(!window.firebase||!window.firebase.initializeApp)
+        await loadScript("https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js");
+      if(!window.firebase.firestore)
+        await loadScript("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js");
+      if(!window.FIREBASE_CONFIG)throw new Error("Firebase configuration unavailable");
+      if(!window.firebase.apps.length)window.firebase.initializeApp(window.FIREBASE_CONFIG);
+      db=window.firebase.firestore();
+      return db;
+    })().catch(function(e){loadPromise=null;throw e;});
+    return loadPromise;
+  }
+  function stop(){if(unsubscribe){try{unsubscribe();}catch(_){}}unsubscribe=null;}
+  function start(code){
+    code=validCode(code);
+    if(!code)return;
+    if(code===activeCode&&(loading||unsubscribe))return;
+    stop();activeCode=code;loading=true;status("Connecting live sync…",false);
+    ensureFirebase().then(function(firestore){
+      if(code!==activeCode)return;
+      var serverSeen=false;
+      unsubscribe=firestore.collection("parentView").doc(code).onSnapshot(
+        {includeMetadataChanges:true},
+        function(snapshot){
+          if(code!==activeCode)return;
+          if(!snapshot.exists){
+            if(!snapshot.metadata.fromCache)status("Parent access unavailable",false);
+            return;
+          }
+          if(snapshot.metadata.fromCache){status("Connecting to live updates…",false);return;}
+          serverSeen=true;loading=false;status("LIVE · instant updates",true);
+          var fresh=snapshot.data()||{};
+          if(typeof window.__tasviaParentLiveRender==="function")
+            window.__tasviaParentLiveRender(fresh,code);
+        },
+        function(error){
+          if(code!==activeCode)return;
+          loading=false;stop();
+          console.warn("TASVIA realtime listener unavailable; REST refresh fallback remains active.",error);
+          status("Auto-refresh active · live listener unavailable",false);
+        }
+      );
+      setTimeout(function(){
+        if(code===activeCode&&loading&&!serverSeen)
+          status("Connecting… auto-refresh remains active",false);
+      },8000);
+    }).catch(function(error){
+      if(code!==activeCode)return;
+      loading=false;
+      console.warn("TASVIA realtime setup failed; keeping REST refresh fallback.",error);
+      status("Auto-refresh active · live setup unavailable",false);
+    });
+  }
+  window.__tasviaStartParentLive=start;
+  window.addEventListener("online",function(){if(activeCode){stop();loading=false;start(activeCode);}});
+  window.addEventListener("pagehide",stop);
+})();
+</script>
+
 </body>
 </html>
