@@ -9,7 +9,7 @@
 /* Staff login is handled directly by the dashboard gate. Keeping login and dashboard on one page avoids iOS/PWA auth handoff loops. */
 </script>
 
-<!-- deployment-refresh-2026-10-17-staff-parent-audit -->
+<!-- deployment-refresh-2026-10-17-corporate-ui-staff-v1 -->
 <meta name="description" content="Attendance, fees, homework, salaries and report cards for TASVIA Academy Tuition Centre, Nizamabad">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
@@ -1799,7 +1799,44 @@ function safeIDHTML(list,photos){
   try{return idHTML(list,photos||{})}catch(e){
     console.error("TASVIA ID HTML:",e);
     const ay=acYear(today()),i=info(),rows=(list||[]).map(s=>`<div style="border:1px solid #999;border-radius:12px;width:340px;min-height:210px;margin:12px auto;overflow:hidden;background:#fff;font-family:Arial;color:#15201C"><div style="background:#0B2455;color:#fff;padding:12px;font-weight:700"><span style="color:#F2AC10">TASVIA</span> ACADEMY</div><div style="padding:16px"><h2 style="margin:0 0 10px;color:#0B2455">${esc(s.name)}</h2><div>Class: ${esc(clsLabel(s.cls))}</div><div>Parent: ${esc(s.parent||"–")}</div><div>Phone: ${esc(s.phone||"–")}</div><div style="margin-top:14px;font-size:12px"><b>Student ID</b> · ${esc(s.id)}</div><div style="font-size:10px">Academic Year · ${esc(ay.label)}</div></div></div>`).join("");
-    return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TASVIA ID cards</title><style>body{margin:0;background:#eef1ef}.bar{position:sticky;top:0;background:#0B2455;color:#fff;padding:12px;display:flex;justify-content:space-between}.bar button{background:#F2AC10;border:0;padding:9px 14px;border-radius:8px;font-weight:700}</style></head><body><div class="bar"><span>TASVIA ID cards · ${rows?list.length:0}</span><button onclick="window.print()">Print / Save PDF</button></div>${rows}</body></html>`;
+    return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TASVIA ID cards</title><style>body{margin:0;background:#eef1ef}.bar{position:sticky;top:0;background:#0B2455;color:#fff;padding:12px;display:flex;justify-content:space-between}.bar button{background:#F2AC10;border:0;padding:9px 14px;border-radius:8px;font-weight:700}
+/* TASVIA CORPORATE UI SYSTEM — staff portal */
+:root{color-scheme:light;--bg:#F4F6FA;--card:#FFFFFF;--ink:#17243B;--muted:#64748B;--line:#E0E6EF;--chip:#EEF2F8;--board:#0B2455;--board2:#173A75;--chalk:#F8FAFC;--gold:#D7A83E;--p:#16835D;--a:#C43D4B}
+body{background:#F4F6FA;color:#17243B;font-family:Inter,"DM Sans","Hind",system-ui,sans-serif;letter-spacing:0}
+header{background:linear-gradient(110deg,#081B43,#0B2455 60%,#173A75);border-bottom:3px solid #D7A83E;box-shadow:0 8px 24px rgba(11,36,85,.12);color:#fff}
+.brand h1{font-family:Inter,"DM Sans",system-ui,sans-serif;font-size:1.22rem;font-weight:800;letter-spacing:-.035em;color:#fff}
+.brand h1 span{color:#E8C46D}
+.sync{border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:6px 10px;background:rgba(255,255,255,.09);color:#F7FAFF}
+main{max-width:1440px;margin:0 auto;padding-top:22px;padding-bottom:105px}
+.hd h2{font-size:1.25rem;font-weight:800;color:#14284C;letter-spacing:-.035em}
+.hd::after{background:#D7A83E}
+.card,.item,.board,.sheet{border:1px solid #E1E7F0;border-radius:16px;box-shadow:0 4px 16px rgba(18,38,75,.045);background:#fff}
+.board{background:linear-gradient(125deg,#0B2455,#173A75);border:1px solid #23477F;color:#fff;box-shadow:0 10px 26px rgba(11,36,85,.13)}
+.board b,.board strong{color:#fff}
+.card{padding:18px}
+.btn{border-radius:10px;font-weight:700;transition:background .16s ease,border-color .16s ease,transform .16s ease,box-shadow .16s ease}
+.btn.gold{background:linear-gradient(135deg,#E6C46E,#D7A83E);border:1px solid #C69A32;color:#17243B;box-shadow:0 4px 10px rgba(174,130,34,.14)}
+.btn:not(.gold):not(.ghost){background:#0B2455;color:#fff;border-color:#0B2455}
+.btn.ghost{background:#fff;color:#243B63;border:1px solid #D6DFEC}
+.btn:hover{transform:translateY(-1px);box-shadow:0 5px 13px rgba(11,36,85,.12)}
+.chip{border:1px solid #DDE5F0;background:#fff;color:#42536D;border-radius:999px;font-weight:650}
+.chip.on{background:#0B2455;color:#fff;border-color:#0B2455}
+input,select,textarea{border:1px solid #D6DFEC!important;border-radius:10px!important;background:#fff!important;color:#17243B!important;min-height:42px}
+input:focus,select:focus,textarea:focus{outline:3px solid rgba(215,168,62,.22);border-color:#D7A83E!important}
+nav{background:rgba(255,255,255,.96);border-top:1px solid #E1E7F0;box-shadow:0 -6px 22px rgba(11,36,85,.055);backdrop-filter:blur(14px)}
+nav button{font-weight:700}
+.gate{background:linear-gradient(145deg,rgba(7,22,53,.86),rgba(11,36,85,.78));backdrop-filter:blur(8px)}
+.gate form{border:1px solid #E3E8F0;border-top:4px solid #D7A83E;border-radius:22px;box-shadow:0 24px 70px rgba(3,16,42,.28);padding:30px;background:#fff;color:#17243B}
+.gate form h1{font-family:Inter,"DM Sans",system-ui,sans-serif;font-weight:850;letter-spacing:-.04em;color:#0B2455}
+.gate form h1 span{color:#B58A2E}
+.gate form .tag{color:#64748B}
+.tag.ok{background:#E7F6EF;color:#16734F;border:1px solid #C8EBDD}
+.tag.due{background:#FFF0F0;color:#B42332;border:1px solid #F5D2D5}
+.toast{box-shadow:0 10px 30px rgba(11,36,85,.18)}
+@media(max-width:520px){main{padding-top:14px;padding-bottom:100px}.card{padding:15px;border-radius:14px}.gate form{padding:23px 20px;margin:16px}}
+@media(prefers-reduced-motion:reduce){.btn,.card,.item{transition:none!important}.btn:hover{transform:none}}
+
+</style></head><body><div class="bar"><span>TASVIA ID cards · ${rows?list.length:0}</span><button onclick="window.print()">Print / Save PDF</button></div>${rows}</body></html>`;
   }
 }
 function openIDDocument(win,html){
