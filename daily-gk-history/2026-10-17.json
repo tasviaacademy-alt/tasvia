@@ -1,0 +1,11 @@
+{
+  "date":"2026-10-17",
+  "title":"Daily General Knowledge",
+  "questions":[
+    {"id":"static-constitution-drafting","category":"Indian Polity","q":"Who chaired the Drafting Committee of the Constitution of India?","a":"Dr. B. R. Ambedkar."},
+    {"id":"static-smallest-continent","category":"World Geography","q":"Which is the smallest continent by land area?","a":"Australia."},
+    {"id":"static-sdg-full-form","category":"Environment & Development","q":"What does SDG stand for in the United Nations development agenda?","a":"Sustainable Development Goal."},
+    {"id":"static-vitamin-sunlight","category":"Biology","q":"Which vitamin can the human body produce in the skin after exposure to sunlight?","a":"Vitamin D."},
+    {"id":"static-si-force","category":"Physics","q":"What is the SI unit of force?","a":"The newton (N)."}
+  ]
+}
