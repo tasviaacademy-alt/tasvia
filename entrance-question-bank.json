@@ -509,6 +509,1022 @@
           "explanation": "Each term is doubled; 40 × 2 = 80."
         }
       ]
+    },
+    {
+      "id": "JNVST-6-S2",
+      "title": "Navodaya JNVST · Class 6 · Practice Set 2",
+      "durationMinutes": 12,
+      "questions": [
+        {
+          "topic": "Mental Ability",
+          "q": "Find the next number: 3, 6, 12, 24, __.",
+          "options": [
+            "30",
+            "36",
+            "48",
+            "54"
+          ],
+          "answer": 2,
+          "explanation": "Each term is multiplied by 2, so 24 × 2 = 48."
+        },
+        {
+          "topic": "Mental Ability",
+          "q": "Which pair has the same relationship as Bird : Nest?",
+          "options": [
+            "Bee : Hive",
+            "Fish : Tree",
+            "Cow : Sky",
+            "Ant : Pond"
+          ],
+          "answer": 0,
+          "explanation": "A nest is a bird's home; a hive is a bee's home."
+        },
+        {
+          "topic": "Mental Ability",
+          "q": "If yesterday was Monday, what day is tomorrow?",
+          "options": [
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Sunday"
+          ],
+          "answer": 1,
+          "explanation": "Yesterday Monday means today Tuesday and tomorrow Wednesday."
+        },
+        {
+          "topic": "Mental Ability",
+          "q": "Choose the odd one out.",
+          "options": [
+            "January",
+            "March",
+            "Sunday",
+            "July"
+          ],
+          "answer": 2,
+          "explanation": "Sunday is a day; the others are months."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "What is 846 − 379?",
+          "options": [
+            "457",
+            "467",
+            "477",
+            "487"
+          ],
+          "answer": 1,
+          "explanation": "846 − 379 = 467."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "A ribbon 3 m long is cut into 6 equal pieces. Each piece is:",
+          "options": [
+            "25 cm",
+            "30 cm",
+            "50 cm",
+            "60 cm"
+          ],
+          "answer": 2,
+          "explanation": "3 m = 300 cm; 300 ÷ 6 = 50 cm."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "What is 2/5 of 35?",
+          "options": [
+            "7",
+            "12",
+            "14",
+            "21"
+          ],
+          "answer": 2,
+          "explanation": "35 ÷ 5 × 2 = 14."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "A book costs ₹48. What is the cost of 5 books?",
+          "options": [
+            "₹200",
+            "₹220",
+            "₹240",
+            "₹250"
+          ],
+          "answer": 2,
+          "explanation": "48 × 5 = ₹240."
+        },
+        {
+          "topic": "Language",
+          "q": "Choose the antonym of “ancient”.",
+          "options": [
+            "Old",
+            "Modern",
+            "Historic",
+            "Past"
+          ],
+          "answer": 1,
+          "explanation": "Modern means recent or current; it is the opposite of ancient."
+        },
+        {
+          "topic": "Language",
+          "q": "Choose the correct sentence.",
+          "options": [
+            "She go to school.",
+            "She goes to school.",
+            "She going school.",
+            "She gone to school."
+          ],
+          "answer": 1,
+          "explanation": "With she/he/it in the simple present, the verb usually takes -s."
+        }
+      ]
+    },
+    {
+      "id": "JNVST-6-S3",
+      "title": "Navodaya JNVST · Class 6 · Practice Set 3",
+      "durationMinutes": 12,
+      "questions": [
+        {
+          "topic": "Mental Ability",
+          "q": "Complete the series: 1, 4, 9, 16, __.",
+          "options": [
+            "20",
+            "24",
+            "25",
+            "36"
+          ],
+          "answer": 2,
+          "explanation": "These are square numbers: 1², 2², 3², 4², so next is 5² = 25."
+        },
+        {
+          "topic": "Mental Ability",
+          "q": "If SOUTH is written as TPVUI (each letter moves one step forward), EAST is written as:",
+          "options": [
+            "FBTU",
+            "FBSU",
+            "DBTU",
+            "GBTU"
+          ],
+          "answer": 0,
+          "explanation": "E→F, A→B, S→T and T→U."
+        },
+        {
+          "topic": "Mental Ability",
+          "q": "Ravi faces North and turns right. Which direction is he facing?",
+          "options": [
+            "West",
+            "South",
+            "East",
+            "North"
+          ],
+          "answer": 2,
+          "explanation": "A right turn from North points East."
+        },
+        {
+          "topic": "Mental Ability",
+          "q": "Which shape has exactly one curved boundary and no corners?",
+          "options": [
+            "Square",
+            "Triangle",
+            "Circle",
+            "Rectangle"
+          ],
+          "answer": 2,
+          "explanation": "A circle has one continuous curved boundary and no corners."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "What is 125 × 8?",
+          "options": [
+            "800",
+            "900",
+            "1,000",
+            "1,200"
+          ],
+          "answer": 2,
+          "explanation": "125 × 8 = 1,000."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "A tank holds 750 litres. If 275 litres are used, how much remains?",
+          "options": [
+            "475 L",
+            "485 L",
+            "525 L",
+            "575 L"
+          ],
+          "answer": 0,
+          "explanation": "750 − 275 = 475 litres."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "Which fraction is equal to 3/6?",
+          "options": [
+            "1/3",
+            "1/2",
+            "2/3",
+            "3/4"
+          ],
+          "answer": 1,
+          "explanation": "Divide numerator and denominator by 3 to get 1/2."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "A bus travels 45 km in one hour. How far in 4 hours at the same speed?",
+          "options": [
+            "160 km",
+            "170 km",
+            "180 km",
+            "200 km"
+          ],
+          "answer": 2,
+          "explanation": "45 × 4 = 180 km."
+        },
+        {
+          "topic": "Language",
+          "q": "Choose the synonym of “rapid”.",
+          "options": [
+            "Slow",
+            "Quick",
+            "Weak",
+            "Late"
+          ],
+          "answer": 1,
+          "explanation": "Rapid means quick or fast."
+        },
+        {
+          "topic": "Language",
+          "q": "What is the past tense of “teach”?",
+          "options": [
+            "Teached",
+            "Taught",
+            "Teaching",
+            "Teach"
+          ],
+          "answer": 1,
+          "explanation": "The past tense of teach is taught."
+        }
+      ]
+    },
+    {
+      "id": "JNVST-9-S2",
+      "title": "Navodaya JNVST · Class 9 · Practice Set 2",
+      "durationMinutes": 12,
+      "questions": [
+        {
+          "topic": "Mathematics",
+          "q": "Solve: 5x + 3 = 28.",
+          "options": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ],
+          "answer": 1,
+          "explanation": "5x = 25, so x = 5."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The perimeter of a rectangle of length 12 cm and breadth 7 cm is:",
+          "options": [
+            "19 cm",
+            "38 cm",
+            "84 cm",
+            "42 cm"
+          ],
+          "answer": 1,
+          "explanation": "Perimeter = 2(12 + 7) = 38 cm."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "Simplify: (−3)² + 4.",
+          "options": [
+            "−5",
+            "5",
+            "13",
+            "−13"
+          ],
+          "answer": 2,
+          "explanation": "(−3)² = 9; 9 + 4 = 13."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The probability of getting a head on a fair coin is:",
+          "options": [
+            "0",
+            "1/4",
+            "1/2",
+            "1"
+          ],
+          "answer": 2,
+          "explanation": "There are two equally likely outcomes; one is a head."
+        },
+        {
+          "topic": "Science",
+          "q": "Which force opposes motion between two surfaces in contact?",
+          "options": [
+            "Gravity",
+            "Friction",
+            "Magnetism",
+            "Buoyancy"
+          ],
+          "answer": 1,
+          "explanation": "Friction opposes relative motion between surfaces."
+        },
+        {
+          "topic": "Science",
+          "q": "The basic unit of life is the:",
+          "options": [
+            "Tissue",
+            "Organ",
+            "Cell",
+            "Organ system"
+          ],
+          "answer": 2,
+          "explanation": "The cell is the basic structural and functional unit of life."
+        },
+        {
+          "topic": "Science",
+          "q": "Which of these is a non-renewable source of energy?",
+          "options": [
+            "Wind",
+            "Sunlight",
+            "Coal",
+            "Tidal energy"
+          ],
+          "answer": 2,
+          "explanation": "Coal forms over millions of years and is non-renewable."
+        },
+        {
+          "topic": "English",
+          "q": "Choose the correct reported speech: He said, “I am tired.”",
+          "options": [
+            "He said that I am tired.",
+            "He said that he was tired.",
+            "He says he tired.",
+            "He told that tired."
+          ],
+          "answer": 1,
+          "explanation": "In reported speech, am generally changes to was and I to he."
+        },
+        {
+          "topic": "English",
+          "q": "Choose the correctly spelled word.",
+          "options": [
+            "Environment",
+            "Enviroment",
+            "Envirnoment",
+            "Environmant"
+          ],
+          "answer": 0,
+          "explanation": "The correct spelling is environment."
+        },
+        {
+          "topic": "Reasoning",
+          "q": "All squares are rectangles. Which statement follows?",
+          "options": [
+            "All rectangles are squares.",
+            "Every square is a rectangle.",
+            "No square is a rectangle.",
+            "All rectangles are triangles."
+          ],
+          "answer": 1,
+          "explanation": "The statement directly says every square belongs to the rectangle group."
+        }
+      ]
+    },
+    {
+      "id": "JNVST-9-S3",
+      "title": "Navodaya JNVST · Class 9 · Practice Set 3",
+      "durationMinutes": 12,
+      "questions": [
+        {
+          "topic": "Mathematics",
+          "q": "If y/4 = 6, then y is:",
+          "options": [
+            "10",
+            "18",
+            "24",
+            "30"
+          ],
+          "answer": 2,
+          "explanation": "Multiply both sides by 4: y = 24."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The sum of angles in a quadrilateral is:",
+          "options": [
+            "180°",
+            "270°",
+            "360°",
+            "540°"
+          ],
+          "answer": 2,
+          "explanation": "The interior angles of a quadrilateral add up to 360°."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "A shirt marked ₹800 is discounted by 10%. The sale price is:",
+          "options": [
+            "₹700",
+            "₹720",
+            "₹740",
+            "₹780"
+          ],
+          "answer": 1,
+          "explanation": "10% of ₹800 is ₹80; ₹800 − ₹80 = ₹720."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The square root of 196 is:",
+          "options": [
+            "12",
+            "13",
+            "14",
+            "16"
+          ],
+          "answer": 2,
+          "explanation": "14 × 14 = 196."
+        },
+        {
+          "topic": "Science",
+          "q": "Which part of a plant absorbs most water from soil?",
+          "options": [
+            "Flower",
+            "Root hairs",
+            "Stem tip",
+            "Petal"
+          ],
+          "answer": 1,
+          "explanation": "Root hairs provide a large surface area for water absorption."
+        },
+        {
+          "topic": "Science",
+          "q": "A device that converts electrical energy into light is a:",
+          "options": [
+            "Bulb",
+            "Motor",
+            "Generator",
+            "Switch"
+          ],
+          "answer": 0,
+          "explanation": "A bulb converts electrical energy into light and heat."
+        },
+        {
+          "topic": "Science",
+          "q": "Which gas is essential for combustion?",
+          "options": [
+            "Nitrogen",
+            "Oxygen",
+            "Carbon dioxide",
+            "Helium"
+          ],
+          "answer": 1,
+          "explanation": "Oxygen supports combustion."
+        },
+        {
+          "topic": "English",
+          "q": "Choose the antonym of “expand”.",
+          "options": [
+            "Increase",
+            "Enlarge",
+            "Contract",
+            "Extend"
+          ],
+          "answer": 2,
+          "explanation": "Contract means to become smaller; it is opposite to expand."
+        },
+        {
+          "topic": "English",
+          "q": "Identify the adjective: “The clever student solved it.”",
+          "options": [
+            "Student",
+            "Solved",
+            "Clever",
+            "It"
+          ],
+          "answer": 2,
+          "explanation": "Clever describes the noun student."
+        },
+        {
+          "topic": "Reasoning",
+          "q": "Find the next term: 2, 5, 8, 11, __.",
+          "options": [
+            "12",
+            "13",
+            "14",
+            "15"
+          ],
+          "answer": 1,
+          "explanation": "Each term increases by 3; 11 + 3 = 14."
+        }
+      ]
+    },
+    {
+      "id": "AISSEE-6-S2",
+      "title": "Sainik School AISSEE · Class 6 · Practice Set 2",
+      "durationMinutes": 12,
+      "questions": [
+        {
+          "topic": "Mathematics",
+          "q": "What is 3,456 + 2,789?",
+          "options": [
+            "6,145",
+            "6,245",
+            "6,255",
+            "6,345"
+          ],
+          "answer": 1,
+          "explanation": "3,456 + 2,789 = 6,245."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "A rectangle is 14 cm long and 5 cm wide. Its area is:",
+          "options": [
+            "19 cm²",
+            "38 cm²",
+            "70 cm²",
+            "140 cm²"
+          ],
+          "answer": 2,
+          "explanation": "Area = length × breadth = 14 × 5 = 70 cm²."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "Find 15% of 200.",
+          "options": [
+            "15",
+            "20",
+            "30",
+            "35"
+          ],
+          "answer": 2,
+          "explanation": "10% of 200 is 20 and 5% is 10; total 30."
+        },
+        {
+          "topic": "Intelligence",
+          "q": "Complete the series: Z, X, V, T, __.",
+          "options": [
+            "S",
+            "R",
+            "Q",
+            "P"
+          ],
+          "answer": 1,
+          "explanation": "The series moves backwards by two letters: next is R."
+        },
+        {
+          "topic": "Intelligence",
+          "q": "Which number is the odd one out?",
+          "options": [
+            "9",
+            "16",
+            "25",
+            "30"
+          ],
+          "answer": 3,
+          "explanation": "9, 16 and 25 are perfect squares; 30 is not."
+        },
+        {
+          "topic": "Language",
+          "q": "Choose the correct preposition: The book is ___ the table.",
+          "options": [
+            "on",
+            "at",
+            "by",
+            "from"
+          ],
+          "answer": 0,
+          "explanation": "On indicates that the book rests on the table's surface."
+        },
+        {
+          "topic": "Language",
+          "q": "Choose the plural of “tooth”.",
+          "options": [
+            "Tooths",
+            "Teeth",
+            "Toothes",
+            "Tooth"
+          ],
+          "answer": 1,
+          "explanation": "The irregular plural of tooth is teeth."
+        },
+        {
+          "topic": "General Knowledge",
+          "q": "Which is the largest planet in our Solar System?",
+          "options": [
+            "Earth",
+            "Saturn",
+            "Jupiter",
+            "Mars"
+          ],
+          "answer": 2,
+          "explanation": "Jupiter is the largest planet in the Solar System."
+        },
+        {
+          "topic": "General Knowledge",
+          "q": "The Indian national flag has how many main colours in its bands?",
+          "options": [
+            "Two",
+            "Three",
+            "Four",
+            "Five"
+          ],
+          "answer": 1,
+          "explanation": "The flag has saffron, white and green bands; the Ashoka Chakra is blue."
+        },
+        {
+          "topic": "General Science",
+          "q": "Which vitamin is produced in the skin in sunlight?",
+          "options": [
+            "Vitamin A",
+            "Vitamin B12",
+            "Vitamin C",
+            "Vitamin D"
+          ],
+          "answer": 3,
+          "explanation": "Sunlight enables the skin to synthesize vitamin D."
+        }
+      ]
+    },
+    {
+      "id": "AISSEE-6-S3",
+      "title": "Sainik School AISSEE · Class 6 · Practice Set 3",
+      "durationMinutes": 12,
+      "questions": [
+        {
+          "topic": "Mathematics",
+          "q": "What is 864 ÷ 12?",
+          "options": [
+            "62",
+            "68",
+            "72",
+            "76"
+          ],
+          "answer": 2,
+          "explanation": "12 × 72 = 864."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The smallest prime number is:",
+          "options": [
+            "0",
+            "1",
+            "2",
+            "3"
+          ],
+          "answer": 2,
+          "explanation": "2 is the smallest prime number and the only even prime."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "Convert 2.5 metres into centimetres.",
+          "options": [
+            "25 cm",
+            "205 cm",
+            "250 cm",
+            "2,500 cm"
+          ],
+          "answer": 2,
+          "explanation": "1 metre = 100 cm, so 2.5 m = 250 cm."
+        },
+        {
+          "topic": "Intelligence",
+          "q": "Complete the series: 4, 7, 10, 13, __.",
+          "options": [
+            "14",
+            "15",
+            "16",
+            "17"
+          ],
+          "answer": 2,
+          "explanation": "Add 3 each time; next is 16."
+        },
+        {
+          "topic": "Intelligence",
+          "q": "If 1 January is a Monday, what day is 8 January?",
+          "options": [
+            "Monday",
+            "Tuesday",
+            "Sunday",
+            "Wednesday"
+          ],
+          "answer": 0,
+          "explanation": "Seven days later is the same weekday."
+        },
+        {
+          "topic": "Language",
+          "q": "Choose the synonym of “honest”.",
+          "options": [
+            "Truthful",
+            "Lazy",
+            "Angry",
+            "Careless"
+          ],
+          "answer": 0,
+          "explanation": "Honest means truthful."
+        },
+        {
+          "topic": "Language",
+          "q": "Choose the correct verb: They ___ playing outside.",
+          "options": [
+            "is",
+            "am",
+            "are",
+            "was"
+          ],
+          "answer": 2,
+          "explanation": "They takes the plural verb are."
+        },
+        {
+          "topic": "General Knowledge",
+          "q": "Which city is the capital of Telangana?",
+          "options": [
+            "Warangal",
+            "Hyderabad",
+            "Nizamabad",
+            "Karimnagar"
+          ],
+          "answer": 1,
+          "explanation": "Hyderabad is the capital of Telangana."
+        },
+        {
+          "topic": "General Knowledge",
+          "q": "Which ocean lies to the south of India?",
+          "options": [
+            "Atlantic Ocean",
+            "Pacific Ocean",
+            "Indian Ocean",
+            "Arctic Ocean"
+          ],
+          "answer": 2,
+          "explanation": "The Indian Ocean lies south of India."
+        },
+        {
+          "topic": "General Science",
+          "q": "Water changes into water vapour by:",
+          "options": [
+            "Freezing",
+            "Condensation",
+            "Evaporation",
+            "Melting"
+          ],
+          "answer": 2,
+          "explanation": "Evaporation changes liquid water into water vapour."
+        }
+      ]
+    },
+    {
+      "id": "AISSEE-9-S2",
+      "title": "Sainik School AISSEE · Class 9 · Practice Set 2",
+      "durationMinutes": 12,
+      "questions": [
+        {
+          "topic": "Mathematics",
+          "q": "Solve: 3(x − 2) = 21.",
+          "options": [
+            "5",
+            "7",
+            "9",
+            "11"
+          ],
+          "answer": 2,
+          "explanation": "Divide by 3: x − 2 = 7, so x = 9."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The circumference of a circle of radius 7 cm (use π = 22/7) is:",
+          "options": [
+            "22 cm",
+            "44 cm",
+            "49 cm",
+            "154 cm"
+          ],
+          "answer": 1,
+          "explanation": "Circumference = 2πr = 2 × 22/7 × 7 = 44 cm."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The value of 2³ × 2² is:",
+          "options": [
+            "2⁵",
+            "2⁶",
+            "4⁵",
+            "4⁶"
+          ],
+          "answer": 0,
+          "explanation": "For the same base, add exponents: 2^(3+2) = 2⁵."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "If a triangle has angles 50° and 60°, its third angle is:",
+          "options": [
+            "60°",
+            "70°",
+            "80°",
+            "90°"
+          ],
+          "answer": 1,
+          "explanation": "180° − 50° − 60° = 70°."
+        },
+        {
+          "topic": "General Science",
+          "q": "Which instrument measures atmospheric pressure?",
+          "options": [
+            "Thermometer",
+            "Barometer",
+            "Ammeter",
+            "Hygrometer"
+          ],
+          "answer": 1,
+          "explanation": "A barometer measures atmospheric pressure."
+        },
+        {
+          "topic": "General Science",
+          "q": "The process by which plants lose water vapour through leaves is:",
+          "options": [
+            "Respiration",
+            "Transpiration",
+            "Germination",
+            "Pollination"
+          ],
+          "answer": 1,
+          "explanation": "Transpiration is the loss of water vapour from plant surfaces, especially leaves."
+        },
+        {
+          "topic": "General Science",
+          "q": "Which particle has a negative electric charge?",
+          "options": [
+            "Proton",
+            "Neutron",
+            "Electron",
+            "Nucleus"
+          ],
+          "answer": 2,
+          "explanation": "Electrons carry a negative charge."
+        },
+        {
+          "topic": "English",
+          "q": "Choose the correct conjunction: I stayed home ___ it was raining.",
+          "options": [
+            "because",
+            "although",
+            "unless",
+            "or"
+          ],
+          "answer": 0,
+          "explanation": "Because introduces the reason for staying home."
+        },
+        {
+          "topic": "English",
+          "q": "Choose the passive voice: “They will finish the work.”",
+          "options": [
+            "The work will be finished by them.",
+            "The work is finished by them.",
+            "The work was finishing.",
+            "They will be finished by work."
+          ],
+          "answer": 0,
+          "explanation": "Future passive uses will be + past participle."
+        },
+        {
+          "topic": "Reasoning",
+          "q": "Find the next number: 1, 4, 9, 16, 25, __.",
+          "options": [
+            "30",
+            "32",
+            "36",
+            "49"
+          ],
+          "answer": 2,
+          "explanation": "These are consecutive squares; the next is 6² = 36."
+        }
+      ]
+    },
+    {
+      "id": "AISSEE-9-S3",
+      "title": "Sainik School AISSEE · Class 9 · Practice Set 3",
+      "durationMinutes": 12,
+      "questions": [
+        {
+          "topic": "Mathematics",
+          "q": "Solve: 4x − 9 = 27.",
+          "options": [
+            "7",
+            "8",
+            "9",
+            "10"
+          ],
+          "answer": 2,
+          "explanation": "4x = 36, so x = 9."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The volume of a cube with side 4 cm is:",
+          "options": [
+            "16 cm³",
+            "32 cm³",
+            "48 cm³",
+            "64 cm³"
+          ],
+          "answer": 3,
+          "explanation": "Volume = side³ = 4³ = 64 cm³."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "A sum of ₹1,500 earns 8% simple interest in one year. Interest is:",
+          "options": [
+            "₹80",
+            "₹100",
+            "₹120",
+            "₹150"
+          ],
+          "answer": 2,
+          "explanation": "SI = 1500 × 8 × 1 / 100 = ₹120."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The coordinates of the origin are:",
+          "options": [
+            "(1,1)",
+            "(0,1)",
+            "(1,0)",
+            "(0,0)"
+          ],
+          "answer": 3,
+          "explanation": "The origin is the point where both axes meet: (0,0)."
+        },
+        {
+          "topic": "General Science",
+          "q": "Which organ filters waste from the blood to form urine?",
+          "options": [
+            "Liver",
+            "Kidney",
+            "Lung",
+            "Stomach"
+          ],
+          "answer": 1,
+          "explanation": "The kidneys filter blood and form urine."
+        },
+        {
+          "topic": "General Science",
+          "q": "The image formed by a plane mirror is generally:",
+          "options": [
+            "Real and inverted",
+            "Virtual and erect",
+            "Real and enlarged",
+            "Virtual and inverted"
+          ],
+          "answer": 1,
+          "explanation": "A plane mirror forms a virtual, erect image of the same size."
+        },
+        {
+          "topic": "General Science",
+          "q": "Which of these is a chemical change?",
+          "options": [
+            "Melting ice",
+            "Cutting paper",
+            "Rusting iron",
+            "Breaking glass"
+          ],
+          "answer": 2,
+          "explanation": "Rusting produces a new substance, iron oxide."
+        },
+        {
+          "topic": "English",
+          "q": "Choose the antonym of “generous”.",
+          "options": [
+            "Kind",
+            "Selfish",
+            "Helpful",
+            "Giving"
+          ],
+          "answer": 1,
+          "explanation": "Selfish is opposite in meaning to generous."
+        },
+        {
+          "topic": "English",
+          "q": "Identify the adverb: “The cadet marched smartly.”",
+          "options": [
+            "Cadet",
+            "Marched",
+            "Smartly",
+            "The"
+          ],
+          "answer": 2,
+          "explanation": "Smartly describes how the cadet marched."
+        },
+        {
+          "topic": "Reasoning",
+          "q": "If every cadet wears a uniform and Arun is a cadet, what follows?",
+          "options": [
+            "Arun wears a uniform.",
+            "Arun is a teacher.",
+            "No cadet wears a uniform.",
+            "All uniforms are cadets."
+          ],
+          "answer": 0,
+          "explanation": "Arun belongs to the cadet group, so the rule applies to him."
+        }
+      ]
     }
   ]
 }
