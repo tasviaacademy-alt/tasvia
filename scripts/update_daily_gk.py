@@ -23,7 +23,7 @@ def answer_key(value):
     return " ".join(str(value or "").casefold().strip().split())
 
 def valid_daily(data):
-    if not isinstance(data, dict) or data.get("schemaVersion") != 2:
+    if not isinstance(data, dict) or data.get("schemaVersion") != 3:
         return False
     questions = data.get("questions", [])
     if len(questions) != 5:
@@ -91,6 +91,7 @@ def option_group(category):
 CUSTOM_DISTRACTORS = {
     "static-sports-olympics": ["Every two years", "Every three years", "Every five years"],
     "static-sports-chess": ["32", "48", "100"],
+    "otq-brain-teasers-2310": ["1", "2", "3"],
 }
 
 def eligible(q):
@@ -180,7 +181,7 @@ for q in selected_raw:
         "options": options,
     })
 
-data = {"schemaVersion": 2, "date": date_str, "title": "Daily General Knowledge", "questions": questions}
+data = {"schemaVersion": 3, "date": date_str, "title": "Daily General Knowledge", "questions": questions}
 text = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
 DAILY_PATH.write_text(text, encoding="utf-8")
 TODAY_HISTORY.write_text(text, encoding="utf-8")
