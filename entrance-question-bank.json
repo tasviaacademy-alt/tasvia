@@ -1,0 +1,514 @@
+{
+  "schemaVersion": 1,
+  "note": "TASVIA Academy original starter practice questions for learning. These are not official NVS/AISSEE papers or reproduced previous-year questions. Confirm current official syllabus and pattern before exam.",
+  "packs": [
+    {
+      "id": "JNVST-6",
+      "title": "Navodaya JNVST · Class 6 · Starter Set 1",
+      "durationMinutes": 12,
+      "questions": [
+        {
+          "topic": "Mental Ability",
+          "q": "Which number comes next: 2, 4, 8, 16, __?",
+          "options": [
+            "18",
+            "24",
+            "32",
+            "34"
+          ],
+          "answer": 2,
+          "explanation": "Each number is doubled: 16 × 2 = 32."
+        },
+        {
+          "topic": "Mental Ability",
+          "q": "Find the odd one out.",
+          "options": [
+            "Triangle",
+            "Square",
+            "Circle",
+            "Rectangle"
+          ],
+          "answer": 2,
+          "explanation": "A circle has no straight sides or corners; the others are polygons."
+        },
+        {
+          "topic": "Mental Ability",
+          "q": "If CAT is coded as DBU (each letter moves one step forward), DOG is coded as:",
+          "options": [
+            "EPH",
+            "EOG",
+            "DPH",
+            "FPI"
+          ],
+          "answer": 0,
+          "explanation": "D→E, O→P and G→H."
+        },
+        {
+          "topic": "Mental Ability",
+          "q": "A is taller than B. B is taller than C. Who is shortest?",
+          "options": [
+            "A",
+            "B",
+            "C",
+            "Cannot tell"
+          ],
+          "answer": 2,
+          "explanation": "The order is A > B > C, so C is shortest."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "What is 375 + 248?",
+          "options": [
+            "613",
+            "623",
+            "633",
+            "643"
+          ],
+          "answer": 1,
+          "explanation": "375 + 200 = 575; add 48 to get 623."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "A box has 8 rows of 6 pencils. How many pencils are there?",
+          "options": [
+            "14",
+            "42",
+            "48",
+            "56"
+          ],
+          "answer": 2,
+          "explanation": "8 × 6 = 48."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "What is 3/4 of 20?",
+          "options": [
+            "5",
+            "10",
+            "15",
+            "16"
+          ],
+          "answer": 2,
+          "explanation": "20 ÷ 4 × 3 = 15."
+        },
+        {
+          "topic": "Language",
+          "q": "Choose the synonym of “brave”.",
+          "options": [
+            "Fearful",
+            "Courageous",
+            "Careless",
+            "Quiet"
+          ],
+          "answer": 1,
+          "explanation": "Brave means courageous."
+        },
+        {
+          "topic": "Language",
+          "q": "Choose the correctly spelled word.",
+          "options": [
+            "Beautifull",
+            "Beutiful",
+            "Beautiful",
+            "Beautifal"
+          ],
+          "answer": 2,
+          "explanation": "The correct spelling is beautiful."
+        },
+        {
+          "topic": "Language",
+          "q": "Choose the correct plural of “child”.",
+          "options": [
+            "Childs",
+            "Childes",
+            "Children",
+            "Childrens"
+          ],
+          "answer": 2,
+          "explanation": "The irregular plural of child is children."
+        }
+      ]
+    },
+    {
+      "id": "JNVST-9",
+      "title": "Navodaya JNVST · Class 9 · Starter Set 1",
+      "durationMinutes": 12,
+      "questions": [
+        {
+          "topic": "Mathematics",
+          "q": "Solve: 3x − 5 = 16.",
+          "options": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "answer": 2,
+          "explanation": "3x = 21, so x = 7."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The area of a triangle with base 12 cm and height 5 cm is:",
+          "options": [
+            "17 cm²",
+            "30 cm²",
+            "60 cm²",
+            "34 cm²"
+          ],
+          "answer": 1,
+          "explanation": "Area = ½ × base × height = 30 cm²."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "What is the simple interest on ₹2,000 at 5% per year for 2 years?",
+          "options": [
+            "₹100",
+            "₹150",
+            "₹200",
+            "₹250"
+          ],
+          "answer": 2,
+          "explanation": "SI = PRT/100 = 2000×5×2/100 = ₹200."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "Factorise x² − 9.",
+          "options": [
+            "(x−9)(x+1)",
+            "(x−3)(x+3)",
+            "(x−3)²",
+            "(x+9)(x−1)"
+          ],
+          "answer": 1,
+          "explanation": "Difference of squares: a²−b²=(a−b)(a+b)."
+        },
+        {
+          "topic": "Science",
+          "q": "Which cell organelle is the main site of aerobic respiration?",
+          "options": [
+            "Ribosome",
+            "Mitochondrion",
+            "Golgi body",
+            "Vacuole"
+          ],
+          "answer": 1,
+          "explanation": "Mitochondria release usable energy through aerobic respiration."
+        },
+        {
+          "topic": "Science",
+          "q": "The SI unit of electric current is:",
+          "options": [
+            "Volt",
+            "Ohm",
+            "Ampere",
+            "Watt"
+          ],
+          "answer": 2,
+          "explanation": "Electric current is measured in amperes (A)."
+        },
+        {
+          "topic": "Science",
+          "q": "Which gas is released during photosynthesis?",
+          "options": [
+            "Carbon dioxide",
+            "Nitrogen",
+            "Oxygen",
+            "Hydrogen"
+          ],
+          "answer": 2,
+          "explanation": "Oxygen is released when water is split during photosynthesis."
+        },
+        {
+          "topic": "English",
+          "q": "Choose the correct passive voice: “The boy kicked the ball.”",
+          "options": [
+            "The ball kicked the boy.",
+            "The ball was kicked by the boy.",
+            "The boy was kicked by the ball.",
+            "The ball is kicking."
+          ],
+          "answer": 1,
+          "explanation": "Past simple passive uses was/were + past participle."
+        },
+        {
+          "topic": "English",
+          "q": "Choose the antonym of “scarce”.",
+          "options": [
+            "Rare",
+            "Limited",
+            "Abundant",
+            "Small"
+          ],
+          "answer": 2,
+          "explanation": "Scarce means insufficient or rare; abundant is the opposite."
+        },
+        {
+          "topic": "Reasoning",
+          "q": "If all roses are flowers and some flowers fade quickly, which statement must be true?",
+          "options": [
+            "All roses fade quickly",
+            "Some roses fade quickly",
+            "All roses are flowers",
+            "No flowers are roses"
+          ],
+          "answer": 2,
+          "explanation": "Only the first premise guarantees that every rose is a flower."
+        }
+      ]
+    },
+    {
+      "id": "AISSEE-6",
+      "title": "Sainik School AISSEE · Class 6 · Starter Set 1",
+      "durationMinutes": 12,
+      "questions": [
+        {
+          "topic": "Mathematics",
+          "q": "What is 25% of 240?",
+          "options": [
+            "40",
+            "50",
+            "60",
+            "80"
+          ],
+          "answer": 2,
+          "explanation": "25% is one quarter; 240 ÷ 4 = 60."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The perimeter of a square with side 9 cm is:",
+          "options": [
+            "18 cm",
+            "27 cm",
+            "36 cm",
+            "81 cm"
+          ],
+          "answer": 2,
+          "explanation": "Perimeter = 4 × side = 36 cm."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "Simplify 48 ÷ 6 + 3 × 4.",
+          "options": [
+            "11",
+            "20",
+            "32",
+            "44"
+          ],
+          "answer": 1,
+          "explanation": "Division and multiplication first: 8 + 12 = 20."
+        },
+        {
+          "topic": "Intelligence",
+          "q": "Complete the pattern: A, C, E, G, __.",
+          "options": [
+            "H",
+            "I",
+            "J",
+            "K"
+          ],
+          "answer": 1,
+          "explanation": "The sequence skips one letter each time; next is I."
+        },
+        {
+          "topic": "Intelligence",
+          "q": "Which is the mirror-like opposite direction of East?",
+          "options": [
+            "North",
+            "South",
+            "West",
+            "North-East"
+          ],
+          "answer": 2,
+          "explanation": "West is opposite East."
+        },
+        {
+          "topic": "Language",
+          "q": "Choose the noun in the sentence: “The cadet saluted smartly.”",
+          "options": [
+            "The",
+            "Cadet",
+            "Smartly",
+            "Saluted"
+          ],
+          "answer": 1,
+          "explanation": "Cadet names a person and is the noun."
+        },
+        {
+          "topic": "Language",
+          "q": "Choose the correct article: “He is ___ honest boy.”",
+          "options": [
+            "a",
+            "an",
+            "the",
+            "no article"
+          ],
+          "answer": 1,
+          "explanation": "Honest begins with a vowel sound, so use “an”."
+        },
+        {
+          "topic": "General Knowledge",
+          "q": "The national animal of India is the:",
+          "options": [
+            "Asiatic lion",
+            "Bengal tiger",
+            "Indian elephant",
+            "Leopard"
+          ],
+          "answer": 1,
+          "explanation": "The Bengal tiger is India's national animal."
+        },
+        {
+          "topic": "General Knowledge",
+          "q": "Which planet is known as the Red Planet?",
+          "options": [
+            "Venus",
+            "Mars",
+            "Jupiter",
+            "Mercury"
+          ],
+          "answer": 1,
+          "explanation": "Iron-rich dust gives Mars its reddish appearance."
+        },
+        {
+          "topic": "General Science",
+          "q": "Which organ pumps blood through the human body?",
+          "options": [
+            "Lungs",
+            "Brain",
+            "Heart",
+            "Kidneys"
+          ],
+          "answer": 2,
+          "explanation": "The heart pumps blood through the circulatory system."
+        }
+      ]
+    },
+    {
+      "id": "AISSEE-9",
+      "title": "Sainik School AISSEE · Class 9 · Starter Set 1",
+      "durationMinutes": 12,
+      "questions": [
+        {
+          "topic": "Mathematics",
+          "q": "If 2x + 7 = 23, then x equals:",
+          "options": [
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "answer": 2,
+          "explanation": "2x = 16, so x = 8."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The hypotenuse of a right triangle with legs 6 cm and 8 cm is:",
+          "options": [
+            "9 cm",
+            "10 cm",
+            "12 cm",
+            "14 cm"
+          ],
+          "answer": 1,
+          "explanation": "By Pythagoras, √(36+64) = √100 = 10 cm."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "The mean of 4, 6, 8, 10 and 12 is:",
+          "options": [
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "answer": 2,
+          "explanation": "The sum is 40; 40 ÷ 5 = 8."
+        },
+        {
+          "topic": "General Science",
+          "q": "Which blood cells help defend the body against infection?",
+          "options": [
+            "Red blood cells",
+            "White blood cells",
+            "Platelets only",
+            "Plasma proteins only"
+          ],
+          "answer": 1,
+          "explanation": "White blood cells are key cells of the immune system."
+        },
+        {
+          "topic": "General Science",
+          "q": "Which law states that current is directly proportional to voltage at constant temperature?",
+          "options": [
+            "Newton’s law",
+            "Ohm’s law",
+            "Boyle’s law",
+            "Hooke’s law"
+          ],
+          "answer": 1,
+          "explanation": "Ohm’s law is V = IR for a conductor under constant physical conditions."
+        },
+        {
+          "topic": "English",
+          "q": "Choose the correct reported speech: He said, “I am tired.”",
+          "options": [
+            "He said that I am tired.",
+            "He said that he was tired.",
+            "He says he tired.",
+            "He said that he is tiring."
+          ],
+          "answer": 1,
+          "explanation": "In reported speech, the pronoun and tense change appropriately."
+        },
+        {
+          "topic": "English",
+          "q": "Choose the synonym of “diligent”.",
+          "options": [
+            "Lazy",
+            "Careful and hardworking",
+            "Angry",
+            "Forgetful"
+          ],
+          "answer": 1,
+          "explanation": "Diligent means showing steady, careful effort."
+        },
+        {
+          "topic": "Social Studies",
+          "q": "The Constitution of India came into effect on:",
+          "options": [
+            "15 August 1947",
+            "26 January 1950",
+            "26 November 1949",
+            "2 October 1950"
+          ],
+          "answer": 1,
+          "explanation": "India celebrates Republic Day on 26 January, when the Constitution took effect."
+        },
+        {
+          "topic": "Social Studies",
+          "q": "Which imaginary line divides Earth into Northern and Southern Hemispheres?",
+          "options": [
+            "Tropic of Cancer",
+            "Prime Meridian",
+            "Equator",
+            "Arctic Circle"
+          ],
+          "answer": 2,
+          "explanation": "The Equator is at 0° latitude and divides the two hemispheres."
+        },
+        {
+          "topic": "Intelligence",
+          "q": "Find the next number: 5, 10, 20, 40, __.",
+          "options": [
+            "45",
+            "60",
+            "75",
+            "80"
+          ],
+          "answer": 3,
+          "explanation": "Each term is doubled; 40 × 2 = 80."
+        }
+      ]
+    }
+  ]
+}
