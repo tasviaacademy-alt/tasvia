@@ -490,6 +490,30 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
 @media(prefers-reduced-motion:reduce){.install-home-btn{transition:none}}
 </style>
 
+
+/* Contrast fix: Parent login must stay crisp and readable on mobile. */
+<style id="tasvia-parent-login-contrast-fix">
+#welcomeBackdrop{background:#0B2455!important;padding:clamp(10px,3vh,24px)!important;overflow-y:auto!important;align-items:center!important}
+#welcomeBackdrop .welcome-card{width:min(100%,420px)!important;max-height:calc(100dvh - 20px);overflow-y:auto;overscroll-behavior:contain;background:#FFFDF7!important;color:#102858!important;border:2px solid #D5AC50!important;border-radius:26px!important;padding:clamp(18px,3vh,30px) clamp(16px,4vw,26px)!important;box-shadow:0 18px 50px rgba(0,0,0,.28)!important}
+#welcomeBackdrop .welcome-logo-wrap{margin-bottom:14px!important}
+#welcomeBackdrop .welcome-card h2{color:#102858!important;font-size:clamp(1.65rem,6vw,2rem)!important}
+#welcomeBackdrop .welcome-card h2 span{color:#B88A20!important}
+#welcomeBackdrop .welcome-card p{color:#34445E!important;opacity:1!important}
+#welcomeBackdrop .welcome-tag{color:#946B12!important;font-weight:800!important}
+#welcomeBackdrop .install-home-btn{width:100%!important;min-height:52px!important;background:#F2B91B!important;color:#332500!important;border:2px solid #D5A20B!important;border-radius:13px!important;font-weight:800!important;box-shadow:none!important;opacity:1!important}
+#welcomeBackdrop .install-home-help{color:#34445E!important;font-size:.82rem!important}
+#welcomeBackdrop .student-login-form{width:100%!important;max-width:100%!important;margin:18px auto 0!important}
+#welcomeBackdrop .student-login-label{color:#102858!important;opacity:1!important;font-weight:800!important;font-size:.9rem!important;margin:12px 0 6px 2px!important}
+#welcomeBackdrop .student-login-input{width:100%!important;min-height:54px!important;background:#FFFFFF!important;color:#102858!important;-webkit-text-fill-color:#102858!important;border:1.5px solid #9AA8BB!important;border-radius:13px!important;padding:14px 15px!important;font-size:16px!important;font-weight:700!important;opacity:1!important;box-shadow:inset 0 1px 2px rgba(16,40,88,.04)!important}
+#welcomeBackdrop .student-login-input::placeholder{color:#65738A!important;-webkit-text-fill-color:#65738A!important;opacity:1!important;font-weight:600!important;text-transform:uppercase}
+#welcomeBackdrop .student-login-input:focus{border:2px solid #0B4E9B!important;outline:3px solid rgba(11,78,155,.14)!important;outline-offset:1px!important;box-shadow:none!important}
+#welcomeBackdrop .welcome-enter{width:100%!important;min-height:56px!important;margin-top:16px!important;background:#0B2455!important;color:#FFFFFF!important;-webkit-text-fill-color:#FFFFFF!important;border:2px solid #0B2455!important;border-radius:13px!important;font-size:1rem!important;font-weight:800!important;opacity:1!important;box-shadow:0 5px 0 #071A3D!important}
+#welcomeBackdrop .welcome-enter:disabled{opacity:.75!important}
+#welcomeBackdrop .student-login-msg{color:#A32121!important;font-weight:700!important}
+@media(max-height:740px){#welcomeBackdrop .welcome-card{padding-top:12px!important;padding-bottom:14px!important}#welcomeBackdrop .welcome-logo-wrap{width:76px!important;height:76px!important;margin-bottom:10px!important}#welcomeBackdrop .welcome-logo{width:64px!important;height:64px!important}#welcomeBackdrop .student-login-form{margin-top:10px!important}#welcomeBackdrop .student-login-input{min-height:48px!important}#welcomeBackdrop .welcome-enter{min-height:50px!important;margin-top:10px!important}}
+@media(prefers-reduced-motion:reduce){#welcomeBackdrop .welcome-logo-wrap{animation:none!important}}
+</style>
+
 </head>
 <body>
 <header><div class="top"><div class="brand"><img class="hlogo" src="./icon-512.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
@@ -1800,6 +1824,5 @@ table td{border-color:#E8EDF4!important}
 })();
 </script>
 
-<script src="./time-features.js?v=20261017-1"></script>
 </body>
 </html>
