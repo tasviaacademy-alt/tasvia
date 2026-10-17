@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-16-v90-gk-current-affairs-refresh">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-17-v91-daily-gk-mcq-auto-refresh">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -513,7 +513,7 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
 (function(){
   "use strict";
   if("serviceWorker" in navigator && location.protocol==="https:"){
-    navigator.serviceWorker.register("./sw.js?v=87",{scope:"./"}).catch(function(){/* Install guidance remains available without a worker. */});
+    navigator.serviceWorker.register("./sw.js?v=88",{scope:"./"}).catch(function(){/* Install guidance remains available without a worker. */});
   }
   var deferredPrompt=null;
   var btn=document.getElementById("addToHomeScreenBtn");
@@ -973,12 +973,8 @@ document.body.innerHTML=
         if(typeof window.__tasviaLoadLearning==="function"){window.__tasviaLoadLearning(kind,target);return;}
       }catch(err){console.warn("TASVIA learning loader fallback",err);}
       if(!target)return;
-      if(kind==="gk"){
-        var qs=[["What two colors are featured on the flag and coat of arms of Malta?","White and red"],["Which animal is least related to the octopus?","Eel"],["Elephants are not bothered by the loss of a stillborn baby because it was never alive.","False"],["What does gambol mean?","To frolic and leap playfully"],["What is the capital city of Washington state?","Olympia"]];
-        target.innerHTML='<div class="learning-meta"><span class="learning-pill">DAILY GK</span><span>07 October 2026</span></div><div class="learning-grid">'+qs.map(function(q,i){return '<div class="learning-card"><h4>Q'+(i+1)+'. '+esc2(q[0])+'</h4><button type="button" class="practice-btn" onclick="this.nextElementSibling.hidden=!this.nextElementSibling.hidden;this.textContent=this.nextElementSibling.hidden?\'Show Answer\':\'Hide Answer\'">Show Answer</button><div class="learning-answer" hidden>'+esc2(q[1])+'</div></div>'}).join("")+'</div>';
-      }else if(kind==="current"){
-        var items=["World Bank raises India’s FY27 growth forecast to 7.1%","School Assembly News Headlines Today — 07 October","Maharashtra’s water crisis puts India’s economic powerhouse under pressure","Switzerland President meets Dr Jitendra","India summons Pak envoy over continued facilitation of illegal cross-border infiltration"];
-        target.innerHTML='<div class="learning-meta"><span class="learning-pill">DAILY CURRENT AFFAIRS</span><span>07 October 2026</span></div><div class="learning-grid">'+items.map(function(x){return '<article class="learning-card"><h4>'+esc2(x)+'</h4><p>'+esc2(x)+'</p></article>'}).join("")+'</div>';
+      if(kind==="gk"||kind==="current"){
+        target.innerHTML='<div class="empty">Live learning content could not be loaded. Please refresh this section to retry.</div>';
       }else if(kind==="bodmas"){
         var questions=[["8 + 4 × 3",20],["(6 + 4) × 2",20],["18 ÷ 3 + 5",11],["12 + 6 × 2 - 4",20],["(15 - 3) × 2",24]];
         target.innerHTML='<div class="learning-meta"><span class="learning-pill">BODMAS PRACTICE</span><span>Practice</span></div><div class="learning-grid">'+questions.map(function(q,i){return '<div class="learning-card"><h4>Q'+(i+1)+'. Solve: '+q[0]+'</h4><input class="practice-input" inputmode="numeric" placeholder="Enter answer"><button type="button" class="practice-btn">Check Answer</button><div class="practice-result" hidden></div></div>'}).join("")+'</div>';
@@ -1330,7 +1326,41 @@ function learningFetch(path){
 }
 function renderLearningError(body,label){body.innerHTML='<div class="learning-card"><h4>'+learningEsc(label)+'</h4><p>Content is temporarily unavailable. Please refresh and try again.</p><button class="practice-btn" type="button" onclick="return window.__tasviaReloadLearning();">Retry</button></div>'}
 window.__tasviaReloadLearning=function(){var b=document.getElementById("tasviaSectionContent"),k=b?b.getAttribute("data-learning"):"";if(k&&b&&window.__tasviaLoadLearning)window.__tasviaLoadLearning(k,b);return false};
-function renderGK(body,data){var qs=Array.isArray(data.questions)?data.questions:[],h='<div class="learning-meta"><span class="learning-pill">STATIC GK</span><span>Evergreen facts · 5 categories</span></div>',groups={},order=["Indian General Knowledge","World GK","Science GK","Mathematics GK","Competitive Exam GK"];qs.slice(0,25).forEach(function(x){var c=String(x.category||"General Knowledge");if(!groups[c])groups[c]=[];groups[c].push(x)});var n=0;order.concat(Object.keys(groups).filter(function(c){return order.indexOf(c)<0})).forEach(function(c){if(!groups[c]||!groups[c].length)return;h+='<section class="learning-gk-category"><h3 style="margin:14px 0 8px;color:var(--board);font-size:1.05rem">📘 '+learningEsc(c)+'</h3><div class="learning-grid">';groups[c].forEach(function(x){var i=n++;h+='<div class="learning-card"><h4>Q'+n+'. '+learningEsc(x.q)+'</h4><button class="practice-btn" type="button" data-gk-answer="'+i+'">Show Answer</button><div class="learning-answer" id="gk-answer-'+i+'" hidden>'+learningEsc(x.a)+'</div></div>'});h+='</div></section>'});if(!n)h+='<div class="empty">Static GK questions will be available soon.</div>';body.innerHTML=h;body.querySelectorAll("[data-gk-answer]").forEach(function(btn){btn.addEventListener("click",function(){var a=body.querySelector("#gk-answer-"+btn.getAttribute("data-gk-answer"));if(a){a.hidden=!a.hidden;btn.textContent=a.hidden?"Show Answer":"Hide Answer"}})})}
+function renderGK(body,data){
+  var qs=Array.isArray(data.questions)?data.questions.slice(0,5):[];
+  var h='<style>.gk-options{display:grid;gap:7px;margin:10px 0}.gk-option{display:flex;align-items:flex-start;gap:9px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--chalk);font-size:14px}.gk-option-letter{flex:0 0 24px;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;background:var(--chip);font-weight:800;color:var(--board)}.gk-option.is-correct{border-color:#238653;background:#EAF7EF;color:#14532D}.gk-option.is-correct .gk-option-letter{background:#238653;color:#fff}</style><div class="learning-meta"><span class="learning-pill">DAILY GK · MCQ</span><span>'+learningEsc(data.date||'')+' · 5 questions</span></div>';
+  var groups={},order=[];
+  qs.forEach(function(x){var c=String(x.category||"General Knowledge");if(!groups[c]){groups[c]=[];order.push(c)}groups[c].push(x)});
+  var n=0;
+  order.forEach(function(c){
+    h+='<section class="learning-gk-category"><h3 style="margin:14px 0 8px;color:var(--board);font-size:1.05rem">📘 '+learningEsc(c)+'</h3><div class="learning-grid">';
+    groups[c].forEach(function(x){
+      var i=n++,options=Array.isArray(x.options)?x.options.slice(0,4):[];
+      var correct=-1;
+      options.forEach(function(opt,oi){if(String(opt).trim()===String(x.a||"").trim())correct=oi});
+      h+='<div class="learning-card"><h4>Q'+n+'. '+learningEsc(x.q)+'</h4>';
+      if(options.length===4){
+        h+='<div class="gk-options">'+options.map(function(opt,oi){return '<div class="gk-option" data-gk-q="'+i+'" data-gk-opt="'+oi+'"><span class="gk-option-letter">'+String.fromCharCode(65+oi)+'</span><span>'+learningEsc(opt)+'</span></div>'}).join('')+'</div>';
+      }
+      h+='<button class="practice-btn" type="button" data-gk-answer="'+i+'" data-correct="'+correct+'">Show Answer</button><div class="learning-answer" id="gk-answer-'+i+'" hidden>'+learningEsc(x.a)+'</div></div>';
+    });
+    h+='</div></section>';
+  });
+  if(!n)h+='<div class="empty">Today’s GK questions are being updated. Please try again shortly.</div>';
+  body.innerHTML=h;
+  body.querySelectorAll("[data-gk-answer]").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var i=btn.getAttribute("data-gk-answer"),a=body.querySelector("#gk-answer-"+i),revealed=btn.getAttribute("data-revealed")==="1";
+      if(!a)return;
+      a.hidden=revealed;
+      btn.setAttribute("data-revealed",revealed?"0":"1");
+      btn.textContent=revealed?"Show Answer":"Hide Answer";
+      var correct=Number(btn.getAttribute("data-correct"));
+      body.querySelectorAll('[data-gk-q="'+i+'"]').forEach(function(opt){opt.classList.remove("is-correct")});
+      if(!revealed&&correct>=0){var right=body.querySelector('[data-gk-q="'+i+'"][data-gk-opt="'+correct+'"]');if(right)right.classList.add("is-correct")}
+    });
+  });
+}
 function learningUrl(v){
   var u=String(v||"").trim();
   return /^https?:\/\//i.test(u)?u:"";
@@ -1486,7 +1516,7 @@ window.__tasviaLoadLearning=function(kind,body){if(!body)return;body.setAttribut
       }
       renderGK(body,d);
     }else{var caDate=String(d&&d.date||"").trim();var istToday=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Kolkata",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());if(caDate!==istToday){body.innerHTML='<div class="empty">Today’s Current Affairs are being updated. Please try again shortly.</div>';return;}renderCurrent(body,d)}
-  }catch(err){console.error("TASVIA learning render",err);body.innerHTML='<div class="empty">Learning content is temporarily unavailable. Please check your connection and retry.</div>'}}learningFetch(path+"?v=20261016-learning-v90&ts="+Date.now()).then(showLearning).catch(function(e){console.warn("TASVIA learning fetch",e);body.innerHTML='<div class="empty">Learning content could not be refreshed. Please check your connection and try again.</div>'});};
+  }catch(err){console.error("TASVIA learning render",err);body.innerHTML='<div class="empty">Learning content is temporarily unavailable. Please check your connection and retry.</div>'}}learningFetch(path+"?v=20261017-learning-v91&ts="+Date.now()).then(showLearning).catch(function(e){console.warn("TASVIA learning fetch",e);body.innerHTML='<div class="empty">Learning content could not be refreshed. Please check your connection and try again.</div>'});};
 // Learning sections are loaded directly by the active parent-section overlay.
 })();
 </script>

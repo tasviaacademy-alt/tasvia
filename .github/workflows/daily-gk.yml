@@ -9,6 +9,8 @@ on:
   push:
     paths:
       - "scripts/update_daily_gk.py"
+      - "gk-question-bank.json"
+      - "static-gk-extra.json"
       - ".github/workflows/daily-gk.yml"
 
 permissions:
@@ -38,11 +40,24 @@ jobs:
           if any(not qid for qid in ids) or len(set(ids)) != 5:
               raise SystemExit("Today's GK set has missing or duplicate question IDs.")
 
+          for number, item in enumerate(questions, start=1):
+              options = item.get("options")
+              if not isinstance(options, list) or len(options) != 4:
+                  raise SystemExit(f"Question {number} must have exactly four A-D options.")
+              normalized = [" ".join(str(value).casefold().split()) for value in options]
+              if len(set(normalized)) != 4:
+                  raise SystemExit(f"Question {number} has duplicate options.")
+              if " ".join(str(item.get("a", "")).casefold().split()) not in set(normalized):
+                  raise SystemExit(f"Question {number} does not include its correct answer among the options.")
+
           date = daily.get("date")
           archive = Path("daily-gk-history") / f"{date}.json"
           if not archive.exists():
               raise SystemExit(f"Missing GK archive for {date}")
-          print(f"Validated 5 unique GK questions for {date}.")
+          archived = json.loads(archive.read_text(encoding="utf-8"))
+          if archived != daily:
+              raise SystemExit("Today's GK file and its history archive do not match.")
+          print(f"Validated 5 unique A-D GK questions for {date}.")
           PY
 
       - name: Commit changes

@@ -6,223 +6,445 @@
       "id": "static-india-capital",
       "category": "Indian General Knowledge",
       "q": "What is the capital of India?",
-      "a": "New Delhi."
+      "a": "New Delhi.",
+      "options": [
+        "New Delhi.",
+        "Mumbai",
+        "Kolkata",
+        "Chennai"
+      ]
     },
     {
       "id": "static-india-constitution",
       "category": "Indian Polity",
       "q": "When did the Constitution of India come into effect?",
-      "a": "26 January 1950."
+      "a": "26 January 1950.",
+      "options": [
+        "26 January 1950.",
+        "15 August 1947.",
+        "26 November 1949.",
+        "2 October 1950."
+      ]
     },
     {
       "id": "static-india-independence",
       "category": "Indian History",
       "q": "On which date did India become independent?",
-      "a": "15 August 1947."
+      "a": "15 August 1947.",
+      "options": [
+        "15 August 1947.",
+        "26 January 1950.",
+        "15 August 1948.",
+        "2 October 1947."
+      ]
     },
     {
       "id": "static-national-animal",
       "category": "National Symbols",
       "q": "What is the national animal of India?",
-      "a": "The Bengal tiger."
+      "a": "The Bengal tiger.",
+      "options": [
+        "The Bengal tiger.",
+        "The Asiatic lion.",
+        "The Indian elephant.",
+        "The snow leopard."
+      ]
     },
     {
       "id": "static-national-bird",
       "category": "National Symbols",
       "q": "What is the national bird of India?",
-      "a": "The Indian peacock."
+      "a": "The Indian peacock.",
+      "options": [
+        "The Indian peacock.",
+        "The Indian parrot.",
+        "The Himalayan monal.",
+        "The sarus crane."
+      ]
     },
     {
       "id": "static-national-flower",
       "category": "National Symbols",
       "q": "What is the national flower of India?",
-      "a": "The lotus."
+      "a": "The lotus.",
+      "options": [
+        "The lotus.",
+        "The rose.",
+        "The jasmine.",
+        "The sunflower."
+      ]
     },
     {
       "id": "static-national-anthem",
       "category": "Indian Culture",
       "q": "Who wrote the Indian national anthem, Jana Gana Mana?",
-      "a": "Rabindranath Tagore."
+      "a": "Rabindranath Tagore.",
+      "options": [
+        "Rabindranath Tagore.",
+        "Bankim Chandra Chattopadhyay.",
+        "Sarojini Naidu.",
+        "Subhas Chandra Bose."
+      ]
     },
     {
       "id": "static-space-isro",
       "category": "Science & Space",
       "q": "What is the name of India's national space agency?",
-      "a": "ISRO (Indian Space Research Organisation)."
+      "a": "ISRO (Indian Space Research Organisation).",
+      "options": [
+        "ISRO (Indian Space Research Organisation).",
+        "DRDO (Defence Research and Development Organisation).",
+        "CSIR (Council of Scientific and Industrial Research).",
+        "BARC (Bhabha Atomic Research Centre)."
+      ]
     },
     {
       "id": "static-solar-planet",
       "category": "Science",
       "q": "Which is the largest planet in our Solar System?",
-      "a": "Jupiter."
+      "a": "Jupiter.",
+      "options": [
+        "Jupiter.",
+        "Saturn.",
+        "Neptune.",
+        "Earth."
+      ]
     },
     {
       "id": "static-water-formula",
       "category": "Science",
       "q": "What is the chemical formula of water?",
-      "a": "H₂O."
+      "a": "H₂O.",
+      "options": [
+        "H₂O.",
+        "CO₂.",
+        "O₂.",
+        "NaCl."
+      ]
     },
     {
       "id": "static-photosynthesis",
       "category": "Science",
       "q": "What process do green plants use to make food using sunlight?",
-      "a": "Photosynthesis."
+      "a": "Photosynthesis.",
+      "options": [
+        "Photosynthesis.",
+        "Respiration.",
+        "Transpiration.",
+        "Fermentation."
+      ]
     },
     {
       "id": "static-human-heart",
       "category": "Human Biology",
       "q": "Which organ pumps blood around the human body?",
-      "a": "The heart."
+      "a": "The heart.",
+      "options": [
+        "The heart.",
+        "The lungs.",
+        "The liver.",
+        "The kidneys."
+      ]
     },
     {
       "id": "static-earth-satellite",
       "category": "Astronomy",
       "q": "What is Earth's natural satellite?",
-      "a": "The Moon."
+      "a": "The Moon.",
+      "options": [
+        "The Moon.",
+        "Mars.",
+        "Venus.",
+        "The Sun."
+      ]
     },
     {
       "id": "static-largest-ocean",
       "category": "World Geography",
       "q": "Which is the largest ocean on Earth?",
-      "a": "The Pacific Ocean."
+      "a": "The Pacific Ocean.",
+      "options": [
+        "The Pacific Ocean.",
+        "The Atlantic Ocean.",
+        "The Indian Ocean.",
+        "The Arctic Ocean."
+      ]
     },
     {
       "id": "static-mountain-everest",
       "category": "World Geography",
       "q": "What is the highest mountain above sea level?",
-      "a": "Mount Everest."
+      "a": "Mount Everest.",
+      "options": [
+        "Mount Everest.",
+        "K2.",
+        "Kangchenjunga.",
+        "Lhotse."
+      ]
     },
     {
       "id": "static-continents",
       "category": "World Geography",
       "q": "How many continents are there in the commonly taught seven-continent model?",
-      "a": "Seven."
+      "a": "Seven.",
+      "options": [
+        "Seven.",
+        "Five.",
+        "Six.",
+        "Eight."
+      ]
     },
     {
       "id": "static-indian-parliament",
       "category": "Indian Polity",
       "q": "What are the two houses of the Parliament of India?",
-      "a": "Lok Sabha and Rajya Sabha."
+      "a": "Lok Sabha and Rajya Sabha.",
+      "options": [
+        "Lok Sabha and Rajya Sabha.",
+        "Lok Sabha and Vidhan Sabha.",
+        "Rajya Sabha and the Supreme Court.",
+        "Lok Sabha and the Cabinet."
+      ]
     },
     {
       "id": "static-fundamental-rights",
       "category": "Indian Polity",
       "q": "Which part of the Indian Constitution lists Fundamental Rights?",
-      "a": "Part III."
+      "a": "Part III.",
+      "options": [
+        "Part III.",
+        "Part II.",
+        "Part IV.",
+        "Part V."
+      ]
     },
     {
       "id": "static-first-president",
       "category": "Indian History",
       "q": "Who was the first President of India?",
-      "a": "Dr. Rajendra Prasad."
+      "a": "Dr. Rajendra Prasad.",
+      "options": [
+        "Dr. Rajendra Prasad.",
+        "Dr. Sarvepalli Radhakrishnan.",
+        "Dr. Zakir Husain.",
+        "V. V. Giri."
+      ]
     },
     {
       "id": "static-first-pm",
       "category": "Indian History",
       "q": "Who was the first Prime Minister of independent India?",
-      "a": "Jawaharlal Nehru."
+      "a": "Jawaharlal Nehru.",
+      "options": [
+        "Jawaharlal Nehru.",
+        "Sardar Vallabhbhai Patel.",
+        "Lal Bahadur Shastri.",
+        "Dr. Rajendra Prasad."
+      ]
     },
     {
       "id": "static-dandi-march",
       "category": "Indian History",
       "q": "Who led the Dandi March in 1930?",
-      "a": "Mahatma Gandhi."
+      "a": "Mahatma Gandhi.",
+      "options": [
+        "Mahatma Gandhi.",
+        "Jawaharlal Nehru.",
+        "Sardar Vallabhbhai Patel.",
+        "Subhas Chandra Bose."
+      ]
     },
     {
       "id": "static-renewable-energy",
       "category": "Environment",
       "q": "Which energy source uses sunlight to generate electricity?",
-      "a": "Solar energy."
+      "a": "Solar energy.",
+      "options": [
+        "Solar energy.",
+        "Wind energy.",
+        "Hydropower.",
+        "Geothermal energy."
+      ]
     },
     {
       "id": "static-biodiversity",
       "category": "Environment",
       "q": "What does biodiversity mean?",
-      "a": "The variety of living organisms in an area or on Earth."
+      "a": "The variety of living organisms in an area or on Earth.",
+      "options": [
+        "The variety of living organisms in an area or on Earth.",
+        "The number of buildings in a city.",
+        "The amount of rainfall in a year.",
+        "The movement of water through the atmosphere."
+      ]
     },
     {
       "id": "static-ozone",
       "category": "Environment",
       "q": "Which atmospheric layer helps protect Earth from much of the Sun's harmful ultraviolet radiation?",
-      "a": "The ozone layer."
+      "a": "The ozone layer.",
+      "options": [
+        "The ozone layer.",
+        "The troposphere.",
+        "The mesosphere.",
+        "The thermosphere."
+      ]
     },
     {
       "id": "static-computer-cpu",
       "category": "Computer Basics",
       "q": "What does CPU stand for?",
-      "a": "Central Processing Unit."
+      "a": "Central Processing Unit.",
+      "options": [
+        "Central Processing Unit.",
+        "Graphics Processing Unit.",
+        "Random Access Memory.",
+        "Arithmetic Logic Unit."
+      ]
     },
     {
       "id": "static-computer-www",
       "category": "Computer Basics",
       "q": "What does WWW stand for?",
-      "a": "World Wide Web."
+      "a": "World Wide Web.",
+      "options": [
+        "World Wide Web.",
+        "Wireless World Web.",
+        "World Web Window.",
+        "Wide World Web."
+      ]
     },
     {
       "id": "static-maths-triangle",
       "category": "Mathematics",
       "q": "How many sides does a triangle have?",
-      "a": "Three."
+      "a": "Three.",
+      "options": [
+        "Three.",
+        "Four.",
+        "Five.",
+        "Six."
+      ]
     },
     {
       "id": "static-maths-right-angle",
       "category": "Mathematics",
       "q": "How many degrees are in a right angle?",
-      "a": "90 degrees."
+      "a": "90 degrees.",
+      "options": [
+        "90 degrees.",
+        "45 degrees.",
+        "180 degrees.",
+        "360 degrees."
+      ]
     },
     {
       "id": "static-maths-prime",
       "category": "Mathematics",
       "q": "What is the smallest prime number?",
-      "a": "2."
+      "a": "2.",
+      "options": [
+        "2.",
+        "1.",
+        "3.",
+        "5."
+      ]
     },
     {
       "id": "static-sports-olympics",
       "category": "Sports",
       "q": "How often are the Summer Olympic Games normally held?",
-      "a": "Every four years."
+      "a": "Every four years.",
+      "options": [
+        "Every four years.",
+        "Every two years.",
+        "Every three years.",
+        "Every five years."
+      ]
     },
     {
       "id": "static-sports-chess",
       "category": "Sports",
       "q": "How many squares are there on a standard chessboard?",
-      "a": "64."
+      "a": "64.",
+      "options": [
+        "64.",
+        "32.",
+        "48.",
+        "100."
+      ]
     },
     {
       "id": "static-literature-ramayana",
       "category": "Literature & Culture",
       "q": "Who is traditionally credited with composing the Sanskrit Ramayana?",
-      "a": "Valmiki."
+      "a": "Valmiki.",
+      "options": [
+        "Valmiki.",
+        "Vyasa.",
+        "Kalidasa.",
+        "Tulsidas."
+      ]
     },
     {
       "id": "static-literature-mahabharata",
       "category": "Literature & Culture",
       "q": "Who is traditionally credited with composing the Mahabharata?",
-      "a": "Vyasa."
+      "a": "Vyasa.",
+      "options": [
+        "Vyasa.",
+        "Valmiki.",
+        "Kalidasa.",
+        "Tulsidas."
+      ]
     },
     {
       "id": "static-economics-currency",
       "category": "Economics",
       "q": "What is the currency of India?",
-      "a": "The Indian rupee."
+      "a": "The Indian rupee.",
+      "options": [
+        "The Indian rupee.",
+        "The Nepalese rupee.",
+        "The Bangladeshi taka.",
+        "The Sri Lankan rupee."
+      ]
     },
     {
       "id": "static-india-largest-state",
       "category": "Indian Geography",
       "q": "Which is India's largest state by area?",
-      "a": "Rajasthan."
+      "a": "Rajasthan.",
+      "options": [
+        "Rajasthan.",
+        "Madhya Pradesh.",
+        "Maharashtra.",
+        "Uttar Pradesh."
+      ]
     },
     {
       "id": "static-india-smallest-state",
       "category": "Indian Geography",
       "q": "Which is India's smallest state by area?",
-      "a": "Goa."
+      "a": "Goa.",
+      "options": [
+        "Goa.",
+        "Sikkim.",
+        "Tripura.",
+        "Manipur."
+      ]
     },
     {
       "id": "static-telangana-capital",
       "category": "Indian Geography",
       "q": "What is the capital of Telangana?",
-      "a": "Hyderabad."
+      "a": "Hyderabad.",
+      "options": [
+        "Hyderabad.",
+        "Warangal.",
+        "Karimnagar.",
+        "Nizamabad."
+      ]
     }
   ]
 }

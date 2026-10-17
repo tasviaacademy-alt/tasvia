@@ -1,4 +1,5 @@
 {
+  "schemaVersion": 3,
   "date": "2026-10-17",
   "title": "Daily General Knowledge",
   "questions": [
@@ -6,31 +7,61 @@
       "id": "static-literature-ramayana",
       "category": "Literature & Culture",
       "q": "Who is traditionally credited with composing the Sanskrit Ramayana?",
-      "a": "Valmiki."
+      "a": "Valmiki.",
+      "options": [
+        "Valmiki.",
+        "Vyasa.",
+        "Kalidasa.",
+        "Tulsidas."
+      ]
     },
     {
-      "id": "static-solar-planet",
-      "category": "Science",
-      "q": "Which is the largest planet in our Solar System?",
-      "a": "Jupiter."
+      "id": "static-india-capital",
+      "category": "Indian General Knowledge",
+      "q": "What is the capital of India?",
+      "a": "New Delhi.",
+      "options": [
+        "New Delhi.",
+        "Mumbai",
+        "Kolkata",
+        "Chennai"
+      ]
     },
     {
-      "id": "static-sports-olympics",
-      "category": "Sports",
-      "q": "How often are the Summer Olympic Games normally held?",
-      "a": "Every four years."
+      "id": "otq-brain-teasers-2310",
+      "category": "brain-teasers",
+      "q": "There is a branch with 10 birds on it. I shot 2 of them and then 1 more. How many birds are left on the branch?",
+      "a": "0",
+      "options": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ]
     },
     {
       "id": "static-computer-www",
       "category": "Computer Basics",
       "q": "What does WWW stand for?",
-      "a": "World Wide Web."
+      "a": "World Wide Web.",
+      "options": [
+        "World Wide Web.",
+        "Wireless World Web.",
+        "World Web Window.",
+        "Wide World Web."
+      ]
     },
     {
-      "id": "static-continents",
-      "category": "World Geography",
-      "q": "How many continents are there in the commonly taught seven-continent model?",
-      "a": "Seven."
+      "id": "static-human-heart",
+      "category": "Human Biology",
+      "q": "Which organ pumps blood around the human body?",
+      "a": "The heart.",
+      "options": [
+        "The heart.",
+        "The lungs.",
+        "The liver.",
+        "The kidneys."
+      ]
     }
   ]
 }
