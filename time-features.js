@@ -170,7 +170,13 @@
     mountClock();
     patchFirestore();
     wrapParentRender();
-    if(!patched||typeof window.__tasviaParentLiveRender!=="function")window.setInterval(function(){patchFirestore();wrapParentRender();},1000);
+    if(!patched||typeof window.__tasviaStartParentLive==="function"){
+      var retryTimer=window.setInterval(function(){
+        patchFirestore();wrapParentRender();
+        if(patched&&typeof window.__tasviaStartParentLive!=="function"){window.clearInterval(retryTimer);return;}
+        if(patched&&window.__tasviaParentLiveRender&&window.__tasviaParentLiveRender.__tasviaTimestampWrapped){window.clearInterval(retryTimer);}
+      },1000);
+    }
     // Parent sync timestamps are updated by the live-render wrapper above; avoid a broad DOM observer.
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();
