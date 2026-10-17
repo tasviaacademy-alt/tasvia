@@ -23,7 +23,9 @@ def answer_key(value):
     return " ".join(str(value or "").casefold().strip().split())
 
 def valid_daily(data):
-    questions = data.get("questions", []) if isinstance(data, dict) else []
+    if not isinstance(data, dict) or data.get("schemaVersion") != 2:
+        return False
+    questions = data.get("questions", [])
     if len(questions) != 5:
         return False
     ids = [q.get("id") for q in questions]
@@ -68,6 +70,29 @@ option_dependent_answers = {
     "all of these", "all of the above", "both a and b", "both a and c",
     "none of these", "none of the above",
 }
+def option_group(category):
+    c = str(category or "").casefold()
+    if c in {"geography", "world geography", "indian geography"}:
+        return "geography"
+    if c == "animals":
+        return "animals"
+    if c in {"brain-teasers", "brain teasers"}:
+        return "logic"
+    if c in {"indian history", "indian culture", "literature & culture"}:
+        return "history-culture"
+    if c in {"indian general knowledge", "indian polity", "national symbols", "economics"}:
+        return "india"
+    if c in {"science", "science & space", "human biology", "astronomy", "environment", "computer basics", "mathematics"}:
+        return "science-tech"
+    if c == "sports":
+        return "sports"
+    return c
+
+CUSTOM_DISTRACTORS = {
+    "static-sports-olympics": ["Every two years", "Every three years", "Every five years"],
+    "static-sports-chess": ["32", "48", "100"],
+}
+
 def eligible(q):
     question = str(q.get("q", "")).strip()
     answer = str(q.get("a", "")).strip()
@@ -120,23 +145,33 @@ for q in bank:
         continue
     key = answer_key(q["a"])
     if key:
-        all_answers.setdefault(key, str(q["a"]).strip())
-        answer_pools.setdefault(q.get("category", "General Knowledge"), {})
-        answer_pools[q.get("category", "General Knowledge")].setdefault(key, str(q["a"]).strip())
+        value = str(q["a"]).strip()
+        all_answers.setdefault(key, value)
+        group = option_group(q.get("category"))
+        answer_pools.setdefault(group, {})
+        answer_pools[group].setdefault(key, value)
 
 questions = []
 for q in selected_raw:
     correct = str(q["a"]).strip()
     correct_key = answer_key(correct)
-    category_pool = answer_pools.get(q.get("category", "General Knowledge"), {})
-    distractor_pool = [value for key, value in category_pool.items() if key != correct_key]
-    if len(distractor_pool) < 3:
-        distractor_pool = [value for key, value in all_answers.items() if key != correct_key]
-    if len(distractor_pool) < 3:
-        raise RuntimeError(f"Not enough distinct answer options for question {q['id']}.")
-    rng.shuffle(distractor_pool)
-    options = [correct] + distractor_pool[:3]
-    rng.shuffle(options)
+    curated = CUSTOM_DISTRACTORS.get(q["id"])
+    provided = q.get("options")
+    if isinstance(provided, list) and len(provided) == 4 and correct_key in {answer_key(x) for x in provided}:
+        options = list(provided)
+    elif curated and len({answer_key(x) for x in curated + [correct]}) == 4:
+        options = [correct] + curated
+        rng.shuffle(options)
+    else:
+        pool = answer_pools.get(option_group(q.get("category")), {})
+        distractor_pool = [value for key, value in pool.items() if key != correct_key]
+        if len(distractor_pool) < 3:
+            distractor_pool = [value for key, value in all_answers.items() if key != correct_key]
+        if len(distractor_pool) < 3:
+            raise RuntimeError(f"Not enough distinct answer options for question {q['id']}.")
+        rng.shuffle(distractor_pool)
+        options = [correct] + distractor_pool[:3]
+        rng.shuffle(options)
     questions.append({
         "id": q["id"],
         "category": q.get("category", "General Knowledge"),
@@ -145,7 +180,7 @@ for q in selected_raw:
         "options": options,
     })
 
-data = {"date": date_str, "title": "Daily General Knowledge", "questions": questions}
+data = {"schemaVersion": 2, "date": date_str, "title": "Daily General Knowledge", "questions": questions}
 text = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
 DAILY_PATH.write_text(text, encoding="utf-8")
 TODAY_HISTORY.write_text(text, encoding="utf-8")
