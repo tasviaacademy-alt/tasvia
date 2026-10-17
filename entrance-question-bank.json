@@ -1525,6 +1525,514 @@
           "explanation": "Arun belongs to the cadet group, so the rule applies to him."
         }
       ]
+    },
+    {
+      "id": "JNVST-6-S2",
+      "title": "Navodaya JNVST · Class 6 · Practice Set 2",
+      "durationMinutes": 12,
+      "questions": [
+        {
+          "topic": "Mental Ability",
+          "q": "Next number: 3, 6, 12, 24, __.",
+          "options": [
+            "30",
+            "36",
+            "48",
+            "54"
+          ],
+          "answer": 2,
+          "explanation": "Each number doubles; 24 × 2 = 48."
+        },
+        {
+          "topic": "Mental Ability",
+          "q": "Bird is to nest as bee is to:",
+          "options": [
+            "Hive",
+            "Pond",
+            "Stable",
+            "Web"
+          ],
+          "answer": 0,
+          "explanation": "A hive is a bee's home."
+        },
+        {
+          "topic": "Mental Ability",
+          "q": "Yesterday was Monday. What day is tomorrow?",
+          "options": [
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Sunday"
+          ],
+          "answer": 1,
+          "explanation": "Today is Tuesday, so tomorrow is Wednesday."
+        },
+        {
+          "topic": "Mental Ability",
+          "q": "Odd one out:",
+          "options": [
+            "January",
+            "March",
+            "Sunday",
+            "July"
+          ],
+          "answer": 2,
+          "explanation": "Sunday is a day; the others are months."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "846 − 379 = ?",
+          "options": [
+            "457",
+            "467",
+            "477",
+            "487"
+          ],
+          "answer": 1,
+          "explanation": "846 − 379 = 467."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "3 metres cut into 6 equal pieces gives each piece:",
+          "options": [
+            "25 cm",
+            "30 cm",
+            "50 cm",
+            "60 cm"
+          ],
+          "answer": 2,
+          "explanation": "300 cm ÷ 6 = 50 cm."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "2/5 of 35 is:",
+          "options": [
+            "7",
+            "12",
+            "14",
+            "21"
+          ],
+          "answer": 2,
+          "explanation": "35 ÷ 5 × 2 = 14."
+        },
+        {
+          "topic": "Arithmetic",
+          "q": "A book costs ₹48. Cost of 5 books?",
+          "options": [
+            "₹200",
+            "₹220",
+            "₹240",
+            "₹250"
+          ],
+          "answer": 2,
+          "explanation": "48 × 5 = ₹240."
+        },
+        {
+          "topic": "Language",
+          "q": "Synonym of rapid:",
+          "options": [
+            "Slow",
+            "Quick",
+            "Weak",
+            "Late"
+          ],
+          "answer": 1,
+          "explanation": "Rapid means quick."
+        },
+        {
+          "topic": "Language",
+          "q": "Past tense of teach:",
+          "options": [
+            "Teached",
+            "Taught",
+            "Teaching",
+            "Teach"
+          ],
+          "answer": 1,
+          "explanation": "The past tense is taught."
+        }
+      ]
+    },
+    {
+      "id": "JNVST-9-S2",
+      "title": "Navodaya JNVST · Class 9 · Practice Set 2",
+      "durationMinutes": 12,
+      "questions": [
+        {
+          "topic": "Mathematics",
+          "q": "Solve 5x + 3 = 28.",
+          "options": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ],
+          "answer": 1,
+          "explanation": "5x = 25, so x = 5."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "Perimeter of a 12 cm by 7 cm rectangle:",
+          "options": [
+            "19 cm",
+            "38 cm",
+            "84 cm",
+            "42 cm"
+          ],
+          "answer": 1,
+          "explanation": "2 × (12 + 7) = 38 cm."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "(−3)² + 4 = ?",
+          "options": [
+            "−5",
+            "5",
+            "13",
+            "−13"
+          ],
+          "answer": 2,
+          "explanation": "9 + 4 = 13."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "Probability of heads on a fair coin:",
+          "options": [
+            "0",
+            "1/4",
+            "1/2",
+            "1"
+          ],
+          "answer": 2,
+          "explanation": "One of two equally likely outcomes is heads."
+        },
+        {
+          "topic": "Science",
+          "q": "Force opposing motion between surfaces:",
+          "options": [
+            "Gravity",
+            "Friction",
+            "Magnetism",
+            "Buoyancy"
+          ],
+          "answer": 1,
+          "explanation": "Friction opposes relative motion."
+        },
+        {
+          "topic": "Science",
+          "q": "Basic unit of life:",
+          "options": [
+            "Tissue",
+            "Organ",
+            "Cell",
+            "Organ system"
+          ],
+          "answer": 2,
+          "explanation": "The cell is life's basic structural and functional unit."
+        },
+        {
+          "topic": "Science",
+          "q": "Which is non-renewable?",
+          "options": [
+            "Wind",
+            "Sunlight",
+            "Coal",
+            "Tidal energy"
+          ],
+          "answer": 2,
+          "explanation": "Coal takes millions of years to form."
+        },
+        {
+          "topic": "English",
+          "q": "Correct reported speech for He said, “I am tired.”",
+          "options": [
+            "He said I am tired.",
+            "He said that he was tired.",
+            "He says he tired.",
+            "He told that tired."
+          ],
+          "answer": 1,
+          "explanation": "Am changes to was and I to he."
+        },
+        {
+          "topic": "English",
+          "q": "Correct spelling:",
+          "options": [
+            "Environment",
+            "Enviroment",
+            "Envirnoment",
+            "Environmant"
+          ],
+          "answer": 0,
+          "explanation": "Environment is the correct spelling."
+        },
+        {
+          "topic": "Reasoning",
+          "q": "All squares are rectangles. Which must be true?",
+          "options": [
+            "All rectangles are squares",
+            "Every square is a rectangle",
+            "No square is a rectangle",
+            "All rectangles are triangles"
+          ],
+          "answer": 1,
+          "explanation": "This restates the given relationship."
+        }
+      ]
+    },
+    {
+      "id": "AISSEE-6-S2",
+      "title": "Sainik School AISSEE · Class 6 · Practice Set 2",
+      "durationMinutes": 12,
+      "questions": [
+        {
+          "topic": "Mathematics",
+          "q": "3,456 + 2,789 = ?",
+          "options": [
+            "6,145",
+            "6,245",
+            "6,255",
+            "6,345"
+          ],
+          "answer": 1,
+          "explanation": "The sum is 6,245."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "Area of rectangle 14 cm × 5 cm:",
+          "options": [
+            "19 cm²",
+            "38 cm²",
+            "70 cm²",
+            "140 cm²"
+          ],
+          "answer": 2,
+          "explanation": "Area = 14 × 5 = 70 cm²."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "15% of 200 is:",
+          "options": [
+            "15",
+            "20",
+            "30",
+            "35"
+          ],
+          "answer": 2,
+          "explanation": "10% is 20 and 5% is 10; total 30."
+        },
+        {
+          "topic": "Intelligence",
+          "q": "Z, X, V, T, __.",
+          "options": [
+            "S",
+            "R",
+            "Q",
+            "P"
+          ],
+          "answer": 1,
+          "explanation": "Move backwards two letters each time: R."
+        },
+        {
+          "topic": "Intelligence",
+          "q": "Odd number out:",
+          "options": [
+            "9",
+            "16",
+            "25",
+            "30"
+          ],
+          "answer": 3,
+          "explanation": "9, 16 and 25 are squares; 30 is not."
+        },
+        {
+          "topic": "Language",
+          "q": "The book is ___ the table.",
+          "options": [
+            "on",
+            "at",
+            "by",
+            "from"
+          ],
+          "answer": 0,
+          "explanation": "On describes the book's position on the surface."
+        },
+        {
+          "topic": "Language",
+          "q": "Plural of tooth:",
+          "options": [
+            "Tooths",
+            "Teeth",
+            "Toothes",
+            "Tooth"
+          ],
+          "answer": 1,
+          "explanation": "The plural is teeth."
+        },
+        {
+          "topic": "General Knowledge",
+          "q": "Largest planet in the Solar System:",
+          "options": [
+            "Earth",
+            "Saturn",
+            "Jupiter",
+            "Mars"
+          ],
+          "answer": 2,
+          "explanation": "Jupiter is the largest planet."
+        },
+        {
+          "topic": "General Knowledge",
+          "q": "How many main colour bands are on India's national flag?",
+          "options": [
+            "Two",
+            "Three",
+            "Four",
+            "Five"
+          ],
+          "answer": 1,
+          "explanation": "The bands are saffron, white and green."
+        },
+        {
+          "topic": "General Science",
+          "q": "Vitamin made in skin with sunlight:",
+          "options": [
+            "Vitamin A",
+            "Vitamin B12",
+            "Vitamin C",
+            "Vitamin D"
+          ],
+          "answer": 3,
+          "explanation": "Sunlight enables the skin to synthesize vitamin D."
+        }
+      ]
+    },
+    {
+      "id": "AISSEE-9-S2",
+      "title": "Sainik School AISSEE · Class 9 · Practice Set 2",
+      "durationMinutes": 12,
+      "questions": [
+        {
+          "topic": "Mathematics",
+          "q": "Solve 3(x − 2) = 21.",
+          "options": [
+            "5",
+            "7",
+            "9",
+            "11"
+          ],
+          "answer": 2,
+          "explanation": "x − 2 = 7, so x = 9."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "Circumference of radius 7 cm (π = 22/7):",
+          "options": [
+            "22 cm",
+            "44 cm",
+            "49 cm",
+            "154 cm"
+          ],
+          "answer": 1,
+          "explanation": "2πr = 44 cm."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "2³ × 2² equals:",
+          "options": [
+            "2⁵",
+            "2⁶",
+            "4⁵",
+            "4⁶"
+          ],
+          "answer": 0,
+          "explanation": "Add exponents with the same base: 2⁵."
+        },
+        {
+          "topic": "Mathematics",
+          "q": "Triangle angles are 50° and 60°. Third angle:",
+          "options": [
+            "60°",
+            "70°",
+            "80°",
+            "90°"
+          ],
+          "answer": 1,
+          "explanation": "180° − 50° − 60° = 70°."
+        },
+        {
+          "topic": "General Science",
+          "q": "Instrument measuring atmospheric pressure:",
+          "options": [
+            "Thermometer",
+            "Barometer",
+            "Ammeter",
+            "Hygrometer"
+          ],
+          "answer": 1,
+          "explanation": "A barometer measures atmospheric pressure."
+        },
+        {
+          "topic": "General Science",
+          "q": "Water vapour loss from leaves:",
+          "options": [
+            "Respiration",
+            "Transpiration",
+            "Germination",
+            "Pollination"
+          ],
+          "answer": 1,
+          "explanation": "This process is transpiration."
+        },
+        {
+          "topic": "General Science",
+          "q": "Negatively charged particle:",
+          "options": [
+            "Proton",
+            "Neutron",
+            "Electron",
+            "Nucleus"
+          ],
+          "answer": 2,
+          "explanation": "Electrons carry negative charge."
+        },
+        {
+          "topic": "English",
+          "q": "I stayed home ___ it was raining.",
+          "options": [
+            "because",
+            "although",
+            "unless",
+            "or"
+          ],
+          "answer": 0,
+          "explanation": "Because introduces the reason."
+        },
+        {
+          "topic": "English",
+          "q": "Passive voice of “They will finish the work.”",
+          "options": [
+            "The work will be finished by them.",
+            "The work is finished by them.",
+            "The work was finishing.",
+            "They will be finished by work."
+          ],
+          "answer": 0,
+          "explanation": "Future passive: will be + past participle."
+        },
+        {
+          "topic": "Reasoning",
+          "q": "Next number: 1, 4, 9, 16, 25, __.",
+          "options": [
+            "30",
+            "32",
+            "36",
+            "49"
+          ],
+          "answer": 2,
+          "explanation": "Consecutive squares: next is 6² = 36."
+        }
+      ]
     }
   ]
 }
