@@ -4,63 +4,63 @@
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-india-largest-state",
-      "category": "Indian Geography",
-      "q": "Which is India's largest state by area?",
-      "a": "Rajasthan.",
+      "id": "daily-2026-10-18-1",
+      "category": "Geography",
+      "q": "Which is the largest ocean on Earth?",
+      "a": "Pacific Ocean",
       "options": [
-        "Rajasthan.",
-        "Madhya Pradesh.",
-        "Maharashtra.",
-        "Uttar Pradesh."
+        "Atlantic Ocean",
+        "Indian Ocean",
+        "Pacific Ocean",
+        "Arctic Ocean"
       ]
     },
     {
-      "id": "static-earth-satellite",
-      "category": "Astronomy",
-      "q": "What is Earth's natural satellite?",
-      "a": "The Moon.",
+      "id": "daily-2026-10-18-2",
+      "category": "Geography",
+      "q": "Which imaginary line divides Earth into Northern and Southern Hemispheres?",
+      "a": "Equator",
       "options": [
-        "The Moon.",
-        "Mars.",
-        "Venus.",
-        "The Sun."
+        "Prime Meridian",
+        "Equator",
+        "Tropic of Cancer",
+        "Arctic Circle"
       ]
     },
     {
-      "id": "static-photosynthesis",
-      "category": "Science",
-      "q": "What process do green plants use to make food using sunlight?",
-      "a": "Photosynthesis.",
+      "id": "daily-2026-10-18-3",
+      "category": "Literature & Culture",
+      "q": "Who is traditionally credited with composing the Sanskrit Ramayana?",
+      "a": "Valmiki",
       "options": [
-        "Photosynthesis.",
-        "Respiration.",
-        "Transpiration.",
-        "Fermentation."
+        "Vyasa",
+        "Kalidasa",
+        "Valmiki",
+        "Tulsidas"
       ]
     },
     {
-      "id": "static-maths-right-angle",
-      "category": "Mathematics",
-      "q": "How many degrees are in a right angle?",
-      "a": "90 degrees.",
+      "id": "daily-2026-10-18-4",
+      "category": "Literature & Culture",
+      "q": "Who wrote India's national anthem Jana Gana Mana?",
+      "a": "Rabindranath Tagore",
       "options": [
-        "90 degrees.",
-        "45 degrees.",
-        "180 degrees.",
-        "360 degrees."
+        "Bankim Chandra Chatterjee",
+        "Rabindranath Tagore",
+        "Sarojini Naidu",
+        "Subramania Bharati"
       ]
     },
     {
-      "id": "otq-geography-150",
-      "category": "geography",
-      "q": "In 1643, a Native American uprising killed this unauthorized Puritan preacher of a dissident church discussion group, and pioneer in Rhode Island and the Bronx.",
-      "a": "Anne Hutchinson",
+      "id": "daily-2026-10-18-5",
+      "category": "Civics",
+      "q": "When did the Constitution of India come into effect?",
+      "a": "26 January 1950",
       "options": [
-        "People of the mountains",
-        "Beirut",
-        "Anne Hutchinson",
-        "Okita Sōji"
+        "15 August 1947",
+        "26 January 1950",
+        "26 November 1949",
+        "2 October 1950"
       ]
     }
   ]
