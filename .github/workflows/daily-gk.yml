@@ -83,5 +83,6 @@ jobs:
             echo "No GK changes to commit."
           else
             git commit -m "chore: daily non-repeating GK update"
+            git pull --rebase origin main
             git push
           fi
