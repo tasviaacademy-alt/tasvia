@@ -2,9 +2,10 @@ name: Daily GK Update
 
 on:
   schedule:
-    # Run every day at 05:50 and 08:50 India Standard Time.
-    - cron: "20 0 * * *"
-    - cron: "20 3 * * *"
+    # Run shortly after midnight IST, with a retry 30 minutes later.
+    # GitHub Actions cron is in UTC: 18:35 UTC = 00:05 IST; 19:05 UTC = 00:35 IST.
+    - cron: "35 18 * * *"
+    - cron: "5 19 * * *"
   workflow_dispatch:
   push:
     paths:
