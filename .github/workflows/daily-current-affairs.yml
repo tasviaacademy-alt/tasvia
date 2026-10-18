@@ -7,6 +7,11 @@ on:
     - cron: "45 18 * * *"
     - cron: "15 19 * * *"
   workflow_dispatch:
+  push:
+    paths:
+      - "scripts/update_current_affairs.py"
+      - "current-affairs.json"
+      - ".github/workflows/daily-current-affairs.yml"
 
 permissions:
   contents: write
@@ -49,5 +54,6 @@ jobs:
             echo "No current-affairs changes to commit."
           else
             git commit -m "chore: daily non-repeating current affairs update"
+            git pull --rebase origin main
             git push
           fi
