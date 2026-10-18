@@ -2,8 +2,10 @@ name: Daily Current Affairs Update
 
 on:
   schedule:
-    - cron: "30 0 * * *"
-    - cron: "30 3 * * *"
+    # GitHub Actions cron is UTC: 18:45 UTC = 00:15 IST; 19:15 UTC = 00:45 IST.
+    # The second run is a retry in case the first update fails or feeds are late.
+    - cron: "45 18 * * *"
+    - cron: "15 19 * * *"
   workflow_dispatch:
 
 permissions:
