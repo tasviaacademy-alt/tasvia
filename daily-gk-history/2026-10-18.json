@@ -52,15 +52,15 @@
       ]
     },
     {
-      "id": "daily-20261018-chemical-symbol-sodium",
-      "category": "Science & Chemistry",
-      "q": "What is the chemical symbol for sodium?",
-      "a": "Na",
+      "id": "otq-geography-150",
+      "category": "geography",
+      "q": "In 1643, a Native American uprising killed this unauthorized Puritan preacher of a dissident church discussion group, and pioneer in Rhode Island and the Bronx.",
+      "a": "Anne Hutchinson",
       "options": [
-        "Na",
-        "S",
-        "So",
-        "N"
+        "People of the mountains",
+        "Beirut",
+        "Anne Hutchinson",
+        "Okita Sōji"
       ]
     }
   ]
