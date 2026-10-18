@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-10-17",
+  "date": "2026-10-18",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-literature-ramayana",
-      "category": "Literature & Culture",
-      "q": "Who is traditionally credited with composing the Sanskrit Ramayana?",
-      "a": "Valmiki.",
+      "id": "static-india-largest-state",
+      "category": "Indian Geography",
+      "q": "Which is India's largest state by area?",
+      "a": "Rajasthan.",
       "options": [
-        "Valmiki.",
-        "Vyasa.",
-        "Kalidasa.",
-        "Tulsidas."
+        "Rajasthan.",
+        "Madhya Pradesh.",
+        "Maharashtra.",
+        "Uttar Pradesh."
       ]
     },
     {
-      "id": "static-india-capital",
-      "category": "Indian General Knowledge",
-      "q": "What is the capital of India?",
-      "a": "New Delhi.",
+      "id": "static-earth-satellite",
+      "category": "Astronomy",
+      "q": "What is Earth's natural satellite?",
+      "a": "The Moon.",
       "options": [
-        "New Delhi.",
-        "Mumbai",
-        "Kolkata",
-        "Chennai"
+        "The Moon.",
+        "Mars.",
+        "Venus.",
+        "The Sun."
       ]
     },
     {
-      "id": "otq-brain-teasers-2310",
-      "category": "brain-teasers",
-      "q": "There is a branch with 10 birds on it. I shot 2 of them and then 1 more. How many birds are left on the branch?",
-      "a": "0",
+      "id": "static-photosynthesis",
+      "category": "Science",
+      "q": "What process do green plants use to make food using sunlight?",
+      "a": "Photosynthesis.",
       "options": [
-        "0",
-        "1",
-        "2",
-        "3"
+        "Photosynthesis.",
+        "Respiration.",
+        "Transpiration.",
+        "Fermentation."
       ]
     },
     {
-      "id": "static-computer-www",
-      "category": "Computer Basics",
-      "q": "What does WWW stand for?",
-      "a": "World Wide Web.",
+      "id": "static-maths-right-angle",
+      "category": "Mathematics",
+      "q": "How many degrees are in a right angle?",
+      "a": "90 degrees.",
       "options": [
-        "World Wide Web.",
-        "Wireless World Web.",
-        "World Web Window.",
-        "Wide World Web."
+        "90 degrees.",
+        "45 degrees.",
+        "180 degrees.",
+        "360 degrees."
       ]
     },
     {
-      "id": "static-human-heart",
-      "category": "Human Biology",
-      "q": "Which organ pumps blood around the human body?",
-      "a": "The heart.",
+      "id": "otq-geography-150",
+      "category": "geography",
+      "q": "In 1643, a Native American uprising killed this unauthorized Puritan preacher of a dissident church discussion group, and pioneer in Rhode Island and the Bronx.",
+      "a": "Anne Hutchinson",
       "options": [
-        "The heart.",
-        "The lungs.",
-        "The liver.",
-        "The kidneys."
+        "People of the mountains",
+        "Beirut",
+        "Anne Hutchinson",
+        "Okita Sōji"
       ]
     }
   ]
