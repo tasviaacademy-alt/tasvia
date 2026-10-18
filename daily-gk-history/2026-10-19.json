@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-10-19",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "otq-animals-1804",
+      "category": "animals",
+      "q": "What distinctive feature is characteristic of the crocodile species called gharial, or Indian gavial?",
+      "a": "Narrow snout",
+      "options": [
+        "Snake with hood",
+        "Prairie Wolf",
+        "Snakes will attack almost always they sense the presence of a human.",
+        "Narrow snout"
+      ]
+    },
+    {
+      "id": "static-sports-olympics",
+      "category": "Sports",
+      "q": "How often are the Summer Olympic Games normally held?",
+      "a": "Every four years.",
+      "options": [
+        "Every four years.",
+        "Every two years.",
+        "Every three years.",
+        "Every five years."
+      ]
+    },
+    {
+      "id": "otq-brain-teasers-2245",
+      "category": "brain-teasers",
+      "q": "Nine passengers carried with them enough food for five days. Several other passengers joined the first group and they all shared the same food, which was now enough for three days. How many passengers joined the first group?",
+      "a": "6",
+      "options": [
+        "to frolic and leap playfully",
+        "7.5",
+        "6",
+        "3 kg"
+      ]
+    },
+    {
+      "id": "static-solar-planet",
+      "category": "Science",
+      "q": "Which is the largest planet in our Solar System?",
+      "a": "Jupiter.",
+      "options": [
+        "Jupiter.",
+        "Saturn.",
+        "Neptune.",
+        "Earth."
+      ]
+    },
+    {
+      "id": "otq-geography-804",
+      "category": "geography",
+      "q": "What does the word Colorado mean?",
+      "a": "Colored Red",
+      "options": [
+        "2002",
+        "Colored Red",
+        "San Marino",
+        "Ireland"
+      ]
+    }
+  ]
+}

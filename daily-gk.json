@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-10-18",
+  "date": "2026-10-19",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "daily-2026-10-18-1",
-      "category": "Geography",
-      "q": "Which is the largest ocean on Earth?",
-      "a": "Pacific Ocean",
+      "id": "otq-animals-1804",
+      "category": "animals",
+      "q": "What distinctive feature is characteristic of the crocodile species called gharial, or Indian gavial?",
+      "a": "Narrow snout",
       "options": [
-        "Atlantic Ocean",
-        "Indian Ocean",
-        "Pacific Ocean",
-        "Arctic Ocean"
+        "Snake with hood",
+        "Prairie Wolf",
+        "Snakes will attack almost always they sense the presence of a human.",
+        "Narrow snout"
       ]
     },
     {
-      "id": "daily-2026-10-18-2",
-      "category": "Geography",
-      "q": "Which imaginary line divides Earth into Northern and Southern Hemispheres?",
-      "a": "Equator",
+      "id": "static-sports-olympics",
+      "category": "Sports",
+      "q": "How often are the Summer Olympic Games normally held?",
+      "a": "Every four years.",
       "options": [
-        "Prime Meridian",
-        "Equator",
-        "Tropic of Cancer",
-        "Arctic Circle"
+        "Every four years.",
+        "Every two years.",
+        "Every three years.",
+        "Every five years."
       ]
     },
     {
-      "id": "daily-2026-10-18-3",
-      "category": "Literature & Culture",
-      "q": "Who is traditionally credited with composing the Sanskrit Ramayana?",
-      "a": "Valmiki",
+      "id": "otq-brain-teasers-2245",
+      "category": "brain-teasers",
+      "q": "Nine passengers carried with them enough food for five days. Several other passengers joined the first group and they all shared the same food, which was now enough for three days. How many passengers joined the first group?",
+      "a": "6",
       "options": [
-        "Vyasa",
-        "Kalidasa",
-        "Valmiki",
-        "Tulsidas"
+        "to frolic and leap playfully",
+        "7.5",
+        "6",
+        "3 kg"
       ]
     },
     {
-      "id": "daily-2026-10-18-4",
-      "category": "Literature & Culture",
-      "q": "Who wrote India's national anthem Jana Gana Mana?",
-      "a": "Rabindranath Tagore",
+      "id": "static-solar-planet",
+      "category": "Science",
+      "q": "Which is the largest planet in our Solar System?",
+      "a": "Jupiter.",
       "options": [
-        "Bankim Chandra Chatterjee",
-        "Rabindranath Tagore",
-        "Sarojini Naidu",
-        "Subramania Bharati"
+        "Jupiter.",
+        "Saturn.",
+        "Neptune.",
+        "Earth."
       ]
     },
     {
-      "id": "daily-2026-10-18-5",
-      "category": "Civics",
-      "q": "When did the Constitution of India come into effect?",
-      "a": "26 January 1950",
+      "id": "otq-geography-804",
+      "category": "geography",
+      "q": "What does the word Colorado mean?",
+      "a": "Colored Red",
       "options": [
-        "15 August 1947",
-        "26 January 1950",
-        "26 November 1949",
-        "2 October 1950"
+        "2002",
+        "Colored Red",
+        "San Marino",
+        "Ireland"
       ]
     }
   ]
