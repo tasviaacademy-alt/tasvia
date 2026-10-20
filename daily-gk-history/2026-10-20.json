@@ -4,18 +4,6 @@
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "otq-animals-1115",
-      "category": "animals",
-      "q": "Butterflies need the warmth of the sun in order to fly. They cannot possibly fly if the temperature is below this.",
-      "a": "50 F (10 C)",
-      "options": [
-        "50 F (10 C)",
-        "The female lays 1 egg which she incubates in her pouch.",
-        "Pride",
-        "Australia"
-      ]
-    },
-    {
       "id": "static-telangana-capital",
       "category": "Indian Geography",
       "q": "What is the capital of Telangana?",
@@ -28,15 +16,15 @@
       ]
     },
     {
-      "id": "otq-geography-766",
-      "category": "geography",
-      "q": "What is the currency of Russia?",
-      "a": "ruble",
+      "id": "static-water-formula",
+      "category": "Science",
+      "q": "What is the chemical formula of water?",
+      "a": "H₂O.",
       "options": [
-        "Football (soccer)",
-        "Corazon Aquino",
-        "The Song of the Italians",
-        "ruble"
+        "H₂O.",
+        "CO₂.",
+        "O₂.",
+        "NaCl."
       ]
     },
     {
@@ -52,15 +40,27 @@
       ]
     },
     {
-      "id": "otq-brain-teasers-2266",
-      "category": "brain-teasers",
-      "q": "One of these pairs of numbers has this strange characteristic - when you subtract one of them from the other you get a number equal to what you will get if you divide one by the other. Can you spot it?",
-      "a": "25/4 and 5/4",
+      "id": "static-maths-prime",
+      "category": "Mathematics",
+      "q": "What is the smallest prime number?",
+      "a": "2.",
       "options": [
-        "The boy",
-        "25/4 and 5/4",
-        "Xylene",
-        "12 rungs"
+        "2.",
+        "1.",
+        "3.",
+        "5."
+      ]
+    },
+    {
+      "id": "static-national-bird",
+      "category": "National Symbols",
+      "q": "What is the national bird of India?",
+      "a": "The Indian peacock.",
+      "options": [
+        "The Indian peacock.",
+        "The Indian parrot.",
+        "The Himalayan monal.",
+        "The sarus crane."
       ]
     }
   ]
