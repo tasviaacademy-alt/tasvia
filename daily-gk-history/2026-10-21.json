@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-10-21",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-india-smallest-state",
+      "category": "Indian Geography",
+      "q": "Which is India's smallest state by area?",
+      "a": "Goa.",
+      "options": [
+        "Goa.",
+        "Sikkim.",
+        "Tripura.",
+        "Manipur."
+      ]
+    },
+    {
+      "id": "static-first-president",
+      "category": "Indian History",
+      "q": "Who was the first President of India?",
+      "a": "Dr. Rajendra Prasad.",
+      "options": [
+        "Dr. Rajendra Prasad.",
+        "Dr. Sarvepalli Radhakrishnan.",
+        "Dr. Zakir Husain.",
+        "V. V. Giri."
+      ]
+    },
+    {
+      "id": "otq-brain-teasers-2360",
+      "category": "brain-teasers",
+      "q": "You are on a ship and over the side hangs a rope ladder with one foot rungs. The tide rises a one foot per hour. At the end of five hours, how much of the ladder will remain above the water assuming that 12 rungs were above the water when the tide began to rise?",
+      "a": "12 rungs",
+      "options": [
+        "Malaysia",
+        "12 rungs",
+        "a petty fault",
+        "7.5"
+      ]
+    },
+    {
+      "id": "static-mountain-everest",
+      "category": "World Geography",
+      "q": "What is the highest mountain above sea level?",
+      "a": "Mount Everest.",
+      "options": [
+        "Mount Everest.",
+        "K2.",
+        "Kangchenjunga.",
+        "Lhotse."
+      ]
+    },
+    {
+      "id": "otq-geography-751",
+      "category": "geography",
+      "q": "What is the capital and largest city of Lebanon?",
+      "a": "Beirut",
+      "options": [
+        "Corn State",
+        "The Nile",
+        "Beirut",
+        "Mount St. Helens"
+      ]
+    }
+  ]
+}

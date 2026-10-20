@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-10-20",
+  "date": "2026-10-21",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "daily-2026-10-20-1",
-      "category": "Indian General Knowledge",
-      "q": "Which is the national animal of India?",
-      "a": "Bengal tiger",
+      "id": "static-india-smallest-state",
+      "category": "Indian Geography",
+      "q": "Which is India's smallest state by area?",
+      "a": "Goa.",
       "options": [
-        "Lion",
-        "Bengal tiger",
-        "Elephant",
-        "Leopard"
+        "Goa.",
+        "Sikkim.",
+        "Tripura.",
+        "Manipur."
       ]
     },
     {
-      "id": "daily-2026-10-20-2",
-      "category": "Indian General Knowledge",
-      "q": "What is the national flower of India?",
-      "a": "Lotus",
+      "id": "static-first-president",
+      "category": "Indian History",
+      "q": "Who was the first President of India?",
+      "a": "Dr. Rajendra Prasad.",
       "options": [
-        "Rose",
-        "Lotus",
-        "Jasmine",
-        "Sunflower"
+        "Dr. Rajendra Prasad.",
+        "Dr. Sarvepalli Radhakrishnan.",
+        "Dr. Zakir Husain.",
+        "V. V. Giri."
       ]
     },
     {
-      "id": "daily-2026-10-20-3",
-      "category": "Indian General Knowledge",
-      "q": "Which is the largest Indian state by area?",
-      "a": "Rajasthan",
+      "id": "otq-brain-teasers-2360",
+      "category": "brain-teasers",
+      "q": "You are on a ship and over the side hangs a rope ladder with one foot rungs. The tide rises a one foot per hour. At the end of five hours, how much of the ladder will remain above the water assuming that 12 rungs were above the water when the tide began to rise?",
+      "a": "12 rungs",
       "options": [
-        "Maharashtra",
-        "Madhya Pradesh",
-        "Rajasthan",
-        "Uttar Pradesh"
+        "Malaysia",
+        "12 rungs",
+        "a petty fault",
+        "7.5"
       ]
     },
     {
-      "id": "daily-2026-10-20-4",
-      "category": "Indian General Knowledge",
-      "q": "Which river is often called the Ganga of the South?",
-      "a": "Godavari",
+      "id": "static-mountain-everest",
+      "category": "World Geography",
+      "q": "What is the highest mountain above sea level?",
+      "a": "Mount Everest.",
       "options": [
-        "Krishna",
-        "Godavari",
-        "Kaveri",
-        "Narmada"
+        "Mount Everest.",
+        "K2.",
+        "Kangchenjunga.",
+        "Lhotse."
       ]
     },
     {
-      "id": "daily-2026-10-20-5",
-      "category": "Science",
-      "q": "Which planet is known as the Red Planet?",
-      "a": "Mars",
+      "id": "otq-geography-751",
+      "category": "geography",
+      "q": "What is the capital and largest city of Lebanon?",
+      "a": "Beirut",
       "options": [
-        "Venus",
-        "Mars",
-        "Jupiter",
-        "Mercury"
+        "Corn State",
+        "The Nile",
+        "Beirut",
+        "Mount St. Helens"
       ]
     }
   ]
