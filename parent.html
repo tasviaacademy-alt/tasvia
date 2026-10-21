@@ -1082,6 +1082,50 @@ document.body.innerHTML=
     }
   }
     var actionBox=document.querySelector(".dash-actions");
+    /* Runtime-enforce compact 3-column grid after the dashboard is rebuilt. */
+    if(actionBox){
+      var compactGrid=function(){
+        if(!actionBox.isConnected)return;
+        if(window.matchMedia("(max-width: 560px)").matches){
+          actionBox.style.setProperty("display","grid","important");
+          actionBox.style.setProperty("grid-template-columns","repeat(3,minmax(0,1fr))","important");
+          actionBox.style.setProperty("grid-auto-flow","row","important");
+          actionBox.style.setProperty("gap","8px 6px","important");
+          actionBox.style.setProperty("width","100%","important");
+          actionBox.querySelectorAll(".action-detail").forEach(function(card){
+            if(card.classList.contains("complaint-suggestion-card")){card.style.setProperty("grid-column","1 / -1","important");return;}
+            card.style.setProperty("grid-column","auto","important");
+            card.style.setProperty("min-width","0","important");
+            card.style.setProperty("min-height","68px","important");
+            card.style.setProperty("height","auto","important");
+            card.style.setProperty("width","100%","important");
+          });
+          actionBox.querySelectorAll(".action-summary").forEach(function(el){
+            if(el.closest(".complaint-suggestion-card"))return;
+            el.style.setProperty("display","flex","important");
+            el.style.setProperty("flex-direction","column","important");
+            el.style.setProperty("align-items","center","important");
+            el.style.setProperty("justify-content","center","important");
+            el.style.setProperty("min-height","68px","important");
+            el.style.setProperty("height","auto","important");
+            el.style.setProperty("padding","5px 2px","important");
+            el.style.setProperty("gap","4px","important");
+            el.style.setProperty("font-size","9px","important");
+            el.style.setProperty("text-align","center","important");
+          });
+          actionBox.querySelectorAll(".action-icon").forEach(function(icon){
+            icon.style.setProperty("width","26px","important");
+            icon.style.setProperty("height","26px","important");
+            icon.style.setProperty("min-width","26px","important");
+            icon.style.setProperty("flex","0 0 26px","important");
+            icon.style.setProperty("font-size","16px","important");
+          });
+        }
+      };
+      compactGrid();
+      new MutationObserver(compactGrid).observe(actionBox,{childList:true,subtree:true});
+      window.addEventListener("resize",compactGrid,{passive:true});
+    }
     var dashHead=document.querySelector(".dash-head");
     var dashSummary=document.querySelector(".dash-summary");
     var sectionView=document.getElementById("sectionView");
