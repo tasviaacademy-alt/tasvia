@@ -647,58 +647,59 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
 @media(prefers-reduced-motion:reduce){.dash-actions .action-detail,.dash-actions .action-summary{transition:none!important}}
 </style>
 <script id="tasvia-force-three-column-runtime">
-/* Runtime enforcement: dashboard markup is inserted dynamically after initial page CSS. */
+/* Force the actual dashboard cards into a three-column mobile grid after dynamic render. */
 (function(){
-  function compactGrid(){
-    var grids=document.querySelectorAll('.dash-actions');
-    grids.forEach(function(grid){
-      if(window.matchMedia('(max-width: 700px)').matches){
-        grid.style.setProperty('display','grid','important');
-        grid.style.setProperty('grid-template-columns','repeat(3,minmax(0,1fr))','important');
-        grid.style.setProperty('grid-auto-flow','row','important');
-        grid.style.setProperty('width','100%','important');
-        grid.style.setProperty('gap','7px 5px','important');
-        grid.querySelectorAll('.action-detail').forEach(function(card){
-          if(card.classList.contains('complaint-suggestion-card')){
-            card.style.setProperty('grid-column','1 / -1','important');
-            return;
-          }
-          card.style.setProperty('grid-column','auto','important');
-          card.style.setProperty('width','100%','important');
-          card.style.setProperty('min-width','0','important');
-          card.style.setProperty('min-height','68px','important');
-          card.style.setProperty('height','auto','important');
-        });
-        grid.querySelectorAll('.action-summary').forEach(function(button){
-          if(button.closest('.complaint-suggestion-card')) return;
-          button.style.setProperty('display','flex','important');
-          button.style.setProperty('flex-direction','column','important');
-          button.style.setProperty('align-items','center','important');
-          button.style.setProperty('justify-content','center','important');
-          button.style.setProperty('min-width','0','important');
-          button.style.setProperty('min-height','68px','important');
-          button.style.setProperty('height','auto','important');
-          button.style.setProperty('padding','5px 2px','important');
-          button.style.setProperty('gap','4px','important');
-          button.style.setProperty('font-size','10px','important');
-          button.style.setProperty('line-height','1.15','important');
-          button.style.setProperty('text-align','center','important');
-        });
-        grid.querySelectorAll('.action-icon').forEach(function(icon){
-          icon.style.setProperty('width','26px','important');
-          icon.style.setProperty('height','26px','important');
-          icon.style.setProperty('min-width','26px','important');
-          icon.style.setProperty('flex','0 0 26px','important');
-          icon.style.setProperty('font-size','16px','important');
-        });
-      }
-    });
-  }
-  var queued=false;
-  function schedule(){if(queued)return;queued=true;requestAnimationFrame(function(){queued=false;compactGrid();});}
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',schedule);else schedule();
-  new MutationObserver(schedule).observe(document.documentElement,{childList:true,subtree:true});
-  window.addEventListener('resize',schedule,{passive:true});
+ function apply(){
+   if(!window.matchMedia('(max-width: 700px)').matches)return;
+   document.querySelectorAll('.dash-actions').forEach(function(grid){
+     grid.style.setProperty('display','grid','important');
+     grid.style.setProperty('grid-template-columns','repeat(3,minmax(0,1fr))','important');
+     grid.style.setProperty('grid-auto-flow','row','important');
+     grid.style.setProperty('align-items','stretch','important');
+     grid.style.setProperty('width','100%','important');
+     grid.style.setProperty('gap','7px 5px','important');
+     Array.from(grid.children).forEach(function(card){
+       if(!card.matches('.action-detail,.action-summary,.complaint-suggestion-card'))return;
+       card.style.setProperty('grid-column',card.classList.contains('complaint-suggestion-card')?'1 / -1':'auto','important');
+       card.style.setProperty('width','100%','important');
+       card.style.setProperty('min-width','0','important');
+       card.style.setProperty('min-height',card.classList.contains('complaint-suggestion-card')?'68px':'68px','important');
+       card.style.setProperty('height','auto','important');
+       card.style.setProperty('float','none','important');
+       card.style.setProperty('position','relative','important');
+       card.style.setProperty('margin','0','important');
+       card.style.setProperty('flex','initial','important');
+       card.style.setProperty('max-width','100%','important');
+     });
+     grid.querySelectorAll('.action-summary').forEach(function(btn){
+       if(btn.closest('.complaint-suggestion-card'))return;
+       btn.style.setProperty('display','flex','important');
+       btn.style.setProperty('flex-direction','column','important');
+       btn.style.setProperty('align-items','center','important');
+       btn.style.setProperty('justify-content','center','important');
+       btn.style.setProperty('padding','5px 2px','important');
+       btn.style.setProperty('gap','4px','important');
+       btn.style.setProperty('font-size','10px','important');
+       btn.style.setProperty('line-height','1.15','important');
+       btn.style.setProperty('text-align','center','important');
+       btn.style.setProperty('white-space','normal','important');
+     });
+     grid.querySelectorAll('.action-icon').forEach(function(icon){
+       icon.style.setProperty('width','26px','important');
+       icon.style.setProperty('height','26px','important');
+       icon.style.setProperty('min-width','26px','important');
+       icon.style.setProperty('flex','0 0 26px','important');
+       icon.style.setProperty('font-size','16px','important');
+     });
+   });
+ }
+ var queued=false;
+ function schedule(){if(queued)return;queued=true;requestAnimationFrame(function(){queued=false;apply();});}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',schedule);else schedule();
+ new MutationObserver(schedule).observe(document.documentElement,{subtree:true,childList:true});
+ window.addEventListener('resize',schedule);
+ window.addEventListener('orientationchange',schedule);
+ setTimeout(schedule,100);setTimeout(schedule,500);setTimeout(schedule,1500);
 })();
 </script>
 </head>
