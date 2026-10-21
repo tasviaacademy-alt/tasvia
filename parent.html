@@ -2172,5 +2172,118 @@ table td{border-color:#E8EDF4!important}
 
 
 
+
+<style id="tasvia-parent-dashboard-polish-v1">
+/* TASVIA parent dashboard: refined hierarchy, touch targets and responsive cards */
+.dash-head{
+  background:radial-gradient(circle at 92% 4%,rgba(242,172,16,.18),transparent 28%),
+             linear-gradient(135deg,#071A3D 0%,#0B2455 55%,#1C427F 100%)!important;
+}
+.dash-head:after{border:1px solid rgba(242,172,16,.18)}
+.dash-head-inner{max-width:900px!important;gap:clamp(14px,3vw,24px)!important}
+.dash-photo{box-shadow:0 0 0 3px rgba(242,172,16,.9),0 12px 28px rgba(0,0,0,.22)!important}
+.dash-name{letter-spacing:-.025em;text-wrap:balance}
+.dash-class{color:rgba(255,255,255,.84)!important}
+.dash-main{max-width:900px!important}
+.dash-summary{
+  border:1px solid rgba(242,172,16,.22)!important;
+  box-shadow:0 16px 38px rgba(11,36,85,.18)!important;
+}
+.dash-title{display:flex;align-items:center;gap:8px;letter-spacing:-.015em}
+.dash-stats{gap:10px!important}
+.dash-stat{
+  border:1px solid rgba(255,255,255,.13)!important;
+  background:rgba(255,255,255,.075)!important;
+  border-radius:15px!important;
+  min-width:0;
+  transition:background .18s ease,transform .18s ease;
+}
+.dash-stat:hover{background:rgba(255,255,255,.12)!important;transform:translateY(-1px)}
+.dash-stat b,.dash-stat .notpaid{font-variant-numeric:tabular-nums}
+.notification-center{
+  border-color:#DCE4F0!important;
+  box-shadow:0 8px 24px rgba(11,36,85,.055)!important;
+}
+.dash-actions{
+  gap:12px!important;
+  align-items:stretch!important;
+}
+.dash-actions .action-detail{
+  min-width:0!important;
+  border:1px solid #E0E6EF!important;
+  border-radius:18px!important;
+  background:linear-gradient(150deg,#FFFFFF 0%,#F8FAFD 100%)!important;
+  box-shadow:0 4px 14px rgba(11,36,85,.045)!important;
+  transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease!important;
+}
+.dash-actions .action-detail:hover{
+  border-color:#D6B75E!important;
+  box-shadow:0 9px 22px rgba(11,36,85,.09)!important;
+  transform:translateY(-2px);
+}
+.dash-actions .action-summary{
+  min-height:112px!important;
+  height:100%!important;
+  padding:16px 10px 13px!important;
+  gap:10px!important;
+  font-size:14px!important;
+  overflow-wrap:anywhere;
+}
+.dash-actions .action-icon{
+  width:52px!important;height:52px!important;min-width:52px!important;
+  border-radius:15px!important;font-size:26px!important;
+  background:linear-gradient(145deg,#FFFFFF,#EEF2F8)!important;
+  border-color:#E2E8F0!important;
+  box-shadow:0 4px 10px rgba(11,36,85,.07)!important;
+}
+.dash-actions .action-summary:after{font-size:22px!important;top:7px!important;right:9px!important;color:#B18A24!important}
+.dash-actions .action-summary:focus-visible{
+  outline:3px solid #D9A923!important;outline-offset:-4px!important;border-radius:16px;
+}
+.dash-actions .notice-board-action{
+  border-color:rgba(214,183,94,.65)!important;
+  background:linear-gradient(145deg,#FFFDF6,#FFFFFF 75%)!important;
+}
+.dash-actions .notice-board-action .action-icon{
+  background:linear-gradient(145deg,#FFF3C7,#F8E5A2)!important;border-color:#EBD28B!important;
+}
+.dash-actions .tasvia-unread{font-size:10px!important;line-height:1.2}
+.section-view{
+  border-radius:20px!important;
+  box-shadow:0 18px 48px rgba(11,36,85,.15)!important;
+}
+.section-view-header{overflow-wrap:anywhere}
+@media(min-width:900px){
+  .dash-actions{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+@media(max-width:560px){
+  .dash-head{padding:22px 15px 32px!important}
+  .dash-head-inner{gap:14px!important}
+  .dash-photo{width:76px!important;height:92px!important;border-radius:16px!important}
+  .dash-name{font-size:clamp(23px,6.5vw,30px)!important;line-height:1.08!important}
+  .dash-class{font-size:12px!important;line-height:1.4!important}
+  .dash-main{padding-left:12px!important;padding-right:12px!important;padding-bottom:30px!important}
+  .dash-summary{padding:14px!important;border-radius:18px!important}
+  .dash-stats{gap:6px!important}
+  .dash-stat{padding:9px 4px!important;border-radius:12px!important}
+  .dash-actions{gap:8px 6px!important}
+  .dash-actions .action-detail{border-radius:14px!important}
+  .dash-actions .action-summary{min-height:82px!important;padding:8px 3px!important;gap:6px!important;font-size:11px!important}
+  .dash-actions .action-icon{width:32px!important;height:32px!important;min-width:32px!important;flex-basis:32px!important;border-radius:10px!important;font-size:18px!important}
+  .dash-actions .action-summary:after{top:4px!important;right:5px!important;font-size:17px!important}
+  .notification-center{margin-top:10px!important;padding:13px!important}
+}
+@media(max-width:380px){
+  .dash-head-inner{gap:11px!important}
+  .dash-photo{width:64px!important;height:80px!important}
+  .dash-actions{gap:6px 4px!important}
+  .dash-actions .action-summary{min-height:74px!important;font-size:10px!important}
+  .dash-actions .action-icon{width:28px!important;height:28px!important;min-width:28px!important;flex-basis:28px!important;font-size:16px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .dash-stat,.dash-actions .action-detail{transition:none!important}
+  .dash-stat:hover,.dash-actions .action-detail:hover{transform:none!important}
+}
+</style>
 </body>
 </html>
