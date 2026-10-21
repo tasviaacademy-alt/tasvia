@@ -1974,15 +1974,24 @@ table td{border-color:#E8EDF4!important}
 
 
 <style id="tasvia-parent-mobile-list-layout">
-/* Compact horizontal navigation on phones: replace tall centered tiles with clean list rows. */
+/* Mobile parent dashboard: two-column premium cards matching the approved reference. */
 @media(max-width:560px){
-  .dash-actions{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:9px!important;margin-top:12px!important}
-  .dash-actions .action-detail{min-height:0!important;height:auto!important;border-radius:14px!important;box-shadow:0 3px 12px rgba(16,40,88,.055)!important}
-  .dash-actions .action-summary{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;gap:13px!important;width:100%!important;height:auto!important;min-height:68px!important;padding:11px 42px 11px 13px!important;text-align:left!important;font-size:15px!important;line-height:1.3!important}
-  .dash-actions .action-icon{width:42px!important;height:42px!important;flex:0 0 42px!important;border-radius:12px!important;font-size:22px!important}
-  .dash-actions .action-summary>span:nth-child(2){width:auto!important;min-width:0!important;flex:1 1 auto!important;display:flex!important;justify-content:flex-start!important;align-items:center!important;text-align:left!important;flex-wrap:wrap!important;gap:6px!important}
-  .dash-actions .action-summary:after{content:"›"!important;top:50%!important;right:15px!important;transform:translateY(-50%)!important;font-size:26px!important;color:#B18A2E!important}
-  .dash-actions .complaint-suggestion-card{grid-column:1/-1!important}
+  .dash-actions{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px 12px!important;margin-top:20px!important}
+  .dash-actions .action-detail{display:block!important;width:100%!important;min-width:0!important;min-height:130px!important;height:auto!important;border:1px solid #E1E5EC!important;border-radius:24px!important;background:linear-gradient(145deg,#fff,#fbfcfe)!important;box-shadow:0 7px 20px rgba(16,40,88,.055)!important;overflow:hidden!important}
+  .dash-actions .action-summary{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;gap:12px!important;width:100%!important;min-width:0!important;min-height:130px!important;height:auto!important;padding:16px 27px 16px 14px!important;background:transparent!important;text-align:left!important;font-size:15px!important;line-height:1.35!important;white-space:normal!important}
+  .dash-actions .action-icon{display:grid!important;place-items:center!important;width:52px!important;height:52px!important;min-width:52px!important;flex:0 0 52px!important;border-radius:17px!important;background:#F0F2F6!important;border:0!important;box-shadow:none!important;font-size:27px!important}
+  .dash-actions .action-summary>span:nth-child(2){display:flex!important;align-items:center!important;justify-content:flex-start!important;flex:1 1 0!important;min-width:0!important;width:auto!important;overflow-wrap:anywhere!important;word-break:normal!important;text-align:left!important;flex-wrap:wrap!important;gap:5px!important;font-size:15px!important;font-weight:800!important}
+  .dash-actions .action-summary:after{content:"›"!important;top:50%!important;right:10px!important;transform:translateY(-50%)!important;font-size:27px!important;line-height:1!important;color:#C7A04A!important}
+  .dash-actions .action-detail:hover{transform:none!important}
+  .dash-actions .complaint-suggestion-card{grid-column:1/-1!important;min-height:88px!important}
+  .dash-actions .complaint-suggestion-card .action-summary{min-height:88px!important}
+}
+@media(max-width:380px){
+  .dash-actions{gap:10px 8px!important}
+  .dash-actions .action-detail,.dash-actions .action-summary{min-height:116px!important}
+  .dash-actions .action-summary{padding:12px 23px 12px 10px!important;gap:8px!important;font-size:13px!important}
+  .dash-actions .action-icon{width:42px!important;height:42px!important;min-width:42px!important;flex-basis:42px!important;font-size:22px!important;border-radius:13px!important}
+  .dash-actions .action-summary>span:nth-child(2){font-size:13px!important}
 }
 @media(prefers-reduced-motion:reduce){.dash-actions .action-detail,.dash-actions .action-summary{transition:none!important}}
 </style>
