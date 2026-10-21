@@ -614,6 +614,38 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
 @media(prefers-reduced-motion:reduce){#welcomeBackdrop .welcome-logo-wrap{animation:none!important}}
 </style>
 
+<style id="tasvia-parent-mobile-list-layout">
+/* Force compact three-column card grid in the actual rendered dashboard. */
+@media(max-width:560px){
+  .dash-main .dash-actions,
+  body .dash-actions{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-auto-flow:row!important;align-items:stretch!important;gap:8px 7px!important;margin-top:12px!important;width:100%!important}
+  .dash-main .dash-actions .action-detail,
+  body .dash-actions .action-detail{display:block!important;grid-column:auto!important;width:100%!important;max-width:none!important;min-width:0!important;min-height:78px!important;height:auto!important;align-self:stretch!important;border:1px solid #E1E5EC!important;border-radius:14px!important;background:linear-gradient(145deg,#fff,#fbfcfe)!important;box-shadow:0 3px 10px rgba(16,40,88,.05)!important;overflow:hidden!important}
+  .dash-main .dash-actions .action-summary,
+  body .dash-actions .action-summary{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:5px!important;width:100%!important;min-width:0!important;min-height:78px!important;height:auto!important;padding:7px 3px!important;background:transparent!important;text-align:center!important;font-size:10px!important;line-height:1.2!important;white-space:normal!important}
+  .dash-main .dash-actions .action-icon,
+  body .dash-actions .action-icon{display:grid!important;place-items:center!important;width:30px!important;height:30px!important;min-width:30px!important;flex:0 0 30px!important;border-radius:9px!important;background:#F0F2F6!important;border:0!important;box-shadow:none!important;font-size:18px!important}
+  .dash-main .dash-actions .action-summary>span:nth-child(2),
+  body .dash-actions .action-summary>span:nth-child(2){display:flex!important;align-items:center!important;justify-content:center!important;flex:0 1 auto!important;min-width:0!important;width:100%!important;max-width:100%!important;overflow-wrap:anywhere!important;word-break:normal!important;text-align:center!important;flex-wrap:wrap!important;gap:3px!important;font-size:10px!important;font-weight:800!important}
+  .dash-main .dash-actions .action-summary:after,
+  body .dash-actions .action-summary:after{content:none!important;display:none!important}
+  .dash-main .dash-actions .complaint-suggestion-card,
+  body .dash-actions .complaint-suggestion-card{grid-column:1/-1!important;min-height:60px!important}
+  .dash-main .dash-actions .complaint-suggestion-card .action-summary,
+  body .dash-actions .complaint-suggestion-card .action-summary{flex-direction:row!important;min-height:60px!important;gap:8px!important;justify-content:flex-start!important;text-align:left!important}
+  .dash-main .dash-actions .complaint-suggestion-card .action-summary>span:nth-child(2),
+  body .dash-actions .complaint-suggestion-card .action-summary>span:nth-child(2){justify-content:flex-start!important;text-align:left!important}
+}
+@media(max-width:380px){
+  .dash-main .dash-actions,body .dash-actions{gap:7px 5px!important}
+  .dash-main .dash-actions .action-detail,body .dash-actions .action-detail,
+  .dash-main .dash-actions .action-summary,body .dash-actions .action-summary{min-height:72px!important}
+  .dash-main .dash-actions .action-summary,body .dash-actions .action-summary{padding:6px 2px!important;gap:4px!important;font-size:9px!important}
+  .dash-main .dash-actions .action-icon,body .dash-actions .action-icon{width:27px!important;height:27px!important;min-width:27px!important;flex-basis:27px!important;font-size:16px!important}
+  .dash-main .dash-actions .action-summary>span:nth-child(2),body .dash-actions .action-summary>span:nth-child(2){font-size:9px!important}
+}
+@media(prefers-reduced-motion:reduce){.dash-actions .action-detail,.dash-actions .action-summary{transition:none!important}}
+</style>
 </head>
 <body>
 <header><div class="top"><div class="brand"><img class="hlogo" src="./icon-512.png" alt="">TASVIA <span>Academy</span></div><div class="langs" id="langs"></div></div><div class="kid" id="kid"></div></header>
@@ -1973,37 +2005,6 @@ table td{border-color:#E8EDF4!important}
 
 
 
-<style id="tasvia-parent-mobile-list-layout">
-/* Force compact three-column card grid in the actual rendered dashboard. */
-@media(max-width:560px){
-  .dash-main .dash-actions,
-  body .dash-actions{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-auto-flow:row!important;align-items:stretch!important;gap:8px 7px!important;margin-top:12px!important;width:100%!important}
-  .dash-main .dash-actions .action-detail,
-  body .dash-actions .action-detail{display:block!important;grid-column:auto!important;width:100%!important;max-width:none!important;min-width:0!important;min-height:78px!important;height:auto!important;align-self:stretch!important;border:1px solid #E1E5EC!important;border-radius:14px!important;background:linear-gradient(145deg,#fff,#fbfcfe)!important;box-shadow:0 3px 10px rgba(16,40,88,.05)!important;overflow:hidden!important}
-  .dash-main .dash-actions .action-summary,
-  body .dash-actions .action-summary{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:5px!important;width:100%!important;min-width:0!important;min-height:78px!important;height:auto!important;padding:7px 3px!important;background:transparent!important;text-align:center!important;font-size:10px!important;line-height:1.2!important;white-space:normal!important}
-  .dash-main .dash-actions .action-icon,
-  body .dash-actions .action-icon{display:grid!important;place-items:center!important;width:30px!important;height:30px!important;min-width:30px!important;flex:0 0 30px!important;border-radius:9px!important;background:#F0F2F6!important;border:0!important;box-shadow:none!important;font-size:18px!important}
-  .dash-main .dash-actions .action-summary>span:nth-child(2),
-  body .dash-actions .action-summary>span:nth-child(2){display:flex!important;align-items:center!important;justify-content:center!important;flex:0 1 auto!important;min-width:0!important;width:100%!important;max-width:100%!important;overflow-wrap:anywhere!important;word-break:normal!important;text-align:center!important;flex-wrap:wrap!important;gap:3px!important;font-size:10px!important;font-weight:800!important}
-  .dash-main .dash-actions .action-summary:after,
-  body .dash-actions .action-summary:after{content:none!important;display:none!important}
-  .dash-main .dash-actions .complaint-suggestion-card,
-  body .dash-actions .complaint-suggestion-card{grid-column:1/-1!important;min-height:60px!important}
-  .dash-main .dash-actions .complaint-suggestion-card .action-summary,
-  body .dash-actions .complaint-suggestion-card .action-summary{flex-direction:row!important;min-height:60px!important;gap:8px!important;justify-content:flex-start!important;text-align:left!important}
-  .dash-main .dash-actions .complaint-suggestion-card .action-summary>span:nth-child(2),
-  body .dash-actions .complaint-suggestion-card .action-summary>span:nth-child(2){justify-content:flex-start!important;text-align:left!important}
-}
-@media(max-width:380px){
-  .dash-main .dash-actions,body .dash-actions{gap:7px 5px!important}
-  .dash-main .dash-actions .action-detail,body .dash-actions .action-detail,
-  .dash-main .dash-actions .action-summary,body .dash-actions .action-summary{min-height:72px!important}
-  .dash-main .dash-actions .action-summary,body .dash-actions .action-summary{padding:6px 2px!important;gap:4px!important;font-size:9px!important}
-  .dash-main .dash-actions .action-icon,body .dash-actions .action-icon{width:27px!important;height:27px!important;min-width:27px!important;flex-basis:27px!important;font-size:16px!important}
-  .dash-main .dash-actions .action-summary>span:nth-child(2),body .dash-actions .action-summary>span:nth-child(2){font-size:9px!important}
-}
-@media(prefers-reduced-motion:reduce){.dash-actions .action-detail,.dash-actions .action-summary{transition:none!important}}
-</style>
+
 </body>
 </html>
