@@ -646,6 +646,52 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
 }
 @media(prefers-reduced-motion:reduce){.dash-actions .action-detail,.dash-actions .action-summary{transition:none!important}}
 </style>
+<style id="tasvia-hard-grid-override">
+@media screen and (max-width:700px){
+ body .dash-actions,
+ body .dash-main .dash-actions,
+ body .dash-actions[style]{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  grid-auto-columns:minmax(0,1fr)!important;
+  grid-auto-flow:row!important;
+  align-items:stretch!important;
+  justify-items:stretch!important;
+  width:100%!important;
+  gap:7px 5px!important;
+ }
+ body .dash-actions > *,
+ body .dash-actions .action-detail{
+  grid-column:auto!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  float:none!important;
+ }
+ body .dash-actions .complaint-suggestion-card{
+  grid-column:1/-1!important;
+ }
+ body .dash-actions .action-summary{
+  min-width:0!important;
+  min-height:68px!important;
+  height:auto!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:5px 2px!important;
+  gap:4px!important;
+  font-size:10px!important;
+  line-height:1.15!important;
+  text-align:center!important;
+  white-space:normal!important;
+ }
+ body .dash-actions .action-icon{
+  width:26px!important;height:26px!important;min-width:26px!important;flex:0 0 26px!important;font-size:16px!important
+ }
+}
+</style>
 <script id="tasvia-force-three-column-runtime">
 /* Force the actual dashboard cards into a three-column mobile grid after dynamic render. */
 (function(){
