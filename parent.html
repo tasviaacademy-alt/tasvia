@@ -441,6 +441,30 @@ main{position:relative}
 @media(hover:none){.card:hover{transform:none;box-shadow:0 5px 20px rgba(13,35,70,.045)}}
 @media(prefers-reduced-motion:reduce){header:before,header:after,.kid,.welcome-card,.welcome-logo-wrap,.welcome-logo-wrap:after,.bar i{animation:none!important}.card,.btn,.hw,.tag,.hlogo{transition:none!important}.card.cin-reveal{opacity:1;transform:none}.card:hover{transform:none}}
 
+
+/* CINEMATIC PLUS: ambient particles, shimmer, depth, gentle icon motion */
+.cin-ambient{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;opacity:.7}
+.cin-ambient i{position:absolute;display:block;width:4px;height:4px;border-radius:50%;background:#F2AC10;box-shadow:0 0 12px rgba(242,172,16,.65);animation:cinSpark 7s ease-in-out infinite}
+.cin-ambient i:nth-child(1){left:12%;top:25%;animation-delay:-1s}
+.cin-ambient i:nth-child(2){left:31%;top:70%;animation-delay:-4s;width:3px;height:3px}
+.cin-ambient i:nth-child(3){left:67%;top:22%;animation-delay:-2s}
+.cin-ambient i:nth-child(4){left:84%;top:64%;animation-delay:-5s;width:5px;height:5px}
+.cin-ambient i:nth-child(5){left:51%;top:46%;animation-delay:-3s;width:2px;height:2px}
+header .cin-ambient{z-index:0}
+header .top,header .kid{z-index:1}
+.welcome-backdrop .cin-ambient{position:absolute;inset:0}
+.welcome-backdrop .cin-ambient i{background:#fff;box-shadow:0 0 13px rgba(255,255,255,.7)}
+.card{transform-style:preserve-3d}
+.card:after{content:"";position:absolute;top:0;left:-140%;width:70%;height:100%;pointer-events:none;background:linear-gradient(110deg,transparent,rgba(255,255,255,.15),transparent);transform:skewX(-14deg);transition:left .75s ease}
+@media(hover:hover) and (pointer:fine){.card:hover:after{left:160%}}
+.brand span{display:inline-block;animation:cinGoldPulse 3s ease-in-out infinite}
+.langs button.on{box-shadow:0 0 0 3px rgba(242,172,16,.16),0 4px 15px rgba(242,172,16,.18)}
+.hw-count{transition:transform .25s ease,background .25s ease}
+.hw-section-head:hover .hw-count{transform:scale(1.04);background:color-mix(in srgb,var(--gold) 20%,var(--chip))}
+@keyframes cinSpark{0%,100%{transform:translate3d(0,0,0) scale(.65);opacity:.22}35%{transform:translate3d(8px,-16px,0) scale(1.15);opacity:.9}70%{transform:translate3d(-5px,-29px,0) scale(.8);opacity:.45}}
+@keyframes cinGoldPulse{0%,100%{text-shadow:0 0 0 rgba(242,172,16,0)}50%{text-shadow:0 0 14px rgba(242,172,16,.35)}}
+@media(prefers-reduced-motion:reduce){.cin-ambient i,.brand span{animation:none!important}.card:after{display:none}}
+
 </style>
 <!-- parent-pages-refresh-2026-10-07-v68-learning-fix -->
 <style>.fee-qr-wrap{margin:14px auto 10px;padding:12px;border:1px solid #E3E7ED;border-radius:16px;background:#F8FAFC;display:inline-block}.fee-qr{display:block;width:190px;height:190px;object-fit:contain;border-radius:10px;background:#fff}.fee-qr-note{font-size:11px;color:#667085;margin-top:7px}.fee-details-pay{margin-top:18px;padding-top:16px;border-top:1px solid rgba(16,40,88,.12)}.fee-popup-pay{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}.fee-popup-pay a{display:inline-flex;align-items:center;justify-content:center;min-width:130px;padding:11px 15px;border-radius:12px;text-decoration:none;font-weight:800;background:#0B2455;color:#fff}.fee-popup-pay a.gold{background:#F2AC10;color:#1a1405}.fee-popup-close{margin-top:10px;border:0;background:transparent;color:#667085;font:600 14px Hind,sans-serif;padding:7px 14px;cursor:pointer}</style>
@@ -1899,6 +1923,23 @@ table td{border-color:#E8EDF4!important}
       }
     });
   }catch(e){console.warn("TASVIA visual enhancements safely skipped",e);}
+})();
+</script>
+
+
+<script>
+(function(){
+ "use strict";
+ try{
+  function addParticles(parent){
+   if(!parent||parent.querySelector(":scope > .cin-ambient"))return;
+   var layer=document.createElement("div");layer.className="cin-ambient";layer.setAttribute("aria-hidden","true");
+   for(var i=0;i<5;i++)layer.appendChild(document.createElement("i"));
+   parent.insertBefore(layer,parent.firstChild);
+  }
+  addParticles(document.querySelector("header"));
+  addParticles(document.querySelector(".welcome-backdrop"));
+ }catch(e){console.warn("TASVIA ambient effects skipped",e);}
 })();
 </script>
 
