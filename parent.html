@@ -1012,6 +1012,7 @@ document.body.innerHTML=
       '</div></section>'+
       notificationCenterHtml+
        progressPanelHtml+
+       '<section id="tasviaPortalMotion" class="portal-motion-banner" aria-label="TASVIA learning motivation"><div class="portal-motion-row"><div class="portal-motion-icon" aria-hidden="true">🎓</div><div class="portal-motion-copy"><div class="portal-motion-kicker">TASVIA • Parent Zone</div><div class="portal-motion-title">Every day is a new chance to shine!</div><div class="portal-motion-sub">Learn with confidence. Grow with curiosity. Succeed together.</div></div></div><span class="portal-motion-spark" aria-hidden="true">✦</span></section><div class="portal-learning-strip" aria-label="Learning values"><div class="portal-learning-tile"><span class="portal-tile-icon" aria-hidden="true">📚</span><b>Learn</b><small>Build knowledge</small></div><div class="portal-learning-tile"><span class="portal-tile-icon" aria-hidden="true">🚀</span><b>Improve</b><small>One step daily</small></div><div class="portal-learning-tile"><span class="portal-tile-icon" aria-hidden="true">🏆</span><b>Achieve</b><small>Celebrate progress</small></div></div>'+
        '<div class="dash-actions">'+
       '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">🔔</span><span>Notice'+tasviaUnread("notice",noticeText)+'</span></button><div class="action-content"><div class="notice-card"><b>Latest Notice</b><p>'+esc(noticeText||"No new notices from TASVIA Academy.")+'</p></div></div></div>'+
       '<div class="action-detail"><button class="action-summary" type="button" onclick="return window.__tasviaOpenSection(this);"><span class="action-icon">📚</span><span>Homework'+tasviaUnread("homework",JSON.stringify(hw))+'</span></button><div class="action-content">'+(hwRows||'<div class="empty">No homework added yet.</div>')+'</div></div>'+
@@ -1971,21 +1972,7 @@ table td{border-color:#E8EDF4!important}
 </script>
 
 
-<script>
-(function(){
- "use strict";
- try{
-  var main=document.querySelector("main");
-  if(!main||document.getElementById("tasviaPortalMotion"))return;
-  var section=document.createElement("section");
-  section.id="tasviaPortalMotion";
-  section.setAttribute("aria-label","TASVIA learning highlights");
-  section.innerHTML='<div class="portal-motion-banner"><div class="portal-motion-row"><div class="portal-motion-icon" aria-hidden="true">🎓</div><div class="portal-motion-copy"><div class="portal-motion-kicker">TASVIA • Parent Zone</div><div class="portal-motion-title">Every day is a new chance to shine!</div><div class="portal-motion-sub">Learn with confidence. Grow with curiosity. Succeed together.</div></div></div><span class="portal-motion-spark" aria-hidden="true">✦</span></div><div class="portal-learning-strip" aria-label="Learning values"><div class="portal-learning-tile"><span class="portal-tile-icon" aria-hidden="true">📚</span><b>Learn</b><small>Build knowledge</small></div><div class="portal-learning-tile"><span class="portal-tile-icon" aria-hidden="true">🚀</span><b>Improve</b><small>One step daily</small></div><div class="portal-learning-tile"><span class="portal-tile-icon" aria-hidden="true">🏆</span><b>Achieve</b><small>Celebrate progress</small></div></div>';
-  var anchor=main.querySelector(".card");
-  if(anchor)main.insertBefore(section,anchor);else main.insertBefore(section,main.firstChild);
- }catch(e){console.warn("TASVIA in-portal animation skipped",e);}
-})();
-</script>
+
 
 </body>
 </html>
