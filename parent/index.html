@@ -8,13 +8,13 @@
 <script>
 (function(){
   "use strict";
-  var q=location.search||"";
-  var h=location.hash||"";
-  var p=String(location.pathname||"");
-  var m=p.match(/\/parent(?:\/index\.html)?\/([A-Za-z0-9._-]{3,64})\/?$/i);
-  if(m && !q && !h) q="?code="+encodeURIComponent(m[1]);
-  var target="/parent.html"+q+h;
-  try{location.replace(target)}catch(_){location.href=target}
+  // Route legacy parent links to the canonical live portal and preserve the student code.
+  var q=new URLSearchParams(location.search||"");
+  var code=q.get("code")||q.get("pcode")||q.get("parentCode")||q.get("student")||q.get("studentCode")||q.get("studentId")||q.get("id")||"";
+  if(!code && location.hash) code=String(location.hash).replace(/^#/,"");
+  var target="https://apk.tasviaacademy.com/parent.html";
+  if(code) target+="?code="+encodeURIComponent(code);
+  location.replace(target);
 })();
 </script>
 </head>
