@@ -1627,8 +1627,25 @@ document.body.innerHTML=
   window.tasviaStudentLogin=function(e){
     if(e&&e.preventDefault)e.preventDefault();
     var input=document.getElementById("studentLoginId");
+    var pin=document.getElementById("studentLoginPin");
+    var message=document.querySelector(".student-login-msg");
     var code=getCode(input&&input.value);
-    if(code&&typeof window.__tasviaRescueStart==="function")var pin=document.getElementById("studentLoginPin");window.__tasviaRescueStart(code,pin&&pin.value,false);
+    if(!code){
+      if(message)message.textContent="Please enter a valid Student ID.";
+      if(input)input.focus();
+      return false;
+    }
+    if(typeof window.__tasviaRescueStart!=="function"){
+      if(message)message.textContent="The portal is still loading. Please wait a moment and try again.";
+      return false;
+    }
+    try{
+      if(message)message.textContent="";
+      window.__tasviaRescueStart(code,pin&&pin.value,false);
+    }catch(err){
+      console.error("TASVIA parent login failed:",err);
+      if(message)message.textContent="Unable to start login. Please refresh the portal and try again.";
+    }
     return false;
   };
   try{
