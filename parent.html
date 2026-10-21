@@ -1972,5 +1972,19 @@ table td{border-color:#E8EDF4!important}
 
 
 
+
+<style id="tasvia-parent-mobile-list-layout">
+/* Compact horizontal navigation on phones: replace tall centered tiles with clean list rows. */
+@media(max-width:560px){
+  .dash-actions{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:9px!important;margin-top:12px!important}
+  .dash-actions .action-detail{min-height:0!important;height:auto!important;border-radius:14px!important;box-shadow:0 3px 12px rgba(16,40,88,.055)!important}
+  .dash-actions .action-summary{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;gap:13px!important;width:100%!important;height:auto!important;min-height:68px!important;padding:11px 42px 11px 13px!important;text-align:left!important;font-size:15px!important;line-height:1.3!important}
+  .dash-actions .action-icon{width:42px!important;height:42px!important;flex:0 0 42px!important;border-radius:12px!important;font-size:22px!important}
+  .dash-actions .action-summary>span:nth-child(2){width:auto!important;min-width:0!important;flex:1 1 auto!important;display:flex!important;justify-content:flex-start!important;align-items:center!important;text-align:left!important;flex-wrap:wrap!important;gap:6px!important}
+  .dash-actions .action-summary:after{content:"›"!important;top:50%!important;right:15px!important;transform:translateY(-50%)!important;font-size:26px!important;color:#B18A2E!important}
+  .dash-actions .complaint-suggestion-card{grid-column:1/-1!important}
+}
+@media(prefers-reduced-motion:reduce){.dash-actions .action-detail,.dash-actions .action-summary{transition:none!important}}
+</style>
 </body>
 </html>
