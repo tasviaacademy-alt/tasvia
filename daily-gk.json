@@ -4,63 +4,63 @@
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-india-smallest-state",
-      "category": "Indian Geography",
-      "q": "Which is India's smallest state by area?",
-      "a": "Goa.",
+      "id": "daily-2026-10-21-1",
+      "category": "Mathematics",
+      "q": "What is the smallest prime number?",
+      "a": "2",
       "options": [
-        "Goa.",
-        "Sikkim.",
-        "Tripura.",
-        "Manipur."
+        "1",
+        "2",
+        "3",
+        "5"
       ]
     },
     {
-      "id": "static-first-president",
-      "category": "Indian History",
-      "q": "Who was the first President of India?",
-      "a": "Dr. Rajendra Prasad.",
+      "id": "daily-2026-10-21-2",
+      "category": "Geography",
+      "q": "Which is the largest ocean on Earth?",
+      "a": "Pacific Ocean",
       "options": [
-        "Dr. Rajendra Prasad.",
-        "Dr. Sarvepalli Radhakrishnan.",
-        "Dr. Zakir Husain.",
-        "V. V. Giri."
+        "Atlantic Ocean",
+        "Indian Ocean",
+        "Pacific Ocean",
+        "Arctic Ocean"
       ]
     },
     {
-      "id": "otq-brain-teasers-2360",
-      "category": "brain-teasers",
-      "q": "You are on a ship and over the side hangs a rope ladder with one foot rungs. The tide rises a one foot per hour. At the end of five hours, how much of the ladder will remain above the water assuming that 12 rungs were above the water when the tide began to rise?",
-      "a": "12 rungs",
+      "id": "daily-2026-10-21-3",
+      "category": "Geography",
+      "q": "Which imaginary line divides Earth into Northern and Southern Hemispheres?",
+      "a": "Equator",
       "options": [
-        "Malaysia",
-        "12 rungs",
-        "a petty fault",
-        "7.5"
+        "Prime Meridian",
+        "Equator",
+        "Tropic of Cancer",
+        "Arctic Circle"
       ]
     },
     {
-      "id": "static-mountain-everest",
-      "category": "World Geography",
-      "q": "What is the highest mountain above sea level?",
-      "a": "Mount Everest.",
+      "id": "daily-2026-10-21-4",
+      "category": "Literature & Culture",
+      "q": "Who is traditionally credited with composing the Sanskrit Ramayana?",
+      "a": "Valmiki",
       "options": [
-        "Mount Everest.",
-        "K2.",
-        "Kangchenjunga.",
-        "Lhotse."
+        "Vyasa",
+        "Kalidasa",
+        "Valmiki",
+        "Tulsidas"
       ]
     },
     {
-      "id": "otq-geography-751",
-      "category": "geography",
-      "q": "What is the capital and largest city of Lebanon?",
-      "a": "Beirut",
+      "id": "daily-2026-10-21-5",
+      "category": "Literature & Culture",
+      "q": "Who wrote India's national anthem Jana Gana Mana?",
+      "a": "Rabindranath Tagore",
       "options": [
-        "Corn State",
-        "The Nile",
-        "Beirut",
-        "Mount St. Helens"
+        "Bankim Chandra Chatterjee",
+        "Rabindranath Tagore",
+        "Sarojini Naidu",
+        "Subramania Bharati"
       ]
     }
   ]
