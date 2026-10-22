@@ -4,63 +4,63 @@
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-dandi-march",
-      "category": "Indian History",
-      "q": "Who led the Dandi March in 1930?",
-      "a": "Mahatma Gandhi.",
+      "id": "daily-2026-10-22-1",
+      "category": "Abacus & Numbers",
+      "q": "How many sides does a hexagon have?",
+      "a": "6",
       "options": [
-        "Mahatma Gandhi.",
-        "Jawaharlal Nehru.",
-        "Sardar Vallabhbhai Patel.",
-        "Subhas Chandra Bose."
+        "5",
+        "6",
+        "7",
+        "8"
       ]
     },
     {
-      "id": "static-continents",
-      "category": "World Geography",
-      "q": "How many continents are there in the commonly taught seven-continent model?",
-      "a": "Seven.",
+      "id": "daily-2026-10-22-2",
+      "category": "Science",
+      "q": "At standard atmospheric pressure, water boils at what temperature in Celsius?",
+      "a": "100°C",
       "options": [
-        "Seven.",
-        "Five.",
-        "Six.",
-        "Eight."
+        "0°C",
+        "50°C",
+        "100°C",
+        "150°C"
       ]
     },
     {
-      "id": "otq-animals-1996",
-      "category": "animals",
-      "q": "How fast can a domestic cat sprint?",
-      "a": "30 MPH",
+      "id": "daily-2026-10-22-3",
+      "category": "Geography",
+      "q": "Which continent is the Sahara Desert located in?",
+      "a": "Africa",
       "options": [
-        "30 MPH",
-        "The flowers nectar",
-        "Leaves",
-        "Eurasian Black Vulture"
+        "Asia",
+        "Africa",
+        "Australia",
+        "South America"
       ]
     },
     {
-      "id": "otq-geography-657",
-      "category": "geography",
-      "q": "What is the literal translation of the title of the national anthem of Egypt, Bilady, Bilady, Bilady?",
-      "a": "My country, my country, my country",
+      "id": "daily-2026-10-22-4",
+      "category": "Indian General Knowledge",
+      "q": "What is the capital of India?",
+      "a": "New Delhi",
       "options": [
-        "My country, my country, my country",
-        "Syrian",
-        "Head of the Sky",
-        "Springfield"
+        "New Delhi",
+        "Mumbai",
+        "Kolkata",
+        "Chennai"
       ]
     },
     {
-      "id": "otq-brain-teasers-2292",
-      "category": "brain-teasers",
-      "q": "Which is the month that allows women to talk the least?",
-      "a": "February",
+      "id": "daily-2026-10-22-5",
+      "category": "Indian General Knowledge",
+      "q": "Which is the national animal of India?",
+      "a": "Bengal tiger",
       "options": [
-        "65,498,700 cents",
-        "0",
-        "1. Wisdom 2. Lie 3. Truth",
-        "February"
+        "Lion",
+        "Bengal tiger",
+        "Elephant",
+        "Leopard"
       ]
     }
   ]
