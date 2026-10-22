@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-10-23",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "otq-animals-1714",
+      "category": "animals",
+      "q": "How do platypuses reproduce?",
+      "a": "Platypuses lay eggs.",
+      "options": [
+        "Storer",
+        "Fruit",
+        "Platypuses lay eggs.",
+        "Loxocemidae bicolor"
+      ]
+    },
+    {
+      "id": "otq-geography-100",
+      "category": "geography",
+      "q": "Which is the volcanically active region that is situated in a famous national US park and has a territory of 55 kilometers by 72 kilometers?",
+      "a": "Yellowstone Caldera",
+      "options": [
+        "Yellowstone Caldera",
+        "Rio Bravo",
+        "St. Martin",
+        "Oder (Odra)"
+      ]
+    },
+    {
+      "id": "otq-brain-teasers-2362",
+      "category": "brain-teasers",
+      "q": "What family of animals has species called Oryx, Duiker, Dik-dik and Impala?",
+      "a": "Antelope",
+      "options": [
+        "raja",
+        "Antelope",
+        "Egg",
+        "Both"
+      ]
+    },
+    {
+      "id": "otq-animals-857",
+      "category": "animals",
+      "q": "Snakes belong to the following category.",
+      "a": "Reptiles",
+      "options": [
+        "Pocahontas",
+        "Reptiles",
+        "North and South America",
+        "2"
+      ]
+    },
+    {
+      "id": "otq-geography-805",
+      "category": "geography",
+      "q": "What is the state fish of Colorado?",
+      "a": "Greenback Cutthroat Trout",
+      "options": [
+        "People of the mountains",
+        "Football",
+        "Only Slovenia is an Alpine country.",
+        "Greenback Cutthroat Trout"
+      ]
+    }
+  ]
+}

@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-10-22",
+  "date": "2026-10-23",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "daily-2026-10-22-1",
-      "category": "Abacus & Numbers",
-      "q": "How many sides does a hexagon have?",
-      "a": "6",
+      "id": "otq-animals-1714",
+      "category": "animals",
+      "q": "How do platypuses reproduce?",
+      "a": "Platypuses lay eggs.",
       "options": [
-        "5",
-        "6",
-        "7",
-        "8"
+        "Storer",
+        "Fruit",
+        "Platypuses lay eggs.",
+        "Loxocemidae bicolor"
       ]
     },
     {
-      "id": "daily-2026-10-22-2",
-      "category": "Science",
-      "q": "At standard atmospheric pressure, water boils at what temperature in Celsius?",
-      "a": "100°C",
+      "id": "otq-geography-100",
+      "category": "geography",
+      "q": "Which is the volcanically active region that is situated in a famous national US park and has a territory of 55 kilometers by 72 kilometers?",
+      "a": "Yellowstone Caldera",
       "options": [
-        "0°C",
-        "50°C",
-        "100°C",
-        "150°C"
+        "Yellowstone Caldera",
+        "Rio Bravo",
+        "St. Martin",
+        "Oder (Odra)"
       ]
     },
     {
-      "id": "daily-2026-10-22-3",
-      "category": "Geography",
-      "q": "Which continent is the Sahara Desert located in?",
-      "a": "Africa",
+      "id": "otq-brain-teasers-2362",
+      "category": "brain-teasers",
+      "q": "What family of animals has species called Oryx, Duiker, Dik-dik and Impala?",
+      "a": "Antelope",
       "options": [
-        "Asia",
-        "Africa",
-        "Australia",
-        "South America"
+        "raja",
+        "Antelope",
+        "Egg",
+        "Both"
       ]
     },
     {
-      "id": "daily-2026-10-22-4",
-      "category": "Indian General Knowledge",
-      "q": "What is the capital of India?",
-      "a": "New Delhi",
+      "id": "otq-animals-857",
+      "category": "animals",
+      "q": "Snakes belong to the following category.",
+      "a": "Reptiles",
       "options": [
-        "New Delhi",
-        "Mumbai",
-        "Kolkata",
-        "Chennai"
+        "Pocahontas",
+        "Reptiles",
+        "North and South America",
+        "2"
       ]
     },
     {
-      "id": "daily-2026-10-22-5",
-      "category": "Indian General Knowledge",
-      "q": "Which is the national animal of India?",
-      "a": "Bengal tiger",
+      "id": "otq-geography-805",
+      "category": "geography",
+      "q": "What is the state fish of Colorado?",
+      "a": "Greenback Cutthroat Trout",
       "options": [
-        "Lion",
-        "Bengal tiger",
-        "Elephant",
-        "Leopard"
+        "People of the mountains",
+        "Football",
+        "Only Slovenia is an Alpine country.",
+        "Greenback Cutthroat Trout"
       ]
     }
   ]
