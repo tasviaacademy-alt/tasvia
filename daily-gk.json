@@ -4,63 +4,63 @@
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "otq-animals-1714",
-      "category": "animals",
-      "q": "How do platypuses reproduce?",
-      "a": "Platypuses lay eggs.",
+      "id": "daily-2026-10-23-1",
+      "category": "Indian General Knowledge",
+      "q": "What is the national flower of India?",
+      "a": "Lotus",
       "options": [
-        "Storer",
-        "Fruit",
-        "Platypuses lay eggs.",
-        "Loxocemidae bicolor"
+        "Rose",
+        "Lotus",
+        "Jasmine",
+        "Sunflower"
       ]
     },
     {
-      "id": "otq-geography-100",
-      "category": "geography",
-      "q": "Which is the volcanically active region that is situated in a famous national US park and has a territory of 55 kilometers by 72 kilometers?",
-      "a": "Yellowstone Caldera",
+      "id": "daily-2026-10-23-2",
+      "category": "Indian General Knowledge",
+      "q": "Which is the largest Indian state by area?",
+      "a": "Rajasthan",
       "options": [
-        "Yellowstone Caldera",
-        "Rio Bravo",
-        "St. Martin",
-        "Oder (Odra)"
+        "Maharashtra",
+        "Madhya Pradesh",
+        "Rajasthan",
+        "Uttar Pradesh"
       ]
     },
     {
-      "id": "otq-brain-teasers-2362",
-      "category": "brain-teasers",
-      "q": "What family of animals has species called Oryx, Duiker, Dik-dik and Impala?",
-      "a": "Antelope",
+      "id": "daily-2026-10-23-3",
+      "category": "Indian General Knowledge",
+      "q": "Which river is often called the Ganga of the South?",
+      "a": "Godavari",
       "options": [
-        "raja",
-        "Antelope",
-        "Egg",
-        "Both"
+        "Krishna",
+        "Godavari",
+        "Kaveri",
+        "Narmada"
       ]
     },
     {
-      "id": "otq-animals-857",
-      "category": "animals",
-      "q": "Snakes belong to the following category.",
-      "a": "Reptiles",
+      "id": "daily-2026-10-23-4",
+      "category": "Science",
+      "q": "Which planet is known as the Red Planet?",
+      "a": "Mars",
       "options": [
-        "Pocahontas",
-        "Reptiles",
-        "North and South America",
-        "2"
+        "Venus",
+        "Mars",
+        "Jupiter",
+        "Mercury"
       ]
     },
     {
-      "id": "otq-geography-805",
-      "category": "geography",
-      "q": "What is the state fish of Colorado?",
-      "a": "Greenback Cutthroat Trout",
+      "id": "daily-2026-10-23-5",
+      "category": "Science",
+      "q": "Which gas do plants absorb during photosynthesis?",
+      "a": "Carbon dioxide",
       "options": [
-        "People of the mountains",
-        "Football",
-        "Only Slovenia is an Alpine country.",
-        "Greenback Cutthroat Trout"
+        "Oxygen",
+        "Nitrogen",
+        "Carbon dioxide",
+        "Hydrogen"
       ]
     }
   ]
