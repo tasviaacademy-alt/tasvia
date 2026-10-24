@@ -22,6 +22,30 @@ if EXTRA_BANK_PATH.exists():
 def answer_key(value):
     return " ".join(str(value or "").casefold().strip().split())
 
+CUSTOM_DISTRACTORS = {
+    "static-sports-olympics": ["Every two years", "Every three years", "Every five years"],
+    "static-sports-chess": ["32", "48", "100"],
+    "otq-brain-teasers-2310": ["1", "2", "3"],
+}
+bank_by_id = {q.get("id"): q for q in bank if q.get("id")}
+
+def curated_options(q):
+    """Return only options curated for this exact question; never borrow answers from other questions."""
+    correct = str(q.get("a", "")).strip()
+    correct_key = answer_key(correct)
+    provided = q.get("options")
+    if isinstance(provided, list) and len(provided) == 4:
+        keys = [answer_key(value) for value in provided]
+        if all(keys) and len(set(keys)) == 4 and correct_key in set(keys):
+            return list(provided)
+    distractors = CUSTOM_DISTRACTORS.get(q.get("id"))
+    if distractors:
+        options = [correct] + list(distractors)
+        keys = [answer_key(value) for value in options]
+        if all(keys) and len(set(keys)) == 4:
+            return options
+    return None
+
 def valid_daily(data):
     if not isinstance(data, dict) or data.get("schemaVersion") != 3:
         return False
@@ -35,9 +59,20 @@ def valid_daily(data):
         options = q.get("options")
         if not isinstance(options, list) or len(options) != 4:
             return False
-        if len({answer_key(x) for x in options}) != 4:
+        option_keys = [answer_key(x) for x in options]
+        if any(not key for key in option_keys) or len(set(option_keys)) != 4:
             return False
-        if answer_key(q.get("a")) not in {answer_key(x) for x in options}:
+        if answer_key(q.get("a")) not in set(option_keys):
+            return False
+        source = bank_by_id.get(q.get("id"))
+        if not source:
+            return False
+        if answer_key(source.get("q")) != answer_key(q.get("q")):
+            return False
+        if answer_key(source.get("a")) != answer_key(q.get("a")):
+            return False
+        allowed = curated_options(source)
+        if allowed is None or set(option_keys) != {answer_key(value) for value in allowed}:
             return False
     return True
 
@@ -88,12 +123,6 @@ def option_group(category):
         return "sports"
     return c
 
-CUSTOM_DISTRACTORS = {
-    "static-sports-olympics": ["Every two years", "Every three years", "Every five years"],
-    "static-sports-chess": ["32", "48", "100"],
-    "otq-brain-teasers-2310": ["1", "2", "3"],
-}
-
 def eligible(q):
     question = str(q.get("q", "")).strip()
     answer = str(q.get("a", "")).strip()
@@ -103,6 +132,7 @@ def eligible(q):
         and len(question) <= 320 and len(answer) <= 120
         and key not in option_dependent_answers
         and key not in {"true", "false", "yes", "no"}
+        and curated_options(q) is not None
     )
 
 unused = [q for q in bank if eligible(q) and q["id"] not in used_ids]
@@ -137,47 +167,20 @@ for round_index in range(max_rounds):
 if len(selected_raw) != 5 or len({q["id"] for q in selected_raw}) != 5:
     raise RuntimeError("Could not select five unique GK questions.")
 
-# Build four-option MCQs. Prefer distractors from the same category; use the
-# wider bank only when that category does not contain three distinct alternatives.
-answer_pools = {}
-all_answers = {}
-for q in bank:
-    if not eligible(q):
-        continue
-    key = answer_key(q["a"])
-    if key:
-        value = str(q["a"]).strip()
-        all_answers.setdefault(key, value)
-        group = option_group(q.get("category"))
-        answer_pools.setdefault(group, {})
-        answer_pools[group].setdefault(key, value)
-
+# Build four-option MCQs exclusively from options curated for the exact question.
+# If a source question has no safe option set, it was excluded by eligible().
 questions = []
 for q in selected_raw:
-    correct = str(q["a"]).strip()
-    correct_key = answer_key(correct)
-    curated = CUSTOM_DISTRACTORS.get(q["id"])
-    provided = q.get("options")
-    if isinstance(provided, list) and len(provided) == 4 and correct_key in {answer_key(x) for x in provided}:
-        options = list(provided)
-    elif curated and len({answer_key(x) for x in curated + [correct]}) == 4:
-        options = [correct] + curated
-        rng.shuffle(options)
-    else:
-        pool = answer_pools.get(option_group(q.get("category")), {})
-        distractor_pool = [value for key, value in pool.items() if key != correct_key]
-        if len(distractor_pool) < 3:
-            distractor_pool = [value for key, value in all_answers.items() if key != correct_key]
-        if len(distractor_pool) < 3:
-            raise RuntimeError(f"Not enough distinct answer options for question {q['id']}.")
-        rng.shuffle(distractor_pool)
-        options = [correct] + distractor_pool[:3]
-        rng.shuffle(options)
+    options = curated_options(q)
+    if options is None:
+        raise RuntimeError(f"No curated options for question {q.get('id')}; refusing to publish unrelated distractors.")
+    options = list(options)
+    rng.shuffle(options)
     questions.append({
         "id": q["id"],
         "category": q.get("category", "General Knowledge"),
         "q": str(q["q"]).strip(),
-        "a": correct,
+        "a": str(q["a"]).strip(),
         "options": options,
     })
 
