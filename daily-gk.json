@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-10-24",
+  "date": "2026-10-25",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-india-national-flag",
-      "category": "National Symbols",
-      "q": "How many colours are there in the Indian national flag, excluding the Ashoka Chakra?",
-      "a": "Three.",
+      "id": "static-gk-math-right-angle",
+      "category": "Mathematics",
+      "q": "How many degrees are in a right angle?",
+      "a": "90 degrees.",
       "options": [
-        "Four.",
-        "Three.",
-        "Five.",
-        "Two."
+        "45 degrees.",
+        "180 degrees.",
+        "90 degrees.",
+        "360 degrees."
       ]
     },
     {
-      "id": "static-ashoka-chakra-spokes",
-      "category": "National Symbols",
-      "q": "How many spokes are there in the Ashoka Chakra on India's national flag?",
-      "a": "24.",
-      "options": [
-        "18.",
-        "24.",
-        "12.",
-        "32."
-      ]
-    },
-    {
-      "id": "static-telangana-formation",
+      "id": "static-telangana-river",
       "category": "Telangana GK",
-      "q": "On which date was Telangana formed as a state?",
-      "a": "2 June 2014.",
+      "q": "Which major river flows through Telangana and is one of India's longest rivers?",
+      "a": "Godavari.",
       "options": [
-        "1 November 1956.",
-        "2 June 2014.",
-        "15 August 1947.",
-        "26 January 1950."
+        "Godavari.",
+        "Beas.",
+        "Narmada.",
+        "Ravi."
       ]
     },
     {
-      "id": "static-science-gravity",
+      "id": "static-science-boiling-water",
       "category": "Science",
-      "q": "Which force pulls objects towards Earth?",
-      "a": "Gravity.",
+      "q": "At what temperature does pure water boil at sea level?",
+      "a": "100°C.",
       "options": [
-        "Magnetism.",
-        "Gravity.",
-        "Friction.",
-        "Buoyancy."
+        "150°C.",
+        "0°C.",
+        "100°C.",
+        "50°C."
       ]
     },
     {
-      "id": "static-world-largest-continent",
+      "id": "static-gk-world-ocean",
       "category": "World Geography",
-      "q": "Which is the largest continent by area?",
-      "a": "Asia.",
+      "q": "Which is the largest ocean on Earth?",
+      "a": "Pacific Ocean.",
       "options": [
-        "Africa.",
-        "Europe.",
-        "Asia.",
-        "Australia."
+        "Indian Ocean.",
+        "Pacific Ocean.",
+        "Atlantic Ocean.",
+        "Arctic Ocean."
+      ]
+    },
+    {
+      "id": "static-computer-keyboard",
+      "category": "Computer Basics",
+      "q": "Which device is commonly used to type text into a computer?",
+      "a": "Keyboard.",
+      "options": [
+        "Printer.",
+        "Keyboard.",
+        "Speaker.",
+        "Monitor."
       ]
     }
   ]
