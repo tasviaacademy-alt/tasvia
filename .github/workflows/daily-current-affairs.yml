@@ -47,7 +47,7 @@ jobs:
               title_norm, summary_norm = norm(title), norm(summary)
               if len(title) < 20 or len(summary) < 90:
                   raise SystemExit(f"Story {number} has a generic title or an insufficient summary.")
-              if re.search(r"\\b(home|current affairs|latest news|live updates|live blog|live stream|fixtures|betting|odds|predictions?|opinion|news feed|watch live)\\b", title.lower()):
+              if re.search(r"\b(home|current affairs|latest news|live updates|live blog|live stream|fixtures|betting|odds|predictions?|opinion|news feed|watch live)\b", title.lower()):
                   raise SystemExit(f"Story {number} uses a generic or unsuitable headline: {title}")
               if summary_norm == title_norm or (summary_norm.startswith(title_norm) and len(summary_norm) - len(title_norm) < 45):
                   raise SystemExit(f"Story {number} summary merely repeats its headline.")
