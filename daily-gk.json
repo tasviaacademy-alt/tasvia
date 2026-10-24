@@ -4,63 +4,63 @@
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "daily-20261024-space-mars",
-      "category": "Science & Space",
-      "q": "Which planet is known as the Red Planet?",
-      "a": "Mars.",
+      "id": "static-india-national-flag",
+      "category": "National Symbols",
+      "q": "How many colours are there in the Indian national flag, excluding the Ashoka Chakra?",
+      "a": "Three.",
       "options": [
-        "Venus.",
-        "Mars.",
-        "Jupiter.",
-        "Mercury."
-      ]
-    },
-    {
-      "id": "daily-20261024-india-river",
-      "category": "Indian Geography",
-      "q": "Which river is often called the Ganga of the South?",
-      "a": "Godavari.",
-      "options": [
-        "Krishna.",
-        "Kaveri.",
-        "Godavari.",
-        "Narmada."
-      ]
-    },
-    {
-      "id": "daily-20261024-computer-cpu",
-      "category": "Computers",
-      "q": "What is the full form of CPU?",
-      "a": "Central Processing Unit.",
-      "options": [
-        "Central Processing Unit.",
-        "Computer Personal Unit.",
-        "Central Program Utility.",
-        "Control Processing User."
-      ]
-    },
-    {
-      "id": "daily-20261024-maths-triangle",
-      "category": "Mathematics",
-      "q": "How many sides does a hexagon have?",
-      "a": "Six.",
-      "options": [
+        "Four.",
+        "Three.",
         "Five.",
-        "Six.",
-        "Seven.",
-        "Eight."
+        "Two."
       ]
     },
     {
-      "id": "daily-20261024-environment",
-      "category": "Environment",
-      "q": "Which gas do plants absorb from the atmosphere during photosynthesis?",
-      "a": "Carbon dioxide.",
+      "id": "static-ashoka-chakra-spokes",
+      "category": "National Symbols",
+      "q": "How many spokes are there in the Ashoka Chakra on India's national flag?",
+      "a": "24.",
       "options": [
-        "Oxygen.",
-        "Nitrogen.",
-        "Carbon dioxide.",
-        "Hydrogen."
+        "18.",
+        "24.",
+        "12.",
+        "32."
+      ]
+    },
+    {
+      "id": "static-telangana-formation",
+      "category": "Telangana GK",
+      "q": "On which date was Telangana formed as a state?",
+      "a": "2 June 2014.",
+      "options": [
+        "1 November 1956.",
+        "2 June 2014.",
+        "15 August 1947.",
+        "26 January 1950."
+      ]
+    },
+    {
+      "id": "static-science-gravity",
+      "category": "Science",
+      "q": "Which force pulls objects towards Earth?",
+      "a": "Gravity.",
+      "options": [
+        "Magnetism.",
+        "Gravity.",
+        "Friction.",
+        "Buoyancy."
+      ]
+    },
+    {
+      "id": "static-world-largest-continent",
+      "category": "World Geography",
+      "q": "Which is the largest continent by area?",
+      "a": "Asia.",
+      "options": [
+        "Africa.",
+        "Europe.",
+        "Asia.",
+        "Australia."
       ]
     }
   ]
