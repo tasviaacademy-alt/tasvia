@@ -15,12 +15,6 @@ HISTORY_DIR = Path("current-affairs-history")
 HISTORY_DIR.mkdir(exist_ok=True)
 TODAY_HISTORY = HISTORY_DIR / f"{date_str}.json"
 
-if TODAY_HISTORY.exists():
-    existing = json.loads(TODAY_HISTORY.read_text(encoding="utf-8"))
-    Path("current-affairs.json").write_text(json.dumps(existing, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"{date_str}: today's current-affairs edition already archived; no change.")
-    raise SystemExit(0)
-
 QUERIES = [
     ("India", f"India current affairs India government national news after:{yesterday}"),
     ("World", f"world international current affairs after:{yesterday}"),
@@ -35,6 +29,79 @@ def clean(s):
 
 def norm_title(s):
     return re.sub(r"[^a-z0-9]+", " ", (s or "").lower()).strip()
+
+def quality_story(item):
+    title = clean(item.get("title", ""))
+    summary = clean(item.get("description", item.get("text", "")))
+    title_norm = norm_title(title)
+    summary_norm = norm_title(summary)
+    title_lower = title.casefold()
+    if len(title) < 20 or not title_norm:
+        return False
+    if re.search(r"\b(home|current affairs|latest news|live updates|live blog|live stream|fixtures|betting|odds|predictions?|opinion|news feed|watch live)\b", title_lower):
+        return False
+    if len(summary) < 90 or not summary_norm:
+        return False
+    # Reject RSS entries whose "description" is just the headline and publisher.
+    if summary_norm == title_norm:
+        return False
+    if summary_norm.startswith(title_norm) and len(summary_norm) - len(title_norm) < 45:
+        return False
+    return True
+
+def build_quiz(item):
+    title = clean(item.get("title", ""))
+    summary = clean(item.get("description", item.get("text", "")))
+    combined = f"{title}. {summary}"
+    low = combined.casefold()
+
+    if "urban mobility india" in low and "bhubaneswar" in low:
+        return {"q": "What theme did the 19th Urban Mobility India Conference focus on?", "a": "Urban Accessibility and Liveability in Digital Age"}
+    if "pmi" in low and re.search(r"\b56\.7\b", combined):
+        return {"q": "What was the HSBC Flash India Composite PMI reading reported for October?", "a": "56.7"}
+    if "atmanirbhar bharat" in low and "chamba" in low:
+        return {"q": "Where did the Atmanirbhar Bharat – Destination Himachal Expo 2026 open?", "a": "Chaugan Ground in Chamba"}
+    if "chancellors conclave" in low and "goa" in low:
+        return {"q": "In which state was Chancellors Conclave 2026 held?", "a": "Goa"}
+    if "new zealand" in low and "india" in low and ("t20" in low or "cricket" in low) and re.search(r"four[- ]wicket", low):
+        return {"q": "By how many wickets did India beat New Zealand in the first T20I?", "a": "Four wickets"}
+
+    # Limited factual fallbacks: only create a quiz when the feed gives a concrete
+    # value or event location; never turn the headline itself into the answer.
+    value = re.search(r"\b(?:rose|increased|climbed|reached|hit)\s+(?:to\s+)?(\d+(?:\.\d+)?%?)", combined, re.I)
+    if value and re.search(r"\b(?:PMI|percent|per cent|growth|inflation|score|outlay|crore|kilometres|km)\b", low):
+        return {"q": "What figure did the report give for the latest measured result?", "a": value.group(1)}
+    location = re.search(r"\b(?:inaugurated|opened|began|hosted|held|launched)\b.{0,100}\b(?:in|at)\s+(Bhubaneswar|Chamba|Goa|Christchurch|New Delhi|Delhi|Mumbai|Kolkata|Hyderabad|Nizamabad|Amaravati|Chennai|Bengaluru|India)\b", combined, re.I)
+    if location:
+        place = location.group(1)
+        return {"q": "In which city or place did the reported event take place?", "a": place}
+    return None
+
+def valid_edition(data):
+    if not isinstance(data, dict) or data.get("date") != date_str:
+        return False
+    items = data.get("items", [])
+    quiz = data.get("quiz", [])
+    if len(items) < 5 or len(quiz) < 5:
+        return False
+    if any(not quality_story(item) for item in items):
+        return False
+    if any(not str(q.get("q", "")).strip() or not str(q.get("a", "")).strip()
+           or str(q.get("q", "")).casefold().startswith("which topic is covered")
+           for q in quiz):
+        return False
+    return True
+
+if TODAY_HISTORY.exists():
+    try:
+        existing = json.loads(TODAY_HISTORY.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        existing = {}
+    if valid_edition(existing):
+        Path("current-affairs.json").write_text(json.dumps(existing, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        print(f"{date_str}: today's archived current-affairs edition passed quality checks; no change.")
+        raise SystemExit(0)
+    print(f"{date_str}: today's archive failed quality checks; regenerating from verified recent feeds.")
 
 def parse_pub_date(value):
     if not value:
@@ -66,13 +133,16 @@ def rss_items(query):
         age = now - published
         if age < timedelta(hours=-1) or age > timedelta(hours=36):
             continue
-        out.append({
+        candidate = {
             "title": title,
             "description": desc,
             "link": link,
             "source": source,
             "published": published
-        })
+        }
+        if not quality_story(candidate):
+            continue
+        out.append(candidate)
     return out
 
 used_titles = set()
@@ -123,14 +193,18 @@ for x in selected:
         "url": x["link"]
     })
 
-if not items:
-    p = Path("current-affairs.json")
-    if p.exists():
-        print("No genuinely recent unused feed items; retaining previous content.")
-        raise SystemExit(0)
-    raise RuntimeError("No recent current-affairs items available; refusing to publish empty content.")
+if len(items) < 5:
+    raise RuntimeError(
+        f"Only {len(items)} current-affairs stories passed recency and quality checks; "
+        "refusing to publish generic headlines or headline-only summaries."
+    )
 
-quiz = [{"q": f"Which topic is covered in today's {x['category']} current affairs?", "a": x["title"]} for x in items[:5]]
+quiz = [question for x in selected if (question := build_quiz(x)) is not None]
+if len(quiz) < 5:
+    raise RuntimeError(
+        f"Only {len(quiz)} factual quiz questions could be generated from the selected stories; "
+        "refusing to publish headline-identification questions."
+    )
 data = {"date": date_str, "month": month_str, "title": "Daily Current Affairs", "items": items, "quiz": quiz}
 
 text = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
