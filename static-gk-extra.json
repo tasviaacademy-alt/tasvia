@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "title": "TASVIA Static GK Question Bank",
   "questions": [
     {
@@ -444,6 +444,246 @@
         "Warangal.",
         "Karimnagar.",
         "Nizamabad."
+      ]
+    },
+    {
+      "id": "static-india-national-song",
+      "category": "National Symbols",
+      "q": "Who wrote India's national song, Vande Mataram?",
+      "a": "Bankim Chandra Chattopadhyay.",
+      "options": [
+        "Bankim Chandra Chattopadhyay.",
+        "Rabindranath Tagore.",
+        "Sarojini Naidu.",
+        "Mahatma Gandhi."
+      ]
+    },
+    {
+      "id": "static-india-national-flag",
+      "category": "National Symbols",
+      "q": "How many colours are there in the Indian national flag, excluding the Ashoka Chakra?",
+      "a": "Three.",
+      "options": [
+        "Three.",
+        "Two.",
+        "Four.",
+        "Five."
+      ]
+    },
+    {
+      "id": "static-ashoka-chakra-spokes",
+      "category": "National Symbols",
+      "q": "How many spokes are there in the Ashoka Chakra on India's national flag?",
+      "a": "24.",
+      "options": [
+        "24.",
+        "12.",
+        "18.",
+        "32."
+      ]
+    },
+    {
+      "id": "static-india-republic-day",
+      "category": "Indian Polity",
+      "q": "Which day is celebrated as India's Republic Day?",
+      "a": "26 January.",
+      "options": [
+        "26 January.",
+        "15 August.",
+        "2 October.",
+        "14 November."
+      ]
+    },
+    {
+      "id": "static-india-constitution-day",
+      "category": "Indian Polity",
+      "q": "When is Constitution Day observed in India?",
+      "a": "26 November.",
+      "options": [
+        "26 November.",
+        "26 January.",
+        "15 August.",
+        "1 May."
+      ]
+    },
+    {
+      "id": "static-india-parliament-lower-house",
+      "category": "Indian Polity",
+      "q": "Which is the lower house of the Parliament of India?",
+      "a": "Lok Sabha.",
+      "options": [
+        "Lok Sabha.",
+        "Rajya Sabha.",
+        "Supreme Court.",
+        "Vidhan Parishad."
+      ]
+    },
+    {
+      "id": "static-telangana-formation",
+      "category": "Telangana GK",
+      "q": "On which date was Telangana formed as a state?",
+      "a": "2 June 2014.",
+      "options": [
+        "2 June 2014.",
+        "1 November 1956.",
+        "15 August 1947.",
+        "26 January 1950."
+      ]
+    },
+    {
+      "id": "static-telangana-festival",
+      "category": "Telangana GK",
+      "q": "Which floral festival is widely associated with Telangana?",
+      "a": "Bathukamma.",
+      "options": [
+        "Bathukamma.",
+        "Onam.",
+        "Bihu.",
+        "Pongal."
+      ]
+    },
+    {
+      "id": "static-telangana-river",
+      "category": "Telangana GK",
+      "q": "Which major river flows through Telangana and is one of India's longest rivers?",
+      "a": "Godavari.",
+      "options": [
+        "Godavari.",
+        "Narmada.",
+        "Ravi.",
+        "Beas."
+      ]
+    },
+    {
+      "id": "static-telangana-capital-city",
+      "category": "Telangana GK",
+      "q": "Which city is known as the capital of Telangana?",
+      "a": "Hyderabad.",
+      "options": [
+        "Hyderabad.",
+        "Nizamabad.",
+        "Warangal.",
+        "Khammam."
+      ]
+    },
+    {
+      "id": "static-science-gravity",
+      "category": "Science",
+      "q": "Which force pulls objects towards Earth?",
+      "a": "Gravity.",
+      "options": [
+        "Gravity.",
+        "Friction.",
+        "Magnetism.",
+        "Buoyancy."
+      ]
+    },
+    {
+      "id": "static-science-boiling-water",
+      "category": "Science",
+      "q": "At what temperature does pure water boil at sea level?",
+      "a": "100°C.",
+      "options": [
+        "100°C.",
+        "0°C.",
+        "50°C.",
+        "150°C."
+      ]
+    },
+    {
+      "id": "static-science-red-planet",
+      "category": "Science & Space",
+      "q": "Which planet is commonly called the Red Planet?",
+      "a": "Mars.",
+      "options": [
+        "Mars.",
+        "Venus.",
+        "Jupiter.",
+        "Mercury."
+      ]
+    },
+    {
+      "id": "static-science-sun-star",
+      "category": "Science & Space",
+      "q": "What is the Sun?",
+      "a": "A star.",
+      "options": [
+        "A star.",
+        "A planet.",
+        "A moon.",
+        "A comet."
+      ]
+    },
+    {
+      "id": "static-human-lungs",
+      "category": "Human Biology",
+      "q": "Which organs help humans breathe?",
+      "a": "The lungs.",
+      "options": [
+        "The lungs.",
+        "The kidneys.",
+        "The stomach.",
+        "The pancreas."
+      ]
+    },
+    {
+      "id": "static-environment-tree-gas",
+      "category": "Environment",
+      "q": "Which gas do green plants absorb from the air during photosynthesis?",
+      "a": "Carbon dioxide.",
+      "options": [
+        "Carbon dioxide.",
+        "Oxygen.",
+        "Nitrogen.",
+        "Hydrogen."
+      ]
+    },
+    {
+      "id": "static-computer-keyboard",
+      "category": "Computer Basics",
+      "q": "Which device is commonly used to type text into a computer?",
+      "a": "Keyboard.",
+      "options": [
+        "Keyboard.",
+        "Monitor.",
+        "Speaker.",
+        "Printer."
+      ]
+    },
+    {
+      "id": "static-maths-perimeter-square",
+      "category": "Mathematics",
+      "q": "What is the perimeter of a square with each side 5 cm?",
+      "a": "20 cm.",
+      "options": [
+        "20 cm.",
+        "10 cm.",
+        "25 cm.",
+        "15 cm."
+      ]
+    },
+    {
+      "id": "static-world-largest-continent",
+      "category": "World Geography",
+      "q": "Which is the largest continent by area?",
+      "a": "Asia.",
+      "options": [
+        "Asia.",
+        "Africa.",
+        "Europe.",
+        "Australia."
+      ]
+    },
+    {
+      "id": "static-world-equator",
+      "category": "World Geography",
+      "q": "What is the imaginary line that divides Earth into the Northern and Southern Hemispheres?",
+      "a": "The Equator.",
+      "options": [
+        "The Equator.",
+        "The Prime Meridian.",
+        "The Tropic of Cancer.",
+        "The Arctic Circle."
       ]
     }
   ]
