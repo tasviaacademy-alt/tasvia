@@ -38,7 +38,7 @@ def quality_story(item):
     title_lower = title.casefold()
     if len(title) < 20 or not title_norm:
         return False
-    if re.search(r"\\b(home|current affairs|latest news|live updates|live blog|live stream|fixtures|betting|odds|predictions?|opinion|news feed|watch live)\\b", title_lower):
+    if re.search(r"\b(home|current affairs|latest news|live updates|live blog|live stream|fixtures|betting|odds|predictions?|opinion|news feed|watch live)\b", title_lower):
         return False
     if len(summary) < 90 or not summary_norm:
         return False
@@ -57,7 +57,7 @@ def build_quiz(item):
 
     if "urban mobility india" in low and "bhubaneswar" in low:
         return {"q": "What theme did the 19th Urban Mobility India Conference focus on?", "a": "Urban Accessibility and Liveability in the Digital Age"}
-    if "pmi" in low and re.search(r"\\b56\\.7\\b", combined):
+    if "pmi" in low and re.search(r"\b56\.7\b", combined):
         return {"q": "What was the HSBC Flash India Composite PMI reading reported for October?", "a": "56.7"}
     if "atmanirbhar bharat" in low and "chamba" in low:
         return {"q": "Where did the Atmanirbhar Bharat – Destination Himachal Expo 2026 open?", "a": "Chaugan Ground in Chamba"}
@@ -68,10 +68,10 @@ def build_quiz(item):
 
     # Limited factual fallbacks: only create a quiz when the feed gives a concrete
     # value or event location; never turn the headline itself into the answer.
-    value = re.search(r"\\b(?:rose|increased|climbed|reached|hit)\\s+(?:to\\s+)?(\\d+(?:\\.\\d+)?%?)", combined, re.I)
-    if value and re.search(r"\\b(?:PMI|percent|per cent|growth|inflation|score|outlay|crore|kilometres|km)\\b", low):
+    value = re.search(r"\b(?:rose|increased|climbed|reached|hit)\s+(?:to\s+)?(\d+(?:\.\d+)?%?)", combined, re.I)
+    if value and re.search(r"\b(?:PMI|percent|per cent|growth|inflation|score|outlay|crore|kilometres|km)\b", low):
         return {"q": "What figure did the report give for the latest measured result?", "a": value.group(1)}
-    location = re.search(r"\\b(?:inaugurated|opened|began|hosted|held|launched)\\b.{0,100}\\b(?:in|at)\\s+(Bhubaneswar|Chamba|Goa|Christchurch|New Delhi|Delhi|Mumbai|Kolkata|Hyderabad|Nizamabad|Amaravati|Chennai|Bengaluru|India)\\b", combined, re.I)
+    location = re.search(r"\b(?:inaugurated|opened|began|hosted|held|launched)\b.{0,100}\b(?:in|at)\s+(Bhubaneswar|Chamba|Goa|Christchurch|New Delhi|Delhi|Mumbai|Kolkata|Hyderabad|Nizamabad|Amaravati|Chennai|Bengaluru|India)\b", combined, re.I)
     if location:
         place = location.group(1)
         return {"q": "In which city or place did the reported event take place?", "a": place}
@@ -98,7 +98,7 @@ if TODAY_HISTORY.exists():
     except (OSError, json.JSONDecodeError):
         existing = {}
     if valid_edition(existing):
-        Path("current-affairs.json").write_text(json.dumps(existing, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+        Path("current-affairs.json").write_text(json.dumps(existing, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print(f"{date_str}: today's archived current-affairs edition passed quality checks; no change.")
         raise SystemExit(0)
     print(f"{date_str}: today's archive failed quality checks; regenerating from verified recent feeds.")
