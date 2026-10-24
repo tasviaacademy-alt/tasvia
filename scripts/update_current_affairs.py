@@ -56,7 +56,7 @@ def build_quiz(item):
     low = combined.casefold()
 
     if "urban mobility india" in low and "bhubaneswar" in low:
-        return {"q": "What theme did the 19th Urban Mobility India Conference focus on?", "a": "Urban Accessibility and Liveability in the Digital Age"}
+        return {"q": "What theme did the 19th Urban Mobility India Conference focus on?", "a": "Urban Accessibility and Liveability in Digital Age"}
     if "pmi" in low and re.search(r"\b56\.7\b", combined):
         return {"q": "What was the HSBC Flash India Composite PMI reading reported for October?", "a": "56.7"}
     if "atmanirbhar bharat" in low and "chamba" in low:
