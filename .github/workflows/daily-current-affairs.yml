@@ -30,8 +30,36 @@ jobs:
         run: |
           python3 - <<'PY'
           import json, re
+          from datetime import datetime, timezone, timedelta
           from pathlib import Path
+
           def norm(s): return re.sub(r"[^a-z0-9]+", " ", (s or "").lower()).strip()
+          ist = timezone(timedelta(hours=5, minutes=30))
+          today = datetime.now(ist).strftime("%Y-%m-%d")
+          daily = json.loads(Path("current-affairs.json").read_text(encoding="utf-8"))
+          if daily.get("date") != today:
+              raise SystemExit(f"Stale Current Affairs date: expected {today}, found {daily.get('date')!r}")
+          if len(daily.get("items", [])) < 5 or len(daily.get("quiz", [])) < 5:
+              raise SystemExit("Current Affairs needs at least five quality stories and five factual quiz questions.")
+          for number, item in enumerate(daily["items"], 1):
+              title = str(item.get("title", "")).strip()
+              summary = str(item.get("text", "")).strip()
+              title_norm, summary_norm = norm(title), norm(summary)
+              if len(title) < 20 or len(summary) < 90:
+                  raise SystemExit(f"Story {number} has a generic title or an insufficient summary.")
+              if re.search(r"\\b(home|current affairs|latest news|live updates|live blog|live stream|fixtures|betting|odds|predictions?|opinion|news feed|watch live)\\b", title.lower()):
+                  raise SystemExit(f"Story {number} uses a generic or unsuitable headline: {title}")
+              if summary_norm == title_norm or (summary_norm.startswith(title_norm) and len(summary_norm) - len(title_norm) < 45):
+                  raise SystemExit(f"Story {number} summary merely repeats its headline.")
+          for number, question in enumerate(daily["quiz"], 1):
+              q = str(question.get("q", "")).strip()
+              a = str(question.get("a", "")).strip()
+              if not q or not a or q.casefold().startswith("which topic is covered"):
+                  raise SystemExit(f"Quiz question {number} is empty or only asks students to identify a headline.")
+          today_archive = Path("current-affairs-history") / f"{today}.json"
+          if not today_archive.exists() or json.loads(today_archive.read_text(encoding="utf-8")) != daily:
+              raise SystemExit("Today's Current Affairs file and dated archive do not match.")
+
           seen = set()
           for path in sorted(Path("current-affairs-history").glob("*.json")):
               data = json.loads(path.read_text(encoding="utf-8"))
@@ -42,7 +70,7 @@ jobs:
                   if key in seen:
                       raise SystemExit(f"Repeated current-affairs story detected: {item.get('title')}")
                   seen.add(key)
-          print(f"Validated {len(seen)} unique archived current-affairs stories.")
+          print(f"Validated today's content and {len(seen)} unique archived current-affairs stories.")
           PY
 
       - name: Commit changes
