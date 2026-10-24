@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "TASVIA Static GK Question Bank",
   "questions": [
     {
@@ -684,6 +684,126 @@
         "The Prime Meridian.",
         "The Tropic of Cancer.",
         "The Arctic Circle."
+      ]
+    },
+    {
+      "id": "static-gk-solar-system-sun",
+      "category": "Science & Space",
+      "q": "Which star is at the centre of our solar system?",
+      "a": "The Sun.",
+      "options": [
+        "Sirius.",
+        "The Sun.",
+        "Polaris.",
+        "Alpha Centauri."
+      ]
+    },
+    {
+      "id": "static-gk-earth-satellite",
+      "category": "Science & Space",
+      "q": "What is Earth's natural satellite?",
+      "a": "The Moon.",
+      "options": [
+        "Mars.",
+        "The Moon.",
+        "Venus.",
+        "The Sun."
+      ]
+    },
+    {
+      "id": "static-gk-human-heart",
+      "category": "Human Body",
+      "q": "How many chambers does the human heart have?",
+      "a": "Four.",
+      "options": [
+        "Two.",
+        "Three.",
+        "Four.",
+        "Five."
+      ]
+    },
+    {
+      "id": "static-gk-water-formula",
+      "category": "Science",
+      "q": "What is the chemical formula for water?",
+      "a": "H₂O.",
+      "options": [
+        "CO₂.",
+        "H₂O.",
+        "O₂.",
+        "NaCl."
+      ]
+    },
+    {
+      "id": "static-gk-world-ocean",
+      "category": "World Geography",
+      "q": "Which is the largest ocean on Earth?",
+      "a": "Pacific Ocean.",
+      "options": [
+        "Atlantic Ocean.",
+        "Indian Ocean.",
+        "Arctic Ocean.",
+        "Pacific Ocean."
+      ]
+    },
+    {
+      "id": "static-gk-telangana-capital",
+      "category": "Telangana GK",
+      "q": "What is the capital city of Telangana?",
+      "a": "Hyderabad.",
+      "options": [
+        "Warangal.",
+        "Karimnagar.",
+        "Hyderabad.",
+        "Nizamabad."
+      ]
+    },
+    {
+      "id": "static-gk-indian-parliament",
+      "category": "Indian Polity",
+      "q": "What is the lower house of India's Parliament called?",
+      "a": "Lok Sabha.",
+      "options": [
+        "Rajya Sabha.",
+        "Lok Sabha.",
+        "Vidhan Parishad.",
+        "Gram Sabha."
+      ]
+    },
+    {
+      "id": "static-gk-national-song",
+      "category": "National Symbols",
+      "q": "Who wrote India's national song, Vande Mataram?",
+      "a": "Bankim Chandra Chattopadhyay.",
+      "options": [
+        "Rabindranath Tagore.",
+        "Bankim Chandra Chattopadhyay.",
+        "Sarojini Naidu.",
+        "Subhas Chandra Bose."
+      ]
+    },
+    {
+      "id": "static-gk-computer-keyboard",
+      "category": "Computers",
+      "q": "Which device is mainly used to type text into a computer?",
+      "a": "Keyboard.",
+      "options": [
+        "Monitor.",
+        "Speaker.",
+        "Keyboard.",
+        "Printer."
+      ]
+    },
+    {
+      "id": "static-gk-math-right-angle",
+      "category": "Mathematics",
+      "q": "How many degrees are in a right angle?",
+      "a": "90 degrees.",
+      "options": [
+        "45 degrees.",
+        "90 degrees.",
+        "180 degrees.",
+        "360 degrees."
       ]
     }
   ]
