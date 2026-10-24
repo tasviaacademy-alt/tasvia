@@ -4,63 +4,63 @@
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "otq-geography-792",
-      "category": "geography",
-      "q": "What is the state animal of Colorado and the symbol of Rocky Mountain National Park?",
-      "a": "Big Horned Sheep",
+      "id": "static-science-force-unit",
+      "category": "Science",
+      "q": "What is the SI unit of force?",
+      "a": "Newton.",
       "options": [
-        "Huang",
-        "Big Horned Sheep",
-        "Latvia",
-        "Valerie Bertinelli"
+        "Joule.",
+        "Newton.",
+        "Pascal.",
+        "Watt."
       ]
     },
     {
-      "id": "otq-brain-teasers-2209",
-      "category": "brain-teasers",
-      "q": "A farmer had 12 sheep and 3 cows. All of the animals except 9 sheep died. How many animals did he have left in his farm?",
-      "a": "9 sheep",
+      "id": "static-geography-hornbill",
+      "category": "Indian Geography",
+      "q": "Which Indian state hosts the Hornbill Festival?",
+      "a": "Nagaland.",
       "options": [
-        "9 sheep",
-        "February",
-        "9",
-        "P"
+        "Assam.",
+        "Nagaland.",
+        "Manipur.",
+        "Meghalaya."
       ]
     },
     {
-      "id": "otq-animals-890",
-      "category": "animals",
-      "q": "How many types of bats are there?",
-      "a": "900",
+      "id": "static-geography-rajasthan-capital",
+      "category": "Indian Geography",
+      "q": "What is the capital of Rajasthan?",
+      "a": "Jaipur.",
       "options": [
-        "900",
-        "Males and females have different eye colour.",
-        "Savanna Elephant",
-        "Saddled Puffer"
+        "Udaipur.",
+        "Jaipur.",
+        "Bikaner.",
+        "Jodhpur."
       ]
     },
     {
-      "id": "otq-geography-149",
-      "category": "geography",
-      "q": "Which one of these statements is true about The Bronx, NY?",
-      "a": "The only borough that is not an island",
+      "id": "static-civics-bharat-ratna",
+      "category": "Indian General Knowledge",
+      "q": "What is India's highest civilian award?",
+      "a": "Bharat Ratna.",
       "options": [
-        "Harare",
-        "The only borough that is not an island",
-        "Wyoming",
-        "Lhagba Pool"
+        "Padma Shri.",
+        "Bharat Ratna.",
+        "Padma Bhushan.",
+        "Padma Vibhushan."
       ]
     },
     {
-      "id": "otq-brain-teasers-2225",
-      "category": "brain-teasers",
-      "q": "A kid found two old coins. The first coin said it was minted in 43 BC, while the other said it was minted during the reign of Emperor Nicholas I. Which of the coins was fake?",
-      "a": "Both",
+      "id": "static-science-kidneys",
+      "category": "Human Biology",
+      "q": "Which organs filter waste from blood and help produce urine?",
+      "a": "Kidneys.",
       "options": [
-        "Both",
-        "0%",
-        "None",
-        "6 cats"
+        "Pancreas.",
+        "Kidneys.",
+        "Lungs.",
+        "Stomach."
       ]
     }
   ]
