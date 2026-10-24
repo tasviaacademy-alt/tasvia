@@ -93,10 +93,9 @@ jobs:
               if not source or norm(source.get("q")) != norm(item.get("q")) or norm(source.get("a")) != answer:
                   raise SystemExit(f"Question {number} does not match the curated question bank.")
               source_options = source.get("options")
-              if isinstance(source_options, list) and len(source_options) == 4:
-                  expected = {norm(value) for value in source_options}
-                  if len(expected) != 4 or answer not in expected:
-                      expected = set()
+              source_keys = [norm(value) for value in source_options] if isinstance(source_options, list) else []
+              if len(source_keys) == 4 and len(set(source_keys)) == 4 and answer in set(source_keys):
+                  expected = set(source_keys)
               else:
                   distractors = custom.get(item.get("id"), [])
                   expected = {norm(source.get("a"))} | {norm(value) for value in distractors}
