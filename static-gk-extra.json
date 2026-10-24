@@ -445,6 +445,150 @@
         "Karimnagar.",
         "Nizamabad."
       ]
+    },
+    {
+      "id": "static-science-force-unit",
+      "category": "Science",
+      "q": "What is the SI unit of force?",
+      "a": "Newton.",
+      "options": [
+        "Newton.",
+        "Joule.",
+        "Watt.",
+        "Pascal."
+      ]
+    },
+    {
+      "id": "static-science-plant-gas",
+      "category": "Science",
+      "q": "Which gas do green plants absorb during photosynthesis?",
+      "a": "Carbon dioxide.",
+      "options": [
+        "Carbon dioxide.",
+        "Oxygen.",
+        "Nitrogen.",
+        "Hydrogen."
+      ]
+    },
+    {
+      "id": "static-science-evaporation",
+      "category": "Science",
+      "q": "What is the change from liquid water to water vapour called?",
+      "a": "Evaporation.",
+      "options": [
+        "Evaporation.",
+        "Condensation.",
+        "Freezing.",
+        "Melting."
+      ]
+    },
+    {
+      "id": "static-science-barometer",
+      "category": "Science",
+      "q": "Which instrument measures atmospheric pressure?",
+      "a": "Barometer.",
+      "options": [
+        "Barometer.",
+        "Thermometer.",
+        "Hygrometer.",
+        "Anemometer."
+      ]
+    },
+    {
+      "id": "static-science-kidneys",
+      "category": "Human Biology",
+      "q": "Which organs filter waste from blood and help produce urine?",
+      "a": "Kidneys.",
+      "options": [
+        "Kidneys.",
+        "Lungs.",
+        "Stomach.",
+        "Pancreas."
+      ]
+    },
+    {
+      "id": "static-science-blue-whale",
+      "category": "Animals",
+      "q": "Which is the largest animal known to live on Earth?",
+      "a": "Blue whale.",
+      "options": [
+        "Blue whale.",
+        "African elephant.",
+        "Giraffe.",
+        "Great white shark."
+      ]
+    },
+    {
+      "id": "static-science-earth-layer",
+      "category": "Science",
+      "q": "Which layer is Earth's outermost solid layer?",
+      "a": "Crust.",
+      "options": [
+        "Crust.",
+        "Mantle.",
+        "Outer core.",
+        "Inner core."
+      ]
+    },
+    {
+      "id": "static-geography-hornbill",
+      "category": "Indian Geography",
+      "q": "Which Indian state hosts the Hornbill Festival?",
+      "a": "Nagaland.",
+      "options": [
+        "Nagaland.",
+        "Assam.",
+        "Meghalaya.",
+        "Manipur."
+      ]
+    },
+    {
+      "id": "static-geography-rajasthan-capital",
+      "category": "Indian Geography",
+      "q": "What is the capital of Rajasthan?",
+      "a": "Jaipur.",
+      "options": [
+        "Jaipur.",
+        "Jodhpur.",
+        "Udaipur.",
+        "Bikaner."
+      ]
+    },
+    {
+      "id": "static-civics-bharat-ratna",
+      "category": "Indian General Knowledge",
+      "q": "What is India's highest civilian award?",
+      "a": "Bharat Ratna.",
+      "options": [
+        "Bharat Ratna.",
+        "Padma Vibhushan.",
+        "Padma Bhushan.",
+        "Padma Shri."
+      ]
+    },
+    {
+      "id": "static-geography-musi-river",
+      "category": "Indian Geography",
+      "q": "Which river flows through Hyderabad?",
+      "a": "Musi River.",
+      "options": [
+        "Musi River.",
+        "Godavari River.",
+        "Krishna River.",
+        "Manjira River."
+      ]
+    },
+    {
+      "id": "static-indian-history-iron-man",
+      "category": "Indian History",
+      "q": "Which leader is popularly known as the Iron Man of India?",
+      "a": "Sardar Vallabhbhai Patel.",
+      "options": [
+        "Sardar Vallabhbhai Patel.",
+        "Jawaharlal Nehru.",
+        "Subhas Chandra Bose.",
+        "B. R. Ambedkar."
+      ]
     }
   ]
 }
