@@ -4,63 +4,63 @@
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-gk-math-right-angle",
-      "category": "Mathematics",
-      "q": "How many degrees are in a right angle?",
-      "a": "90 degrees.",
+      "id": "daily-20261025-weather-anemometer",
+      "category": "Science & Weather",
+      "q": "Which instrument is used to measure wind speed?",
+      "a": "An anemometer.",
       "options": [
-        "45 degrees.",
-        "180 degrees.",
-        "90 degrees.",
-        "360 degrees."
+        "A barometer.",
+        "A thermometer.",
+        "An anemometer.",
+        "A rain gauge."
       ]
     },
     {
-      "id": "static-telangana-river",
-      "category": "Telangana GK",
-      "q": "Which major river flows through Telangana and is one of India's longest rivers?",
-      "a": "Godavari.",
+      "id": "daily-20261025-biology-cell",
+      "category": "Biology",
+      "q": "What is commonly described as the smallest unit of life?",
+      "a": "The cell.",
       "options": [
-        "Godavari.",
-        "Beas.",
-        "Narmada.",
-        "Ravi."
+        "The tissue.",
+        "The cell.",
+        "The organ.",
+        "The atom."
       ]
     },
     {
-      "id": "static-science-boiling-water",
-      "category": "Science",
-      "q": "At what temperature does pure water boil at sea level?",
-      "a": "100°C.",
+      "id": "daily-20261025-human-kidneys",
+      "category": "Human Body",
+      "q": "Which organs filter waste from the blood and help produce urine?",
+      "a": "The kidneys.",
       "options": [
-        "150°C.",
-        "0°C.",
-        "100°C.",
-        "50°C."
+        "The lungs.",
+        "The stomach.",
+        "The kidneys.",
+        "The pancreas."
       ]
     },
     {
-      "id": "static-gk-world-ocean",
-      "category": "World Geography",
-      "q": "Which is the largest ocean on Earth?",
-      "a": "Pacific Ocean.",
+      "id": "daily-20261025-nature-nectar",
+      "category": "Nature",
+      "q": "What do honeybees collect from flowers to help make honey?",
+      "a": "Nectar.",
       "options": [
-        "Indian Ocean.",
-        "Pacific Ocean.",
-        "Atlantic Ocean.",
-        "Arctic Ocean."
+        "Nectar.",
+        "Sand.",
+        "Tree bark.",
+        "Salt."
       ]
     },
     {
-      "id": "static-computer-keyboard",
-      "category": "Computer Basics",
-      "q": "Which device is commonly used to type text into a computer?",
-      "a": "Keyboard.",
+      "id": "daily-20261025-language-antonym",
+      "category": "English Vocabulary",
+      "q": "What is a word with the opposite meaning of another word called?",
+      "a": "An antonym.",
       "options": [
-        "Printer.",
-        "Keyboard.",
-        "Speaker.",
-        "Monitor."
+        "A synonym.",
+        "An antonym.",
+        "A homophone.",
+        "A noun."
       ]
     }
   ]
