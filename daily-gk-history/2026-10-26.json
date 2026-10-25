@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-10-26",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-gk-vitamin-sunlight",
+      "category": "Health & Science",
+      "q": "Which vitamin can the human body make when skin is exposed to sunlight?",
+      "a": "Vitamin D.",
+      "options": [
+        "Vitamin C.",
+        "Vitamin D.",
+        "Vitamin A.",
+        "Vitamin B12."
+      ]
+    },
+    {
+      "id": "static-gk-white-blood-cells",
+      "category": "Human Body",
+      "q": "Which blood cells help the body fight infections?",
+      "a": "White blood cells.",
+      "options": [
+        "Nerve cells.",
+        "White blood cells.",
+        "Platelets.",
+        "Red blood cells."
+      ]
+    },
+    {
+      "id": "static-human-lungs",
+      "category": "Human Biology",
+      "q": "Which organs help humans breathe?",
+      "a": "The lungs.",
+      "options": [
+        "The lungs.",
+        "The pancreas.",
+        "The stomach.",
+        "The kidneys."
+      ]
+    },
+    {
+      "id": "static-gk-nepal-capital",
+      "category": "World Geography",
+      "q": "What is the capital of Nepal?",
+      "a": "Kathmandu.",
+      "options": [
+        "Dhaka.",
+        "Thimphu.",
+        "Colombo.",
+        "Kathmandu."
+      ]
+    },
+    {
+      "id": "static-maths-perimeter-square",
+      "category": "Mathematics",
+      "q": "What is the perimeter of a square with each side 5 cm?",
+      "a": "20 cm.",
+      "options": [
+        "15 cm.",
+        "10 cm.",
+        "20 cm.",
+        "25 cm."
+      ]
+    }
+  ]
+}
