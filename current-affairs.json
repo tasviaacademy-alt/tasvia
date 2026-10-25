@@ -1,69 +1,69 @@
 {
-  "date": "2026-10-24",
+  "date": "2026-10-25",
   "month": "October 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "Tilak Varma and Nitish Kumar Reddy power India to a second T20I win",
+      "text": "India chased New Zealand's 181-run target in Christchurch, reaching 184 for six to win by four wickets and take a 2–0 lead in the five-match series. Tilak Varma made 51 from 26 balls, and Nitish Kumar Reddy scored 26 from 13 as the pair added 69 runs for the seventh wicket.",
+      "source": "The Indian Express, 2026-10-25",
+      "url": "https://indianexpress.com/article/sports/cricket/india-vs-new-zealand-2nd-t20-tilak-varma-nitish-kumar-reddy-10935152/"
+    },
+    {
       "category": "India",
       "icon": "🇮🇳",
-      "title": "19th Urban Mobility India Conference opens in Bhubaneswar",
-      "text": "The Ministry of Housing and Urban Affairs reported that the 2026 conference and exhibition was inaugurated by Union Minister of State Tokhan Sahu on 23 October. Policymakers and transport specialists are discussing accessible, liveable cities, digital mobility, intelligent transport and sustainable public transport; 28 exhibitors are presenting urban-transport solutions.",
-      "source": "Press Information Bureau, 2026-10-23",
-      "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2327551"
+      "title": "PM Modi to inaugurate RBI data centre and cybersecurity institute in Bhubaneswar",
+      "text": "During his 25 October visit to Varanasi and Bhubaneswar, Prime Minister Narendra Modi is scheduled to inaugurate the Reserve Bank of India's Data Centre and Cybersecurity Training Institute in Bhubaneswar. The institute will focus on cybersecurity, artificial intelligence, quantum computing and other emerging technologies relevant to banking.",
+      "source": "Financial Express, 2026-10-25",
+      "url": "https://www.financialexpress.com/india-news/pm-modi-to-visit-varanasi-bhubaneswar-today-whats-on-agenda/4368965/"
     },
     {
       "category": "Economy",
       "icon": "💹",
-      "title": "India's private-sector activity reaches a four-month high in October",
-      "text": "The HSBC Flash India Composite Purchasing Managers' Index rose to 56.7 in October from 55.9 in September, signalling expansion. Services activity strengthened to 56.2, while manufacturing eased to 54.9. New orders and export demand improved, although companies remained cautious about hiring because existing staff could handle workloads.",
-      "source": "The Economic Times, 2026-10-24",
-      "url": "https://economictimes.indiatimes.com/news/economy/indicators/private-sector-activity-hits-four-month-high-in-october/articleshow/135153950.cms"
+      "title": "Madhya Pradesh receives over ₹5,800 crore in semiconductor and technology proposals",
+      "text": "At the MP Semiconductor Summit 2026 in Indore, the state reported technology and semiconductor investment proposals worth more than ₹5,800 crore, with potential to create over 10,000 jobs. The state also announced plans for semiconductor and photonics and quantum technology centres, alongside industry partnerships and skills development.",
+      "source": "Financial Express, 2026-10-25",
+      "url": "https://www.financialexpress.com/business/industry/madhya-pradesh-eyes-10000-jobs-as-semiconductor-tech-proposals-cross-rs-5800-crore/4368590/"
     },
     {
       "category": "Science & Technology",
       "icon": "🔬",
-      "title": "Atmanirbhar Bharat – Destination Himachal Expo 2026 opens in Chamba",
-      "text": "A three-day national-level science, innovation and industry exhibition opened at the historic Chaugan Ground on Friday. Scientific institutions, government organisations, artisans, farmers and local entrepreneurs are taking part, creating a shared platform to present research, technology, traditional skills and local enterprise.",
-      "source": "The Tribune, 2026-10-24",
-      "url": "https://www.tribuneindia.com/news/himachal/atmanirbhar-bharat-expo-brings-science-innovation-to-chamba/amp"
+      "title": "India and Germany discuss six areas for industrial technology cooperation",
+      "text": "During Commerce and Industry Minister Piyush Goyal's visit to Germany, officials and industry representatives discussed collaboration in microelectronics, power electronics, logistics, smart manufacturing, industrial innovation and battery technologies. The discussions included research partnerships linking industry, academia and research institutions; no specific new investment commitments were announced.",
+      "source": "Financial Express, 2026-10-25",
+      "url": "https://www.financialexpress.com/business/industry/india-germany-talks-semiconductors-batteries-among-six-technology-focus-areas/4368899/"
     },
     {
-      "category": "Education",
-      "icon": "🎓",
-      "title": "Andhra Pradesh calls for universities to strengthen research and innovation",
-      "text": "At the Chancellors Conclave 2026 in Goa, Andhra Pradesh's science, technology and innovation secretary Dr H. Purushotham urged universities to become stronger centres for research, entrepreneurship and technology. Priorities included industry partnerships, AI and quantum-computing education, improved research infrastructure and greater patent generation.",
-      "source": "The Hans India, 2026-10-24",
-      "url": "https://www.thehansindia.com/news/cities/amaravati/ap-varsities-urged-to-embrace-research-innovation-1135094"
-    },
-    {
-      "category": "Sports",
-      "icon": "🏆",
-      "title": "India beats New Zealand by four wickets in the first T20I",
-      "text": "India chased a target of 226 and finished on 230 for six in 19.4 overs at Hagley Oval in Christchurch, taking a 1–0 lead in the five-match series. Sanju Samson scored 67 from 33 balls, while Naman Dhir remained unbeaten on 42 to help complete the chase.",
-      "source": "The Indian Express, 2026-10-23",
-      "url": "https://indianexpress.com/article/sports/cricket/india-vs-new-zealand-1st-t20i-four-wickets-sanju-samson-10932249/"
+      "category": "Weather",
+      "icon": "🌦️",
+      "title": "IMD issues heavy-rain alerts for Tamil Nadu and Kerala",
+      "text": "The India Meteorological Department forecast heavy to very heavy rainfall, with isolated extremely heavy downpours, across Kerala, Mahe, Tamil Nadu, Puducherry and Karaikal on 25 October. Alerts also covered several other regions, with thunderstorms, lightning, gusty winds and squally conditions expected in some coastal areas.",
+      "source": "The Economic Times, 2026-10-25",
+      "url": "https://m.economictimes.com/news/new-updates/india-weather-october-25-heavy-rain-alert-for-tamil-nadu-kerala-check-imds-state-wise-forecast/articleshow/135173531.cms"
     }
   ],
   "quiz": [
     {
-      "q": "What theme did the 19th Urban Mobility India Conference focus on?",
-      "a": "Urban Accessibility and Liveability in Digital Age"
+      "q": "How many runs did Tilak Varma score in the second T20I?",
+      "a": "51 runs off 26 balls"
     },
     {
-      "q": "What was the HSBC Flash India Composite PMI reading reported for October?",
-      "a": "56.7"
+      "q": "Which city will host the RBI Data Centre and Cybersecurity Training Institute?",
+      "a": "Bhubaneswar"
     },
     {
-      "q": "At which ground did the Atmanirbhar Bharat – Destination Himachal Expo 2026 open?",
-      "a": "Chaugan Ground"
+      "q": "Which state reported semiconductor and technology proposals worth over ₹5,800 crore?",
+      "a": "Madhya Pradesh"
     },
     {
-      "q": "In which state was Chancellors Conclave 2026 held?",
-      "a": "Goa"
+      "q": "How many technology areas were discussed in the India–Germany talks?",
+      "a": "Six"
     },
     {
-      "q": "By how many wickets did India beat New Zealand in the first T20I?",
-      "a": "Four wickets"
+      "q": "Which agency issued the heavy-rain alerts mentioned in the report?",
+      "a": "India Meteorological Department (IMD)"
     }
   ]
 }
