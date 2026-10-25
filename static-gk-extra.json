@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "title": "TASVIA Static GK Question Bank",
   "questions": [
     {
@@ -804,6 +804,126 @@
         "90 degrees.",
         "180 degrees.",
         "360 degrees."
+      ]
+    },
+    {
+      "id": "static-gk-vitamin-sunlight",
+      "category": "Health & Science",
+      "q": "Which vitamin can the human body make when skin is exposed to sunlight?",
+      "a": "Vitamin D.",
+      "options": [
+        "Vitamin A.",
+        "Vitamin B12.",
+        "Vitamin C.",
+        "Vitamin D."
+      ]
+    },
+    {
+      "id": "static-gk-hardest-natural-substance",
+      "category": "Science",
+      "q": "Which of these is commonly known as the hardest naturally occurring substance?",
+      "a": "Diamond.",
+      "options": [
+        "Quartz.",
+        "Diamond.",
+        "Copper.",
+        "Gypsum."
+      ]
+    },
+    {
+      "id": "static-gk-konark-state",
+      "category": "Indian Geography & Heritage",
+      "q": "In which Indian state is the Sun Temple at Konark located?",
+      "a": "Odisha.",
+      "options": [
+        "Gujarat.",
+        "Odisha.",
+        "Rajasthan.",
+        "Kerala."
+      ]
+    },
+    {
+      "id": "static-gk-nepal-capital",
+      "category": "World Geography",
+      "q": "What is the capital of Nepal?",
+      "a": "Kathmandu.",
+      "options": [
+        "Thimphu.",
+        "Dhaka.",
+        "Kathmandu.",
+        "Colombo."
+      ]
+    },
+    {
+      "id": "static-gk-si-force",
+      "category": "Physics",
+      "q": "What is the SI unit of force?",
+      "a": "Newton.",
+      "options": [
+        "Joule.",
+        "Watt.",
+        "Newton.",
+        "Pascal."
+      ]
+    },
+    {
+      "id": "static-gk-white-blood-cells",
+      "category": "Human Body",
+      "q": "Which blood cells help the body fight infections?",
+      "a": "White blood cells.",
+      "options": [
+        "Red blood cells.",
+        "White blood cells.",
+        "Platelets.",
+        "Nerve cells."
+      ]
+    },
+    {
+      "id": "static-gk-closest-planet-sun",
+      "category": "Astronomy",
+      "q": "Which planet is closest to the Sun?",
+      "a": "Mercury.",
+      "options": [
+        "Venus.",
+        "Earth.",
+        "Mars.",
+        "Mercury."
+      ]
+    },
+    {
+      "id": "static-gk-temperature-instrument",
+      "category": "Science",
+      "q": "Which instrument is used to measure temperature?",
+      "a": "A thermometer.",
+      "options": [
+        "A compass.",
+        "A thermometer.",
+        "A telescope.",
+        "A barometer."
+      ]
+    },
+    {
+      "id": "static-gk-transpiration",
+      "category": "Plant Science",
+      "q": "What is the process called in which plants release water vapour mainly through their leaves?",
+      "a": "Transpiration.",
+      "options": [
+        "Germination.",
+        "Pollination.",
+        "Transpiration.",
+        "Fertilisation."
+      ]
+    },
+    {
+      "id": "static-gk-prime-meridian",
+      "category": "World Geography",
+      "q": "What is the line of longitude at 0 degrees called?",
+      "a": "The Prime Meridian.",
+      "options": [
+        "The Equator.",
+        "The Tropic of Cancer.",
+        "The Prime Meridian.",
+        "The International Date Line."
       ]
     }
   ]
