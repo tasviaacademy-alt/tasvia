@@ -130,13 +130,13 @@ def build_quiz(item):
 
     if "cyclone arnab" in low and "bapatla" in low and "visakhapatnam" in low:
         return {"q": "Near which Andhra Pradesh coastal stretch could Cyclone Arnab approach on 28 October, according to the forecast?", "a": "Between Bapatla and Visakhapatnam"}
-    if "devdutt padikkal" in low and re.search(r"\\b199\\b", combined):
+    if "devdutt padikkal" in low and re.search(r"\b199\b", combined):
         return {"q": "What score did Devdutt Padikkal make against New Zealand A?", "a": "199 runs"}
-    if "india women" in low and "zimbabwe" in low and re.search(r"\\b121[- ]runs?\\b", low):
+    if "india women" in low and "zimbabwe" in low and re.search(r"\b121[- ]runs?\b", low):
         return {"q": "By how many runs did India Women defeat Zimbabwe in the second ODI?", "a": "121 runs"}
-    if "jogen chowdhury" in low and re.search(r"\\b87\\b", combined):
+    if "jogen chowdhury" in low and re.search(r"\b87\b", combined):
         return {"q": "How old was painter Jogen Chowdhury when he died?", "a": "87 years"}
-    if "operation trident" in low and re.search(r"\\b18 arrests\\b", low):
+    if "operation trident" in low and re.search(r"\b18 arrests\b", low):
         return {"q": "How many arrests were reported during Operation Trident?", "a": "18 people"}
 
     # Extract other concrete facts when a source gives a clear number or location.
