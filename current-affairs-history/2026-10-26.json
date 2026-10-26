@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-26",
+  "month": "October 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "Weather",
+      "icon": "🌦️",
+      "title": "Cyclone Arnab may bring severe weather to Andhra Pradesh and Odisha",
+      "text": "The India Meteorological Department warned that a system over the Bay of Bengal could intensify into a very severe cyclonic storm before approaching the Andhra Pradesh coast near Bapatla and Visakhapatnam on 28 October. Forecasts warned of heavy rain, strong winds and possible landslides in parts of Odisha; the storm's track and intensity may still change.",
+      "source": "Financial Express, 2026-10-26",
+      "url": "https://www.financialexpress.com/india-news/cyclone-arnab-odisha-andhra-brace-for-heavy-rainfall-strong-wind-impact-and-landslide-risk/4369430/"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "Devdutt Padikkal falls one run short of a double century for India A",
+      "text": "Playing New Zealand A in the first unofficial Test at Bert Sutcliffe Oval in Lincoln, Devdutt Padikkal was dismissed for 199 after facing 248 balls. He had resumed the day on 56 not out, reached his century in 128 balls and shared a 215-run third-wicket partnership with Sai Sudharsan, who scored 92.",
+      "source": "The Indian Express, 2026-10-26",
+      "url": "https://indianexpress.com/article/sports/cricket/devdutt-padikkal-century-career-best-score-india-vs-new-zealand-a-10936727/"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "India Women defeat Zimbabwe by 121 runs to clinch ODI series",
+      "text": "India posted 328 for six in the second women's ODI at Vadodara, led by Harmanpreet Kaur's 126 and Deepti Sharma's unbeaten 106. Zimbabwe were dismissed for 207 in 48.5 overs, giving India a 121-run win and an unassailable 2–0 lead in the three-match series.",
+      "source": "International Cricket Council, 2026-10-25",
+      "url": "https://www.icc-cricket.com/matches/270973/india-vs-zimbabwe"
+    },
+    {
+      "category": "Culture",
+      "icon": "🎨",
+      "title": "Indian painter Jogen Chowdhury dies in Kolkata at age 87",
+      "text": "Modern Indian artist and former Rajya Sabha member Jogen Chowdhury died in Kolkata on 25 October at the age of 87, following a prolonged illness. He was known for distinctive line work and for blending traditional Indian imagery with contemporary styles. His career included art education, exhibitions and public service.",
+      "source": "The Indian Express, 2026-10-25",
+      "url": "https://indianexpress.com/article/lifestyle/art-and-culture/artist-jogen-chowdhury-dead-10935955/"
+    },
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Operation Trident targets an international narcotics network across northeast India",
+      "text": "The Narcotics Control Bureau and partner agencies carried out coordinated raids on 23 October across Assam, Mizoram and Manipur. The operation led to 18 arrests, the freezing of 1,424 bank accounts and the seizure of cash and other items while investigators traced alleged trafficking and hawala networks across borders.",
+      "source": "The Indian Express, 2026-10-26",
+      "url": "https://indianexpress.com/article/india/amit-shah-operation-trident-narcotics-cartel-raids-10936646/"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "Near which Andhra Pradesh coastal stretch could Cyclone Arnab approach on 28 October, according to the forecast?",
+      "a": "Between Bapatla and Visakhapatnam"
+    },
+    {
+      "q": "What score did Devdutt Padikkal make against New Zealand A?",
+      "a": "199 runs"
+    },
+    {
+      "q": "By how many runs did India Women defeat Zimbabwe in the second ODI?",
+      "a": "121 runs"
+    },
+    {
+      "q": "How old was painter Jogen Chowdhury when he died?",
+      "a": "87 years"
+    },
+    {
+      "q": "How many arrests were reported during Operation Trident?",
+      "a": "18 people"
+    }
+  ]
+}
