@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-10-27",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-telangana-festival",
+      "category": "Telangana GK",
+      "q": "Which floral festival is widely associated with Telangana?",
+      "a": "Bathukamma.",
+      "options": [
+        "Onam.",
+        "Bathukamma.",
+        "Pongal.",
+        "Bihu."
+      ]
+    },
+    {
+      "id": "static-gk-prime-meridian",
+      "category": "World Geography",
+      "q": "What is the line of longitude at 0 degrees called?",
+      "a": "The Prime Meridian.",
+      "options": [
+        "The Tropic of Cancer.",
+        "The Equator.",
+        "The International Date Line.",
+        "The Prime Meridian."
+      ]
+    },
+    {
+      "id": "static-gk-national-song",
+      "category": "National Symbols",
+      "q": "Who wrote India's national song, Vande Mataram?",
+      "a": "Bankim Chandra Chattopadhyay.",
+      "options": [
+        "Rabindranath Tagore.",
+        "Subhas Chandra Bose.",
+        "Bankim Chandra Chattopadhyay.",
+        "Sarojini Naidu."
+      ]
+    },
+    {
+      "id": "static-gk-computer-keyboard",
+      "category": "Computers",
+      "q": "Which device is mainly used to type text into a computer?",
+      "a": "Keyboard.",
+      "options": [
+        "Printer.",
+        "Keyboard.",
+        "Speaker.",
+        "Monitor."
+      ]
+    },
+    {
+      "id": "static-gk-si-force",
+      "category": "Physics",
+      "q": "What is the SI unit of force?",
+      "a": "Newton.",
+      "options": [
+        "Watt.",
+        "Pascal.",
+        "Joule.",
+        "Newton."
+      ]
+    }
+  ]
+}
