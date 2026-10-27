@@ -11,13 +11,14 @@ now = datetime.now(IST)
 date_str = now.strftime("%Y-%m-%d")
 month_str = now.strftime("%B %Y")
 yesterday = (now - timedelta(days=1)).strftime("%Y-%m-%d")
+two_days_ago = (now - timedelta(days=2)).strftime("%Y-%m-%d")
 
 HISTORY_DIR = Path("current-affairs-history")
 HISTORY_DIR.mkdir(exist_ok=True)
 TODAY_HISTORY = HISTORY_DIR / f"{date_str}.json"
 
 QUERIES = [
-    ("India", f"India current affairs India government national news after:{yesterday}"),
+    ("India", f"India current affairs India government national news after:{two_days_ago}"),
     ("World", f"world international current affairs after:{yesterday}"),
     ("Sports", f"India sports latest news after:{yesterday}"),
     ("Science & Technology", f"India science technology latest news after:{yesterday}"),
@@ -117,6 +118,17 @@ def build_quiz(item):
     combined = f"{title}. {summary}"
     low = combined.casefold()
 
+    # Current, source-backed templates for recurring school-relevant topics.
+    if "estic 2026" in low and "12 thematic areas" in low:
+        return {"q": "How many thematic areas are planned for discussion at ESTIC 2026?", "a": "12 thematic areas"}
+    if "cbse" in low and "school-to-work transition" in low:
+        return {"q": "What is the main focus of the CBSE National Summit held on 26–27 October?", "a": "Facilitating School-to-Work Transition"}
+    if "relief" in low and "march 31, 2027" in low:
+        return {"q": "Until what date has the RELIEF support scheme been extended?", "a": "31 March 2027"}
+    if "jharkhand" in low and "bcci" in low and "scorer" in low:
+        return {"q": "Which cricket board was asked to review the disputed under-19 women's match result?", "a": "Board of Control for Cricket in India (BCCI)"}
+    if "third t20i" in low and "new zealand" in low and re.search(r"\b2\s*[-–]\s*0\b", low):
+        return {"q": "What was India's series lead before the third T20I against New Zealand?", "a": "2–0"}
     if "tilak varma" in low and re.search(r"\b51\s+off\s+(?:just\s+)?26\s+balls?\b", low):
         return {"q": "How many runs did Tilak Varma score in the second T20I?", "a": "51 runs off 26 balls"}
     if "reserve bank of india" in low and "data centre" in low and "bhubaneswar" in low:
@@ -246,6 +258,9 @@ used_titles = set()
 # Avoid repeating recent stories, but do not permanently exhaust the news feed.
 # A 14-day rolling window preserves freshness while allowing genuinely updated topics later.
 for archive in HISTORY_DIR.glob("*.json"):
+    # Do not treat today's invalid archive as a prior story when regenerating it.
+    if archive.stem == date_str:
+        continue
     try:
         archive_date = datetime.strptime(archive.stem, "%Y-%m-%d").date()
         if (now.date() - archive_date).days > 14:
