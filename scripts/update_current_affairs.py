@@ -10,7 +10,6 @@ IST = timezone(timedelta(hours=5, minutes=30))
 now = datetime.now(IST)
 date_str = now.strftime("%Y-%m-%d")
 month_str = now.strftime("%B %Y")
-yesterday = (now - timedelta(days=1)).strftime("%Y-%m-%d")
 two_days_ago = (now - timedelta(days=2)).strftime("%Y-%m-%d")
 
 HISTORY_DIR = Path("current-affairs-history")
@@ -119,11 +118,11 @@ def build_quiz(item):
     low = combined.casefold()
 
     # Current, source-backed templates for recurring school-relevant topics.
-    if "estic 2026" in low and "12 thematic areas" in low:
+    if "estic 2026" in low and re.search(r"\b12\s+(?:thematic\s+)?areas\b", low):
         return {"q": "How many thematic areas are planned for discussion at ESTIC 2026?", "a": "12 thematic areas"}
     if "cbse" in low and "school-to-work transition" in low:
         return {"q": "What is the main focus of the CBSE National Summit held on 26–27 October?", "a": "Facilitating School-to-Work Transition"}
-    if "relief" in low and "march 31, 2027" in low:
+    if "relief" in low and (re.search(r"\b31\s+march\s+2027\b", low) or re.search(r"\bmarch\s+31,?\s+2027\b", low)):
         return {"q": "Until what date has the RELIEF support scheme been extended?", "a": "31 March 2027"}
     if "jharkhand" in low and "bcci" in low and "scorer" in low:
         return {"q": "Which cricket board was asked to review the disputed under-19 women's match result?", "a": "Board of Control for Cricket in India (BCCI)"}
