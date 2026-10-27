@@ -760,14 +760,16 @@ function currentFeeCycle(s){
   const joinDate=makeDate(jy,jm-1);
   const firstEnd=makeDate(jy,jm);
   const todayDate=new Date();todayDate.setHours(0,0,0,0);
-  // Before the first anniversary, track the first cycle instead of an older calendar month.
+  // The first fee is due on the joining date itself. After that, each
+  // monthly cycle is tracked by the joining-date anniversary.
   let cycleStart,cycleEnd;
-  if(todayDate<firstEnd){
+  const firstCycle=todayDate<firstEnd;
+  if(firstCycle){
     cycleStart=joinDate;
-    cycleEnd=firstEnd;
+    cycleEnd=joinDate;
   }else{
-    // The active cycle ends on this month's joining-date anniversary, whether it is
-    // still upcoming or passed. Sep 8–Oct 8 is the September cycle.
+    // The active cycle ends on this month's joining-date anniversary.
+    // For example, Sep 8–Oct 8 is paid through Oct 8; unpaid fees become due Oct 9.
     cycleEnd=makeDate(todayDate.getFullYear(),todayDate.getMonth());
     cycleStart=makeDate(cycleEnd.getFullYear(),cycleEnd.getMonth()-1);
   }
@@ -786,7 +788,7 @@ function currentFeeCycle(s){
   paid=Math.min(fee,Math.max(0,paid));
   const dueDate=iso(cycleEnd);
   const nextDue=makeDate(cycleEnd.getFullYear(),cycleEnd.getMonth()+1);
-  const status=paid>=fee?"paid":(iso(todayDate)<=dueDate?"upcoming":"due");
+  const status=paid>=fee?"paid":(firstCycle?(iso(todayDate)<dueDate?"upcoming":"due"):(iso(todayDate)<=dueDate?"upcoming":"due"));
   return {status,fee,paid,due:Math.max(0,fee-paid),dueDate,nextDueDate:iso(nextDue),cycleStart:iso(cycleStart),completedMonth};
 }
 const active=s=>s.active!==false;
