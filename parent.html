@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-17-v102-live-time">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-27-v103-joining-date">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -771,7 +771,7 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
 (function(){
   "use strict";
   if("serviceWorker" in navigator && location.protocol==="https:"){
-    navigator.serviceWorker.register("./sw.js?v=96",{scope:"./",updateViaCache:"none"}).catch(function(){/* Install guidance remains available without a worker. */});
+    navigator.serviceWorker.register("./sw.js?v=97",{scope:"./",updateViaCache:"none"}).catch(function(){/* Install guidance remains available without a worker. */});
   }
   var deferredPrompt=null;
   var btn=document.getElementById("addToHomeScreenBtn");
@@ -1003,6 +1003,11 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     var feeTodayISO=nowLocal.getFullYear()+"-"+String(nowLocal.getMonth()+1).padStart(2,"0")+"-"+String(nowLocal.getDate()).padStart(2,"0");
     function parentTimestampMs(v){if(v==null||v==="")return 0;if(typeof v==="number"&&Number.isFinite(v))return v<100000000000?v*1000:v;if(typeof v==="string"){var n=Number(v);if(Number.isFinite(n)&&v.trim()!=="")return n<100000000000?n*1000:n;var p=Date.parse(v);return Number.isFinite(p)?p:0;}if(typeof v==="object"){if(typeof v.toDate==="function"){try{return v.toDate().getTime()}catch(_){}}if(v.seconds!=null)return Number(v.seconds)*1000;if(v._seconds!=null)return Number(v._seconds)*1000;}return 0;}var parentUpdated=parentTimestampMs(d.activityAtClient)||parentTimestampMs(d.activityAt)||parentTimestampMs(d.attendanceUpdatedAt)||parentTimestampMs(d.homeworkUpdatedAt)||parentTimestampMs(d.updated)||Date.now();var parentUpdatedText=new Date(parentUpdated).toLocaleString("en-IN",{timeZone:"Asia/Kolkata",day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})+" IST";
     var currentFee=d.currentFee&&typeof d.currentFee==="object"?Object.assign({},d.currentFee):null;
+    if(!joiningDateRaw&&currentFee&&currentFee.cycleStart)joiningDateRaw=String(currentFee.cycleStart);
+    if(!joiningDateRaw&&currentFee&&currentFee.joined)joiningDateRaw=String(currentFee.joined);
+    joiningDateText=joiningDateRaw;
+    joiningDateParts=joiningDateRaw.split("-");
+    if(joiningDateParts.length===3&&joiningDateParts[0].length===4&&joiningDateParts[1].length===2&&joiningDateParts[2].length===2){joiningDateObj=new Date(Number(joiningDateParts[0]),Number(joiningDateParts[1])-1,Number(joiningDateParts[2]));joiningDateText=new Intl.DateTimeFormat("en-IN",{day:"2-digit",month:"short",year:"numeric"}).format(joiningDateObj);}
     // Correct the first fee cycle from the student's joining date, even when
     // the parent payload does not include a currentFee summary.
     var joinedDate=String(d.joined||"");
