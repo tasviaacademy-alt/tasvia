@@ -999,24 +999,25 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     var feeTodayISO=nowLocal.getFullYear()+"-"+String(nowLocal.getMonth()+1).padStart(2,"0")+"-"+String(nowLocal.getDate()).padStart(2,"0");
     function parentTimestampMs(v){if(v==null||v==="")return 0;if(typeof v==="number"&&Number.isFinite(v))return v<100000000000?v*1000:v;if(typeof v==="string"){var n=Number(v);if(Number.isFinite(n)&&v.trim()!=="")return n<100000000000?n*1000:n;var p=Date.parse(v);return Number.isFinite(p)?p:0;}if(typeof v==="object"){if(typeof v.toDate==="function"){try{return v.toDate().getTime()}catch(_){}}if(v.seconds!=null)return Number(v.seconds)*1000;if(v._seconds!=null)return Number(v._seconds)*1000;}return 0;}var parentUpdated=parentTimestampMs(d.activityAtClient)||parentTimestampMs(d.activityAt)||parentTimestampMs(d.attendanceUpdatedAt)||parentTimestampMs(d.homeworkUpdatedAt)||parentTimestampMs(d.updated)||Date.now();var parentUpdatedText=new Date(parentUpdated).toLocaleString("en-IN",{timeZone:"Asia/Kolkata",day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})+" IST";
     var currentFee=d.currentFee&&typeof d.currentFee==="object"?Object.assign({},d.currentFee):null;
-    // Correct first-cycle display for a student joining today: fee is due on
-    // the joining date, not the following month's anniversary.
+    // Correct the first fee cycle from the student's joining date, even when
+    // the parent payload does not include a currentFee summary.
     var joinedDate=String(d.joined||"");
-    var feeTodayISO=new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Kolkata"});
-    if(currentFee && /^\d{4}-\d{2}-\d{2}$/.test(joinedDate) &&
-       joinedDate.slice(0,7)===feeTodayISO.slice(0,7) && feeTodayISO>=joinedDate &&
-       Number(currentFee.paid||0)<Number(currentFee.fee||0) &&
-       String(currentFee.dueDate||"")>joinedDate){
-      currentFee.dueDate=joinedDate;
-      currentFee.completedMonth=joinedDate.slice(0,7);
-      currentFee.status="due";
-      currentFee.due=Math.max(0,Number(currentFee.fee||0)-Number(currentFee.paid||0));
-    }
-    // Align the current-month fee history row with the corrected first-cycle summary.
-    if(currentFee && joinedDate.slice(0,7)===feeTodayISO.slice(0,7) && feeTodayISO>=joinedDate){
+    var feeTodayParts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Kolkata",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());
+    var feeTodayMap={};feeTodayParts.forEach(function(p){if(p.type!=="literal")feeTodayMap[p.type]=p.value;});
+    var feeTodayISO=feeTodayMap.year+"-"+feeTodayMap.month+"-"+feeTodayMap.day;
+    var validJoinDate=/^\\d{4}-\\d{2}-\\d{2}$/.test(joinedDate);
+    var firstCycleDue=validJoinDate && joinedDate.slice(0,7)===feeTodayISO.slice(0,7) && feeTodayISO>=joinedDate;
+    if(firstCycleDue){
+      if(currentFee && Number(currentFee.paid||0)<Number(currentFee.fee||0) && String(currentFee.dueDate||"")>joinedDate){
+        currentFee.dueDate=joinedDate;
+        currentFee.completedMonth=joinedDate.slice(0,7);
+        currentFee.status="due";
+        currentFee.due=Math.max(0,Number(currentFee.fee||0)-Number(currentFee.paid||0));
+      }
       fees=fees.map(function(row){
-        if(row && String(row.m||"").slice(0,7)===joinedDate.slice(0,7) &&
-           Number(row.paid||0)<Number(row.fee||currentFee.fee||0)){
+        var rowFee=Number(row&&row.fee||0);
+        var rowPaid=Number(row&&row.paid||0);
+        if(row && String(row.m||"").slice(0,7)===joinedDate.slice(0,7) && rowPaid<rowFee){
           return Object.assign({},row,{dueDate:joinedDate,status:"due"});
         }
         return row;
