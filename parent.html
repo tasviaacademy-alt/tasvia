@@ -1005,6 +1005,10 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     var feeTodayParts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Kolkata",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());
     var feeTodayMap={};feeTodayParts.forEach(function(p){if(p.type!=="literal")feeTodayMap[p.type]=p.value;});
     var feeTodayISO=feeTodayMap.year+"-"+feeTodayMap.month+"-"+feeTodayMap.day;
+    // The parent payload may omit d.joined. Use the cycle start as a fallback.
+    if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(joinedDate) && currentFee && /^\\d{4}-\\d{2}-\\d{2}$/.test(String(currentFee.cycleStart||""))){
+      joinedDate=String(currentFee.cycleStart);
+    }
     var validJoinDate=/^\\d{4}-\\d{2}-\\d{2}$/.test(joinedDate);
     var firstCycleDue=validJoinDate && joinedDate.slice(0,7)===feeTodayISO.slice(0,7) && feeTodayISO>=joinedDate;
     if(firstCycleDue){
