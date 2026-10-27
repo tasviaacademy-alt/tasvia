@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-27-v108-regex-fix-join-date">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-27-v109-join-date-fee-status-cache">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -1021,10 +1021,10 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     var validJoinDate=/^\d{4}-\d{2}-\d{2}$/.test(joinedDate);
     var firstCycleDue=validJoinDate && joinedDate.slice(0,7)===feeTodayISO.slice(0,7) && feeTodayISO>=joinedDate;
     if(firstCycleDue){
-      if(currentFee && Number(currentFee.paid||0)<Number(currentFee.fee||0) && String(currentFee.dueDate||"")>joinedDate){
+      if(currentFee && Number(currentFee.paid||0)<Number(currentFee.fee||0)){
         currentFee.dueDate=joinedDate;
         currentFee.completedMonth=joinedDate.slice(0,7);
-        currentFee.status="due";
+        currentFee.status="due";currentFee.nextDueDate="";
         currentFee.due=Math.max(0,Number(currentFee.fee||0)-Number(currentFee.paid||0));
       }
       fees=fees.map(function(row){
