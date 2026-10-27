@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-27-v105-joining-date-scope-fix">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-27-v106-join-date-attendance-filter">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -955,7 +955,7 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     var yr=d.yr&&typeof d.yr==="object"?d.yr:{};
     var yp=Number(yr.p)||0,ya=Number(yr.a)||0,yt=yp+ya,ypct=yt?Math.round(yp*100/yt):0;
     // Absent dates are synchronized from staff attendance as d.abs.
-    var absentDates=Array.isArray(d.abs)?d.abs.filter(function(x){return /^\d{4}-\d{2}-\d{2}$/.test(String(x));}).sort().reverse():[];
+    var allAbsentDates=Array.isArray(d.abs)?d.abs.filter(function(x){return /^\d{4}-\d{2}-\d{2}$/.test(String(x));}).sort().reverse():[];var joinedISO=String(d.joined||d.joiningDate||d.joining||"").trim();if(!/^\d{4}-\d{2}-\d{2}$/.test(joinedISO)&&/^\d{4}-\d{2}-\d{2}$/.test(String(d.currentFee&&d.currentFee.cycleStart||"")))joinedISO=String(d.currentFee.cycleStart);var absentDates=joinedISO?allAbsentDates.filter(function(x){return x>=joinedISO;}):allAbsentDates.slice();var preJoinAbsences=joinedISO?allAbsentDates.filter(function(x){return x<joinedISO;}):[];if(joinedISO){ma=Math.max(0,ma-preJoinAbsences.filter(function(x){return x.slice(0,7)===cm;}).length);ya=Math.max(0,ya-preJoinAbsences.length);mt=mp+ma;mpct=mt?Math.round(mp*100/mt):0;yt=yp+ya;ypct=yt?Math.round(yp*100/yt):0;}
     var absentRows=absentDates.map(function(x){
       var dt=new Date(x+"T00:00:00");
       var label=isNaN(dt.getTime())?x:dt.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
