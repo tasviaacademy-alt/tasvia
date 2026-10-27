@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-27-v109-join-date-fee-status-cache">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-27-v110-qr-due-today">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -1068,7 +1068,7 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
         dueText=isNaN(dt.getTime())?dd:dt.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
       }
       // A cycle remains current through its due date; it becomes overdue the next day.
-      var isFutureDue=/^\d{4}-\d{2}-\d{2}$/.test(dd) && feeTodayISO<=dd;
+      var isFutureDue=/^\d{4}-\d{2}-\d{2}$/.test(dd) && feeTodayISO<dd;
       var feeState=f?(isFutureDue?"Upcoming "+money(f):"Due "+money(f)):"Paid";
       return "<tr><td>"+esc(x.m||"")+(dueText?"<small style='display:block;margin-top:4px;color:#667085'>Due date: "+esc(dueText)+"</small>":"")+"</td><td>"+(f?"<b class='"+(isFutureDue?"":"due")+"'>"+esc(feeState)+"</b>":"<b class='paid'>Paid</b>")+"</td></tr>";
     }).join("");
@@ -1077,7 +1077,7 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     var feeTotalDue=fees.reduce(function(sum,x){
       var dd=x&&x.dueDate?String(x.dueDate):"";
       var f=Math.max(0,(Number(x&&x.fee)||0)-(Number(x&&x.paid)||0));
-      var overdue=!dd || (/^\d{4}-\d{2}-\d{2}$/.test(dd) && feeTodayISO>dd);
+      var overdue=!dd || (/^\d{4}-\d{2}-\d{2}$/.test(dd) && feeTodayISO>=dd);
       return sum+(f&&overdue?f:0);
     },0);
     var feeDetailsQr=centreUpi&&feeTotalDue>0?"upi://pay?pa="+encodeURIComponent(centreUpi)+"&pn="+encodeURIComponent("TASVIA Academy")+"&am="+encodeURIComponent(feeTotalDue.toFixed(2))+"&cu=INR":"";
