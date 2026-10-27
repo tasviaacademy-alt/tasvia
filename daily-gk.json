@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-10-27",
+  "date": "2026-10-28",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-telangana-festival",
-      "category": "Telangana GK",
-      "q": "Which floral festival is widely associated with Telangana?",
-      "a": "Bathukamma.",
+      "id": "static-gk-closest-planet-sun",
+      "category": "Astronomy",
+      "q": "Which planet is closest to the Sun?",
+      "a": "Mercury.",
       "options": [
-        "Onam.",
-        "Bathukamma.",
-        "Pongal.",
-        "Bihu."
+        "Earth.",
+        "Mercury.",
+        "Mars.",
+        "Venus."
       ]
     },
     {
-      "id": "static-gk-prime-meridian",
+      "id": "static-science-red-planet",
+      "category": "Science & Space",
+      "q": "Which planet is commonly called the Red Planet?",
+      "a": "Mars.",
+      "options": [
+        "Mercury.",
+        "Jupiter.",
+        "Venus.",
+        "Mars."
+      ]
+    },
+    {
+      "id": "static-world-equator",
       "category": "World Geography",
-      "q": "What is the line of longitude at 0 degrees called?",
-      "a": "The Prime Meridian.",
+      "q": "What is the imaginary line that divides Earth into the Northern and Southern Hemispheres?",
+      "a": "The Equator.",
       "options": [
+        "The Arctic Circle.",
         "The Tropic of Cancer.",
-        "The Equator.",
-        "The International Date Line.",
-        "The Prime Meridian."
+        "The Prime Meridian.",
+        "The Equator."
       ]
     },
     {
-      "id": "static-gk-national-song",
-      "category": "National Symbols",
-      "q": "Who wrote India's national song, Vande Mataram?",
-      "a": "Bankim Chandra Chattopadhyay.",
+      "id": "static-india-republic-day",
+      "category": "Indian Polity",
+      "q": "Which day is celebrated as India's Republic Day?",
+      "a": "26 January.",
       "options": [
-        "Rabindranath Tagore.",
-        "Subhas Chandra Bose.",
-        "Bankim Chandra Chattopadhyay.",
-        "Sarojini Naidu."
+        "14 November.",
+        "2 October.",
+        "15 August.",
+        "26 January."
       ]
     },
     {
-      "id": "static-gk-computer-keyboard",
-      "category": "Computers",
-      "q": "Which device is mainly used to type text into a computer?",
-      "a": "Keyboard.",
+      "id": "static-gk-konark-state",
+      "category": "Indian Geography & Heritage",
+      "q": "In which Indian state is the Sun Temple at Konark located?",
+      "a": "Odisha.",
       "options": [
-        "Printer.",
-        "Keyboard.",
-        "Speaker.",
-        "Monitor."
-      ]
-    },
-    {
-      "id": "static-gk-si-force",
-      "category": "Physics",
-      "q": "What is the SI unit of force?",
-      "a": "Newton.",
-      "options": [
-        "Watt.",
-        "Pascal.",
-        "Joule.",
-        "Newton."
+        "Gujarat.",
+        "Kerala.",
+        "Odisha.",
+        "Rajasthan."
       ]
     }
   ]

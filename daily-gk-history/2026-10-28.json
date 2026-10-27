@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-10-28",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-gk-closest-planet-sun",
+      "category": "Astronomy",
+      "q": "Which planet is closest to the Sun?",
+      "a": "Mercury.",
+      "options": [
+        "Earth.",
+        "Mercury.",
+        "Mars.",
+        "Venus."
+      ]
+    },
+    {
+      "id": "static-science-red-planet",
+      "category": "Science & Space",
+      "q": "Which planet is commonly called the Red Planet?",
+      "a": "Mars.",
+      "options": [
+        "Mercury.",
+        "Jupiter.",
+        "Venus.",
+        "Mars."
+      ]
+    },
+    {
+      "id": "static-world-equator",
+      "category": "World Geography",
+      "q": "What is the imaginary line that divides Earth into the Northern and Southern Hemispheres?",
+      "a": "The Equator.",
+      "options": [
+        "The Arctic Circle.",
+        "The Tropic of Cancer.",
+        "The Prime Meridian.",
+        "The Equator."
+      ]
+    },
+    {
+      "id": "static-india-republic-day",
+      "category": "Indian Polity",
+      "q": "Which day is celebrated as India's Republic Day?",
+      "a": "26 January.",
+      "options": [
+        "14 November.",
+        "2 October.",
+        "15 August.",
+        "26 January."
+      ]
+    },
+    {
+      "id": "static-gk-konark-state",
+      "category": "Indian Geography & Heritage",
+      "q": "In which Indian state is the Sun Temple at Konark located?",
+      "a": "Odisha.",
+      "options": [
+        "Gujarat.",
+        "Kerala.",
+        "Odisha.",
+        "Rajasthan."
+      ]
+    }
+  ]
+}
