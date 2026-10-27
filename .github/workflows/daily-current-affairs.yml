@@ -60,17 +60,25 @@ jobs:
           if not today_archive.exists() or json.loads(today_archive.read_text(encoding="utf-8")) != daily:
               raise SystemExit("Today's Current Affairs file and dated archive do not match.")
 
-          seen = set()
+          # Match the generator's rolling 14-day duplicate window. Older stories may
+          # legitimately recur when there is a genuinely new development.
+          seen = {}
+          today_date = datetime.strptime(today, "%Y-%m-%d").date()
+          checked_archives = 0
           for path in sorted(Path("current-affairs-history").glob("*.json")):
+              archive_date = datetime.strptime(path.stem, "%Y-%m-%d").date()
+              if (today_date - archive_date).days > 14:
+                  continue
               data = json.loads(path.read_text(encoding="utf-8"))
-              if not data.get("date") or not data.get("items"):
+              if data.get("date") != path.stem or not data.get("items"):
                   raise SystemExit(f"{path}: invalid/empty archive")
               for item in data["items"]:
                   key = norm(item.get("title"))
-                  if key in seen:
-                      raise SystemExit(f"Repeated current-affairs story detected: {item.get('title')}")
-                  seen.add(key)
-          print(f"Validated today's content and {len(seen)} unique archived current-affairs stories.")
+                  if key in seen and seen[key] != path.stem:
+                      raise SystemExit(f"Repeated current-affairs story in recent archives: {item.get('title')}")
+                  seen[key] = path.stem
+              checked_archives += 1
+          print(f"Validated today's content and {len(seen)} unique stories across {checked_archives} recent archives.")
           PY
 
       - name: Commit changes
