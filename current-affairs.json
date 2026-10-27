@@ -1,69 +1,69 @@
 {
-  "date": "2026-10-26",
+  "date": "2026-10-27",
   "month": "October 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
-      "category": "Weather",
-      "icon": "🌦️",
-      "title": "Cyclone Arnab may bring severe weather to Andhra Pradesh and Odisha",
-      "text": "The India Meteorological Department warned that a system over the Bay of Bengal could intensify into a very severe cyclonic storm before approaching the Andhra Pradesh coast near Bapatla and Visakhapatnam on 28 October. Forecasts warned of heavy rain, strong winds and possible landslides in parts of Odisha; the storm's track and intensity may still change.",
-      "source": "Financial Express, 2026-10-26",
-      "url": "https://www.financialexpress.com/india-news/cyclone-arnab-odisha-andhra-brace-for-heavy-rainfall-strong-wind-impact-and-landslide-risk/4369430/"
+      "category": "Science & Technology",
+      "icon": "🔬",
+      "title": "ESTIC 2026 brings India's emerging technology priorities to New Delhi",
+      "text": "The Emerging Science, Technology and Innovation Conclave runs from 27 to 29 October at Bharat Mandapam in New Delhi. The Prime Minister is scheduled to inaugurate it at 5:30 p.m. Discussions cover 12 areas, including artificial intelligence, biotechnology, advanced materials, manufacturing, healthcare, energy, climate and ocean sciences. The exhibition is expected to feature about 150 deep-tech startup stalls.",
+      "source": "Prime Minister's Office, 2026-10-26",
+      "url": "https://www.pmindia.gov.in/en/news_updates/pm-to-inaugurate-emerging-science-technology-and-innovation-conclave-2026-on-27-october/?comment=disable"
+    },
+    {
+      "category": "Education",
+      "icon": "🎓",
+      "title": "CBSE summit focuses on school-to-work transition and digital skills",
+      "text": "The Central Board of Secondary Education and the Sahodaya School Complexes of Delhi/NCR are organising the fourth National Summit on Facilitating School-to-Work Transition in New Delhi on 26 and 27 October. School leaders, educators, industry experts and policymakers are discussing digital skills, career guidance and ways to help students move from school education into employment.",
+      "source": "The Times of India, 2026-10-27",
+      "url": "https://timesofindia.indiatimes.com/education/news/cbse-national-summit-2026-focus-on-school-to-work-transition-digital-skills-and-career-guidance/articleshow/135223402.cms"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "India extends RELIEF support scheme for exporters until March 2027",
+      "text": "The Commerce and Industry Ministry has extended the Resilience & Logistics Intervention for Export Facilitation (RELIEF) scheme until 31 March 2027. It is intended to support exporters affected by geopolitical disruptions in West Asia and related shipping and insurance difficulties. Under one component, the Export Credit Guarantee Corporation provides 95% risk coverage for eligible shipments to specified destinations.",
+      "source": "The Indian Express, 2026-10-27",
+      "url": "https://indianexpress.com/article/business/economy/relief-scheme-extension-west-asia-exporters-10937820/"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏏",
+      "title": "Jharkhand association asks BCCI to review disputed under-19 women's match",
+      "text": "The Jharkhand Cricket Association has lodged a complaint with the Board of Control for Cricket in India after a disputed one-run result in a women's under-19 match against Uttarakhand in Nagpur. Jharkhand alleges that a scorer's error may have affected the result and says the match may have ended in a tie. The report did not include a response from the BCCI.",
+      "source": "The Times of India, 2026-10-27",
+      "url": "https://timesofindia.indiatimes.com/sports/cricket/news/one-run-defeat-sparks-controversy-bcci-receives-complaint-over-scorers-blunder/articleshow/135223278.cms"
     },
     {
       "category": "Sports",
       "icon": "🏆",
-      "title": "Devdutt Padikkal falls one run short of a double century for India A",
-      "text": "Playing New Zealand A in the first unofficial Test at Bert Sutcliffe Oval in Lincoln, Devdutt Padikkal was dismissed for 199 after facing 248 balls. He had resumed the day on 56 not out, reached his century in 128 balls and shared a 215-run third-wicket partnership with Sai Sudharsan, who scored 92.",
-      "source": "The Indian Express, 2026-10-26",
-      "url": "https://indianexpress.com/article/sports/cricket/devdutt-padikkal-century-career-best-score-india-vs-new-zealand-a-10936727/"
-    },
-    {
-      "category": "Sports",
-      "icon": "🏆",
-      "title": "India Women defeat Zimbabwe by 121 runs to clinch ODI series",
-      "text": "India posted 328 for six in the second women's ODI at Vadodara, led by Harmanpreet Kaur's 126 and Deepti Sharma's unbeaten 106. Zimbabwe were dismissed for 207 in 48.5 overs, giving India a 121-run win and an unassailable 2–0 lead in the three-match series.",
-      "source": "International Cricket Council, 2026-10-25",
-      "url": "https://www.icc-cricket.com/matches/270973/india-vs-zimbabwe"
-    },
-    {
-      "category": "Culture",
-      "icon": "🎨",
-      "title": "Indian painter Jogen Chowdhury dies in Kolkata at age 87",
-      "text": "Modern Indian artist and former Rajya Sabha member Jogen Chowdhury died in Kolkata on 25 October at the age of 87, following a prolonged illness. He was known for distinctive line work and for blending traditional Indian imagery with contemporary styles. His career included art education, exhibitions and public service.",
-      "source": "The Indian Express, 2026-10-25",
-      "url": "https://indianexpress.com/article/lifestyle/art-and-culture/artist-jogen-chowdhury-dead-10935955/"
-    },
-    {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "Operation Trident targets an international narcotics network across northeast India",
-      "text": "The Narcotics Control Bureau and partner agencies carried out coordinated raids on 23 October across Assam, Mizoram and Manipur. The operation led to 18 arrests, the freezing of 1,424 bank accounts and the seizure of cash and other items while investigators traced alleged trafficking and hawala networks across borders.",
-      "source": "The Indian Express, 2026-10-26",
-      "url": "https://indianexpress.com/article/india/amit-shah-operation-trident-narcotics-cartel-raids-10936646/"
+      "title": "India seek to extend their T20I lead against New Zealand in Wellington",
+      "text": "India and New Zealand are scheduled to play the third T20 International on 27 October in Wellington. India leads the five-match series 2–0 after winning the second match by four wickets in Christchurch. Tilak Varma scored an unbeaten 51 from 26 balls in that chase. A win in the third match would give India an unassailable series lead.",
+      "source": "Jansatta, 2026-10-27",
+      "url": "https://www.jansatta.com/khel/cricket/ind-vs-nz-3rd-t20i-live-streaming-tv-channel-where-to-watch-india-vs-new-zealand-cricket-match-wellington/4761652/"
     }
   ],
   "quiz": [
     {
-      "q": "Near which Andhra Pradesh coastal stretch could Cyclone Arnab approach on 28 October, according to the forecast?",
-      "a": "Between Bapatla and Visakhapatnam"
+      "q": "How many thematic areas are planned for discussion at ESTIC 2026?",
+      "a": "12 thematic areas"
     },
     {
-      "q": "What score did Devdutt Padikkal make against New Zealand A?",
-      "a": "199 runs"
+      "q": "What is the main focus of the CBSE National Summit held on 26–27 October?",
+      "a": "Facilitating School-to-Work Transition"
     },
     {
-      "q": "By how many runs did India Women defeat Zimbabwe in the second ODI?",
-      "a": "121 runs"
+      "q": "Until what date has the RELIEF support scheme been extended?",
+      "a": "31 March 2027"
     },
     {
-      "q": "How old was painter Jogen Chowdhury when he died?",
-      "a": "87 years"
+      "q": "Which cricket board was asked to review the disputed under-19 women's match result?",
+      "a": "Board of Control for Cricket in India (BCCI)"
     },
     {
-      "q": "How many arrests were reported during Operation Trident?",
-      "a": "18 people"
+      "q": "What was India's series lead before the third T20I against New Zealand?",
+      "a": "2–0"
     }
   ]
 }
