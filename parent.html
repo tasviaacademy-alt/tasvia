@@ -2045,6 +2045,8 @@ function renderLocalNizamabadNews(body){
       h+='</div>';
     }else if(latestItems.length){
       var cats=["All","Nizamabad","Government","Education","Public Safety","Agriculture","Sports"];
+      var importantCount=latestItems.filter(function(x){return /official notice|school|exam|admission|scholarship|collector|district administration|alert|warning|closure|safety|emergency/i.test(String(x.title||""))||(/official|district administration/i.test(String(x.source||""))&&/notice|announcement|order|alert/i.test(String(x.title||"")))}).length;
+      if(importantCount)h+='<div class="section-note" role="status" style="border-left:4px solid #C43D4B;background:#FFF7F7"><b>🔔 Important updates to review: '+importantCount+'</b><br>These headlines were flagged by keywords, not officially verified. Confirm dates and instructions with the original publisher or government website.</div>';
       h+='<h3 style="margin:16px 0 8px">Latest headlines</h3><div id="localNewsFilters" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">';
       cats.forEach(function(c){h+='<button type="button" data-news-category="'+esc(c)+'" class="btn '+(activeCategory===c?'gold':'')+'" style="padding:7px 10px;font-size:12px">'+esc(c)+'</button>'});
       h+='</div><div id="localNewsCards" class="learning-grid">';
