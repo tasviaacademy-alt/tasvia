@@ -1048,17 +1048,28 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     }
     // The current cycle is based on the student's joining-date anniversary, not
     // the calendar-month row. Sep 8–Oct 8 is the September cycle.
-    var feeAmt=currentFee ? (Number(currentFee.fee)||0) : (fee ? (Number(fee.fee)||0) : 0);
-    var paid=currentFee ? (Number(currentFee.paid)||0) : (fee ? (Number(fee.paid)||0) : 0);
-    var due=currentFee ? Math.max(0,Number(currentFee.due)||0) : (fee ? Math.max(0,feeAmt-paid) : 0);
-    // If a legacy/currentFee payload omits or inconsistently zeros "due", derive it from fee minus paid.
-    if(currentFee && due===0 && feeAmt>paid)due=Math.max(0,feeAmt-paid);
-    var feePaid=currentFee ? (currentFee.status==="paid" && due<=0) : (!!fee&&due<=0);
-    var feeUpcoming=currentFee ? (currentFee.status==="upcoming" && due>0) : (!!fee&&fee.status==="upcoming");
+    // Use the monthly fee saved in the staff student profile when a legacy parentView
+    // document has a missing or zero currentFee/fee-row amount.
+    var profileFee=Math.max(0,Number(d.fee)||0);
+    var feeAmt=(currentFee&&Number(currentFee.fee)>0)?Number(currentFee.fee):((fee&&Number(fee.fee)>0)?Number(fee.fee):profileFee);
+    var paid=currentFee ? Math.max(0,Number(currentFee.paid)||0) : (fee ? Math.max(0,Number(fee.paid)||0) : 0);
+    var due=currentFee ? Math.max(0,Number(currentFee.due)||0) : Math.max(0,feeAmt-paid);
+    // Legacy summaries may have a zero due despite a valid fee amount.
+    if(due===0 && feeAmt>paid && !(currentFee&&currentFee.status==="paid"))due=Math.max(0,feeAmt-paid);
+    var feePaid=(currentFee&&currentFee.status==="paid"&&due<=0) || (!!fee&&feeAmt>0&&due<=0&&paid>=feeAmt);
+    var feeUpcoming=(currentFee&&currentFee.status==="upcoming"&&due>0) || (!!fee&&fee.status==="upcoming");
     var feeLabel=feeAmt<=0?"Not Set":(feePaid?"Paid":(feeUpcoming?"Upcoming":"Not Paid"));
     var feeDate=feeAmt<=0?"Not set":(feePaid
       ? (currentFee&&currentFee.nextDueDate?String(currentFee.nextDueDate):(fee&&fee.dueDate?String(fee.dueDate):""))
       : (currentFee&&currentFee.dueDate?String(currentFee.dueDate):(fee&&fee.dueDate?String(fee.dueDate):"")));
+    // If old parent data lacks a fee-cycle date, derive the next anniversary from
+    // the student's recorded joining date instead of displaying "Not set".
+    if(!feeDate && feeAmt>0 && validJoinDate){
+      var joinDay=Number(joinedDate.slice(8,10));
+      var dueYear=Number(feeTodayISO.slice(0,4)),dueMonth=Number(feeTodayISO.slice(5,7))-1;
+      var dueDay=Math.min(joinDay,new Date(dueYear,dueMonth+1,0).getDate());
+      feeDate=dueYear+"-"+String(dueMonth+1).padStart(2,"0")+"-"+String(dueDay).padStart(2,"0");
+    }
     if(!feeDate)feeDate="Not set";
     var feeClass=feeAmt<=0?"":(feePaid?"paid":(feeUpcoming?"upcoming":"notpaid"));
     var testRows=tests.slice(0,12).map(function(x){
