@@ -4,7 +4,8 @@ import json
 import re
 import urllib.request
 import xml.etree.ElementTree as ET
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 from urllib.parse import quote
@@ -30,6 +31,9 @@ def main():
         raise RuntimeError("RSS feed did not contain a channel")
     items = []
     seen = set()
+    now = datetime.now(timezone.utc)
+    ist = ZoneInfo("Asia/Kolkata")
+    oldest_allowed = now - timedelta(days=7)
     for item in channel.findall("item"):
         title = clean(item.findtext("title"))
         link = clean(item.findtext("link"))
@@ -40,23 +44,33 @@ def main():
             continue
         seen.add(link)
         try:
-            pub_date = parsedate_to_datetime(pub_raw).astimezone(timezone.utc).isoformat()
+            parsed = parsedate_to_datetime(pub_raw)
+            if parsed.tzinfo is None:
+                parsed = parsed.replace(tzinfo=timezone.utc)
+            published = parsed.astimezone(timezone.utc)
+            # Keep the digest fresh; old stories can remain in the previous file if
+            # the feed temporarily has no recent, usable headlines.
+            if published < oldest_allowed or published > now + timedelta(days=1):
+                continue
+            pub_date = published.isoformat()
+            pub_label = published.astimezone(ist).strftime("%d %b %Y, %I:%M %p IST")
         except Exception:
             pub_date = ""
+            pub_label = pub_raw
         items.append({
             "title": title,
             "url": link,
             "source": source,
             "publishedAt": pub_date,
-            "publishedLabel": pub_raw
+            "publishedLabel": pub_label
         })
         if len(items) >= 15:
             break
     if not items:
         raise RuntimeError("The RSS feed returned no usable headlines; keeping the previous digest")
     data = {
-        "updatedAt": datetime.now(timezone.utc).isoformat(),
-        "updatedDateIST": datetime.now(timezone.utc).astimezone(__import__("zoneinfo").ZoneInfo("Asia/Kolkata")).strftime("%d %b %Y, %I:%M %p IST"),
+        "updatedAt": now.isoformat(),
+        "updatedDateIST": now.astimezone(ist).strftime("%d %b %Y, %I:%M %p IST"),
         "feed": FEED_URL,
         "items": items
     }
