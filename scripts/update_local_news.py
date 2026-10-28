@@ -15,7 +15,7 @@ QUERY = 'Nizamabad Telangana district'
 FEED_URL = "https://news.google.com/rss/search?q=" + quote(QUERY) + "&hl=en-IN&gl=IN&ceid=IN:en"
 
 def clean(value):
-    return re.sub(r"\\s+", " ", (value or "")).strip()
+    return re.sub(r"\s+", " ", (value or "")).strip()
 
 def main():
     request = urllib.request.Request(
@@ -60,7 +60,7 @@ def main():
         "feed": FEED_URL,
         "items": items
     }
-    OUTPUT.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    OUTPUT.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Wrote {len(items)} headlines to {OUTPUT}")
 
 if __name__ == "__main__":
