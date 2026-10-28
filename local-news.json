@@ -1,6 +1,14 @@
 {
-  "updatedAt": null,
-  "updatedDateIST": "Waiting for first successful automatic refresh",
+  "updatedAt": "2026-10-28T03:42:39.017026+00:00",
+  "updatedDateIST": "28 Oct 2026, 09:12 AM IST",
   "feed": "https://news.google.com/rss/search?q=Nizamabad%20Telangana%20district&hl=en-IN&gl=IN&ceid=IN:en",
-  "items": []
+  "items": [
+    {
+      "title": "Nizamabad Rabi Paddy Plan Faces Water Crisis Warning - Urban Acres",
+      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxOWlVpeFg3Vk81YlQ0THlxWmk4ZU5TQjJlcG11S3BDa0NGVWxxQUY5NjAycllTRWs2eGpYOFZRMmVSYzE5d0dfMnhGcGM2VzFqalJsU3gwR0JxaFlPNG1OUkVjNDFXRXExNm5NZFpKOWpINDZCQ2NlRFUxRUhsOHdFMw?oc=5",
+      "source": "Urban Acres",
+      "publishedAt": "2026-10-27T22:18:52+00:00",
+      "publishedLabel": "28 Oct 2026, 03:48 AM IST"
+    }
+  ]
 }
