@@ -1015,8 +1015,8 @@ function buildParentView(s){
   const parentAttStats=(month,from,to)=>{let p=0,a=0;datesOf("att").forEach(d=>{if(joinISO&&d<joinISO)return;if(from?!(d>=from&&d<=to):!d.startsWith(month))return;const v=studentMark(d);if(v==="P")p++;else if(v==="A")a++;});return {p,a,t:p+a,pct:p+a?Math.round(p*100/(p+a)):null};};
   const att={};months.forEach(m=>{const t=parentAttStats(m);att[m]={p:t.p,a:t.a}});
   const yr=parentAttStats("",ay.from,today());
-  const abs=datesOf("att").filter(d=>d>=ay.from&&(!joinISO||d>=joinISO)&&studentMark(d)==="A").sort().reverse();
-  const attendanceDays={};datesOf("att").filter(d=>d>=ay.from&&d<=today()&&(!joinISO||d>=joinISO)).forEach(d=>{const mark=studentMark(d);if(mark==="P"||mark==="A")attendanceDays[d]=mark;});
+  const abs=datesOf("att").filter(d=>d<=today()&&(!joinISO||d>=joinISO)&&studentMark(d)==="A").sort().reverse();
+  const attendanceDays={};datesOf("att").filter(d=>d<=today()&&(!joinISO||d>=joinISO)).forEach(d=>{const mark=studentMark(d);if(mark==="P"||mark==="A")attendanceDays[d]=mark;});
  const tests=Object.values(S.tests).filter(t=>t.date>=ay.from&&((t.marks&&t.marks[s.id]!=null)||["JNVST-6","JNVST-9","AISSEE-6","AISSEE-9"].includes(t.practicePack))).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,25).map(t=>({d:t.date,s:t.subject,n:t.name,m:t.marks&&t.marks[s.id]!=null?+t.marks[s.id]:null,x:+t.max,e:["JNVST","AISSEE"].includes(t.examType)?t.examType:"",p:["JNVST-6","JNVST-9","AISSEE-6","AISSEE-9"].includes(t.practicePack)?t.practicePack:"",h:!!(t.marks&&t.marks[s.id]!=null)}));
   // Payment history is the source of truth for parent fee status.
   // A payment belongs to the fee period when its explicit month matches OR its
