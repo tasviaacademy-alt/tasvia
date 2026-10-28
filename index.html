@@ -1952,7 +1952,7 @@ function restoreBackupFile(){
         }
       }
       if(c.info&&c.info.centre)await db.doc("info/centre").set(c.info.centre,{merge:true});
-      toast("Backup restored successfully");scheduleRender();
+      toast("Backup restored successfully");pvCache={};try{localStorage.removeItem("tasvia-pv")}catch(e){}scheduleRender();schedulePV(true);
     }catch(e){console.error("restore backup",e);toast(e&&e.message==="Invalid backup"?"Invalid TASVIA backup file":"Restore failed")}
   };
   inp.click();
