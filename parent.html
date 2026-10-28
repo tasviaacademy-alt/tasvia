@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-28-v115-nizamabad-local-news">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-28-v116-daily-nizamabad-news">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -2021,22 +2021,35 @@ function renderLocalNizamabadNews(body){
     {name:"Oneindia Telugu · Nizamabad",url:"https://telugu.oneindia.com/news/nizamabad/",note:"Telugu news updates"},
     {name:"Official Nizamabad District",url:"https://nizamabad.telangana.gov.in/",note:"Official notices and district announcements"}
   ];
-  var h='<div class="learning-meta"><span class="learning-pill">📍 NIZAMABAD · LOCAL NEWS</span><span>Source-linked headlines</span></div>'+
-    '<div class="section-note"><b>Stay informed about your city.</b> These links open news publishers directly. Headlines and publication times can change, so check the source for the latest updates.</div>'+
-    '<div class="learning-grid" style="margin-top:12px">';
-  sources.forEach(function(x){h+='<section class="learning-card" style="border-left:4px solid #D7B44C"><h4>'+learningEsc(x.name)+'</h4><p>'+learningEsc(x.note)+'</p><a class="btn gold" href="'+learningEsc(x.url)+'" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:7px">View Latest Headlines ↗</a></section>'});
-  h+='</div><h3 style="margin:18px 0 8px">Recently reported local stories</h3><div class="section-note">Reported on 25–27 October 2026; these are recent examples, not a live-updating feed.</div>';
-  var stories=[
-    {date:"27 Oct 2026",title:"Indalwai: A lorry carrying toor dal overturns on the national highway",telugu:"ఇందల్వాయి దగ్గర జాతీయ రహదారిపై కందిపప్పు లారీ బోల్తా",url:"https://public.app/district/news-in-nizamabad"},
-    {date:"27 Oct 2026",title:"Dichpally: An elderly woman’s body found in Rajeswar Cheruvu",telugu:"ఘన్‌పూర్‌లో వృద్ధురాలి మృతదేహం రాజరాజేశ్వర చెరువులో లభ్యం",url:"https://public.app/district/news-in-nizamabad"},
-    {date:"26 Oct 2026",title:"Nizamabad Rural: NHM employees submit a petition to the MLA",telugu:"NHM ఉద్యోగుల సమ్మెపై ఎమ్మెల్యే భూపతి రెడ్డికి వినతిపత్రం",url:"https://public.app/district/news-in-nizamabad"},
-    {date:"26 Oct 2026",title:"Nizamabad South: BJP announces protest over Madhavanagar ROB delay",telugu:"మాధవనగర్ ROB పనుల జాప్యంపై నిరసన దీక్ష ప్రకటన",url:"https://public.app/district/news-in-nizamabad"},
-    {date:"27 Oct 2026",title:"Ayyappa devotees begin a sacred journey to Sabarimala",telugu:"నిజామాబాద్ నుంచి శబరిమలకు అయ్యప్ప భక్తుల పాదయాత్ర ప్రారంభం",url:"https://www.thehansindia.com/news/cities/nizamabad"}
-  ];
-  h+='<div class="learning-grid">';
-  stories.forEach(function(x){h+='<article class="learning-card"><div class="learning-meta"><span class="learning-pill">'+learningEsc(x.date)+'</span><span>Local</span></div><h4 style="margin-top:8px">'+learningEsc(x.title)+'</h4><p style="font-family:system-ui,sans-serif">'+learningEsc(x.telugu)+'</p><a class="btn" href="'+learningEsc(x.url)+'" target="_blank" rel="noopener noreferrer">Read at Source ↗</a></article>'});
-  h+='</div><p style="font-size:12px;color:var(--muted);margin-top:12px">TASVIA Academy provides links for awareness and education. News belongs to its original publishers; please verify details from the source.</p>';
-  body.innerHTML=h;
+  function safeUrl(value){try{var u=new URL(value);return /^https?:$/.test(u.protocol)?u.href:"#"}catch(_){return "#"}}
+  function render(data){
+    var items=Array.isArray(data&&data.items)?data.items:[];
+    var updated=String(data&&data.updatedDateIST||"");
+    var h='<div class="learning-meta"><span class="learning-pill">📍 NIZAMABAD · LOCAL NEWS</span><span>Daily automatic headlines</span></div>'+
+      '<div class="section-note"><b>Stay informed about your city.</b> Headlines refresh automatically once a day from Google News RSS search results. Tap a headline to read the original publisher’s report.</div>'+
+      '<div class="learning-meta" style="margin-top:12px"><span class="learning-pill">Last updated</span><span>'+learningEsc(updated||"Waiting for first refresh")+'</span></div>';
+    if(items.length){
+      h+='<div class="learning-grid" style="margin-top:12px">';
+      items.forEach(function(x){
+        var url=safeUrl(x.url);
+        h+='<article class="learning-card"><div class="learning-meta"><span class="learning-pill">'+learningEsc(x.source||"News")+'</span></div><h4 style="margin-top:8px">'+learningEsc(x.title||"Local news headline")+'</h4>'+
+          (x.publishedLabel?'<p class="sub">'+learningEsc(x.publishedLabel)+'</p>':"")+
+          '<a class="btn" href="'+learningEsc(url)+'" target="_blank" rel="noopener noreferrer">Read Full Story ↗</a></article>';
+      });
+      h+='</div>';
+    }else{
+      h+='<div class="section-note" style="margin-top:12px">The first automatic news refresh is pending. Please use the trusted source links below in the meantime.</div>';
+    }
+    h+='<h3 style="margin:20px 0 8px">Trusted Nizamabad news sources</h3><div class="learning-grid">';
+    sources.forEach(function(x){h+='<section class="learning-card" style="border-left:4px solid #D7B44C"><h4>'+learningEsc(x.name)+'</h4><p>'+learningEsc(x.note)+'</p><a class="btn gold" href="'+learningEsc(x.url)+'" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:7px">Open News ↗</a></section>'});
+    h+='</div><p style="font-size:12px;color:var(--muted);margin-top:12px">News headlines are collected from Google News search results and link to publishers. TASVIA Academy does not own or independently verify news reports.</p>';
+    body.innerHTML=h;
+  }
+  body.innerHTML='<div class="section-note">Loading latest Nizamabad headlines…</div>';
+  fetch("./local-news.json?v=2026-10-28-daily-news&ts="+Date.now(),{cache:"no-store"})
+    .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json()})
+    .then(render)
+    .catch(function(){render({items:[],updatedDateIST:"Feed temporarily unavailable"});});
 }
 
 // Learning sections are loaded directly by the active parent-section overlay.
