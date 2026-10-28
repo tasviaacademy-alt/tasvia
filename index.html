@@ -1194,7 +1194,7 @@ async function syncPV(){
         }catch(e){console.warn("authoritative fee refresh",id,e)}
         let v;
         try{
-          v=buildParentView({id,...st,pcode:code});
+          v=buildParentView({...st,id,pcode:code});
         }catch(err){
           console.warn("parent view build failed",id,err);
           const i=info();
