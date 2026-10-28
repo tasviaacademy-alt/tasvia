@@ -1,6 +1,42 @@
 {
-  "updatedAt": "",
-  "updatedDateIST": "News feed is being prepared",
+  "updatedAt": "2026-10-28T01:30:00Z",
+  "updatedDateIST": "28 Oct 2026 · initial headlines",
   "feed": "https://news.google.com/rss/search?q=Nizamabad+Telangana+district&hl=en-IN&gl=IN&ceid=IN:en",
-  "items": []
+  "items": [
+    {
+      "title": "Indalwai: Lorry carrying toor dal overturns on the national highway",
+      "url": "https://public.app/district/news-in-nizamabad",
+      "source": "Public App · Nizamabad",
+      "publishedAt": "2026-10-27",
+      "publishedLabel": "27 Oct 2026"
+    },
+    {
+      "title": "Dichpalle: Body of an elderly woman found in Rajeswar Cheruvu",
+      "url": "https://public.app/district/news-in-nizamabad",
+      "source": "Public App · Nizamabad",
+      "publishedAt": "2026-10-27",
+      "publishedLabel": "27 Oct 2026"
+    },
+    {
+      "title": "Ayyappa devotees set out on a sacred journey to Sabarimala",
+      "url": "https://www.thehansindia.com/news/cities/nizamabad",
+      "source": "The Hans India · Nizamabad",
+      "publishedAt": "2026-10-27",
+      "publishedLabel": "27 Oct 2026"
+    },
+    {
+      "title": "Nizamabad district updates and latest Telugu headlines",
+      "url": "https://www.ntnews.com/nizamabad",
+      "source": "Namasthe Telangana",
+      "publishedAt": "",
+      "publishedLabel": "Latest publisher feed"
+    },
+    {
+      "title": "Official Nizamabad district notices and announcements",
+      "url": "https://nizamabad.telangana.gov.in/",
+      "source": "Nizamabad District Administration",
+      "publishedAt": "",
+      "publishedLabel": "Official website"
+    }
+  ]
 }
