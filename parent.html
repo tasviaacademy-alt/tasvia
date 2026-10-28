@@ -948,8 +948,10 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     if(joiningDateParts.length===3&&joiningDateParts[0].length===4&&joiningDateParts[1].length===2&&joiningDateParts[2].length===2){var joiningDateObj=new Date(Number(joiningDateParts[0]),Number(joiningDateParts[1])-1,Number(joiningDateParts[2]));joiningDateText=new Intl.DateTimeFormat("en-IN",{day:"2-digit",month:"short",year:"numeric"}).format(joiningDateObj);}
     var photo=(typeof d.photo==="string"&&/^data:image\/jpeg;base64,/.test(d.photo))?d.photo:"";
     var att=d.att&&typeof d.att==="object"?d.att:{};
-    var months=Object.keys(att).filter(function(k){return /^\d{4}-\d{2}$/.test(k);}).sort().reverse();
-    var cm=months[0]||"";
+    // The overview represents the current month in India, not merely the latest month with saved records.
+    var attendanceMonthParts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Kolkata",year:"numeric",month:"2-digit"}).formatToParts(new Date());
+    var attendanceMonthMap={};attendanceMonthParts.forEach(function(p){if(p.type!=="literal")attendanceMonthMap[p.type]=p.value;});
+    var cm=attendanceMonthMap.year+"-"+attendanceMonthMap.month;
     var a=att[cm]&&typeof att[cm]==="object"?att[cm]:{};
     var mp=Number(a.p)||0,ma=Number(a.a)||0,mt=mp+ma,mpct=mt?Math.round(mp*100/mt):0;
     var yr=d.yr&&typeof d.yr==="object"?d.yr:{};
@@ -1079,7 +1081,8 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     var feeTotalDue=fees.reduce(function(sum,x){
       var dd=x&&x.dueDate?String(x.dueDate):"";
       var f=Math.max(0,(Number(x&&x.fee)||0)-(Number(x&&x.paid)||0));
-      var overdue=!dd || (/^\d{4}-\d{2}-\d{2}$/.test(dd) && feeTodayISO>=dd);
+      // Never include an undated fee in the auto-calculated QR total: without a due date we cannot safely classify it as payable now.
+      var overdue=/^\d{4}-\d{2}-\d{2}$/.test(dd) && feeTodayISO>=dd;
       return sum+(f&&overdue?f:0);
     },0);
     var feeDetailsQr=centreUpi&&feeTotalDue>0?"upi://pay?pa="+encodeURIComponent(centreUpi)+"&pn="+encodeURIComponent("TASVIA Academy")+"&am="+encodeURIComponent(feeTotalDue.toFixed(2))+"&cu=INR":"";
