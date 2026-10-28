@@ -957,7 +957,7 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     var yr=d.yr&&typeof d.yr==="object"?d.yr:{};
     var yp=Number(yr.p)||0,ya=Number(yr.a)||0,yt=yp+ya,ypct=yt?Math.round(yp*100/yt):0;
     // Absent dates are synchronized from staff attendance as d.abs.
-    var allAbsentDates=Array.isArray(d.abs)?d.abs.filter(function(x){return /^\d{4}-\d{2}-\d{2}$/.test(String(x));}).sort().reverse():[];var joinedISO=String(d.joined||d.joiningDate||d.joining||"").trim();if(!/^\d{4}-\d{2}-\d{2}$/.test(joinedISO)&&/^\d{4}-\d{2}-\d{2}$/.test(String(d.currentFee&&d.currentFee.cycleStart||"")))joinedISO=String(d.currentFee.cycleStart);var todayAttendanceISO=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Kolkata",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());var absentDates=allAbsentDates.filter(function(x){return x<=todayAttendanceISO&&(!/^\d{4}-\d{2}-\d{2}$/.test(joinedISO)||x>=joinedISO);});var attendanceMarkMap={};Object.keys(d.attendanceDays&&typeof d.attendanceDays==="object"?d.attendanceDays:{}).forEach(function(x){if(!/^\d{4}-\d{2}-\d{2}$/.test(x)||x>todayAttendanceISO||(/^\d{4}-\d{2}-\d{2}$/.test(joinedISO)&&x<joinedISO))return;var raw=d.attendanceDays[x],v=raw&&typeof raw==="object"?(raw.status||raw.mark||raw.value||raw.attendance||""):raw;v=String(v==null?"":v).trim().toUpperCase();if(["P","PRESENT","1","TRUE"].indexOf(v)>=0)attendanceMarkMap[x]="P";else if(["A","ABSENT","0","FALSE"].indexOf(v)>=0)attendanceMarkMap[x]="A";});absentDates.forEach(function(x){if(!attendanceMarkMap[x])attendanceMarkMap[x]="A";});yp=0;ya=0;Object.keys(attendanceMarkMap).forEach(function(x){if(attendanceMarkMap[x]==="P")yp++;else if(attendanceMarkMap[x]==="A")ya++;});yt=yp+ya;ypct=yt?Math.round(yp*100/yt):0;var validMonthMarks=Object.keys(attendanceMarkMap).filter(function(x){return x.slice(0,7)===cm;});if(validMonthMarks.length){mp=0;ma=0;validMonthMarks.forEach(function(x){if(attendanceMarkMap[x]==="P")mp++;else if(attendanceMarkMap[x]==="A")ma++;});mt=mp+ma;mpct=mt?Math.round(mp*100/mt):0;}
+    var allAbsentDates=Array.isArray(d.abs)?d.abs.filter(function(x){return /^\d{4}-\d{2}-\d{2}$/.test(String(x));}).sort().reverse():[];var joinedISO=String(d.joined||d.joiningDate||d.joining||"").trim();if(!/^\d{4}-\d{2}-\d{2}$/.test(joinedISO)&&/^\d{4}-\d{2}-\d{2}$/.test(String(d.currentFee&&d.currentFee.cycleStart||"")))joinedISO=String(d.currentFee.cycleStart);var todayAttendanceISO=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Kolkata",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());var absentDates=allAbsentDates.filter(function(x){return x<=todayAttendanceISO&&(!/^\d{4}-\d{2}-\d{2}$/.test(joinedISO)||x>=joinedISO);});var attendanceMarkMap={};var attendanceSource=d.attendanceDays&&typeof d.attendanceDays==="object"?Object.assign({},d.attendanceDays):{};if(!Object.keys(attendanceSource).length){[d.attendanceRecords,d.attendanceHistory,d.attendance].forEach(function(src){if(Array.isArray(src))src.forEach(function(row){if(!row||typeof row!=="object")return;var day=String(row.date||row.day||row.d||"").slice(0,10);if(/^\d{4}-\d{2}-\d{2}$/.test(day))attendanceSource[day]=row.status||row.mark||row.value||row.attendance||"";});else if(src&&typeof src==="object")Object.keys(src).forEach(function(k){if(/^\d{4}-\d{2}-\d{2}$/.test(k))attendanceSource[k]=src[k];});});}Object.keys(attendanceSource).forEach(function(x){if(!/^\d{4}-\d{2}-\d{2}$/.test(x)||x>todayAttendanceISO||(/^\d{4}-\d{2}-\d{2}$/.test(joinedISO)&&x<joinedISO))return;var raw=attendanceSource[x],v=raw&&typeof raw==="object"?(raw.status||raw.mark||raw.value||raw.attendance||""):raw;v=String(v==null?"":v).trim().toUpperCase();if(["P","PRESENT","1","TRUE"].indexOf(v)>=0)attendanceMarkMap[x]="P";if(["A","ABSENT","0","FALSE"].indexOf(v)>=0)attendanceMarkMap[x]="A";});absentDates.forEach(function(x){if(!attendanceMarkMap[x])attendanceMarkMap[x]="A";});yp=0;ya=0;Object.keys(attendanceMarkMap).forEach(function(x){if(attendanceMarkMap[x]==="P")yp++;else if(attendanceMarkMap[x]==="A")ya++;});yt=yp+ya;ypct=yt?Math.round(yp*100/yt):0;var validMonthMarks=Object.keys(attendanceMarkMap).filter(function(x){return x.slice(0,7)===cm;});if(validMonthMarks.length){mp=0;ma=0;validMonthMarks.forEach(function(x){if(attendanceMarkMap[x]==="P")mp++;else if(attendanceMarkMap[x]==="A")ma++;});mt=mp+ma;mpct=mt?Math.round(mp*100/mt):0;}
     var absentRows=absentDates.map(function(x){
       var dt=new Date(x+"T00:00:00");
       var label=isNaN(dt.getTime())?x:dt.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
@@ -967,7 +967,24 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     var fees=Array.isArray(d.fees)?d.fees.slice():[];
     // Older parent payloads may carry the current fee summary without a monthly history row.
     if(!fees.length&&currentFee&&Number(currentFee.fee)>0){fees.push({m:String(currentFee.completedMonth||currentFee.cycleStart||current||""),fee:Number(currentFee.fee)||0,paid:Number(currentFee.paid)||0,dueDate:String(currentFee.dueDate||""),status:String(currentFee.status||"")});}
-    var pays=Array.isArray(d.pays)?d.pays.filter(function(p){return p&&Number(p.a)>0&&p.d;}):[];
+    // Restore payment history from current and older parent payload shapes.
+    function normalizeParentPayment(p,key){
+      if(!p||typeof p!=="object")return null;
+      var amount=Number(p.a!=null?p.a:(p.amount!=null?p.amount:(p.paidAmount!=null?p.paidAmount:0)))||0;
+      var date=String(p.d||p.date||p.paidOn||p.paymentDate||"").trim();
+      var month=String(p.m||p.month||p.feeMonth||p.forMonth||"").trim();
+      if(!month&&/^\d{4}-\d{2}-\d{2}$/.test(date))month=date.slice(0,7);
+      if(!(amount>0)||!date)return null;
+      return {m:month||"Fee payment",d:date,a:amount,mode:String(p.mode||p.method||"")};
+    }
+    var pays=[],seenPaymentIds={};
+    function addParentPayment(p,key){var n=normalizeParentPayment(p,key);if(!n)return;var sig=String(key||p.id||"")+"|"+n.d+"|"+n.a+"|"+n.m;if(seenPaymentIds[sig])return;seenPaymentIds[sig]=true;pays.push(n);}
+    if(Array.isArray(d.pays))d.pays.forEach(function(p,i){addParentPayment(p,"payload-"+i);});
+    [d.payments,d.paymentHistory,d.paymentRecords,d.feePayments,d.fees&&d.fees.payments].forEach(function(source){
+      if(Array.isArray(source))source.forEach(function(p,i){addParentPayment(p,"legacy-"+i);});
+      else if(source&&typeof source==="object")Object.keys(source).forEach(function(k){var p=source[k];if(p&&typeof p==="object")addParentPayment(p,k);});
+    });
+    pays.sort(function(a,b){return String(b.d).localeCompare(String(a.d));});
     var hw=[];
     if(Array.isArray(d.hw)) hw=d.hw;
     else if(d.hw&&typeof d.hw==="object") Object.keys(d.hw).forEach(function(k){var x=d.hw[k];if(x&&typeof x==="object")hw.push(Object.assign({d:k},x));});
@@ -1098,6 +1115,8 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
       var overdue=/^\d{4}-\d{2}-\d{2}$/.test(dd) && feeTodayISO>=dd;
       return sum+(f&&overdue?f:0);
     },0);
+    // If legacy fee rows are absent, use the current overdue balance for the Fee Details QR.
+    if(feeTotalDue<=0&&due>0&&/^\d{4}-\d{2}-\d{2}$/.test(String(feeDate))&&feeTodayISO>=String(feeDate))feeTotalDue=due;
     var feeDetailsQr=centreUpi&&feeTotalDue>0?"upi://pay?pa="+encodeURIComponent(centreUpi)+"&pn="+encodeURIComponent("TASVIA Academy")+"&am="+encodeURIComponent(feeTotalDue.toFixed(2))+"&cu=INR":"";
     var feeDetailsPay=feeDetailsQr?'<div class="fee-details-pay"><div class="fee-qr-wrap"><img class="fee-qr" alt="Fee payment QR code" src="https://quickchart.io/qr?size=220&text='+encodeURIComponent(feeDetailsQr)+'"><div class="fee-qr-note">Scan to pay total due • '+money(feeTotalDue)+'</div></div><div class="fee-popup-pay"><a class="gold" href="'+feeDetailsQr+'">Pay Now</a></div></div>':"";
     window.__tasviaParentCode=code;
@@ -1229,7 +1248,7 @@ document.body.innerHTML=
 
     // Show the popup only once the monthly fee cycle has actually reached its due date.
     // Do not show it during the active month before the student's joining-date anniversary.
-    var popupDueDate=currentFee&&currentFee.dueDate?String(currentFee.dueDate):(fee&&fee.dueDate?String(fee.dueDate):"");
+    var popupDueDate=currentFee&&currentFee.dueDate?String(currentFee.dueDate):(fee&&fee.dueDate?String(fee.dueDate):(validJoinDate?feeDate:""));
     var todayISO=feeTodayISO;
     // The first fee is due on the joining date itself. For later monthly cycles,
     // preserve the existing rule: Sep 8–Oct 8 is paid through Oct 8, and overdue from Oct 9.
