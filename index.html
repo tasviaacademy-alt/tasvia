@@ -1058,7 +1058,10 @@ function buildParentView(s){
     .filter(p=>p.m||p.d)
     .sort((a,b)=>String(b.d||"").localeCompare(String(a.d||"")));
   const hw=homeworkListForStudent(s);
-  return {studentId:s.id,name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,att,yr:{p:yr.p,a:yr.a},abs,attendanceDays,tests,fees,pays,hw,currentFee,pin:String(s.pin||""),
+  return {studentId:s.id,name:s.name,cls:s.cls,board:s.board||"",lang:langOf(s),year:ay.label,
+    // Publish canonical profile fields so the parent portal can show the same joining date and monthly fee as the staff dashboard.
+    joined:String(s.joined||""),joiningDate:String(s.joined||""),fee:Math.max(0,Number(s.fee)||0),
+    att,yr:{p:yr.p,a:yr.a},abs,attendanceDays,tests,fees,pays,hw,currentFee,pin:String(s.pin||""),
     centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||"",upi:i.upi||DEFAULT_INFO.upi||""}};
 }
 async function syncParentHomeworkForStudent(sid,savedDate,savedEntry){
@@ -1209,6 +1212,9 @@ async function syncPV(){
             board:v.board||st.board||"",
             lang:v.lang||langOf(st),
             year:v.year||acYear(today()).label,
+            joined:String(v.joined||st.joined||""),
+            joiningDate:String(v.joiningDate||v.joined||st.joined||""),
+            fee:Math.max(0,Number(v.fee!==undefined?v.fee:st.fee)||0),
             att:v.att||{},
             yr:v.yr||{p:0,a:0},
             abs:Array.isArray(v.abs)?v.abs:[],
@@ -1248,6 +1254,9 @@ async function syncPV(){
               board:v.board||st.board||"",
               lang:v.lang||langOf(st),
               year:v.year||acYear(today()).label,
+              joined:String(v.joined||st.joined||""),
+              joiningDate:String(v.joiningDate||v.joined||st.joined||""),
+              fee:Math.max(0,Number(v.fee!==undefined?v.fee:st.fee)||0),
               att:v.att||{},
               yr:v.yr||{p:0,a:0},
               abs:Array.isArray(v.abs)?v.abs:[],
