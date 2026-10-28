@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-10-28",
+  "date": "2026-10-29",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-gk-closest-planet-sun",
-      "category": "Astronomy",
-      "q": "Which planet is closest to the Sun?",
-      "a": "Mercury.",
+      "id": "static-gk-transpiration",
+      "category": "Plant Science",
+      "q": "What is the process called in which plants release water vapour mainly through their leaves?",
+      "a": "Transpiration.",
       "options": [
-        "Earth.",
-        "Mercury.",
-        "Mars.",
-        "Venus."
+        "Transpiration.",
+        "Fertilisation.",
+        "Germination.",
+        "Pollination."
       ]
     },
     {
-      "id": "static-science-red-planet",
+      "id": "static-environment-tree-gas",
+      "category": "Environment",
+      "q": "Which gas do green plants absorb from the air during photosynthesis?",
+      "a": "Carbon dioxide.",
+      "options": [
+        "Oxygen.",
+        "Carbon dioxide.",
+        "Nitrogen.",
+        "Hydrogen."
+      ]
+    },
+    {
+      "id": "static-gk-human-heart",
+      "category": "Human Body",
+      "q": "How many chambers does the human heart have?",
+      "a": "Four.",
+      "options": [
+        "Four.",
+        "Two.",
+        "Three.",
+        "Five."
+      ]
+    },
+    {
+      "id": "static-telangana-capital-city",
+      "category": "Telangana GK",
+      "q": "Which city is known as the capital of Telangana?",
+      "a": "Hyderabad.",
+      "options": [
+        "Hyderabad.",
+        "Khammam.",
+        "Warangal.",
+        "Nizamabad."
+      ]
+    },
+    {
+      "id": "static-gk-solar-system-sun",
       "category": "Science & Space",
-      "q": "Which planet is commonly called the Red Planet?",
-      "a": "Mars.",
+      "q": "Which star is at the centre of our solar system?",
+      "a": "The Sun.",
       "options": [
-        "Mercury.",
-        "Jupiter.",
-        "Venus.",
-        "Mars."
-      ]
-    },
-    {
-      "id": "static-world-equator",
-      "category": "World Geography",
-      "q": "What is the imaginary line that divides Earth into the Northern and Southern Hemispheres?",
-      "a": "The Equator.",
-      "options": [
-        "The Arctic Circle.",
-        "The Tropic of Cancer.",
-        "The Prime Meridian.",
-        "The Equator."
-      ]
-    },
-    {
-      "id": "static-india-republic-day",
-      "category": "Indian Polity",
-      "q": "Which day is celebrated as India's Republic Day?",
-      "a": "26 January.",
-      "options": [
-        "14 November.",
-        "2 October.",
-        "15 August.",
-        "26 January."
-      ]
-    },
-    {
-      "id": "static-gk-konark-state",
-      "category": "Indian Geography & Heritage",
-      "q": "In which Indian state is the Sun Temple at Konark located?",
-      "a": "Odisha.",
-      "options": [
-        "Gujarat.",
-        "Kerala.",
-        "Odisha.",
-        "Rajasthan."
+        "Alpha Centauri.",
+        "Sirius.",
+        "Polaris.",
+        "The Sun."
       ]
     }
   ]

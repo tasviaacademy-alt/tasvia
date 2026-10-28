@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-10-29",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-gk-transpiration",
+      "category": "Plant Science",
+      "q": "What is the process called in which plants release water vapour mainly through their leaves?",
+      "a": "Transpiration.",
+      "options": [
+        "Transpiration.",
+        "Fertilisation.",
+        "Germination.",
+        "Pollination."
+      ]
+    },
+    {
+      "id": "static-environment-tree-gas",
+      "category": "Environment",
+      "q": "Which gas do green plants absorb from the air during photosynthesis?",
+      "a": "Carbon dioxide.",
+      "options": [
+        "Oxygen.",
+        "Carbon dioxide.",
+        "Nitrogen.",
+        "Hydrogen."
+      ]
+    },
+    {
+      "id": "static-gk-human-heart",
+      "category": "Human Body",
+      "q": "How many chambers does the human heart have?",
+      "a": "Four.",
+      "options": [
+        "Four.",
+        "Two.",
+        "Three.",
+        "Five."
+      ]
+    },
+    {
+      "id": "static-telangana-capital-city",
+      "category": "Telangana GK",
+      "q": "Which city is known as the capital of Telangana?",
+      "a": "Hyderabad.",
+      "options": [
+        "Hyderabad.",
+        "Khammam.",
+        "Warangal.",
+        "Nizamabad."
+      ]
+    },
+    {
+      "id": "static-gk-solar-system-sun",
+      "category": "Science & Space",
+      "q": "Which star is at the centre of our solar system?",
+      "a": "The Sun.",
+      "options": [
+        "Alpha Centauri.",
+        "Sirius.",
+        "Polaris.",
+        "The Sun."
+      ]
+    }
+  ]
+}
