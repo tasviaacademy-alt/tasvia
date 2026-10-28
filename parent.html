@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-28-v118-local-news-dashboard-alerts">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-28-v119-button-polish">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -2511,5 +2511,199 @@ table td{border-color:#E8EDF4!important}
   .dash-stat:hover,.dash-actions .action-detail:hover{transform:none!important}
 }
 </style>
+
+<style id="tasvia-parent-button-polish-v1">
+/* TASVIA button system — consistent, accessible, mobile-friendly. */
+:root{
+  --tasvia-navy:#0B2455;
+  --tasvia-navy-deep:#071A3D;
+  --tasvia-gold:#F2AC10;
+  --tasvia-gold-light:#FFE39A;
+  --tasvia-ink:#182136;
+  --tasvia-line:#D8E0EB;
+  --tasvia-focus:#C58A00;
+}
+button:not(.action-summary),
+.btn,
+.upi-app,
+.fee-popup-pay a,
+a.install-home-btn,
+a.welcome-enter{
+  box-sizing:border-box;
+  min-height:44px;
+  border-radius:12px!important;
+  font-family:inherit;
+  font-weight:750!important;
+  line-height:1.25;
+  letter-spacing:.005em;
+  box-shadow:0 3px 9px rgba(11,36,85,.075);
+  transition:transform .16s ease,box-shadow .16s ease,filter .16s ease,border-color .16s ease;
+  touch-action:manipulation;
+}
+button:not(.action-summary),
+.btn{
+  cursor:pointer;
+}
+button:not(.action-summary):hover,
+.btn:hover,
+.upi-app:hover,
+.fee-popup-pay a:hover{
+  filter:brightness(1.025);
+  box-shadow:0 7px 17px rgba(11,36,85,.14);
+  transform:translateY(-1px);
+}
+button:not(.action-summary):active,
+.btn:active,
+.upi-app:active,
+.fee-popup-pay a:active{
+  transform:translateY(0) scale(.985);
+  box-shadow:0 2px 5px rgba(11,36,85,.1);
+}
+button:not(.action-summary):focus-visible,
+.btn:focus-visible,
+.upi-app:focus-visible,
+.fee-popup-pay a:focus-visible,
+a.install-home-btn:focus-visible{
+  outline:3px solid var(--tasvia-focus)!important;
+  outline-offset:3px!important;
+  box-shadow:0 0 0 5px rgba(242,172,16,.18)!important;
+}
+button:disabled,
+button[disabled],
+.btn[aria-disabled="true"]{
+  cursor:not-allowed!important;
+  opacity:.55!important;
+  transform:none!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:10px 16px;
+  text-align:center;
+  text-decoration:none!important;
+  border:1px solid rgba(11,36,85,.12);
+  background:linear-gradient(145deg,#173A75,#0B2455);
+  color:#fff;
+}
+.btn.gold,
+button.gold,
+.fee-popup-pay a.gold,
+a.gold{
+  background:linear-gradient(135deg,#FFE39A 0%,#F2AC10 54%,#D99500 100%);
+  border-color:#D7A22A!important;
+  color:#1A1405!important;
+  box-shadow:0 4px 12px rgba(213,166,71,.22);
+}
+button.action-summary{
+  box-shadow:none;
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+}
+button.action-summary:focus-visible{
+  outline:3px solid var(--tasvia-focus)!important;
+  outline-offset:3px!important;
+}
+.practice-btn,
+.gk-switch,
+.bodmas-level,
+.eg-option,
+.quiz-option,
+.german-meaning,
+.german-answer,
+.german-complete,
+.hw-complete-btn,
+.receipt-download-btn,
+.receipt-all-btn,
+.fee-popup-close,
+#tasviaOverlayBack,
+#tasviaPracticeExit{
+  min-height:44px!important;
+  border-radius:12px!important;
+  font-weight:700!important;
+}
+.practice-btn,
+.gk-switch,
+.bodmas-level,
+.eg-option,
+.quiz-option,
+.german-answer{
+  box-shadow:0 2px 7px rgba(11,36,85,.055);
+}
+.bodmas-level{padding:9px 10px!important}
+.bodmas-level.active{
+  background:linear-gradient(135deg,#173A75,#0B2455)!important;
+  color:#fff!important;
+  border-color:#0B2455!important;
+  box-shadow:0 5px 12px rgba(11,36,85,.18)!important;
+}
+.hw-complete-btn{padding:9px 12px!important}
+.fee-popup-close{
+  padding:10px 16px!important;
+  background:#F3F5F9!important;
+  border:1px solid #D8E0EB!important;
+  color:#24334D!important;
+}
+.fee-popup-pay a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:132px;
+  padding:11px 18px;
+  text-decoration:none!important;
+  font-weight:800!important;
+}
+.upi-app{
+  display:flex!important;
+  align-items:center;
+  justify-content:center;
+  padding:10px 8px!important;
+  border:1px solid #D8E0EB!important;
+  background:linear-gradient(145deg,#fff,#F7F9FC)!important;
+  color:#182136!important;
+}
+#localNewsEnglish,#localNewsTelugu,[data-news-category]{
+  min-height:40px!important;
+  padding:9px 13px!important;
+  border-radius:999px!important;
+}
+#localNewsEnglish.gold,#localNewsTelugu.gold,[data-news-category].gold{
+  background:linear-gradient(135deg,#FFE39A,#F2AC10)!important;
+  border-color:#D7A22A!important;
+  color:#1A1405!important;
+}
+#tasviaPracticeAgain,#tasviaPracticeClose,#tasviaPracticeSubmit{
+  min-height:46px!important;
+  border-radius:13px!important;
+  box-shadow:0 5px 14px rgba(11,36,85,.16);
+}
+#tasviaPracticeExit{
+  min-width:44px;
+  min-height:44px!important;
+}
+@media(max-width:560px){
+  button:not(.action-summary),.btn,.upi-app,.fee-popup-pay a{
+    max-width:100%;
+    overflow-wrap:anywhere;
+  }
+  .btn{padding:10px 13px}
+  #localNewsEnglish,#localNewsTelugu,[data-news-category]{
+    padding:8px 11px!important;
+    font-size:12px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  button:not(.action-summary),.btn,.upi-app,.fee-popup-pay a{
+    transition:none!important;
+    scroll-behavior:auto!important;
+  }
+  button:not(.action-summary):hover,.btn:hover,.upi-app:hover,.fee-popup-pay a:hover{
+    transform:none!important;
+  }
+}
+</style>
+
 </body>
 </html>
