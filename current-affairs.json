@@ -1,69 +1,69 @@
 {
-  "date": "2026-10-27",
+  "date": "2026-10-28",
   "month": "October 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
-      "category": "Science & Technology",
-      "icon": "🔬",
-      "title": "ESTIC 2026 brings India's emerging technology priorities to New Delhi",
-      "text": "The Emerging Science, Technology and Innovation Conclave runs from 27 to 29 October at Bharat Mandapam in New Delhi. The Prime Minister is scheduled to inaugurate it at 5:30 p.m. Discussions cover 12 areas, including artificial intelligence, biotechnology, advanced materials, manufacturing, healthcare, energy, climate and ocean sciences. The exhibition is expected to feature about 150 deep-tech startup stalls.",
-      "source": "Prime Minister's Office, 2026-10-26",
-      "url": "https://www.pmindia.gov.in/en/news_updates/pm-to-inaugurate-emerging-science-technology-and-innovation-conclave-2026-on-27-october/?comment=disable"
+      "category": "Sports",
+      "icon": "🏏",
+      "title": "India clinches T20I series in New Zealand after Abhishek Sharma's 113",
+      "text": "India beat New Zealand by six wickets in the third T20 International in Wellington on 27 October, chasing a target of 199 in 13.2 overs. Abhishek Sharma scored 113 from 38 balls, reaching his century in 35 deliveries, while 15-year-old Vaibhav Sooryavanshi made 45. The win gave India an unassailable 3–0 lead with two matches remaining.",
+      "source": "Reuters, 2026-10-27",
+      "url": "https://www.reuters.com/sports/cricket/abhishek-ton-flattens-new-zealand-india-seal-t20-series-2026-10-27/"
     },
     {
-      "category": "Education",
-      "icon": "🎓",
-      "title": "CBSE summit focuses on school-to-work transition and digital skills",
-      "text": "The Central Board of Secondary Education and the Sahodaya School Complexes of Delhi/NCR are organising the fourth National Summit on Facilitating School-to-Work Transition in New Delhi on 26 and 27 October. School leaders, educators, industry experts and policymakers are discussing digital skills, career guidance and ways to help students move from school education into employment.",
-      "source": "The Times of India, 2026-10-27",
-      "url": "https://timesofindia.indiatimes.com/education/news/cbse-national-summit-2026-focus-on-school-to-work-transition-digital-skills-and-career-guidance/articleshow/135223402.cms"
+      "category": "Weather & Public Safety",
+      "icon": "🌧️",
+      "title": "Schools in eight Odisha districts scheduled to close as Cyclone Arnab approaches",
+      "text": "Schools in eight Odisha districts were scheduled to remain closed on Wednesday, 28 October, as very severe Cyclone Arnab approached the east coast. The India Meteorological Department issued an orange alert for several districts and forecast 12–20 cm of rain in some areas. Authorities prepared evacuations and shelters; families were advised to follow official district notices for local closure and travel guidance.",
+      "source": "The Indian Express, 2026-10-28",
+      "url": "https://indianexpress.com/article/education/cyclone-arnab-odisha-school-closure-october-28-imd-alert-10939035/"
     },
     {
       "category": "Economy",
-      "icon": "💹",
-      "title": "India extends RELIEF support scheme for exporters until March 2027",
-      "text": "The Commerce and Industry Ministry has extended the Resilience & Logistics Intervention for Export Facilitation (RELIEF) scheme until 31 March 2027. It is intended to support exporters affected by geopolitical disruptions in West Asia and related shipping and insurance difficulties. Under one component, the Export Credit Guarantee Corporation provides 95% risk coverage for eligible shipments to specified destinations.",
-      "source": "The Indian Express, 2026-10-27",
-      "url": "https://indianexpress.com/article/business/economy/relief-scheme-extension-west-asia-exporters-10937820/"
+      "icon": "📈",
+      "title": "Indian shares face a weaker opening as oil rises and Jio IPO draws attention",
+      "text": "Reuters reported on 28 October that Indian shares were expected to open lower as rising oil prices weighed on investor sentiment ahead of the US Federal Reserve decision. Jio Platforms' $3.2 billion IPO attracted $77 billion in bids and was expected to make the company one of India's largest listed firms by market value. The report also noted a weaker GIFT Nifty indication.",
+      "source": "Reuters, 2026-10-28",
+      "url": "https://www.reuters.com/world/india/indian-shares-set-lower-open-oil-rise-jio-market-debut-focus-2026-10-28/"
     },
     {
-      "category": "Sports",
-      "icon": "🏏",
-      "title": "Jharkhand association asks BCCI to review disputed under-19 women's match",
-      "text": "The Jharkhand Cricket Association has lodged a complaint with the Board of Control for Cricket in India after a disputed one-run result in a women's under-19 match against Uttarakhand in Nagpur. Jharkhand alleges that a scorer's error may have affected the result and says the match may have ended in a tie. The report did not include a response from the BCCI.",
-      "source": "The Times of India, 2026-10-27",
-      "url": "https://timesofindia.indiatimes.com/sports/cricket/news/one-run-defeat-sparks-controversy-bcci-receives-complaint-over-scorers-blunder/articleshow/135223278.cms"
+      "category": "Economy",
+      "icon": "💱",
+      "title": "Raghuram Rajan cautions India against using up reserves to defend a rupee level",
+      "text": "Former Reserve Bank of India Governor Raghuram Rajan told Reuters that India should avoid exhausting foreign-exchange reserves to defend a specific rupee exchange rate. He said moderate depreciation can support exports, while high oil prices, US Treasury yields and foreign equity outflows have put pressure on the currency. He also warned that expensive oil can widen India's current-account deficit.",
+      "source": "Reuters, 2026-10-27",
+      "url": "https://www.reuters.com/world/india/india-should-not-deplete-reserves-defend-rupee-ex-rbi-chief-rajan-says-2026-10-27/"
     },
     {
-      "category": "Sports",
-      "icon": "🏆",
-      "title": "India seek to extend their T20I lead against New Zealand in Wellington",
-      "text": "India and New Zealand are scheduled to play the third T20 International on 27 October in Wellington. India leads the five-match series 2–0 after winning the second match by four wickets in Christchurch. Tilak Varma scored an unbeaten 51 from 26 balls in that chase. A win in the third match would give India an unassailable series lead.",
-      "source": "Jansatta, 2026-10-27",
-      "url": "https://www.jansatta.com/khel/cricket/ind-vs-nz-3rd-t20i-live-streaming-tv-channel-where-to-watch-india-vs-new-zealand-cricket-match-wellington/4761652/"
+      "category": "Science & Technology",
+      "icon": "🔬",
+      "title": "PM Modi highlights India's science and technology progress at New Delhi conclave",
+      "text": "At a science conclave in New Delhi on Tuesday, Prime Minister Narendra Modi praised India's achievements in science and technology, describing the country as advancing with a new vision, a changed mindset and renewed self-confidence. The Emerging Science, Technology and Innovation Conclave brings researchers, policymakers, industry leaders and startups together to discuss emerging technologies and India's research priorities.",
+      "source": "The Times of India, 2026-10-28",
+      "url": "https://timesofindia.indiatimes.com/india/india-progressing-with-new-vision-confidence-pm-modi-at-science-conclave/articleshow/135236852.cms"
     }
   ],
   "quiz": [
     {
-      "q": "How many thematic areas are planned for discussion at ESTIC 2026?",
-      "a": "12 thematic areas"
+      "q": "How many runs did Abhishek Sharma score in the third T20I against New Zealand?",
+      "a": "113 runs off 38 balls"
     },
     {
-      "q": "What is the main focus of the CBSE National Summit held on 26–27 October?",
-      "a": "Facilitating School-to-Work Transition"
+      "q": "How many Odisha districts were reported to have school closures on 28 October because of Cyclone Arnab?",
+      "a": "Eight districts"
     },
     {
-      "q": "Until what date has the RELIEF support scheme been extended?",
-      "a": "31 March 2027"
+      "q": "How much did Jio Platforms' IPO attract in bids, according to Reuters?",
+      "a": "$77 billion"
     },
     {
-      "q": "Which cricket board was asked to review the disputed under-19 women's match result?",
-      "a": "Board of Control for Cricket in India (BCCI)"
+      "q": "What did former RBI Governor Raghuram Rajan advise India not to exhaust while defending a rupee level?",
+      "a": "Foreign-exchange reserves"
     },
     {
-      "q": "What was India's series lead before the third T20I against New Zealand?",
-      "a": "2–0"
+      "q": "In which city did Prime Minister Narendra Modi attend the science conclave?",
+      "a": "New Delhi"
     }
   ]
 }
