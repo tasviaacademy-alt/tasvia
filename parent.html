@@ -1184,7 +1184,7 @@ document.body.innerHTML=
       '<header class="dash-head"><div class="dash-head-inner">'+photoHtml+'<div><div class="dash-name">'+esc(name)+'</div><div class="dash-class">'+(cls?(cls.toLowerCase().indexOf("class ")===0?esc(cls):"Class "+esc(cls)):"Class not specified")+(year?" · Academic Year "+esc(year):"")+(joiningDateText?'<div class="dash-joining-date" style="margin-top:5px;color:#F2D27A;font-size:14px;font-weight:700">📅 Joining Date: '+esc(joiningDateText)+'</div>':'<div class="dash-joining-date" style="margin-top:5px;color:#FFE3A0;font-size:13px;font-weight:700">⚠️ Joining date not recorded — please contact TASVIA Academy</div>')+'</div><div id="tasviaLiveDateTime" style="margin-top:9px;font-size:15px;font-weight:600;color:#F2D27A;letter-spacing:.15px" aria-live="polite"></div></div></div></header>'+
       '<main class="dash-main">'+
       '<section class="dash-summary"><h2 class="dash-title">📊 Parent Dashboard</h2><div class="dash-stats">'+
-      '<div class="dash-stat"><b>'+ypct+'%</b><small>Attendance</small></div>'+
+      '<div class="dash-stat"><b>'+(yt?ypct+"%":"—")+'</b><small>'+(yt?"Attendance":"Attendance · No records")+'</small></div>'+
       '<div class="dash-stat"><b>'+testAvg+'</b><small>Test Average</small></div>'+
       '<div class="dash-stat"><b class="'+feeClass+'">'+feeLabel+'</b><small>'+(feePaid?"Next due":"Due date")+' · '+esc(feeDate)+'</small></div>'+
       '</div></section>'+
