@@ -1047,14 +1047,16 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     var feeAmt=currentFee ? (Number(currentFee.fee)||0) : (fee ? (Number(fee.fee)||0) : 0);
     var paid=currentFee ? (Number(currentFee.paid)||0) : (fee ? (Number(fee.paid)||0) : 0);
     var due=currentFee ? Math.max(0,Number(currentFee.due)||0) : (fee ? Math.max(0,feeAmt-paid) : 0);
-    var feePaid=currentFee ? currentFee.status==="paid" : (!!fee&&due<=0);
-    var feeUpcoming=currentFee ? currentFee.status==="upcoming" : (!!fee&&fee.status==="upcoming");
-    var feeLabel=feePaid?"Paid":(feeUpcoming?"Upcoming":"Not Paid");
-    var feeDate=feePaid
+    // If a legacy/currentFee payload omits or inconsistently zeros "due", derive it from fee minus paid.
+    if(currentFee && due===0 && feeAmt>paid)due=Math.max(0,feeAmt-paid);
+    var feePaid=currentFee ? (currentFee.status==="paid" && due<=0) : (!!fee&&due<=0);
+    var feeUpcoming=currentFee ? (currentFee.status==="upcoming" && due>0) : (!!fee&&fee.status==="upcoming");
+    var feeLabel=feeAmt<=0?"Not Set":(feePaid?"Paid":(feeUpcoming?"Upcoming":"Not Paid"));
+    var feeDate=feeAmt<=0?"Not set":(feePaid
       ? (currentFee&&currentFee.nextDueDate?String(currentFee.nextDueDate):(fee&&fee.dueDate?String(fee.dueDate):""))
-      : (currentFee&&currentFee.dueDate?String(currentFee.dueDate):(fee&&fee.dueDate?String(fee.dueDate):""));
-    if(!feeDate)feeDate=new Date().toLocaleDateString("en-IN",{month:"short",year:"numeric"});
-    var feeClass=feePaid?"paid":(feeUpcoming?"upcoming":"notpaid");
+      : (currentFee&&currentFee.dueDate?String(currentFee.dueDate):(fee&&fee.dueDate?String(fee.dueDate):"")));
+    if(!feeDate)feeDate="Not set";
+    var feeClass=feeAmt<=0?"":(feePaid?"paid":(feeUpcoming?"upcoming":"notpaid"));
     var testRows=tests.slice(0,12).map(function(x){
       var marks=Number(x.m)||0,max=Number(x.x)||0;
       return "<tr><td>"+esc(x.s||"Test")+" "+esc(x.n||"")+"</td><td>"+marks+(max?"/"+max:"")+"</td></tr>";
