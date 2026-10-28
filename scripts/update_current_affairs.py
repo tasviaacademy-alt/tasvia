@@ -18,10 +18,10 @@ TODAY_HISTORY = HISTORY_DIR / f"{date_str}.json"
 
 QUERIES = [
     ("India", f"India current affairs India government national news after:{two_days_ago}"),
-    ("World", f"world international current affairs after:{yesterday}"),
-    ("Sports", f"India sports latest news after:{yesterday}"),
-    ("Science & Technology", f"India science technology latest news after:{yesterday}"),
-    ("Economy", f"India economy business latest news after:{yesterday}"),
+    ("World", f"world international current affairs after:{two_days_ago}"),
+    ("Sports", f"India sports latest news after:{two_days_ago}"),
+    ("Science & Technology", f"India science technology latest news after:{two_days_ago}"),
+    ("Economy", f"India economy business latest news after:{two_days_ago}"),
 ]
 
 def clean(s):
