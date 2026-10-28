@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-28-v116-daily-nizamabad-news">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-28-v117-local-news-dashboard">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -2015,35 +2015,63 @@ function renderEnglishGrammar(body){
 
 function renderLocalNizamabadNews(body){
   var sources=[
-    {name:"Public App · Nizamabad",url:"https://public.app/district/news-in-nizamabad",note:"Local Telugu news and district updates"},
+    {name:"Public App · Nizamabad",url:"https://public.app/district/news-in-nizamabad",note:"స్థానిక తెలుగు వార్తలు"},
+    {name:"Namasthe Telangana · Nizamabad",url:"https://www.ntnews.com/nizamabad",note:"తెలుగు జిల్లా వార్తలు"},
+    {name:"Oneindia Telugu · Nizamabad",url:"https://telugu.oneindia.com/news/nizamabad/",note:"తెలుగు వార్తల అప్‌డేట్స్"},
     {name:"The Hans India · Nizamabad",url:"https://www.thehansindia.com/news/cities/nizamabad",note:"English local news"},
-    {name:"Namasthe Telangana · Nizamabad",url:"https://www.ntnews.com/nizamabad",note:"Telugu district headlines"},
-    {name:"Oneindia Telugu · Nizamabad",url:"https://telugu.oneindia.com/news/nizamabad/",note:"Telugu news updates"},
-    {name:"Official Nizamabad District",url:"https://nizamabad.telangana.gov.in/",note:"Official notices and district announcements"}
+    {name:"Official Nizamabad District",url:"https://nizamabad.telangana.gov.in/",note:"అధికారిక జిల్లా ప్రకటనలు"}
   ];
+  var activeCategory="All",teluguMode=false,latestItems=[];
   function safeUrl(value){try{var u=new URL(value);return /^https?:$/.test(u.protocol)?u.href:"#"}catch(_){return "#"}}
+  function categoryOf(item){
+    var t=String((item&&item.title)||"").toLowerCase();
+    if(/school|student|exam|education|college|university|admission|scholarship|teacher/.test(t))return "Education";
+    if(/police|crime|accident|road|traffic|safety|fire|court/.test(t))return "Public Safety";
+    if(/government|collector|mla|minister|district administration|official|scheme|municipal|council/.test(t))return "Government";
+    if(/farmer|agriculture|crop|rain|market yard|farm|seed|fertili[sz]er/.test(t))return "Agriculture";
+    if(/sport|cricket|football|tournament|athlete|match|medal/.test(t))return "Sports";
+    return "Nizamabad";
+  }
+  function esc(s){return learningEsc(String(s==null?"":s))}
   function render(data){
-    var items=Array.isArray(data&&data.items)?data.items:[];
+    latestItems=Array.isArray(data&&data.items)?data.items:[];
     var updated=String(data&&data.updatedDateIST||"");
     var h='<div class="learning-meta"><span class="learning-pill">📍 NIZAMABAD · LOCAL NEWS</span><span>Daily automatic headlines</span></div>'+
-      '<div class="section-note"><b>Stay informed about your city.</b> Headlines refresh automatically once a day from Google News RSS search results. Tap a headline to read the original publisher’s report.</div>'+
-      '<div class="learning-meta" style="margin-top:12px"><span class="learning-pill">Last updated</span><span>'+learningEsc(updated||"Waiting for first refresh")+'</span></div>';
-    if(items.length){
-      h+='<div class="learning-grid" style="margin-top:12px">';
-      items.forEach(function(x){
-        var url=safeUrl(x.url);
-        h+='<article class="learning-card"><div class="learning-meta"><span class="learning-pill">'+learningEsc(x.source||"News")+'</span></div><h4 style="margin-top:8px">'+learningEsc(x.title||"Local news headline")+'</h4>'+
-          (x.publishedLabel?'<p class="sub">'+learningEsc(x.publishedLabel)+'</p>':"")+
-          '<a class="btn" href="'+learningEsc(url)+'" target="_blank" rel="noopener noreferrer">Read Full Story ↗</a></article>';
-      });
+      '<div class="section-note"><b>Stay informed about your city.</b> Headlines are refreshed by a daily feed. Stories open at their original publishers. Please verify important notices with official sources.</div>'+
+      '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0"><span class="learning-pill">Last updated: '+esc(updated||"Waiting for first refresh")+'</span><button type="button" id="localNewsEnglish" class="btn '+(!teluguMode?'gold':'')+'" style="padding:8px 12px">English Headlines</button><button type="button" id="localNewsTelugu" class="btn '+(teluguMode?'gold':'')+'" style="padding:8px 12px">తెలుగు వార్తల మూలాలు</button></div>';
+    if(teluguMode){
+      h+='<div class="section-note">తెలుగు వార్తల కోసం క్రింది వార్తా సంస్థలను తెరవండి. వార్తల పూర్తి వివరాలు అసలు ప్రచురణకర్త వెబ్‌సైట్‌లో ఉంటాయి.</div><div class="learning-grid" style="margin-top:12px">';
+      sources.filter(function(x){return /Telangana|Public App|Oneindia Telugu|Official/.test(x.name)}).forEach(function(x){h+='<section class="learning-card"><h4>'+esc(x.name)+'</h4><p>'+esc(x.note)+'</p><a class="btn gold" href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer">వార్తలు చూడండి ↗</a></section>'});
       h+='</div>';
+    }else if(latestItems.length){
+      var cats=["All","Nizamabad","Government","Education","Public Safety","Agriculture","Sports"];
+      h+='<h3 style="margin:16px 0 8px">Latest headlines</h3><div id="localNewsFilters" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">';
+      cats.forEach(function(c){h+='<button type="button" data-news-category="'+esc(c)+'" class="btn '+(activeCategory===c?'gold':'')+'" style="padding:7px 10px;font-size:12px">'+esc(c)+'</button>'});
+      h+='</div><div id="localNewsCards" class="learning-grid">';
+      latestItems.forEach(function(x,i){var cat=categoryOf(x);if(activeCategory!=="All"&&cat!==activeCategory)return;h+='<article class="learning-card" data-news-item="'+i+'"><div class="learning-meta"><span class="learning-pill">'+esc(cat)+'</span><span>'+esc(x.source||"News")+'</span></div><h4 style="margin-top:8px">'+esc(x.title||"Local news headline")+'</h4>'+(x.publishedLabel?'<p class="sub">'+esc(x.publishedLabel)+'</p>':"")+'<a class="btn" href="'+esc(safeUrl(x.url))+'" target="_blank" rel="noopener noreferrer">Read Full Story ↗</a></article>'});
+      h+='</div><h3 style="margin:20px 0 8px">🧠 Daily News Quiz</h3><p class="sub">Answer five questions using the headlines above. This is a reading-comprehension activity, not an official current-affairs exam.</p><div id="localNewsQuiz" class="learning-card"></div>';
     }else{
-      h+='<div class="section-note" style="margin-top:12px">The first automatic news refresh is pending. Please use the trusted source links below in the meantime.</div>';
+      h+='<div class="section-note" style="margin-top:12px">The automatic feed is not available yet. Use the trusted source links below while the feed recovers.</div>';
     }
-    h+='<h3 style="margin:20px 0 8px">Trusted Nizamabad news sources</h3><div class="learning-grid">';
-    sources.forEach(function(x){h+='<section class="learning-card" style="border-left:4px solid #D7B44C"><h4>'+learningEsc(x.name)+'</h4><p>'+learningEsc(x.note)+'</p><a class="btn gold" href="'+learningEsc(x.url)+'" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:7px">Open News ↗</a></section>'});
-    h+='</div><p style="font-size:12px;color:var(--muted);margin-top:12px">News headlines are collected from Google News search results and link to publishers. TASVIA Academy does not own or independently verify news reports.</p>';
+    h+='<h3 style="margin:20px 0 8px">Trusted news sources</h3><div class="learning-grid">';
+    sources.forEach(function(x){h+='<section class="learning-card"><h4>'+esc(x.name)+'</h4><p>'+esc(x.note)+'</p><a class="btn gold" href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:7px">'+(teluguMode?'వెబ్‌సైట్ తెరవండి ↗':'Open News ↗')+'</a></section>'});
+    h+='</div><p style="font-size:12px;color:var(--muted);margin-top:12px">Headlines are discovered through Google News RSS and link to publishers. Category labels are automated estimates. TASVIA Academy does not own or independently verify reports.</p>';
     body.innerHTML=h;
+    var en=document.getElementById("localNewsEnglish"),te=document.getElementById("localNewsTelugu");
+    if(en)en.onclick=function(){teluguMode=false;render(data)};
+    if(te)te.onclick=function(){teluguMode=true;render(data)};
+    body.querySelectorAll("[data-news-category]").forEach(function(btn){btn.onclick=function(){activeCategory=btn.getAttribute("data-news-category");render(data)}});
+    if(!teluguMode&&latestItems.length)buildQuiz();
+  }
+  function buildQuiz(){
+    var target=document.getElementById("localNewsQuiz");if(!target)return;
+    var pool=latestItems.slice(0,Math.min(5,latestItems.length));
+    if(pool.length<2){target.innerHTML='<p>More headlines are needed to create today’s quiz.</p>';return}
+    var qs=pool.map(function(item,i){var correct=categoryOf(item),others=latestItems.filter(function(x){return x!==item});var distractors=[];others.forEach(function(x){var c=categoryOf(x);if(c!==correct&&distractors.indexOf(c)<0)distractors.push(c)});var opts=[correct].concat(distractors.slice(0,3));while(opts.length<4)opts.push(["Government","Education","Public Safety","Nizamabad"].filter(function(c){return opts.indexOf(c)<0})[0]);opts=opts.slice(0,4);for(var j=opts.length-1;j>0;j--){var k=Math.floor(Math.random()*(j+1)),tmp=opts[j];opts[j]=opts[k];opts[k]=tmp}return {title:item.title,correct:correct,options:opts,answer:opts.indexOf(correct)}});
+    var h='<form id="localNewsQuizForm">';
+    qs.forEach(function(q,i){h+='<fieldset style="border:1px solid #E1E7F0;border-radius:12px;padding:12px;margin:10px 0"><legend style="font-weight:700">Q'+(i+1)+'. Which category best fits this headline?</legend><p style="font-size:13px;margin:4px 0 8px">'+esc(q.title)+'</p>'+q.options.map(function(o,j){return '<label style="display:flex;gap:8px;padding:6px;align-items:center"><input type="radio" name="localNewsQ'+i+'" value="'+j+'"> '+esc(o)+'</label>'}).join("")+'</fieldset>'});
+    h+='<button type="submit" class="btn gold">Check My Answers</button><div id="localNewsQuizResult" role="status" aria-live="polite" style="margin-top:10px"></div></form>';target.innerHTML=h;
+    document.getElementById("localNewsQuizForm").onsubmit=function(ev){ev.preventDefault();var score=0;qs.forEach(function(q,i){var chosen=target.querySelector('input[name="localNewsQ'+i+'"]:checked');if(chosen&&Number(chosen.value)===q.answer)score++});var res=document.getElementById("localNewsQuizResult");res.innerHTML='<b>You scored '+score+'/'+qs.length+'.</b> Read the headlines and category labels to improve your news-reading skills.'};
   }
   body.innerHTML='<div class="section-note">Loading latest Nizamabad headlines…</div>';
   fetch("./local-news.json?v=2026-10-28-daily-news&ts="+Date.now(),{cache:"no-store"})
