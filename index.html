@@ -1123,6 +1123,15 @@ async function syncPV(){
     // to 120 diary documents, and a fast snapshot can otherwise rebuild a parent
     // record with an empty homework array and overwrite a valid assignment.
     if(forceWrite){
+      // Refresh authoritative attendance directly from Firestore before rebuilding
+      // parent views. A restored backup or delayed realtime listener must not leave
+      // the parent portal with an empty/stale attendance map.
+      try{
+        const attendanceSnap=await db.collection("attendance").get();
+        const freshAttendance={};
+        attendanceSnap.docs.forEach(doc=>{freshAttendance[doc.id]=doc.data()||{}});
+        S.att=Object.assign({},S.att,freshAttendance);
+      }catch(e){console.warn("authoritative attendance refresh",e)}
       try{
         const diarySnap=await db.collection("diary").orderBy("date","desc").limit(365).get();
         const freshDiary={};
