@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-28-v117-local-news-dashboard">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-10-28-v118-local-news-dashboard-alerts">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -2048,7 +2048,7 @@ function renderLocalNizamabadNews(body){
       h+='<h3 style="margin:16px 0 8px">Latest headlines</h3><div id="localNewsFilters" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">';
       cats.forEach(function(c){h+='<button type="button" data-news-category="'+esc(c)+'" class="btn '+(activeCategory===c?'gold':'')+'" style="padding:7px 10px;font-size:12px">'+esc(c)+'</button>'});
       h+='</div><div id="localNewsCards" class="learning-grid">';
-      latestItems.forEach(function(x,i){var cat=categoryOf(x);if(activeCategory!=="All"&&cat!==activeCategory)return;h+='<article class="learning-card" data-news-item="'+i+'"><div class="learning-meta"><span class="learning-pill">'+esc(cat)+'</span><span>'+esc(x.source||"News")+'</span></div><h4 style="margin-top:8px">'+esc(x.title||"Local news headline")+'</h4>'+(x.publishedLabel?'<p class="sub">'+esc(x.publishedLabel)+'</p>':"")+'<a class="btn" href="'+esc(safeUrl(x.url))+'" target="_blank" rel="noopener noreferrer">Read Full Story ↗</a></article>'});
+      latestItems.forEach(function(x,i){var cat=categoryOf(x);if(activeCategory!=="All"&&cat!==activeCategory)return;var important=/official notice|school|exam|admission|scholarship|collector|district administration|alert|warning|closure|safety|emergency/i.test(String(x.title||""))||(/official|district administration/i.test(String(x.source||""))&&/notice|announcement|order|alert/i.test(String(x.title||"")));h+='<article class="learning-card" data-news-item="'+i+'" style="'+(important?'border-top:3px solid #C43D4B;':'')+'"><div class="learning-meta"><span class="learning-pill">'+esc(cat)+'</span>'+(important?'<span class="learning-pill" style="background:#FCE8E8;color:#9B1C1C">🔴 Important</span>':'')+'<span>'+esc(x.source||"News")+'</span></div><h4 style="margin-top:8px">'+esc(x.title||"Local news headline")+'</h4>'+(x.publishedLabel?'<p class="sub">'+esc(x.publishedLabel)+'</p>':"")+'<a class="btn" href="'+esc(safeUrl(x.url))+'" target="_blank" rel="noopener noreferrer">Read Full Story ↗</a></article>'});
       h+='</div><h3 style="margin:20px 0 8px">🧠 Daily News Quiz</h3><p class="sub">Answer five questions using the headlines above. This is a reading-comprehension activity, not an official current-affairs exam.</p><div id="localNewsQuiz" class="learning-card"></div>';
     }else{
       h+='<div class="section-note" style="margin-top:12px">The automatic feed is not available yet. Use the trusted source links below while the feed recovers.</div>';
