@@ -96,15 +96,48 @@ def fetch_article_summary(link, title):
 def norm_title(s):
     return re.sub(r"[^a-z0-9]+", " ", (s or "").lower()).strip()
 
+TITLE_STOPWORDS = {
+    "a", "an", "the", "and", "or", "to", "of", "for", "in", "on", "at", "from",
+    "by", "with", "as", "is", "are", "was", "were", "be", "after", "before",
+    "how", "why", "what", "who", "when", "where", "this", "that", "these",
+    "those", "its", "their", "new", "latest", "today", "report", "reports",
+    "news", "india", "indian", "cabinet", "approves", "approve", "approved",
+    "clears", "clear", "cleared", "scheme", "crore", "crores", "rs", "rupees",
+    "make", "build", "global", "hub", "base", "boost", "promotion", "cmps",
+    "outlay", "years", "year", "trust", "platform", "together", "business",
+    "standard", "magazine", "trade", "economic", "times", "adda247", "sportscape"
+}
+
+def title_topic_tokens(title):
+    # Google News commonly appends the publisher after a spaced dash.
+    core = re.split(r"\s[-–—|]\s", clean(title), maxsplit=1)[0]
+    return {token for token in norm_title(core).split()
+            if token not in TITLE_STOPWORDS and not token.isdigit() and len(token) > 2}
+
+def similar_story_titles(first, second):
+    if norm_title(first) == norm_title(second):
+        return True
+    a = title_topic_tokens(first)
+    b = title_topic_tokens(second)
+    if len(a) < 2 or len(b) < 2:
+        return False
+    overlap = len(a & b)
+    return overlap >= 2 and overlap / min(len(a), len(b)) >= 0.7
+
 def quality_story(item):
     title = clean(item.get("title", ""))
     summary = clean(item.get("description", item.get("text", "")))
     title_norm = norm_title(title)
     summary_norm = norm_title(summary)
     title_lower = title.casefold()
+    summary_lower = summary.casefold()
     if len(title) < 20 or not title_norm:
         return False
-    if re.search(r"\b(home|current affairs|latest news|live updates|live blog|live stream|fixtures|betting|odds|predictions?|opinion|news feed|watch live)\b", title_lower):
+    if re.search(r"\b(home|current affairs|latest news|live updates|live blog|live stream|fixtures|betting|odds|predictions?|opinion|news feed|watch live|advertorial|sponsored|brand studio|partner content|newsletter|media kit|years of trust)\b", title_lower):
+        return False
+    if re.search(r"comprehensive up.to.date news coverage|aggregated from sources all over the world by google news|click here to read|subscribe to our newsletter", summary_lower):
+        return False
+    if re.search(r"\bwhy .{0,70} is the platform that brings .{0,50} together\b", title_lower):
         return False
     if len(summary) < 90 or not summary_norm:
         return False
@@ -201,7 +234,7 @@ def build_quiz(item):
             "a": answer
         }
 
-    percentage = re.search(r"\b\d+(?:\.\d+)?\s*(?:%|percent|per cent)\b", combined, re.I)
+    percentage = re.search(r"\b\d+(?:\.\d+)?\s*(?:%|percent|per cent)(?![A-Za-z])", combined, re.I)
     if percentage:
         return {
             "q": f"What percentage was reported in the story “{title_context}”?",
@@ -231,6 +264,10 @@ def valid_edition(data):
         return False
     if any(not quality_story(item) for item in items):
         return False
+    titles = [str(item.get("title", "")) for item in items]
+    for i, title in enumerate(titles):
+        if any(similar_story_titles(title, other) for other in titles[i + 1:]):
+            return False
     if any(not str(q.get("q", "")).strip() or not str(q.get("a", "")).strip()
            or str(q.get("q", "")).casefold().startswith("which topic is covered")
            for q in quiz):
@@ -295,8 +332,9 @@ def rss_items(query):
     return out
 
 used_titles = set()
-# Avoid repeating recent stories, but do not permanently exhaust the news feed.
-# A 14-day rolling window preserves freshness while allowing genuinely updated topics later.
+used_title_topics = []
+# Avoid repeating recent stories and near-duplicate coverage, but do not permanently
+# exhaust the news feed. A 14-day rolling window preserves freshness.
 for archive in HISTORY_DIR.glob("*.json"):
     # Do not treat today's invalid archive as a prior story when regenerating it.
     if archive.stem == date_str:
@@ -307,7 +345,9 @@ for archive in HISTORY_DIR.glob("*.json"):
             continue
         old = json.loads(archive.read_text(encoding="utf-8"))
         for item in old.get("items", []):
-            used_titles.add(norm_title(item.get("title")))
+            title = str(item.get("title", ""))
+            used_titles.add(norm_title(title))
+            used_title_topics.append(title)
     except Exception:
         continue
 
@@ -336,28 +376,40 @@ for candidate in all_items:
 selected = []
 category_counts = {}
 selected_titles = set()
+selected_title_texts = []
+
+def can_select_title(title):
+    if norm_title(title) in used_titles:
+        return False
+    if any(similar_story_titles(title, old_title) for old_title in used_title_topics):
+        return False
+    if any(similar_story_titles(title, selected_title) for selected_title in selected_title_texts):
+        return False
+    return True
+
 for candidate, question in quiz_candidates:
     category = candidate["category"]
-    if category_counts.get(category, 0) >= 2:
+    if category_counts.get(category, 0) >= 2 or not can_select_title(candidate["title"]):
         continue
     selected.append((candidate, question))
     selected_titles.add(norm_title(candidate["title"]))
+    selected_title_texts.append(candidate["title"])
     category_counts[category] = category_counts.get(category, 0) + 1
     if len(selected) == 5:
         break
 
 # If the feed is unusually concentrated in one category, fill from remaining
-# factual stories rather than failing solely because of the diversity cap.
+# factual stories, while still excluding repeated topics.
 if len(selected) < 5:
     for candidate, question in quiz_candidates:
         key = norm_title(candidate["title"])
-        if key in selected_titles:
+        if key in selected_titles or not can_select_title(candidate["title"]):
             continue
         selected.append((candidate, question))
         selected_titles.add(key)
+        selected_title_texts.append(candidate["title"])
         if len(selected) == 5:
             break
-
 if len(selected) < 5:
     raise RuntimeError(
         f"Only {len(selected)} recent stories produced factual quiz questions; "
