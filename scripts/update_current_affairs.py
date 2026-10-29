@@ -18,10 +18,14 @@ TODAY_HISTORY = HISTORY_DIR / f"{date_str}.json"
 
 QUERIES = [
     ("India", f"India current affairs India government national news after:{two_days_ago}"),
+    ("Government", f"India government ministry cabinet announcement PIB after:{two_days_ago}"),
     ("World", f"world international current affairs after:{two_days_ago}"),
     ("Sports", f"India sports latest news after:{two_days_ago}"),
-    ("Science & Technology", f"India science technology latest news after:{two_days_ago}"),
-    ("Economy", f"India economy business latest news after:{two_days_ago}"),
+    ("Science & Technology", f"India science technology research latest news after:{two_days_ago}"),
+    ("Economy", f"India economy business markets latest news after:{two_days_ago}"),
+    ("Education", f"India education schools exams policy news after:{two_days_ago}"),
+    ("Health", f"India health research public health latest news after:{two_days_ago}"),
+    ("Environment", f"India environment weather climate latest news after:{two_days_ago}"),
 ]
 
 def clean(s):
@@ -179,6 +183,43 @@ def build_quiz(item):
     if location:
         place = location.group(1)
         return {"q": "In which city or place did the reported event take place?", "a": place}
+
+    # Evidence-based fallback for a story with a clear, explicit quantity.
+    # Answers are copied from the article text, never inferred from the headline.
+    title_context = title.strip()
+    if len(title_context) > 100:
+        title_context = title_context[:97].rsplit(" ", 1)[0] + "…"
+    money = re.search(
+        r"(?:₹|Rs\.?\s*|US\$|USD\s*|\$|€|£)\s*\d[\d,]*(?:\.\d+)?"
+        r"(?:\s*(?:lakh crore|crore|lakh|billion|million|trillion|thousand))?",
+        combined, re.I
+    )
+    if money:
+        answer = clean(money.group(0))
+        return {
+            "q": f"According to the report “{title_context}”, what monetary figure was mentioned?",
+            "a": answer
+        }
+
+    percentage = re.search(r"\b\d+(?:\.\d+)?\s*(?:%|percent|per cent)\b", combined, re.I)
+    if percentage:
+        return {
+            "q": f"What percentage was reported in the story “{title_context}”?",
+            "a": clean(percentage.group(0))
+        }
+
+    count = re.search(
+        r"\b(\d[\d,]*(?:\.\d+)?)\s+"
+        r"(districts?|schools?|students?|people|teams?|runs?|wickets?|states?|countries|"
+        r"athletes|participants|jobs|deaths|injuries|hours?|days?|months?|years?|"
+        r"gigawatts?|kilometres?|kilometers?|villages?|families|workers|projects|companies)\b",
+        combined, re.I
+    )
+    if count:
+        return {
+            "q": f"How many {count.group(2)} were mentioned in the story “{title_context}”?",
+            "a": f"{count.group(1)} {count.group(2)}"
+        }
     return None
 
 def valid_edition(data):
