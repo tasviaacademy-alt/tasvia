@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-10-30",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-gk-telangana-capital",
+      "category": "Telangana GK",
+      "q": "What is the capital city of Telangana?",
+      "a": "Hyderabad.",
+      "options": [
+        "Nizamabad.",
+        "Warangal.",
+        "Karimnagar.",
+        "Hyderabad."
+      ]
+    },
+    {
+      "id": "static-science-sun-star",
+      "category": "Science & Space",
+      "q": "What is the Sun?",
+      "a": "A star.",
+      "options": [
+        "A comet.",
+        "A moon.",
+        "A star.",
+        "A planet."
+      ]
+    },
+    {
+      "id": "static-gk-indian-parliament",
+      "category": "Indian Polity",
+      "q": "What is the lower house of India's Parliament called?",
+      "a": "Lok Sabha.",
+      "options": [
+        "Lok Sabha.",
+        "Rajya Sabha.",
+        "Vidhan Parishad.",
+        "Gram Sabha."
+      ]
+    },
+    {
+      "id": "static-gk-temperature-instrument",
+      "category": "Science",
+      "q": "Which instrument is used to measure temperature?",
+      "a": "A thermometer.",
+      "options": [
+        "A telescope.",
+        "A barometer.",
+        "A compass.",
+        "A thermometer."
+      ]
+    },
+    {
+      "id": "static-india-national-song",
+      "category": "National Symbols",
+      "q": "Who wrote India's national song, Vande Mataram?",
+      "a": "Bankim Chandra Chattopadhyay.",
+      "options": [
+        "Rabindranath Tagore.",
+        "Mahatma Gandhi.",
+        "Sarojini Naidu.",
+        "Bankim Chandra Chattopadhyay."
+      ]
+    }
+  ]
+}
