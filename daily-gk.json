@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-10-30",
+  "date": "2026-10-31",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-gk-telangana-capital",
-      "category": "Telangana GK",
-      "q": "What is the capital city of Telangana?",
-      "a": "Hyderabad.",
+      "id": "static-gk-hardest-natural-substance",
+      "category": "Science",
+      "q": "Which of these is commonly known as the hardest naturally occurring substance?",
+      "a": "Diamond.",
       "options": [
-        "Nizamabad.",
-        "Warangal.",
-        "Karimnagar.",
-        "Hyderabad."
+        "Quartz.",
+        "Diamond.",
+        "Copper.",
+        "Gypsum."
       ]
     },
     {
-      "id": "static-science-sun-star",
+      "id": "static-gk-earth-satellite",
       "category": "Science & Space",
-      "q": "What is the Sun?",
-      "a": "A star.",
+      "q": "What is Earth's natural satellite?",
+      "a": "The Moon.",
       "options": [
-        "A comet.",
-        "A moon.",
-        "A star.",
-        "A planet."
+        "Venus.",
+        "Mars.",
+        "The Moon.",
+        "The Sun."
       ]
     },
     {
-      "id": "static-gk-indian-parliament",
+      "id": "static-india-parliament-lower-house",
       "category": "Indian Polity",
-      "q": "What is the lower house of India's Parliament called?",
+      "q": "Which is the lower house of the Parliament of India?",
       "a": "Lok Sabha.",
       "options": [
-        "Lok Sabha.",
-        "Rajya Sabha.",
         "Vidhan Parishad.",
-        "Gram Sabha."
+        "Supreme Court.",
+        "Lok Sabha.",
+        "Rajya Sabha."
       ]
     },
     {
-      "id": "static-gk-temperature-instrument",
+      "id": "static-gk-water-formula",
       "category": "Science",
-      "q": "Which instrument is used to measure temperature?",
-      "a": "A thermometer.",
+      "q": "What is the chemical formula for water?",
+      "a": "H₂O.",
       "options": [
-        "A telescope.",
-        "A barometer.",
-        "A compass.",
-        "A thermometer."
+        "H₂O.",
+        "CO₂.",
+        "NaCl.",
+        "O₂."
       ]
     },
     {
-      "id": "static-india-national-song",
-      "category": "National Symbols",
-      "q": "Who wrote India's national song, Vande Mataram?",
-      "a": "Bankim Chandra Chattopadhyay.",
+      "id": "static-india-constitution-day",
+      "category": "Indian Polity",
+      "q": "When is Constitution Day observed in India?",
+      "a": "26 November.",
       "options": [
-        "Rabindranath Tagore.",
-        "Mahatma Gandhi.",
-        "Sarojini Naidu.",
-        "Bankim Chandra Chattopadhyay."
+        "26 November.",
+        "15 August.",
+        "26 January.",
+        "1 May."
       ]
     }
   ]

@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-10-31",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-gk-hardest-natural-substance",
+      "category": "Science",
+      "q": "Which of these is commonly known as the hardest naturally occurring substance?",
+      "a": "Diamond.",
+      "options": [
+        "Quartz.",
+        "Diamond.",
+        "Copper.",
+        "Gypsum."
+      ]
+    },
+    {
+      "id": "static-gk-earth-satellite",
+      "category": "Science & Space",
+      "q": "What is Earth's natural satellite?",
+      "a": "The Moon.",
+      "options": [
+        "Venus.",
+        "Mars.",
+        "The Moon.",
+        "The Sun."
+      ]
+    },
+    {
+      "id": "static-india-parliament-lower-house",
+      "category": "Indian Polity",
+      "q": "Which is the lower house of the Parliament of India?",
+      "a": "Lok Sabha.",
+      "options": [
+        "Vidhan Parishad.",
+        "Supreme Court.",
+        "Lok Sabha.",
+        "Rajya Sabha."
+      ]
+    },
+    {
+      "id": "static-gk-water-formula",
+      "category": "Science",
+      "q": "What is the chemical formula for water?",
+      "a": "H₂O.",
+      "options": [
+        "H₂O.",
+        "CO₂.",
+        "NaCl.",
+        "O₂."
+      ]
+    },
+    {
+      "id": "static-india-constitution-day",
+      "category": "Indian Polity",
+      "q": "When is Constitution Day observed in India?",
+      "a": "26 November.",
+      "options": [
+        "26 November.",
+        "15 August.",
+        "26 January.",
+        "1 May."
+      ]
+    }
+  ]
+}
