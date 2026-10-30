@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-30",
+  "month": "October 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "Environment",
+      "icon": "🌦️",
+      "title": "Cyclone Arnab causes damage along India's eastern coast",
+      "text": "Cyclone Arnab made landfall on Andhra Pradesh's coast early on Wednesday as a very severe storm. Officials reported six deaths. The storm damaged at least 15,000 electricity poles and disrupted power; more than 180,000 people were evacuated in Andhra Pradesh and Odisha before landfall. Electricity had been restored in most affected districts by Thursday, while restoration continued in Konaseema and West Godavari.",
+      "source": "Reuters, 2026-10-29",
+      "url": "https://www.reuters.com/business/environment/six-killed-cyclone-off-indias-eastern-coast-2026-10-29/"
+    },
+    {
+      "category": "Energy",
+      "icon": "🔋",
+      "title": "India seeks $220 billion clean-energy investment to meet 2030 target",
+      "text": "A senior Indian government official said India will need about US$220 billion in clean-energy investment over the next three years. The funding is intended to expand renewable power generation and grid infrastructure so the country can progress toward its 2030 target of 500 gigawatts of non-fossil-fuel capacity.",
+      "source": "Reuters, 2026-10-28",
+      "url": "https://www.reuters.com/business/energy/india-seeks-220-billion-clean-energy-push-meet-2030-target-2026-10-28/"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "Finance Ministry projects 7.3% growth for India's FY27 economy",
+      "text": "India's finance ministry expects the economy to grow 7.3% in the financial year ending March 2027, according to its October economic review. The projection is slightly above the Reserve Bank of India's 7.1% forecast issued earlier in October. The review also flagged inflation risks, although the report did not specify their sources or likely effects.",
+      "source": "Reuters, 2026-10-29",
+      "url": "https://www.reuters.com/world/india/indias-finance-ministry-sees-fy27-growth-73-flags-inflation-risks-2026-10-29/"
+    },
+    {
+      "category": "Science & Technology",
+      "icon": "🤖",
+      "title": "India's markets regulator considers a domestic AI model for securities oversight",
+      "text": "India's markets regulator is considering a domestically governed artificial-intelligence model tailored to the securities market. Its chairman said the regulator is also working to implement a global supervisory toolkit for AI. The proposal would apply AI to market oversight while keeping governance of a potential model within India.",
+      "source": "Reuters, 2026-10-28",
+      "url": "https://www.reuters.com/world/india/india-markets-regulator-weighs-domestic-ai-model-securities-trading-chairman-2026-10-28/"
+    },
+    {
+      "category": "Civic Awareness",
+      "icon": "🏦",
+      "title": "PIB Fact Check debunks claim about a new ₹1,000 banknote",
+      "text": "The Press Information Bureau's Fact Check unit debunked a viral claim that India had issued or planned to introduce a new yellow-coloured ₹1,000 banknote. It said the Reserve Bank of India had made no such announcement and urged people to verify information through official sources. The old ₹1,000 note ceased to be legal tender on 8 November 2016.",
+      "source": "Financial Express, 2026-10-28",
+      "url": "https://www.financialexpress.com/india-news/pib-fact-check-debunks-viral-claims-of-new-rs-1000-note-in-india/4370527/"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "How many people were evacuated in Andhra Pradesh and Odisha before Cyclone Arnab arrived?",
+      "a": "More than 180,000 people"
+    },
+    {
+      "q": "How much clean-energy investment is India expected to need over the next three years?",
+      "a": "About US$220 billion"
+    },
+    {
+      "q": "What GDP growth rate did the Finance Ministry project for FY27?",
+      "a": "7.3%"
+    },
+    {
+      "q": "Which Indian regulator is considering a domestic AI model for securities-market oversight?",
+      "a": "Securities and Exchange Board of India (SEBI)"
+    },
+    {
+      "q": "What false banknote claim did PIB Fact Check debunk?",
+      "a": "That a new yellow-coloured ₹1,000 banknote was being introduced"
+    }
+  ]
+}
