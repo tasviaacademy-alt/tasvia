@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-31",
+  "month": "October 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "Science & Technology",
+      "icon": "🚀",
+      "title": "ISRO's GSLV-F18 places navigation satellite NVS-03 into orbit",
+      "text": "The Indian Space Research Organisation (ISRO) said its GSLV-F18 vehicle successfully placed the NVS-03 navigation satellite in its intended orbit on 30 October 2026. It was the 20th flight of the GSLV. NVS-03 is the third satellite in the next-generation navigation system and carries an indigenous atomic clock; it adds the L1 signal to the existing L5 and S signals.",
+      "source": "ISRO, 2026-10-30",
+      "url": "https://www.isro.gov.in/Mission_GSLVF18.html"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "India's foreign-exchange reserves fall to $719.75 billion",
+      "text": "India's foreign-exchange reserves fell by $1.27 billion to $719.75 billion in the week ended 23 October, marking a seventh consecutive weekly decline and the lowest level in more than two months, Reuters reported. The value of Reserve Bank of India gold holdings fell by $2.6 billion to $103.15 billion, while foreign-currency assets rose by $1.3 billion to $593.2 billion.",
+      "source": "Reuters, 2026-10-30",
+      "url": "https://www.reuters.com/world/india/indias-fx-reserves-dip-seventh-straight-week-hit-over-two-month-low-2026-10-30/"
+    },
+    {
+      "category": "Agriculture",
+      "icon": "🌾",
+      "title": "PM-KISAN's 24th instalment released for more than 9.34 crore farmers",
+      "text": "The 24th instalment of PM-KISAN was released on 30 October at Banaskantha in Gujarat. More than 9.34 crore eligible farmers were set to receive ₹2,000 each, totalling over ₹18,690 crore through Direct Benefit Transfer. The scheme provides eligible farmer families with ₹6,000 a year in three instalments to support agricultural and household needs.",
+      "source": "The Economic Times, 2026-10-30",
+      "url": "https://m.economictimes.com/wealth/invest/pm-kisan-24th-instalment-released-9-34-crore-farmers-to-receive-rs-2000-check-beneficiary-status-and-ekyc-details/articleshow/135347705.cms?from=mdr"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏅",
+      "title": "Manisha Bhanwala wins India's first women's wrestling world gold",
+      "text": "Manisha Bhanwala won the women's 59 kg gold at the 2026 World Wrestling Championships in Astana, defeating the United States' Abigail Nette 8–6 in the final after trailing 0–6. United World Wrestling reported that this was India's first-ever women's world championship gold in wrestling. Indian women finished the event with four medals.",
+      "source": "United World Wrestling, 2026-10-30",
+      "url": "https://uww.org/articles/manisha-becomes-indias-first-ever-womens-world-champion"
+    },
+    {
+      "category": "Environment",
+      "icon": "🌧️",
+      "title": "IMD forecasts heavy rain and thunderstorms across several states on 31 October",
+      "text": "The India Meteorological Department forecast heavy rainfall on 31 October in parts of Arunachal Pradesh, coastal Andhra Pradesh and Kerala. Thunderstorms with lightning and gusty winds were also expected in Odisha, Tamil Nadu, Puducherry, Karnataka and Telangana. Residents in affected areas were advised to follow local weather alerts.",
+      "source": "The Economic Times, 2026-10-31",
+      "url": "https://m.economictimes.com/news/new-updates/india-weather-october-30-heavy-rainfall-alert-in-three-states-thunderstorm-warning-across-several-regions-check-imds-state-wise-forecast/articleshow/135361457.cms"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "Which navigation satellite did GSLV-F18 place into its intended orbit?",
+      "a": "NVS-03"
+    },
+    {
+      "q": "What was India's foreign-exchange reserve total for the week ended 23 October?",
+      "a": "$719.75 billion"
+    },
+    {
+      "q": "How many eligible farmers were to receive the 24th PM-KISAN instalment?",
+      "a": "More than 9.34 crore"
+    },
+    {
+      "q": "What score did Manisha Bhanwala achieve in the 59 kg world final?",
+      "a": "8–6"
+    },
+    {
+      "q": "Which agency issued the heavy-rain forecast for 31 October?",
+      "a": "India Meteorological Department (IMD)"
+    }
+  ]
+}
