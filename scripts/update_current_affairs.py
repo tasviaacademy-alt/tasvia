@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import email.utils
-import html, json, re, urllib.parse, urllib.request
+import html, json, re, time, urllib.parse, urllib.request
+from urllib.error import HTTPError, URLError
 from html.parser import HTMLParser
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -296,10 +297,38 @@ def parse_pub_date(value):
     except Exception:
         return None
 
+def open_with_retry(request, timeout=15, attempts=3, label="news request"):
+    """Retry transient upstream failures without weakening the content checks."""
+    for attempt in range(attempts):
+        try:
+            return urllib.request.urlopen(request, timeout=timeout)
+        except HTTPError as exc:
+            retryable = exc.code in {408, 425, 429, 500, 502, 503, 504}
+            if not retryable or attempt == attempts - 1:
+                raise
+            retry_after = (exc.headers.get("Retry-After", "") if exc.headers else "").strip()
+            try:
+                delay = min(15.0, max(1.0, float(retry_after)))
+            except (TypeError, ValueError):
+                delay = (2.0, 6.0)[min(attempt, 1)]
+            print(f"{label} returned HTTP {exc.code}; retry {attempt + 2}/{attempts} in {delay:g}s")
+            time.sleep(delay)
+        except (URLError, TimeoutError) as exc:
+            if attempt == attempts - 1:
+                raise
+            delay = (2.0, 6.0)[min(attempt, 1)]
+            print(f"{label} failed ({type(exc).__name__}); retry {attempt + 2}/{attempts} in {delay:g}s")
+            time.sleep(delay)
+    raise RuntimeError(f"{label} failed after {attempts} attempts")
+
+
 def rss_items(query):
     url = "https://news.google.com/rss/search?q=" + urllib.parse.quote(query) + "&hl=en-IN&gl=IN&ceid=IN:en"
-    req = urllib.request.Request(url, headers={"User-Agent": "TASVIA-Current-Affairs/2.0"})
-    with urllib.request.urlopen(req, timeout=20) as r:
+    req = urllib.request.Request(
+        url,
+        headers={"User-Agent": "Mozilla/5.0 (compatible; TASVIA-Current-Affairs/2.2)"}
+    )
+    with open_with_retry(req, timeout=15, attempts=3, label=f"Google News RSS: {query[:45]}") as r:
         root = ET.fromstring(r.read())
     out = []
     for item in root.findall("./channel/item"):
