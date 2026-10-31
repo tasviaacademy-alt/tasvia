@@ -11,22 +11,21 @@ IST = timezone(timedelta(hours=5, minutes=30))
 now = datetime.now(IST)
 date_str = now.strftime("%Y-%m-%d")
 month_str = now.strftime("%B %Y")
-two_days_ago = (now - timedelta(days=2)).strftime("%Y-%m-%d")
 
 HISTORY_DIR = Path("current-affairs-history")
 HISTORY_DIR.mkdir(exist_ok=True)
 TODAY_HISTORY = HISTORY_DIR / f"{date_str}.json"
 
 QUERIES = [
-    ("India", f"India current affairs India government national news after:{two_days_ago}"),
-    ("Government", f"India government ministry cabinet announcement PIB after:{two_days_ago}"),
-    ("World", f"world international current affairs after:{two_days_ago}"),
-    ("Sports", f"India sports latest news after:{two_days_ago}"),
-    ("Science & Technology", f"India science technology research latest news after:{two_days_ago}"),
-    ("Economy", f"India economy business markets latest news after:{two_days_ago}"),
-    ("Education", f"India education schools exams policy news after:{two_days_ago}"),
-    ("Health", f"India health research public health latest news after:{two_days_ago}"),
-    ("Environment", f"India environment weather climate latest news after:{two_days_ago}"),
+    ("India", f"India current affairs India government national news when:3d"),
+    ("Government", f"India government ministry cabinet announcement PIB when:3d"),
+    ("World", f"world international current affairs when:3d"),
+    ("Sports", f"India sports latest news when:3d"),
+    ("Science & Technology", f"India science technology research latest news when:3d"),
+    ("Economy", f"India economy business markets latest news when:3d"),
+    ("Education", f"India education schools exams policy news when:3d"),
+    ("Health", f"India health research public health latest news when:3d"),
+    ("Environment", f"India environment weather climate latest news when:3d"),
 ]
 
 def clean(s):
