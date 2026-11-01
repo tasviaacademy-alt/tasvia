@@ -22,7 +22,7 @@ QUERIES = [
     '"Kamareddy" district news',
 ]
 LOCAL_TERMS = (
-    "nizamabad", "bodhan", "armoor", "ar मूर", "banswada", "bansvada",
+    "nizamabad", "bodhan", "armoor", "banswada", "bansvada",
     "dichpally", "dichpalli", "nandipet", "balkonda", "navipet",
     "indalwai", "kotagiri", "varni", "yellareddy", "kamareddy",
 )
@@ -30,7 +30,7 @@ IST = ZoneInfo("Asia/Kolkata")
 
 
 def clean(value):
-    return re.sub(r"\\s+", " ", (value or "")).strip()
+    return re.sub(r"\s+", " ", (value or "")).strip()
 
 
 def fetch(url, attempts=4):
