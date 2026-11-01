@@ -33,7 +33,7 @@ def main():
     seen = set()
     now = datetime.now(timezone.utc)
     ist = ZoneInfo("Asia/Kolkata")
-    oldest_allowed = now - timedelta(days=7)
+    oldest_allowed = now - timedelta(hours=72)
     for item in channel.findall("item"):
         title = clean(item.findtext("title"))
         link = clean(item.findtext("link"))
@@ -50,13 +50,13 @@ def main():
             published = parsed.astimezone(timezone.utc)
             # Keep the digest fresh; old stories can remain in the previous file if
             # the feed temporarily has no recent, usable headlines.
-            if published < oldest_allowed or published > now + timedelta(days=1):
+            if published < oldest_allowed or published > now + timedelta(hours=1):
                 continue
             pub_date = published.isoformat()
             pub_label = published.astimezone(ist).strftime("%d %b %Y, %I:%M %p IST")
         except Exception:
-            pub_date = ""
-            pub_label = pub_raw
+            # Undated items cannot be verified as fresh; skip them.
+            continue
         items.append({
             "title": title,
             "url": link,
@@ -67,7 +67,8 @@ def main():
         if len(items) >= 15:
             break
     if not items:
-        raise RuntimeError("The RSS feed returned no usable headlines; keeping the previous digest")
+        print("No verified Nizamabad headlines from the last 72 hours; keeping the previous digest unchanged.")
+        return
     data = {
         "updatedAt": now.isoformat(),
         "updatedDateIST": now.astimezone(ist).strftime("%d %b %Y, %I:%M %p IST"),
