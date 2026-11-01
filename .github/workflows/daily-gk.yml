@@ -62,14 +62,18 @@ jobs:
               return " ".join(str(value or "").casefold().split())
 
           used_ids = set()
+          today_date = datetime.strptime(expected_date, "%Y-%m-%d").date()
           for old_archive in Path("daily-gk-history").glob("*.json"):
               if old_archive.name == f"{date}.json":
                   continue
               try:
+                  archive_date = datetime.strptime(old_archive.stem, "%Y-%m-%d").date()
+                  if (today_date - archive_date).days > 7:
+                      continue
                   old_data = json.loads(old_archive.read_text(encoding="utf-8"))
                   used_ids.update(q.get("id") for q in old_data.get("questions", []) if q.get("id"))
-              except (OSError, json.JSONDecodeError):
-                  raise SystemExit(f"Could not validate historical archive {old_archive}")
+              except (OSError, json.JSONDecodeError, ValueError):
+                  raise SystemExit(f"Could not validate recent historical archive {old_archive}")
 
           seen_questions = set()
           for number, item in enumerate(questions, start=1):
@@ -88,7 +92,7 @@ jobs:
               if answer not in set(normalized):
                   raise SystemExit(f"Question {number} does not include its correct answer among the options.")
               if item.get("id") in used_ids:
-                  raise SystemExit(f"Question {number} repeats a question ID from an older archive.")
+                  raise SystemExit(f"Question {number} repeats a question ID from the last 7 days.")
               source = bank_by_id.get(item.get("id"))
               if not source or norm(source.get("q")) != norm(item.get("q")) or norm(source.get("a")) != answer:
                   raise SystemExit(f"Question {number} does not match the curated question bank.")
