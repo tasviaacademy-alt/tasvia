@@ -117,7 +117,7 @@ def main():
         "feed": "Google News RSS; multiple Nizamabad and nearby-town queries",
         "items": items,
     }
-    OUTPUT.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    OUTPUT.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Wrote {len(items)} fresh local headlines to {OUTPUT}")
     if failures:
         print(f"Warning: {len(failures)} of {len(QUERIES)} query feeds failed; successful feeds were retained.")
