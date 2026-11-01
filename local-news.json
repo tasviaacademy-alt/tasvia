@@ -1,14 +1,21 @@
 {
-  "updatedAt": "2026-11-01T02:23:04.955516+00:00",
-  "updatedDateIST": "01 Nov 2026, 07:53 AM IST",
-  "feed": "https://news.google.com/rss/search?q=Nizamabad%20Telangana%20district&hl=en-IN&gl=IN&ceid=IN:en",
+  "updatedAt": "2026-11-01T04:00:00+00:00",
+  "updatedDateIST": "01 Nov 2026, 09:30 AM IST",
+  "feed": "Verified Nizamabad district news sources; Google News RSS multi-query updater",
   "items": [
     {
-      "title": "Nizamabad Rabi Paddy Plan Faces Water Crisis Warning - Urban Acres",
-      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxOWlVpeFg3Vk81YlQ0THlxWmk4ZU5TQjJlcG11S3BDa0NGVWxxQUY5NjAycllTRWs2eGpYOFZRMmVSYzE5d0dfMnhGcGM2VzFqalJsU3gwR0JxaFlPNG1OUkVjNDFXRXExNm5NZFpKOWpINDZCQ2NlRFUxRUhsOHdFMw?oc=5",
-      "source": "Urban Acres",
-      "publishedAt": "2026-10-27T22:18:52+00:00",
-      "publishedLabel": "28 Oct 2026, 03:48 AM IST"
+      "title": "CMR arrears cross ₹700 crore in Nizamabad; officials face questions",
+      "url": "https://www.thehansindia.com/news/cities/nizamabad/cmr-arrears-cross-rs-700-crore-officials-face-questions-1137943",
+      "source": "The Hans India",
+      "publishedAt": "2026-10-31T19:55:00+00:00",
+      "publishedLabel": "01 Nov 2026, 01:25 AM IST"
+    },
+    {
+      "title": "Telangana releases ₹120 crore for drinking-water arrangements in Singur-dependent districts including Nizamabad",
+      "url": "https://www.deccanchronicle.com/southern-states/telangana/el-nio-impact-telangana-releases-120-cr-for-singur-dependent-districts-2000721",
+      "source": "Deccan Chronicle",
+      "publishedAt": "2026-10-31T19:13:00+00:00",
+      "publishedLabel": "01 Nov 2026, 12:43 AM IST"
     }
   ]
 }
