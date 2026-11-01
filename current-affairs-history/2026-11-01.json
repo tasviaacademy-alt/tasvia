@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-01",
+  "month": "November 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "Education",
+      "icon": "🎓",
+      "title": "UGC asks colleges and universities to observe BRICS Sustainable Lifestyle Week from 1–7 November",
+      "text": "The University Grants Commission has asked colleges and universities to observe BRICS Sustainable Lifestyle Week from 1 to 7 November 2026 under Mission LiFE. The week is part of India's BRICS Chairship and encourages students, faculty and staff to adopt environmentally responsible habits through awareness and practical campus activities.",
+      "source": "University Grants Commission, 2026-10-30",
+      "url": "https://www.ugc.gov.in/pdfnews/6275096_Celebration-of-BRICS-Sustainable-Lifestyle-Week-%28BSLW%29-2026-under-Mission-LiFE.pdf"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "GST procedural changes take effect across India on 1 November",
+      "text": "India's updated Goods and Services Tax procedures took effect on 1 November 2026. The changes clarify the treatment of post-sale discounts and accelerate provisional tax refunds for businesses affected by inverted duty structures, where tax paid on inputs exceeds tax collected on outputs. The measures are intended to simplify compliance and improve business cash flow.",
+      "source": "Reuters, 2026-10-27",
+      "url": "https://www.reuters.com/world/india/india-implement-changes-goods-services-tax-november-1-2026-10-27/"
+    },
+    {
+      "category": "Education",
+      "icon": "🎓",
+      "title": "Nandan Nilekani-led exam reforms task force gets extension until January 2027",
+      "text": "The Centre has extended the tenure of the Nandan Nilekani-led task force on examination reforms until January 2027. The panel is expected to consult chief ministers and chief secretaries before finalising its recommendations. Stakeholders have also discussed a possible hybrid format for NEET-UG 2027 while the infrastructure for computer-based testing is considered.",
+      "source": "The Times of India, 2026-11-01",
+      "url": "https://timesofindia.indiatimes.com/india/government-extends-nilekani-led-exam-reforms-panel-tenure-till-jan/articleshow/135411465.cms"
+    },
+    {
+      "category": "World",
+      "icon": "🌐",
+      "title": "Jaishankar calls for diversified energy supply chains at G20",
+      "text": "External Affairs Minister S. Jaishankar urged G20 members to diversify energy supply chains and cautioned against politicising energy flows. He said disruptions to energy and supply networks can place a disproportionate burden on developing countries, highlighting the need for more resilient and reliable systems.",
+      "source": "The Times of India, 2026-11-01",
+      "url": "https://timesofindia.indiatimes.com/india/politicisation-of-energy-flows-harmful-jaishankar-calls-for-diversified-supply-chains-at-g20/articleshow/135414623.cms"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "Mohun Bagan beat Punjab FC 2–1 to move top of the ISL table",
+      "text": "Mohun Bagan Super Giant came from behind to defeat Punjab FC 2–1 in the Indian Super League on 31 October. Punjab FC scored in the third minute, before Lee Erwin equalised in the 18th minute and Dejan Dražić scored the winner in the 42nd minute. The victory moved Mohun Bagan temporarily to the top of the standings.",
+      "source": "The New Indian Express, 2026-10-31",
+      "url": "https://www.newindianexpress.com/sport/sports-news/2026/Oct/31/punjab-fc-fight-but-fall-short-against-mohun-bagan-super-giant"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "Under which initiative is BRICS Sustainable Lifestyle Week being observed in India?",
+      "a": "Mission LiFE (Lifestyle for Environment)"
+    },
+    {
+      "q": "Which tax system's procedural changes took effect in India on 1 November 2026?",
+      "a": "Goods and Services Tax (GST)"
+    },
+    {
+      "q": "Until which month has the Nandan Nilekani-led examination reforms task force been extended?",
+      "a": "January 2027"
+    },
+    {
+      "q": "Which Indian minister called for diversified energy supply chains at the G20?",
+      "a": "External Affairs Minister S. Jaishankar"
+    },
+    {
+      "q": "Which club defeated Punjab FC 2–1 in the Indian Super League on 31 October?",
+      "a": "Mohun Bagan Super Giant"
+    }
+  ]
+}
