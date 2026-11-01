@@ -17,15 +17,15 @@ HISTORY_DIR.mkdir(exist_ok=True)
 TODAY_HISTORY = HISTORY_DIR / f"{date_str}.json"
 
 QUERIES = [
-    ("India", f"India current affairs India government national news when:3d"),
-    ("Government", f"India government ministry cabinet announcement PIB when:3d"),
-    ("World", f"world international current affairs when:3d"),
-    ("Sports", f"India sports latest news when:3d"),
-    ("Science & Technology", f"India science technology research latest news when:3d"),
-    ("Economy", f"India economy business markets latest news when:3d"),
-    ("Education", f"India education schools exams policy news when:3d"),
-    ("Health", f"India health research public health latest news when:3d"),
-    ("Environment", f"India environment weather climate latest news when:3d"),
+    ("India", f"India current affairs India government national news when:7d"),
+    ("Government", f"India government ministry cabinet announcement PIB when:7d"),
+    ("World", f"world international current affairs when:7d"),
+    ("Sports", f"India sports latest news when:7d"),
+    ("Science & Technology", f"India science technology research latest news when:7d"),
+    ("Economy", f"India economy business markets latest news when:7d"),
+    ("Education", f"India education schools exams policy news when:7d"),
+    ("Health", f"India health research public health latest news when:7d"),
+    ("Environment", f"India environment weather climate latest news when:7d"),
 ]
 
 def clean(s):
@@ -74,7 +74,7 @@ def fetch_article_summary(link, title):
         headers={"User-Agent": "Mozilla/5.0 (compatible; TASVIA-Current-Affairs/2.1)"}
     )
     try:
-        with urllib.request.urlopen(request, timeout=12) as response:
+        with open_with_retry(request, timeout=12, attempts=2, label=f"Article page: {title[:45]}") as response:
             content_type = response.headers.get("Content-Type", "")
             if "html" not in content_type.casefold():
                 return ""
@@ -339,9 +339,9 @@ def rss_items(query):
         if not title or not published:
             continue
         # Never publish an article merely because the RSS feed returned it today.
-        # Allow up to 48 hours so a delayed feed does not leave the edition stale.
+        # Allow up to 72 hours so a delayed feed does not leave the edition stale.
         age = now - published
-        if age < timedelta(hours=-1) or age > timedelta(hours=48):
+        if age < timedelta(hours=-1) or age > timedelta(hours=72):
             continue
         candidate = {
             "title": title,
@@ -362,14 +362,14 @@ def rss_items(query):
 used_titles = set()
 used_title_topics = []
 # Avoid repeating recent stories and near-duplicate coverage, but do not permanently
-# exhaust the news feed. A 14-day rolling window preserves freshness.
+# exhaust the news feed. A 7-day rolling window preserves freshness.
 for archive in HISTORY_DIR.glob("*.json"):
     # Do not treat today's invalid archive as a prior story when regenerating it.
     if archive.stem == date_str:
         continue
     try:
         archive_date = datetime.strptime(archive.stem, "%Y-%m-%d").date()
-        if (now.date() - archive_date).days > 14:
+        if (now.date() - archive_date).days > 7:
             continue
         old = json.loads(archive.read_text(encoding="utf-8"))
         for item in old.get("items", []):
