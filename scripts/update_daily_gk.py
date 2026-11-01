@@ -87,18 +87,21 @@ if TODAY_HISTORY.exists():
         print(f"{date_str}: today's five MCQs are already archived; no change.")
         raise SystemExit(0)
 
-# An invalid legacy archive for today must not block regeneration. All older
-# archive IDs remain excluded, while today's invalid IDs can be replaced.
+# Avoid repeating a question within the last seven days. Older questions can
+# rotate back into the pool so the curated bank remains sustainable.
 used_ids = set()
 for archive in HISTORY_DIR.glob("*.json"):
     if archive == TODAY_HISTORY:
         continue
     try:
+        archive_date = datetime.strptime(archive.stem, "%Y-%m-%d").date()
+        if (now.date() - archive_date).days > 7:
+            continue
         data = json.loads(archive.read_text(encoding="utf-8"))
         for item in data.get("questions", []):
             if item.get("id"):
                 used_ids.add(item["id"])
-    except (OSError, json.JSONDecodeError):
+    except (OSError, json.JSONDecodeError, ValueError):
         continue
 
 option_dependent_answers = {
