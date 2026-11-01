@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-11-01",
+  "date": "2026-11-02",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-first-president",
-      "category": "Indian History",
-      "q": "Who was the first President of India?",
-      "a": "Dr. Rajendra Prasad.",
+      "id": "otq-brain-teasers-2310",
+      "category": "brain-teasers",
+      "q": "There is a branch with 10 birds on it. I shot 2 of them and then 1 more. How many birds are left on the branch?",
+      "a": "0",
       "options": [
-        "Dr. Sarvepalli Radhakrishnan.",
-        "V. V. Giri.",
-        "Dr. Zakir Husain.",
-        "Dr. Rajendra Prasad."
+        "3",
+        "2",
+        "0",
+        "1"
       ]
     },
     {
-      "id": "static-national-anthem",
-      "category": "Indian Culture",
-      "q": "Who wrote the Indian national anthem, Jana Gana Mana?",
-      "a": "Rabindranath Tagore.",
+      "id": "static-ozone",
+      "category": "Environment",
+      "q": "Which atmospheric layer helps protect Earth from much of the Sun's harmful ultraviolet radiation?",
+      "a": "The ozone layer.",
       "options": [
-        "Bankim Chandra Chattopadhyay.",
-        "Rabindranath Tagore.",
-        "Subhas Chandra Bose.",
-        "Sarojini Naidu."
+        "The troposphere.",
+        "The ozone layer.",
+        "The thermosphere.",
+        "The mesosphere."
       ]
     },
     {
-      "id": "static-india-constitution",
-      "category": "Indian Polity",
-      "q": "When did the Constitution of India come into effect?",
-      "a": "26 January 1950.",
+      "id": "static-science-boiling-water",
+      "category": "Science",
+      "q": "At what temperature does pure water boil at sea level?",
+      "a": "100°C.",
       "options": [
-        "26 January 1950.",
-        "26 November 1949.",
-        "15 August 1947.",
-        "2 October 1950."
+        "50°C.",
+        "100°C.",
+        "150°C.",
+        "0°C."
       ]
     },
     {
-      "id": "static-telangana-capital",
-      "category": "Indian Geography",
-      "q": "What is the capital of Telangana?",
-      "a": "Hyderabad.",
+      "id": "static-largest-ocean",
+      "category": "World Geography",
+      "q": "Which is the largest ocean on Earth?",
+      "a": "The Pacific Ocean.",
       "options": [
-        "Karimnagar.",
-        "Hyderabad.",
-        "Nizamabad.",
-        "Warangal."
+        "The Arctic Ocean.",
+        "The Indian Ocean.",
+        "The Atlantic Ocean.",
+        "The Pacific Ocean."
       ]
     },
     {
-      "id": "static-india-capital",
-      "category": "Indian General Knowledge",
-      "q": "What is the capital of India?",
-      "a": "New Delhi.",
+      "id": "static-sports-chess",
+      "category": "Sports",
+      "q": "How many squares are there on a standard chessboard?",
+      "a": "64.",
       "options": [
-        "Chennai",
-        "Mumbai",
-        "Kolkata",
-        "New Delhi."
+        "32.",
+        "48.",
+        "100.",
+        "64."
       ]
     }
   ]

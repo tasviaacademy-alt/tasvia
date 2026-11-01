@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-02",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "otq-brain-teasers-2310",
+      "category": "brain-teasers",
+      "q": "There is a branch with 10 birds on it. I shot 2 of them and then 1 more. How many birds are left on the branch?",
+      "a": "0",
+      "options": [
+        "3",
+        "2",
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "static-ozone",
+      "category": "Environment",
+      "q": "Which atmospheric layer helps protect Earth from much of the Sun's harmful ultraviolet radiation?",
+      "a": "The ozone layer.",
+      "options": [
+        "The troposphere.",
+        "The ozone layer.",
+        "The thermosphere.",
+        "The mesosphere."
+      ]
+    },
+    {
+      "id": "static-science-boiling-water",
+      "category": "Science",
+      "q": "At what temperature does pure water boil at sea level?",
+      "a": "100°C.",
+      "options": [
+        "50°C.",
+        "100°C.",
+        "150°C.",
+        "0°C."
+      ]
+    },
+    {
+      "id": "static-largest-ocean",
+      "category": "World Geography",
+      "q": "Which is the largest ocean on Earth?",
+      "a": "The Pacific Ocean.",
+      "options": [
+        "The Arctic Ocean.",
+        "The Indian Ocean.",
+        "The Atlantic Ocean.",
+        "The Pacific Ocean."
+      ]
+    },
+    {
+      "id": "static-sports-chess",
+      "category": "Sports",
+      "q": "How many squares are there on a standard chessboard?",
+      "a": "64.",
+      "options": [
+        "32.",
+        "48.",
+        "100.",
+        "64."
+      ]
+    }
+  ]
+}
