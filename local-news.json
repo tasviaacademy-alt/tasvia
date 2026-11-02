@@ -1,8 +1,15 @@
 {
-  "updatedAt": "2026-11-01T04:01:53.538408+00:00",
-  "updatedDateIST": "01 Nov 2026, 09:31 AM IST",
+  "updatedAt": "2026-11-02T02:38:27.133173+00:00",
+  "updatedDateIST": "02 Nov 2026, 08:08 AM IST",
   "feed": "Google News RSS; multiple Nizamabad and nearby-town queries",
   "items": [
+    {
+      "title": "Homemade bomb explosion injures 7 including 3 children in Kamareddy - NewsBytes",
+      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQYVh1ZmhNc3B5QkgwVlM4V19yVnI0YURzR3FCb2xNOHRUX3lXaUlLR25oMXctdG53eGtJX0RKLVFGNHo2Rk1nQm1RaTJTXzFfakItSHotMVVKZGZ4cEhlVmdMUEZjYUh1cnVLdVI5LUR6eFB1ZDk4eXdzRVZNVkZFTC1pNTBGZklReFkwVkl5WU1WdDEwMS1vZTBhZTNsOGpQT0c3ZFhBN2ZFU0VTWFZVTE1R?oc=5",
+      "source": "NewsBytes",
+      "publishedAt": "2026-11-01T20:39:53+00:00",
+      "publishedLabel": "02 Nov 2026, 02:09 AM IST"
+    },
     {
       "title": "Chatanpally Railway Crossing Standoff Halts Guntakal–Bodhan Train - Urban Acres",
       "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNM2sxT194Y3BTWUNsYlYwek1NaW5MRjNSZFpZalFSa01UR3dnUjRLSzZCX2lwY2xUN1Z6R1NPNzh4MGk2NHZNTUR5NGpRbmlmb2FWWjFISUkwUmh4clFHSGs3UEdCdFYya0oyYlZwRmFySm8zLVF6bHNKNU5ubGwzaDhMeFVPcHBCY2Qyem1xc0RoZw?oc=5",
@@ -46,7 +53,7 @@
       "publishedLabel": "31 Oct 2026, 09:18 PM IST"
     },
     {
-      "title": "DMHO Kamareddy Recruitment 2026: Walk-in for 10 Vacancies - FreeJobAlert.Com",
+      "title": "DMHO Kamareddy Recruitment 2026 – Walkin for 10 Medical Officer, Anesthetist and More Posts - FreeJobAlert.Com",
       "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNVkJ0anJISUlMRVl0MWpnNkYxSS1jdXF4WnR0bHhHXzJ0eTBHM0h6WTMxcUh3eGhHb2h4VXFPY1BkOXBQM3JPSmxLTjNjMV9mSWxzRHZpbENDQTcyUlRMd0puUVQ0UHU2UlV5Nk9LSzI2Qk1VQWZoTG5YWDhxSk12bHl4SUZMSm4teEhnM2FrNUo2Q1pRMHI1TFZRUmpqajZrdHRlejJCUng?oc=5",
       "source": "FreeJobAlert.Com",
       "publishedAt": "2026-10-31T08:20:44+00:00",
@@ -58,27 +65,6 @@
       "source": "The Siasat Daily",
       "publishedAt": "2026-10-30T14:10:00+00:00",
       "publishedLabel": "30 Oct 2026, 07:40 PM IST"
-    },
-    {
-      "title": "Leopard Sightings Trigger Panic In Kamareddy Village - Deccan Chronicle",
-      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPb0JvVUdLQlRpa09TVUg0akdfajVxTWt4ZjdyY0RNZ2M3UUNJVU5ZZFpndUozSlVWN2ZIVUJ3aHVnRGkwR1N4aWVlNWp6eFhPeUU4aks4VUJhTVNBZktoMUEwQ0dXLWpwRmdKdEU1Nk4xZU1LNWc2MDI0anA5bGdoZ3VQRzJZOXl4cWJwQWM4dXVockR3SFV3VVlHbzE2MU5pbnJRTTJfWHpIRWlXeHU2SmZNSW5aUzdFb2fSAb8BQVVfeXFMTkdGaDRpVENuT2J4NzhYUUpyLWpjLUFKVzAwbHhjbXgxT25tZmduRXdsUkZHczRVTzBvbi1VY1NxbE1DZkxQYXpuWmV2SnU3aE5fOEFjNXl3SXhLOUVSak02VGdEWnlTOGM1Y1lsNG11d1kxbHk3WmJBN0I1SHo0RG1CTjAtbzBwYzlVdVVSTldJcEJDblBrOTFWSzlSWk1QalNUa2VyNVVYM1RTdkhURVJhVGNBTEN5VW1ZQ05DNms?oc=5",
-      "source": "Deccan Chronicle",
-      "publishedAt": "2026-10-29T17:23:19+00:00",
-      "publishedLabel": "29 Oct 2026, 10:53 PM IST"
-    },
-    {
-      "title": "Awareness session on kidney, urological conditions held in Nizamabad - The Hindu",
-      "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQSi02THpwTjRFTDhiTHJVUDZueGQ4alNidVJHSzU3ZmlzWWtyWWxRQ3dyNjQ3WEdNbUxiV25Qemk1YTQ5bmczTVlTQWZhZ1NuM0NOcld0MVFERWlfOWo5RVhjbUZNb0FkNGtKTFNXOFJqNktlRlpONnJKMGxyc3BfOVhxekdvaEpjNGQ1Qno4RFpTTXF3bzYycnhtZWJOQjB0ZEx4cUhWX0VWd3Y3OUtEa25ITE9fMDZSR2s5QjM2eGhublJwLVU0M3o4aUduSU5pMmfSAdgBQVVfeXFMTUZWaUM1UEI1dTN2QnNqNGxnUHJKbWZIT2VTQi1ZVmZGZnEtYjFUOThGcWxLRGI2empUT2JmeVRVUHhuV0JXZGlBQmtjdDc2TEJDUFBmMm96N1hsb0dTQnRNdTRud2xmTUtNQzRCUXlXd3o1QlRkWkY5QVRROWctSm12dVctcXNKZHNnT0RhVExLemhyYzJqUjN0Mk1zYkVnNEVoN3hfQl80dU50NlVnWGU4ZEY1NzVxQWVNMy1sTkNIMTFmamYxTmhaR1V0MVREaUxOdzNXTFNQ?oc=5",
-      "source": "The Hindu",
-      "publishedAt": "2026-10-29T16:22:42+00:00",
-      "publishedLabel": "29 Oct 2026, 09:52 PM IST"
-    },
-    {
-      "title": "Collector gives ‘thumbs up’ to Nizamabad venue for Khelo India TT event - Telangana Today",
-      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPWjhQTzNlejk4ckRtWkthNG1GczUyUjR5dEFES015SHBMZEhuQ3NidlRvNHJlQ1EzeVNvU1ZBcmlBRXA1OV9SeThRXzZtQ1lScXRfcFRvdHFIMkNPTzZHZXZwNU5ENi13bUZyaFZzVmNldno4YWoxdlhnZ0NoaHdTNU1ITlI0WnpfT0xJRjdFVk5ONUpXTlF0OEt4SWo?oc=5",
-      "source": "Telangana Today",
-      "publishedAt": "2026-10-29T04:24:08+00:00",
-      "publishedLabel": "29 Oct 2026, 09:54 AM IST"
     }
   ]
 }
