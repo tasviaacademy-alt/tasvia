@@ -1,69 +1,69 @@
 {
-  "date": "2026-11-01",
+  "date": "2026-11-02",
   "month": "November 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
-      "category": "Education",
-      "icon": "🎓",
-      "title": "UGC asks colleges and universities to observe BRICS Sustainable Lifestyle Week from 1–7 November",
-      "text": "The University Grants Commission has asked colleges and universities to observe BRICS Sustainable Lifestyle Week from 1 to 7 November 2026 under Mission LiFE. The week is part of India's BRICS Chairship and encourages students, faculty and staff to adopt environmentally responsible habits through awareness and practical campus activities.",
-      "source": "University Grants Commission, 2026-10-30",
-      "url": "https://www.ugc.gov.in/pdfnews/6275096_Celebration-of-BRICS-Sustainable-Lifestyle-Week-%28BSLW%29-2026-under-Mission-LiFE.pdf"
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Telangana records 8,594 senior-citizen support complaints since 2021",
+      "text": "Telangana recorded 8,594 complaints under the Maintenance and Welfare of Parents and Senior Citizens Act between 2021 and August 2026. Nearly 3,100 were filed from April 2025 to August 2026. The Telangana Employees Accountability and Monitoring of Parental Support Act, 2026 makes support for elderly parents mandatory for public representatives and employees; failure can lead to a salary deduction of up to 15% or ₹10,000, whichever is lower.",
+      "source": "The Times of India, 2026-11-02",
+      "url": "https://timesofindia.indiatimes.com/city/hyderabad/abandoned-by-own-family-cases-of-elderly-parents-turning-to-law-now-increasing-in-telangana-8594-complaints-filed-since-2021-nearly-3100-in-17-months-as-new-law-allows-up-to-15-salary-cut-for-those-who-fail-to-support-elderly-parents/articleshow/135442533.cms"
     },
     {
       "category": "Economy",
       "icon": "💹",
-      "title": "GST procedural changes take effect across India on 1 November",
-      "text": "India's updated Goods and Services Tax procedures took effect on 1 November 2026. The changes clarify the treatment of post-sale discounts and accelerate provisional tax refunds for businesses affected by inverted duty structures, where tax paid on inputs exceeds tax collected on outputs. The measures are intended to simplify compliance and improve business cash flow.",
-      "source": "Reuters, 2026-10-27",
-      "url": "https://www.reuters.com/world/india/india-implement-changes-goods-services-tax-november-1-2026-10-27/"
-    },
-    {
-      "category": "Education",
-      "icon": "🎓",
-      "title": "Nandan Nilekani-led exam reforms task force gets extension until January 2027",
-      "text": "The Centre has extended the tenure of the Nandan Nilekani-led task force on examination reforms until January 2027. The panel is expected to consult chief ministers and chief secretaries before finalising its recommendations. Stakeholders have also discussed a possible hybrid format for NEET-UG 2027 while the infrastructure for computer-based testing is considered.",
-      "source": "The Times of India, 2026-11-01",
-      "url": "https://timesofindia.indiatimes.com/india/government-extends-nilekani-led-exam-reforms-panel-tenure-till-jan/articleshow/135411465.cms"
-    },
-    {
-      "category": "World",
-      "icon": "🌐",
-      "title": "Jaishankar calls for diversified energy supply chains at G20",
-      "text": "External Affairs Minister S. Jaishankar urged G20 members to diversify energy supply chains and cautioned against politicising energy flows. He said disruptions to energy and supply networks can place a disproportionate burden on developing countries, highlighting the need for more resilient and reliable systems.",
-      "source": "The Times of India, 2026-11-01",
-      "url": "https://timesofindia.indiatimes.com/india/politicisation-of-energy-flows-harmful-jaishankar-calls-for-diversified-supply-chains-at-g20/articleshow/135414623.cms"
+      "title": "Indian stock markets open higher as Nifty and Sensex gain on 2 November",
+      "text": "Indian equity benchmarks opened higher on 2 November as easing crude prices and stronger-than-expected quarterly earnings from Reliance Industries supported sentiment. By 9:22 a.m. IST, the Nifty 50 had gained 0.93% to 23,267.45 and the Sensex had risen 1.06% to 75,247.63. Reliance Industries shares were up 5.4%.",
+      "source": "Reuters, 2026-11-02",
+      "url": "https://www.reuters.com/world/india/indian-shares-set-positive-start-talks-end-iran-war-strong-reliance-earnings-2026-11-02/"
     },
     {
       "category": "Sports",
       "icon": "🏆",
-      "title": "Mohun Bagan beat Punjab FC 2–1 to move top of the ISL table",
-      "text": "Mohun Bagan Super Giant came from behind to defeat Punjab FC 2–1 in the Indian Super League on 31 October. Punjab FC scored in the third minute, before Lee Erwin equalised in the 18th minute and Dejan Dražić scored the winner in the 42nd minute. The victory moved Mohun Bagan temporarily to the top of the standings.",
-      "source": "The New Indian Express, 2026-10-31",
-      "url": "https://www.newindianexpress.com/sport/sports-news/2026/Oct/31/punjab-fc-fight-but-fall-short-against-mohun-bagan-super-giant"
+      "title": "Harmanpreet Singh hat-trick powers India to 4–2 win over Malaysia",
+      "text": "India defeated Malaysia 4–2 in the penultimate league match of the Asian Champions Trophy in Jalandhar. Captain Harmanpreet Singh scored a hat-trick, while Sukhjeet Singh also scored. India took the lead in the third minute, and Harmanpreet completed his hat-trick through a penalty stroke in the closing minutes.",
+      "source": "The Times of India, 2026-11-02",
+      "url": "https://timesofindia.indiatimes.com/sports/hockey/top-stories/hockey-harmanpreet-singhs-hat-trick-helps-india-down-malaysia-4-2-at-asian-champions-trophy/articleshow/135443281.cms"
+    },
+    {
+      "category": "World",
+      "icon": "🌐",
+      "title": "New Zealand records 913,762 early votes ahead of 7 November election",
+      "text": "New Zealand's Electoral Commission reported that 913,762 ballots were cast during the first week of advance voting for the country's 7 November 2026 general election. The total, covering 26 October to 1 November, was 28% higher than the same period during the 2023 election. Saturday was the busiest day, with more than 190,000 votes issued.",
+      "source": "Reuters, 2026-11-02",
+      "url": "https://www.reuters.com/world/asia-pacific/new-zealand-early-voting-surges-ahead-november-7-election-2026-11-02/"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "India clinches T20I series 3–2 despite final-match defeat to New Zealand",
+      "text": "India secured the five-match T20I series against New Zealand 3–2 even though the visitors won the final match by seven wickets at Seddon Park in Hamilton. India scored 191/8; New Zealand chased the target with 195/3 in 18 overs. Tim Seifert scored 93 and Glenn Phillips remained unbeaten on 65.",
+      "source": "The Times of India, 2026-11-01",
+      "url": "https://timesofindia.indiatimes.com/sports/cricket/india-vs-new-zealand/tim-seifert-glenn-phillips-power-new-zealand-to-7-wicket-win-in-the-final-t20i-as-india-take-series-3-2/articleshow/135424806.cms"
     }
   ],
   "quiz": [
     {
-      "q": "Under which initiative is BRICS Sustainable Lifestyle Week being observed in India?",
-      "a": "Mission LiFE (Lifestyle for Environment)"
+      "q": "How many complaints were filed in Telangana under the MWPSC Act between 2021 and August 2026?",
+      "a": "8,594 complaints"
     },
     {
-      "q": "Which tax system's procedural changes took effect in India on 1 November 2026?",
-      "a": "Goods and Services Tax (GST)"
+      "q": "What percentage did the Sensex gain by 9:22 a.m. IST on 2 November 2026?",
+      "a": "1.06%"
     },
     {
-      "q": "Until which month has the Nandan Nilekani-led examination reforms task force been extended?",
-      "a": "January 2027"
+      "q": "Which Indian captain scored a hat-trick against Malaysia in the Asian Champions Trophy?",
+      "a": "Harmanpreet Singh"
     },
     {
-      "q": "Which Indian minister called for diversified energy supply chains at the G20?",
-      "a": "External Affairs Minister S. Jaishankar"
+      "q": "How many ballots were cast during New Zealand's first week of advance voting?",
+      "a": "913,762 ballots"
     },
     {
-      "q": "Which club defeated Punjab FC 2–1 in the Indian Super League on 31 October?",
-      "a": "Mohun Bagan Super Giant"
+      "q": "What was the final result of India's five-match T20I series against New Zealand?",
+      "a": "India won 3–2"
     }
   ]
 }
