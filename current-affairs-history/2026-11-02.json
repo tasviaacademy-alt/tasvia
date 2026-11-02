@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-02",
+  "month": "November 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Telangana records 8,594 senior-citizen support complaints since 2021",
+      "text": "Telangana recorded 8,594 complaints under the Maintenance and Welfare of Parents and Senior Citizens Act between 2021 and August 2026. Nearly 3,100 were filed from April 2025 to August 2026. The Telangana Employees Accountability and Monitoring of Parental Support Act, 2026 makes support for elderly parents mandatory for public representatives and employees; failure can lead to a salary deduction of up to 15% or ₹10,000, whichever is lower.",
+      "source": "The Times of India, 2026-11-02",
+      "url": "https://timesofindia.indiatimes.com/city/hyderabad/abandoned-by-own-family-cases-of-elderly-parents-turning-to-law-now-increasing-in-telangana-8594-complaints-filed-since-2021-nearly-3100-in-17-months-as-new-law-allows-up-to-15-salary-cut-for-those-who-fail-to-support-elderly-parents/articleshow/135442533.cms"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "Indian stock markets open higher as Nifty and Sensex gain on 2 November",
+      "text": "Indian equity benchmarks opened higher on 2 November as easing crude prices and stronger-than-expected quarterly earnings from Reliance Industries supported sentiment. By 9:22 a.m. IST, the Nifty 50 had gained 0.93% to 23,267.45 and the Sensex had risen 1.06% to 75,247.63. Reliance Industries shares were up 5.4%.",
+      "source": "Reuters, 2026-11-02",
+      "url": "https://www.reuters.com/world/india/indian-shares-set-positive-start-talks-end-iran-war-strong-reliance-earnings-2026-11-02/"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "Harmanpreet Singh hat-trick powers India to 4–2 win over Malaysia",
+      "text": "India defeated Malaysia 4–2 in the penultimate league match of the Asian Champions Trophy in Jalandhar. Captain Harmanpreet Singh scored a hat-trick, while Sukhjeet Singh also scored. India took the lead in the third minute, and Harmanpreet completed his hat-trick through a penalty stroke in the closing minutes.",
+      "source": "The Times of India, 2026-11-02",
+      "url": "https://timesofindia.indiatimes.com/sports/hockey/top-stories/hockey-harmanpreet-singhs-hat-trick-helps-india-down-malaysia-4-2-at-asian-champions-trophy/articleshow/135443281.cms"
+    },
+    {
+      "category": "World",
+      "icon": "🌐",
+      "title": "New Zealand records 913,762 early votes ahead of 7 November election",
+      "text": "New Zealand's Electoral Commission reported that 913,762 ballots were cast during the first week of advance voting for the country's 7 November 2026 general election. The total, covering 26 October to 1 November, was 28% higher than the same period during the 2023 election. Saturday was the busiest day, with more than 190,000 votes issued.",
+      "source": "Reuters, 2026-11-02",
+      "url": "https://www.reuters.com/world/asia-pacific/new-zealand-early-voting-surges-ahead-november-7-election-2026-11-02/"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "India clinches T20I series 3–2 despite final-match defeat to New Zealand",
+      "text": "India secured the five-match T20I series against New Zealand 3–2 even though the visitors won the final match by seven wickets at Seddon Park in Hamilton. India scored 191/8; New Zealand chased the target with 195/3 in 18 overs. Tim Seifert scored 93 and Glenn Phillips remained unbeaten on 65.",
+      "source": "The Times of India, 2026-11-01",
+      "url": "https://timesofindia.indiatimes.com/sports/cricket/india-vs-new-zealand/tim-seifert-glenn-phillips-power-new-zealand-to-7-wicket-win-in-the-final-t20i-as-india-take-series-3-2/articleshow/135424806.cms"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "How many complaints were filed in Telangana under the MWPSC Act between 2021 and August 2026?",
+      "a": "8,594 complaints"
+    },
+    {
+      "q": "What percentage did the Sensex gain by 9:22 a.m. IST on 2 November 2026?",
+      "a": "1.06%"
+    },
+    {
+      "q": "Which Indian captain scored a hat-trick against Malaysia in the Asian Champions Trophy?",
+      "a": "Harmanpreet Singh"
+    },
+    {
+      "q": "How many ballots were cast during New Zealand's first week of advance voting?",
+      "a": "913,762 ballots"
+    },
+    {
+      "q": "What was the final result of India's five-match T20I series against New Zealand?",
+      "a": "India won 3–2"
+    }
+  ]
+}
