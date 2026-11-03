@@ -1661,9 +1661,14 @@ const TASVIA_APK_HOST=location.hostname==="apk.tasviaacademy.com";
 
 function payForm(id){
   const s=S.students[id];
+  // Monthly fee records are labeled by the cycle start month (e.g. Oct 16–Nov 16 = October).
+  // Default to the student's active cycle, not the calendar month, to prevent payments
+  // being attached to the wrong fee row and appearing unpaid in the Parent Portal.
+  const activeCycleMonth=currentFeeCycle(s).completedMonth||today().slice(0,7);
+  const selectedFeeMonth=UI.tab==="fees"?UI.feeMonth:activeCycleMonth;
   openSheet("Record payment",`<p class="sub" style="margin-top:-8px">${esc(s.name)} · ${clsLabel(s.cls)}</p><form id="fPay" data-id="${id}">
-  <div class="two"><label class="f">Amount (₹)<input name="amount" inputmode="numeric" required value="${esc(s.fee||"")}"></label>
-  <label class="f">Fee for month<input name="month" type="month" required value="${UI.tab==="fees"?UI.feeMonth:today().slice(0,7)}"></label></div>
+  <div class="two"><label class="f">Amount (₹)<input name="amount" type="number" min="0.01" step="0.01" inputmode="decimal" required value="${esc(s.fee||"")}"></label>
+  <label class="f">Fee cycle (starting month)<input name="month" type="month" required value="${selectedFeeMonth}"></label></div>
   <div class="two"><label class="f">Paid on<input name="date" type="date" required value="${today()}"></label>
   <label class="f">Mode<select name="mode">${["Cash","UPI","Bank transfer","Cheque"].map(x=>opt(x,"Cash")).join("")}</select></label></div>
   <label class="f">Note (optional)<input name="note" placeholder="Admission fee, books…"></label>
