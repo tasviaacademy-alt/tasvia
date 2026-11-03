@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-03",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-gk-white-blood-cells",
+      "category": "Human Body",
+      "q": "Which blood cells help the body fight infections?",
+      "a": "White blood cells.",
+      "options": [
+        "Nerve cells.",
+        "Platelets.",
+        "Red blood cells.",
+        "White blood cells."
+      ]
+    },
+    {
+      "id": "static-continents",
+      "category": "World Geography",
+      "q": "How many continents are there in the commonly taught seven-continent model?",
+      "a": "Seven.",
+      "options": [
+        "Seven.",
+        "Six.",
+        "Five.",
+        "Eight."
+      ]
+    },
+    {
+      "id": "static-science-gravity",
+      "category": "Science",
+      "q": "Which force pulls objects towards Earth?",
+      "a": "Gravity.",
+      "options": [
+        "Buoyancy.",
+        "Gravity.",
+        "Magnetism.",
+        "Friction."
+      ]
+    },
+    {
+      "id": "static-renewable-energy",
+      "category": "Environment",
+      "q": "Which energy source uses sunlight to generate electricity?",
+      "a": "Solar energy.",
+      "options": [
+        "Hydropower.",
+        "Wind energy.",
+        "Geothermal energy.",
+        "Solar energy."
+      ]
+    },
+    {
+      "id": "static-maths-triangle",
+      "category": "Mathematics",
+      "q": "How many sides does a triangle have?",
+      "a": "Three.",
+      "options": [
+        "Five.",
+        "Four.",
+        "Six.",
+        "Three."
+      ]
+    }
+  ]
+}
