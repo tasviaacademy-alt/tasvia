@@ -720,7 +720,21 @@ function paymentMonth(p){
   if(dateYear)return dateYear[1]+"-"+date.slice(5,7);
   return "";
 }
-function paidFor(sid,month){return payList(sid).filter(x=>paymentMonth(x)===month)}
+function paymentFeeMonth(p){
+  const assigned=paymentMonth(p);
+  const date=String(p&&p.date||p&&p.paidOn||p&&p.paymentDate||"");
+  // Repair old Staff Portal records whose default month was one month ahead
+  // of the actual payment date. This makes an already-recorded September
+  // payment count for September without creating or editing any transaction.
+  const dm=/^(\d{4})-(\d{2})-\d{2}$/.exec(date);
+  if(assigned&&dm){
+    const next=new Date(Number(dm[1]),Number(dm[2]),1);
+    const nextKey=next.getFullYear()+"-"+String(next.getMonth()+1).padStart(2,"0");
+    if(assigned===nextKey)return dm[1]+"-"+dm[2];
+  }
+  return assigned;
+}
+function paidFor(sid,month){return payList(sid).filter(x=>paymentFeeMonth(x)===month)}
 function feeDueDate(s,month){
   if(!s?.joined||!/^\d{4}-\d{2}-\d{2}$/.test(s.joined)||!/^\d{4}-\d{2}$/.test(month))return null;
   const day=Number(s.joined.slice(8,10)),[y,mo]=month.split("-").map(Number);
@@ -768,7 +782,7 @@ function currentFeeCycle(s){
   payList(s.id).forEach(p=>{
     const amount=Number(p.amount)||0;
     const explicitMonth=String(p.month||"").trim();
-    if(explicitMonth){if(paymentMonth(p)===completedMonth)paid+=amount;return;}
+    if(explicitMonth){if(paymentFeeMonth(p)===completedMonth)paid+=amount;return;}
     const ds=String(p.date||"");
     const d=/^\d{4}-\d{2}-\d{2}$/.test(ds)?new Date(ds+"T00:00:00"):null;
     if(d&&d>=cycleStart&&d<=cycleEnd)paid+=amount;
