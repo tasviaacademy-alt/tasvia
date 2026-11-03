@@ -1093,7 +1093,7 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
       var marks=Number(x.m)||0,max=Number(x.x)||0;
       return "<tr><td>"+esc(x.s||"Test")+" "+esc(x.n||"")+"</td><td>"+marks+(max?"/"+max:"")+"</td></tr>";
     }).join("");
-    // Rebuild the visible fee history from the joining-date anniversary.
+    // Rebuild visible fee history using due-month labels (October due Oct 16, November due Nov 16).
     // This prevents stale calendar-month rows (e.g. Oct and Nov both due Nov 16)
     // from being shown when the student's cycle is Sep 16–Oct 16, Oct 16–Nov 16.
     if(validJoinDate){
@@ -1115,7 +1115,7 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
       fees=[-1,0,1].map(function(offset){
         var start=new Date(anchorDate.getFullYear(),anchorDate.getMonth()+offset,1);
         var monthKey=start.getFullYear()+"-"+String(start.getMonth()+1).padStart(2,"0");
-        var due=new Date(start.getFullYear(),start.getMonth()+1,Math.min(joinDayForRows,new Date(start.getFullYear(),start.getMonth()+2,0).getDate()));
+        var due=new Date(start.getFullYear(),start.getMonth(),Math.min(joinDayForRows,new Date(start.getFullYear(),start.getMonth()+1,0).getDate()));
         var dueISO=due.getFullYear()+"-"+String(due.getMonth()+1).padStart(2,"0")+"-"+String(due.getDate()).padStart(2,"0");
         var prior=oldFeeRows[monthKey]||{};
         var cyclePayments=pays.filter(function(p){return String(p.m||"").slice(0,7)===monthKey;});
