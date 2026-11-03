@@ -1093,6 +1093,37 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
       var marks=Number(x.m)||0,max=Number(x.x)||0;
       return "<tr><td>"+esc(x.s||"Test")+" "+esc(x.n||"")+"</td><td>"+marks+(max?"/"+max:"")+"</td></tr>";
     }).join("");
+    // Rebuild the visible fee history from the joining-date anniversary.
+    // This prevents stale calendar-month rows (e.g. Oct and Nov both due Nov 16)
+    // from being shown when the student's cycle is Sep 16–Oct 16, Oct 16–Nov 16.
+    if(validJoinDate){
+      var joinDayForRows=Number(joinedDate.slice(8,10));
+      var ty=Number(feeTodayISO.slice(0,4)),tm=Number(feeTodayISO.slice(5,7))-1;
+      function anniversaryDate(y,m){
+        var lastDay=new Date(y,m+1,0).getDate();
+        return new Date(y,m,Math.min(joinDayForRows,lastDay));
+      }
+      var thisMonthAnniversary=anniversaryDate(ty,tm);
+      var todayForRows=new Date(Number(feeTodayISO.slice(0,4)),Number(feeTodayISO.slice(5,7))-1,Number(feeTodayISO.slice(8,10)));
+      var anchorDate;
+      if(feeTodayISO<joinedDate)anchorDate=new Date(Number(joinedDate.slice(0,4)),Number(joinedDate.slice(5,7))-1,1);
+      else if(todayForRows<thisMonthAnniversary)anchorDate=new Date(ty,tm-1,1);
+      else anchorDate=new Date(ty,tm,1);
+      var oldFeeRows={};
+      fees.forEach(function(row){if(row&&/^\\d{4}-\\d{2}$/.test(String(row.m||"")))oldFeeRows[String(row.m)]=row;});
+      var profileMonthlyFee=Math.max(0,Number(d.fee)||0);
+      fees=[-1,0,1].map(function(offset){
+        var start=new Date(anchorDate.getFullYear(),anchorDate.getMonth()+offset,1);
+        var monthKey=start.getFullYear()+"-"+String(start.getMonth()+1).padStart(2,"0");
+        var due=new Date(start.getFullYear(),start.getMonth()+1,Math.min(joinDayForRows,new Date(start.getFullYear(),start.getMonth()+2,0).getDate()));
+        var dueISO=due.getFullYear()+"-"+String(due.getMonth()+1).padStart(2,"0")+"-"+String(due.getDate()).padStart(2,"0");
+        var prior=oldFeeRows[monthKey]||{};
+        var cyclePayments=pays.filter(function(p){return String(p.m||"").slice(0,7)===monthKey;});
+        var paid=cyclePayments.length?cyclePayments.reduce(function(sum,p){return sum+Math.max(0,Number(p.a)||0);},0):Math.max(0,Number(prior.paid)||0);
+        var amount=profileMonthlyFee||Math.max(0,Number(prior.fee)||0);
+        return {m:monthKey,fee:amount,paid:Math.min(amount,paid),dueDate:dueISO,status:paid>=amount&&amount>0?"paid":(feeTodayISO<dueISO?"upcoming":"due")};
+      }).filter(function(row){return row.m>=joinedDate.slice(0,7);}).sort(function(a,b){return b.m.localeCompare(a.m);});
+    }
     var feeRows=fees.slice(0,12).map(function(x){
       var f=Math.max(0,(Number(x.fee)||0)-(Number(x.paid)||0));
       var dd=x.dueDate?String(x.dueDate):"";
