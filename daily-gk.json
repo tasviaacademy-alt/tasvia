@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-11-03",
+  "date": "2026-11-04",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-gk-white-blood-cells",
-      "category": "Human Body",
-      "q": "Which blood cells help the body fight infections?",
-      "a": "White blood cells.",
+      "id": "static-gk-computer-keyboard",
+      "category": "Computers",
+      "q": "Which device is mainly used to type text into a computer?",
+      "a": "Keyboard.",
       "options": [
-        "Nerve cells.",
-        "Platelets.",
-        "Red blood cells.",
-        "White blood cells."
+        "Monitor.",
+        "Printer.",
+        "Keyboard.",
+        "Speaker."
       ]
     },
     {
-      "id": "static-continents",
-      "category": "World Geography",
-      "q": "How many continents are there in the commonly taught seven-continent model?",
-      "a": "Seven.",
-      "options": [
-        "Seven.",
-        "Six.",
-        "Five.",
-        "Eight."
-      ]
-    },
-    {
-      "id": "static-science-gravity",
+      "id": "static-photosynthesis",
       "category": "Science",
-      "q": "Which force pulls objects towards Earth?",
-      "a": "Gravity.",
+      "q": "What process do green plants use to make food using sunlight?",
+      "a": "Photosynthesis.",
       "options": [
-        "Buoyancy.",
-        "Gravity.",
-        "Magnetism.",
-        "Friction."
+        "Fermentation.",
+        "Transpiration.",
+        "Photosynthesis.",
+        "Respiration."
       ]
     },
     {
-      "id": "static-renewable-energy",
-      "category": "Environment",
-      "q": "Which energy source uses sunlight to generate electricity?",
-      "a": "Solar energy.",
+      "id": "static-economics-currency",
+      "category": "Economics",
+      "q": "What is the currency of India?",
+      "a": "The Indian rupee.",
       "options": [
-        "Hydropower.",
-        "Wind energy.",
-        "Geothermal energy.",
-        "Solar energy."
+        "The Sri Lankan rupee.",
+        "The Nepalese rupee.",
+        "The Indian rupee.",
+        "The Bangladeshi taka."
       ]
     },
     {
-      "id": "static-maths-triangle",
-      "category": "Mathematics",
-      "q": "How many sides does a triangle have?",
-      "a": "Three.",
+      "id": "static-telangana-festival",
+      "category": "Telangana GK",
+      "q": "Which floral festival is widely associated with Telangana?",
+      "a": "Bathukamma.",
       "options": [
-        "Five.",
-        "Four.",
-        "Six.",
-        "Three."
+        "Onam.",
+        "Bathukamma.",
+        "Pongal.",
+        "Bihu."
+      ]
+    },
+    {
+      "id": "static-sports-olympics",
+      "category": "Sports",
+      "q": "How often are the Summer Olympic Games normally held?",
+      "a": "Every four years.",
+      "options": [
+        "Every three years.",
+        "Every four years.",
+        "Every five years.",
+        "Every two years."
       ]
     }
   ]
