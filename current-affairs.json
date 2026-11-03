@@ -1,69 +1,69 @@
 {
-  "date": "2026-11-02",
+  "date": "2026-11-03",
   "month": "November 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "Telangana records 8,594 senior-citizen support complaints since 2021",
-      "text": "Telangana recorded 8,594 complaints under the Maintenance and Welfare of Parents and Senior Citizens Act between 2021 and August 2026. Nearly 3,100 were filed from April 2025 to August 2026. The Telangana Employees Accountability and Monitoring of Parental Support Act, 2026 makes support for elderly parents mandatory for public representatives and employees; failure can lead to a salary deduction of up to 15% or ₹10,000, whichever is lower.",
-      "source": "The Times of India, 2026-11-02",
-      "url": "https://timesofindia.indiatimes.com/city/hyderabad/abandoned-by-own-family-cases-of-elderly-parents-turning-to-law-now-increasing-in-telangana-8594-complaints-filed-since-2021-nearly-3100-in-17-months-as-new-law-allows-up-to-15-salary-cut-for-those-who-fail-to-support-elderly-parents/articleshow/135442533.cms"
-    },
-    {
       "category": "Economy",
       "icon": "💹",
-      "title": "Indian stock markets open higher as Nifty and Sensex gain on 2 November",
-      "text": "Indian equity benchmarks opened higher on 2 November as easing crude prices and stronger-than-expected quarterly earnings from Reliance Industries supported sentiment. By 9:22 a.m. IST, the Nifty 50 had gained 0.93% to 23,267.45 and the Sensex had risen 1.06% to 75,247.63. Reliance Industries shares were up 5.4%.",
-      "source": "Reuters, 2026-11-02",
-      "url": "https://www.reuters.com/world/india/indian-shares-set-positive-start-talks-end-iran-war-strong-reliance-earnings-2026-11-02/"
+      "title": "Rupee may open firmer as crude oil prices fall",
+      "text": "Reuters reported on 3 November that the Indian rupee was expected to open at ₹94.75–₹94.78 per US dollar, after closing at ₹94.90 on Monday. Brent crude had fallen 11%, improving the outlook for India, which imports about 90% of its oil requirement. Dollar strength and technical resistance could limit the rupee’s gains.",
+      "source": "Reuters, 2026-11-03",
+      "url": "https://www.reuters.com/world/india/rupee-benefit-oil-plunge-while-facing-technical-resistance-dollar-strength-2026-11-03/"
+    },
+    {
+      "category": "Weather",
+      "icon": "🌧️",
+      "title": "Cyclone Murasu prompts heavy-rain alerts across five states",
+      "text": "The Economic Times reported that the India Meteorological Department forecast heavy to very heavy rainfall in parts of Andhra Pradesh, Telangana, Tamil Nadu, Odisha and Chhattisgarh on 3 November. Cyclone Murasu was expected to weaken after crossing the south Andhra Pradesh coast. Residents were advised to follow local administration instructions and official weather updates.",
+      "source": "The Economic Times, 2026-11-03",
+      "url": "https://economictimes.indiatimes.com/news/new-updates/weather-today-november-3-cyclone-murasu-tamil-nadu-andhra-pradesh-telangana-brace-for-heavy-rain-imd-alert-across-5-states/articleshow/135460679.cms"
+    },
+    {
+      "category": "Environment",
+      "icon": "🌍",
+      "title": "Strong El Niño episode continues to intensify",
+      "text": "A report published by Le Monde on 3 November said the current El Niño has continued to strengthen and could peak near the end of 2026. The Niño 3.4 sea-surface temperature anomaly was around 3.5°C at the end of October. Scientists linked the episode with weather disruptions including drought and wildfires, while noting that other climate factors also influence regional impacts.",
+      "source": "Le Monde, 2026-11-03",
+      "url": "https://www.lemonde.fr/en/environment/article/2026/11/03/super-el-nino-continues-to-intensify-it-has-already-reached-unprecedented-levels_6769600_114.html"
+    },
+    {
+      "category": "India",
+      "icon": "⚖️",
+      "title": "Supreme Court allows limited green-firecracker use in Delhi-NCR",
+      "text": "The Supreme Court permitted certified green firecrackers in Delhi-NCR on 7 and 8 November for specified time windows: 6–7 a.m. and 8–10 p.m. The order also establishes 300-metre no-firecracker zones around hospitals, educational institutions and other protected places. The complete ban is to resume from 9 November.",
+      "source": "The Economic Times (Reuters), 2026-11-03",
+      "url": "https://m.economictimes.com/news/india/delhi-ncr-gets-two-days-of-green-crackers-as-supreme-court-caps-bursting-at-three-hours-a-day-and-sets-300-metre-no-cracker-zones/amp_articleshow/135471955.cms"
     },
     {
       "category": "Sports",
-      "icon": "🏆",
-      "title": "Harmanpreet Singh hat-trick powers India to 4–2 win over Malaysia",
-      "text": "India defeated Malaysia 4–2 in the penultimate league match of the Asian Champions Trophy in Jalandhar. Captain Harmanpreet Singh scored a hat-trick, while Sukhjeet Singh also scored. India took the lead in the third minute, and Harmanpreet completed his hat-trick through a penalty stroke in the closing minutes.",
+      "icon": "🏅",
+      "title": "All 10 candidates elected unopposed to IOA Athletes’ Commission",
+      "text": "The Times of India reported that the Indian Olympic Association’s Athletes’ Commission election scheduled for 3 November will not be held because all 10 candidates for the five male and five female positions were declared elected unopposed. Withdrawals by two nominees left one candidate for each position across the categories.",
       "source": "The Times of India, 2026-11-02",
-      "url": "https://timesofindia.indiatimes.com/sports/hockey/top-stories/hockey-harmanpreet-singhs-hat-trick-helps-india-down-malaysia-4-2-at-asian-champions-trophy/articleshow/135443281.cms"
-    },
-    {
-      "category": "World",
-      "icon": "🌐",
-      "title": "New Zealand records 913,762 early votes ahead of 7 November election",
-      "text": "New Zealand's Electoral Commission reported that 913,762 ballots were cast during the first week of advance voting for the country's 7 November 2026 general election. The total, covering 26 October to 1 November, was 28% higher than the same period during the 2023 election. Saturday was the busiest day, with more than 190,000 votes issued.",
-      "source": "Reuters, 2026-11-02",
-      "url": "https://www.reuters.com/world/asia-pacific/new-zealand-early-voting-surges-ahead-november-7-election-2026-11-02/"
-    },
-    {
-      "category": "Sports",
-      "icon": "🏆",
-      "title": "India clinches T20I series 3–2 despite final-match defeat to New Zealand",
-      "text": "India secured the five-match T20I series against New Zealand 3–2 even though the visitors won the final match by seven wickets at Seddon Park in Hamilton. India scored 191/8; New Zealand chased the target with 195/3 in 18 overs. Tim Seifert scored 93 and Glenn Phillips remained unbeaten on 65.",
-      "source": "The Times of India, 2026-11-01",
-      "url": "https://timesofindia.indiatimes.com/sports/cricket/india-vs-new-zealand/tim-seifert-glenn-phillips-power-new-zealand-to-7-wicket-win-in-the-final-t20i-as-india-take-series-3-2/articleshow/135424806.cms"
+      "url": "https://timesofindia.indiatimes.com/sports/more-sports/others/ioa-elections-manjeet-singh-elected-into-athletes-commission-kidambi-srikanth-withdraws/articleshow/135466118.cms"
     }
   ],
   "quiz": [
     {
-      "q": "How many complaints were filed in Telangana under the MWPSC Act between 2021 and August 2026?",
-      "a": "8,594 complaints"
+      "q": "What range was the Indian rupee expected to open at against the US dollar on 3 November?",
+      "a": "₹94.75–₹94.78 per US dollar"
     },
     {
-      "q": "What percentage did the Sensex gain by 9:22 a.m. IST on 2 November 2026?",
-      "a": "1.06%"
+      "q": "Which storm prompted heavy-rain alerts across parts of five Indian states?",
+      "a": "Cyclone Murasu"
     },
     {
-      "q": "Which Indian captain scored a hat-trick against Malaysia in the Asian Champions Trophy?",
-      "a": "Harmanpreet Singh"
+      "q": "What was the approximate Niño 3.4 temperature anomaly at the end of October?",
+      "a": "About +3.5°C"
     },
     {
-      "q": "How many ballots were cast during New Zealand's first week of advance voting?",
-      "a": "913,762 ballots"
+      "q": "On which dates did the Supreme Court permit limited green-firecracker use in Delhi-NCR?",
+      "a": "7 and 8 November 2026"
     },
     {
-      "q": "What was the final result of India's five-match T20I series against New Zealand?",
-      "a": "India won 3–2"
+      "q": "Which organisation's Athletes’ Commission declared all 10 candidates elected unopposed?",
+      "a": "Indian Olympic Association (IOA)"
     }
   ]
 }
