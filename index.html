@@ -725,10 +725,11 @@ function feeDueDate(s,month){
   if(!s?.joined||!/^\d{4}-\d{2}-\d{2}$/.test(s.joined)||!/^\d{4}-\d{2}$/.test(month))return null;
   const day=Number(s.joined.slice(8,10)),[y,mo]=month.split("-").map(Number);
   if(!day||!y||!mo)return null;
-  // A fee month is the cycle's start month: Sep 8–Oct 8 is the September cycle.
-  const next=new Date(y,mo,1);
-  const last=new Date(next.getFullYear(),next.getMonth()+1,0).getDate();
-  return next.getFullYear()+"-"+String(next.getMonth()+1).padStart(2,"0")+"-"+String(Math.min(day,last)).padStart(2,"0");
+  // Fee rows are labeled by the cycle's due-month, matching currentFeeCycle:
+  // the October fee is due on the October joining-date anniversary.
+  const cycleMonth=new Date(y,mo-1,1);
+  const last=new Date(cycleMonth.getFullYear(),cycleMonth.getMonth()+1,0).getDate();
+  return cycleMonth.getFullYear()+"-"+String(cycleMonth.getMonth()+1).padStart(2,"0")+"-"+String(Math.min(day,last)).padStart(2,"0");
 }
 function feeStatus(s,month){
   const paid=paidFor(s.id,month).reduce((a,b)=>a+ +b.amount,0);
@@ -742,8 +743,8 @@ function feeStatus(s,month){
     if(month===joinMonth&&today()<s.joined)return {k:"upcoming",paid,left:Math.max(+s.fee-paid,0),dueDate};
   }
   if(paid>=s.fee)return {k:"paid",paid,left:0,dueDate};
-  // The fee is overdue only the day after the cycle-end anniversary.
-  const dueNow=!dueDate||today()>dueDate;
+  // The fee is due on the joining-date anniversary itself.
+  const dueNow=!dueDate||today()>=dueDate;
   if(!dueNow)return {k:"upcoming",paid,left:s.fee-paid,dueDate};
   return {k:paid?"part":"due",paid,left:s.fee-paid,dueDate};
 }
@@ -788,7 +789,7 @@ function currentFeeCycle(s){
   paid=Math.min(fee,Math.max(0,paid));
   const dueDate=iso(cycleEnd);
   const nextDue=makeDate(cycleEnd.getFullYear(),cycleEnd.getMonth()+1);
-  const status=paid>=fee?"paid":(firstCycle?(iso(todayDate)<dueDate?"upcoming":"due"):(iso(todayDate)<=dueDate?"upcoming":"due"));
+  const status=paid>=fee?"paid":(iso(todayDate)<dueDate?"upcoming":"due");
   return {status,fee,paid,due:Math.max(0,fee-paid),dueDate,nextDueDate:iso(nextDue),cycleStart:iso(cycleStart),completedMonth};
 }
 const active=s=>s.active!==false;
