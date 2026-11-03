@@ -725,10 +725,9 @@ function feeDueDate(s,month){
   if(!s?.joined||!/^\d{4}-\d{2}-\d{2}$/.test(s.joined)||!/^\d{4}-\d{2}$/.test(month))return null;
   const day=Number(s.joined.slice(8,10)),[y,mo]=month.split("-").map(Number);
   if(!day||!y||!mo)return null;
-  // Month labels represent the cycle start: Oct 16–Nov 16 is October.
-  const cycleEnd=new Date(y,mo,1);
-  const last=new Date(cycleEnd.getFullYear(),cycleEnd.getMonth()+1,0).getDate();
-  return cycleEnd.getFullYear()+"-"+String(cycleEnd.getMonth()+1).padStart(2,"0")+"-"+String(Math.min(day,last)).padStart(2,"0");
+  // Fee rows are labeled by due month: October is due Oct 16; November Nov 16.
+  const due=new Date(y,mo-1,Math.min(day,new Date(y,mo,0).getDate()));
+  return due.getFullYear()+"-"+String(due.getMonth()+1).padStart(2,"0")+"-"+String(due.getDate()).padStart(2,"0");
 }
 function feeStatus(s,month){
   const paid=paidFor(s.id,month).reduce((a,b)=>a+ +b.amount,0);
@@ -760,21 +759,10 @@ function currentFeeCycle(s){
   const joinDate=makeDate(jy,jm-1);
   const firstEnd=makeDate(jy,jm);
   const todayDate=new Date();todayDate.setHours(0,0,0,0);
-  // The first fee is due on the joining date itself. After that, each
-  // monthly cycle is tracked by the joining-date anniversary.
-  let cycleStart,cycleEnd;
-  const firstCycle=todayDate<firstEnd;
-  if(firstCycle){
-    cycleStart=joinDate;
-    cycleEnd=joinDate;
-  }else{
-    // The active cycle ends on this month's joining-date anniversary.
-    // For example, Sep 8–Oct 8 is paid through Oct 8; unpaid fees become due Oct 9.
-    cycleEnd=makeDate(todayDate.getFullYear(),todayDate.getMonth());
-    cycleStart=makeDate(cycleEnd.getFullYear(),cycleEnd.getMonth()-1);
-  }
-  // Fee history is labeled by cycle start month: Oct 16–Nov 16 is October.
-  // Keep payment matching and the monthly history row on that same cycle.
+  // Fee rows are labeled by due month: October due Oct 16, November due Nov 16.
+  // Keep the first joining month as its own fee row, then use the current calendar month.
+  const cycleStart=new Date(todayDate.getFullYear(),todayDate.getMonth(),1);
+  const cycleEnd=makeDate(todayDate.getFullYear(),todayDate.getMonth());
   const completedMonth=monthOf(cycleStart);
   let paid=0;
   payList(s.id).forEach(p=>{
