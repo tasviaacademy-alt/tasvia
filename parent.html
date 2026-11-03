@@ -1110,7 +1110,7 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
       else if(todayForRows<thisMonthAnniversary)anchorDate=new Date(ty,tm-1,1);
       else anchorDate=new Date(ty,tm,1);
       var oldFeeRows={};
-      fees.forEach(function(row){if(row&&/^\\d{4}-\\d{2}$/.test(String(row.m||"")))oldFeeRows[String(row.m)]=row;});
+      fees.forEach(function(row){if(row&&/^\d{4}-\d{2}$/.test(String(row.m||"")))oldFeeRows[String(row.m)]=row;});
       var profileMonthlyFee=Math.max(0,Number(d.fee)||0);
       fees=[-1,0,1].map(function(offset){
         var start=new Date(anchorDate.getFullYear(),anchorDate.getMonth()+offset,1);
