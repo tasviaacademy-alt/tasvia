@@ -1205,6 +1205,35 @@ async function syncPV(){
           const i=info();
           v={studentId:id,name:st.name||"Student",cls:st.cls||"",board:st.board||"",lang:langOf(st),year:acYear(today()).label,att:{},yr:{p:0,a:0},abs:[],attendanceDays:{},tests:[],fees:[],pays:[],hw:[],currentFee:null,pin:String(st.pin||pin||""),centre:{name:i.name,phone:i.phone,notice:i.notice||"",timings:i.timings||"",address:i.address||"",upi:i.upi||DEFAULT_INFO.upi||""}};
         }
+        // Publish payment records directly from the freshly-read authoritative fees/{studentId}
+        // document. This avoids a stale in-memory fee listener/cache hiding staff-recorded
+        // payments from the Parent Portal and its receipt list.
+        try{
+          const authoritativeFee=S.fees[id]||{};
+          const rawPayments=authoritativeFee.payments;
+          const paymentRows=Array.isArray(rawPayments)
+            ?rawPayments.filter(Boolean)
+            :rawPayments&&typeof rawPayments==="object"?Object.values(rawPayments).filter(Boolean):[];
+          const normalizedPayments=paymentRows.map((p,index)=>({
+            id:String(p.id||"fee-payment-"+index),
+            d:String(p.date||p.paidOn||p.paymentDate||""),
+            a:Math.max(0,Number(p.amount!=null?p.amount:(p.a!=null?p.a:p.paidAmount))||0),
+            m:paymentMonth(p),
+            mode:String(p.mode||p.method||"")
+          })).filter(p=>p.a>0&&p.d);
+          v.pays=normalizedPayments;
+          if(Array.isArray(v.fees)){
+            v.fees=v.fees.map(row=>{
+              const month=String(row.m||"");
+              const paid=Math.min(Math.max(0,Number(v.fee)||0),
+                normalizedPayments.filter(p=>p.m===month).reduce((sum,p)=>sum+p.a,0));
+              const amount=Math.max(0,Number(row.fee)||Number(v.fee)||0);
+              const dueDate=String(row.dueDate||feeDueDate(st,month)||"");
+              const status=paid>=amount&&amount>0?"paid":(dueDate&&today()<dueDate?"upcoming":(paid>0?"part":"due"));
+              return Object.assign({},row,{paid,status,dueDate});
+            });
+          }
+        }catch(paymentSyncError){console.warn("Parent payment history sync failed",id,paymentSyncError)}
         const j=stable(v),hj=hash(j);
         let exists=false;
         let oldParent=null;
