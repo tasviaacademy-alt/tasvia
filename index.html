@@ -1008,7 +1008,15 @@ async function saveStudentHomeworkCanonical(sid,date,entry){
 function buildParentView(s){
   const i=info();
   if(!active(s))return {left:true,name:s.name,centre:{name:i.name,phone:i.phone}};
-  const ay=acYear(today()),months=lastMonths(3);
+  const ay=acYear(today());
+  // Parent fee history follows the student's joining-date anniversary cycles,
+  // not calendar-month due dates. Show previous, active, and next cycle.
+  const activeCycleMonth=currentFeeCycle(s).completedMonth||today().slice(0,7);
+  const cycleAnchor=new Date(activeCycleMonth+"-01T00:00:00");
+  const months=[-1,0,1].map(offset=>{
+    const d=new Date(cycleAnchor.getFullYear(),cycleAnchor.getMonth()+offset,1);
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+  }).filter(m=>enrolledIn(s,m)).sort((a,b)=>b.localeCompare(a));
   const joinISO=/^\d{4}-\d{2}-\d{2}$/.test(String(s.joined||""))?String(s.joined):"";
   const attendanceKeys=[...new Set([s.id,s._legacyId,s.legacyId,s.admissionNo].map(x=>String(x||"").trim()).filter(Boolean))];
   const studentMark=d=>{const marks=getMarks(d);for(const key of attendanceKeys){const value=marks[key];if(value==="P"||value==="A")return value;}return "";};
