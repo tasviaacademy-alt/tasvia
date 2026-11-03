@@ -1037,7 +1037,7 @@ function buildParentView(s){
     id:String(p.id||""),
     d:String(p.date||""),
     a:Math.max(0,Number(p.amount)||0),
-    m:paymentMonth(p),
+    m:paymentFeeMonth(p),
     mode:p.mode
   })).filter(p=>p.m||p.d);
   const feePeriodPaid=(month)=>{
@@ -1232,7 +1232,7 @@ async function syncPV(){
             id:String(p.id||"fee-payment-"+index),
             d:String(p.date||p.paidOn||p.paymentDate||""),
             a:Math.max(0,Number(p.amount!=null?p.amount:(p.a!=null?p.a:p.paidAmount))||0),
-            m:paymentMonth(p),
+            m:paymentFeeMonth(p),
             mode:String(p.mode||p.method||"")
           })).filter(p=>p.a>0&&p.d);
           v.pays=normalizedPayments;
