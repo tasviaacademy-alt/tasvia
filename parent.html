@@ -1084,8 +1084,9 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     if(!feeDate && feeAmt>0 && validJoinDate){
       var joinDay=Number(joinedDate.slice(8,10));
       var dueYear=Number(feeTodayISO.slice(0,4)),dueMonth=Number(feeTodayISO.slice(5,7))-1;
-      var dueDay=Math.min(joinDay,new Date(dueYear,dueMonth+1,0).getDate());
-      feeDate=dueYear+"-"+String(dueMonth+1).padStart(2,"0")+"-"+String(dueDay).padStart(2,"0");
+      var dueAnniversary=new Date(dueYear,dueMonth,Math.min(joinDay,new Date(dueYear,dueMonth+1,0).getDate()));
+      var dueNext=new Date(dueAnniversary.getFullYear(),dueAnniversary.getMonth(),dueAnniversary.getDate()+1);
+      feeDate=dueNext.getFullYear()+"-"+String(dueNext.getMonth()+1).padStart(2,"0")+"-"+String(dueNext.getDate()).padStart(2,"0");
     }
     if(!feeDate)feeDate="Not set";
     var feeClass=feeAmt<=0?"":(feePaid?"paid":(feeUpcoming?"upcoming":"notpaid"));
@@ -1115,7 +1116,14 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
       fees=[-1,0,1].map(function(offset){
         var start=new Date(anchorDate.getFullYear(),anchorDate.getMonth()+offset,1);
         var monthKey=start.getFullYear()+"-"+String(start.getMonth()+1).padStart(2,"0");
-        var due=new Date(start.getFullYear(),start.getMonth(),Math.min(joinDayForRows,new Date(start.getFullYear(),start.getMonth()+1,0).getDate()));
+        // First fee month starts on the joining date; each later fee month
+        // starts the day after that month's joining-date anniversary.
+        var due;
+        if(monthKey===joinedDate.slice(0,7))due=new Date(Number(joinedDate.slice(0,4)),Number(joinedDate.slice(5,7))-1,Number(joinedDate.slice(8,10)));
+        else{
+          var anniversary=new Date(start.getFullYear(),start.getMonth(),Math.min(joinDayForRows,new Date(start.getFullYear(),start.getMonth()+1,0).getDate()));
+          due=new Date(anniversary.getFullYear(),anniversary.getMonth(),anniversary.getDate()+1);
+        }
         var dueISO=due.getFullYear()+"-"+String(due.getMonth()+1).padStart(2,"0")+"-"+String(due.getDate()).padStart(2,"0");
         var prior=oldFeeRows[monthKey]||{};
         var cyclePayments=pays.filter(function(p){return String(p.m||"").slice(0,7)===monthKey;});
