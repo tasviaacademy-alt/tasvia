@@ -1892,6 +1892,19 @@ nav button{font-weight:700}
 @media(max-width:520px){main{padding-top:14px;padding-bottom:100px}.card{padding:15px;border-radius:14px}.gate form{padding:23px 20px;margin:16px}}
 @media(prefers-reduced-motion:reduce){.btn,.card,.item{transition:none!important}.btn:hover{transform:none}}
 
+
+/* TASVIA STAFF PORTAL: enforce the approved white-background brand theme on every device. */
+:root,:root[data-theme="dark"],:root:not([data-theme="light"]){
+  color-scheme:light!important;
+  --bg:#FFFFFF!important;--card:#FFFFFF!important;--ink:#14213D!important;
+  --muted:#64748B!important;--line:#E2E8F0!important;--chip:#F5F7FA!important;
+  --board:#0B2455!important;--board2:#15326F!important;--chalk:#FFFFFF!important;
+  --gold:#D9A441!important;--p:#238653!important;--a:#C43D4B!important;
+}
+html,body,main,.sheet{background:#FFFFFF!important;color:#14213D!important}
+.card,.item,nav{background:#FFFFFF!important}
+.chip{background:#F5F7FA!important;color:#14213D!important}
+.chip.on{background:#0B2455!important;color:#FFFFFF!important}
 </style></head><body><div class="bar"><span>TASVIA ID cards · ${rows?list.length:0}</span><button onclick="window.print()">Print / Save PDF</button></div>${rows}</body></html>`;
   }
 }
