@@ -2781,16 +2781,71 @@ button.action-summary:focus-visible{
 </style>
 
 <style id="tasvia-diwali-2026">
-
-/* Diwali 2026 — stronger visible festive treatment */
-:root{--bg:#FFF8EA!important;--card:#FFFFFF!important;--ink:#182744!important;--muted:#756653!important;--line:#EED5A8!important;--chip:#FFF0D5!important;--gold:#F4B942!important;--board:#0B2455!important;--chalk:#FFFDF8!important;}
-body{background-image:radial-gradient(ellipse at 5% 0%,rgba(255,184,74,.23),transparent 38%),radial-gradient(ellipse at 95% 85%,rgba(222,145,38,.15),transparent 34%)!important;}
-header{border-bottom:4px solid #F4B942!important;box-shadow:0 5px 18px rgba(145,91,22,.14)!important;}
-.card,.notice{border-color:#EED5A8!important;}
-.btn.gold,.langs button.on{background:linear-gradient(135deg,#FFE4A1,#F2B43D)!important;color:#28200F!important;}
-body:before{content:"";position:fixed;top:0;left:0;right:0;height:6px;z-index:9999;pointer-events:none;background:linear-gradient(90deg,#9E3D22,#F4B942,#FFF0C5,#F4B942,#9E3D22);}
-body:after{content:"🪔  ✨";position:fixed;right:12px;bottom:12px;z-index:8;pointer-events:none;font-size:27px;opacity:.68;filter:drop-shadow(0 3px 7px rgba(150,80,12,.28));}
-
+/* TASVIA • Diwali 2026 — premium festive edition */
+:root{
+ --bg:#fff8ed!important;--card:#fffefa!important;--ink:#182744!important;
+ --muted:#756653!important;--line:#ecd6ad!important;--gold:#e8a92e!important;
+ --gold2:#ffd982!important;
+}
+html{scroll-behavior:smooth}
+body{
+ background-color:#fff8ed!important;
+ background-image:
+ radial-gradient(ellipse at 4% 2%,rgba(255,190,92,.25),transparent 34%),
+ radial-gradient(ellipse at 96% 16%,rgba(190,67,42,.075),transparent 27%),
+ radial-gradient(ellipse at 90% 92%,rgba(240,184,77,.18),transparent 32%),
+ linear-gradient(145deg,#fffaf2 0%,#fff5e4 55%,#fffaf2 100%)!important;
+}
+body:before{
+ content:"";position:fixed;inset:0 0 auto;height:7px;z-index:9999;pointer-events:none;
+ background:linear-gradient(90deg,#8e3028 0%,#d58b28 18%,#ffe3a0 34%,#f4bd4e 50%,#ffe3a0 66%,#d58b28 82%,#8e3028 100%);
+ box-shadow:0 2px 12px rgba(135,74,22,.2);
+}
+header{
+ border-bottom:1px solid rgba(224,169,77,.7)!important;
+ box-shadow:0 8px 26px rgba(99,62,22,.09)!important;
+}
+.card,.notice,.panel,.modal-content,.fee-card,.stat-card{
+ border-color:rgba(222,176,103,.52)!important;
+ box-shadow:0 8px 24px rgba(88,61,27,.055);
+}
+.card,.notice,.panel,.fee-card,.stat-card{
+ transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+}
+.card:hover,.panel:hover,.fee-card:hover,.stat-card:hover{
+ transform:translateY(-2px);border-color:#e5b34e!important;
+ box-shadow:0 13px 30px rgba(111,74,25,.11);
+}
+button,.btn,.fee-popup-pay a,.upi-app{
+ transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+}
+.btn.gold,.langs button.on{
+ background:linear-gradient(135deg,#ffe7ad 0%,#f4c45f 48%,#e6a52d 100%)!important;
+ color:#33230d!important;border:1px solid rgba(173,112,27,.28)!important;
+ box-shadow:0 5px 14px rgba(176,117,29,.2),inset 0 1px rgba(255,255,255,.7)!important;
+}
+button:hover,.btn:hover,.upi-app:hover,.fee-popup-pay a:hover{
+ filter:brightness(1.025);box-shadow:0 7px 18px rgba(126,82,25,.16);
+}
+h1,h2,h3{letter-spacing:-.02em}
+input,select,textarea{border-color:#e7d4b3!important}
+:focus-visible{outline:3px solid rgba(226,164,49,.5)!important;outline-offset:2px}
+body:after{
+ content:"🪔  शुभ दीपावली";position:fixed;right:14px;
+ bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:999;
+ pointer-events:none;padding:9px 14px;border-radius:999px;
+ color:#fff6df;font:600 12px/1.2 system-ui,sans-serif;letter-spacing:.04em;
+ background:linear-gradient(115deg,#7d2d27,#a94b2c 52%,#c8892c);
+ border:1px solid rgba(255,220,151,.65);
+ box-shadow:0 5px 18px rgba(85,43,20,.22),inset 0 1px rgba(255,255,255,.18);
+}
+@media(max-width:600px){
+ body:after{right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));font-size:11px;padding:8px 11px}
+ .card,.notice,.panel,.fee-card,.stat-card{box-shadow:0 5px 16px rgba(88,61,27,.06)}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
 </style>
 </body>
 </html>
