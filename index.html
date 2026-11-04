@@ -413,6 +413,22 @@ button,.btn,a.btn{visibility:visible;}
 .acts > .btn,.acts > a.btn,.acts > button{flex:0 0 auto;max-width:100%;}
 .item{overflow:visible;}
 @media(max-width:520px){.acts > .btn,.acts > a.btn,.acts > button{min-height:42px}.acts > .btn.sm,.acts > a.btn.sm,.acts > button.btn.sm{min-height:38px}}
+
+/* TASVIA STAFF PORTAL — approved LIGHT theme. Keep this in the main page stylesheet. */
+:root,:root[data-theme="dark"],:root:not([data-theme="light"]){
+ color-scheme:light!important;
+ --bg:#FFFFFF!important;--card:#FFFFFF!important;--ink:#14213D!important;
+ --muted:#64748B!important;--line:#E2E8F0!important;--chip:#F5F7FA!important;
+ --board:#0B2455!important;--board2:#15326F!important;--chalk:#FFFFFF!important;
+ --gold:#D9A441!important;--p:#238653!important;--a:#C43D4B!important;
+}
+html,body,#view,main,.sheet,.gate{background-color:#FFFFFF!important;color:#14213D!important}
+.card,.item,nav,.commercial-kpi,.commercial-action,.commercial-strip{background-color:#FFFFFF!important;color:#14213D!important}
+input,select,textarea{background-color:#FFFFFF!important;color:#14213D!important;border-color:#CBD5E1!important}
+.chip{background-color:#F5F7FA!important;color:#14213D!important}
+.chip.on{background-color:#0B2455!important;color:#FFFFFF!important}
+header,.board,.welcome,.hero{background-color:#0B2455!important;color:#FFFFFF!important}
+nav{border-top:1px solid #E2E8F0!important}
 </style>
 <script>
 /* iOS PWA recovery: remove stale Staff App service-worker/cache state once. */
