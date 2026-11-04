@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-11-04-v121-diwali-english-visible">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-11-04-v122-diwali-persistent">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -746,6 +746,43 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
  window.addEventListener('resize',schedule);
  window.addEventListener('orientationchange',schedule);
  setTimeout(schedule,100);setTimeout(schedule,500);setTimeout(schedule,1500);
+})();
+</script>
+<style id="tasvia-diwali-badge-style">
+#tasvia-diwali-badge{
+ position:fixed!important;right:12px!important;bottom:calc(12px + env(safe-area-inset-bottom,0px))!important;
+ z-index:2147483000!important;display:flex!important;align-items:center!important;
+ justify-content:center!important;gap:4px!important;padding:9px 13px!important;
+ border-radius:999px!important;color:#fff8e8!important;
+ background:linear-gradient(110deg,#792c27,#a84b2c 55%,#c88a2d)!important;
+ border:1px solid #f6d99a!important;box-shadow:0 5px 18px rgba(85,43,20,.28)!important;
+ font:700 11px/1.2 system-ui,sans-serif!important;letter-spacing:.055em!important;
+ pointer-events:none!important;white-space:nowrap!important;
+}
+</style>
+<script id="tasvia-diwali-badge-persistent">
+(function(){
+  function ensureBadge(){
+    if(!document.body)return;
+    var badge=document.getElementById("tasvia-diwali-badge");
+    if(!badge){
+      badge=document.createElement("div");
+      badge.id="tasvia-diwali-badge";
+      badge.setAttribute("role","status");
+      badge.setAttribute("aria-label","Happy Diwali");
+      badge.textContent="🪔  HAPPY DIWALI  ✨";
+      document.body.appendChild(badge);
+    }
+  }
+  function start(){
+    ensureBadge();
+    if(document.body && !window.__tasviaDiwaliBadgeObserver){
+      window.__tasviaDiwaliBadgeObserver=new MutationObserver(ensureBadge);
+      window.__tasviaDiwaliBadgeObserver.observe(document.body,{childList:true});
+    }
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});
+  else start();
 })();
 </script>
 </head>
@@ -2845,19 +2882,6 @@ body:after{
 }
 @media(prefers-reduced-motion:reduce){
  *,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
-}
-</style>
-<div id="tasvia-diwali-badge" role="status" aria-label="Happy Diwali">🪔 &nbsp; HAPPY DIWALI &nbsp; ✨</div>
-<style id="tasvia-diwali-badge-style">
-#tasvia-diwali-badge{
- position:fixed!important;right:12px!important;bottom:calc(12px + env(safe-area-inset-bottom,0px))!important;
- z-index:2147483000!important;display:flex!important;align-items:center!important;
- justify-content:center!important;gap:4px!important;padding:9px 13px!important;
- border-radius:999px!important;color:#fff8e8!important;
- background:linear-gradient(110deg,#792c27,#a84b2c 55%,#c88a2d)!important;
- border:1px solid #f6d99a!important;box-shadow:0 5px 18px rgba(85,43,20,.28)!important;
- font:700 11px/1.2 system-ui,sans-serif!important;letter-spacing:.055em!important;
- pointer-events:none!important;white-space:nowrap!important;
 }
 </style>
 </body>
