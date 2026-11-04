@@ -2062,6 +2062,58 @@ html,body,main,.sheet{background:#FFFFFF!important;color:#14213D!important}
 .card,.item,nav{background:#FFFFFF!important}
 .chip{background:#F5F7FA!important;color:#14213D!important}
 .chip.on{background:#0B2455!important;color:#FFFFFF!important}
+
+/* TASVIA STAFF QUALITY UPGRADE — consistent light theme, accessible controls and restrained motion */
+:root{
+  color-scheme:light!important;
+  --bg:#FFFFFF!important;--card:#FFFFFF!important;--ink:#14213D!important;
+  --muted:#64748B!important;--line:#E2E8F0!important;--chip:#F5F7FA!important;
+  --board:#0B2455!important;--board2:#15326F!important;--chalk:#FFFFFF!important;
+  --gold:#D9A441!important;--p:#238653!important;--a:#C43D4B!important;
+}
+html,body,#view,main{background:#FFFFFF!important;color:#14213D}
+body{overflow-x:hidden;-webkit-text-size-adjust:100%;overscroll-behavior-y:contain}
+button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
+button:not(.pa button){touch-action:manipulation}
+:where(button,a.btn,.x,.back,.pa button){min-height:44px}
+.x{width:44px;height:44px;display:inline-grid;place-items:center;flex:0 0 44px}
+.back{min-height:44px;padding:8px 16px}
+.btn{min-height:44px}
+.btn:disabled,button:disabled{opacity:.48!important;cursor:not-allowed!important;transform:none!important;box-shadow:none!important}
+:focus-visible{outline:3px solid #D9A441!important;outline-offset:3px!important}
+.card,.item,.dashboard-tile{background:#FFFFFF!important;color:#14213D}
+.card,.item,.dashboard-tile{border-color:#E2E8F0}
+.dashboard-tile{min-height:132px;justify-content:flex-start;overflow-wrap:anywhere}
+.dashboard-tile strong,.dashboard-tile small{max-width:100%;overflow-wrap:anywhere}
+.dashboard-icon{flex:0 0 38px}
+.chip,.seg,.x,.back{background:#F5F7FA;color:#14213D}
+.chip.on,.seg button.on{background:#0B2455!important;color:#FFFFFF!important}
+nav{background:rgba(255,255,255,.98)!important;border-top:1px solid #E2E8F0}
+nav button{min-height:54px}
+nav button.on{color:#0B2455!important}
+nav button.on svg{color:#D9A441}
+.tag.ok{background:#E8F5ED;color:#176B43}
+.tag.due{background:#FCEBEC;color:#A52F3A}
+.item.P{border-left-color:#238653}.item.A{border-left-color:#C43D4B}.item.H{border-left-color:#D9A441}
+.sheet{background:#FFFFFF!important;color:#14213D}
+input,select,textarea{max-width:100%}
+@media(max-width:380px){
+  main{padding-left:12px;padding-right:12px}
+  .dashboard-tiles{gap:7px}
+  .dashboard-tile{padding:10px;min-height:122px}
+  .dashboard-tile strong{font-size:.78rem}
+  .dashboard-tile small{font-size:.66rem}
+  .brand h1{font-size:1rem}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+/* Keep motion short and consistent; never animate continuously. */
+main{animation:tasviaPageIn .22s ease-out both}
+.card,.list .item,.dashboard-tile,.board{animation:tasviaCardIn .22s ease-out both}
+.sync{animation:none!important}
+.btn:hover,.dashboard-tile:hover{transform:translateY(-1px)}
+
 </style></head><body><div class="bar"><span>TASVIA ID cards · ${rows?list.length:0}</span><button onclick="window.print()">Print / Save PDF</button></div>${rows}</body></html>`;
   }
 }
@@ -2736,6 +2788,47 @@ render();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
 else startFirebase();
 if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=89",{scope:"./",updateViaCache:"none"}).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
+
+/* TASVIA STAFF NAVIGATION QUALITY: native back button returns through app screens. */
+(function(){
+  const stack=[];
+  let restoring=false;
+  function snapshot(){return {tab:UI.tab,seg:UI.seg,more:UI.more,backupTab:UI.backupTab||"home",dashboardHome:UI.dashboardHome};}
+  function restore(v){
+    if(!v)return;
+    restoring=true;
+    UI.tab=v.tab||"today";UI.seg=v.seg||"students";UI.more=v.more||null;
+    UI.backupTab=v.backupTab||"home";UI.dashboardHome=!!v.dashboardHome;
+    render();window.scrollTo(0,0);
+    restoring=false;
+  }
+  document.addEventListener("click",function(e){
+    if(restoring)return;
+    const b=e.target.closest("[data-act]");
+    if(!b)return;
+    const a=b.dataset.act;
+    if(["tab","seg","more","backupTab"].includes(a)){
+      stack.push(snapshot());
+      history.pushState({tasviaStaffNav:true},"","#staff");
+    }
+  },true);
+  window.addEventListener("popstate",function(){
+    if(document.getElementById("scrim")?.classList.contains("open")){
+      closeSheet();
+      return;
+    }
+    const previous=stack.pop();
+    if(previous){restore(previous);return;}
+    if(UI.tab!=="today"||UI.more){
+      UI.tab="today";UI.more=null;UI.dashboardHome=true;render();window.scrollTo(0,0);
+    }
+    history.pushState({tasviaStaffRoot:true},"","#staff");
+  });
+  if(!history.state||!history.state.tasviaStaffRoot){
+    history.replaceState({tasviaStaffRoot:true},"",location.href);
+  }
+})();
+
 </script>
 
 <script src="./time-features.js?v=20261017-1"></script>
