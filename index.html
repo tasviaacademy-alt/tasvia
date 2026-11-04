@@ -2139,6 +2139,12 @@ document.addEventListener("submit",e=>{
     if(Object.entries(S.students).some(([k,x])=>k!==id&&x.name.toLowerCase()===s.name.toLowerCase()&&x.cls===s.cls&&!f.dataset.dup)){f.dataset.dup="1";return toast(`${s.name} is already in ${clsLabel(s.cls)}. Tap again to add anyway.`)}s.pcode=(S.students[id]||{}).pcode||newCode();S.students[id]=s;put("students/"+id,s);closeSheet();render();toast(f.dataset.id?"Changes saved":"Student added");
   }
   if(f.id==="fPay"){
+    // Prevent a second click from submitting a duplicate payment while the
+    // Firestore transaction and read-back verification are still in progress.
+    if(f.dataset.saving==="1")return;
+    f.dataset.saving="1";
+    const submitButton=f.querySelector('button[type="submit"]');
+    if(submitButton){submitButton.disabled=true;submitButton.textContent="Saving…";}
     const id=f.dataset.id,amt=Number(d.amount);
     if(!(amt>0))return toast("Enter an amount");
     if(!d.month||!d.date||!d.mode)return toast("Complete the payment details");
@@ -2172,7 +2178,7 @@ document.addEventListener("submit",e=>{
     })).catch(e=>{toast(errMsg(e));return false}).finally(()=>{window._tasviaPaymentSaveRunning=false});
     const current={payments:Object.fromEntries(payList(id).map(x=>[x.id,x]))};current.payments[p.id]=p;S.fees[id]=current;
     feeWrite.then(ok=>{
-      if(ok===false){if(previousFees===undefined)delete S.fees[id];else S.fees[id]=previousFees;render();return;}
+      if(ok===false){if(previousFees===undefined)delete S.fees[id];else S.fees[id]=previousFees;if(f.isConnected){f.dataset.saving="";if(submitButton){submitButton.disabled=false;submitButton.textContent="Save payment";}}render();return;}
       pvCache[S.students[id]?.pcode]=null;try{localStorage.removeItem("tasvia-pv")}catch(e){}schedulePV(true);render();const s={id,...S.students[id]};
       openSheet("Payment saved",`<p>${rs(amt)} from ${esc(s.name)} for ${monthName(d.month)}.</p><pre class="msg">${esc(receiptText(s,p))}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,receiptText(s,p))}">Send receipt on WhatsApp</a><button class="btn ghost" data-act="close">Done</button></div>`);
     });
