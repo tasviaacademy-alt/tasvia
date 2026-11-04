@@ -2780,5 +2780,17 @@ button.action-summary:focus-visible{
 }
 </style>
 
+<style id="tasvia-diwali-2026">
+
+/* TASVIA Diwali 2026 seasonal layer — visual-only, parent data and payments untouched */
+:root{--bg:#FFF8EC!important;--card:#FFFFFF!important;--ink:#1B2A45!important;--muted:#756653!important;--line:#F0D7B0!important;--chip:#FFF0D7!important;--gold:#F2B544!important;--board:#0B2455!important;--chalk:#FFF9EF!important;}
+body{background-image:radial-gradient(ellipse at 0 0,rgba(255,176,67,.14),transparent 34%),radial-gradient(ellipse at 100% 100%,rgba(218,145,43,.09),transparent 32%)!important;}
+button,.btn,.upi-app,.fee-popup-pay a{transition:box-shadow .22s ease,border-color .22s ease,filter .22s ease;}
+button:not(:disabled):hover,.btn:hover,.upi-app:hover,.fee-popup-pay a:hover{box-shadow:0 7px 20px rgba(194,112,24,.15);}
+body:after{content:"🪔";position:fixed;right:13px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:2;pointer-events:none;font-size:25px;opacity:.22;filter:drop-shadow(0 2px 5px rgba(170,94,20,.2));animation:tasviaDiwaliGlow 3.8s ease-in-out infinite alternate;}
+@keyframes tasviaDiwaliGlow{from{opacity:.16;transform:translateY(0) scale(.96)}to{opacity:.34;transform:translateY(-3px) scale(1.04)}}
+@media(prefers-reduced-motion:reduce){body:after{animation:none}button,.btn,.upi-app,.fee-popup-pay a{transition:none}}
+
+</style>
 </body>
 </html>
