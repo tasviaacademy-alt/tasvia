@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-04",
+  "month": "November 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "Rupee recovery may gain support from equity inflows and a weaker dollar",
+      "text": "Reuters reported on 4 November 2026 that the Indian rupee was expected to open near ₹94.70 per US dollar after closing at ₹94.74 on Tuesday. The dollar index fell 0.3%, while foreign investors bought more than $700 million of Indian equities on Tuesday, taking purchases over three sessions to about $1.5 billion. Analysts said recent currency movements could also reflect uncertainty around the US midterm elections.",
+      "source": "Reuters, 2026-11-04",
+      "url": "https://www.reuters.com/world/india/india-rupees-recovery-may-find-fresh-legs-equity-flows-dollar-weakness-2026-11-04/"
+    },
+    {
+      "category": "Weather",
+      "icon": "🌧️",
+      "title": "IMD issues heavy-rain warning for Telangana and several other states",
+      "text": "The Economic Times reported on 4 November that the India Meteorological Department forecast isolated heavy rainfall over Telangana and heavy to very heavy rain at isolated places in coastal Andhra Pradesh. The warning followed Cyclonic Storm Murasu crossing the south Andhra Pradesh coast and weakening. The IMD also flagged flash-flood risks in some watersheds and advised fishermen to avoid affected Bay of Bengal and Andhra Pradesh coastal waters.",
+      "source": "The Economic Times, 2026-11-04",
+      "url": "https://economictimes.indiatimes.com/news/new-updates/weather-today-november-4-heavy-rain-alert-for-tamil-nadu-andhra-pradesh-telangana-chhattisgarh-imd-warns-of-flash-flood-risks-in-several-districts/articleshow/135499645.cms"
+    },
+    {
+      "category": "Environment",
+      "icon": "🌫️",
+      "title": "Delhi's air quality turns severe as AQI reaches 605",
+      "text": "The Economic Times reported that Delhi's overall Air Quality Index reached 605 at 7:41 a.m. on 4 November 2026, according to Central Pollution Control Board data. Several monitoring stations recorded severe pollution. Authorities stepped up enforcement under Stage II of the Graded Response Action Plan, including vehicle checks at the Delhi–Gurugram border.",
+      "source": "The Economic Times, 2026-11-04",
+      "url": "https://economictimes.indiatimes.com/news/india/delhi-air-turns-hazardous-aqi-touches-605-grap-ii-curbs-enforced-at-gurgaon-border/articleshow/135520190.cms"
+    },
+    {
+      "category": "World",
+      "icon": "🌐",
+      "title": "North Korea launches missiles toward eastern waters, South Korea says",
+      "text": "The Associated Press reported on 4 November that South Korea's military detected several missiles launched by North Korea toward its eastern waters. The launches came amid renewed tensions after Pyongyang rejected US accusations linking North Korean hackers to a major cryptocurrency theft. South Korean and US authorities said they were analysing details of the launches.",
+      "source": "Associated Press, 2026-11-04",
+      "url": "https://apnews.com/article/north-korea-kim-weapons-tests-036aa8b36ae8401f3c1b3bbb81e9b2ed"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏑",
+      "title": "India face South Korea in the Asian Champions Trophy semifinal",
+      "text": "The Times of India reported on 4 November that India entered the men's Asian Champions Trophy semifinal after winning all five group matches, scoring 34 goals and conceding five. India will meet South Korea in Mohali, after defeating the same opponent 8–0 in their final group-stage match on Monday.",
+      "source": "The Times of India, 2026-11-04",
+      "url": "https://timesofindia.indiatimes.com/sports/hockey/top-stories/hockey-asian-champions-trophy-india-look-for-an-encore-vs-south-korea/articleshow/135521017.cms"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "At what level was the Indian rupee expected to open against the US dollar on 4 November?",
+      "a": "Around ₹94.70 per US dollar"
+    },
+    {
+      "q": "Which agency issued the heavy-rain warnings mentioned in the weather report?",
+      "a": "India Meteorological Department (IMD)"
+    },
+    {
+      "q": "What was Delhi's overall AQI at 7:41 a.m. on 4 November?",
+      "a": "605"
+    },
+    {
+      "q": "Which country's military reported detecting the missile launches toward eastern waters?",
+      "a": "South Korea"
+    },
+    {
+      "q": "Which team was India's opponent in the men's Asian Champions Trophy semifinal?",
+      "a": "South Korea"
+    }
+  ]
+}
