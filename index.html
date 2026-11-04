@@ -461,6 +461,53 @@ nav{border-top:1px solid #E2E8F0!important}
 }
 .gate .link{opacity:1!important;text-decoration:underline}
 .gate .err{color:#FFD2CE!important}
+
+/* TASVIA STAFF PORTAL — final mobile spacing and alignment polish */
+@media(max-width:600px){
+  main{
+    padding:18px 16px calc(164px + env(safe-area-inset-bottom,0px))!important;
+    width:100%;
+  }
+  .hd{align-items:flex-start;gap:12px;margin:4px 0 16px}
+  .menu{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    grid-auto-rows:1fr;
+    align-items:stretch;
+    gap:12px!important;
+    margin-top:10px;
+  }
+  .menu .item{
+    width:100%;
+    min-width:0;
+    min-height:164px;
+    height:100%;
+    padding:14px!important;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:flex-start;
+    gap:8px;
+    border-radius:16px;
+  }
+  .menu .ic{width:44px;height:44px;margin:0 0 1px}
+  .menu .item .grow{width:100%;min-width:0}
+  .menu .item b,.menu .item strong{line-height:1.25}
+  .menu .item small,.menu .item p{line-height:1.4}
+  nav{
+    padding-bottom:calc(env(safe-area-inset-bottom,0px) + 4px)!important;
+    background:rgba(255,255,255,.98)!important;
+    box-shadow:0 -4px 18px rgba(11,36,85,.06);
+  }
+  nav .in{min-height:66px;align-items:center}
+  nav button{padding:9px 2px 10px;line-height:1.25}
+  .scrim .sheet{padding-bottom:calc(24px + env(safe-area-inset-bottom,0px))}
+}
+@media(min-width:601px){
+  main{padding-bottom:150px}
+  .menu{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}
+  .menu .item{min-height:150px;height:100%}
+}
 </style>
 <script>
 /* iOS PWA recovery: remove stale Staff App service-worker/cache state once. */
