@@ -2832,5 +2832,17 @@ if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.service
 </script>
 
 <script src="./time-features.js?v=20261017-1"></script>
+<style id="tasvia-diwali-2026">
+
+/* TASVIA Diwali 2026 seasonal layer — visual-only, no app logic changes */
+:root{--bg:#FFF9EF!important;--card:#FFFFFF!important;--ink:#182744!important;--muted:#766653!important;--line:#F0D9B5!important;--chip:#FFF0D8!important;--gold:#F2B544!important;--board:#0B2455!important;--board2:#15326F!important;}
+body{background-image:radial-gradient(ellipse at 2% 0%,rgba(255,183,77,.13),transparent 34%),radial-gradient(ellipse at 100% 100%,rgba(218,145,43,.10),transparent 30%)!important;}
+button,.btn,[role=button]{transition:box-shadow .22s ease,border-color .22s ease,filter .22s ease;}
+button:not(:disabled):hover,.btn:hover,[role=button]:hover{box-shadow:0 7px 20px rgba(194,112,24,.16);filter:saturate(1.06);}
+body:after{content:"🪔";position:fixed;right:13px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:2;pointer-events:none;font-size:25px;opacity:.22;filter:drop-shadow(0 2px 5px rgba(170,94,20,.2));animation:tasviaDiwaliGlow 3.8s ease-in-out infinite alternate;}
+@keyframes tasviaDiwaliGlow{from{opacity:.16;transform:translateY(0) scale(.96)}to{opacity:.34;transform:translateY(-3px) scale(1.04)}}
+@media(prefers-reduced-motion:reduce){body:after{animation:none}button,.btn,[role=button]{transition:none}}
+
+</style>
 </body>
 </html>
