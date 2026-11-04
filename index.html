@@ -429,6 +429,38 @@ input,select,textarea{background-color:#FFFFFF!important;color:#14213D!important
 .chip.on{background-color:#0B2455!important;color:#FFFFFF!important}
 header,.board,.welcome,.hero{background-color:#0B2455!important;color:#FFFFFF!important}
 nav{border-top:1px solid #E2E8F0!important}
+
+/* TASVIA STAFF LOGIN — explicit high-contrast navy, white and gold palette. */
+.gate{
+ background:linear-gradient(145deg,#0B2455 0%,#102F68 55%,#0B2455 100%)!important;
+ color:#FFFFFF!important;
+}
+.gate form,.gate form *{color:inherit}
+.gate h1,.gate #gateMsg,.gate label,.gate p:not(.tag),.gate .link{
+ color:#FFFFFF!important;
+}
+.gate h1 span,.gate .tag{color:#E5B95E!important}
+.gate .glogo{background:#FFFFFF!important;border:2px solid #E5B95E!important}
+.gate input{
+ background:#FFFFFF!important;color:#14213D!important;
+ -webkit-text-fill-color:#14213D!important;
+ border:1px solid #D8E0EC!important;
+ box-shadow:0 2px 8px rgba(0,0,0,.08)!important;
+}
+.gate input::placeholder{color:#64748B!important;opacity:1}
+.gate input:-webkit-autofill,
+.gate input:-webkit-autofill:hover,
+.gate input:-webkit-autofill:focus{
+ -webkit-text-fill-color:#14213D!important;
+ box-shadow:0 0 0 1000px #FFFFFF inset!important;
+}
+.gate .btn.gold,.gate button[type="submit"]{
+ background:linear-gradient(100deg,#E5B95E,#D9A441)!important;
+ color:#14213D!important;border:1px solid #C79636!important;
+ font-weight:700!important;
+}
+.gate .link{opacity:1!important;text-decoration:underline}
+.gate .err{color:#FFD2CE!important}
 </style>
 <script>
 /* iOS PWA recovery: remove stale Staff App service-worker/cache state once. */
