@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-05",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-gk-si-force",
+      "category": "Physics",
+      "q": "What is the SI unit of force?",
+      "a": "Newton.",
+      "options": [
+        "Watt.",
+        "Pascal.",
+        "Joule.",
+        "Newton."
+      ]
+    },
+    {
+      "id": "static-water-formula",
+      "category": "Science",
+      "q": "What is the chemical formula of water?",
+      "a": "H₂O.",
+      "options": [
+        "CO₂.",
+        "NaCl.",
+        "O₂.",
+        "H₂O."
+      ]
+    },
+    {
+      "id": "static-gk-world-ocean",
+      "category": "World Geography",
+      "q": "Which is the largest ocean on Earth?",
+      "a": "Pacific Ocean.",
+      "options": [
+        "Atlantic Ocean.",
+        "Arctic Ocean.",
+        "Pacific Ocean.",
+        "Indian Ocean."
+      ]
+    },
+    {
+      "id": "static-gk-closest-planet-sun",
+      "category": "Astronomy",
+      "q": "Which planet is closest to the Sun?",
+      "a": "Mercury.",
+      "options": [
+        "Venus.",
+        "Mars.",
+        "Mercury.",
+        "Earth."
+      ]
+    },
+    {
+      "id": "static-gk-konark-state",
+      "category": "Indian Geography & Heritage",
+      "q": "In which Indian state is the Sun Temple at Konark located?",
+      "a": "Odisha.",
+      "options": [
+        "Kerala.",
+        "Rajasthan.",
+        "Gujarat.",
+        "Odisha."
+      ]
+    }
+  ]
+}

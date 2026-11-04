@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-11-04",
+  "date": "2026-11-05",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-gk-computer-keyboard",
-      "category": "Computers",
-      "q": "Which device is mainly used to type text into a computer?",
-      "a": "Keyboard.",
+      "id": "static-gk-si-force",
+      "category": "Physics",
+      "q": "What is the SI unit of force?",
+      "a": "Newton.",
       "options": [
-        "Monitor.",
-        "Printer.",
-        "Keyboard.",
-        "Speaker."
+        "Watt.",
+        "Pascal.",
+        "Joule.",
+        "Newton."
       ]
     },
     {
-      "id": "static-photosynthesis",
+      "id": "static-water-formula",
       "category": "Science",
-      "q": "What process do green plants use to make food using sunlight?",
-      "a": "Photosynthesis.",
+      "q": "What is the chemical formula of water?",
+      "a": "H₂O.",
       "options": [
-        "Fermentation.",
-        "Transpiration.",
-        "Photosynthesis.",
-        "Respiration."
+        "CO₂.",
+        "NaCl.",
+        "O₂.",
+        "H₂O."
       ]
     },
     {
-      "id": "static-economics-currency",
-      "category": "Economics",
-      "q": "What is the currency of India?",
-      "a": "The Indian rupee.",
+      "id": "static-gk-world-ocean",
+      "category": "World Geography",
+      "q": "Which is the largest ocean on Earth?",
+      "a": "Pacific Ocean.",
       "options": [
-        "The Sri Lankan rupee.",
-        "The Nepalese rupee.",
-        "The Indian rupee.",
-        "The Bangladeshi taka."
+        "Atlantic Ocean.",
+        "Arctic Ocean.",
+        "Pacific Ocean.",
+        "Indian Ocean."
       ]
     },
     {
-      "id": "static-telangana-festival",
-      "category": "Telangana GK",
-      "q": "Which floral festival is widely associated with Telangana?",
-      "a": "Bathukamma.",
+      "id": "static-gk-closest-planet-sun",
+      "category": "Astronomy",
+      "q": "Which planet is closest to the Sun?",
+      "a": "Mercury.",
       "options": [
-        "Onam.",
-        "Bathukamma.",
-        "Pongal.",
-        "Bihu."
+        "Venus.",
+        "Mars.",
+        "Mercury.",
+        "Earth."
       ]
     },
     {
-      "id": "static-sports-olympics",
-      "category": "Sports",
-      "q": "How often are the Summer Olympic Games normally held?",
-      "a": "Every four years.",
+      "id": "static-gk-konark-state",
+      "category": "Indian Geography & Heritage",
+      "q": "In which Indian state is the Sun Temple at Konark located?",
+      "a": "Odisha.",
       "options": [
-        "Every three years.",
-        "Every four years.",
-        "Every five years.",
-        "Every two years."
+        "Kerala.",
+        "Rajasthan.",
+        "Gujarat.",
+        "Odisha."
       ]
     }
   ]
