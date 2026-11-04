@@ -2787,7 +2787,7 @@ loginForm.addEventListener("submit",async e=>{
 render();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
 else startFirebase();
-if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=90",{scope:"./",updateViaCache:"none"}).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=99",{scope:"./",updateViaCache:"none"}).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 
 /* TASVIA STAFF NAVIGATION QUALITY: native back button returns through app screens. */
 (function(){
@@ -2834,14 +2834,14 @@ if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.service
 <script src="./time-features.js?v=20261017-1"></script>
 <style id="tasvia-diwali-2026">
 
-/* TASVIA Diwali 2026 seasonal layer — visual-only, no app logic changes */
-:root{--bg:#FFF9EF!important;--card:#FFFFFF!important;--ink:#182744!important;--muted:#766653!important;--line:#F0D9B5!important;--chip:#FFF0D8!important;--gold:#F2B544!important;--board:#0B2455!important;--board2:#15326F!important;}
-body{background-image:radial-gradient(ellipse at 2% 0%,rgba(255,183,77,.13),transparent 34%),radial-gradient(ellipse at 100% 100%,rgba(218,145,43,.10),transparent 30%)!important;}
-button,.btn,[role=button]{transition:box-shadow .22s ease,border-color .22s ease,filter .22s ease;}
-button:not(:disabled):hover,.btn:hover,[role=button]:hover{box-shadow:0 7px 20px rgba(194,112,24,.16);filter:saturate(1.06);}
-body:after{content:"🪔";position:fixed;right:13px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:2;pointer-events:none;font-size:25px;opacity:.22;filter:drop-shadow(0 2px 5px rgba(170,94,20,.2));animation:tasviaDiwaliGlow 3.8s ease-in-out infinite alternate;}
-@keyframes tasviaDiwaliGlow{from{opacity:.16;transform:translateY(0) scale(.96)}to{opacity:.34;transform:translateY(-3px) scale(1.04)}}
-@media(prefers-reduced-motion:reduce){body:after{animation:none}button,.btn,[role=button]{transition:none}}
+/* Diwali 2026 — stronger visible festive treatment */
+:root{--bg:#FFF8EA!important;--card:#FFFFFF!important;--ink:#182744!important;--muted:#756653!important;--line:#EED5A8!important;--chip:#FFF0D5!important;--gold:#F4B942!important;--board:#0B2455!important;--board2:#173A70!important;--chalk:#FFFDF8!important;}
+body{background-image:radial-gradient(ellipse at 5% 0%,rgba(255,184,74,.23),transparent 38%),radial-gradient(ellipse at 95% 85%,rgba(222,145,38,.15),transparent 34%)!important;}
+header{border-bottom:4px solid #F4B942!important;box-shadow:0 5px 18px rgba(145,91,22,.14)!important;}
+.card,.item,.sheet{border-color:#EED5A8!important;}
+.btn.gold,.chip.on{background:linear-gradient(135deg,#FFE4A1,#F2B43D)!important;color:#28200F!important;}
+body:before{content:"";position:fixed;top:0;left:0;right:0;height:6px;z-index:9999;pointer-events:none;background:linear-gradient(90deg,#9E3D22,#F4B942,#FFF0C5,#F4B942,#9E3D22);}
+body:after{content:"🪔  ✨";position:fixed;right:12px;bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:8;pointer-events:none;font-size:27px;opacity:.68;filter:drop-shadow(0 3px 7px rgba(150,80,12,.28));}
 
 </style>
 </body>
