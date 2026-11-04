@@ -721,26 +721,23 @@ function paymentMonth(p){
   return "";
 }
 function paymentFeeMonth(p){
-  const assigned=paymentMonth(p);
-  const date=String(p&&p.date||p&&p.paidOn||p&&p.paymentDate||"");
-  // Repair old Staff Portal records whose default month was one month ahead
-  // of the actual payment date. This makes an already-recorded September
-  // payment count for September without creating or editing any transaction.
-  const dm=/^(\d{4})-(\d{2})-\d{2}$/.exec(date);
-  if(assigned&&dm){
-    const next=new Date(Number(dm[1]),Number(dm[2]),1);
-    const nextKey=next.getFullYear()+"-"+String(next.getMonth()+1).padStart(2,"0");
-    if(assigned===nextKey)return dm[1]+"-"+dm[2];
-  }
-  return assigned;
+  // The selected fee month is authoritative. Only legacy records without a
+  // month use their payment date; never silently move an advance payment.
+  return paymentMonth(p);
 }
 function paidFor(sid,month){return payList(sid).filter(x=>paymentFeeMonth(x)===month)}
 function feeDueDate(s,month){
   if(!s?.joined||!/^\d{4}-\d{2}-\d{2}$/.test(s.joined)||!/^\d{4}-\d{2}$/.test(month))return null;
-  const day=Number(s.joined.slice(8,10)),[y,mo]=month.split("-").map(Number);
-  if(!day||!y||!mo)return null;
-  // Fee rows are labeled by due month: October is due Oct 16; November Nov 16.
-  const due=new Date(y,mo-1,Math.min(day,new Date(y,mo,0).getDate()));
+  const [jy,jm,jd]=s.joined.split("-").map(Number),[y,mo]=month.split("-").map(Number);
+  if(!jd||!y||!mo)return null;
+  // First cycle begins on the joining date. Later cycles begin the day after
+  // the joining-date anniversary: Sep 8 -> Sep 8-Oct 8, then Oct 9-Nov 8.
+  let due;
+  if(y===jy&&mo===jm)due=new Date(jy,jm-1,jd);
+  else{
+    const anniversary=new Date(y,mo-1,Math.min(jd,new Date(y,mo,0).getDate()));
+    due=new Date(anniversary.getFullYear(),anniversary.getMonth(),anniversary.getDate()+1);
+  }
   return due.getFullYear()+"-"+String(due.getMonth()+1).padStart(2,"0")+"-"+String(due.getDate()).padStart(2,"0");
 }
 function feeStatus(s,month){
@@ -762,36 +759,29 @@ function feeStatus(s,month){
 }
 function enrolledIn(s,month){return !s.joined||s.joined.slice(0,7)<=month}
 function currentFeeCycle(s){
-  const fee=Number(s&&s.fee)||0;
-  if(!fee)return {status:"none",fee:0,paid:0,due:0,dueDate:null,nextDueDate:null,cycleStart:null,completedMonth:null};
+  const fee=Math.max(0,Number(s&&s.fee)||0);
+  if(!fee)return {status:"none",fee:0,paid:0,due:0,dueDate:null,nextDueDate:null,cycleStart:null,cycleEnd:null,completedMonth:null};
   const join=String(s&&s.joined||"");
-  if(!/^\d{4}-\d{2}-\d{2}$/.test(join))return {status:"due",fee,paid:0,due:fee,dueDate:null,nextDueDate:null,cycleStart:null,completedMonth:null};
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(join))return {status:"due",fee,paid:0,due:fee,dueDate:null,nextDueDate:null,cycleStart:null,cycleEnd:null,completedMonth:null};
   const [jy,jm,jd]=join.split("-").map(Number);
-  const makeDate=(year,monthIndex)=>{const last=new Date(year,monthIndex+1,0).getDate();return new Date(year,monthIndex,Math.min(jd,last));};
   const iso=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
   const monthOf=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
-  const joinDate=makeDate(jy,jm-1);
-  const firstEnd=makeDate(jy,jm);
-  const todayDate=new Date();todayDate.setHours(0,0,0,0);
-  // Fee rows are labeled by due month: October due Oct 16, November due Nov 16.
-  // Keep the first joining month as its own fee row, then use the current calendar month.
-  const cycleStart=new Date(todayDate.getFullYear(),todayDate.getMonth(),1);
-  const cycleEnd=makeDate(todayDate.getFullYear(),todayDate.getMonth());
+  const monthStart=(year,monthIndex)=>{
+    if(year===jy&&monthIndex===jm-1)return new Date(jy,jm-1,jd);
+    const anniversary=new Date(year,monthIndex,Math.min(jd,new Date(year,monthIndex+1,0).getDate()));
+    return new Date(anniversary.getFullYear(),anniversary.getMonth(),anniversary.getDate()+1);
+  };
+  const todayDate=new Date(today()+"T00:00:00"),joinDate=new Date(join+"T00:00:00");
+  if(todayDate<joinDate)return {status:"upcoming",fee,paid:0,due:fee,dueDate:join,nextDueDate:join,cycleStart:join,cycleEnd:null,completedMonth:join.slice(0,7)};
+  let y=todayDate.getFullYear(),mi=todayDate.getMonth(),cycleStart=monthStart(y,mi);
+  if(todayDate<cycleStart){mi--;if(mi<0){mi=11;y--;}cycleStart=monthStart(y,mi);}
+  const nextMonth=mi+1,nextYear=y+(nextMonth>11?1:0),nextDue=monthStart(nextYear,nextMonth%12);
+  const cycleEnd=new Date(nextDue.getFullYear(),nextDue.getMonth(),nextDue.getDate()-1);
   const completedMonth=monthOf(cycleStart);
-  let paid=0;
-  payList(s.id).forEach(p=>{
-    const amount=Number(p.amount)||0;
-    const explicitMonth=String(p.month||"").trim();
-    if(explicitMonth){if(paymentFeeMonth(p)===completedMonth)paid+=amount;return;}
-    const ds=String(p.date||"");
-    const d=/^\d{4}-\d{2}-\d{2}$/.test(ds)?new Date(ds+"T00:00:00"):null;
-    if(d&&d>=cycleStart&&d<=cycleEnd)paid+=amount;
-  });
-  paid=Math.min(fee,Math.max(0,paid));
-  const dueDate=iso(cycleEnd);
-  const nextDue=makeDate(cycleEnd.getFullYear(),cycleEnd.getMonth()+1);
-  const status=paid>=fee?"paid":(iso(todayDate)<dueDate?"upcoming":"due");
-  return {status,fee,paid,due:Math.max(0,fee-paid),dueDate,nextDueDate:iso(nextDue),cycleStart:iso(cycleStart),completedMonth};
+  const paidRaw=payList(s.id).reduce((sum,p)=>paymentFeeMonth(p)===completedMonth?sum+Math.max(0,Number(p.amount)||0):sum,0);
+  const paid=Math.min(fee,paidRaw),dueDate=iso(cycleStart),nextDueDate=iso(nextDue);
+  const status=paid>=fee?"paid":(todayDate<cycleStart?"upcoming":(paid>0?"part":"due"));
+  return {status,fee,paid,due:Math.max(0,fee-paid),dueDate,nextDueDate,cycleStart:dueDate,cycleEnd:iso(cycleEnd),completedMonth};
 }
 const active=s=>s.active!==false;
 function teachersList(all){return Object.entries(S.teachers).map(([id,t])=>({id,...t})).filter(t=>all||active(t)).sort((a,b)=>(active(b)-active(a))||a.name.localeCompare(b.name))}
@@ -1480,7 +1470,7 @@ function vStaff(){
 }
 function vMoney(){
   const m=UI.moneyMonth;
-  const fees=Object.keys(S.fees).reduce((a,id)=>a+payList(id).filter(p=>paymentMonth(p)===m).reduce((x,p)=>x+ +p.amount,0),0);
+  const fees=Object.keys(S.fees).reduce((a,id)=>a+payList(id).filter(p=>paymentFeeMonth(p)===m).reduce((x,p)=>x+ +p.amount,0),0);
   const sal=Object.keys(S.salaries).reduce((a,id)=>a+salList(id).filter(p=>p.month===m).reduce((x,p)=>x+ +p.amount,0),0);
   const ex=expList(m).sort((a,b)=>b.date.localeCompare(a.date)),exT=ex.reduce((a,b)=>a+ +b.amount,0),net=fees-sal-exT;
   const cats={};ex.forEach(e=>cats[e.cat]=(cats[e.cat]||0)+ +e.amount);
@@ -1600,7 +1590,7 @@ function vStudents(){
   h+=`<input type="search" class="search" id="q" placeholder="Search by name or parent" value="${esc(UI.q)}">`+classChips("cls")+batchChips();
   const q=UI.q.toLowerCase(),list=byBatch(studentsOf(UI.cls,true)).filter(s=>!q||(s.name+" "+(s.parent||"")+" "+(s.phone||"")).toLowerCase().includes(q)).sort((a,b)=>active(b)-active(a));
   const m=today().slice(0,7);
-  h+=`<div class="list">`+list.map(s=>{const st=attStats(s.id,m),fs=isAdmin()?feeStatus(s,m):null;const tag=!active(s)?`<span class="tag n">Left</span>`:isAdmin()?(s.fee>0&&enrolledIn(s,m)?(fs.k==="paid"?`<span class="tag ok">Paid</span>`:fs.k==="part"?`<span class="tag due">${rs(fs.left)} balance due</span>`:`<span class="tag due">Fee due</span>`):""):"";return `<button class="item" data-act="openStudent" data-id="${s.id}" style="${active(s)?"":"opacity:.6"}"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)}${s.batch?" · "+s.batch:""} · ${esc(s.board||"")}${st.pct!=null?" · "+st.pct+"% attendance":""}</div></div>${tag}</button>`}).join("")+`</div>`;
+  h+=`<div class="list">`+list.map(s=>{const st=attStats(s.id,m),fs=isAdmin()?currentFeeCycle(s):null;const tag=!active(s)?`<span class="tag n">Left</span>`:isAdmin()?(s.fee>0?(fs.status==="paid"?`<span class="tag ok">Paid</span>`:fs.status==="upcoming"?`<span class="tag n">Upcoming · due ${nice(fs.dueDate)}</span>`:fs.status==="part"?`<span class="tag due">${rs(fs.due)} balance due</span>`:`<span class="tag due">Fee due</span>`):""):"";return `<button class="item" data-act="openStudent" data-id="${s.id}" style="${active(s)?"":"opacity:.6"}"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)}${s.batch?" · "+s.batch:""} · ${esc(s.board||"")}${st.pct!=null?" · "+st.pct+"% attendance":""}</div></div>${tag}</button>`}).join("")+`</div>`;
   if(!list.length)h+=`<div class="empty">No students match.</div>`;
   return h;
 }
@@ -1614,6 +1604,7 @@ function vFees(){
   const row=(s,isPaid)=>{const fs=feeStatus(s,m);const due=fs.dueDate?` · due ${nice(fs.dueDate)}`:"";const status=fs.k==="paid"?`<span class="tag ok">Paid</span>`:fs.k==="upcoming"?`<span class="tag n">Upcoming · due ${nice(fs.dueDate)}</span>`:`<button class="btn sm gold" data-act="pay" data-id="${s.id}">Record</button>`;return `<div class="item"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)} · ${rs(s.fee)}/month${fs.k==="part"?` · paid ${rs(fs.paid)}, <b>${rs(fs.left)} left</b>`:""}${due}</div></div>${status}</div>`};
   if(due.length)h+=`<div class="row" style="justify-content:space-between;margin:14px 0 8px"><h3>Due (${due.length})</h3><button class="btn sm ghost" data-act="remindAll">Fee reminders</button></div><div class="list">${due.map(s=>row(s,0)).join("")}</div>`;
   if(paid.length)h+=`<h3 style="margin:18px 0 8px">Paid (${paid.length})</h3><div class="list">${paid.map(s=>row(s,1)).join("")}</div>`;
+  if(upcoming.length)h+=`<h3 style="margin:18px 0 8px">Upcoming (${upcoming.length})</h3><div class="list">${upcoming.map(s=>row(s,0)).join("")}</div>`;
   if(!list.length)h+=`<div class="empty">Set a monthly fee on a student's profile to track it here.</div>`;
   return h;
 }
