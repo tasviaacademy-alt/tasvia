@@ -1597,10 +1597,13 @@ function vStudents(){
 function vFees(){
   const m=UI.feeMonth,list=byBatch(studentsOf(UI.cls)).filter(s=>s.fee>0&&enrolledIn(s,m));
   let exp=0,col=0;list.forEach(s=>{const fs=feeStatus(s,m);if(fs.k!=="upcoming"){exp+=+s.fee;col+=Math.min(fs.paid,+s.fee)}});
+  const cyclePayments=Object.keys(S.fees).flatMap(sid=>payList(sid).filter(p=>paymentFeeMonth(p)===m).map(p=>({sid,p})));
+  const todayCollected=cyclePayments.filter(x=>x.p.date===today()).reduce((n,x)=>n+(Number(x.p.amount)||0),0);
+  const modeTotals=cyclePayments.reduce((o,x)=>{const k=String(x.p.mode||"Other");o[k]=(o[k]||0)+(Number(x.p.amount)||0);return o;},{});
   let h=`<div class="hd"><div><h2>Fees</h2><div class="sub">${monthName(m)}</div></div><input type="month" id="feeMonth" value="${m}" aria-label="Month"></div>`;
   if(!Object.keys(S.students).length)return h+noStudents();
   const due=list.filter(s=>["due","part"].includes(feeStatus(s,m).k)),paid=list.filter(s=>feeStatus(s,m).k==="paid"),upcoming=list.filter(s=>feeStatus(s,m).k==="upcoming");
-  h+=`<div class="board"><div class="pp"><b style="font-size:1.5rem">${rs(col)}</b><small>Collected</small></div><div class="aa"><b style="font-size:1.5rem">${rs(Math.max(exp-col,0))}</b><small>Pending</small></div><div><b>${due.length}</b><small>Students due</small></div></div>`+classChips("cls")+batchChips();
+  h+=`<div class="board"><div class="pp"><b style="font-size:1.5rem">${rs(col)}</b><small>Collected</small></div><div class="aa"><b style="font-size:1.5rem">${rs(Math.max(exp-col,0))}</b><small>Pending</small></div><div><b>${due.length}</b><small>Students due</small></div></div><div class="card"><div class="row" style="justify-content:space-between"><div><div class="sub">Payments tagged to ${monthName(m)}</div><h3 style="margin:2px 0">${cyclePayments.length} transaction${cyclePayments.length===1?"":"s"}</h3></div><div style="text-align:right"><div class="sub">Collected today</div><b>${rs(todayCollected)}</b></div></div><div class="sub" style="margin-top:8px">${Object.keys(modeTotals).length?Object.entries(modeTotals).map(([k,v])=>`${esc(k)}: ${rs(v)}`).join(" · "):"No payments recorded for this fee cycle yet."}</div><div class="acts"><button class="btn sm ghost" data-act="export" data-k="payments">Export full fee ledger (CSV)</button></div></div>`+classChips("cls")+batchChips();
   const row=(s,isPaid)=>{const fs=feeStatus(s,m);const due=fs.dueDate?` · due ${nice(fs.dueDate)}`:"";const status=fs.k==="paid"?`<span class="tag ok">Paid</span>`:fs.k==="upcoming"?`<span class="tag n">Upcoming · due ${nice(fs.dueDate)}</span>`:`<button class="btn sm gold" data-act="pay" data-id="${s.id}">Record</button>`;return `<div class="item"><div class="grow"><div class="nm">${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)} · ${rs(s.fee)}/month${fs.k==="part"?` · paid ${rs(fs.paid)}, <b>${rs(fs.left)} left</b>`:""}${due}</div></div>${status}</div>`};
   if(due.length)h+=`<div class="row" style="justify-content:space-between;margin:14px 0 8px"><h3>Due (${due.length})</h3><button class="btn sm ghost" data-act="remindAll">Fee reminders</button></div><div class="list">${due.map(s=>row(s,0)).join("")}</div>`;
   if(paid.length)h+=`<h3 style="margin:18px 0 8px">Paid (${paid.length})</h3><div class="list">${paid.map(s=>row(s,1)).join("")}</div>`;
@@ -2141,13 +2144,13 @@ document.addEventListener("submit",e=>{
   if(f.id==="fPay"){
     // Prevent a second click from submitting a duplicate payment while the
     // Firestore transaction and read-back verification are still in progress.
+    const id=f.dataset.id,amt=Number(d.amount);
+    if(!(amt>0))return toast("Enter an amount");
+    if(!d.month||!d.date||!d.mode)return toast("Complete the payment details");
     if(f.dataset.saving==="1")return;
     f.dataset.saving="1";
     const submitButton=f.querySelector('button[type="submit"]');
     if(submitButton){submitButton.disabled=true;submitButton.textContent="Saving…";}
-    const id=f.dataset.id,amt=Number(d.amount);
-    if(!(amt>0))return toast("Enter an amount");
-    if(!d.month||!d.date||!d.mode)return toast("Complete the payment details");
     const p={id:uid("p"),amount:amt,month:d.month,date:d.date,mode:d.mode,note:(d.note||"").trim()};ownIds.add(p.id);
     const previousFees=S.fees[id];
     // Payment writes are protected from the legacy student-ID migration so a migration
