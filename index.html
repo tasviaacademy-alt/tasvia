@@ -546,6 +546,30 @@ nav{border-top:1px solid #E2E8F0!important}
   .menu{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important}
   .menu .item{min-height:150px}
 }
+
+/* FIX: actual quick-access component uses .dashboard-tiles, not .menu */
+@media(max-width:650px){
+  .dashboard-tiles{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:9px!important;
+    align-items:stretch;
+  }
+  .dashboard-tile{
+    min-width:0!important;
+    min-height:132px!important;
+    height:100%;
+    padding:10px 9px!important;
+    gap:7px!important;
+    border-radius:14px!important;
+  }
+  .dashboard-icon{width:36px!important;height:36px!important;font-size:1rem!important}
+  .dashboard-tile strong{font-size:.78rem!important;line-height:1.2!important;overflow-wrap:anywhere}
+  .dashboard-tile small{font-size:.66rem!important;line-height:1.25!important;overflow-wrap:anywhere}
+}
+@media(min-width:651px){
+  .dashboard-tiles{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .dashboard-tile{min-height:145px}
+}
 </style>
 <script>
 /* iOS PWA recovery: remove stale Staff App service-worker/cache state once. */
