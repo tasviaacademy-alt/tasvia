@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-05",
+  "month": "November 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Cabinet approves a two-year service extension for 75% of Agniveers",
+      "text": "The Union Cabinet approved a two-year service extension for 75% of Agniveers who are not initially absorbed into the regular Armed Forces after their four-year tenure. The extension offers another opportunity to join as regular soldiers, subject to the individuals' willingness and selection criteria.",
+      "source": "The Indian Express, 2026-11-04",
+      "url": "https://indianexpress.com/article/education/today-news-headlines-for-school-assembly-november-5-2026-india-defeats-new-zealand-5-wickets-first-odi-10949971/"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏏",
+      "title": "India take a 1–0 lead after winning the first ODI against New Zealand",
+      "text": "India defeated New Zealand in the opening ODI at Eden Park in Auckland. New Zealand were bowled out for 185, and India chased the revised target of 143 to take a 1–0 lead in the five-match series. Anshul Kamboj was named Player of the Match after taking two wickets for 22 runs in 10 overs.",
+      "source": "The Indian Express, 2026-11-04",
+      "url": "https://indianexpress.com/article/education/today-news-headlines-for-school-assembly-november-5-2026-india-defeats-new-zealand-5-wickets-first-odi-10949971/"
+    },
+    {
+      "category": "Weather",
+      "icon": "🌧️",
+      "title": "IMD forecasts further rain in parts of Telangana on 5 November",
+      "text": "After heavy to extremely heavy rain affected parts of Telangana on Wednesday, the India Meteorological Department forecast light to moderate showers at a few places on Thursday, with isolated heavy rainfall possible in Bhadradri Kothagudem, Khammam and Mahabubabad. Aswaraopeta in Bhadradri Kothagudem recorded 276.8 mm between 8:30 a.m. and 3 p.m. on Wednesday. The report said no rain was recorded at Nizamabad in the 24-hour station data ending 8:30 a.m. Wednesday.",
+      "source": "The Times of India, 2026-11-05",
+      "url": "https://timesofindia.indiatimes.com/city/hyderabad/heavy-rains-lash-telangana-more-to-come-says-imd/articleshow/135550313.cms"
+    },
+    {
+      "category": "Science & Technology",
+      "icon": "🔬",
+      "title": "India targets its first human deep-sea mission to 6,000 metres by 2028",
+      "text": "India is working towards sending its first human deep-sea mission to a depth of up to 6,000 metres by 2028 under the Samudrayaan Mission. Union Minister Jitendra Singh said the Matsya submersible is designed to carry three aquanauts to depths of 5,000–6,000 metres, with trials supported by capabilities developed by the National Institute of Ocean Technology.",
+      "source": "DD India, 2026-11-05",
+      "url": "https://ddindia.co.in/2026/11/india-aims-to-send-first-human-deep-sea-mission-to-6000-metres-by-2028-jitendra-singh/"
+    },
+    {
+      "category": "Environment",
+      "icon": "🌱",
+      "title": "IEA projects India's renewable power capacity to reach around 530 GW by 2030",
+      "text": "The International Energy Agency's India Renewable Energy Market Report 2026 projects that India's renewable power capacity will reach around 530 gigawatts by 2030. Solar photovoltaic power is expected to account for more than 80% of new additions. The IEA says renewable electricity helped save India more than US$100 billion in coal and natural-gas import costs between 2011 and 2025.",
+      "source": "International Energy Agency, 2026-11-03",
+      "url": "https://www.iea.org/news/indias-rapid-renewables-growth-is-strengthening-its-role-in-global-energy-markets-iea-report-finds"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What service extension did the Union Cabinet approve for 75% of Agniveers who are not initially absorbed after four years?",
+      "a": "Two years, subject to willingness and selection criteria."
+    },
+    {
+      "q": "At which Auckland ground was the first India–New Zealand ODI played?",
+      "a": "Eden Park."
+    },
+    {
+      "q": "Which Telangana district recorded 276.8 mm of rainfall at Aswaraopeta on Wednesday?",
+      "a": "Bhadradri Kothagudem district."
+    },
+    {
+      "q": "How deep is India's planned first human deep-sea mission by 2028?",
+      "a": "Up to 6,000 metres."
+    },
+    {
+      "q": "What renewable power capacity does the IEA project for India by 2030?",
+      "a": "Around 530 GW."
+    }
+  ]
+}
