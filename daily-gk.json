@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-11-05",
+  "date": "2026-11-06",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-gk-si-force",
-      "category": "Physics",
-      "q": "What is the SI unit of force?",
-      "a": "Newton.",
-      "options": [
-        "Watt.",
-        "Pascal.",
-        "Joule.",
-        "Newton."
-      ]
-    },
-    {
-      "id": "static-water-formula",
-      "category": "Science",
-      "q": "What is the chemical formula of water?",
-      "a": "H₂O.",
-      "options": [
-        "CO₂.",
-        "NaCl.",
-        "O₂.",
-        "H₂O."
-      ]
-    },
-    {
-      "id": "static-gk-world-ocean",
-      "category": "World Geography",
-      "q": "Which is the largest ocean on Earth?",
-      "a": "Pacific Ocean.",
-      "options": [
-        "Atlantic Ocean.",
-        "Arctic Ocean.",
-        "Pacific Ocean.",
-        "Indian Ocean."
-      ]
-    },
-    {
-      "id": "static-gk-closest-planet-sun",
+      "id": "static-earth-satellite",
       "category": "Astronomy",
-      "q": "Which planet is closest to the Sun?",
-      "a": "Mercury.",
+      "q": "What is Earth's natural satellite?",
+      "a": "The Moon.",
       "options": [
-        "Venus.",
         "Mars.",
-        "Mercury.",
-        "Earth."
+        "The Moon.",
+        "The Sun.",
+        "Venus."
       ]
     },
     {
-      "id": "static-gk-konark-state",
-      "category": "Indian Geography & Heritage",
-      "q": "In which Indian state is the Sun Temple at Konark located?",
-      "a": "Odisha.",
+      "id": "static-gk-transpiration",
+      "category": "Plant Science",
+      "q": "What is the process called in which plants release water vapour mainly through their leaves?",
+      "a": "Transpiration.",
       "options": [
-        "Kerala.",
-        "Rajasthan.",
-        "Gujarat.",
-        "Odisha."
+        "Germination.",
+        "Transpiration.",
+        "Fertilisation.",
+        "Pollination."
+      ]
+    },
+    {
+      "id": "static-dandi-march",
+      "category": "Indian History",
+      "q": "Who led the Dandi March in 1930?",
+      "a": "Mahatma Gandhi.",
+      "options": [
+        "Mahatma Gandhi.",
+        "Subhas Chandra Bose.",
+        "Jawaharlal Nehru.",
+        "Sardar Vallabhbhai Patel."
+      ]
+    },
+    {
+      "id": "static-national-flower",
+      "category": "National Symbols",
+      "q": "What is the national flower of India?",
+      "a": "The lotus.",
+      "options": [
+        "The lotus.",
+        "The jasmine.",
+        "The sunflower.",
+        "The rose."
+      ]
+    },
+    {
+      "id": "static-literature-ramayana",
+      "category": "Literature & Culture",
+      "q": "Who is traditionally credited with composing the Sanskrit Ramayana?",
+      "a": "Valmiki.",
+      "options": [
+        "Tulsidas.",
+        "Kalidasa.",
+        "Valmiki.",
+        "Vyasa."
       ]
     }
   ]

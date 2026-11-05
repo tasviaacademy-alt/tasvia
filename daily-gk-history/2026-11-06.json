@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-06",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-earth-satellite",
+      "category": "Astronomy",
+      "q": "What is Earth's natural satellite?",
+      "a": "The Moon.",
+      "options": [
+        "Mars.",
+        "The Moon.",
+        "The Sun.",
+        "Venus."
+      ]
+    },
+    {
+      "id": "static-gk-transpiration",
+      "category": "Plant Science",
+      "q": "What is the process called in which plants release water vapour mainly through their leaves?",
+      "a": "Transpiration.",
+      "options": [
+        "Germination.",
+        "Transpiration.",
+        "Fertilisation.",
+        "Pollination."
+      ]
+    },
+    {
+      "id": "static-dandi-march",
+      "category": "Indian History",
+      "q": "Who led the Dandi March in 1930?",
+      "a": "Mahatma Gandhi.",
+      "options": [
+        "Mahatma Gandhi.",
+        "Subhas Chandra Bose.",
+        "Jawaharlal Nehru.",
+        "Sardar Vallabhbhai Patel."
+      ]
+    },
+    {
+      "id": "static-national-flower",
+      "category": "National Symbols",
+      "q": "What is the national flower of India?",
+      "a": "The lotus.",
+      "options": [
+        "The lotus.",
+        "The jasmine.",
+        "The sunflower.",
+        "The rose."
+      ]
+    },
+    {
+      "id": "static-literature-ramayana",
+      "category": "Literature & Culture",
+      "q": "Who is traditionally credited with composing the Sanskrit Ramayana?",
+      "a": "Valmiki.",
+      "options": [
+        "Tulsidas.",
+        "Kalidasa.",
+        "Valmiki.",
+        "Vyasa."
+      ]
+    }
+  ]
+}
