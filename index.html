@@ -1395,6 +1395,11 @@ async function syncPV(){
             });
           }
         }catch(paymentSyncError){console.warn("Parent payment history sync failed",id,paymentSyncError)}
+        // Mirror canonical Staff Portal photo into the private Parent Portal record.
+        try{
+          const studentPhoto=await getPhoto(id);
+          if(studentPhoto)v.photo=studentPhoto;
+        }catch(photoSyncError){console.warn("Parent photo sync failed",id,photoSyncError)}
         const j=stable(v),hj=hash(j);
         let exists=false;
         let oldParent=null;
@@ -1435,6 +1440,7 @@ async function syncPV(){
             currentFee:v.currentFee||null,
             pin:String(v.pin||st.pin||pin||""),
             centre:v.centre||null,
+        photo:typeof v.photo==="string"?v.photo:null,
             updated:Date.now()
           },{merge:true});
           pvCache[code]=hj;
@@ -1473,6 +1479,7 @@ async function syncPV(){
               currentFee:v.currentFee||null,
               pin:String(v.pin||st.pin||pin||""),
               centre:v.centre||null,
+        photo:typeof v.photo==="string"?v.photo:null,
               updated:Date.now()
             },{merge:true});
           }
