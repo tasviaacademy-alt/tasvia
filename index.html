@@ -1399,7 +1399,6 @@ async function syncPV(){
         try{
           const studentPhoto=await getPhoto(id);
           if(studentPhoto)v.photo=studentPhoto;
-          else if(oldParent&&typeof oldParent.photo==="string"&&oldParent.photo)v.photo=oldParent.photo;
         }catch(photoSyncError){console.warn("Parent photo sync failed",id,photoSyncError)}
         const j=stable(v),hj=hash(j);
         let exists=false;
