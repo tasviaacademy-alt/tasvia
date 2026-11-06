@@ -989,7 +989,12 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     var joiningDateText=joinedDateRaw;
     var joiningDateParts=joinedDateRaw.split("-");
     if(joiningDateParts.length===3&&joiningDateParts[0].length===4&&joiningDateParts[1].length===2&&joiningDateParts[2].length===2){var joiningDateObj=new Date(Number(joiningDateParts[0]),Number(joiningDateParts[1])-1,Number(joiningDateParts[2]));joiningDateText=new Intl.DateTimeFormat("en-IN",{day:"2-digit",month:"short",year:"numeric"}).format(joiningDateObj);}
-    var photo=(typeof d.photo==="string"&&/^data:image\/jpeg;base64,/.test(d.photo))?d.photo:"";
+    // Accept the JPEG data URLs written by Staff Portal plus legacy/alternate image fields and secure hosted image URLs.
+    var photoCandidate=d.photo||d.photoUrl||d.photoURL||d.studentPhoto||d.studentPhotoUrl||d.img||"";
+    if(photoCandidate&&typeof photoCandidate==="object")photoCandidate=photoCandidate.url||photoCandidate.src||photoCandidate.data||"";
+    var photo=typeof photoCandidate==="string"?photoCandidate.trim():"";
+    var photoAllowed=/^data:image\/(?:jpeg|jpg|png|webp|gif);base64,/i.test(photo)||/^https:\/\//i.test(photo);
+    if(!photoAllowed)photo="";
     var att=d.att&&typeof d.att==="object"?d.att:{};
     // The overview represents the current month in India, not merely the latest month with saved records.
     var attendanceMonthParts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Kolkata",year:"numeric",month:"2-digit"}).formatToParts(new Date());
@@ -1219,7 +1224,7 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     }).join("");
     var feeUpiUri="";
     if(centreUpi&&due>0){feeUpiUri="upi://pay?pa="+encodeURIComponent(centreUpi)+"&pn="+encodeURIComponent("TASVIA Academy")+"&am="+encodeURIComponent(due.toFixed(2))+"&cu=INR";}
-    var photoHtml=photo?'<div class="dash-photo"><img src="'+photo+'" alt="'+esc(name)+'"></div>':'<div class="dash-photo dash-photo-fallback">👤</div>';
+    var photoHtml=photo?'<div class="dash-photo"><img src="'+esc(photo)+'" alt="'+esc(name)+'" loading="eager" referrerpolicy="no-referrer" onerror="this.parentNode.classList.add(\'dash-photo-fallback\');this.parentNode.textContent=\'👤\'"></div>':'<div class="dash-photo dash-photo-fallback" aria-label="Student photo not available">👤</div>';
     var testAvg="—";
     if(tests.length){
       var vals=tests.filter(function(x){return x.m!=null;}).map(function(x){return {m:Number(x.m)||0,x:Number(x.x)||0};}).filter(function(x){return x.x>0;});
