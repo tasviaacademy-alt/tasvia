@@ -1175,11 +1175,7 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     var feeDetailsQr=centreUpi&&feeTotalDue>0?"upi://pay?pa="+encodeURIComponent(centreUpi)+"&pn="+encodeURIComponent("TASVIA Academy")+"&am="+encodeURIComponent(feeTotalDue.toFixed(2))+"&cu=INR":"";
     function renderFeePayOptions(amount,upiUri){
       if(!upiUri||!amount)return "";
-      var query=upiUri.replace(/^upi:\/\/pay\?/,"");
-      var gpayUri="tez://upi/pay?"+query;
-      var phonepeUri="phonepe://pay?"+query;
-      var paytmUri="paytmmp://pay?"+query;
-      return '<div class="fee-qr-wrap"><img class="fee-qr" alt="TASVIA Academy UPI payment QR code" src="https://quickchart.io/qr?size=260&text='+encodeURIComponent(upiUri)+'"><div class="fee-qr-note">Scan this QR using any UPI app • '+money(amount)+'</div></div><div class="upi-apps"><a class="upi-app" href="'+gpayUri+'">Google Pay</a><a class="upi-app" href="'+phonepeUri+'">PhonePe</a><a class="upi-app" href="'+paytmUri+'">Paytm</a></div><div class="fee-popup-pay"><a class="gold" href="'+upiUri+'">Other UPI Apps</a></div><div class="fee-qr-note" style="margin-top:8px;overflow-wrap:anywhere">UPI ID: <b>'+esc(centreUpi)+'</b><br>If an app declines the payment, scan the QR code or enter this UPI ID manually. Payment is recorded only after the Academy verifies it.</div>';
+      return '<div class="fee-qr-wrap"><img class="fee-qr" alt="TASVIA Academy UPI payment QR code" src="https://quickchart.io/qr?size=260&text='+encodeURIComponent(upiUri)+'"><div class="fee-qr-note">Recommended: scan this QR using Google Pay, PhonePe, Paytm or any UPI app • '+money(amount)+'</div></div><div class="fee-qr-note" style="margin-top:8px;overflow-wrap:anywhere">UPI ID: <b style="user-select:all;-webkit-user-select:all">'+esc(centreUpi)+'</b><br><b>Payment tip:</b> QR scanning is supported. Direct app-opening buttons are temporarily removed because some UPI apps may show a security warning for payment links. If you are viewing this portal on the same phone, scan the QR from another phone or use your UPI app\'s scan-from-gallery option. Payment is recorded only after the Academy verifies it.</div>';
     }
     var feeDetailsPay=feeDetailsQr?'<div class="fee-details-pay">'+renderFeePayOptions(feeTotalDue,feeDetailsQr)+'</div>':"";
     window.__tasviaParentCode=code;
