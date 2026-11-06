@@ -1173,7 +1173,15 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     // If legacy fee rows are absent, use the current overdue balance for the Fee Details QR.
     if(feeTotalDue<=0&&due>0&&/^\d{4}-\d{2}-\d{2}$/.test(String(feeDate))&&feeTodayISO>=String(feeDate))feeTotalDue=due;
     var feeDetailsQr=centreUpi&&feeTotalDue>0?"upi://pay?pa="+encodeURIComponent(centreUpi)+"&pn="+encodeURIComponent("TASVIA Academy")+"&am="+encodeURIComponent(feeTotalDue.toFixed(2))+"&cu=INR":"";
-    var feeDetailsPay=feeDetailsQr?'<div class="fee-details-pay"><div class="fee-qr-wrap"><img class="fee-qr" alt="Fee payment QR code" src="https://quickchart.io/qr?size=220&text='+encodeURIComponent(feeDetailsQr)+'"><div class="fee-qr-note">Scan to pay total due • '+money(feeTotalDue)+'</div></div><div class="fee-popup-pay"><a class="gold" href="'+feeDetailsQr+'">Pay Now</a></div></div>':"";
+    function renderFeePayOptions(amount,upiUri){
+      if(!upiUri||!amount)return "";
+      var query=upiUri.replace(/^upi:\/\/pay\?/,"");
+      var gpayUri="tez://upi/pay?"+query;
+      var phonepeUri="phonepe://pay?"+query;
+      var paytmUri="paytmmp://pay?"+query;
+      return '<div class="fee-qr-wrap"><img class="fee-qr" alt="TASVIA Academy UPI payment QR code" src="https://quickchart.io/qr?size=260&text='+encodeURIComponent(upiUri)+'"><div class="fee-qr-note">Scan this QR using any UPI app • '+money(amount)+'</div></div><div class="upi-apps"><a class="upi-app" href="'+gpayUri+'">Google Pay</a><a class="upi-app" href="'+phonepeUri+'">PhonePe</a><a class="upi-app" href="'+paytmUri+'">Paytm</a></div><div class="fee-popup-pay"><a class="gold" href="'+upiUri+'">Other UPI Apps</a></div><div class="fee-qr-note" style="margin-top:8px;overflow-wrap:anywhere">UPI ID: <b>'+esc(centreUpi)+'</b><br>If an app declines the payment, scan the QR code or enter this UPI ID manually. Payment is recorded only after the Academy verifies it.</div>';
+    }
+    var feeDetailsPay=feeDetailsQr?'<div class="fee-details-pay">'+renderFeePayOptions(feeTotalDue,feeDetailsQr)+'</div>':"";
     window.__tasviaParentCode=code;
     function hwDoneKey(x){
       var raw=String(code)+"|"+String(x.d||"")+"|"+String(x.hw||x.text||"");
@@ -1295,7 +1303,7 @@ document.body.innerHTML=
       '<div class="fee-popup-icon">⚠️</div><h3 id="feeDueTitle">Fee Due</h3>'+
       '<div class="due-label">'+esc(name)+'</div><div class="due-amount">'+money(due)+'</div>'+
       '<p class="due-note">Your monthly fee is pending. Due date: <b>'+esc(currentFee&&currentFee.dueDate?currentFee.dueDate:"")+'</b>. The next cycle starts one month after the joining-date cycle.</p>'+
-      (feeUpiUri?'<div class="fee-qr-wrap"><img class="fee-qr" alt="Fee payment QR code" src="https://quickchart.io/qr?size=220&text='+encodeURIComponent(feeUpiUri)+'"><div class="fee-qr-note">Scan with any UPI app</div></div><div class="fee-popup-pay"><a class="gold" href="'+feeUpiUri+'">Pay Now</a></div>':'<div class="fee-popup-pay"><a href="tel:+917842138739">Call TASVIA</a></div><div class="fee-qr-note">Payment QR will appear once the centre UPI ID is added in Staff → Centre Info.</div>')+
+      (feeUpiUri?renderFeePayOptions(due,feeUpiUri):'<div class="fee-popup-pay"><a href="tel:+917842138739">Call TASVIA</a></div><div class="fee-qr-note">Payment QR will appear once the centre UPI ID is added in Staff → Centre Info.</div>')+
       '<button type="button" class="fee-popup-close" id="feeDueClose">Continue to Parent Portal</button>'+
       '</div></div>'+
 
