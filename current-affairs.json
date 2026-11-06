@@ -1,69 +1,81 @@
 {
-  "date": "2026-11-05",
+  "date": "2026-11-06",
   "month": "November 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
       "category": "India",
       "icon": "🇮🇳",
-      "title": "Cabinet approves a two-year service extension for 75% of Agniveers",
-      "text": "The Union Cabinet approved a two-year service extension for 75% of Agniveers who are not initially absorbed into the regular Armed Forces after their four-year tenure. The extension offers another opportunity to join as regular soldiers, subject to the individuals' willingness and selection criteria.",
-      "source": "The Indian Express, 2026-11-04",
-      "url": "https://indianexpress.com/article/education/today-news-headlines-for-school-assembly-november-5-2026-india-defeats-new-zealand-5-wickets-first-odi-10949971/"
-    },
-    {
-      "category": "Sports",
-      "icon": "🏏",
-      "title": "India take a 1–0 lead after winning the first ODI against New Zealand",
-      "text": "India defeated New Zealand in the opening ODI at Eden Park in Auckland. New Zealand were bowled out for 185, and India chased the revised target of 143 to take a 1–0 lead in the five-match series. Anshul Kamboj was named Player of the Match after taking two wickets for 22 runs in 10 overs.",
-      "source": "The Indian Express, 2026-11-04",
-      "url": "https://indianexpress.com/article/education/today-news-headlines-for-school-assembly-november-5-2026-india-defeats-new-zealand-5-wickets-first-odi-10949971/"
-    },
-    {
-      "category": "Weather",
-      "icon": "🌧️",
-      "title": "IMD forecasts further rain in parts of Telangana on 5 November",
-      "text": "After heavy to extremely heavy rain affected parts of Telangana on Wednesday, the India Meteorological Department forecast light to moderate showers at a few places on Thursday, with isolated heavy rainfall possible in Bhadradri Kothagudem, Khammam and Mahabubabad. Aswaraopeta in Bhadradri Kothagudem recorded 276.8 mm between 8:30 a.m. and 3 p.m. on Wednesday. The report said no rain was recorded at Nizamabad in the 24-hour station data ending 8:30 a.m. Wednesday.",
-      "source": "The Times of India, 2026-11-05",
-      "url": "https://timesofindia.indiatimes.com/city/hyderabad/heavy-rains-lash-telangana-more-to-come-says-imd/articleshow/135550313.cms"
+      "title": "ECI announces voter-roll revision in four states and two Union Territories",
+      "text": "The Election Commission of India announced a Special Summary Revision of electoral rolls in Arunachal Pradesh, Mizoram, Odisha and Sikkim, along with Chandigarh and Dadra and Nagar Haveli and Daman and Diu. Draft rolls are scheduled for publication on 30 November 2026, and the final rolls on 21 January 2027. The exercise aims to enrol eligible voters, especially young and first-time electors.",
+      "source": "The Indian Express, 2026-11-05",
+      "url": "https://indianexpress.com/article/india/election-commission-orders-voter-roll-revision-in-6-more-states-union-territories-including-odisha-arunachal-10951724/lite/"
     },
     {
       "category": "Science & Technology",
       "icon": "🔬",
-      "title": "India targets its first human deep-sea mission to 6,000 metres by 2028",
-      "text": "India is working towards sending its first human deep-sea mission to a depth of up to 6,000 metres by 2028 under the Samudrayaan Mission. Union Minister Jitendra Singh said the Matsya submersible is designed to carry three aquanauts to depths of 5,000–6,000 metres, with trials supported by capabilities developed by the National Institute of Ocean Technology.",
-      "source": "DD India, 2026-11-05",
-      "url": "https://ddindia.co.in/2026/11/india-aims-to-send-first-human-deep-sea-mission-to-6000-metres-by-2028-jitendra-singh/"
+      "title": "DRDO successfully flight-tests indigenous Pralay quasi-ballistic missile",
+      "text": "The Defence Research and Development Organisation successfully flight-tested the indigenously developed Pralay quasi-ballistic missile from Dr APJ Abdul Kalam Island off Odisha on 5 November at about 11:10 a.m. The Ministry of Defence said all test objectives were met. Research Centre Imarat in Hyderabad and other DRDO laboratories developed the missile, while Bharat Dynamics Limited produced the system.",
+      "source": "The Economic Times, 2026-11-05",
+      "url": "https://economictimes.indiatimes.com/news/defence/drdo-successfully-tests-indigenously-developed-pralay-missile-off-odisha-coast-rajnath-singh/articleshow/135577017.cms"
     },
     {
-      "category": "Environment",
-      "icon": "🌱",
-      "title": "IEA projects India's renewable power capacity to reach around 530 GW by 2030",
-      "text": "The International Energy Agency's India Renewable Energy Market Report 2026 projects that India's renewable power capacity will reach around 530 gigawatts by 2030. Solar photovoltaic power is expected to account for more than 80% of new additions. The IEA says renewable electricity helped save India more than US$100 billion in coal and natural-gas import costs between 2011 and 2025.",
-      "source": "International Energy Agency, 2026-11-03",
-      "url": "https://www.iea.org/news/indias-rapid-renewables-growth-is-strengthening-its-role-in-global-energy-markets-iea-report-finds"
+      "category": "Economy",
+      "icon": "⛏️",
+      "title": "Ministry of Mines offers 20 critical-mineral blocks in its ninth auction tranche",
+      "text": "The Ministry of Mines launched the ninth tranche of the critical and strategic mineral block auction on 5 November, offering 20 blocks. Telangana is among the states included, with three blocks in this tranche. The auction is intended to strengthen domestic access to minerals used in clean energy, electric mobility, electronics, defence and other strategic industries.",
+      "source": "Press Information Bureau, Ministry of Mines, 2026-11-05",
+      "url": "https://www.pib.gov.in/PressReleseDetailm.aspx?PRID=2333123&lang=2&reg=48"
+    },
+    {
+      "category": "Digital India",
+      "icon": "🪪",
+      "title": "UIDAI onboards 300 entities for Aadhaar offline verification",
+      "text": "The Unique Identification Authority of India said it has onboarded 300 Offline Verification Seeking Entities since the Aadhaar App rollout in January. The consent-based, paperless verification framework is being adopted across sectors including hospitality, healthcare, education, events and the gig economy. UIDAI also reported nearly 7.5 crore Aadhaar App downloads.",
+      "source": "Press Information Bureau, Ministry of Electronics & IT, 2026-11-05",
+      "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2333177&lang=1&reg=48"
+    },
+    {
+      "category": "Sports",
+      "icon": "⚽",
+      "title": "India begin SAFF Championship title defence with 3–2 win over Pakistan",
+      "text": "India opened their SAFF Championship 2026 campaign with a 3–2 victory over Pakistan in Dhaka on 5 November. Suhail Ahmad Bhat scored twice in the first half and Manglenthang Kipgen added the third goal. Pakistan scored twice in stoppage time, but India held on to secure all three points.",
+      "source": "All India Football Federation, 2026-11-05",
+      "url": "https://www.the-aiff.com/index.php/article/india-defeat-pakistan-in-saff-championship-opener"
+    },
+    {
+      "category": "Economy",
+      "icon": "📈",
+      "title": "Rupee gains support as foreign investors return to Indian equities",
+      "text": "Reuters reported on 6 November that the rupee was supported by renewed foreign investment and a weekly gain of about 0.5%. Foreign investors bought a net US$1.6 billion of Indian shares on Thursday, their largest single-day purchase in nearly six years. Lower oil prices and global technology-market volatility were among the factors shaping the outlook.",
+      "source": "Reuters, 2026-11-06",
+      "url": "https://www.reuters.com/world/india/rupee-draw-support-return-foreign-flows-amid-tech-meltdown-2026-11-06/"
     }
   ],
   "quiz": [
     {
-      "q": "What service extension did the Union Cabinet approve for 75% of Agniveers who are not initially absorbed after four years?",
-      "a": "Two years, subject to willingness and selection criteria."
+      "q": "On what date are the final electoral rolls scheduled to be published under the latest ECI Special Summary Revision?",
+      "a": "21 January 2027."
     },
     {
-      "q": "At which Auckland ground was the first India–New Zealand ODI played?",
-      "a": "Eden Park."
+      "q": "Which indigenously developed quasi-ballistic missile did DRDO successfully flight-test on 5 November?",
+      "a": "Pralay."
     },
     {
-      "q": "Which Telangana district recorded 276.8 mm of rainfall at Aswaraopeta on Wednesday?",
-      "a": "Bhadradri Kothagudem district."
+      "q": "How many critical and strategic mineral blocks are being offered in the ninth auction tranche?",
+      "a": "20 blocks."
     },
     {
-      "q": "How deep is India's planned first human deep-sea mission by 2028?",
-      "a": "Up to 6,000 metres."
+      "q": "How many Offline Verification Seeking Entities has UIDAI onboarded since the Aadhaar App rollout?",
+      "a": "300 entities."
     },
     {
-      "q": "What renewable power capacity does the IEA project for India by 2030?",
-      "a": "Around 530 GW."
+      "q": "What was the final score when India defeated Pakistan in the SAFF Championship 2026 opener?",
+      "a": "India won 3–2."
+    },
+    {
+      "q": "How much did foreign investors buy in Indian shares on Thursday, according to Reuters?",
+      "a": "A net US$1.6 billion."
     }
   ]
 }
