@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-07",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-literature-mahabharata",
+      "category": "Literature & Culture",
+      "q": "Who is traditionally credited with composing the Mahabharata?",
+      "a": "Vyasa.",
+      "options": [
+        "Tulsidas.",
+        "Kalidasa.",
+        "Vyasa.",
+        "Valmiki."
+      ]
+    },
+    {
+      "id": "static-maths-perimeter-square",
+      "category": "Mathematics",
+      "q": "What is the perimeter of a square with each side 5 cm?",
+      "a": "20 cm.",
+      "options": [
+        "25 cm.",
+        "10 cm.",
+        "20 cm.",
+        "15 cm."
+      ]
+    },
+    {
+      "id": "static-gk-temperature-instrument",
+      "category": "Science",
+      "q": "Which instrument is used to measure temperature?",
+      "a": "A thermometer.",
+      "options": [
+        "A thermometer.",
+        "A compass.",
+        "A barometer.",
+        "A telescope."
+      ]
+    },
+    {
+      "id": "static-computer-cpu",
+      "category": "Computer Basics",
+      "q": "What does CPU stand for?",
+      "a": "Central Processing Unit.",
+      "options": [
+        "Central Processing Unit.",
+        "Graphics Processing Unit.",
+        "Random Access Memory.",
+        "Arithmetic Logic Unit."
+      ]
+    },
+    {
+      "id": "static-gk-vitamin-sunlight",
+      "category": "Health & Science",
+      "q": "Which vitamin can the human body make when skin is exposed to sunlight?",
+      "a": "Vitamin D.",
+      "options": [
+        "Vitamin C.",
+        "Vitamin B12.",
+        "Vitamin D.",
+        "Vitamin A."
+      ]
+    }
+  ]
+}
