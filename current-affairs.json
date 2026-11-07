@@ -1,81 +1,69 @@
 {
-  "date": "2026-11-06",
+  "date": "2026-11-07",
   "month": "November 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "ECI announces voter-roll revision in four states and two Union Territories",
-      "text": "The Election Commission of India announced a Special Summary Revision of electoral rolls in Arunachal Pradesh, Mizoram, Odisha and Sikkim, along with Chandigarh and Dadra and Nagar Haveli and Daman and Diu. Draft rolls are scheduled for publication on 30 November 2026, and the final rolls on 21 January 2027. The exercise aims to enrol eligible voters, especially young and first-time electors.",
-      "source": "The Indian Express, 2026-11-05",
-      "url": "https://indianexpress.com/article/india/election-commission-orders-voter-roll-revision-in-6-more-states-union-territories-including-odisha-arunachal-10951724/lite/"
+      "category": "Environment",
+      "icon": "🌱",
+      "title": "Thirteen Telangana districts face exceptional agricultural drought, IIT Bombay data shows",
+      "text": "An agricultural monitoring website developed by researchers at IIT Bombay shows that 13 Telangana districts had exceptionally low soil moisture during the week of November 2–8. Nizamabad recorded an anomaly of −1.972, while Kamareddy recorded −2.096. The figures compare soil moisture with the average for the same period over the previous 10 years; they indicate dry conditions but do not by themselves establish crop losses.",
+      "source": "Hyderabad Mail, 2026-11-07",
+      "url": "https://hyderabadmail.com/telangana-13-districts-exceptional-agricultural-drought-iit-bombay-data/"
     },
     {
-      "category": "Science & Technology",
-      "icon": "🔬",
-      "title": "DRDO successfully flight-tests indigenous Pralay quasi-ballistic missile",
-      "text": "The Defence Research and Development Organisation successfully flight-tested the indigenously developed Pralay quasi-ballistic missile from Dr APJ Abdul Kalam Island off Odisha on 5 November at about 11:10 a.m. The Ministry of Defence said all test objectives were met. Research Centre Imarat in Hyderabad and other DRDO laboratories developed the missile, while Bharat Dynamics Limited produced the system.",
-      "source": "The Economic Times, 2026-11-05",
-      "url": "https://economictimes.indiatimes.com/news/defence/drdo-successfully-tests-indigenously-developed-pralay-missile-off-odisha-coast-rajnath-singh/articleshow/135577017.cms"
+      "category": "Telangana",
+      "icon": "🚌",
+      "title": "Telangana reduces Metro–RTC monthly combined pass fare to ₹4,000",
+      "text": "Telangana has reduced the combined Metro–RTC monthly pass from ₹8,500 to ₹4,000, with the revised fares taking effect on 8 November. The new monthly pass includes up to 50 single Metro trips and unlimited RTC bus travel. The daily pass has also been cut from ₹400 to ₹275, comprising ₹200 for Metro and ₹75 for RTC.",
+      "source": "Telangana Today, 2026-11-07",
+      "url": "https://telanganatoday.com/diwali-gift-for-commuters-metro-rtc-monthly-pass-fare-reduced-by-rs-4500"
     },
     {
-      "category": "Economy",
-      "icon": "⛏️",
-      "title": "Ministry of Mines offers 20 critical-mineral blocks in its ninth auction tranche",
-      "text": "The Ministry of Mines launched the ninth tranche of the critical and strategic mineral block auction on 5 November, offering 20 blocks. Telangana is among the states included, with three blocks in this tranche. The auction is intended to strengthen domestic access to minerals used in clean energy, electric mobility, electronics, defence and other strategic industries.",
-      "source": "Press Information Bureau, Ministry of Mines, 2026-11-05",
-      "url": "https://www.pib.gov.in/PressReleseDetailm.aspx?PRID=2333123&lang=2&reg=48"
-    },
-    {
-      "category": "Digital India",
-      "icon": "🪪",
-      "title": "UIDAI onboards 300 entities for Aadhaar offline verification",
-      "text": "The Unique Identification Authority of India said it has onboarded 300 Offline Verification Seeking Entities since the Aadhaar App rollout in January. The consent-based, paperless verification framework is being adopted across sectors including hospitality, healthcare, education, events and the gig economy. UIDAI also reported nearly 7.5 crore Aadhaar App downloads.",
-      "source": "Press Information Bureau, Ministry of Electronics & IT, 2026-11-05",
-      "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2333177&lang=1&reg=48"
+      "category": "Education & Technology",
+      "icon": "🎓",
+      "title": "NIT Warangal receives ₹4-crore PMKVY project to train 1,200 youth",
+      "text": "NIT Warangal received a ₹4-crore project under the Pradhan Mantri Kaushal Vikas Yojana from the Union Ministry of Skill Development and Entrepreneurship. The programme will train about 1,200 unemployed young people in artificial intelligence, machine learning, web design and full-stack development, with the target of reaching beneficiaries by March 2027.",
+      "source": "Telangana Today, 2026-11-07",
+      "url": "https://telanganatoday.com/nit-warangal-gets-rs-4-crore-pmkvy-project-to-train-1200-youth-in-emerging-technologies"
     },
     {
       "category": "Sports",
-      "icon": "⚽",
-      "title": "India begin SAFF Championship title defence with 3–2 win over Pakistan",
-      "text": "India opened their SAFF Championship 2026 campaign with a 3–2 victory over Pakistan in Dhaka on 5 November. Suhail Ahmad Bhat scored twice in the first half and Manglenthang Kipgen added the third goal. Pakistan scored twice in stoppage time, but India held on to secure all three points.",
-      "source": "All India Football Federation, 2026-11-05",
-      "url": "https://www.the-aiff.com/index.php/article/india-defeat-pakistan-in-saff-championship-opener"
+      "icon": "🏏",
+      "title": "Mohammed Shami retires from Test cricket after a 13-year career",
+      "text": "India fast bowler Mohammed Shami announced his retirement from Test cricket on 6 November after a 13-year international red-ball career. He finished with 229 wickets in 64 Tests, including six five-wicket hauls. Shami said he intends to continue playing white-ball cricket and may play domestic four-day matches when fit.",
+      "source": "PTI via Telangana Today, 2026-11-07",
+      "url": "https://telanganatoday.com/mohammed-shami-announces-test-retirement-ends-13-year-red-ball-journey"
     },
     {
-      "category": "Economy",
-      "icon": "📈",
-      "title": "Rupee gains support as foreign investors return to Indian equities",
-      "text": "Reuters reported on 6 November that the rupee was supported by renewed foreign investment and a weekly gain of about 0.5%. Foreign investors bought a net US$1.6 billion of Indian shares on Thursday, their largest single-day purchase in nearly six years. Lower oil prices and global technology-market volatility were among the factors shaping the outlook.",
-      "source": "Reuters, 2026-11-06",
-      "url": "https://www.reuters.com/world/india/rupee-draw-support-return-foreign-flows-amid-tech-meltdown-2026-11-06/"
+      "category": "India",
+      "icon": "🚆",
+      "title": "Four coaches of Karmabhoomi Express catch fire in Punjab; passengers safe",
+      "text": "Four coaches of the Amritsar–New Jalpaiguri Karmabhoomi Express caught fire near Sarai Banjara in Patiala district, Punjab, on 6 November. Railway staff evacuated passengers and isolated the affected coaches. Officials reported no injuries or casualties; the train was travelling from Amritsar towards New Jalpaiguri in West Bengal.",
+      "source": "IANS via Telangana Today, 2026-11-07",
+      "url": "https://telanganatoday.com/train-enroute-to-bengal-catches-fire-in-punjab-all-passengers-escape-unhurt"
     }
   ],
   "quiz": [
     {
-      "q": "On what date are the final electoral rolls scheduled to be published under the latest ECI Special Summary Revision?",
-      "a": "21 January 2027."
+      "q": "Which institute's researchers developed the agricultural monitoring website cited in the Telangana soil-moisture report?",
+      "a": "IIT Bombay."
     },
     {
-      "q": "Which indigenously developed quasi-ballistic missile did DRDO successfully flight-test on 5 November?",
-      "a": "Pralay."
+      "q": "What is the revised monthly fare for Telangana's combined Metro–RTC pass from 8 November?",
+      "a": "₹4,000."
     },
     {
-      "q": "How many critical and strategic mineral blocks are being offered in the ninth auction tranche?",
-      "a": "20 blocks."
+      "q": "How many unemployed young people is the NIT Warangal PMKVY project expected to train?",
+      "a": "About 1,200."
     },
     {
-      "q": "How many Offline Verification Seeking Entities has UIDAI onboarded since the Aadhaar App rollout?",
-      "a": "300 entities."
+      "q": "How many Test wickets did Mohammed Shami take in 64 matches?",
+      "a": "229 wickets."
     },
     {
-      "q": "What was the final score when India defeated Pakistan in the SAFF Championship 2026 opener?",
-      "a": "India won 3–2."
-    },
-    {
-      "q": "How much did foreign investors buy in Indian shares on Thursday, according to Reuters?",
-      "a": "A net US$1.6 billion."
+      "q": "How many coaches of the Karmabhoomi Express were affected by the fire in Punjab?",
+      "a": "Four coaches."
     }
   ]
 }
