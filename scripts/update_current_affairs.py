@@ -26,6 +26,8 @@ QUERIES = [
     ("Education", f"India education schools exams policy news when:7d"),
     ("Health", f"India health research public health latest news when:7d"),
     ("Environment", f"India environment weather climate latest news when:7d"),
+    ("Telangana", f"Telangana government agriculture transport education news when:7d"),
+    ("India", f"India national headlines railway ministry policy education when:7d"),
 ]
 
 def clean(s):
@@ -241,10 +243,33 @@ def build_quiz(item):
             "a": clean(percentage.group(0))
         }
 
+    word_count = re.search(
+        r"\b(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|"
+        r"thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty)\s+"
+        r"(districts?|coaches?|schools?|students?|people|teams?|runs?|wickets?|"
+        r"states?|countries|athletes|participants|jobs|deaths|injuries|hours?|"
+        r"days?|months?|years?|passengers|villages?|families|workers)\b",
+        combined, re.I
+    )
+    if word_count:
+        number_words = {
+            "one":"1", "two":"2", "three":"3", "four":"4", "five":"5",
+            "six":"6", "seven":"7", "eight":"8", "nine":"9", "ten":"10",
+            "eleven":"11", "twelve":"12", "thirteen":"13", "fourteen":"14",
+            "fifteen":"15", "sixteen":"16", "seventeen":"17", "eighteen":"18",
+            "nineteen":"19", "twenty":"20"
+        }
+        amount_word = number_words[word_count.group(1).casefold()]
+        unit = word_count.group(2).lower()
+        return {
+            "q": f"How many {unit} were mentioned in the report?",
+            "a": f"{amount_word} {unit}"
+        }
+
     count = re.search(
         r"\b(\d[\d,]*(?:\.\d+)?)\s+"
         r"(districts?|schools?|students?|people|teams?|runs?|wickets?|states?|countries|"
-        r"athletes|participants|jobs|deaths|injuries|hours?|days?|months?|years?|"
+        r"athletes|participants|jobs|youth|coaches?|deaths|injuries|hours?|days?|months?|years?|"
         r"gigawatts?|kilometres?|kilometers?|villages?|families|workers|projects|companies)\b",
         combined, re.I
     )
@@ -362,14 +387,14 @@ def rss_items(query):
 used_titles = set()
 used_title_topics = []
 # Avoid repeating recent stories and near-duplicate coverage, but do not permanently
-# exhaust the news feed. A 7-day rolling window preserves freshness.
+# exhaust the news feed. A 3-day rolling window balances freshness and variety.
 for archive in HISTORY_DIR.glob("*.json"):
     # Do not treat today's invalid archive as a prior story when regenerating it.
     if archive.stem == date_str:
         continue
     try:
         archive_date = datetime.strptime(archive.stem, "%Y-%m-%d").date()
-        if (now.date() - archive_date).days > 7:
+        if (now.date() - archive_date).days > 3:
             continue
         old = json.loads(archive.read_text(encoding="utf-8"))
         for item in old.get("items", []):
@@ -381,25 +406,43 @@ for archive in HISTORY_DIR.glob("*.json"):
 
 all_items = []
 seen_today = set()
+feed_counts = []
 for category, query in QUERIES:
     try:
-        for x in rss_items(query):
+        fetched = rss_items(query)
+        feed_counts.append((category, len(fetched)))
+        for x in fetched:
             x["category"] = category
             key = norm_title(x["title"])
             if key and key not in used_titles and key not in seen_today:
                 seen_today.add(key)
                 all_items.append(x)
     except Exception as e:
+        feed_counts.append((category, 0))
         print(f"Feed failed: {category}: {e}")
+print(f"Current Affairs RSS results by category: {feed_counts}")
 
-# Select only stories that can support a factual quiz question. This avoids
-# publishing a story set whose quiz is forced to fall back to headline-identification.
+# Select only stories that can support a factual quiz question. RSS summaries are
+# often too short for fact extraction even when they pass the length check, so
+# enrich a limited number of the newest candidates from their publisher pages.
 all_items.sort(key=lambda x: x["published"], reverse=True)
 quiz_candidates = []
+summary_enrichments = 0
 for candidate in all_items:
     question = build_quiz(candidate)
+    if question is None and summary_enrichments < 18:
+        summary_enrichments += 1
+        enriched = fetch_article_summary(candidate["link"], candidate["title"])
+        if enriched:
+            candidate["description"] = enriched
+            question = build_quiz(candidate)
     if question is not None:
         quiz_candidates.append((candidate, question))
+print(
+    f"Current Affairs feed diagnostics: {len(all_items)} unique recent stories, "
+    f"{len(quiz_candidates)} factual quiz candidates after {summary_enrichments} "
+    "publisher-summary enrichment attempts."
+)
 
 selected = []
 category_counts = {}
