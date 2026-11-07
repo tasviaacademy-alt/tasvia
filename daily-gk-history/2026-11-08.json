@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-08",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-human-lungs",
+      "category": "Human Biology",
+      "q": "Which organs help humans breathe?",
+      "a": "The lungs.",
+      "options": [
+        "The lungs.",
+        "The pancreas.",
+        "The stomach.",
+        "The kidneys."
+      ]
+    },
+    {
+      "id": "static-india-parliament-lower-house",
+      "category": "Indian Polity",
+      "q": "Which is the lower house of the Parliament of India?",
+      "a": "Lok Sabha.",
+      "options": [
+        "Rajya Sabha.",
+        "Vidhan Parishad.",
+        "Supreme Court.",
+        "Lok Sabha."
+      ]
+    },
+    {
+      "id": "static-computer-keyboard",
+      "category": "Computer Basics",
+      "q": "Which device is commonly used to type text into a computer?",
+      "a": "Keyboard.",
+      "options": [
+        "Keyboard.",
+        "Printer.",
+        "Monitor.",
+        "Speaker."
+      ]
+    },
+    {
+      "id": "static-biodiversity",
+      "category": "Environment",
+      "q": "What does biodiversity mean?",
+      "a": "The variety of living organisms in an area or on Earth.",
+      "options": [
+        "The movement of water through the atmosphere.",
+        "The amount of rainfall in a year.",
+        "The variety of living organisms in an area or on Earth.",
+        "The number of buildings in a city."
+      ]
+    },
+    {
+      "id": "static-india-smallest-state",
+      "category": "Indian Geography",
+      "q": "Which is India's smallest state by area?",
+      "a": "Goa.",
+      "options": [
+        "Goa.",
+        "Sikkim.",
+        "Tripura.",
+        "Manipur."
+      ]
+    }
+  ]
+}

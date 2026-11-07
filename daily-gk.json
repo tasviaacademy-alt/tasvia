@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-11-07",
+  "date": "2026-11-08",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-literature-mahabharata",
-      "category": "Literature & Culture",
-      "q": "Who is traditionally credited with composing the Mahabharata?",
-      "a": "Vyasa.",
+      "id": "static-human-lungs",
+      "category": "Human Biology",
+      "q": "Which organs help humans breathe?",
+      "a": "The lungs.",
       "options": [
-        "Tulsidas.",
-        "Kalidasa.",
-        "Vyasa.",
-        "Valmiki."
+        "The lungs.",
+        "The pancreas.",
+        "The stomach.",
+        "The kidneys."
       ]
     },
     {
-      "id": "static-maths-perimeter-square",
-      "category": "Mathematics",
-      "q": "What is the perimeter of a square with each side 5 cm?",
-      "a": "20 cm.",
+      "id": "static-india-parliament-lower-house",
+      "category": "Indian Polity",
+      "q": "Which is the lower house of the Parliament of India?",
+      "a": "Lok Sabha.",
       "options": [
-        "25 cm.",
-        "10 cm.",
-        "20 cm.",
-        "15 cm."
+        "Rajya Sabha.",
+        "Vidhan Parishad.",
+        "Supreme Court.",
+        "Lok Sabha."
       ]
     },
     {
-      "id": "static-gk-temperature-instrument",
-      "category": "Science",
-      "q": "Which instrument is used to measure temperature?",
-      "a": "A thermometer.",
-      "options": [
-        "A thermometer.",
-        "A compass.",
-        "A barometer.",
-        "A telescope."
-      ]
-    },
-    {
-      "id": "static-computer-cpu",
+      "id": "static-computer-keyboard",
       "category": "Computer Basics",
-      "q": "What does CPU stand for?",
-      "a": "Central Processing Unit.",
+      "q": "Which device is commonly used to type text into a computer?",
+      "a": "Keyboard.",
       "options": [
-        "Central Processing Unit.",
-        "Graphics Processing Unit.",
-        "Random Access Memory.",
-        "Arithmetic Logic Unit."
+        "Keyboard.",
+        "Printer.",
+        "Monitor.",
+        "Speaker."
       ]
     },
     {
-      "id": "static-gk-vitamin-sunlight",
-      "category": "Health & Science",
-      "q": "Which vitamin can the human body make when skin is exposed to sunlight?",
-      "a": "Vitamin D.",
+      "id": "static-biodiversity",
+      "category": "Environment",
+      "q": "What does biodiversity mean?",
+      "a": "The variety of living organisms in an area or on Earth.",
       "options": [
-        "Vitamin C.",
-        "Vitamin B12.",
-        "Vitamin D.",
-        "Vitamin A."
+        "The movement of water through the atmosphere.",
+        "The amount of rainfall in a year.",
+        "The variety of living organisms in an area or on Earth.",
+        "The number of buildings in a city."
+      ]
+    },
+    {
+      "id": "static-india-smallest-state",
+      "category": "Indian Geography",
+      "q": "Which is India's smallest state by area?",
+      "a": "Goa.",
+      "options": [
+        "Goa.",
+        "Sikkim.",
+        "Tripura.",
+        "Manipur."
       ]
     }
   ]
