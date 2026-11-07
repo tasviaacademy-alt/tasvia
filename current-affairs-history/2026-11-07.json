@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-07",
+  "month": "November 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "Environment",
+      "icon": "🌱",
+      "title": "Thirteen Telangana districts face exceptional agricultural drought, IIT Bombay data shows",
+      "text": "An agricultural monitoring website developed by researchers at IIT Bombay shows that 13 Telangana districts had exceptionally low soil moisture during the week of November 2–8. Nizamabad recorded an anomaly of −1.972, while Kamareddy recorded −2.096. The figures compare soil moisture with the average for the same period over the previous 10 years; they indicate dry conditions but do not by themselves establish crop losses.",
+      "source": "Hyderabad Mail, 2026-11-07",
+      "url": "https://hyderabadmail.com/telangana-13-districts-exceptional-agricultural-drought-iit-bombay-data/"
+    },
+    {
+      "category": "Telangana",
+      "icon": "🚌",
+      "title": "Telangana reduces Metro–RTC monthly combined pass fare to ₹4,000",
+      "text": "Telangana has reduced the combined Metro–RTC monthly pass from ₹8,500 to ₹4,000, with the revised fares taking effect on 8 November. The new monthly pass includes up to 50 single Metro trips and unlimited RTC bus travel. The daily pass has also been cut from ₹400 to ₹275, comprising ₹200 for Metro and ₹75 for RTC.",
+      "source": "Telangana Today, 2026-11-07",
+      "url": "https://telanganatoday.com/diwali-gift-for-commuters-metro-rtc-monthly-pass-fare-reduced-by-rs-4500"
+    },
+    {
+      "category": "Education & Technology",
+      "icon": "🎓",
+      "title": "NIT Warangal receives ₹4-crore PMKVY project to train 1,200 youth",
+      "text": "NIT Warangal received a ₹4-crore project under the Pradhan Mantri Kaushal Vikas Yojana from the Union Ministry of Skill Development and Entrepreneurship. The programme will train about 1,200 unemployed young people in artificial intelligence, machine learning, web design and full-stack development, with the target of reaching beneficiaries by March 2027.",
+      "source": "Telangana Today, 2026-11-07",
+      "url": "https://telanganatoday.com/nit-warangal-gets-rs-4-crore-pmkvy-project-to-train-1200-youth-in-emerging-technologies"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏏",
+      "title": "Mohammed Shami retires from Test cricket after a 13-year career",
+      "text": "India fast bowler Mohammed Shami announced his retirement from Test cricket on 6 November after a 13-year international red-ball career. He finished with 229 wickets in 64 Tests, including six five-wicket hauls. Shami said he intends to continue playing white-ball cricket and may play domestic four-day matches when fit.",
+      "source": "PTI via Telangana Today, 2026-11-07",
+      "url": "https://telanganatoday.com/mohammed-shami-announces-test-retirement-ends-13-year-red-ball-journey"
+    },
+    {
+      "category": "India",
+      "icon": "🚆",
+      "title": "Four coaches of Karmabhoomi Express catch fire in Punjab; passengers safe",
+      "text": "Four coaches of the Amritsar–New Jalpaiguri Karmabhoomi Express caught fire near Sarai Banjara in Patiala district, Punjab, on 6 November. Railway staff evacuated passengers and isolated the affected coaches. Officials reported no injuries or casualties; the train was travelling from Amritsar towards New Jalpaiguri in West Bengal.",
+      "source": "IANS via Telangana Today, 2026-11-07",
+      "url": "https://telanganatoday.com/train-enroute-to-bengal-catches-fire-in-punjab-all-passengers-escape-unhurt"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "Which institute's researchers developed the agricultural monitoring website cited in the Telangana soil-moisture report?",
+      "a": "IIT Bombay."
+    },
+    {
+      "q": "What is the revised monthly fare for Telangana's combined Metro–RTC pass from 8 November?",
+      "a": "₹4,000."
+    },
+    {
+      "q": "How many unemployed young people is the NIT Warangal PMKVY project expected to train?",
+      "a": "About 1,200."
+    },
+    {
+      "q": "How many Test wickets did Mohammed Shami take in 64 matches?",
+      "a": "229 wickets."
+    },
+    {
+      "q": "How many coaches of the Karmabhoomi Express were affected by the fire in Punjab?",
+      "a": "Four coaches."
+    }
+  ]
+}
