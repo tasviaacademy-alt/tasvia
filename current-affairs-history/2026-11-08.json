@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-08",
+  "month": "November 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "India take 2–0 lead over New Zealand after four-run DLS win",
+      "text": "India defeated New Zealand by four runs under the Duckworth–Lewis–Stern method in a rain-affected second ODI in Wellington. New Zealand were all out for 134 in 41 overs, and India were 113 for 7 after 26 overs when rain stopped play. The result gave India a 2–0 lead in the five-match series.",
+      "source": "Reuters, published by Dawn, 2026-11-08",
+      "url": "https://www.dawn.com/news/2042951/india-beat-new-zealand-via-dls-after-rain-hit-pace-battle"
+    },
+    {
+      "category": "Telangana",
+      "icon": "🏗️",
+      "title": "Telangana announces more than ₹9,000 crore of projects during Kodangal tour",
+      "text": "Chief Minister A. Revanth Reddy's three-day Kodangal visit from 7 to 9 November includes development projects worth more than ₹9,000 crore. On 8 November, the programme includes foundation stones for Radial Road-2, the second phase of the Mahbubnagar–Narayanpet–Kodangal lift-irrigation scheme and more than 200 BT roads. An ₹81-crore palm-oil factory is also planned in the Lagacherla industrial corridor.",
+      "source": "The Times of India, 2026-11-07",
+      "url": "https://timesofindia.indiatimes.com/city/hyderabad/revanth-to-launch-9000cr-projects-during-3-day-kodangal-tour/articleshow/135619063.cms"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "Muhurat Trading 2026 scheduled for Diwali afternoon",
+      "text": "The NSE, BSE and MCX are holding special Muhurat Trading sessions on Sunday, 8 November, for Diwali Laxmi Pujan and the start of Samvat 2083. The main equity session on NSE and BSE runs from 2:20 pm to 3:30 pm IST. Equity trades from the session are scheduled for settlement on 9 November under the T+1 cycle.",
+      "source": "Moneycontrol, 2026-11-08",
+      "url": "https://www.moneycontrol.com/news/business/markets/muhurat-trading-2026-check-timings-settlement-rules-market-schedule-for-nse-bse-mcx-14074656.html/amp"
+    },
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Lal Krishna Advani enters his 100th year on 8 November",
+      "text": "Former Deputy Prime Minister Lal Krishna Advani entered his 100th year on 8 November 2026. He was born on 8 November 1927, and his birthday coincides with Diwali this year. The occasion also falls in a year marking 75 years since the founding of the Jana Sangh and the 125th birth anniversary of Dr. Syama Prasad Mookerjee.",
+      "source": "The Times of India, 2026-11-08",
+      "url": "https://timesofindia.indiatimes.com/india/bharat-ratna-lk-advani-ji-at-100/articleshow/135639827.cms"
+    },
+    {
+      "category": "Environment",
+      "icon": "🌦️",
+      "title": "IMD forecasts scattered rain in Telangana and several southern states",
+      "text": "The India Meteorological Department forecast isolated to scattered rainfall in Telangana on 8 November, with thunderstorms and strong surface winds possible during the ongoing weather spell. The forecast also covered parts of Andhra Pradesh, Tamil Nadu, Kerala and Karnataka. Kerala and Mahe were expected to receive fairly widespread rainfall, with isolated heavy rain possible in parts of Kerala and Tamil Nadu.",
+      "source": "The Times of India, 2026-11-07",
+      "url": "https://timesofindia.indiatimes.com/city/delhi/weather-tomorrow-imd-issues-rain-alert-for-tamil-nadu-kerala-andhra-pradesh-delhi-noida-likely-to-remain-dry-on-diwali/articleshow/135632905.cms"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "By how many runs did India defeat New Zealand in the rain-affected second ODI?",
+      "a": "Four runs (DLS method)"
+    },
+    {
+      "q": "What is the approximate value of the projects planned during the Kodangal visit?",
+      "a": "More than ₹9,000 crore"
+    },
+    {
+      "q": "At what time does the main NSE and BSE Muhurat equity session begin on 8 November 2026?",
+      "a": "2:20 pm IST"
+    },
+    {
+      "q": "Which former Deputy Prime Minister entered his 100th year on 8 November 2026?",
+      "a": "Lal Krishna Advani"
+    },
+    {
+      "q": "Which agency issued the rainfall forecast mentioned in the weather report?",
+      "a": "India Meteorological Department (IMD)"
+    }
+  ]
+}
