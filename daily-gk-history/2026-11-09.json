@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-09",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-gk-human-heart",
+      "category": "Human Body",
+      "q": "How many chambers does the human heart have?",
+      "a": "Four.",
+      "options": [
+        "Five.",
+        "Three.",
+        "Two.",
+        "Four."
+      ]
+    },
+    {
+      "id": "static-national-anthem",
+      "category": "Indian Culture",
+      "q": "Who wrote the Indian national anthem, Jana Gana Mana?",
+      "a": "Rabindranath Tagore.",
+      "options": [
+        "Sarojini Naidu.",
+        "Rabindranath Tagore.",
+        "Subhas Chandra Bose.",
+        "Bankim Chandra Chattopadhyay."
+      ]
+    },
+    {
+      "id": "static-national-animal",
+      "category": "National Symbols",
+      "q": "What is the national animal of India?",
+      "a": "The Bengal tiger.",
+      "options": [
+        "The Bengal tiger.",
+        "The Indian elephant.",
+        "The snow leopard.",
+        "The Asiatic lion."
+      ]
+    },
+    {
+      "id": "static-india-constitution-day",
+      "category": "Indian Polity",
+      "q": "When is Constitution Day observed in India?",
+      "a": "26 November.",
+      "options": [
+        "1 May.",
+        "15 August.",
+        "26 January.",
+        "26 November."
+      ]
+    },
+    {
+      "id": "static-india-capital",
+      "category": "Indian General Knowledge",
+      "q": "What is the capital of India?",
+      "a": "New Delhi.",
+      "options": [
+        "Chennai",
+        "Kolkata",
+        "New Delhi.",
+        "Mumbai"
+      ]
+    }
+  ]
+}
