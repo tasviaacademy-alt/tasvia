@@ -1263,7 +1263,7 @@ async function migrateAssignedHomeworkToParentViews(){
     for(const [id,raw] of entries){
       const st=Object.assign({id},raw||{});
       const code=String(st.pcode||"").trim().toUpperCase();
-      if(!/^[A-Z0-9]{8,20}$/.test(code))continue;
+      if(!/^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(code))continue;
       const rows=homeworkListForStudent(st);
       await db.doc("parentView/"+code).set({
         hw:rows,
@@ -1332,7 +1332,7 @@ async function syncPV(){
         S.students[id]=Object.assign({},S.students[id]||{},studentSnap.data()||{});
         let code=String(st.pcode||"").trim().toUpperCase();
         if(!active({id,...st}))continue;
-        if(!/^[A-Z0-9]{8,20}$/.test(code)||usedCodes.has(code)){
+        if(!/^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(code)||usedCodes.has(code)){
           do{code=newCode()}while(usedCodes.has(code));
           S.students[id]=Object.assign({},st,{pcode:code});
           await db.doc("students/"+id).set({pcode:code},{merge:true});
@@ -2468,7 +2468,7 @@ document.addEventListener("submit",e=>{
           const st=Object.assign({id:sid},fresh.data()||{});
           S.students[sid]=Object.assign({},S.students[sid]||{},st);
           const code=String(st.pcode||"").trim().toUpperCase();
-          if(!/^[A-Z0-9]{8,20}$/.test(code))throw new Error("Parent link code missing");
+          if(!/^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(code))throw new Error("Parent link code missing");
           const rows=homeworkListForStudent(st);
           await db.doc("parentView/"+code).set({
             hw:rows,
