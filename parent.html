@@ -891,24 +891,27 @@ document.addEventListener("DOMContentLoaded",function(){
   badge.innerHTML='<span class="tf-icon" aria-hidden="true">'+chosen.icon+'</span><span>TASVIA celebrates '+chosen.name+'</span><button class="tf-close" aria-label="Close festival theme">×</button>';
   badge.className='tasvia-festival-notice';
   function placeParentBadge(){
-   var welcomeCard=document.querySelector('.welcome-card');
-   if(welcomeCard){
-    var logo=welcomeCard.querySelector('.welcome-logo-wrap');
-    welcomeCard.insertBefore(badge,logo||welcomeCard.firstChild);
-    badge.classList.add('show');
-    return true;
-   }
-   return false;
-  }
-  if(!placeParentBadge()){
-   document.body.appendChild(badge);
+   var welcomeCard=document.querySelector('#welcomeBackdrop .welcome-card')||document.querySelector('.welcome-card');
+   if(!welcomeCard || !document.body.contains(welcomeCard)) return false;
+   var logo=welcomeCard.querySelector('.welcome-logo-wrap');
+   if(badge.parentElement!==welcomeCard) welcomeCard.insertBefore(badge,logo||welcomeCard.firstChild);
    badge.classList.add('show');
-   var observer=new MutationObserver(function(){
-    if(placeParentBadge())observer.disconnect();
-   });
-   observer.observe(document.body,{childList:true,subtree:true});
-   setTimeout(function(){observer.disconnect()},30000);
+   return true;
   }
+  var observer=null,retryTimer=null;
+  function retryPlacement(){
+   if(placeParentBadge()){
+    if(observer)observer.disconnect();
+    if(retryTimer)clearInterval(retryTimer);
+   }
+  }
+  retryPlacement();
+  if(!badge.isConnected)document.body.appendChild(badge);
+  if(!badge.classList.contains('show'))badge.classList.add('show');
+  observer=new MutationObserver(retryPlacement);
+  observer.observe(document.documentElement,{childList:true,subtree:true});
+  retryTimer=setInterval(retryPlacement,250);
+  setTimeout(function(){if(observer)observer.disconnect();if(retryTimer)clearInterval(retryTimer);},60000);
   badge.querySelector('button').addEventListener('click',function(){badge.remove();});
  }catch(e){console.warn('TASVIA festival theme skipped:',e);}
 });
