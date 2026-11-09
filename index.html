@@ -2146,7 +2146,7 @@ body.tasvia-festival-active .card,body.tasvia-festival-active .stat-card,body.ta
 @media(max-width:600px){#tasvia-festival-badge{font-size:11px;padding:7px 10px;margin:8px auto}}
 </style>
 <script id="tasvia-festival-theme-engine">
-(function(){
+document.addEventListener('DOMContentLoaded',function(){
  try{
   var today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kolkata',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
   var fixed=[
@@ -2195,7 +2195,7 @@ body.tasvia-festival-active .card,body.tasvia-festival-active .stat-card,body.ta
   var staffHeader=document.querySelector('body > header');if(staffHeader){document.body.insertBefore(badge,staffHeader);}else{document.body.insertBefore(badge,document.body.firstChild);}badge.classList.add('show');
   badge.querySelector('button').addEventListener('click',function(){badge.remove();});
  }catch(e){console.warn('TASVIA festival theme skipped:',e);}
-})();
+});
 </script>
 <!-- /TASVIA FESTIVAL THEME ENGINE -->
 
