@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-11-09-v126-early-magic-link-capture">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-11-09-v127-legacy-link-compatible-capture">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -16,7 +16,7 @@
     ];
     for(var i=0;i<candidates.length;i++){
       var code=String(candidates[i]||"").trim().toUpperCase();
-      if(/^[A-Z0-9]{8,20}$/.test(code)){
+      if(/^[A-Z0-9][A-Z0-9._-]{2,63}$/.test(code)){
         window.__tasviaPendingParentCode=code;
         try{
           sessionStorage.setItem("tasvia-parent-code",code);
