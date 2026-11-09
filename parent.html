@@ -3013,5 +3013,54 @@ button.action-summary:focus-visible{
 </style>
 
 
+
+<!-- TASVIA parent festival notice: show only inside the authenticated dashboard -->
+<style id="tasvia-parent-festival-dashboard-only">
+#tasvia-festival-badge,
+#tasvia-festival-badge.tasvia-festival-notice,
+#tasvia-festival-badge.show{
+  position:relative!important;inset:auto!important;top:auto!important;right:auto!important;
+  left:auto!important;bottom:auto!important;transform:none!important;z-index:3!important;
+  width:max-content!important;max-width:calc(100% - 28px)!important;
+  box-sizing:border-box!important;margin:12px auto 16px!important;
+  padding:9px 14px!important;border:1px solid #D4AF37!important;border-radius:999px!important;
+  background:#fff8e7!important;color:#102858!important;
+  box-shadow:0 3px 12px rgba(11,36,85,.12)!important;
+  font:700 12px/1.35 system-ui,sans-serif!important;text-align:center!important;
+}
+#tasvia-festival-badge{display:none!important}
+#tasvia-festival-badge.show{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important}
+#tasvia-festival-badge .tf-close{color:#102858!important;min-width:24px;min-height:24px}
+</style>
+<script id="tasvia-parent-festival-dashboard-only-js">
+(function(){
+ function syncFestivalNotice(){
+  var badge=document.getElementById('tasvia-festival-badge');
+  var welcome=document.getElementById('welcomeBackdrop');
+  var main=document.getElementById('main');
+  if(!badge||!welcome||!main)return;
+  var loggedIn=welcome.classList.contains('hide') ||
+    getComputedStyle(welcome).display==='none' ||
+    welcome.getAttribute('aria-hidden')==='true';
+  if(!loggedIn){
+   badge.style.setProperty('display','none','important');
+   return;
+  }
+  if(badge.parentElement!==main) main.insertBefore(badge,main.firstChild);
+  badge.classList.add('show');
+  badge.style.removeProperty('display');
+ }
+ function start(){
+  syncFestivalNotice();
+  var observer=new MutationObserver(syncFestivalNotice);
+  observer.observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class','style','aria-hidden']});
+  setTimeout(function(){observer.disconnect()},120000);
+  setInterval(syncFestivalNotice,1000);
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});
+ else start();
+})();
+</script>
+
 </body>
 </html>
