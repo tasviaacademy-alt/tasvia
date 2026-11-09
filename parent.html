@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-11-09-v127-legacy-link-compatible-capture">
+<head><meta id="tasviaPortalVersion" name="tasvia-parent-version" content="2026-11-09-v128-firestore-api-key-parent-link">
 <!-- Parent portal Pages refresh: 2026-10-07 learning-content reliability fix -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -944,16 +944,36 @@ header::before{animation:tasviaGlowDrift 8s ease-in-out infinite}
     }
     return v;
   }
+  var parentFirebaseConfigPromise=null;
+  function ensureParentFirebaseConfig(){
+    if(window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey)return Promise.resolve(window.FIREBASE_CONFIG);
+    if(parentFirebaseConfigPromise)return parentFirebaseConfigPromise;
+    parentFirebaseConfigPromise=new Promise(function(resolve,reject){
+      var script=document.createElement("script");
+      script.src="/firebase-config.js";
+      script.async=true;
+      script.onload=function(){
+        if(window.FIREBASE_CONFIG&&window.FIREBASE_CONFIG.apiKey)resolve(window.FIREBASE_CONFIG);
+        else reject(new Error("Parent portal Firebase configuration is unavailable."));
+      };
+      script.onerror=function(){reject(new Error("Could not load Parent Portal configuration. Please reload the page."));};
+      document.head.appendChild(script);
+    });
+    return parentFirebaseConfigPromise;
+  }
   function read(code){
     var controller=window.AbortController?new AbortController():null;
-    var timer=controller?setTimeout(function(){try{controller.abort()}catch(_){}},15000):null;
-    return fetch(FIRESTORE_ROOT+encodeURIComponent(code),{
-      cache:"no-store",mode:"cors",credentials:"omit",
-      signal:controller?controller.signal:undefined
+    var timer=controller?setTimeout(function(){try{controller.abort()}catch(_){}},20000):null;
+    return ensureParentFirebaseConfig().then(function(config){
+      var endpoint=FIRESTORE_ROOT+encodeURIComponent(code)+"?key="+encodeURIComponent(config.apiKey);
+      return fetch(endpoint,{
+        cache:"no-store",mode:"cors",credentials:"omit",
+        signal:controller?controller.signal:undefined
+      });
     }).then(function(r){
       if(timer)clearTimeout(timer);
       if(r.status===404) return null;
-      if(r.status===403) throw new Error("Parent portal access is blocked by Firestore rules.");
+      if(r.status===403) throw new Error("Parent link access denied by Firestore. Please ask TASVIA staff to check this student's existing parent link.");
       if(!r.ok) throw new Error("Parent portal server error (HTTP "+r.status+").");
       return r.json();
     }).then(function(d){
