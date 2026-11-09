@@ -30,6 +30,21 @@ QUERIES = [
     ("India", f"India national headlines railway ministry policy education when:7d"),
 ]
 
+# Broader backup searches are used only when the primary searches return too few
+# quality stories. The parser still enforces the same 72-hour publication window.
+FALLBACK_QUERIES = [
+    ("India", "India news when:14d"),
+    ("Government", "India government news when:14d"),
+    ("World", "world news when:14d"),
+    ("Sports", "India sports news when:14d"),
+    ("Science & Technology", "India technology research news when:14d"),
+    ("Economy", "India business economy news when:14d"),
+    ("Education", "India education news when:14d"),
+    ("Health", "India health news when:14d"),
+    ("Environment", "India weather environment news when:14d"),
+    ("Telangana", "Telangana news when:14d"),
+]
+
 def clean(s):
     s = html.unescape(re.sub(r"<[^>]+>", " ", s or ""))
     return re.sub(r"\s+", " ", s).strip()
@@ -315,11 +330,14 @@ def parse_pub_date(value):
         return None
     try:
         d = email.utils.parsedate_to_datetime(value)
-        if d.tzinfo is None:
-            d = d.replace(tzinfo=timezone.utc)
-        return d.astimezone(IST)
-    except Exception:
-        return None
+    except (TypeError, ValueError, OverflowError):
+        try:
+            d = datetime.fromisoformat(str(value).strip().replace("Z", "+00:00"))
+        except (TypeError, ValueError, OverflowError):
+            return None
+    if d.tzinfo is None:
+        d = d.replace(tzinfo=timezone.utc)
+    return d.astimezone(IST)
 
 def open_with_retry(request, timeout=15, attempts=3, label="news request"):
     """Retry transient upstream failures without weakening the content checks."""
@@ -350,24 +368,50 @@ def rss_items(query):
     url = "https://news.google.com/rss/search?q=" + urllib.parse.quote(query) + "&hl=en-IN&gl=IN&ceid=IN:en"
     req = urllib.request.Request(
         url,
-        headers={"User-Agent": "Mozilla/5.0 (compatible; TASVIA-Current-Affairs/2.2)"}
+        headers={"User-Agent": "Mozilla/5.0 (compatible; TASVIA-Current-Affairs/2.3)"}
     )
     with open_with_retry(req, timeout=15, attempts=3, label=f"Google News RSS: {query[:45]}") as r:
         root = ET.fromstring(r.read())
+
+    atom_ns = "{http://www.w3.org/2005/Atom}"
+    entries = root.findall("./channel/item")
+    atom_feed = False
+    if not entries:
+        entries = root.findall(f"{atom_ns}entry")
+        atom_feed = True
+
+    raw_count = len(entries)
+    dated_count = 0
+    fresh_count = 0
     out = []
-    for item in root.findall("./channel/item"):
-        title = clean(item.findtext("title"))
-        desc = clean(item.findtext("description"))
-        link = item.findtext("link") or ""
-        source = clean(item.find("source").text if item.find("source") is not None else "News source")
-        published = parse_pub_date(item.findtext("pubDate"))
+    for item in entries:
+        if atom_feed:
+            title = clean(item.findtext(f"{atom_ns}title"))
+            desc = clean(item.findtext(f"{atom_ns}summary") or item.findtext(f"{atom_ns}content"))
+            link_node = item.find(f"{atom_ns}link")
+            link = (link_node.get("href", "") if link_node is not None else "")
+            source = clean(item.findtext(f"{atom_ns}author/{atom_ns}name") or "News source")
+            published = parse_pub_date(
+                item.findtext(f"{atom_ns}published") or item.findtext(f"{atom_ns}updated")
+            )
+        else:
+            title = clean(item.findtext("title"))
+            desc = clean(item.findtext("description"))
+            link = item.findtext("link") or ""
+            source = clean(item.find("source").text if item.find("source") is not None else "News source")
+            published = parse_pub_date(item.findtext("pubDate"))
+
         if not title or not published:
             continue
+        dated_count += 1
+
         # Never publish an article merely because the RSS feed returned it today.
         # Allow up to 72 hours so a delayed feed does not leave the edition stale.
         age = now - published
         if age < timedelta(hours=-1) or age > timedelta(hours=72):
             continue
+        fresh_count += 1
+
         candidate = {
             "title": title,
             "description": desc,
@@ -382,6 +426,12 @@ def rss_items(query):
         if not quality_story(candidate):
             continue
         out.append(candidate)
+
+    print(
+        f"Google News RSS diagnostics for {query[:45]}: "
+        f"{raw_count} entries, {dated_count} dated, {fresh_count} within 72 hours, "
+        f"{len(out)} quality stories."
+    )
     return out
 
 used_titles = set()
@@ -407,19 +457,30 @@ for archive in HISTORY_DIR.glob("*.json"):
 all_items = []
 seen_today = set()
 feed_counts = []
-for category, query in QUERIES:
-    try:
-        fetched = rss_items(query)
-        feed_counts.append((category, len(fetched)))
-        for x in fetched:
-            x["category"] = category
-            key = norm_title(x["title"])
-            if key and key not in used_titles and key not in seen_today:
-                seen_today.add(key)
-                all_items.append(x)
-    except Exception as e:
-        feed_counts.append((category, 0))
-        print(f"Feed failed: {category}: {e}")
+
+def collect_feeds(query_set, label):
+    for category, query in query_set:
+        try:
+            fetched = rss_items(query)
+            feed_counts.append((label, category, len(fetched)))
+            for x in fetched:
+                x["category"] = category
+                key = norm_title(x["title"])
+                if key and key not in used_titles and key not in seen_today:
+                    seen_today.add(key)
+                    all_items.append(x)
+        except Exception as e:
+            feed_counts.append((label, category, 0))
+            print(f"{label.title()} feed failed: {category}: {e}")
+
+collect_feeds(QUERIES, "primary")
+if len(all_items) < 5:
+    print(
+        f"Primary searches returned only {len(all_items)} eligible stories; "
+        "trying broader backup searches while keeping the 72-hour freshness filter."
+    )
+    collect_feeds(FALLBACK_QUERIES, "fallback")
+
 print(f"Current Affairs RSS results by category: {feed_counts}")
 
 # Select only stories that can support a factual quiz question. RSS summaries are
