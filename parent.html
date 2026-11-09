@@ -824,6 +824,23 @@ body.tasvia-festival-active header,body.tasvia-festival-active .topbar,body.tasv
 #tasvia-festival-badge{position:fixed;right:12px;top:10px;z-index:99999;display:none;align-items:center;gap:8px;max-width:min(88vw,390px);padding:8px 13px;border:1px solid var(--tf-accent,#D4AF37);border-radius:999px;background:var(--tf-card,#fff);color:var(--tf-ink,#0B2455);box-shadow:0 5px 20px rgba(11,36,85,.16);font:600 12px/1.25 system-ui,sans-serif;backdrop-filter:blur(10px)}
 #tasvia-festival-badge.show{display:flex}#tasvia-festival-badge .tf-icon{font-size:17px}#tasvia-festival-badge .tf-close{border:0;background:transparent;color:inherit;font-size:16px;line-height:1;padding:0 0 0 4px;cursor:pointer}
 body.tasvia-festival-active .card,body.tasvia-festival-active .stat-card,body.tasvia-festival-active .dashboard-card{border-color:color-mix(in srgb,var(--tf-accent,#D4AF37) 28%,transparent)}
+
+/* Parent portal: keep festival announcement inside welcome card, never floating over content */
+#tasvia-festival-badge{
+ position:relative!important;top:auto!important;right:auto!important;z-index:2!important;
+ display:none;align-items:center;justify-content:center;gap:8px;
+ width:max-content;max-width:100%;margin:0 auto 14px;padding:8px 13px;
+ border:1px solid var(--tf-accent,#D4AF37);border-radius:999px;
+ background:var(--tf-card,#fff);color:var(--tf-ink,#0B2455);
+ box-shadow:0 3px 12px rgba(11,36,85,.10);
+ font:600 12px/1.3 system-ui,sans-serif;text-align:center;
+}
+#tasvia-festival-badge.show{display:flex}
+#tasvia-festival-badge .tf-icon{font-size:17px;flex:0 0 auto}
+#tasvia-festival-badge .tf-close{border:0;background:transparent;color:inherit;font-size:16px;line-height:1;padding:0 0 0 4px;cursor:pointer}
+@media(max-width:600px){
+ #tasvia-festival-badge{font-size:11px;padding:7px 10px;margin-bottom:12px}
+}
 </style>
 <script id="tasvia-festival-theme-engine">
 (function(){
@@ -872,7 +889,10 @@ body.tasvia-festival-active .card,body.tasvia-festival-active .stat-card,body.ta
   document.documentElement.style.setProperty('--tf-glow',chosen.accent+'22');
   var badge=document.createElement('div');badge.id='tasvia-festival-badge';badge.setAttribute('role','status');
   badge.innerHTML='<span class="tf-icon" aria-hidden="true">'+chosen.icon+'</span><span>TASVIA celebrates '+chosen.name+'</span><button class="tf-close" aria-label="Close festival theme">×</button>';
-  document.body.appendChild(badge);badge.classList.add('show');
+  var welcomeCard=document.querySelector('.welcome-card');
+  if(welcomeCard){var logo=welcomeCard.querySelector('.welcome-logo-wrap');welcomeCard.insertBefore(badge,logo||welcomeCard.firstChild);}
+  else{document.body.insertBefore(badge,document.body.firstChild);}
+  badge.classList.add('show');
   badge.querySelector('button').addEventListener('click',function(){badge.remove();});
  }catch(e){console.warn('TASVIA festival theme skipped:',e);}
 })();
