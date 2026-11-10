@@ -1,69 +1,69 @@
 {
-  "date": "2026-11-10",
+  "date": "2026-11-11",
   "month": "November 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
-      "category": "Telangana",
-      "icon": "🌱",
-      "title": "Telangana plans climate conclave alongside its December Global Summit",
-      "text": "Telangana is planning an international climate conclave as part of the Invest Telangana–Global Summit scheduled for December 7–9 at Bharat Future City. Irrigation Minister N. Uttam Kumar Reddy reviewed preparations with officials and said the event should focus on climate resilience, green investment and El Niño preparedness, including water security, agriculture and livelihoods.",
-      "source": "The Times of India, 2026-11-10",
-      "url": "https://timesofindia.indiatimes.com/city/hyderabad/telangana-plans-to-hold-climate-conclave-with-star-speakers-during-global-summit-2026/articleshow/135691489.cms"
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Bihar Cabinet hikes 3% DA for employees, pensioners",
+      "text": "The Cabinet approved the “Bihar Ki Beti Startup Challenge Scheme”, under which, 2,100 female students may be provided benefits beginning from the current financial year",
+      "source": "The Hindu National, 2026-11-11",
+      "url": "https://www.thehindu.com/news/national/bihar/bihar-cabinet-hikes-3-da-for-employees-pensioners/article71687144.ece"
     },
     {
-      "category": "Sports",
-      "icon": "🏅",
-      "title": "Telangana to host Khelo India Youth Games from 11 to 22 December",
-      "text": "The Union Minister for Youth Affairs and Sports announced that Telangana will host the Khelo India Youth Games from 11 to 22 December 2026. The programme includes 27 competitive sports and one demonstration sport; Hyderabad will stage 22 medal sports, while Nizamabad is scheduled to host table tennis.",
-      "source": "Telangana Today, 2026-11-09",
-      "url": "https://telanganatoday.com/telangana-to-host-khelo-india-youth-games-from-december-11-27-sports-on-schedule"
-    },
-    {
-      "category": "Defence",
-      "icon": "⚓",
-      "title": "INS Surat reaches Muscat for the 15th India–Oman naval exercise",
-      "text": "Indian Naval Ship INS Surat arrived in Muscat on 8 November to participate in the 15th edition of the bilateral exercise Naseem Al Bahr 2026. The four-day exercise, scheduled from 8 to 11 November, includes harbour and sea-phase activities and a coordinated patrol with the Royal Navy of Oman.",
-      "source": "IANS Live, 2026-11-09",
-      "url": "https://ianslive.in/ins-surat-reaches-muscat-for-india-oman-joint-naval-exercise--20261109160624"
-    },
-    {
-      "category": "Art & Culture",
-      "icon": "🎨",
-      "title": "Artist Arpita Singh dies in New Delhi at age 89",
-      "text": "Renowned modernist artist Arpita Singh died in New Delhi on 9 November 2026 at the age of 89. She was known for figurative paintings exploring women's lives and social concerns, and received the Padma Bhushan in 2011 and the Lalit Kala Akademi Fellowship in 2014.",
-      "source": "Hindustan Times, 2026-11-09",
-      "url": "https://www.hindustantimes.com/lifestyle/art-culture/acclaimed-contemporary-artist-arpita-singh-89-passes-away-in-new-delhi-101794198108590.html"
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Andhra Pradesh Cabinet clears policy frameworks to attract investments in AI, electronics, renewable energy",
+      "text": "Directorate of Traffic Management and Road Safety to be set up at Mangalagiri; ₹31,387-crore green integrated AI data centre proposed by AM Intelligence at Amanam in Visakhapatnam district cleared",
+      "source": "The Hindu National, 2026-11-11",
+      "url": "https://www.thehindu.com/news/national/andhra-pradesh/andhra-pradesh-cabinet-clears-policy-frameworks-to-attract-investments-in-ai-electronics-renewable-energy/article71686342.ece"
     },
     {
       "category": "Economy",
       "icon": "💹",
-      "title": "Rupee ends six-session rally, closes at 93.9275 per dollar",
-      "text": "The Indian rupee ended a six-session winning streak on 9 November after dollar purchases by state-run banks outweighed recent gains. It had touched a six-month high of 93.69 per US dollar before closing at 93.9275; lower oil prices and foreign equity inflows had supported the currency.",
-      "source": "Reuters, 2026-11-09",
-      "url": "https://www.reuters.com/world/india/indian-rupee-rally-faces-test-ai-jitters-calm-2026-11-09/"
+      "title": "Blackstone to buy about 16% stake in India's IIFL Finance for $535 million",
+      "text": "The issue will also include a 12.64 billion ​rupee ‌investment by existing investors Nirmal Jain and R. Venkataraman, while Anchorage Capital ‌will invest ​another ₹1.5 billion",
+      "source": "The Hindu Business, 2026-11-10",
+      "url": "https://www.thehindu.com/business/Industry/blackstone-to-buy-about-16-stake-in-indias-iifl-finance-for-535-million/article71687312.ece"
+    },
+    {
+      "category": "World",
+      "icon": "🌐",
+      "title": "New Israeli parliament to take aim at Netanyahu as Eisenkot seeks government",
+      "text": "President Isaac Herzog, ceremonially opening the session, called on all sides to work together and avoid a fresh election in a deeply polarised country weary from three years of war.",
+      "source": "The Hindu International, 2026-11-10",
+      "url": "https://www.thehindu.com/news/international/new-israeli-parliament-to-take-aim-at-netanyahu-as-eisenkot-seeks-government/article71687117.ece"
+    },
+    {
+      "category": "Telangana",
+      "icon": "📰",
+      "title": "Banks in Telangana achieved 74% of Kharif loan targets in H1",
+      "text": "Account subscription benefits alongside Premium Stories, Editorials, Opinions and more. Unlock these with Subscription",
+      "source": "The Hindu Telangana, 2026-11-10",
+      "url": "https://www.thehindu.com/news/cities/Hyderabad/banks-in-telangana-achieved-74-of-kharif-loan-targets-in-h1/article71686919.ece"
     }
   ],
   "quiz": [
     {
-      "q": "Which minister reviewed preparations for Telangana's climate conclave during the December Global Summit?",
-      "a": "Irrigation Minister N. Uttam Kumar Reddy"
+      "q": "What percentage was reported in the story “Bihar Cabinet hikes 3% DA for employees, pensioners”?",
+      "a": "3%"
     },
     {
-      "q": "Which sport is scheduled to be held in Nizamabad during the 2026 Khelo India Youth Games?",
-      "a": "Table tennis"
+      "q": "According to the report “Andhra Pradesh Cabinet clears policy frameworks to attract investments in AI, electronics,…”, what monetary figure was mentioned?",
+      "a": "₹31,387"
     },
     {
-      "q": "What is the name of the India–Oman naval exercise in which INS Surat is participating?",
-      "a": "Naseem Al Bahr 2026"
+      "q": "According to the report “Blackstone to buy about 16% stake in India's IIFL Finance for $535 million”, what monetary figure was mentioned?",
+      "a": "$535 million"
     },
     {
-      "q": "In which year was artist Arpita Singh awarded the Padma Bhushan?",
-      "a": "2011"
+      "q": "How many years were mentioned in the report?",
+      "a": "3 years"
     },
     {
-      "q": "At what level did the Indian rupee close against the US dollar on 9 November 2026?",
-      "a": "₹93.9275 per US dollar"
+      "q": "What percentage was reported in the story “Banks in Telangana achieved 74% of Kharif loan targets in H1”?",
+      "a": "74%"
     }
   ]
 }

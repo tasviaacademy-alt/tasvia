@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-11",
+  "month": "November 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Bihar Cabinet hikes 3% DA for employees, pensioners",
+      "text": "The Cabinet approved the “Bihar Ki Beti Startup Challenge Scheme”, under which, 2,100 female students may be provided benefits beginning from the current financial year",
+      "source": "The Hindu National, 2026-11-11",
+      "url": "https://www.thehindu.com/news/national/bihar/bihar-cabinet-hikes-3-da-for-employees-pensioners/article71687144.ece"
+    },
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Andhra Pradesh Cabinet clears policy frameworks to attract investments in AI, electronics, renewable energy",
+      "text": "Directorate of Traffic Management and Road Safety to be set up at Mangalagiri; ₹31,387-crore green integrated AI data centre proposed by AM Intelligence at Amanam in Visakhapatnam district cleared",
+      "source": "The Hindu National, 2026-11-11",
+      "url": "https://www.thehindu.com/news/national/andhra-pradesh/andhra-pradesh-cabinet-clears-policy-frameworks-to-attract-investments-in-ai-electronics-renewable-energy/article71686342.ece"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "Blackstone to buy about 16% stake in India's IIFL Finance for $535 million",
+      "text": "The issue will also include a 12.64 billion ​rupee ‌investment by existing investors Nirmal Jain and R. Venkataraman, while Anchorage Capital ‌will invest ​another ₹1.5 billion",
+      "source": "The Hindu Business, 2026-11-10",
+      "url": "https://www.thehindu.com/business/Industry/blackstone-to-buy-about-16-stake-in-indias-iifl-finance-for-535-million/article71687312.ece"
+    },
+    {
+      "category": "World",
+      "icon": "🌐",
+      "title": "New Israeli parliament to take aim at Netanyahu as Eisenkot seeks government",
+      "text": "President Isaac Herzog, ceremonially opening the session, called on all sides to work together and avoid a fresh election in a deeply polarised country weary from three years of war.",
+      "source": "The Hindu International, 2026-11-10",
+      "url": "https://www.thehindu.com/news/international/new-israeli-parliament-to-take-aim-at-netanyahu-as-eisenkot-seeks-government/article71687117.ece"
+    },
+    {
+      "category": "Telangana",
+      "icon": "📰",
+      "title": "Banks in Telangana achieved 74% of Kharif loan targets in H1",
+      "text": "Account subscription benefits alongside Premium Stories, Editorials, Opinions and more. Unlock these with Subscription",
+      "source": "The Hindu Telangana, 2026-11-10",
+      "url": "https://www.thehindu.com/news/cities/Hyderabad/banks-in-telangana-achieved-74-of-kharif-loan-targets-in-h1/article71686919.ece"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What percentage was reported in the story “Bihar Cabinet hikes 3% DA for employees, pensioners”?",
+      "a": "3%"
+    },
+    {
+      "q": "According to the report “Andhra Pradesh Cabinet clears policy frameworks to attract investments in AI, electronics,…”, what monetary figure was mentioned?",
+      "a": "₹31,387"
+    },
+    {
+      "q": "According to the report “Blackstone to buy about 16% stake in India's IIFL Finance for $535 million”, what monetary figure was mentioned?",
+      "a": "$535 million"
+    },
+    {
+      "q": "How many years were mentioned in the report?",
+      "a": "3 years"
+    },
+    {
+      "q": "What percentage was reported in the story “Banks in Telangana achieved 74% of Kharif loan targets in H1”?",
+      "a": "74%"
+    }
+  ]
+}
