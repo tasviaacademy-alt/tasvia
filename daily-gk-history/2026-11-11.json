@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-11",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-fundamental-rights",
+      "category": "Indian Polity",
+      "q": "Which part of the Indian Constitution lists Fundamental Rights?",
+      "a": "Part III.",
+      "options": [
+        "Part V.",
+        "Part II.",
+        "Part III.",
+        "Part IV."
+      ]
+    },
+    {
+      "id": "static-sports-chess",
+      "category": "Sports",
+      "q": "How many squares are there on a standard chessboard?",
+      "a": "64.",
+      "options": [
+        "48.",
+        "64.",
+        "100.",
+        "32."
+      ]
+    },
+    {
+      "id": "static-national-bird",
+      "category": "National Symbols",
+      "q": "What is the national bird of India?",
+      "a": "The Indian peacock.",
+      "options": [
+        "The Himalayan monal.",
+        "The sarus crane.",
+        "The Indian peacock.",
+        "The Indian parrot."
+      ]
+    },
+    {
+      "id": "static-world-equator",
+      "category": "World Geography",
+      "q": "What is the imaginary line that divides Earth into the Northern and Southern Hemispheres?",
+      "a": "The Equator.",
+      "options": [
+        "The Tropic of Cancer.",
+        "The Prime Meridian.",
+        "The Arctic Circle.",
+        "The Equator."
+      ]
+    },
+    {
+      "id": "static-human-heart",
+      "category": "Human Biology",
+      "q": "Which organ pumps blood around the human body?",
+      "a": "The heart.",
+      "options": [
+        "The liver.",
+        "The kidneys.",
+        "The heart.",
+        "The lungs."
+      ]
+    }
+  ]
+}
