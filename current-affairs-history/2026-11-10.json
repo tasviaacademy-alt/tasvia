@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-10",
+  "month": "November 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "Telangana",
+      "icon": "🌱",
+      "title": "Telangana plans climate conclave alongside its December Global Summit",
+      "text": "Telangana is planning an international climate conclave as part of the Invest Telangana–Global Summit scheduled for December 7–9 at Bharat Future City. Irrigation Minister N. Uttam Kumar Reddy reviewed preparations with officials and said the event should focus on climate resilience, green investment and El Niño preparedness, including water security, agriculture and livelihoods.",
+      "source": "The Times of India, 2026-11-10",
+      "url": "https://timesofindia.indiatimes.com/city/hyderabad/telangana-plans-to-hold-climate-conclave-with-star-speakers-during-global-summit-2026/articleshow/135691489.cms"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏅",
+      "title": "Telangana to host Khelo India Youth Games from 11 to 22 December",
+      "text": "The Union Minister for Youth Affairs and Sports announced that Telangana will host the Khelo India Youth Games from 11 to 22 December 2026. The programme includes 27 competitive sports and one demonstration sport; Hyderabad will stage 22 medal sports, while Nizamabad is scheduled to host table tennis.",
+      "source": "Telangana Today, 2026-11-09",
+      "url": "https://telanganatoday.com/telangana-to-host-khelo-india-youth-games-from-december-11-27-sports-on-schedule"
+    },
+    {
+      "category": "Defence",
+      "icon": "⚓",
+      "title": "INS Surat reaches Muscat for the 15th India–Oman naval exercise",
+      "text": "Indian Naval Ship INS Surat arrived in Muscat on 8 November to participate in the 15th edition of the bilateral exercise Naseem Al Bahr 2026. The four-day exercise, scheduled from 8 to 11 November, includes harbour and sea-phase activities and a coordinated patrol with the Royal Navy of Oman.",
+      "source": "IANS Live, 2026-11-09",
+      "url": "https://ianslive.in/ins-surat-reaches-muscat-for-india-oman-joint-naval-exercise--20261109160624"
+    },
+    {
+      "category": "Art & Culture",
+      "icon": "🎨",
+      "title": "Artist Arpita Singh dies in New Delhi at age 89",
+      "text": "Renowned modernist artist Arpita Singh died in New Delhi on 9 November 2026 at the age of 89. She was known for figurative paintings exploring women's lives and social concerns, and received the Padma Bhushan in 2011 and the Lalit Kala Akademi Fellowship in 2014.",
+      "source": "Hindustan Times, 2026-11-09",
+      "url": "https://www.hindustantimes.com/lifestyle/art-culture/acclaimed-contemporary-artist-arpita-singh-89-passes-away-in-new-delhi-101794198108590.html"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "Rupee ends six-session rally, closes at 93.9275 per dollar",
+      "text": "The Indian rupee ended a six-session winning streak on 9 November after dollar purchases by state-run banks outweighed recent gains. It had touched a six-month high of 93.69 per US dollar before closing at 93.9275; lower oil prices and foreign equity inflows had supported the currency.",
+      "source": "Reuters, 2026-11-09",
+      "url": "https://www.reuters.com/world/india/indian-rupee-rally-faces-test-ai-jitters-calm-2026-11-09/"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "Which minister reviewed preparations for Telangana's climate conclave during the December Global Summit?",
+      "a": "Irrigation Minister N. Uttam Kumar Reddy"
+    },
+    {
+      "q": "Which sport is scheduled to be held in Nizamabad during the 2026 Khelo India Youth Games?",
+      "a": "Table tennis"
+    },
+    {
+      "q": "What is the name of the India–Oman naval exercise in which INS Surat is participating?",
+      "a": "Naseem Al Bahr 2026"
+    },
+    {
+      "q": "In which year was artist Arpita Singh awarded the Padma Bhushan?",
+      "a": "2011"
+    },
+    {
+      "q": "At what level did the Indian rupee close against the US dollar on 9 November 2026?",
+      "a": "₹93.9275 per US dollar"
+    }
+  ]
+}
