@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-10",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "otq-brain-teasers-2310",
+      "category": "brain-teasers",
+      "q": "There is a branch with 10 birds on it. I shot 2 of them and then 1 more. How many birds are left on the branch?",
+      "a": "0",
+      "options": [
+        "1",
+        "2",
+        "0",
+        "3"
+      ]
+    },
+    {
+      "id": "static-telangana-capital",
+      "category": "Indian Geography",
+      "q": "What is the capital of Telangana?",
+      "a": "Hyderabad.",
+      "options": [
+        "Nizamabad.",
+        "Karimnagar.",
+        "Warangal.",
+        "Hyderabad."
+      ]
+    },
+    {
+      "id": "static-telangana-formation",
+      "category": "Telangana GK",
+      "q": "On which date was Telangana formed as a state?",
+      "a": "2 June 2014.",
+      "options": [
+        "15 August 1947.",
+        "1 November 1956.",
+        "2 June 2014.",
+        "26 January 1950."
+      ]
+    },
+    {
+      "id": "static-gk-prime-meridian",
+      "category": "World Geography",
+      "q": "What is the line of longitude at 0 degrees called?",
+      "a": "The Prime Meridian.",
+      "options": [
+        "The International Date Line.",
+        "The Tropic of Cancer.",
+        "The Equator.",
+        "The Prime Meridian."
+      ]
+    },
+    {
+      "id": "static-environment-tree-gas",
+      "category": "Environment",
+      "q": "Which gas do green plants absorb from the air during photosynthesis?",
+      "a": "Carbon dioxide.",
+      "options": [
+        "Nitrogen.",
+        "Carbon dioxide.",
+        "Hydrogen.",
+        "Oxygen."
+      ]
+    }
+  ]
+}
