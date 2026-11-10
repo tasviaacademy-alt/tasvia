@@ -45,6 +45,18 @@ FALLBACK_QUERIES = [
     ("Telangana", "Telangana news when:14d"),
 ]
 
+# Direct publisher feeds are a last-resort source when Google News returns
+# headlines without usable summaries. These are public, editorial/government
+# feeds; the same 72-hour, quality, deduplication and factual-quiz checks apply.
+DIRECT_FEEDS = [
+    ("India", "Press Information Bureau", "https://www.pib.gov.in/RssMain.aspx?ModId=6&Lang=1&Regid=3&reg=3"),
+    ("India", "The Hindu National", "https://www.thehindu.com/news/national/feeder/default.rss"),
+    ("Telangana", "The Hindu Telangana", "https://www.thehindu.com/news/national/telangana/feeder/default.rss"),
+    ("World", "The Hindu International", "https://www.thehindu.com/news/international/feeder/default.rss"),
+    ("Sports", "The Hindu Sport", "https://www.thehindu.com/sport/feeder/default.rss"),
+    ("Economy", "The Hindu Business", "https://www.thehindu.com/business/feeder/default.rss"),
+]
+
 def clean(s):
     s = html.unescape(re.sub(r"<[^>]+>", " ", s or ""))
     return re.sub(r"\s+", " ", s).strip()
@@ -364,8 +376,8 @@ def open_with_retry(request, timeout=15, attempts=3, label="news request"):
     raise RuntimeError(f"{label} failed after {attempts} attempts")
 
 
-def rss_items(query):
-    url = "https://news.google.com/rss/search?q=" + urllib.parse.quote(query) + "&hl=en-IN&gl=IN&ceid=IN:en"
+def rss_items(query, feed_url=None, source_hint="News source"):
+    url = feed_url or ("https://news.google.com/rss/search?q=" + urllib.parse.quote(query) + "&hl=en-IN&gl=IN&ceid=IN:en")
     req = urllib.request.Request(
         url,
         headers={"User-Agent": "Mozilla/5.0 (compatible; TASVIA-Current-Affairs/2.3)"}
@@ -390,16 +402,22 @@ def rss_items(query):
             desc = clean(item.findtext(f"{atom_ns}summary") or item.findtext(f"{atom_ns}content"))
             link_node = item.find(f"{atom_ns}link")
             link = (link_node.get("href", "") if link_node is not None else "")
-            source = clean(item.findtext(f"{atom_ns}author/{atom_ns}name") or "News source")
+            source = clean(item.findtext(f"{atom_ns}author/{atom_ns}name") or source_hint)
             published = parse_pub_date(
                 item.findtext(f"{atom_ns}published") or item.findtext(f"{atom_ns}updated")
             )
         else:
             title = clean(item.findtext("title"))
             desc = clean(item.findtext("description"))
+            encoded = clean(item.findtext("{http://purl.org/rss/1.0/modules/content/}encoded"))
+            if len(encoded) > len(desc):
+                desc = encoded
             link = item.findtext("link") or ""
-            source = clean(item.find("source").text if item.find("source") is not None else "News source")
-            published = parse_pub_date(item.findtext("pubDate"))
+            source_node = item.find("source")
+            source = clean(source_node.text if source_node is not None and source_node.text else source_hint)
+            published = parse_pub_date(
+                item.findtext("pubDate") or item.findtext("{http://purl.org/dc/elements/1.1/}date")
+            )
 
         if not title or not published:
             continue
@@ -480,6 +498,25 @@ if len(all_items) < 5:
         "trying broader backup searches while keeping the 72-hour freshness filter."
     )
     collect_feeds(FALLBACK_QUERIES, "fallback")
+
+if len(all_items) < 5:
+    print(
+        f"Google News produced only {len(all_items)} eligible stories; "
+        "trying direct PIB and The Hindu feeds with the same freshness and quality checks."
+    )
+    for category, source, feed_url in DIRECT_FEEDS:
+        try:
+            fetched = rss_items(source, feed_url=feed_url, source_hint=source)
+            feed_counts.append(("direct", category, len(fetched)))
+            for item in fetched:
+                item["category"] = category
+                key = norm_title(item["title"])
+                if key and key not in used_titles and key not in seen_today:
+                    seen_today.add(key)
+                    all_items.append(item)
+        except Exception as exc:
+            feed_counts.append(("direct", category, 0))
+            print(f"Direct publisher feed failed: {source}: {type(exc).__name__}: {exc}")
 
 print(f"Current Affairs RSS results by category: {feed_counts}")
 
