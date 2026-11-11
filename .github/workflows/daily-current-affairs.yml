@@ -47,6 +47,10 @@ jobs:
               title_norm, summary_norm = norm(title), norm(summary)
               if len(title) < 20 or len(summary) < 90:
                   raise SystemExit(f"Story {number} has a generic title or an insufficient summary.")
+              if not str(item.get("url", "")).startswith("https://") or not str(item.get("source", "")).strip():
+                  raise SystemExit(f"Story {number} is missing a valid HTTPS source link or publisher.")
+              if re.search(r"\b(account subscription benefits|premium stories|unlock these with subscription|subscribe to read|subscription required|log in to continue|register to continue)\b", summary.lower()):
+                  raise SystemExit(f"Story {number} contains paywall or subscription boilerplate.")
               if re.search(r"\b(home|current affairs|latest news|live updates|live blog|live stream|fixtures|betting|odds|predictions?|opinion|news feed|watch live)\b", title.lower()):
                   raise SystemExit(f"Story {number} uses a generic or unsuitable headline: {title}")
               if summary_norm == title_norm or (summary_norm.startswith(title_norm) and len(summary_norm) - len(title_norm) < 45):
@@ -56,6 +60,8 @@ jobs:
               a = str(question.get("a", "")).strip()
               if not q or not a or q.casefold().startswith("which topic is covered"):
                   raise SystemExit(f"Quiz question {number} is empty or only asks students to identify a headline.")
+              if re.search(r"^how many .+ were mentioned in the report[?.!]*$", q, re.I):
+                  raise SystemExit(f"Quiz question {number} is too vague to test a specific fact.")
           today_archive = Path("current-affairs-history") / f"{today}.json"
           if not today_archive.exists() or json.loads(today_archive.read_text(encoding="utf-8")) != daily:
               raise SystemExit("Today's Current Affairs file and dated archive do not match.")
