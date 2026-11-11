@@ -289,7 +289,7 @@ def build_quiz(item):
         amount_word = number_words[word_count.group(1).casefold()]
         unit = word_count.group(2).lower()
         if unit in {"year", "years"}:
-            if re.search(r"\\byears?\\s+of\\s+war\\b", low):
+            if re.search(r"\byears?\s+of\s+war\b", low):
                 return {
                     "q": f"How long had the country been weary from war, according to the report “{title_context}”?",
                     "a": f"{amount_word} {unit}"
