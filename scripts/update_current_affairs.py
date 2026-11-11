@@ -164,7 +164,7 @@ def quality_story(item):
         return False
     if re.search(r"\b(home|current affairs|latest news|live updates|live blog|live stream|fixtures|betting|odds|predictions?|opinion|news feed|watch live|advertorial|sponsored|brand studio|partner content|newsletter|media kit|years of trust)\b", title_lower):
         return False
-    if re.search(r"comprehensive up.to.date news coverage|aggregated from sources all over the world by google news|click here to read|subscribe to our newsletter", summary_lower):
+    if re.search(r"comprehensive up.to.date news coverage|aggregated from sources all over the world by google news|click here to read|subscribe to our newsletter|account subscription benefits|premium stories|unlock these with subscription|subscribe to read|subscription required|log in to continue|register to continue", summary_lower):
         return False
     if re.search(r"\bwhy .{0,70} is the platform that brings .{0,50} together\b", title_lower):
         return False
@@ -288,8 +288,15 @@ def build_quiz(item):
         }
         amount_word = number_words[word_count.group(1).casefold()]
         unit = word_count.group(2).lower()
+        if unit in {"year", "years"}:
+            if re.search(r"\\byears?\\s+of\\s+war\\b", low):
+                return {
+                    "q": f"How long had the country been weary from war, according to the report “{title_context}”?",
+                    "a": f"{amount_word} {unit}"
+                }
+            return None
         return {
-            "q": f"How many {unit} were mentioned in the report?",
+            "q": f"How many {unit} were mentioned in the report “{title_context}”?",
             "a": f"{amount_word} {unit}"
         }
 
@@ -316,12 +323,16 @@ def valid_edition(data):
         return False
     if any(not quality_story(item) for item in items):
         return False
+    if any(not str(item.get("url", "")).startswith("https://")
+           or not str(item.get("source", "")).strip() for item in items):
+        return False
     titles = [str(item.get("title", "")) for item in items]
     for i, title in enumerate(titles):
         if any(similar_story_titles(title, other) for other in titles[i + 1:]):
             return False
     if any(not str(q.get("q", "")).strip() or not str(q.get("a", "")).strip()
            or str(q.get("q", "")).casefold().startswith("which topic is covered")
+           or re.search(r"^how many .+ were mentioned in the report[?.!]*$", str(q.get("q", "")).strip(), re.I)
            for q in quiz):
         return False
     return True
