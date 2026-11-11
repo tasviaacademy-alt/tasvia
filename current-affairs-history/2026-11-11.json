@@ -7,9 +7,9 @@
       "category": "India",
       "icon": "🇮🇳",
       "title": "Bihar Cabinet hikes 3% DA for employees, pensioners",
-      "text": "The Cabinet approved the “Bihar Ki Beti Startup Challenge Scheme”, under which, 2,100 female students may be provided benefits beginning from the current financial year",
-      "source": "The Hindu National, 2026-11-11",
-      "url": "https://www.thehindu.com/news/national/bihar/bihar-cabinet-hikes-3-da-for-employees-pensioners/article71687144.ece"
+      "text": "The Bihar Cabinet approved a 3-percentage-point rise in dearness allowance for state government employees and dearness relief for pensioners, effective 1 July 2026. Under the Seventh Pay Commission, the rate increases from 60% to 63%.",
+      "source": "India Today, 2026-11-10",
+      "url": "https://www.indiatoday.in/amp/india/story/bihar-da-hike-cabinet-ai-mission-women-student-schemes-ptag-3036326-2026-11-10"
     },
     {
       "category": "India",
@@ -23,7 +23,7 @@
       "category": "Economy",
       "icon": "💹",
       "title": "Blackstone to buy about 16% stake in India's IIFL Finance for $535 million",
-      "text": "The issue will also include a 12.64 billion ​rupee ‌investment by existing investors Nirmal Jain and R. Venkataraman, while Anchorage Capital ‌will invest ​another ₹1.5 billion",
+      "text": "The proposed transaction would give Blackstone about a 16% stake in IIFL Finance for $535 million. Existing investors Nirmal Jain and R. Venkataraman would also invest ₹12.64 billion, while Anchorage Capital would invest another ₹1.5 billion.",
       "source": "The Hindu Business, 2026-11-10",
       "url": "https://www.thehindu.com/business/Industry/blackstone-to-buy-about-16-stake-in-indias-iifl-finance-for-535-million/article71687312.ece"
     },
@@ -31,39 +31,39 @@
       "category": "World",
       "icon": "🌐",
       "title": "New Israeli parliament to take aim at Netanyahu as Eisenkot seeks government",
-      "text": "President Isaac Herzog, ceremonially opening the session, called on all sides to work together and avoid a fresh election in a deeply polarised country weary from three years of war.",
+      "text": "President Isaac Herzog opened the new parliamentary session and urged lawmakers to work together to avoid another election. The report described the country as deeply polarised and weary after three years of war.",
       "source": "The Hindu International, 2026-11-10",
       "url": "https://www.thehindu.com/news/international/new-israeli-parliament-to-take-aim-at-netanyahu-as-eisenkot-seeks-government/article71687117.ece"
     },
     {
       "category": "Telangana",
       "icon": "📰",
-      "title": "Banks in Telangana achieved 74% of Kharif loan targets in H1",
-      "text": "Account subscription benefits alongside Premium Stories, Editorials, Opinions and more. Unlock these with Subscription",
-      "source": "The Hindu Telangana, 2026-11-10",
-      "url": "https://www.thehindu.com/news/cities/Hyderabad/banks-in-telangana-achieved-74-of-kharif-loan-targets-in-h1/article71686919.ece"
+      "title": "Telangana Deputy CM urges banks to restructure crop loans in drought-hit areas",
+      "text": "At the State Level Bankers’ Committee meeting, Deputy CM Mallu Bhatti Vikramarka urged banks to restructure eligible crop loans and ensure timely Rabi credit. Telangana had declared 365 mandals across 31 districts drought-affected, including 111 severely affected; the Rabi crop-loan target was ₹38,268 crore.",
+      "source": "United News of India, 2026-11-10",
+      "url": "https://test.uniindia.com/t-gana-dy-cm-bhatti-urges-banks-to-restructure-crop-loans-of-drought-hit-farmers/south/news/4035312.html"
     }
   ],
   "quiz": [
     {
-      "q": "What percentage was reported in the story “Bihar Cabinet hikes 3% DA for employees, pensioners”?",
-      "a": "3%"
+      "q": "Under the Seventh Pay Commission, what will be Bihar’s revised dearness allowance rate from 1 July 2026?",
+      "a": "63%"
     },
     {
-      "q": "According to the report “Andhra Pradesh Cabinet clears policy frameworks to attract investments in AI, electronics,…”, what monetary figure was mentioned?",
-      "a": "₹31,387"
+      "q": "What is the value of the proposed green integrated AI data centre cleared by the Andhra Pradesh Cabinet?",
+      "a": "₹31,387 crore"
     },
     {
-      "q": "According to the report “Blackstone to buy about 16% stake in India's IIFL Finance for $535 million”, what monetary figure was mentioned?",
+      "q": "How much is Blackstone paying for its proposed stake in IIFL Finance?",
       "a": "$535 million"
     },
     {
-      "q": "How many years were mentioned in the report?",
-      "a": "3 years"
+      "q": "For how long had the country been weary from war, according to the report on Israel’s new parliament?",
+      "a": "Three years"
     },
     {
-      "q": "What percentage was reported in the story “Banks in Telangana achieved 74% of Kharif loan targets in H1”?",
-      "a": "74%"
+      "q": "How many mandals across Telangana were declared drought-affected?",
+      "a": "365 mandals"
     }
   ]
 }
