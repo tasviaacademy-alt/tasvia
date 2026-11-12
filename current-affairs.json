@@ -7,7 +7,7 @@
       "category": "India",
       "icon": "🇮🇳",
       "title": "Thousands struggling without water after a major leak in a pipeline in Kolkata’s Tala area",
-      "text": "According to the Kolkata Municipal Corporation, over 5 million gallons of water have been gushed out after the 72-inch pipeline got damaged on Monday (November 9, 2026) morning",
+      "text": "More than 5 million gallons of water gushed out after the 72-inch pipeline was damaged on November 9, according to the Kolkata Municipal Corporation; the leak disrupted water supply across several central Kolkata neighbourhoods.",
       "source": "The Hindu National, 2026-11-12",
       "url": "https://www.thehindu.com/news/cities/kolkata/thousands-struggling-without-water-after-a-major-leak-in-a-pipeline-in-kolkatas-tala-area/article71690884.ece"
     },
@@ -15,7 +15,7 @@
       "category": "Sports",
       "icon": "🏆",
       "title": "Ambekar Meetei storms into men’s 50kg final at Youth Olympics",
-      "text": "Ambekar Meetei reaches Dakar 2026 Youth Olympics boxing final after a dominant 5-0 win, ending 16-year wait for India.",
+      "text": "Lairenlakpam Ambekar Meetei beat Colombia’s Izzon Jeffrey Galea Arevalo 5–0 in the men’s 50 kg semifinal at Dakar 2026, reaching the Youth Olympics boxing final and ending a 16-year wait for an Indian boxer.",
       "source": "The Hindu Sport, 2026-11-12",
       "url": "https://www.thehindu.com/sport/ambekar-meetei-storms-into-mens-50kg-final-at-youth-olympics/article71691219.ece"
     },
@@ -23,7 +23,7 @@
       "category": "Sports",
       "icon": "🏆",
       "title": "Aaryavir in focus as India face Afghanistan in U-19 Asia Cup semifinal",
-      "text": "Aaryavir is the tournament’s leading run-scorer after smashing 160 off 168 balls to guide India to a 70-run win over the UAE in their final Group A match",
+      "text": "Aaryavir Sehwag scored 160 off 168 balls to lead India to a 70-run win over the UAE in their final Group A match, finishing as the tournament’s leading run-scorer before the semifinal.",
       "source": "The Hindu Sport, 2026-11-12",
       "url": "https://www.thehindu.com/sport/cricket/aaryavir-in-focus-as-india-face-afghanistan-in-u-19-asia-cup-semifinal/article71691215.ece"
     },
@@ -31,7 +31,7 @@
       "category": "India",
       "icon": "🇮🇳",
       "title": "Anti-Sterlite protests: CM orders ₹5.25-cr. additional relief to victims",
-      "text": "TN CM orders ₹5.25 crore extra relief for Thoothukudi anti-Sterlite victims, boosting per-family compensation to ₹50 lakh for deceased and ₹10 lakh for grievous injuries.",
+      "text": "The Tamil Nadu Chief Minister ordered ₹5.25 crore in additional relief for victims of the Thoothukudi anti-Sterlite protests; the report says compensation rises to ₹50 lakh for each deceased victim’s family and ₹10 lakh for grievously injured victims.",
       "source": "The Hindu National, 2026-11-12",
       "url": "https://www.thehindu.com/news/national/tamil-nadu/anti-sterlite-protest-cm-orders-525-cr-additional-relief-to-victims/article71689687.ece"
     },
@@ -39,30 +39,30 @@
       "category": "World",
       "icon": "🌐",
       "title": "DR Congo Ebola outbreak exceeds 11,000 cases, causes 5,387 deaths",
-      "text": "The 17th outbreak of the virus in the DRC's history was officially declared in May, but experts believe it emerged weeks or even months earlier",
+      "text": "By November 11, 2026, official figures showed 11,042 confirmed Ebola cases and 5,387 deaths in the Democratic Republic of Congo; armed conflict was hampering the public-health response.",
       "source": "The Hindu International, 2026-11-11",
       "url": "https://www.thehindu.com/news/international/dr-congo-ebola-outbreak-exceeds-11000-cases-causes-5387-deaths/article71691022.ece"
     }
   ],
   "quiz": [
     {
-      "q": "What amount or figure did the report state?",
-      "a": "5 million"
+      "q": "How much water was reported to have gushed out after the Kolkata pipeline was damaged?",
+      "a": "Over 5 million gallons"
     },
     {
-      "q": "How many Youth were mentioned in the story “Ambekar Meetei storms into men’s 50kg final at Youth Olympics”?",
-      "a": "2026 Youth"
+      "q": "What was the score of Lairenlakpam Ambekar Meetei’s men’s 50 kg semifinal victory?",
+      "a": "5–0"
     },
     {
-      "q": "What score did Aaryavir make in the reported match?",
+      "q": "How many runs did Aaryavir Sehwag score against the UAE, and from how many balls?",
       "a": "160 runs off 168 balls"
     },
     {
-      "q": "According to the report “Anti-Sterlite protests: CM orders ₹5.25-cr. additional relief to victims”, what monetary figure was mentioned?",
-      "a": "₹5.25"
+      "q": "How much additional relief did the Tamil Nadu Chief Minister order for victims of the anti-Sterlite protests?",
+      "a": "₹5.25 crore"
     },
     {
-      "q": "How many deaths were mentioned in the story “DR Congo Ebola outbreak exceeds 11,000 cases, causes 5,387 deaths”?",
+      "q": "How many deaths had been reported in the DR Congo Ebola outbreak by November 11, 2026?",
       "a": "5,387 deaths"
     }
   ]
