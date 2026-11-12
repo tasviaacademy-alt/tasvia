@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-12",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-sports-olympics",
+      "category": "Sports",
+      "q": "How often are the Summer Olympic Games normally held?",
+      "a": "Every four years.",
+      "options": [
+        "Every four years.",
+        "Every two years.",
+        "Every three years.",
+        "Every five years."
+      ]
+    },
+    {
+      "id": "static-gk-white-blood-cells",
+      "category": "Human Body",
+      "q": "Which blood cells help the body fight infections?",
+      "a": "White blood cells.",
+      "options": [
+        "Red blood cells.",
+        "Nerve cells.",
+        "Platelets.",
+        "White blood cells."
+      ]
+    },
+    {
+      "id": "static-renewable-energy",
+      "category": "Environment",
+      "q": "Which energy source uses sunlight to generate electricity?",
+      "a": "Solar energy.",
+      "options": [
+        "Hydropower.",
+        "Geothermal energy.",
+        "Wind energy.",
+        "Solar energy."
+      ]
+    },
+    {
+      "id": "static-india-largest-state",
+      "category": "Indian Geography",
+      "q": "Which is India's largest state by area?",
+      "a": "Rajasthan.",
+      "options": [
+        "Madhya Pradesh.",
+        "Uttar Pradesh.",
+        "Maharashtra.",
+        "Rajasthan."
+      ]
+    },
+    {
+      "id": "static-space-isro",
+      "category": "Science & Space",
+      "q": "What is the name of India's national space agency?",
+      "a": "ISRO (Indian Space Research Organisation).",
+      "options": [
+        "CSIR (Council of Scientific and Industrial Research).",
+        "DRDO (Defence Research and Development Organisation).",
+        "BARC (Bhabha Atomic Research Centre).",
+        "ISRO (Indian Space Research Organisation)."
+      ]
+    }
+  ]
+}
