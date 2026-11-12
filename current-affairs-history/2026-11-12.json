@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-12",
+  "month": "November 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Thousands struggling without water after a major leak in a pipeline in Kolkata’s Tala area",
+      "text": "According to the Kolkata Municipal Corporation, over 5 million gallons of water have been gushed out after the 72-inch pipeline got damaged on Monday (November 9, 2026) morning",
+      "source": "The Hindu National, 2026-11-12",
+      "url": "https://www.thehindu.com/news/cities/kolkata/thousands-struggling-without-water-after-a-major-leak-in-a-pipeline-in-kolkatas-tala-area/article71690884.ece"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "Ambekar Meetei storms into men’s 50kg final at Youth Olympics",
+      "text": "Ambekar Meetei reaches Dakar 2026 Youth Olympics boxing final after a dominant 5-0 win, ending 16-year wait for India.",
+      "source": "The Hindu Sport, 2026-11-12",
+      "url": "https://www.thehindu.com/sport/ambekar-meetei-storms-into-mens-50kg-final-at-youth-olympics/article71691219.ece"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "Aaryavir in focus as India face Afghanistan in U-19 Asia Cup semifinal",
+      "text": "Aaryavir is the tournament’s leading run-scorer after smashing 160 off 168 balls to guide India to a 70-run win over the UAE in their final Group A match",
+      "source": "The Hindu Sport, 2026-11-12",
+      "url": "https://www.thehindu.com/sport/cricket/aaryavir-in-focus-as-india-face-afghanistan-in-u-19-asia-cup-semifinal/article71691215.ece"
+    },
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Anti-Sterlite protests: CM orders ₹5.25-cr. additional relief to victims",
+      "text": "TN CM orders ₹5.25 crore extra relief for Thoothukudi anti-Sterlite victims, boosting per-family compensation to ₹50 lakh for deceased and ₹10 lakh for grievous injuries.",
+      "source": "The Hindu National, 2026-11-12",
+      "url": "https://www.thehindu.com/news/national/tamil-nadu/anti-sterlite-protest-cm-orders-525-cr-additional-relief-to-victims/article71689687.ece"
+    },
+    {
+      "category": "World",
+      "icon": "🌐",
+      "title": "DR Congo Ebola outbreak exceeds 11,000 cases, causes 5,387 deaths",
+      "text": "The 17th outbreak of the virus in the DRC's history was officially declared in May, but experts believe it emerged weeks or even months earlier",
+      "source": "The Hindu International, 2026-11-11",
+      "url": "https://www.thehindu.com/news/international/dr-congo-ebola-outbreak-exceeds-11000-cases-causes-5387-deaths/article71691022.ece"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What amount or figure did the report state?",
+      "a": "5 million"
+    },
+    {
+      "q": "How many Youth were mentioned in the story “Ambekar Meetei storms into men’s 50kg final at Youth Olympics”?",
+      "a": "2026 Youth"
+    },
+    {
+      "q": "What score did Aaryavir make in the reported match?",
+      "a": "160 runs off 168 balls"
+    },
+    {
+      "q": "According to the report “Anti-Sterlite protests: CM orders ₹5.25-cr. additional relief to victims”, what monetary figure was mentioned?",
+      "a": "₹5.25"
+    },
+    {
+      "q": "How many deaths were mentioned in the story “DR Congo Ebola outbreak exceeds 11,000 cases, causes 5,387 deaths”?",
+      "a": "5,387 deaths"
+    }
+  ]
+}

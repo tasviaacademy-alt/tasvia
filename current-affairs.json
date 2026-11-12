@@ -1,69 +1,69 @@
 {
-  "date": "2026-11-11",
+  "date": "2026-11-12",
   "month": "November 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
       "category": "India",
       "icon": "🇮🇳",
-      "title": "Bihar Cabinet hikes 3% DA for employees, pensioners",
-      "text": "The Bihar Cabinet approved a 3-percentage-point rise in dearness allowance for state government employees and dearness relief for pensioners, effective 1 July 2026. Under the Seventh Pay Commission, the rate increases from 60% to 63%.",
-      "source": "India Today, 2026-11-10",
-      "url": "https://www.indiatoday.in/amp/india/story/bihar-da-hike-cabinet-ai-mission-women-student-schemes-ptag-3036326-2026-11-10"
+      "title": "Thousands struggling without water after a major leak in a pipeline in Kolkata’s Tala area",
+      "text": "According to the Kolkata Municipal Corporation, over 5 million gallons of water have been gushed out after the 72-inch pipeline got damaged on Monday (November 9, 2026) morning",
+      "source": "The Hindu National, 2026-11-12",
+      "url": "https://www.thehindu.com/news/cities/kolkata/thousands-struggling-without-water-after-a-major-leak-in-a-pipeline-in-kolkatas-tala-area/article71690884.ece"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "Ambekar Meetei storms into men’s 50kg final at Youth Olympics",
+      "text": "Ambekar Meetei reaches Dakar 2026 Youth Olympics boxing final after a dominant 5-0 win, ending 16-year wait for India.",
+      "source": "The Hindu Sport, 2026-11-12",
+      "url": "https://www.thehindu.com/sport/ambekar-meetei-storms-into-mens-50kg-final-at-youth-olympics/article71691219.ece"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "Aaryavir in focus as India face Afghanistan in U-19 Asia Cup semifinal",
+      "text": "Aaryavir is the tournament’s leading run-scorer after smashing 160 off 168 balls to guide India to a 70-run win over the UAE in their final Group A match",
+      "source": "The Hindu Sport, 2026-11-12",
+      "url": "https://www.thehindu.com/sport/cricket/aaryavir-in-focus-as-india-face-afghanistan-in-u-19-asia-cup-semifinal/article71691215.ece"
     },
     {
       "category": "India",
       "icon": "🇮🇳",
-      "title": "Andhra Pradesh Cabinet clears policy frameworks to attract investments in AI, electronics, renewable energy",
-      "text": "Directorate of Traffic Management and Road Safety to be set up at Mangalagiri; ₹31,387-crore green integrated AI data centre proposed by AM Intelligence at Amanam in Visakhapatnam district cleared",
-      "source": "The Hindu National, 2026-11-11",
-      "url": "https://www.thehindu.com/news/national/andhra-pradesh/andhra-pradesh-cabinet-clears-policy-frameworks-to-attract-investments-in-ai-electronics-renewable-energy/article71686342.ece"
-    },
-    {
-      "category": "Economy",
-      "icon": "💹",
-      "title": "Blackstone to buy about 16% stake in India's IIFL Finance for $535 million",
-      "text": "The proposed transaction would give Blackstone about a 16% stake in IIFL Finance for $535 million. Existing investors Nirmal Jain and R. Venkataraman would also invest ₹12.64 billion, while Anchorage Capital would invest another ₹1.5 billion.",
-      "source": "The Hindu Business, 2026-11-10",
-      "url": "https://www.thehindu.com/business/Industry/blackstone-to-buy-about-16-stake-in-indias-iifl-finance-for-535-million/article71687312.ece"
+      "title": "Anti-Sterlite protests: CM orders ₹5.25-cr. additional relief to victims",
+      "text": "TN CM orders ₹5.25 crore extra relief for Thoothukudi anti-Sterlite victims, boosting per-family compensation to ₹50 lakh for deceased and ₹10 lakh for grievous injuries.",
+      "source": "The Hindu National, 2026-11-12",
+      "url": "https://www.thehindu.com/news/national/tamil-nadu/anti-sterlite-protest-cm-orders-525-cr-additional-relief-to-victims/article71689687.ece"
     },
     {
       "category": "World",
       "icon": "🌐",
-      "title": "New Israeli parliament to take aim at Netanyahu as Eisenkot seeks government",
-      "text": "President Isaac Herzog opened the new parliamentary session and urged lawmakers to work together to avoid another election. The report described the country as deeply polarised and weary after three years of war.",
-      "source": "The Hindu International, 2026-11-10",
-      "url": "https://www.thehindu.com/news/international/new-israeli-parliament-to-take-aim-at-netanyahu-as-eisenkot-seeks-government/article71687117.ece"
-    },
-    {
-      "category": "Telangana",
-      "icon": "📰",
-      "title": "Telangana Deputy CM urges banks to restructure crop loans in drought-hit areas",
-      "text": "At the State Level Bankers’ Committee meeting, Deputy CM Mallu Bhatti Vikramarka urged banks to restructure eligible crop loans and speed up Rabi credit. Telangana had declared 365 mandals across 31 districts drought-affected, including 111 severely affected. Banks were asked to sanction ₹38,268 crore in Rabi crop loans; only 53% of the ₹96,943 crore overall agricultural lending target had been achieved by September.",
-      "source": "The State Line (IANS), 2026-11-10",
-      "url": "https://thestateline.in/telangana-urges-banks-to-restructure-crop-loans-in-view-of-drought/"
+      "title": "DR Congo Ebola outbreak exceeds 11,000 cases, causes 5,387 deaths",
+      "text": "The 17th outbreak of the virus in the DRC's history was officially declared in May, but experts believe it emerged weeks or even months earlier",
+      "source": "The Hindu International, 2026-11-11",
+      "url": "https://www.thehindu.com/news/international/dr-congo-ebola-outbreak-exceeds-11000-cases-causes-5387-deaths/article71691022.ece"
     }
   ],
   "quiz": [
     {
-      "q": "Under the Seventh Pay Commission, what will be Bihar’s revised dearness allowance rate from 1 July 2026?",
-      "a": "63%"
+      "q": "What amount or figure did the report state?",
+      "a": "5 million"
     },
     {
-      "q": "What is the value of the proposed green integrated AI data centre cleared by the Andhra Pradesh Cabinet?",
-      "a": "₹31,387 crore"
+      "q": "How many Youth were mentioned in the story “Ambekar Meetei storms into men’s 50kg final at Youth Olympics”?",
+      "a": "2026 Youth"
     },
     {
-      "q": "How much is Blackstone paying for its proposed stake in IIFL Finance?",
-      "a": "$535 million"
+      "q": "What score did Aaryavir make in the reported match?",
+      "a": "160 runs off 168 balls"
     },
     {
-      "q": "For how long had the country been weary from war, according to the report on Israel’s new parliament?",
-      "a": "Three years"
+      "q": "According to the report “Anti-Sterlite protests: CM orders ₹5.25-cr. additional relief to victims”, what monetary figure was mentioned?",
+      "a": "₹5.25"
     },
     {
-      "q": "How many mandals across Telangana were declared drought-affected?",
-      "a": "365 mandals"
+      "q": "How many deaths were mentioned in the story “DR Congo Ebola outbreak exceeds 11,000 cases, causes 5,387 deaths”?",
+      "a": "5,387 deaths"
     }
   ]
 }
