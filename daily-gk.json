@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-11-12",
+  "date": "2026-11-13",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-sports-olympics",
-      "category": "Sports",
-      "q": "How often are the Summer Olympic Games normally held?",
-      "a": "Every four years.",
+      "id": "static-gk-computer-keyboard",
+      "category": "Computers",
+      "q": "Which device is mainly used to type text into a computer?",
+      "a": "Keyboard.",
       "options": [
-        "Every four years.",
-        "Every two years.",
-        "Every three years.",
-        "Every five years."
+        "Printer.",
+        "Keyboard.",
+        "Speaker.",
+        "Monitor."
       ]
     },
     {
-      "id": "static-gk-white-blood-cells",
-      "category": "Human Body",
-      "q": "Which blood cells help the body fight infections?",
-      "a": "White blood cells.",
+      "id": "static-gk-konark-state",
+      "category": "Indian Geography & Heritage",
+      "q": "In which Indian state is the Sun Temple at Konark located?",
+      "a": "Odisha.",
       "options": [
-        "Red blood cells.",
-        "Nerve cells.",
-        "Platelets.",
-        "White blood cells."
+        "Rajasthan.",
+        "Gujarat.",
+        "Odisha.",
+        "Kerala."
       ]
     },
     {
-      "id": "static-renewable-energy",
+      "id": "static-ozone",
       "category": "Environment",
-      "q": "Which energy source uses sunlight to generate electricity?",
-      "a": "Solar energy.",
+      "q": "Which atmospheric layer helps protect Earth from much of the Sun's harmful ultraviolet radiation?",
+      "a": "The ozone layer.",
       "options": [
-        "Hydropower.",
-        "Geothermal energy.",
-        "Wind energy.",
-        "Solar energy."
+        "The ozone layer.",
+        "The mesosphere.",
+        "The thermosphere.",
+        "The troposphere."
       ]
     },
     {
-      "id": "static-india-largest-state",
-      "category": "Indian Geography",
-      "q": "Which is India's largest state by area?",
-      "a": "Rajasthan.",
-      "options": [
-        "Madhya Pradesh.",
-        "Uttar Pradesh.",
-        "Maharashtra.",
-        "Rajasthan."
-      ]
-    },
-    {
-      "id": "static-space-isro",
+      "id": "static-science-sun-star",
       "category": "Science & Space",
-      "q": "What is the name of India's national space agency?",
-      "a": "ISRO (Indian Space Research Organisation).",
+      "q": "What is the Sun?",
+      "a": "A star.",
       "options": [
-        "CSIR (Council of Scientific and Industrial Research).",
-        "DRDO (Defence Research and Development Organisation).",
-        "BARC (Bhabha Atomic Research Centre).",
-        "ISRO (Indian Space Research Organisation)."
+        "A star.",
+        "A planet.",
+        "A moon.",
+        "A comet."
+      ]
+    },
+    {
+      "id": "static-gk-closest-planet-sun",
+      "category": "Astronomy",
+      "q": "Which planet is closest to the Sun?",
+      "a": "Mercury.",
+      "options": [
+        "Venus.",
+        "Mercury.",
+        "Mars.",
+        "Earth."
       ]
     }
   ]

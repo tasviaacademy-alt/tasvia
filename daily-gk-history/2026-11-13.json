@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-13",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-gk-computer-keyboard",
+      "category": "Computers",
+      "q": "Which device is mainly used to type text into a computer?",
+      "a": "Keyboard.",
+      "options": [
+        "Printer.",
+        "Keyboard.",
+        "Speaker.",
+        "Monitor."
+      ]
+    },
+    {
+      "id": "static-gk-konark-state",
+      "category": "Indian Geography & Heritage",
+      "q": "In which Indian state is the Sun Temple at Konark located?",
+      "a": "Odisha.",
+      "options": [
+        "Rajasthan.",
+        "Gujarat.",
+        "Odisha.",
+        "Kerala."
+      ]
+    },
+    {
+      "id": "static-ozone",
+      "category": "Environment",
+      "q": "Which atmospheric layer helps protect Earth from much of the Sun's harmful ultraviolet radiation?",
+      "a": "The ozone layer.",
+      "options": [
+        "The ozone layer.",
+        "The mesosphere.",
+        "The thermosphere.",
+        "The troposphere."
+      ]
+    },
+    {
+      "id": "static-science-sun-star",
+      "category": "Science & Space",
+      "q": "What is the Sun?",
+      "a": "A star.",
+      "options": [
+        "A star.",
+        "A planet.",
+        "A moon.",
+        "A comet."
+      ]
+    },
+    {
+      "id": "static-gk-closest-planet-sun",
+      "category": "Astronomy",
+      "q": "Which planet is closest to the Sun?",
+      "a": "Mercury.",
+      "options": [
+        "Venus.",
+        "Mercury.",
+        "Mars.",
+        "Earth."
+      ]
+    }
+  ]
+}
