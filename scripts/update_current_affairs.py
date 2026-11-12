@@ -183,6 +183,42 @@ def build_quiz(item):
     combined = f"{title}. {summary}"
     low = combined.casefold()
 
+    # Specific patterns prevent years in event names from being mistaken for counts.
+    if "kolkata" in low and "pipeline" in low and "gallons" in low:
+        water = re.search(
+            r"\b(over\s+)?(\d[\d,]*(?:\.\d+)?)\s+(?:(million|billion|thousand)\s+)?gallons?\b",
+            combined, re.I
+        )
+        if water:
+            parts = [clean(water.group(1) or ""), water.group(2)]
+            if water.group(3):
+                parts.append(water.group(3))
+            parts.append("gallons")
+            return {
+                "q": "How much water was reported to have gushed out after the Kolkata pipeline was damaged?",
+                "a": " ".join(part for part in parts if part)
+            }
+    if "ambekar meetei" in low and re.search(r"\b5\s*[-–]\s*0\b", low):
+        return {
+            "q": "What was the score of Lairenlakpam Ambekar Meetei’s men’s 50 kg semifinal victory?",
+            "a": "5–0"
+        }
+    if "anti-sterlite" in low and "additional relief" in low:
+        relief = re.search(
+            r"(?:₹|Rs\.?\s*)\s*\d[\d,]*(?:\.\d+)?\s*(?:lakh crore|crore|lakh|billion|million|trillion|thousand)?",
+            summary, re.I
+        )
+        if relief:
+            return {
+                "q": "How much additional relief did the Tamil Nadu Chief Minister order for victims of the anti-Sterlite protests?",
+                "a": clean(relief.group(0))
+            }
+    if "dr congo" in low and "ebola" in low and re.search(r"\b5,?387\s+deaths\b", low):
+        return {
+            "q": "How many deaths had been reported in the DR Congo Ebola outbreak?",
+            "a": "5,387 deaths"
+        }
+
     # Current, source-backed templates for recurring school-relevant topics.
     if "estic 2026" in low and re.search(r"\b12\s+(?:thematic\s+)?areas\b", low):
         return {"q": "How many thematic areas are planned for discussion at ESTIC 2026?", "a": "12 thematic areas"}
@@ -223,7 +259,7 @@ def build_quiz(item):
     amount = re.search(r"\b(?:cross(?:ed|es)?|exceed(?:ed|s)?|over|more than|above|reached|rose to|increased to)\s+(?:₹|Rs\.?\s*)?([\d,]+(?:\.\d+)?)\s*(crore|lakh crore|billion|million|jobs|athletes|participants)\b", combined, re.I)
     if amount:
         unit = amount.group(2).lower()
-        return {"q": "What amount or figure did the report state?", "a": f"{amount.group(1)} {unit}"}
+        return {"q": f"According to the report “{title}”, what amount was reported?", "a": f"{amount.group(1)} {unit}"}
 
     if "urban mobility india" in low and "bhubaneswar" in low:
         return {"q": "What theme did the 19th Urban Mobility India Conference focus on?", "a": "Urban Accessibility and Liveability in Digital Age"}
@@ -251,11 +287,11 @@ def build_quiz(item):
     title_context = title.strip()
     if len(title_context) > 100:
         title_context = title_context[:97].rsplit(" ", 1)[0] + "…"
-    money = re.search(
+    money_pattern = (
         r"(?:₹|Rs\.?\s*|US\$|USD\s*|\$|€|£)\s*\d[\d,]*(?:\.\d+)?"
-        r"(?:\s*(?:lakh crore|crore|lakh|billion|million|trillion|thousand))?",
-        combined, re.I
+        r"(?:\s*(?:lakh crore|crore|lakh|billion|million|trillion|thousand))?"
     )
+    money = re.search(money_pattern, summary, re.I) or re.search(money_pattern, title, re.I)
     if money:
         answer = clean(money.group(0))
         return {
@@ -303,7 +339,7 @@ def build_quiz(item):
     count = re.search(
         r"\b(\d[\d,]*(?:\.\d+)?)\s+"
         r"(districts?|schools?|students?|people|teams?|runs?|wickets?|states?|countries|"
-        r"athletes|participants|jobs|youth|coaches?|deaths|injuries|hours?|days?|months?|years?|"
+        r"athletes|participants|jobs|coaches?|deaths|injuries|hours?|days?|months?|years?|"
         r"gigawatts?|kilometres?|kilometers?|villages?|families|workers|projects|companies)\b",
         combined, re.I
     )
@@ -314,12 +350,54 @@ def build_quiz(item):
         }
     return None
 
+def quiz_is_grounded(item, question):
+    question_text = clean(question.get("q", ""))
+    answer = clean(question.get("a", ""))
+    title = clean(item.get("title", ""))
+    summary = clean(item.get("description", item.get("text", "")))
+    evidence = f"{title} {summary}"
+
+    if not question_text or not answer:
+        return False
+    if re.fullmatch(r"(?:19|20)\d{2}\s+youth", answer, re.I):
+        return False
+    if re.search(
+        r"what amount or figure did the report state|"
+        r"what figure did the report give for the latest measured result",
+        question_text, re.I
+    ):
+        return False
+
+    answer_numbers = [value.replace(",", "") for value in re.findall(r"\d[\d,]*(?:\.\d+)?", answer)]
+    evidence_numbers = {
+        value.replace(",", "") for value in re.findall(r"\d[\d,]*(?:\.\d+)?", evidence)
+    }
+    if any(value not in evidence_numbers for value in answer_numbers):
+        return False
+
+    currency_pattern = (
+        r"(?:₹|Rs\.?\s*|US\$|USD\s*|\$|€|£)\s*\d[\d,]*(?:\.\d+)?"
+        r"(?:\s*(?:lakh crore|crore|lakh|billion|million|trillion|thousand))?"
+    )
+    answer_money = re.search(currency_pattern, answer, re.I)
+    evidence_money = re.search(currency_pattern, summary, re.I) or re.search(currency_pattern, title, re.I)
+    if answer_money and evidence_money:
+        unit_pattern = r"\b(lakh crore|crore|lakh|billion|million|trillion|thousand)\b"
+        answer_unit = re.search(unit_pattern, answer_money.group(0), re.I)
+        evidence_unit = re.search(unit_pattern, evidence_money.group(0), re.I)
+        if evidence_unit and (
+            not answer_unit or answer_unit.group(0).casefold() != evidence_unit.group(0).casefold()
+        ):
+            return False
+    return True
+
+
 def valid_edition(data):
     if not isinstance(data, dict) or data.get("date") != date_str:
         return False
     items = data.get("items", [])
     quiz = data.get("quiz", [])
-    if len(items) < 5 or len(quiz) < 5:
+    if len(items) < 5 or len(quiz) != len(items):
         return False
     if any(not quality_story(item) for item in items):
         return False
@@ -334,6 +412,8 @@ def valid_edition(data):
            or str(q.get("q", "")).casefold().startswith("which topic is covered")
            or re.search(r"^how many .+ were mentioned in the report[?.!]*$", str(q.get("q", "")).strip(), re.I)
            for q in quiz):
+        return False
+    if any(not quiz_is_grounded(item, question) for item, question in zip(items, quiz)):
         return False
     return True
 
