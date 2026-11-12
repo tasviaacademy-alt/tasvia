@@ -39,7 +39,7 @@ jobs:
           daily = json.loads(Path("current-affairs.json").read_text(encoding="utf-8"))
           if daily.get("date") != today:
               raise SystemExit(f"Stale Current Affairs date: expected {today}, found {daily.get('date')!r}")
-          if len(daily.get("items", [])) < 5 or len(daily.get("quiz", [])) < 5:
+          if len(daily.get("items", [])) < 5 or len(daily.get("quiz", [])) != len(daily.get("items", [])):
               raise SystemExit("Current Affairs needs at least five quality stories and five factual quiz questions.")
           for number, item in enumerate(daily["items"], 1):
               title = str(item.get("title", "")).strip()
@@ -55,13 +55,36 @@ jobs:
                   raise SystemExit(f"Story {number} uses a generic or unsuitable headline: {title}")
               if summary_norm == title_norm or (summary_norm.startswith(title_norm) and len(summary_norm) - len(title_norm) < 45):
                   raise SystemExit(f"Story {number} summary merely repeats its headline.")
-          for number, question in enumerate(daily["quiz"], 1):
+          for number, (item, question) in enumerate(zip(daily["items"], daily["quiz"]), 1):
               q = str(question.get("q", "")).strip()
               a = str(question.get("a", "")).strip()
               if not q or not a or q.casefold().startswith("which topic is covered"):
                   raise SystemExit(f"Quiz question {number} is empty or only asks students to identify a headline.")
               if re.search(r"^how many .+ were mentioned in the report[?.!]*$", q, re.I):
                   raise SystemExit(f"Quiz question {number} is too vague to test a specific fact.")
+              if re.search(r"what amount or figure did the report state|what figure did the report give for the latest measured result", q, re.I):
+                  raise SystemExit(f"Quiz question {number} uses a generic numeric prompt.")
+              if re.fullmatch(r"(?:19|20)\d{2}\s+youth", a, re.I):
+                  raise SystemExit(f"Quiz question {number} mistakes an event year for a quantity.")
+              evidence = " ".join(str(item.get(key, "")) for key in ("title", "text"))
+              answer_numbers = [value.replace(",", "") for value in re.findall(r"\d[\d,]*(?:\.\d+)?", a)]
+              evidence_numbers = {value.replace(",", "") for value in re.findall(r"\d[\d,]*(?:\.\d+)?", evidence)}
+              if any(value not in evidence_numbers for value in answer_numbers):
+                  raise SystemExit(f"Quiz answer {number} contains a number not present in its source story.")
+              currency_pattern = (
+                  r"(?:₹|Rs\.?\s*|US\$|USD\s*|\$|€|£)\s*\d[\d,]*(?:\.\d+)?"
+                  r"(?:\s*(?:lakh crore|crore|lakh|billion|million|trillion|thousand))?"
+              )
+              answer_money = re.search(currency_pattern, a, re.I)
+              summary = str(item.get("text", ""))
+              title = str(item.get("title", ""))
+              evidence_money = re.search(currency_pattern, summary, re.I) or re.search(currency_pattern, title, re.I)
+              if answer_money and evidence_money:
+                  unit_pattern = r"\b(lakh crore|crore|lakh|billion|million|trillion|thousand)\b"
+                  answer_unit = re.search(unit_pattern, answer_money.group(0), re.I)
+                  evidence_unit = re.search(unit_pattern, evidence_money.group(0), re.I)
+                  if evidence_unit and (not answer_unit or answer_unit.group(0).casefold() != evidence_unit.group(0).casefold()):
+                      raise SystemExit(f"Quiz answer {number} omits or changes the monetary unit in its source story.")
           today_archive = Path("current-affairs-history") / f"{today}.json"
           if not today_archive.exists() or json.loads(today_archive.read_text(encoding="utf-8")) != daily:
               raise SystemExit("Today's Current Affairs file and dated archive do not match.")
