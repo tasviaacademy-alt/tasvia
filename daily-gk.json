@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-11-13",
+  "date": "2026-11-14",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-gk-computer-keyboard",
-      "category": "Computers",
-      "q": "Which device is mainly used to type text into a computer?",
-      "a": "Keyboard.",
+      "id": "static-gk-national-song",
+      "category": "National Symbols",
+      "q": "Who wrote India's national song, Vande Mataram?",
+      "a": "Bankim Chandra Chattopadhyay.",
       "options": [
-        "Printer.",
-        "Keyboard.",
-        "Speaker.",
-        "Monitor."
+        "Rabindranath Tagore.",
+        "Subhas Chandra Bose.",
+        "Sarojini Naidu.",
+        "Bankim Chandra Chattopadhyay."
       ]
     },
     {
-      "id": "static-gk-konark-state",
-      "category": "Indian Geography & Heritage",
-      "q": "In which Indian state is the Sun Temple at Konark located?",
-      "a": "Odisha.",
+      "id": "static-economics-currency",
+      "category": "Economics",
+      "q": "What is the currency of India?",
+      "a": "The Indian rupee.",
       "options": [
-        "Rajasthan.",
-        "Gujarat.",
-        "Odisha.",
-        "Kerala."
+        "The Sri Lankan rupee.",
+        "The Bangladeshi taka.",
+        "The Indian rupee.",
+        "The Nepalese rupee."
       ]
     },
     {
-      "id": "static-ozone",
-      "category": "Environment",
-      "q": "Which atmospheric layer helps protect Earth from much of the Sun's harmful ultraviolet radiation?",
-      "a": "The ozone layer.",
+      "id": "static-gk-si-force",
+      "category": "Physics",
+      "q": "What is the SI unit of force?",
+      "a": "Newton.",
       "options": [
-        "The ozone layer.",
-        "The mesosphere.",
-        "The thermosphere.",
-        "The troposphere."
+        "Pascal.",
+        "Watt.",
+        "Newton.",
+        "Joule."
       ]
     },
     {
-      "id": "static-science-sun-star",
-      "category": "Science & Space",
-      "q": "What is the Sun?",
-      "a": "A star.",
+      "id": "static-computer-www",
+      "category": "Computer Basics",
+      "q": "What does WWW stand for?",
+      "a": "World Wide Web.",
       "options": [
-        "A star.",
-        "A planet.",
-        "A moon.",
-        "A comet."
+        "World Web Window.",
+        "Wireless World Web.",
+        "World Wide Web.",
+        "Wide World Web."
       ]
     },
     {
-      "id": "static-gk-closest-planet-sun",
-      "category": "Astronomy",
-      "q": "Which planet is closest to the Sun?",
-      "a": "Mercury.",
+      "id": "static-largest-ocean",
+      "category": "World Geography",
+      "q": "Which is the largest ocean on Earth?",
+      "a": "The Pacific Ocean.",
       "options": [
-        "Venus.",
-        "Mercury.",
-        "Mars.",
-        "Earth."
+        "The Pacific Ocean.",
+        "The Arctic Ocean.",
+        "The Indian Ocean.",
+        "The Atlantic Ocean."
       ]
     }
   ]
