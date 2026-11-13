@@ -1,69 +1,69 @@
 {
-  "date": "2026-11-12",
+  "date": "2026-11-13",
   "month": "November 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "Thousands struggling without water after a major leak in a pipeline in Kolkata’s Tala area",
-      "text": "More than 5 million gallons of water gushed out after the 72-inch pipeline was damaged on November 9, according to the Kolkata Municipal Corporation; the leak disrupted water supply across several central Kolkata neighbourhoods.",
-      "source": "The Hindu National, 2026-11-12",
-      "url": "https://www.thehindu.com/news/cities/kolkata/thousands-struggling-without-water-after-a-major-leak-in-a-pipeline-in-kolkatas-tala-area/article71690884.ece"
+      "category": "Telangana",
+      "icon": "🛡️",
+      "title": "Food-safety department suspends licences of nine KFC and Domino’s outlets in Hyderabad",
+      "text": "After inspections of 26 outlets on November 12, Telangana food-safety teams reported hygiene and food-handling violations. Officials suspended the licences of seven KFC outlets and two Domino’s outlets and directed them to stop operating.",
+      "source": "The Times of India, 2026-11-13",
+      "url": "https://timesofindia.indiatimes.com/city/hyderabad/cockroaches-rat-droppings-and-expired-food-9-kfc-dominos-outlets-told-to-shut-after-food-safety-raids-in-hyderabad/articleshow/135786967.cms"
     },
     {
-      "category": "Sports",
-      "icon": "🏆",
-      "title": "Ambekar Meetei storms into men’s 50kg final at Youth Olympics",
-      "text": "Lairenlakpam Ambekar Meetei beat Colombia’s Izzon Jeffrey Galea Arevalo 5–0 in the men’s 50 kg semifinal at Dakar 2026, reaching the Youth Olympics boxing final and ending a 16-year wait for an Indian boxer.",
-      "source": "The Hindu Sport, 2026-11-12",
-      "url": "https://www.thehindu.com/sport/ambekar-meetei-storms-into-mens-50kg-final-at-youth-olympics/article71691219.ece"
+      "category": "Telangana",
+      "icon": "⚖️",
+      "title": "ACB investigation in Telangana uncovers assets allegedly worth over ₹25 crore",
+      "text": "The Anti-Corruption Bureau arrested a deputy executive engineer after searches at 10 locations linked to a disproportionate-assets case. Officials said the market value of assets identified so far was estimated at more than ₹25 crore; the assessment was continuing.",
+      "source": "The Times of India, 2026-11-13",
+      "url": "https://timesofindia.indiatimes.com/city/hyderabad/acb-nets-irrigation-engineer-unearths-assets-worth-25-cr/articleshow/135781238.cms"
     },
     {
-      "category": "Sports",
-      "icon": "🏆",
-      "title": "Aaryavir in focus as India face Afghanistan in U-19 Asia Cup semifinal",
-      "text": "Aaryavir Sehwag scored 160 off 168 balls to lead India to a 70-run win over the UAE in their final Group A match, finishing as the tournament’s leading run-scorer before the semifinal.",
-      "source": "The Hindu Sport, 2026-11-12",
-      "url": "https://www.thehindu.com/sport/cricket/aaryavir-in-focus-as-india-face-afghanistan-in-u-19-asia-cup-semifinal/article71691215.ece"
+      "category": "Education",
+      "icon": "🎓",
+      "title": "IIT Kharagpur introduces NMC-accredited postgraduate MD programmes",
+      "text": "IIT Kharagpur is introducing six MD specialisations with two seats each, for a total of 12 seats in the 2026–27 academic session. Admissions are through NEET-PG 2026 counselling at its Dr. B. C. Roy Multi-Speciality Medical Research Centre.",
+      "source": "The Times of India Education, 2026-11-13",
+      "url": "https://timesofindia.indiatimes.com/education/news/iit-kharagpur-introduces-nmc-accredited-md-programmes-becomes-first-iit-to-offer-postgraduate-medical-courses/articleshow/135786767.cms"
     },
     {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "Anti-Sterlite protests: CM orders ₹5.25-cr. additional relief to victims",
-      "text": "The Tamil Nadu Chief Minister ordered ₹5.25 crore in additional relief for victims of the Thoothukudi anti-Sterlite protests; the report says compensation rises to ₹50 lakh for each deceased victim’s family and ₹10 lakh for grievously injured victims.",
-      "source": "The Hindu National, 2026-11-12",
-      "url": "https://www.thehindu.com/news/national/tamil-nadu/anti-sterlite-protest-cm-orders-525-cr-additional-relief-to-victims/article71689687.ece"
+      "category": "Telangana",
+      "icon": "🏫",
+      "title": "Telangana considers bringing Classes 11 and 12 under the regular school system",
+      "text": "Chief Minister A. Revanth Reddy announced a proposal to end the separate intermediate-college structure and bring Classes 11 and 12 into the regular school education system from the 2027–28 academic year.",
+      "source": "The Indian Express, 2026-11-12",
+      "url": "https://indianexpress.com/article/education/today-news-headlines-for-school-assembly-november-13-2026-caqm-directs-assessment-of-stubble-burning-sites-in-punjab-10959941/"
     },
     {
-      "category": "World",
-      "icon": "🌐",
-      "title": "DR Congo Ebola outbreak exceeds 11,000 cases, causes 5,387 deaths",
-      "text": "By November 11, 2026, official figures showed 11,042 confirmed Ebola cases and 5,387 deaths in the Democratic Republic of Congo; armed conflict was hampering the public-health response.",
-      "source": "The Hindu International, 2026-11-11",
-      "url": "https://www.thehindu.com/news/international/dr-congo-ebola-outbreak-exceeds-11000-cases-causes-5387-deaths/article71691022.ece"
+      "category": "Telangana",
+      "icon": "🚌",
+      "title": "Proposed Hyderabad bus terminal brings Gajularamaram land encroachments into focus",
+      "text": "A Telangana State Road Transport Corporation survey reportedly found that around 15 acres of its 100-acre Gajularamaram allotment had been encroached upon. Officials have sought district-administration intervention as plans for an international bus terminal move forward.",
+      "source": "Telangana Today, 2026-11-13",
+      "url": "https://telanganatoday.com/hyderabad-gajularamaram-bus-terminal-plan-puts-government-land-encroachments-in-focus"
     }
   ],
   "quiz": [
     {
-      "q": "How much water was reported to have gushed out after the Kolkata pipeline was damaged?",
-      "a": "Over 5 million gallons"
+      "q": "How many Hyderabad KFC and Domino’s outlets had their FSSAI licences suspended?",
+      "a": "Nine: seven KFC and two Domino’s outlets"
     },
     {
-      "q": "What was the score of Lairenlakpam Ambekar Meetei’s men’s 50 kg semifinal victory?",
-      "a": "5–0"
+      "q": "What market value of assets did the Telangana ACB say had been identified so far in the disproportionate-assets case?",
+      "a": "More than ₹25 crore"
     },
     {
-      "q": "How many runs did Aaryavir Sehwag score against the UAE, and from how many balls?",
-      "a": "160 runs off 168 balls"
+      "q": "How many seats will IIT Kharagpur’s six new MD specialisations offer in total?",
+      "a": "12 seats"
     },
     {
-      "q": "How much additional relief did the Tamil Nadu Chief Minister order for victims of the anti-Sterlite protests?",
-      "a": "₹5.25 crore"
+      "q": "From which academic year is Telangana proposing to bring Classes 11 and 12 under the regular school system?",
+      "a": "2027–28"
     },
     {
-      "q": "How many deaths had been reported in the DR Congo Ebola outbreak by November 11, 2026?",
-      "a": "5,387 deaths"
+      "q": "How many acres of the TGSRTC’s 100-acre Gajularamaram allotment were reportedly encroached upon?",
+      "a": "About 15 acres"
     }
   ]
 }
