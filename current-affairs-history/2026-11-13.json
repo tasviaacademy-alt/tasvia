@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-13",
+  "month": "November 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "Telangana",
+      "icon": "🛡️",
+      "title": "Food-safety department suspends licences of nine KFC and Domino’s outlets in Hyderabad",
+      "text": "After inspections of 26 outlets on November 12, Telangana food-safety teams reported hygiene and food-handling violations. Officials suspended the licences of seven KFC outlets and two Domino’s outlets and directed them to stop operating.",
+      "source": "The Times of India, 2026-11-13",
+      "url": "https://timesofindia.indiatimes.com/city/hyderabad/cockroaches-rat-droppings-and-expired-food-9-kfc-dominos-outlets-told-to-shut-after-food-safety-raids-in-hyderabad/articleshow/135786967.cms"
+    },
+    {
+      "category": "Telangana",
+      "icon": "⚖️",
+      "title": "ACB investigation in Telangana uncovers assets allegedly worth over ₹25 crore",
+      "text": "The Anti-Corruption Bureau arrested a deputy executive engineer after searches at 10 locations linked to a disproportionate-assets case. Officials said the market value of assets identified so far was estimated at more than ₹25 crore; the assessment was continuing.",
+      "source": "The Times of India, 2026-11-13",
+      "url": "https://timesofindia.indiatimes.com/city/hyderabad/acb-nets-irrigation-engineer-unearths-assets-worth-25-cr/articleshow/135781238.cms"
+    },
+    {
+      "category": "Education",
+      "icon": "🎓",
+      "title": "IIT Kharagpur introduces NMC-accredited postgraduate MD programmes",
+      "text": "IIT Kharagpur is introducing six MD specialisations with two seats each, for a total of 12 seats in the 2026–27 academic session. Admissions are through NEET-PG 2026 counselling at its Dr. B. C. Roy Multi-Speciality Medical Research Centre.",
+      "source": "The Times of India Education, 2026-11-13",
+      "url": "https://timesofindia.indiatimes.com/education/news/iit-kharagpur-introduces-nmc-accredited-md-programmes-becomes-first-iit-to-offer-postgraduate-medical-courses/articleshow/135786767.cms"
+    },
+    {
+      "category": "Telangana",
+      "icon": "🏫",
+      "title": "Telangana considers bringing Classes 11 and 12 under the regular school system",
+      "text": "Chief Minister A. Revanth Reddy announced a proposal to end the separate intermediate-college structure and bring Classes 11 and 12 into the regular school education system from the 2027–28 academic year.",
+      "source": "The Indian Express, 2026-11-12",
+      "url": "https://indianexpress.com/article/education/today-news-headlines-for-school-assembly-november-13-2026-caqm-directs-assessment-of-stubble-burning-sites-in-punjab-10959941/"
+    },
+    {
+      "category": "Telangana",
+      "icon": "🚌",
+      "title": "Proposed Hyderabad bus terminal brings Gajularamaram land encroachments into focus",
+      "text": "A Telangana State Road Transport Corporation survey reportedly found that around 15 acres of its 100-acre Gajularamaram allotment had been encroached upon. Officials have sought district-administration intervention as plans for an international bus terminal move forward.",
+      "source": "Telangana Today, 2026-11-13",
+      "url": "https://telanganatoday.com/hyderabad-gajularamaram-bus-terminal-plan-puts-government-land-encroachments-in-focus"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "How many Hyderabad KFC and Domino’s outlets had their FSSAI licences suspended?",
+      "a": "Nine: seven KFC and two Domino’s outlets"
+    },
+    {
+      "q": "What market value of assets did the Telangana ACB say had been identified so far in the disproportionate-assets case?",
+      "a": "More than ₹25 crore"
+    },
+    {
+      "q": "How many seats will IIT Kharagpur’s six new MD specialisations offer in total?",
+      "a": "12 seats"
+    },
+    {
+      "q": "From which academic year is Telangana proposing to bring Classes 11 and 12 under the regular school system?",
+      "a": "2027–28"
+    },
+    {
+      "q": "How many acres of the TGSRTC’s 100-acre Gajularamaram allotment were reportedly encroached upon?",
+      "a": "About 15 acres"
+    }
+  ]
+}
