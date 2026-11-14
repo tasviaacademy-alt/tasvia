@@ -1,69 +1,69 @@
 {
-  "date": "2026-11-13",
+  "date": "2026-11-14",
   "month": "November 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
-      "category": "Telangana",
-      "icon": "🛡️",
-      "title": "Food-safety department suspends licences of nine KFC and Domino’s outlets in Hyderabad",
-      "text": "After inspections of 26 outlets on November 12, Telangana food-safety teams reported hygiene and food-handling violations. Officials suspended the licences of seven KFC outlets and two Domino’s outlets and directed them to stop operating.",
-      "source": "The Times of India, 2026-11-13",
-      "url": "https://timesofindia.indiatimes.com/city/hyderabad/cockroaches-rat-droppings-and-expired-food-9-kfc-dominos-outlets-told-to-shut-after-food-safety-raids-in-hyderabad/articleshow/135786967.cms"
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Keralam government sanctions ₹11 crore for road development in Kochi",
+      "text": "The project aims to improve the motorability of the road and address hardships faced by commuters, says Ernakulam MLA",
+      "source": "The Hindu National, 2026-11-14",
+      "url": "https://www.thehindu.com/news/national/kerala/keralam-government-sanctions-11-crore-for-road-development-in-kochi/article71698108.ece"
     },
     {
-      "category": "Telangana",
-      "icon": "⚖️",
-      "title": "ACB investigation in Telangana uncovers assets allegedly worth over ₹25 crore",
-      "text": "The Anti-Corruption Bureau arrested a deputy executive engineer after searches at 10 locations linked to a disproportionate-assets case. Officials said the market value of assets identified so far was estimated at more than ₹25 crore; the assessment was continuing.",
-      "source": "The Times of India, 2026-11-13",
-      "url": "https://timesofindia.indiatimes.com/city/hyderabad/acb-nets-irrigation-engineer-unearths-assets-worth-25-cr/articleshow/135781238.cms"
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Himachal approves ₹1,500 monthly financial assistance for women",
+      "text": "Under the scheme, eligible beneficiary families will also receive 300 units of free electricity",
+      "source": "The Hindu National, 2026-11-14",
+      "url": "https://www.thehindu.com/news/national/himachal-pradesh/himachal-approves-1500-monthly-financial-assistance-for-women/article71698523.ece"
     },
     {
-      "category": "Education",
-      "icon": "🎓",
-      "title": "IIT Kharagpur introduces NMC-accredited postgraduate MD programmes",
-      "text": "IIT Kharagpur is introducing six MD specialisations with two seats each, for a total of 12 seats in the 2026–27 academic session. Admissions are through NEET-PG 2026 counselling at its Dr. B. C. Roy Multi-Speciality Medical Research Centre.",
-      "source": "The Times of India Education, 2026-11-13",
-      "url": "https://timesofindia.indiatimes.com/education/news/iit-kharagpur-introduces-nmc-accredited-md-programmes-becomes-first-iit-to-offer-postgraduate-medical-courses/articleshow/135786767.cms"
+      "category": "World",
+      "icon": "🌐",
+      "title": "Microsoft Outage updates: No ETA yet on full recovery, company says",
+      "text": "Microsoft services are beginning to come back online after a massive global outage left millions of users without access for nearly 18 hours",
+      "source": "The Hindu International, 2026-11-14",
+      "url": "https://www.thehindu.com/sci-tech/technology/microsoft-outage-live-updates-november-13-2026-steps-to-fix-outlook-and-other-apps-ongoing/article71696624.ece"
     },
     {
-      "category": "Telangana",
-      "icon": "🏫",
-      "title": "Telangana considers bringing Classes 11 and 12 under the regular school system",
-      "text": "Chief Minister A. Revanth Reddy announced a proposal to end the separate intermediate-college structure and bring Classes 11 and 12 into the regular school education system from the 2027–28 academic year.",
-      "source": "The Indian Express, 2026-11-12",
-      "url": "https://indianexpress.com/article/education/today-news-headlines-for-school-assembly-november-13-2026-caqm-directs-assessment-of-stubble-burning-sites-in-punjab-10959941/"
+      "category": "Economy",
+      "icon": "💹",
+      "title": "Stock markets snap three-day rally on rate hike fears; Sensex drops 318 points",
+      "text": "Retail inflation surged to 6.09% in October, breaching the RBI’s upper tolerance limit for the first time in two years and prompting expectations of a rate hike next month",
+      "source": "The Hindu Business, 2026-11-13",
+      "url": "https://www.thehindu.com/business/stock-markets-snap-three-day-rally-on-rate-hike-fears-sensex-drops-318-points/article71699357.ece"
     },
     {
-      "category": "Telangana",
-      "icon": "🚌",
-      "title": "Proposed Hyderabad bus terminal brings Gajularamaram land encroachments into focus",
-      "text": "A Telangana State Road Transport Corporation survey reportedly found that around 15 acres of its 100-acre Gajularamaram allotment had been encroached upon. Officials have sought district-administration intervention as plans for an international bus terminal move forward.",
-      "source": "Telangana Today, 2026-11-13",
-      "url": "https://telanganatoday.com/hyderabad-gajularamaram-bus-terminal-plan-puts-government-land-encroachments-in-focus"
+      "category": "Economy",
+      "icon": "💹",
+      "title": "Oil India on track for 4 MMT crude oil production this fiscal, officials state",
+      "text": "Oil India further stated that it was on track for scaling their capex target of ₹7,500 crore.",
+      "source": "The Hindu Business, 2026-11-13",
+      "url": "https://www.thehindu.com/business/Industry/oil-india-on-track-for-4-mmt-crude-oil-production-this-fiscal-officials-state/article71699134.ece"
     }
   ],
   "quiz": [
     {
-      "q": "How many Hyderabad KFC and Domino’s outlets had their FSSAI licences suspended?",
-      "a": "Nine: seven KFC and two Domino’s outlets"
+      "q": "According to the report “Keralam government sanctions ₹11 crore for road development in Kochi”, what monetary figure was mentioned?",
+      "a": "₹11 crore"
     },
     {
-      "q": "What market value of assets did the Telangana ACB say had been identified so far in the disproportionate-assets case?",
-      "a": "More than ₹25 crore"
+      "q": "According to the report “Himachal approves ₹1,500 monthly financial assistance for women”, what monetary figure was mentioned?",
+      "a": "₹1,500"
     },
     {
-      "q": "How many seats will IIT Kharagpur’s six new MD specialisations offer in total?",
-      "a": "12 seats"
+      "q": "How many hours were mentioned in the story “Microsoft Outage updates: No ETA yet on full recovery, company says”?",
+      "a": "18 hours"
     },
     {
-      "q": "From which academic year is Telangana proposing to bring Classes 11 and 12 under the regular school system?",
-      "a": "2027–28"
+      "q": "What percentage was reported in the story “Stock markets snap three-day rally on rate hike fears; Sensex drops 318 points”?",
+      "a": "6.09%"
     },
     {
-      "q": "How many acres of the TGSRTC’s 100-acre Gajularamaram allotment were reportedly encroached upon?",
-      "a": "About 15 acres"
+      "q": "According to the report “Oil India on track for 4 MMT crude oil production this fiscal, officials state”, what monetary figure was mentioned?",
+      "a": "₹7,500 crore"
     }
   ]
 }
