@@ -2876,3 +2876,25 @@ if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.service
 
 </body>
 </html>
+/* TASVIA compact More menu — mobile space optimisation */
+@media (max-width: 900px){
+  main .menu{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:10px}
+  main .menu .item{min-height:0;height:auto;align-self:start;box-sizing:border-box;padding:12px;gap:10px;border-radius:14px;align-items:center}
+  main .menu .ic{width:38px;height:38px;flex:0 0 38px;border-radius:10px}
+  main .menu .ic svg{width:20px;height:20px}
+  main .menu .grow{min-width:0;flex:1}
+  main .menu .nm{font-size:.92rem;line-height:1.25;white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+  main .menu .mt{font-size:.76rem;line-height:1.35;margin-top:3px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+  main .menu .item>span[aria-hidden="true"]{font-size:1.15rem;flex:0 0 auto}
+}
+@media (max-width: 380px){
+  main .menu{gap:8px}
+  main .menu .item{padding:10px;gap:8px}
+  main .menu .ic{width:34px;height:34px;flex-basis:34px}
+  main .menu .nm{font-size:.86rem}
+  main .menu .mt{font-size:.72rem}
+}
+@media (min-width: 901px){
+  main .menu{grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}
+  main .menu .item{min-height:92px;height:auto;align-self:start}
+}
