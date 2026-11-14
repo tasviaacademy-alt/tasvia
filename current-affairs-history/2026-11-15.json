@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-15",
+  "month": "November 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Villagers in 25 districts cast votes for panchayat elections’ final phase in Rajasthan",
+      "text": "The final phase polls across 25 districts for Zila Parishad and Panchayat Samiti faced EVM glitches, boycotts, and a 72% turnout",
+      "source": "The Hindu National, 2026-11-15",
+      "url": "https://www.thehindu.com/news/national/rajasthan/rajasthan-panchayat-local-elections-2026-final-phase-voting/article71700929.ece"
+    },
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Mumbai police announce traffic diversion ahead of Britain’s Prince William visit",
+      "text": "The ceremony is hosted in Mumbai from November 16 to 18 for the sixth annual Earthshot Prize",
+      "source": "The Hindu National, 2026-11-15",
+      "url": "https://www.thehindu.com/news/national/maharashtra/mumbai-police-announce-traffic-diversion-ahead-ofbritains-prince-william-visit/article71702944.ece"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "Mahanadi Coalfields files RHP for proposed IPO worth nearly ₹9,500 crore",
+      "text": "The RHP, dated November 13, was filed with the Registrar of Companies, the Securities and Exchange Board of India, the BSE and the NSE, Coal India said in a regulatory filing",
+      "source": "The Hindu Business, 2026-11-14",
+      "url": "https://www.thehindu.com/business/markets/mahanadi-coalfields-files-rhp-for-proposed-ipo-worth-nearly-9500-crore/article71702765.ece"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "TRAI crackdown on spam: Over 1.24 lakh mobile connections barred or disconnected in July-September",
+      "text": "A total of 1,10,325 telecom resources, including mobile numbers, were barred from outgoing services for 15 days for the first violation",
+      "source": "The Hindu Business, 2026-11-14",
+      "url": "https://www.thehindu.com/business/Industry/trai-crackdown-on-spam-over-124-lakh-mobile-connections-barred-or-disconnected-in-july-september/article71702690.ece"
+    },
+    {
+      "category": "Telangana",
+      "icon": "📰",
+      "title": "Over 750 student researchers from 20 universities take part in Anveshan 2026 at Osmania University",
+      "text": "Over 750 student researchers from 20 universities gathered at Anveshan 2026, Osmania University, showcasing diverse interdisciplinary projects.",
+      "source": "The Hindu Telangana, 2026-11-14",
+      "url": "https://www.thehindu.com/news/national/telangana/over-750-student-researchers-from-20-universities-take-part-in-anveshan-2026-at-osmania-university/article71701622.ece"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What percentage was reported in the story “Villagers in 25 districts cast votes for panchayat elections’ final phase in Rajasthan”?",
+      "a": "72%"
+    },
+    {
+      "q": "In which city or place did the reported event take place?",
+      "a": "Mumbai"
+    },
+    {
+      "q": "According to the report “Mahanadi Coalfields files RHP for proposed IPO worth nearly ₹9,500 crore”, what monetary figure was mentioned?",
+      "a": "₹9,500 crore"
+    },
+    {
+      "q": "How many days were mentioned in the story “TRAI crackdown on spam: Over 1.24 lakh mobile connections barred or disconnected in July-September”?",
+      "a": "15 days"
+    },
+    {
+      "q": "How many student were mentioned in the story “Over 750 student researchers from 20 universities take part in Anveshan 2026 at Osmania University”?",
+      "a": "750 student"
+    }
+  ]
+}
