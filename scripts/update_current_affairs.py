@@ -392,6 +392,31 @@ def quiz_is_grounded(item, question):
     return True
 
 
+def visible_summary_for_quiz(item, question, preferred=420, maximum=1200):
+    """Keep the factual evidence for each quiz answer inside the summary students see."""
+    raw = clean(item.get("description", item.get("text", "")))
+    if not raw:
+        return None
+    if len(raw) <= preferred:
+        return raw if quiz_is_grounded(item, question) else None
+
+    final_limit = min(len(raw), maximum)
+    limits = list(range(preferred, final_limit + 1, 80))
+    if not limits or limits[-1] != final_limit:
+        limits.append(final_limit)
+
+    for limit in limits:
+        if limit >= len(raw):
+            visible = raw
+        else:
+            visible = raw[:limit].rsplit(" ", 1)[0].rstrip(" ,;:") + "…"
+        visible_item = dict(item)
+        visible_item["description"] = visible
+        if quiz_is_grounded(visible_item, question):
+            return visible
+    return None
+
+
 def valid_edition(data):
     if not isinstance(data, dict) or data.get("date") != date_str:
         return False
@@ -625,8 +650,11 @@ for candidate in all_items:
         if enriched:
             candidate["description"] = enriched
             question = build_quiz(candidate)
-    if question is not None:
-        quiz_candidates.append((candidate, question))
+    if question is not None and quiz_is_grounded(candidate, question):
+        visible_summary = visible_summary_for_quiz(candidate, question)
+        if visible_summary is not None:
+            candidate["display_summary"] = visible_summary
+            quiz_candidates.append((candidate, question))
 print(
     f"Current Affairs feed diagnostics: {len(all_items)} unique recent stories, "
     f"{len(quiz_candidates)} factual quiz candidates after {summary_enrichments} "
@@ -680,9 +708,7 @@ icons = {"India":"🇮🇳", "World":"🌐", "Sports":"🏆", "Science & Technol
 items = []
 quiz = []
 for candidate, question in selected:
-    summary = candidate["description"]
-    if len(summary) > 420:
-        summary = summary[:417].rsplit(" ", 1)[0] + "…"
+    summary = candidate.get("display_summary") or candidate["description"]
     items.append({
         "category": candidate["category"],
         "icon": icons.get(candidate["category"], "📰"),
@@ -694,6 +720,9 @@ for candidate, question in selected:
     quiz.append(question)
 
 data = {"date": date_str, "month": month_str, "title": "Daily Current Affairs", "items": items, "quiz": quiz}
+
+if not valid_edition(data):
+    raise RuntimeError("Generated Current Affairs failed final validation against the displayed story summaries and quiz answers.")
 
 text = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
 Path("current-affairs.json").write_text(text, encoding="utf-8")
