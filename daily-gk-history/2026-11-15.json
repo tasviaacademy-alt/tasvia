@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-15",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-maths-perimeter-square",
+      "category": "Mathematics",
+      "q": "What is the perimeter of a square with each side 5 cm?",
+      "a": "20 cm.",
+      "options": [
+        "25 cm.",
+        "15 cm.",
+        "10 cm.",
+        "20 cm."
+      ]
+    },
+    {
+      "id": "static-literature-ramayana",
+      "category": "Literature & Culture",
+      "q": "Who is traditionally credited with composing the Sanskrit Ramayana?",
+      "a": "Valmiki.",
+      "options": [
+        "Valmiki.",
+        "Tulsidas.",
+        "Kalidasa.",
+        "Vyasa."
+      ]
+    },
+    {
+      "id": "static-gk-vitamin-sunlight",
+      "category": "Health & Science",
+      "q": "Which vitamin can the human body make when skin is exposed to sunlight?",
+      "a": "Vitamin D.",
+      "options": [
+        "Vitamin A.",
+        "Vitamin C.",
+        "Vitamin B12.",
+        "Vitamin D."
+      ]
+    },
+    {
+      "id": "static-gk-transpiration",
+      "category": "Plant Science",
+      "q": "What is the process called in which plants release water vapour mainly through their leaves?",
+      "a": "Transpiration.",
+      "options": [
+        "Fertilisation.",
+        "Germination.",
+        "Transpiration.",
+        "Pollination."
+      ]
+    },
+    {
+      "id": "static-gk-water-formula",
+      "category": "Science",
+      "q": "What is the chemical formula for water?",
+      "a": "H₂O.",
+      "options": [
+        "CO₂.",
+        "O₂.",
+        "H₂O.",
+        "NaCl."
+      ]
+    }
+  ]
+}
