@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-16",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-human-lungs",
+      "category": "Human Biology",
+      "q": "Which organs help humans breathe?",
+      "a": "The lungs.",
+      "options": [
+        "The pancreas.",
+        "The lungs.",
+        "The kidneys.",
+        "The stomach."
+      ]
+    },
+    {
+      "id": "static-earth-satellite",
+      "category": "Astronomy",
+      "q": "What is Earth's natural satellite?",
+      "a": "The Moon.",
+      "options": [
+        "The Sun.",
+        "Mars.",
+        "Venus.",
+        "The Moon."
+      ]
+    },
+    {
+      "id": "static-telangana-river",
+      "category": "Telangana GK",
+      "q": "Which major river flows through Telangana and is one of India's longest rivers?",
+      "a": "Godavari.",
+      "options": [
+        "Ravi.",
+        "Godavari.",
+        "Narmada.",
+        "Beas."
+      ]
+    },
+    {
+      "id": "static-biodiversity",
+      "category": "Environment",
+      "q": "What does biodiversity mean?",
+      "a": "The variety of living organisms in an area or on Earth.",
+      "options": [
+        "The variety of living organisms in an area or on Earth.",
+        "The movement of water through the atmosphere.",
+        "The number of buildings in a city.",
+        "The amount of rainfall in a year."
+      ]
+    },
+    {
+      "id": "static-maths-right-angle",
+      "category": "Mathematics",
+      "q": "How many degrees are in a right angle?",
+      "a": "90 degrees.",
+      "options": [
+        "360 degrees.",
+        "90 degrees.",
+        "180 degrees.",
+        "45 degrees."
+      ]
+    }
+  ]
+}

@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-11-15",
+  "date": "2026-11-16",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-maths-perimeter-square",
+      "id": "static-human-lungs",
+      "category": "Human Biology",
+      "q": "Which organs help humans breathe?",
+      "a": "The lungs.",
+      "options": [
+        "The pancreas.",
+        "The lungs.",
+        "The kidneys.",
+        "The stomach."
+      ]
+    },
+    {
+      "id": "static-earth-satellite",
+      "category": "Astronomy",
+      "q": "What is Earth's natural satellite?",
+      "a": "The Moon.",
+      "options": [
+        "The Sun.",
+        "Mars.",
+        "Venus.",
+        "The Moon."
+      ]
+    },
+    {
+      "id": "static-telangana-river",
+      "category": "Telangana GK",
+      "q": "Which major river flows through Telangana and is one of India's longest rivers?",
+      "a": "Godavari.",
+      "options": [
+        "Ravi.",
+        "Godavari.",
+        "Narmada.",
+        "Beas."
+      ]
+    },
+    {
+      "id": "static-biodiversity",
+      "category": "Environment",
+      "q": "What does biodiversity mean?",
+      "a": "The variety of living organisms in an area or on Earth.",
+      "options": [
+        "The variety of living organisms in an area or on Earth.",
+        "The movement of water through the atmosphere.",
+        "The number of buildings in a city.",
+        "The amount of rainfall in a year."
+      ]
+    },
+    {
+      "id": "static-maths-right-angle",
       "category": "Mathematics",
-      "q": "What is the perimeter of a square with each side 5 cm?",
-      "a": "20 cm.",
+      "q": "How many degrees are in a right angle?",
+      "a": "90 degrees.",
       "options": [
-        "25 cm.",
-        "15 cm.",
-        "10 cm.",
-        "20 cm."
-      ]
-    },
-    {
-      "id": "static-literature-ramayana",
-      "category": "Literature & Culture",
-      "q": "Who is traditionally credited with composing the Sanskrit Ramayana?",
-      "a": "Valmiki.",
-      "options": [
-        "Valmiki.",
-        "Tulsidas.",
-        "Kalidasa.",
-        "Vyasa."
-      ]
-    },
-    {
-      "id": "static-gk-vitamin-sunlight",
-      "category": "Health & Science",
-      "q": "Which vitamin can the human body make when skin is exposed to sunlight?",
-      "a": "Vitamin D.",
-      "options": [
-        "Vitamin A.",
-        "Vitamin C.",
-        "Vitamin B12.",
-        "Vitamin D."
-      ]
-    },
-    {
-      "id": "static-gk-transpiration",
-      "category": "Plant Science",
-      "q": "What is the process called in which plants release water vapour mainly through their leaves?",
-      "a": "Transpiration.",
-      "options": [
-        "Fertilisation.",
-        "Germination.",
-        "Transpiration.",
-        "Pollination."
-      ]
-    },
-    {
-      "id": "static-gk-water-formula",
-      "category": "Science",
-      "q": "What is the chemical formula for water?",
-      "a": "H₂O.",
-      "options": [
-        "CO₂.",
-        "O₂.",
-        "H₂O.",
-        "NaCl."
+        "360 degrees.",
+        "90 degrees.",
+        "180 degrees.",
+        "45 degrees."
       ]
     }
   ]
