@@ -138,7 +138,19 @@ def eligible(q):
         and curated_options(q) is not None
     )
 
-unused = [q for q in bank if eligible(q) and q["id"] not in used_ids]
+# De-duplicate normalized question text before selection. The curated bank
+# contains some repeated prompts under different IDs; the workflow validator
+# correctly rejects those if two variants land in the same daily set.
+unused = []
+seen_question_text = set()
+for q in bank:
+    if not eligible(q) or q["id"] in used_ids:
+        continue
+    question_key = answer_key(q.get("q"))
+    if question_key in seen_question_text:
+        continue
+    seen_question_text.add(question_key)
+    unused.append(q)
 if len(unused) < 5:
     raise RuntimeError(
         f"GK question bank exhausted: only {len(unused)} unused eligible questions remain; "
