@@ -1576,8 +1576,8 @@ function vParentContacts(){
 function exportParentContacts(){
   const rows=[["Student Name","Parent Name","Class","Student ID","Parent Mobile"]];
   studentsOf("all").forEach(s=>rows.push([s.name||"",s.parent||"",clsLabel(s.cls),s.id||"",s.phone||""]));
-  const csv=rows.map(row=>row.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\\r\\n");
-  const blob=new Blob(["\\uFEFF"+csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
+  const csv=rows.map(row=>row.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\r\n");
+  const blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
   a.href=url;a.download="tasvia-parent-contacts-"+today()+".csv";a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);
   toast("Parent contact list exported");
 }
