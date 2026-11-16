@@ -671,9 +671,9 @@ const DEFAULT_INFO={name:"TASVIA Academy Tuition Centre",notice:"Admissions open
   subjects:"All subjects, LKG to Intermediate (State Board and CBSE)",
   extra:"TASVIA Academy Competitive Coaching: Navodaya (JNVST) and Sainik School entrance.",upi:"badavathpremdas2@ybl"};
 
-let S={students:{},att:{},fees:{},paymentRecords:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},diary:{}};
+let S={students:{},att:{},fees:{},paymentRecords:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},diary:{},assignments:{},staffAccounts:{}};
 let db=null,unsubs=[];
-const UI={tab:"today",seg:"students",dashboardHome:true,more:null,date:today(),cls:"all",feeMonth:today().slice(0,7),moneyMonth:today().slice(0,7),q:"",testCls:"all",cardCls:null,rcFrom:null,rcTo:null,parentContactQ:"",parentContactCls:"all"};
+const UI={tab:"today",seg:"students",dashboardHome:true,more:null,date:today(),cls:"all",feeMonth:today().slice(0,7),moneyMonth:today().slice(0,7),q:"",testCls:"all",cardCls:null,rcFrom:null,rcTo:null,parentContactQ:"",parentContactCls:"all",assignmentFilter:"all"};
 
 function today(){try{const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Kolkata",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());const v={};parts.forEach(p=>{if(p.type!=="literal")v[p.type]=p.value});if(v.year&&v.month&&v.day)return v.year+"-"+v.month+"-"+v.day}catch(e){}const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 function monthName(m){const [y,mo]=m.split("-");return new Date(+y,+mo-1,1).toLocaleDateString("en-IN",{month:"long",year:"numeric"})}
@@ -826,6 +826,19 @@ function subscribe(){
   pvLoad();schedulePV(true);
   /* Staff attendance and admin back-office data are loaded only when those screens are opened. */
   coll("diary","diary",db.collection("diary").orderBy("date","desc").limit(120));
+  const assignmentQuery=admin
+    ? db.collection("assignments").orderBy("createdAt","desc")
+    : db.collection("assignments").where("assignedToEmail","==",String(window.currentUser.email||"").trim().toLowerCase());
+  unsubs.push(assignmentQuery.onSnapshot(snap=>{
+    const rows={};snap.docs.forEach(doc=>rows[doc.id]=doc.data());
+    S.assignments=rows;scheduleRender();
+  },e=>onErr("assignments",e)));
+  if(admin){
+    unsubs.push(db.collection("Staff").onSnapshot(snap=>{
+      const rows={};snap.docs.forEach(doc=>rows[doc.id]=doc.data());
+      S.staffAccounts=rows;scheduleRender();
+    },e=>onErr("Staff roster",e)));
+  }
 }
 function ensureTeacherAttendance(){
   if(!db)return;
@@ -1683,9 +1696,10 @@ function vHomework(){
   }).join("");
   return h+`</div>`;
 }
-const ICONS={alerts:"M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0",parents:"M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7zM9 12l2 2 4-4",parentContacts:"M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM20 8v6M17 11h6",staff:"M16 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 20c0-3 3-5 6-5s6 2 6 5M14 15c3 0 8 1 8 5",money:"M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6",cards:"M3 5h18v14H3zM7 9h4v5H7zM14 10h4M14 13h3",centre:"M3 10l9-6 9 6M5 10v10h14V10M10 20v-5h4v5",backup:"M12 4v11M7 10l5 5 5-5M4 20h16"};
+const ICONS={assignments:"M4 5h16v15H4zM8 9h8M8 13h5M8 17h3M7 2v6M17 2v6",alerts:"M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0",parents:"M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7zM9 12l2 2 4-4",parentContacts:"M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM20 8v6M17 11h6",staff:"M16 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 20c0-3 3-5 6-5s6 2 6 5M14 15c3 0 8 1 8 5",money:"M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6",cards:"M3 5h18v14H3zM7 9h4v5H7zM14 10h4M14 13h3",centre:"M3 10l9-6 9 6M5 10v10h14V10M10 20v-5h4v5",backup:"M12 4v11M7 10l5 5 5-5M4 20h16"};
 function mhead(title,sub,right){return `<button class="back" data-act="more" data-k="">‹ More</button><div class="hd"><div><h2>${title}</h2>${sub?`<div class="sub">${sub}</div>`:""}</div>${right||""}</div>`}
 function vMore(){
+  if(UI.more==="assignments")return vAssignments();
   if(UI.more==="staff"){if(!isAdmin()){UI.more=null;return vMore()}return vStaff();}
   if(UI.more==="money"){if(!isAdmin()){UI.more=null;return vMore()}return vMoney();}
   if(UI.more==="cards")return vCards();
@@ -1695,7 +1709,7 @@ function vMore(){
    if(UI.more==="parentContacts")return vParentContacts();
   if(UI.more==="alerts")return vAlerts();
   const m=today().slice(0,7),ts=teachersList(),salDue=ts.filter(t=>t.salary&&salStatus(t,m).k!=="paid").length;
-  const items=[...(isAdmin()?[["staff","Staff & salaries",`${ts.length} teacher${ts.length===1?"":"s"}${salDue?` · ${salDue} salar${salDue===1?"y":"ies"} due`:""}`]]:[]),
+  const items=[["assignments","Work assignments",`${Object.values(S.assignments||{}).filter(a=>a.status!=="Completed").length} open task(s)`],...(isAdmin()?[["staff","Staff & salaries",`${ts.length} teacher${ts.length===1?"":"s"}${salDue?` · ${salDue} salar${salDue===1?"y":"ies"} due`:""}`]]:[]),
     ...(isAdmin()?[["money","Expenses & profit",`${monthName(m)} summary`]]:[]),
     ["cards","Report cards & ID cards","Print or share on WhatsApp"],
     ["centre","Centre info & language","Notice, timings, message language"],
@@ -1829,8 +1843,32 @@ function vBackup(){
   let h=mhead("Backups","Permanent staff backup of homework & daily GK");
   h+=`<div class="seg" role="tablist"><button class="${UI.backupTab!=="gk"?"on":""}" data-act="backupTab" data-k="homework">Homework archive</button><button class="${UI.backupTab==="gk"?"on":""}" data-act="backupTab" data-k="gk">Daily GK archive</button></div>`;
   h+=UI.backupTab==="gk"?gkBackupHTML():`<div class="notice">Homework remains in Firebase diary records. The parent portal only shows the active recent homework; staff can use this archive to recover older entries.</div>`+homeworkBackupHTML();
-  if(downloads)h+=`<div class="card" style="margin-top:14px"><h3>Spreadsheet backup</h3><p class="sub" style="margin:0 0 10px">Keep a copy in Excel or Google Sheets.</p><div class="acts">`+[["students","Students"],["payments","Fee payments"],["marks","Test marks"],["money","Salaries & expenses"],["tattendance","Teacher attendance"]].map(([k,l])=>`<button class="btn ghost" data-act="export" data-k="${k}">${l}</button>`).join("")+`</div></div>`;h+=`<div class="card" style="margin-top:14px"><h3>Complete backup & restore</h3><p class="sub" style="margin:0 0 10px">Backup students, attendance, tests, fees, homework, staff, salaries, expenses, centre settings and daily GK in one JSON file.</p><div class="acts"><button class="btn gold" data-act="backupNow">Create full backup</button><button class="btn ghost" data-act="restoreBackup">Restore backup</button></div><p class="sub" style="margin:10px 0 0">Keep the downloaded file somewhere safe. Restore should only be used by the admin.</p></div>`;
+  if(downloads)h+=`<div class="card" style="margin-top:14px"><h3>Spreadsheet backup</h3><p class="sub" style="margin:0 0 10px">Keep a copy in Excel or Google Sheets.</p><div class="acts">`+[["students","Students"],["payments","Fee payments"],["marks","Test marks"],["money","Salaries & expenses"],["tattendance","Teacher attendance"]].map(([k,l])=>`<button class="btn ghost" data-act="export" data-k="${k}">${l}</button>`).join("")+`</div></div>`;h+=`<div class="card" style="margin-top:14px"><h3>Complete backup & restore</h3><p class="sub" style="margin:0 0 10px">Backup students, attendance, tests, fees, homework, staff, assignments, salaries, expenses, centre settings and daily GK in one JSON file.</p><div class="acts"><button class="btn gold" data-act="backupNow">Create full backup</button><button class="btn ghost" data-act="restoreBackup">Restore backup</button></div><p class="sub" style="margin:10px 0 0">Keep the downloaded file somewhere safe. Restore should only be used by the admin.</p></div>`;
   return h;
+}
+
+function assignmentRows(){return Object.entries(S.assignments||{}).map(([id,a])=>({id,...a})).sort((a,b)=>(String(a.dueDate||"9999-12-31").localeCompare(String(b.dueDate||"9999-12-31"))||(+b.createdAt||0)-(+a.createdAt||0)))}
+function vAssignments(){
+ const admin=isAdmin(),rows=assignmentRows(),open=rows.filter(a=>a.status!=="Completed").length;
+ let h=mhead("Work assignments",admin?"Assign and monitor staff tasks":"Tasks assigned to you",admin?'<button class="btn gold" data-act="assignmentAdd">Assign task</button>':"");
+ h+=`<div class="board"><div class="pp"><b style="font-size:1.4rem">${rows.length}</b><small>Total tasks</small></div><div class="aa"><b style="font-size:1.4rem">${open}</b><small>Open</small></div><div><b>${rows.filter(a=>a.status==="Completed").length}</b><small>Completed</small></div></div>`;
+ h+=`<div class="chips"><button class="chip ${UI.assignmentFilter==="all"?"on":""}" data-act="assignmentFilter" data-k="all">All</button><button class="chip ${UI.assignmentFilter==="open"?"on":""}" data-act="assignmentFilter" data-k="open">Open</button><button class="chip ${UI.assignmentFilter==="Completed"?"on":""}" data-act="assignmentFilter" data-k="Completed">Completed</button></div>`;
+ const filtered=rows.filter(a=>UI.assignmentFilter==="all"||(UI.assignmentFilter==="open"?a.status!=="Completed":a.status===UI.assignmentFilter));
+ if(!filtered.length)return h+`<div class="empty"><p>${admin?"No assignments yet. Create the first staff task.":"No tasks in this section."}</p>${admin?'<button class="btn gold" data-act="assignmentAdd">Assign task</button>':""}</div>`;
+ h+=`<div class="list">`+filtered.map(a=>{const status=a.status||"Assigned",tag=status==="Completed"?'<span class="tag ok">Completed</span>':status==="In progress"?'<span class="tag due">In progress</span>':'<span class="tag n">Assigned</span>';return `<button class="item" data-act="assignmentOpen" data-id="${esc(a.id)}"><div class="grow"><div class="nm">${esc(a.title||"Untitled task")}</div><div class="mt">${admin?"To: "+esc(a.assignedToName||a.assignedToEmail||"Staff")+" · ":""}Due: ${a.dueDate?nice(a.dueDate):"No deadline"} · ${esc(a.priority||"Normal")} priority</div></div>${tag}</button>`}).join("")+`</div>`;
+ return h;
+}
+function assignmentForm(){
+ if(!requireAdmin())return;
+ const staff=Object.entries(S.staffAccounts||{}).map(([id,x])=>({email:String(x.email||id).trim().toLowerCase(),name:String(x.name||x.fullName||x.email||id),role:String(x.role||"staff").toLowerCase()})).filter(x=>x.email.includes("@")&&x.email!=="tasviaacademy@gmail.com"&&x.role!=="admin");
+ if(!staff.length){openSheet("Assign a task",'<div class="notice">No staff accounts were found. Add or verify staff login accounts first, then return here.</div>');return;}
+ openSheet("Assign a staff task",`<form id="fAssignment"><label class="f">Task title<input name="title" maxlength="100" required placeholder="e.g. Prepare Friday test papers"></label><label class="f">Assign to<select name="assignedToEmail" required><option value="">Select staff member</option>${staff.map(x=>`<option value="${esc(x.email)}">${esc(x.name)} · ${esc(x.email)}</option>`).join("")}</select></label><div class="two"><label class="f">Due date<input name="dueDate" type="date"></label><label class="f">Priority<select name="priority"><option>Normal</option><option>High</option><option>Urgent</option></select></label></div><label class="f">Instructions<textarea name="details" rows="4" maxlength="2000" placeholder="Add clear instructions and expected outcome"></textarea></label><div class="acts"><button class="btn gold" type="submit">Assign task</button></div></form>`);
+}
+function assignmentSheet(id){
+ const a=S.assignments[id];if(!a)return;
+ const admin=isAdmin(),mine=String(a.assignedToEmail||"").toLowerCase()===String(window.currentUser.email||"").toLowerCase();
+ if(!admin&&!mine){toast("You can only open tasks assigned to your account.");return;}
+ openSheet(esc(a.title||"Task details"),`<div class="card"><dl class="kv"><dt>Assigned to</dt><dd>${esc(a.assignedToName||a.assignedToEmail||"–")}</dd><dt>Due date</dt><dd>${a.dueDate?nice(a.dueDate):"No deadline"}</dd><dt>Priority</dt><dd>${esc(a.priority||"Normal")}</dd><dt>Status</dt><dd>${esc(a.status||"Assigned")}</dd><dt>Assigned by</dt><dd>${esc(a.createdByName||a.createdByEmail||"Admin")}</dd></dl>${a.details?`<p style="white-space:pre-wrap;margin:10px 0 0">${esc(a.details)}</p>`:""}</div>${!admin?`<form id="fAssignmentUpdate" data-id="${esc(id)}"><label class="f">Update status<select name="status"><option ${(a.status||"Assigned")==="Assigned"?"selected":""}>Assigned</option><option ${a.status==="In progress"?"selected":""}>In progress</option><option ${a.status==="Completed"?"selected":""}>Completed</option></select></label><label class="f">Progress note<textarea name="staffNote" rows="3" maxlength="1000" placeholder="Add an update for the administrator">${esc(a.staffNote||"")}</textarea></label><div class="acts"><button class="btn gold" type="submit">Save progress</button></div></form>`:`<div class="notice">Staff update: ${esc(a.staffNote||"No update yet.")}</div><div class="acts"><button class="btn danger" data-act="assignmentDelete" data-id="${esc(id)}">Delete task</button></div>`}`);
 }
 function vStudents(){
   let h=`<div class="hd"><div><h2>Students</h2><div class="sub">${studentsOf("all").length} studying now</div></div>${isAdmin()?`<button class="btn gold" data-act="addStudent">Add student</button>`:""}</div>`;
@@ -2313,7 +2351,7 @@ async function exportCSV(kind){
 function buildFullBackup(){
   const data={version:1,createdAt:new Date().toISOString(),app:"TASVIA Academy",collections:{
     students:S.students||{},fees:S.fees||{},paymentRecords:S.paymentRecords||{},tests:S.tests||{},attendance:S.att||{},diary:S.diary||{},
-    teachers:S.teachers||{},salaries:S.salaries||{},expenses:S.expenses||{},staffattendance:S.tatt||{},
+    teachers:S.teachers||{},salaries:S.salaries||{},expenses:S.expenses||{},staffattendance:S.tatt||{},assignments:S.assignments||{},
     info:S.info?{centre:S.info}:{} ,gkBackup:gkBackupRows||{}
   }};
   return data;
@@ -2338,7 +2376,7 @@ function restoreBackupFile(){
       const data=JSON.parse(await f.text()),c=data&&data.collections;
       if(!c||data.app!=="TASVIA Academy")throw new Error("Invalid backup");      if(!confirm("Restore this TASVIA backup? Existing matching records will be overwritten. This cannot be undone."))return;
       if(!db)throw new Error("Database unavailable");
-      const maps={students:c.students,fees:c.fees,paymentRecords:c.paymentRecords,tests:c.tests,attendance:c.attendance,diary:c.diary,teachers:c.teachers,salaries:c.salaries,expenses:c.expenses,staffattendance:c.staffattendance,gkBackup:c.gkBackup};
+      const maps={students:c.students,fees:c.fees,paymentRecords:c.paymentRecords,tests:c.tests,attendance:c.attendance,diary:c.diary,teachers:c.teachers,salaries:c.salaries,expenses:c.expenses,staffattendance:c.staffattendance,assignments:c.assignments,gkBackup:c.gkBackup};
       for(const [col,docs] of Object.entries(maps)){
         if(!docs||typeof docs!=="object")continue;
         const entries=Array.isArray(docs)?docs.map(x=>[x.id,x]):Object.entries(docs);
@@ -2366,7 +2404,7 @@ document.addEventListener("input",e=>{
 });
 document.addEventListener("click",async e=>{
   const b=e.target.closest("[data-act]");if(!b)return;
-  if(!isAdmin()&&["addTeacher","editTeacher","paySal","delSal","delTeacher","addExpense","delExp" ,"addStudent","editStudent","editInfo","delStudent","delPay","resetPL","export","delTest"].includes(b.dataset.act)){toast("Admin access required.");return;}
+  if(!isAdmin()&&["assignmentAdd","assignmentDelete","addTeacher","editTeacher","paySal","delSal","delTeacher","addExpense","delExp" ,"addStudent","editStudent","editInfo","delStudent","delPay","resetPL","export","delTest"].includes(b.dataset.act)){toast("Admin access required.");return;}
   const a=b.dataset.act,id=b.dataset.id;
     switch(a){
     case "tab":
@@ -2387,6 +2425,10 @@ document.addEventListener("click",async e=>{
       break;
     case "more":UI.more=b.dataset.k||null;UI.tab="more";UI.dashboardHome=false;if(UI.more==="money"&&!isAdmin()){UI.more=null;toast("Admin access required.");break;}if(UI.more==="backup")ensureGKBackup();render();window.scrollTo(0,0);break;
     case "backupTab":UI.backupTab=b.dataset.k==="gk"?"gk":"homework";render();break;
+    case "assignmentAdd":assignmentForm();break;
+    case "assignmentOpen":assignmentSheet(id);break;
+    case "assignmentFilter":UI.assignmentFilter=b.dataset.k||"all";render();break;
+    case "assignmentDelete":if(requireAdmin()&&confirmDel(b,"Tap again to permanently delete this task")){delete S.assignments[id];remove("assignments/"+id);closeSheet();render();toast("Assignment deleted")}break;
     case "markT":markT(UI.date,id,b.dataset.v);break;
     case "addTeacher":teacherForm();break;
     case "editTeacher":teacherForm(id);break;
@@ -2482,9 +2524,24 @@ document.addEventListener("change",e=>{
   if(e.target.id==="prefAlerts"){PREF.alerts=e.target.checked;savePref()}
   if(e.target.id==="rcTo"&&e.target.value){UI.rcTo=e.target.value}
 });
-document.addEventListener("submit",e=>{
+document.addEventListener("submit",async e=>{
   if(e.target.id==="fLogin")return;
   e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f));
+  if(f.id==="fAssignment"){
+    if(!requireAdmin())return;
+    const title=String(d.title||"").trim(),email=String(d.assignedToEmail||"").trim().toLowerCase();
+    const account=Object.entries(S.staffAccounts||{}).map(([key,x])=>({email:String(x.email||key).trim().toLowerCase(),name:String(x.name||x.fullName||x.email||key),role:String(x.role||"staff").toLowerCase()})).find(x=>x.email===email&&x.role!=="admin");
+    if(!title||!account)return toast("Enter a task title and choose a valid staff account");
+    const id=uid("task"),now=Date.now(),row={title,details:String(d.details||"").trim(),assignedToEmail:email,assignedToName:account.name,dueDate:String(d.dueDate||""),priority:["Normal","High","Urgent"].includes(d.priority)?d.priority:"Normal",status:"Assigned",staffNote:"",createdAt:now,updatedAt:now,createdByEmail:String(window.currentUser.email||"").toLowerCase(),createdByName:String(window.currentUser.name||"Admin")};
+    try{await db.collection("assignments").doc(id).set(row);S.assignments[id]=row;closeSheet();render();toast("Task assigned to "+account.name)}catch(err){console.error("Assignment create failed",err);toast(errMsg(err))}
+  }
+  if(f.id==="fAssignmentUpdate"){
+    const id=f.dataset.id,a=S.assignments[id],email=String(window.currentUser.email||"").toLowerCase();
+    if(!a||String(a.assignedToEmail||"").toLowerCase()!==email)return toast("This task is not assigned to your account");
+    const status=["Assigned","In progress","Completed"].includes(d.status)?d.status:"Assigned";
+    const patch={status,staffNote:String(d.staffNote||"").trim(),updatedAt:Date.now()};
+    try{await db.collection("assignments").doc(id).update(patch);S.assignments[id]=Object.assign({},a,patch);closeSheet();render();toast("Progress updated")}catch(err){console.error("Assignment update failed",err);toast(errMsg(err))}
+  }
   if(f.id==="fStudent"){
     const id=f.dataset.id||tasviaStudentId(d.joined);ownIds.add(id);const s={name:d.name.trim().replace(/\s+/g," "),cls:d.cls,board:d.board,parent:d.parent.trim(),phone:d.phone.trim(),fee:Math.max(0,Number(d.fee)||0),joined:d.joined,batch:d.batch||"",lang:d.lang||"en",notes:d.notes.trim(),active:f.dataset.id?d.active==="on":true};
     if(!s.name)return toast("Enter the student's name");
