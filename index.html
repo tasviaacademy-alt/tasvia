@@ -1566,7 +1566,7 @@ function vParentContacts(){
   h+=`<p class="sub" style="margin:0 0 10px">${list.length} of ${all.length} students · numbers are read from each student's saved profile.</p>`;
   if(!list.length)return h+`<div class="empty"><p>No matching parent contacts found.</p></div>`;
   h+=`<div class="list">`+list.map(s=>{
-    const phone=String(s.phone||"").trim(),digits=phone.replace(/\\D/g,"");
+    const phone=String(s.phone||"").trim(),digits=phone.replace(/\D/g,"");
     const call=digits?`<a class="btn sm ghost" href="tel:${esc(phone)}">Call</a>`:`<span class="tag n">No number</span>`;
     const wa=digits?`<a class="btn sm gold" target="_blank" rel="noopener" href="${waLink(phone,"Hello "+(s.parent||"Parent")+", regarding "+s.name+" from TASVIA Academy.")}">WhatsApp</a>`:"";
     return `<div class="item"><div class="grow"><div class="nm">${esc(s.parent||"Parent not entered")} · ${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)} · ${esc(phone||"No number saved")} · ID: ${esc(s.id)}</div></div><div class="acts" style="margin:0;flex:0 0 auto">${call}${wa}</div></div>`;
@@ -2402,7 +2402,8 @@ document.addEventListener("click",async e=>{
     case "remindAll":remindSheet();break;
     case "testSound":{const was=PREF.sound;PREF.sound=true;SOUND.alert();PREF.sound=was;banner("TASVIA Academy","This is how alerts will look and sound.");break}
     case "askNotif":Notification.requestPermission().then(()=>render());break;
-    case "exportParents":exportParentContacts();break;\n     case "copyPL":copy(parentURL(S.students[id].pcode));break;
+    case "exportParents":exportParentContacts();break;
+     case "copyPL":copy(parentURL(S.students[id].pcode));break;
     case "resetPL":if(confirmDel(b,"Tap again: old link stops")){const st=S.students[id],old=st.pcode,code=newCode();if(old)remove("parentView/"+old);S.students[id]=Object.assign({},st,{pcode:code});if(db){db.doc("students/"+id).set({pcode:code},{merge:true}).catch(e=>toast(errMsg(e)));getPhoto(id).then(p=>{if(p)db.doc("parentView/"+code).set({photo:p},{merge:true}).catch(()=>{})})}schedulePV();studentSheet(id);toast("New link created")}break;
     case "signOut":
       if(confirmDel(b,"Tap again to sign out")&&auth){
