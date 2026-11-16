@@ -6,6 +6,26 @@
 <title>TASVIA Academy</title>
 <meta name="theme-color" content="#0B2455">
 <script>
+/* SECURITY: credentials must never be accepted or retained in the page URL. */
+(function(){
+  try{
+    const url=new URL(window.location.href);
+    let changed=false;
+    for(const key of Array.from(url.searchParams.keys())){
+      if(/^(email|password|pass|pwd|token|access_token|id_token)$/i.test(key)){
+        url.searchParams.delete(key);
+        changed=true;
+      }
+    }
+    if(changed){
+      const clean=url.pathname+(url.search?url.search:"")+(url.hash||"");
+      window.history.replaceState(window.history.state,"",clean);
+      console.warn("TASVIA security: sensitive URL parameters were removed. Sign in using the secure form.");
+    }
+  }catch(e){console.warn("TASVIA URL security guard:",e);}
+})();
+</script>
+<script>
 /* Staff login is handled directly by the dashboard gate. Keeping login and dashboard on one page avoids iOS/PWA auth handoff loops. */
 </script>
 
@@ -2864,7 +2884,7 @@ loginForm.addEventListener("submit",async e=>{
 render();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startFirebase,{once:true});
 else startFirebase();
-if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=99",{scope:"./",updateViaCache:"none"}).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("./sw.js?v=100",{scope:"./",updateViaCache:"none"}).catch(e=>console.warn("TASVIA service worker unavailable:",e))}
 
 /* TASVIA STAFF NAVIGATION QUALITY: native back button returns through app screens. */
 (function(){
