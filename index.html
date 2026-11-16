@@ -2308,8 +2308,9 @@ document.addEventListener("input",e=>{
   if(e.target&&e.target.id==="parentContactSearch"){
     UI.parentContactQ=e.target.value;
     const pos=e.target.selectionStart;
-    const root=document.getElementById("app");
-    if(root){root.innerHTML=render();const next=document.getElementById("parentContactSearch");if(next){next.focus();next.setSelectionRange(pos,pos)}}
+    render();
+    const next=document.getElementById("parentContactSearch");
+    if(next){next.focus();next.setSelectionRange(pos,pos)}
   }
 });
 document.addEventListener("click",async e=>{
