@@ -83,6 +83,24 @@ service cloud.firestore {
       allow read, write: if staff();
     }
 
+    // Staff assignments: admins manage tasks; staff can read only their own
+    // tasks and update only status/progress notes for those tasks.
+    match /assignments/{id} {
+      allow read: if admin()
+        || (staff() && resource.data.assignedToEmail == request.auth.token.email);
+      allow create, delete: if admin();
+      allow update: if admin()
+        || (
+          staff()
+          && resource.data.assignedToEmail == request.auth.token.email
+          && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['status', 'staffNote', 'updatedAt'])
+          && request.resource.data.status in ['Assigned', 'In progress', 'Completed']
+          && request.resource.data.staffNote is string
+          && request.resource.data.staffNote.size() <= 1000
+        );
+    }
+
     match /teachers/{id} {
       allow read, write: if admin();
     }
