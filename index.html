@@ -1561,15 +1561,19 @@ function vParentContacts(){
   const all=studentsOf(UI.parentContactCls||"all");
   const list=all.filter(s=>[s.name,s.parent,s.phone,s.cls,s.id].some(v=>String(v||"").toLowerCase().includes(q)));
   let h=mhead("Parent Contact Directory","All registered students · authorised staff access",`<button class="btn gold" data-act="exportParents">Export CSV</button>`);
-  h+=`<label class="f" style="margin-bottom:10px">Search parent, student or mobile number<input id="parentContactSearch" type="search" value="${esc(UI.parentContactQ||"")}" placeholder="Search name or phone" autocomplete="off"></label>`;
+  h+=`<div class="pc-tools"><label class="f">Search parent, student or mobile number<input id="parentContactSearch" type="search" value="${esc(UI.parentContactQ||"")}" placeholder="Search name or phone" autocomplete="off"></label></div>`;
   h+=classChips("parentContactCls");
-  h+=`<p class="sub" style="margin:0 0 10px">${list.length} of ${all.length} students · numbers are read from each student's saved profile.</p>`;
+  h+=`<div class="pc-summary"><span>${list.length} contacts</span><span>${all.length} students in selected view</span></div>`;
   if(!list.length)return h+`<div class="empty"><p>No matching parent contacts found.</p></div>`;
-  h+=`<div class="list">`+list.map(s=>{
+  h+=`<div class="pc-grid">`+list.map(s=>{
     const phone=String(s.phone||"").trim(),digits=phone.replace(/\D/g,"");
-    const call=digits?`<a class="btn sm ghost" href="tel:${esc(phone)}">Call</a>`:`<span class="tag n">No number</span>`;
+    const call=digits?`<a class="btn sm ghost" href="tel:${esc(phone)}">Call</a>`:`<span class="tag n">No number saved</span>`;
     const wa=digits?`<a class="btn sm gold" target="_blank" rel="noopener" href="${waLink(phone,"Hello "+(s.parent||"Parent")+", regarding "+s.name+" from TASVIA Academy.")}">WhatsApp</a>`:"";
-    return `<div class="item"><div class="grow"><div class="nm">${esc(s.parent||"Parent not entered")} · ${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)} · ${esc(phone||"No number saved")} · ID: ${esc(s.id)}</div></div><div class="acts" style="margin:0;flex:0 0 auto">${call}${wa}</div></div>`;
+    return `<article class="pc-card">
+      <div class="pc-card-top"><div class="pc-avatar" aria-hidden="true">${esc((s.name||"S").trim().charAt(0).toUpperCase())}</div><div class="pc-names"><div class="pc-parent">${esc(s.parent||"Parent name not entered")}</div><div class="pc-student">${esc(s.name||"Student name not entered")}</div></div><span class="pc-class">${esc(clsLabel(s.cls))}</span></div>
+      <div class="pc-phone-row"><span class="pc-label">PARENT MOBILE</span><span class="pc-phone">${esc(phone||"Not provided")}</span></div>
+      <div class="pc-card-actions">${call}${wa}</div>
+    </article>`;
   }).join("")+`</div>`;
   return h;
 }
@@ -2199,6 +2203,31 @@ main{animation:tasviaPageIn .22s ease-out both}
 .sync{animation:none!important}
 .btn:hover,.dashboard-tile:hover{transform:translateY(-1px)}
 
+
+/* Parent Contact Directory — compact, consistent responsive cards */
+.pc-tools{margin:0 0 12px}
+.pc-tools .f{display:block;width:100%;max-width:560px}
+.pc-tools input{width:100%;margin-top:5px}
+.pc-summary{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:.88rem;margin:12px 0}
+.pc-summary span:first-child{font-weight:700;color:var(--ink)}
+.pc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,310px),1fr));gap:14px;align-items:stretch;margin-top:10px}
+.pc-card{min-width:0;min-height:0;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px;display:flex;flex-direction:column;gap:12px;box-shadow:0 2px 8px rgba(15,35,70,.045)}
+.pc-card-top{display:flex;align-items:center;gap:11px;min-width:0}
+.pc-avatar{width:42px;height:42px;flex:0 0 42px;border-radius:13px;background:var(--board);color:var(--gold);display:grid;place-items:center;font-weight:800;font-size:1.1rem}
+.pc-names{min-width:0;flex:1}
+.pc-parent{font-weight:700;line-height:1.25;overflow-wrap:anywhere}
+.pc-student{font-size:.9rem;color:var(--muted);margin-top:3px;overflow-wrap:anywhere}
+.pc-class{flex:0 0 auto;max-width:115px;text-align:center;background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:4px 9px;font-size:.75rem;font-weight:700;line-height:1.3}
+.pc-phone-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pc-label{font-size:.7rem;font-weight:700;letter-spacing:.06em;color:var(--muted)}
+.pc-phone{font-weight:700;font-variant-numeric:tabular-nums;text-align:right;overflow-wrap:anywhere}
+.pc-card-actions{display:flex;gap:9px;align-items:center}
+.pc-card-actions .btn{min-width:92px;text-align:center}
+@media(max-width:600px){
+ .pc-grid{grid-template-columns:minmax(0,1fr);gap:10px}
+ .pc-card{padding:13px;gap:10px}
+ .pc-summary{margin:9px 0}
+}
 </style>
 
 
