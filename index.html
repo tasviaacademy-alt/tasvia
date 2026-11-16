@@ -529,11 +529,11 @@ nav{border-top:1px solid #E2E8F0!important}
   .menu .item{min-height:150px;height:100%}
 }
 
-/* TASVIA STAFF DASHBOARD — compact 3-column tile layout on mobile */
+/* TASVIA STAFF DASHBOARD — readable two-column More menu on phones on mobile */
 @media(max-width:600px){
   .menu{
     display:grid!important;
-    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
     grid-auto-rows:1fr;
     gap:9px!important;
     align-items:stretch;
@@ -551,6 +551,8 @@ nav{border-top:1px solid #E2E8F0!important}
     border-radius:10px!important;
   }
   .menu .ic svg{width:19px!important;height:19px!important}
+  .menu .item .nm{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;overflow-wrap:anywhere;font-size:.92rem!important;line-height:1.25!important}
+  .menu .item .mt{white-space:normal!important;overflow-wrap:anywhere;font-size:.78rem!important;line-height:1.35!important}
   .menu .item b,.menu .item strong{
     font-size:.88rem!important;
     line-height:1.2!important;
@@ -1684,7 +1686,7 @@ function vHomework(){
 const ICONS={alerts:"M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0",parents:"M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7zM9 12l2 2 4-4",parentContacts:"M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM20 8v6M17 11h6",staff:"M16 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 20c0-3 3-5 6-5s6 2 6 5M14 15c3 0 8 1 8 5",money:"M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6",cards:"M3 5h18v14H3zM7 9h4v5H7zM14 10h4M14 13h3",centre:"M3 10l9-6 9 6M5 10v10h14V10M10 20v-5h4v5",backup:"M12 4v11M7 10l5 5 5-5M4 20h16"};
 function mhead(title,sub,right){return `<button class="back" data-act="more" data-k="">‹ More</button><div class="hd"><div><h2>${title}</h2>${sub?`<div class="sub">${sub}</div>`:""}</div>${right||""}</div>`}
 function vMore(){
-  if(UI.more==="staff")return vStaff();
+  if(UI.more==="staff"){if(!isAdmin()){UI.more=null;return vMore()}return vStaff();}
   if(UI.more==="money"){if(!isAdmin()){UI.more=null;return vMore()}return vMoney();}
   if(UI.more==="cards")return vCards();
   if(UI.more==="centre")return mhead("Centre info","What parents see when you share",`<button class="btn ghost" data-act="editInfo">Edit</button>`)+vCentre();
@@ -1693,7 +1695,7 @@ function vMore(){
    if(UI.more==="parentContacts")return vParentContacts();
   if(UI.more==="alerts")return vAlerts();
   const m=today().slice(0,7),ts=teachersList(),salDue=ts.filter(t=>t.salary&&salStatus(t,m).k!=="paid").length;
-  const items=[["staff","Staff & salaries",`${ts.length} teacher${ts.length===1?"":"s"}${salDue?` · ${salDue} salar${salDue===1?"y":"ies"} due`:""}`],
+  const items=[...(isAdmin()?[["staff","Staff & salaries",`${ts.length} teacher${ts.length===1?"":"s"}${salDue?` · ${salDue} salar${salDue===1?"y":"ies"} due`:""}`]]:[]),
     ...(isAdmin()?[["money","Expenses & profit",`${monthName(m)} summary`]]:[]),
     ["cards","Report cards & ID cards","Print or share on WhatsApp"],
     ["centre","Centre info & language","Notice, timings, message language"],
@@ -2038,7 +2040,7 @@ function hwForm(sid){
 }
 function hwSendSheet(sid,l){
   const s=S.students[sid];if(!s)return;
-  const e=((S.diary[UI.date]||{}).entries||{})[sid];if(!e||!e.hw)return;
+  const e=homeworkEntry(s,UI.date);if(!e||!e.hw)return;
   l=l||langOf(s);const txt=hwText(s,UI.date,e,l);
   openSheet("Send homework · "+s.name,`<div class="chips">${Object.entries(LANGS).map(([k,v])=>`<button class="chip ${k===l?"on":""}" data-act="hwLang" data-id="${sid}" data-l="${k}">${v.split(" (")[0]}</button>`).join("")}</div>
   <pre class="msg">${esc(txt)}</pre><div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,txt)}">Send to parent</a><button class="btn ghost" data-act="copyHw" data-id="${sid}" data-l="${l}">Copy</button></div>
