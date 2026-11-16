@@ -651,7 +651,7 @@ const DEFAULT_INFO={name:"TASVIA Academy Tuition Centre",notice:"Admissions open
 
 let S={students:{},att:{},fees:{},paymentRecords:{},tests:{},info:null,teachers:{},tatt:{},salaries:{},expenses:{},diary:{}};
 let db=null,unsubs=[];
-const UI={tab:"today",seg:"students",dashboardHome:true,more:null,date:today(),cls:"all",feeMonth:today().slice(0,7),moneyMonth:today().slice(0,7),q:"",testCls:"all",cardCls:null,rcFrom:null,rcTo:null};
+const UI={tab:"today",seg:"students",dashboardHome:true,more:null,date:today(),cls:"all",feeMonth:today().slice(0,7),moneyMonth:today().slice(0,7),q:"",testCls:"all",cardCls:null,rcFrom:null,rcTo:null,parentContactQ:"",parentContactCls:"all"};
 
 function today(){try{const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Kolkata",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());const v={};parts.forEach(p=>{if(p.type!=="literal")v[p.type]=p.value});if(v.year&&v.month&&v.day)return v.year+"-"+v.month+"-"+v.day}catch(e){}const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 function monthName(m){const [y,mo]=m.split("-");return new Date(+y,+mo-1,1).toLocaleDateString("en-IN",{month:"long",year:"numeric"})}
@@ -1536,6 +1536,31 @@ function parentCard(s){
   <div class="acts"><a class="btn gold" target="_blank" rel="noopener" href="${waLink(s.phone,parentLinkText(s)+"\n\nStudent ID: "+s.pcode+"\nParent PIN: "+(s.pin||"Please wait."))}">Send ID + PIN on WhatsApp</a><button class="btn ghost" data-act="copyPL" data-id="${s.id}">Copy link</button><a class="btn ghost" target="_blank" rel="noopener" href="${esc(u)}">Open</a><button class="btn danger" data-act="resetPL" data-id="${s.id}">New link</button></div>
   <p class="sub" style="margin:8px 0 0;font-size:.82rem">Use "New link" if the link was shared with the wrong person. The old link stops working.</p></div>`;
 }
+function vParentContacts(){
+  const q=String(UI.parentContactQ||"").trim().toLowerCase();
+  const all=studentsOf(UI.parentContactCls||"all");
+  const list=all.filter(s=>[s.name,s.parent,s.phone,s.cls,s.id].some(v=>String(v||"").toLowerCase().includes(q)));
+  let h=mhead("Parent Contact Directory","All registered students · authorised staff access",`<button class="btn gold" data-act="exportParents">Export CSV</button>`);
+  h+=`<label class="f" style="margin-bottom:10px">Search parent, student or mobile number<input id="parentContactSearch" type="search" value="${esc(UI.parentContactQ||"")}" placeholder="Search name or phone" autocomplete="off"></label>`;
+  h+=classChips("parentContactCls");
+  h+=`<p class="sub" style="margin:0 0 10px">${list.length} of ${all.length} students · numbers are read from each student's saved profile.</p>`;
+  if(!list.length)return h+`<div class="empty"><p>No matching parent contacts found.</p></div>`;
+  h+=`<div class="list">`+list.map(s=>{
+    const phone=String(s.phone||"").trim(),digits=phone.replace(/\\D/g,"");
+    const call=digits?`<a class="btn sm ghost" href="tel:${esc(phone)}">Call</a>`:`<span class="tag n">No number</span>`;
+    const wa=digits?`<a class="btn sm gold" target="_blank" rel="noopener" href="${waLink(phone,"Hello "+(s.parent||"Parent")+", regarding "+s.name+" from TASVIA Academy.")}">WhatsApp</a>`:"";
+    return `<div class="item"><div class="grow"><div class="nm">${esc(s.parent||"Parent not entered")} · ${esc(s.name)}</div><div class="mt">${clsLabel(s.cls)} · ${esc(phone||"No number saved")} · ID: ${esc(s.id)}</div></div><div class="acts" style="margin:0;flex:0 0 auto">${call}${wa}</div></div>`;
+  }).join("")+`</div>`;
+  return h;
+}
+function exportParentContacts(){
+  const rows=[["Student Name","Parent Name","Class","Student ID","Parent Mobile"]];
+  studentsOf("all").forEach(s=>rows.push([s.name||"",s.parent||"",clsLabel(s.cls),s.id||"",s.phone||""]));
+  const csv=rows.map(row=>row.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\\r\\n");
+  const blob=new Blob(["\\uFEFF"+csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
+  a.href=url;a.download="tasvia-parent-contacts-"+today()+".csv";a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);
+  toast("Parent contact list exported");
+}
 function vParents(){
   const list=studentsOf(UI.cls);
   let h=mhead("Parent page links","Send each family their private link once");
@@ -1641,13 +1666,15 @@ function vMore(){
   if(UI.more==="centre")return mhead("Centre info","What parents see when you share",`<button class="btn ghost" data-act="editInfo">Edit</button>`)+vCentre();
   if(UI.more==="backup")return vBackup();
   if(UI.more==="parents")return vParents();
+   if(UI.more==="parentContacts")return vParentContacts();
   if(UI.more==="alerts")return vAlerts();
   const m=today().slice(0,7),ts=teachersList(),salDue=ts.filter(t=>t.salary&&salStatus(t,m).k!=="paid").length;
   const items=[["staff","Staff & salaries",`${ts.length} teacher${ts.length===1?"":"s"}${salDue?` · ${salDue} salar${salDue===1?"y":"ies"} due`:""}`],
     ...(isAdmin()?[["money","Expenses & profit",`${monthName(m)} summary`]]:[]),
     ["cards","Report cards & ID cards","Print or share on WhatsApp"],
     ["centre","Centre info & language","Notice, timings, message language"],
-    ["parents","Parent page links","Private page for each family"],
+    ["parentContacts","Parent Contact Directory","Search, call or WhatsApp parents"],
+     ["parents","Parent page links","Private page for each family"],
     ["alerts","Sounds & alerts",PREF.sound?"Sound on":"Sound off"],
     ["backup","Backup spreadsheets","Download for Excel or Google Sheets"]];
   return `<div class="hd"><h2>More</h2></div><div class="menu">`+items.map(([k,t,d])=>`<button class="item" data-act="more" data-k="${k}"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${ICONS[k]}"/></svg></span><div class="grow"><div class="nm">${t}</div><div class="mt">${d}</div></div><span aria-hidden="true" style="color:var(--muted)">›</span></button>`).join("")+`</div><div class="card" style="margin-top:14px"><h3>Account</h3><p class="sub" style="margin:0 0 10px">Signed in as ${esc((auth&&auth.currentUser&&auth.currentUser.email)||"")}</p><button class="btn ghost" data-act="signOut">Sign out</button></div>`;
@@ -2277,6 +2304,14 @@ function restoreBackupFile(){
   inp.click();
 }
 /* ---------- events ---------- */
+document.addEventListener("input",e=>{
+  if(e.target&&e.target.id==="parentContactSearch"){
+    UI.parentContactQ=e.target.value;
+    const pos=e.target.selectionStart;
+    const root=document.getElementById("app");
+    if(root){root.innerHTML=render();const next=document.getElementById("parentContactSearch");if(next){next.focus();next.setSelectionRange(pos,pos)}}
+  }
+});
 document.addEventListener("click",async e=>{
   const b=e.target.closest("[data-act]");if(!b)return;
   if(!isAdmin()&&["addTeacher","editTeacher","paySal","delSal","delTeacher","addExpense","delExp" ,"addStudent","editStudent","editInfo","delStudent","delPay","resetPL","export","delTest"].includes(b.dataset.act)){toast("Admin access required.");return;}
@@ -2346,7 +2381,7 @@ document.addEventListener("click",async e=>{
     case "remindAll":remindSheet();break;
     case "testSound":{const was=PREF.sound;PREF.sound=true;SOUND.alert();PREF.sound=was;banner("TASVIA Academy","This is how alerts will look and sound.");break}
     case "askNotif":Notification.requestPermission().then(()=>render());break;
-    case "copyPL":copy(parentURL(S.students[id].pcode));break;
+    case "exportParents":exportParentContacts();break;\n     case "copyPL":copy(parentURL(S.students[id].pcode));break;
     case "resetPL":if(confirmDel(b,"Tap again: old link stops")){const st=S.students[id],old=st.pcode,code=newCode();if(old)remove("parentView/"+old);S.students[id]=Object.assign({},st,{pcode:code});if(db){db.doc("students/"+id).set({pcode:code},{merge:true}).catch(e=>toast(errMsg(e)));getPhoto(id).then(p=>{if(p)db.doc("parentView/"+code).set({photo:p},{merge:true}).catch(()=>{})})}schedulePV();studentSheet(id);toast("New link created")}break;
     case "signOut":
       if(confirmDel(b,"Tap again to sign out")&&auth){
