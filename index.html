@@ -2089,8 +2089,10 @@ function hwSendSheet(sid,l){
 function remark(g){return {"A+":"Outstanding work. Keep it up!","A":"Excellent progress. Keep it up!","B+":"Very good. A little more practice will help.","B":"Good effort. Can do even better.","C":"Needs more practice at home.","D":"Needs regular practice and extra attention.","E":"Needs special attention. Please meet the teacher."}[g]}
 function rcData(s,from,to){
   const tests=Object.values(S.tests).filter(t=>t.date>=from&&t.date<=to&&t.marks&&t.marks[s.id]!=null).sort((a,b)=>a.date.localeCompare(b.date));
-  const subj={};tests.forEach(t=>{const x=subj[t.subject]||(subj[t.subject]={got:0,max:0,n:0});x.got+=+t.marks[s.id];x.max+=+t.max;x.n++});
-  const got=tests.reduce((a,t)=>a+ +t.marks[s.id],0),max=tests.reduce((a,t)=>a+ +t.max,0),pct=max?Math.round(got*100/max):null;
+  const subj={};tests.forEach(t=>{const x=subj[t.subject]||(subj[t.subject]={got:0,max:0,n:0,pctTotal:0});const mark=Number(t.marks[s.id])||0,max=Number(t.max)||0;x.got+=mark;x.max+=max;x.n++;x.pctTotal+=max?mark*100/max:0});
+  Object.values(subj).forEach(x=>x.avgPct=x.n?Math.round(x.pctTotal/x.n):null);
+  const got=tests.reduce((a,t)=>a+(Number(t.marks[s.id])||0),0),max=tests.reduce((a,t)=>a+(Number(t.max)||0),0);
+  const pct=tests.length?Math.round(tests.reduce((a,t)=>a+(Number(t.max)?(Number(t.marks[s.id])||0)*100/Number(t.max):0),0)/tests.length):null;
   return {tests,subj,got,max,pct,g:pct!=null?grade(pct):null,att:attStats(s.id,"",from,to)};
 }
 const PRINT_CSS=`*{box-sizing:border-box}body{margin:0;font-family:"Segoe UI",Roboto,"Noto Sans",Arial,sans-serif;color:#15201C;background:#e9ece9}
@@ -2102,7 +2104,7 @@ function rcHTML(list,from,to){
   const pages=list.map(s=>{const d=rcData(s,from,to);
     return `<section class="pg"><header><div style="display:flex;gap:12px;align-items:center">${logoImg()}<div><h1>${esc(i.name)}</h1><p>${esc(i.address)}<br>Phone ${esc(i.phone)} · ${esc(i.email)}</p></div></div><div class="yr">PROGRESS REPORT<br><b>${ay.label}</b></div></header>
     <table class="info"><tr><td>Student</td><th>${esc(s.name)}</th><td>Class</td><th>${esc(clsLabel(s.cls))}</th></tr><tr><td>Parent</td><th>${esc(s.parent||"–")}</th><td>Syllabus</td><th>${esc(s.board||"–")}</th></tr><tr><td>Period</td><th colspan="3">${nice(from)} to ${nice(to)}</th></tr></table>
-    <h2>Subject summary</h2>${Object.keys(d.subj).length?`<table class="m"><tr><th>Subject</th><th>Tests</th><th>Marks</th><th>%</th><th>Grade</th></tr>${Object.entries(d.subj).map(([k,x])=>{const pc=Math.round(x.got*100/x.max);return `<tr><td>${esc(k)}</td><td>${x.n}</td><td>${x.got} / ${x.max}</td><td>${pc}%</td><td><b>${grade(pc)}</b></td></tr>`}).join("")}<tr class="tot"><td>Overall</td><td>${d.tests.length}</td><td>${d.got} / ${d.max}</td><td>${d.pct}%</td><td><b>${d.g}</b></td></tr></table>`:`<p class="none">No test marks in this period.</p>`}
+    <h2>Subject summary · average by test</h2>${Object.keys(d.subj).length?`<table class="m"><tr><th>Subject</th><th>Tests</th><th>Average %</th><th>Grade</th></tr>${Object.entries(d.subj).map(([k,x])=>{const pc=x.avgPct;return `<tr><td>${esc(k)}</td><td>${x.n}</td><td>${pc}%</td><td><b>${grade(pc)}</b></td></tr>`}).join("")}<tr class="tot"><td>Overall average</td><td>${d.tests.length}</td><td>${d.pct}%</td><td><b>${d.g}</b></td></tr></table>`:`<p class="none">No test marks in this period.</p>`}
     ${d.tests.length?`<h2>Test details</h2><table class="m sm"><tr><th>Date</th><th>Subject</th><th>Test</th><th>Marks</th><th>Grade</th></tr>${d.tests.map(t=>`<tr><td>${nice(t.date)}</td><td>${esc(t.subject)}</td><td>${esc(t.name)}</td><td>${t.marks[s.id]} / ${t.max}</td><td>${grade(Math.round(t.marks[s.id]*100/t.max))}</td></tr>`).join("")}</table>`:""}
     <div class="two"><div class="box"><h3>Attendance</h3><p>${d.att.t?`${d.att.p} of ${d.att.t} day${d.att.t===1?"":"s"} present <b>(${d.att.pct}%)</b>`:"Not recorded"}</p></div><div class="box"><h3>Remarks</h3><p>${d.g?remark(d.g):"&nbsp;"}</p><div class="line"></div></div></div>
     <p class="scale">Grades: A+ 90–100 · A 80–89 · B+ 70–79 · B 60–69 · C 50–59 · D 35–49 · E below 35</p>
@@ -2296,32 +2298,33 @@ function openPrintableFile(name,html){
 async function rcImage(id){
   const s={id,...S.students[id]},ay=acYear(today()),d=rcData(s,ay.from,today()),i=info();
   try{await document.fonts.ready}catch(e){}
-  const W=1080,H=1350,c=document.createElement("canvas");c.width=W;c.height=H;const x=c.getContext("2d");
+  const W=1080,H=Math.max(1350,820+d.tests.length*64+260),c=document.createElement("canvas");c.width=W;c.height=H;const x=c.getContext("2d");
   const F=(w,sz)=>`${w} ${sz}px "Hind","Segoe UI",sans-serif`,FB=sz=>`800 ${sz}px "Baloo 2","Segoe UI",sans-serif`;
   const fit=(t,max)=>{t=String(t);if(x.measureText(t).width<=max)return t;while(t.length&&x.measureText(t+"…").width>max)t=t.slice(0,-1);return t+"…"};
-  x.fillStyle="#F3F6F1";x.fillRect(0,0,W,H);
-  x.fillStyle="#0B2455";x.fillRect(0,0,W,250);
+  x.fillStyle="#F3F6F1";x.fillRect(0,0,W,H);x.fillStyle="#0B2455";x.fillRect(0,0,W,250);
   const lg=await new Promise(ok=>{const im=new Image();im.onload=()=>ok(im);im.onerror=()=>ok(null);im.src="logo.png"});
   let lx=70;if(lg){x.fillStyle="#fff";x.beginPath();x.arc(140,125,74,0,Math.PI*2);x.fill();x.drawImage(lg,70,55,140,140);lx=240}
   x.fillStyle="#F3F6F1";x.font=FB(64);x.fillText("TASVIA",lx,120);const tw=x.measureText("TASVIA ").width;x.fillStyle="#F2AC10";x.fillText("Academy",lx+tw,120);
   x.fillStyle="#cfd8d3";x.font=F(500,30);x.fillText("Progress report · "+ay.label,lx,180);
   const pimg=await getPhoto(id).then(p=>p&&new Promise(ok=>{const im=new Image();im.onload=()=>ok(im);im.onerror=()=>ok(null);im.src=p}));
-  let nameW=W-140;
-  if(pimg){const pw=120,ph=160,px=W-70-pw,py=262;x.save();x.beginPath();x.roundRect(px,py,pw,ph,18);x.clip();x.drawImage(pimg,px,py,pw,ph);x.restore();x.strokeStyle="#F2AC10";x.lineWidth=5;x.beginPath();x.roundRect(px,py,pw,ph,18);x.stroke();nameW=W-140-pw-30}
-  x.fillStyle="#15201C";x.font=FB(58);x.fillText(fit(s.name,nameW),70,340);
-  x.fillStyle="#5B6A63";x.font=F(500,32);x.fillText(`${clsLabel(s.cls)} · ${s.board||""}`,70,390);
+  let nameW=W-140;if(pimg){const pw=120,ph=160,px=W-70-pw,py=262;x.save();x.beginPath();x.roundRect(px,py,pw,ph,18);x.clip();x.drawImage(pimg,px,py,pw,ph);x.restore();x.strokeStyle="#F2AC10";x.lineWidth=5;x.beginPath();x.roundRect(px,py,pw,ph,18);x.stroke();nameW=W-140-pw-30}
+  x.fillStyle="#15201C";x.font=FB(58);x.fillText(fit(s.name,nameW),70,340);x.fillStyle="#5B6A63";x.font=F(500,32);x.fillText(`${clsLabel(s.cls)} · ${s.board||""}`,70,390);
   const box=(bx,label,val,col)=>{x.fillStyle="#fff";x.strokeStyle="#D3DCD7";x.lineWidth=2;x.beginPath();x.roundRect(bx,430,300,150,24);x.fill();x.stroke();x.fillStyle=col;x.font=FB(60);x.fillText(val,bx+28,515);x.fillStyle="#5B6A63";x.font=F(500,26);x.fillText(label,bx+30,556)};
-  box(70,"Overall",d.pct!=null?d.pct+"%":"–","#0B2455");box(390,"Grade",d.g||"–","#B8820A");box(710,"Attendance",d.att.pct!=null?d.att.pct+"%":"–","#2B8A55");
-  x.fillStyle="#0B2455";x.font=FB(36);x.fillText("Subjects",70,660);
-  let y=710;const rows=Object.entries(d.subj).slice(0,9);
-  if(!rows.length){x.fillStyle="#5B6A63";x.font=F(400,30);x.fillText("No test marks yet this year.",70,y);}
-  rows.forEach(([k,v],n)=>{const pc=Math.round(v.got*100/v.max);if(n%2===0){x.fillStyle="#E2E9E5";x.fillRect(60,y-42,W-120,62)}
-    x.fillStyle="#15201C";x.font=F(600,32);x.fillText(fit(k,470),80,y);x.font=F(500,30);x.fillStyle="#5B6A63";x.fillText(`${v.got}/${v.max}`,580,y);
-    x.fillStyle="#15201C";x.font=F(600,32);x.fillText(pc+"%",790,y);x.fillStyle="#B8820A";x.font=FB(34);x.fillText(grade(pc),920,y);y+=62});
-  if(d.g){x.fillStyle="#0B2455";x.font=F(600,30);x.fillText(fit(remark(d.g),W-140),70,y+40)}
+  box(70,"Overall average",d.pct!=null?d.pct+"%":"–","#0B2455");box(390,"Grade",d.g||"–","#B8820A");box(710,"Attendance",d.att.pct!=null?d.att.pct+"%":"–","#2B8A55");
+  x.fillStyle="#0B2455";x.font=FB(36);x.fillText("Date-wise examination marks",70,660);
+  const cols={date:80,test:245,marks:690,pct:835,grade:955};x.fillStyle="#0B2455";x.fillRect(60,690,W-120,58);
+  x.fillStyle="#fff";x.font=F(600,24);x.fillText("DATE",cols.date,727);x.fillText("TEST / SUBJECT",cols.test,727);x.fillText("MARKS",cols.marks,727);x.fillText("%",cols.pct,727);x.fillText("GRADE",cols.grade,727);
+  let y=748;if(!d.tests.length){x.fillStyle="#5B6A63";x.font=F(400,30);x.fillText("No test marks recorded in this period.",80,y+42);y+=72}
+  d.tests.forEach((t,n)=>{const mark=Number(t.marks[id])||0,max=Number(t.max)||0,pc=max?Math.round(mark*100/max):0;
+    if(n%2===0){x.fillStyle="#E2E9E5";x.fillRect(60,y,W-120,62)}
+    x.fillStyle="#15201C";x.font=F(500,23);x.fillText(nice(t.date),cols.date,y+38);
+    x.font=F(600,23);x.fillText(fit(t.name||t.subject,410),cols.test,y+27);x.fillStyle="#5B6A63";x.font=F(400,19);x.fillText(fit(t.subject||"",410),cols.test,y+49);
+    x.fillStyle="#15201C";x.font=F(500,23);x.fillText(`${mark}/${max}`,cols.marks,y+38);x.font=F(600,23);x.fillText(pc+"%",cols.pct,y+38);
+    x.fillStyle="#B8820A";x.font=FB(25);x.fillText(grade(pc),cols.grade,y+39);y+=62;
+  });
+  y+=28;if(d.g){x.fillStyle="#0B2455";x.font=F(600,28);x.fillText(fit(remark(d.g),W-140),70,y);y+=45}
   x.fillStyle="#F2AC10";x.fillRect(0,H-90,W,90);x.fillStyle="#1a1405";x.font=F(600,28);x.fillText(fit(`${i.phone} · ${i.address.split(",").slice(-2).join(",").trim()}`,W-140),70,H-35);
-  const blob=await new Promise(res=>c.toBlob(res,"image/png"));
-  await saveFile(`report-card-${slug(s.name)}.png`,blob);
+  const blob=await new Promise(res=>c.toBlob(res,"image/png"));await saveFile(`report-card-${slug(s.name)}.png`,blob);
 }
 function remindSheet(){
   const m=UI.feeMonth,list=byBatch(studentsOf(UI.cls)).filter(s=>s.fee>0&&enrolledIn(s,m)&&["due","part"].includes(feeStatus(s,m).k));
