@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-11-16",
+  "date": "2026-11-17",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-human-lungs",
-      "category": "Human Biology",
-      "q": "Which organs help humans breathe?",
-      "a": "The lungs.",
+      "id": "static-national-anthem",
+      "category": "Indian Culture",
+      "q": "Who wrote the Indian national anthem, Jana Gana Mana?",
+      "a": "Rabindranath Tagore.",
       "options": [
-        "The pancreas.",
-        "The lungs.",
-        "The kidneys.",
-        "The stomach."
+        "Rabindranath Tagore.",
+        "Bankim Chandra Chattopadhyay.",
+        "Subhas Chandra Bose.",
+        "Sarojini Naidu."
       ]
     },
     {
-      "id": "static-earth-satellite",
-      "category": "Astronomy",
-      "q": "What is Earth's natural satellite?",
-      "a": "The Moon.",
-      "options": [
-        "The Sun.",
-        "Mars.",
-        "Venus.",
-        "The Moon."
-      ]
-    },
-    {
-      "id": "static-telangana-river",
-      "category": "Telangana GK",
-      "q": "Which major river flows through Telangana and is one of India's longest rivers?",
-      "a": "Godavari.",
-      "options": [
-        "Ravi.",
-        "Godavari.",
-        "Narmada.",
-        "Beas."
-      ]
-    },
-    {
-      "id": "static-biodiversity",
-      "category": "Environment",
-      "q": "What does biodiversity mean?",
-      "a": "The variety of living organisms in an area or on Earth.",
-      "options": [
-        "The variety of living organisms in an area or on Earth.",
-        "The movement of water through the atmosphere.",
-        "The number of buildings in a city.",
-        "The amount of rainfall in a year."
-      ]
-    },
-    {
-      "id": "static-maths-right-angle",
+      "id": "static-maths-prime",
       "category": "Mathematics",
-      "q": "How many degrees are in a right angle?",
-      "a": "90 degrees.",
+      "q": "What is the smallest prime number?",
+      "a": "2.",
       "options": [
-        "360 degrees.",
-        "90 degrees.",
-        "180 degrees.",
-        "45 degrees."
+        "2.",
+        "3.",
+        "5.",
+        "1."
+      ]
+    },
+    {
+      "id": "static-solar-planet",
+      "category": "Science",
+      "q": "Which is the largest planet in our Solar System?",
+      "a": "Jupiter.",
+      "options": [
+        "Earth.",
+        "Saturn.",
+        "Jupiter.",
+        "Neptune."
+      ]
+    },
+    {
+      "id": "static-indian-parliament",
+      "category": "Indian Polity",
+      "q": "What are the two houses of the Parliament of India?",
+      "a": "Lok Sabha and Rajya Sabha.",
+      "options": [
+        "Lok Sabha and the Cabinet.",
+        "Lok Sabha and Rajya Sabha.",
+        "Rajya Sabha and the Supreme Court.",
+        "Lok Sabha and Vidhan Sabha."
+      ]
+    },
+    {
+      "id": "static-gk-world-ocean",
+      "category": "World Geography",
+      "q": "Which is the largest ocean on Earth?",
+      "a": "Pacific Ocean.",
+      "options": [
+        "Arctic Ocean.",
+        "Indian Ocean.",
+        "Pacific Ocean.",
+        "Atlantic Ocean."
       ]
     }
   ]
