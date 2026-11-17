@@ -1,69 +1,69 @@
 {
-  "date": "2026-11-16",
+  "date": "2026-11-17",
   "month": "November 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
-      "category": "World",
-      "icon": "🌐",
-      "title": "Bessent says Nvidia must ‘go outside the company’ to find new CEO",
-      "text": "U.S. Treasury ‌Secretary Bessent also said Nvidia’s board and outside counsel needed to answer, within the next 10 days, questions about the company’s culture ‌of compliance with export restrictions",
-      "source": "The Hindu International, 2026-11-16",
-      "url": "https://www.thehindu.com/news/international/bessent-says-nvidia-must-go-outside-the-company-to-find-new-ceo/article71705969.ece"
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Six Liangmai Naga civilians laid to rest in Manipur 187 days after abduction, killing",
+      "text": "United Naga Council president N.G. Lorho said May 13, 2026, would remain the darkest day in Manipur’s history",
+      "source": "The Hindu National, 2026-11-17",
+      "url": "https://www.thehindu.com/news/national/manipur/six-months-after-abduction-bodies-of-six-naga-men-interred-in-manipur/article71708214.ece"
     },
     {
       "category": "India",
       "icon": "🇮🇳",
-      "title": "Penury-hit Kashmir artists seek official handholding",
-      "text": "There are artists in Kashmir who are not able to pay school fees of their children or arrange ₹1 lakh to offer a decent burial to their deceased loved ones, says vocalist and music composer Ustaad Waheed Jeelani",
-      "source": "The Hindu National, 2026-11-16",
-      "url": "https://www.thehindu.com/news/national/jammu-and-kashmir/penury-hit-kashmir-artists-seek-official-handholding/article71705789.ece"
+      "title": "Bilkis Bano case: Supreme Court suspends sentence, grants bail to two convicts",
+      "text": "The order published on the court website reasoned that the two men had already been imprisoned for more than 17 years and one of them suffers a severe handicap",
+      "source": "The Hindu National, 2026-11-17",
+      "url": "https://www.thehindu.com/news/national/bilkis-bano-case-supreme-court-suspends-sentence-grants-bail-to-two-convicts/article71707334.ece"
     },
     {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "Anbumani seeks pay hike for guest lecturers from Sept. 1",
-      "text": "Anbumani demands immediate ₹5,000 pay hike for guest lecturers from Sept 1, plus further benefits and ₹50,000 target next year.",
-      "source": "The Hindu National, 2026-11-16",
-      "url": "https://www.thehindu.com/news/national/tamil-nadu/anbumani-seeks-pay-hike-for-guest-lecturers-from-sept-1/article71705798.ece"
+      "category": "Economy",
+      "icon": "💹",
+      "title": "Export duty on diesel hiked ₹2.5/litre, ATF ₹1.5/litre, petrol remains nil",
+      "text": "The hike in diesel levy assumes added significance as India looks to further up their exports of the vehicular fuel to Europe amid a global supply crunch.",
+      "source": "The Hindu Business, 2026-11-17",
+      "url": "https://www.thehindu.com/business/Industry/export-duty-on-diesel-hiked-25litre-atf-15litre-petrol-remains-nil/article71710215.ece"
     },
     {
-      "category": "World",
-      "icon": "🌐",
-      "title": "Respiratory illnesses rise in Gaza with worst to come as winter floods arrive, WHO says",
-      "text": "Respiratory infections currently make up 11% of all consultations, with the WHO ‌expecting cold weather, flooding, overcrowded shelters and poor ventilation to push these numbers higher",
-      "source": "The Hindu International, 2026-11-15",
-      "url": "https://www.thehindu.com/news/international/respiratory-illnesses-rise-in-gaza-with-worst-to-come-as-winter-floods-arrive-who-says/article71705676.ece"
+      "category": "Economy",
+      "icon": "💹",
+      "title": "IBM investing $3 billion annually in India, plans $10 bn global quantum push: CEO",
+      "text": "Chairman and Chief Executive Arvind Krishna said AI could displace 10-20% of jobs over the next decade, with the BPO industry likely to face some of the biggest reductions",
+      "source": "The Hindu Business, 2026-11-16",
+      "url": "https://www.thehindu.com/business/ibm-investing-3-billion-annually-in-india-plans-10-bn-global-quantum-push-ceo/article71709347.ece"
     },
     {
       "category": "Telangana",
       "icon": "📰",
-      "title": "Revanth urges Modi to expedite clearances for Telangana irrigation projects",
-      "text": "Seeks Centre’s intervention to secure Maharashtra’s approval for Tummidihatti project; requests ₹5,000 crore under SASCI; invites PM to Khelo India Youth Games",
-      "source": "The Hindu Telangana, 2026-11-15",
-      "url": "https://www.thehindu.com/news/national/telangana/revanth-urges-modi-to-expedite-clearances-for-telangana-irrigation-projects/article71705336.ece"
+      "title": "Telangana teachers question order linking leave to 95% school attendance",
+      "text": "Hyderabad Collector Priyanka Ala has made prior approval mandatory for teachers seeking leave until schools achieve 95% attendance, prompting teacher representatives to question the legality of the directive.",
+      "source": "The Hindu Telangana, 2026-11-16",
+      "url": "https://www.thehindu.com/news/national/telangana/telangana-teachers-question-order-linking-leave-to-95-school-attendance/article71707969.ece"
     }
   ],
   "quiz": [
     {
-      "q": "How many days were mentioned in the story “Bessent says Nvidia must ‘go outside the company’ to find new CEO”?",
-      "a": "10 days"
+      "q": "How many days were mentioned in the story “Six Liangmai Naga civilians laid to rest in Manipur 187 days after abduction, killing”?",
+      "a": "187 days"
     },
     {
-      "q": "According to the report “Penury-hit Kashmir artists seek official handholding”, what monetary figure was mentioned?",
-      "a": "₹1 lakh"
+      "q": "How many years were mentioned in the story “Bilkis Bano case: Supreme Court suspends sentence, grants bail to two convicts”?",
+      "a": "17 years"
     },
     {
-      "q": "According to the report “Anbumani seeks pay hike for guest lecturers from Sept. 1”, what monetary figure was mentioned?",
-      "a": "₹5,000"
+      "q": "According to the report “Export duty on diesel hiked ₹2.5/litre, ATF ₹1.5/litre, petrol remains nil”, what monetary figure was mentioned?",
+      "a": "₹2.5"
     },
     {
-      "q": "What percentage was reported in the story “Respiratory illnesses rise in Gaza with worst to come as winter floods arrive, WHO says”?",
-      "a": "11%"
+      "q": "According to the report “IBM investing $3 billion annually in India, plans $10 bn global quantum push: CEO”, what monetary figure was mentioned?",
+      "a": "$3 billion"
     },
     {
-      "q": "According to the report “Revanth urges Modi to expedite clearances for Telangana irrigation projects”, what monetary figure was mentioned?",
-      "a": "₹5,000 crore"
+      "q": "What percentage was reported in the story “Telangana teachers question order linking leave to 95% school attendance”?",
+      "a": "95%"
     }
   ]
 }

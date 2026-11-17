@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-17",
+  "month": "November 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Six Liangmai Naga civilians laid to rest in Manipur 187 days after abduction, killing",
+      "text": "United Naga Council president N.G. Lorho said May 13, 2026, would remain the darkest day in Manipur’s history",
+      "source": "The Hindu National, 2026-11-17",
+      "url": "https://www.thehindu.com/news/national/manipur/six-months-after-abduction-bodies-of-six-naga-men-interred-in-manipur/article71708214.ece"
+    },
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Bilkis Bano case: Supreme Court suspends sentence, grants bail to two convicts",
+      "text": "The order published on the court website reasoned that the two men had already been imprisoned for more than 17 years and one of them suffers a severe handicap",
+      "source": "The Hindu National, 2026-11-17",
+      "url": "https://www.thehindu.com/news/national/bilkis-bano-case-supreme-court-suspends-sentence-grants-bail-to-two-convicts/article71707334.ece"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "Export duty on diesel hiked ₹2.5/litre, ATF ₹1.5/litre, petrol remains nil",
+      "text": "The hike in diesel levy assumes added significance as India looks to further up their exports of the vehicular fuel to Europe amid a global supply crunch.",
+      "source": "The Hindu Business, 2026-11-17",
+      "url": "https://www.thehindu.com/business/Industry/export-duty-on-diesel-hiked-25litre-atf-15litre-petrol-remains-nil/article71710215.ece"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "IBM investing $3 billion annually in India, plans $10 bn global quantum push: CEO",
+      "text": "Chairman and Chief Executive Arvind Krishna said AI could displace 10-20% of jobs over the next decade, with the BPO industry likely to face some of the biggest reductions",
+      "source": "The Hindu Business, 2026-11-16",
+      "url": "https://www.thehindu.com/business/ibm-investing-3-billion-annually-in-india-plans-10-bn-global-quantum-push-ceo/article71709347.ece"
+    },
+    {
+      "category": "Telangana",
+      "icon": "📰",
+      "title": "Telangana teachers question order linking leave to 95% school attendance",
+      "text": "Hyderabad Collector Priyanka Ala has made prior approval mandatory for teachers seeking leave until schools achieve 95% attendance, prompting teacher representatives to question the legality of the directive.",
+      "source": "The Hindu Telangana, 2026-11-16",
+      "url": "https://www.thehindu.com/news/national/telangana/telangana-teachers-question-order-linking-leave-to-95-school-attendance/article71707969.ece"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "How many days were mentioned in the story “Six Liangmai Naga civilians laid to rest in Manipur 187 days after abduction, killing”?",
+      "a": "187 days"
+    },
+    {
+      "q": "How many years were mentioned in the story “Bilkis Bano case: Supreme Court suspends sentence, grants bail to two convicts”?",
+      "a": "17 years"
+    },
+    {
+      "q": "According to the report “Export duty on diesel hiked ₹2.5/litre, ATF ₹1.5/litre, petrol remains nil”, what monetary figure was mentioned?",
+      "a": "₹2.5"
+    },
+    {
+      "q": "According to the report “IBM investing $3 billion annually in India, plans $10 bn global quantum push: CEO”, what monetary figure was mentioned?",
+      "a": "$3 billion"
+    },
+    {
+      "q": "What percentage was reported in the story “Telangana teachers question order linking leave to 95% school attendance”?",
+      "a": "95%"
+    }
+  ]
+}
