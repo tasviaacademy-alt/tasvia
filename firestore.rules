@@ -36,17 +36,14 @@ service cloud.firestore {
         && request.auth.token.email != null
         && request.auth.token.email.lower() == email.lower();
 
-      // Only the root admin may list the staff roster for canonical-record repair.
-      // Other signed-in users may query at most their own matching email record.
-      // Firestore rules are not filters: this document-level email check prevents
-      // a signed-in staff member from probing other staff records with limit=1.
-      allow list: if signedIn() && (
-        request.auth.token.email == "tasviaacademy@gmail.com"
-        || (
-          request.query.limit <= 1
-          && resource.data.email is string
-          && resource.data.email.lower() == request.auth.token.email.lower()
-        )
+      // Admins may list the complete staff roster for the staff directory and
+      // task-assignment dropdown. Non-admin staff may query only their own record.
+      allow list: if admin() || (
+        signedIn()
+        && request.auth.token.email != null
+        && request.query.limit <= 1
+        && resource.data.email is string
+        && resource.data.email.lower() == request.auth.token.email.lower()
       );
       allow create, update, delete: if admin();
     }
