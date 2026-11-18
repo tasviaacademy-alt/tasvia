@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-18",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-india-capital",
+      "category": "Indian General Knowledge",
+      "q": "What is the capital of India?",
+      "a": "New Delhi.",
+      "options": [
+        "Kolkata",
+        "Mumbai",
+        "Chennai",
+        "New Delhi."
+      ]
+    },
+    {
+      "id": "static-dandi-march",
+      "category": "Indian History",
+      "q": "Who led the Dandi March in 1930?",
+      "a": "Mahatma Gandhi.",
+      "options": [
+        "Mahatma Gandhi.",
+        "Jawaharlal Nehru.",
+        "Sardar Vallabhbhai Patel.",
+        "Subhas Chandra Bose."
+      ]
+    },
+    {
+      "id": "static-computer-keyboard",
+      "category": "Computer Basics",
+      "q": "Which device is commonly used to type text into a computer?",
+      "a": "Keyboard.",
+      "options": [
+        "Monitor.",
+        "Printer.",
+        "Speaker.",
+        "Keyboard."
+      ]
+    },
+    {
+      "id": "static-india-national-song",
+      "category": "National Symbols",
+      "q": "Who wrote India's national song, Vande Mataram?",
+      "a": "Bankim Chandra Chattopadhyay.",
+      "options": [
+        "Sarojini Naidu.",
+        "Mahatma Gandhi.",
+        "Rabindranath Tagore.",
+        "Bankim Chandra Chattopadhyay."
+      ]
+    },
+    {
+      "id": "otq-brain-teasers-2310",
+      "category": "brain-teasers",
+      "q": "There is a branch with 10 birds on it. I shot 2 of them and then 1 more. How many birds are left on the branch?",
+      "a": "0",
+      "options": [
+        "2",
+        "3",
+        "1",
+        "0"
+      ]
+    }
+  ]
+}
