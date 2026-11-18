@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-18",
+  "month": "November 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Won’t allow hiring of outsiders, hire locals: J&K CM Omar Abdullah to companies",
+      "text": "He made the statement during the inauguration of development projects worth ₹30 crores in Jammu, Samba and Kathua districts",
+      "source": "The Hindu National, 2026-11-18",
+      "url": "https://www.thehindu.com/news/national/jammu-and-kashmir/wont-allow-hiring-of-outsiders-hire-locals-jk-cm-omar-abdullah-to-outside-companies/article71713475.ece"
+    },
+    {
+      "category": "World",
+      "icon": "🌐",
+      "title": "Russian military transport plane crashes in Siberia, killing 19: Defence Ministry",
+      "text": "The An-12 aircraft went down in an unpopulated area near the city of Kemerovo, about 3,000 kilometres (about 1,860 miles) east of Moscow",
+      "source": "The Hindu International, 2026-11-18",
+      "url": "https://www.thehindu.com/news/international/several-dead-after-russian-military-transport-plane-crashes-in-siberia/article71713626.ece"
+    },
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Kochi woman loses ₹90,000 in credit card activation scam",
+      "text": "The complainant, a resident of Mulavukad, was allegedly cheated by an unidentified person who contacted her over the phone, promising to activate a credit card issued by a private sector bank",
+      "source": "The Hindu National, 2026-11-18",
+      "url": "https://www.thehindu.com/news/national/kerala/kochi-woman-loses-90000-in-credit-card-activation-scam/article71711687.ece"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "BPCL plans to raise ₹9,000 crore through bond sale after nearly four years",
+      "text": "The state-run oil marketer is expected to issue debt with a tenure of around five years to fund its refinery expansion and petrochemical projects",
+      "source": "The Hindu Business, 2026-11-17",
+      "url": "https://www.thehindu.com/business/bpcl-plans-to-raise-9000-crore-through-bond-sale-after-nearly-four-years/article71713305.ece"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "Reliance plans $1.6 billion investment in 100 compressed biogas plants by 2030",
+      "text": "The company aims to produce five million cubic metres of biogas daily using agricultural residue, as India seeks to increase gas’s share in its energy mix",
+      "source": "The Hindu Business, 2026-11-17",
+      "url": "https://www.thehindu.com/business/reliance-plans-16-billion-investment-in-100-compressed-biogas-plants-by-2030/article71713310.ece"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "According to the report “Won’t allow hiring of outsiders, hire locals: J&K CM Omar Abdullah to companies”, what monetary figure was mentioned?",
+      "a": "₹30 crore"
+    },
+    {
+      "q": "How many kilometres were mentioned in the story “Russian military transport plane crashes in Siberia, killing 19: Defence Ministry”?",
+      "a": "3,000 kilometres"
+    },
+    {
+      "q": "According to the report “Kochi woman loses ₹90,000 in credit card activation scam”, what monetary figure was mentioned?",
+      "a": "₹90,000"
+    },
+    {
+      "q": "According to the report “BPCL plans to raise ₹9,000 crore through bond sale after nearly four years”, what monetary figure was mentioned?",
+      "a": "₹9,000 crore"
+    },
+    {
+      "q": "According to the report “Reliance plans $1.6 billion investment in 100 compressed biogas plants by 2030”, what monetary figure was mentioned?",
+      "a": "$1.6 billion"
+    }
+  ]
+}

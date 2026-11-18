@@ -1,69 +1,69 @@
 {
-  "date": "2026-11-17",
+  "date": "2026-11-18",
   "month": "November 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
       "category": "India",
       "icon": "🇮🇳",
-      "title": "Six Liangmai Naga civilians laid to rest in Manipur 187 days after abduction, killing",
-      "text": "United Naga Council president N.G. Lorho said May 13, 2026, would remain the darkest day in Manipur’s history",
-      "source": "The Hindu National, 2026-11-17",
-      "url": "https://www.thehindu.com/news/national/manipur/six-months-after-abduction-bodies-of-six-naga-men-interred-in-manipur/article71708214.ece"
+      "title": "Won’t allow hiring of outsiders, hire locals: J&K CM Omar Abdullah to companies",
+      "text": "He made the statement during the inauguration of development projects worth ₹30 crores in Jammu, Samba and Kathua districts",
+      "source": "The Hindu National, 2026-11-18",
+      "url": "https://www.thehindu.com/news/national/jammu-and-kashmir/wont-allow-hiring-of-outsiders-hire-locals-jk-cm-omar-abdullah-to-outside-companies/article71713475.ece"
+    },
+    {
+      "category": "World",
+      "icon": "🌐",
+      "title": "Russian military transport plane crashes in Siberia, killing 19: Defence Ministry",
+      "text": "The An-12 aircraft went down in an unpopulated area near the city of Kemerovo, about 3,000 kilometres (about 1,860 miles) east of Moscow",
+      "source": "The Hindu International, 2026-11-18",
+      "url": "https://www.thehindu.com/news/international/several-dead-after-russian-military-transport-plane-crashes-in-siberia/article71713626.ece"
     },
     {
       "category": "India",
       "icon": "🇮🇳",
-      "title": "Bilkis Bano case: Supreme Court suspends sentence, grants bail to two convicts",
-      "text": "The order published on the court website reasoned that the two men had already been imprisoned for more than 17 years and one of them suffers a severe handicap",
-      "source": "The Hindu National, 2026-11-17",
-      "url": "https://www.thehindu.com/news/national/bilkis-bano-case-supreme-court-suspends-sentence-grants-bail-to-two-convicts/article71707334.ece"
+      "title": "Kochi woman loses ₹90,000 in credit card activation scam",
+      "text": "The complainant, a resident of Mulavukad, was allegedly cheated by an unidentified person who contacted her over the phone, promising to activate a credit card issued by a private sector bank",
+      "source": "The Hindu National, 2026-11-18",
+      "url": "https://www.thehindu.com/news/national/kerala/kochi-woman-loses-90000-in-credit-card-activation-scam/article71711687.ece"
     },
     {
       "category": "Economy",
       "icon": "💹",
-      "title": "Export duty on diesel hiked ₹2.5/litre, ATF ₹1.5/litre, petrol remains nil",
-      "text": "The hike in diesel levy assumes added significance as India looks to further up their exports of the vehicular fuel to Europe amid a global supply crunch.",
+      "title": "BPCL plans to raise ₹9,000 crore through bond sale after nearly four years",
+      "text": "The state-run oil marketer is expected to issue debt with a tenure of around five years to fund its refinery expansion and petrochemical projects",
       "source": "The Hindu Business, 2026-11-17",
-      "url": "https://www.thehindu.com/business/Industry/export-duty-on-diesel-hiked-25litre-atf-15litre-petrol-remains-nil/article71710215.ece"
+      "url": "https://www.thehindu.com/business/bpcl-plans-to-raise-9000-crore-through-bond-sale-after-nearly-four-years/article71713305.ece"
     },
     {
       "category": "Economy",
       "icon": "💹",
-      "title": "IBM investing $3 billion annually in India, plans $10 bn global quantum push: CEO",
-      "text": "Chairman and Chief Executive Arvind Krishna said AI could displace 10-20% of jobs over the next decade, with the BPO industry likely to face some of the biggest reductions",
-      "source": "The Hindu Business, 2026-11-16",
-      "url": "https://www.thehindu.com/business/ibm-investing-3-billion-annually-in-india-plans-10-bn-global-quantum-push-ceo/article71709347.ece"
-    },
-    {
-      "category": "Telangana",
-      "icon": "📰",
-      "title": "Telangana teachers question order linking leave to 95% school attendance",
-      "text": "Hyderabad Collector Priyanka Ala has made prior approval mandatory for teachers seeking leave until schools achieve 95% attendance, prompting teacher representatives to question the legality of the directive.",
-      "source": "The Hindu Telangana, 2026-11-16",
-      "url": "https://www.thehindu.com/news/national/telangana/telangana-teachers-question-order-linking-leave-to-95-school-attendance/article71707969.ece"
+      "title": "Reliance plans $1.6 billion investment in 100 compressed biogas plants by 2030",
+      "text": "The company aims to produce five million cubic metres of biogas daily using agricultural residue, as India seeks to increase gas’s share in its energy mix",
+      "source": "The Hindu Business, 2026-11-17",
+      "url": "https://www.thehindu.com/business/reliance-plans-16-billion-investment-in-100-compressed-biogas-plants-by-2030/article71713310.ece"
     }
   ],
   "quiz": [
     {
-      "q": "How many days were mentioned in the story “Six Liangmai Naga civilians laid to rest in Manipur 187 days after abduction, killing”?",
-      "a": "187 days"
+      "q": "According to the report “Won’t allow hiring of outsiders, hire locals: J&K CM Omar Abdullah to companies”, what monetary figure was mentioned?",
+      "a": "₹30 crore"
     },
     {
-      "q": "How many years were mentioned in the story “Bilkis Bano case: Supreme Court suspends sentence, grants bail to two convicts”?",
-      "a": "17 years"
+      "q": "How many kilometres were mentioned in the story “Russian military transport plane crashes in Siberia, killing 19: Defence Ministry”?",
+      "a": "3,000 kilometres"
     },
     {
-      "q": "According to the report “Export duty on diesel hiked ₹2.5/litre, ATF ₹1.5/litre, petrol remains nil”, what monetary figure was mentioned?",
-      "a": "₹2.5"
+      "q": "According to the report “Kochi woman loses ₹90,000 in credit card activation scam”, what monetary figure was mentioned?",
+      "a": "₹90,000"
     },
     {
-      "q": "According to the report “IBM investing $3 billion annually in India, plans $10 bn global quantum push: CEO”, what monetary figure was mentioned?",
-      "a": "$3 billion"
+      "q": "According to the report “BPCL plans to raise ₹9,000 crore through bond sale after nearly four years”, what monetary figure was mentioned?",
+      "a": "₹9,000 crore"
     },
     {
-      "q": "What percentage was reported in the story “Telangana teachers question order linking leave to 95% school attendance”?",
-      "a": "95%"
+      "q": "According to the report “Reliance plans $1.6 billion investment in 100 compressed biogas plants by 2030”, what monetary figure was mentioned?",
+      "a": "$1.6 billion"
     }
   ]
 }
