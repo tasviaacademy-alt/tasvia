@@ -241,9 +241,12 @@ service cloud.firestore {
       allow delete: if staff();
     }
 
-    // Explicit deny-by-default for every other collection/document.
+    // Global administrator override: an authenticated TASVIA admin has full
+    // read/write access to every current and future portal collection/document.
+    // The admin() helper is restricted to the root admin email or a Staff record
+    // whose role is exactly "admin". This does not expand access for parents/staff.
     match /{document=**} {
-      allow read, write: if false;
+      allow read, write: if admin();
     }
   }
 }
