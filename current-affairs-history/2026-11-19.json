@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-19",
+  "month": "November 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "India’s CSR spending leaves gaps in health, water security, innovation: Report",
+      "text": "Non-communicable diseases (NCDs), for instance, account for 60% of deaths in India, up from 45% in 2004-06. Yet, nearly 62% of identifiable NCD funding goes towards cancer, while cardiovascular diseases receive around 12%, despite accounting for over half of NCD deaths, says a study by a City-based global impact consulting firm",
+      "source": "The Hindu National, 2026-11-19",
+      "url": "https://www.thehindu.com/news/national/indias-csr-spending-leaves-gaps-in-health-water-security-innovation-report/article71716827.ece"
+    },
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Panjab University improves its global standing in interdisciplinary scientific research",
+      "text": "The 2027 edition of the rankings, produced by Times Higher Education in association with Schmidt Science Fellows, assessed 1,058 institutions across 102 countries and territories, compared with 911 institutions in the 2026 edition",
+      "source": "The Hindu National, 2026-11-19",
+      "url": "https://www.thehindu.com/news/national/chandigarh/panjab-university-improves-its-global-standing-in-interdisciplinary-scientific-research/article71717519.ece"
+    },
+    {
+      "category": "World",
+      "icon": "🌐",
+      "title": "Bangladesh deploys paramilitary as unrest grows over Hasina's return",
+      "text": "Police have recorded dozens of crude bomb blasts and incidents of vehicles ​being torched in at least ‌28 districts over the last 10 days, with several police personnel and civilians injured, local media has reported",
+      "source": "The Hindu International, 2026-11-18",
+      "url": "https://www.thehindu.com/news/international/bangladesh-deploys-paramilitary-as-unrest-grows-overhasinas-return/article71717353.ece"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "ACME seals $3.6-billion deal for Odisha green ammonia project",
+      "text": "With an annual production capacity of 760,000 tonnes, the facility is expected to be commissioned by 2029.",
+      "source": "The Hindu Business, 2026-11-18",
+      "url": "https://www.thehindu.com/business/acme-seals-36-billion-deal-for-odisha-green-ammonia-project/article71717139.ece"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "India’s Oct. crude import bill soars 87.5% to $19.5-bn amid West Asia tensions, volumes up 11%",
+      "text": "While higher petroleum product exports offer a partial natural hedge, sustained increases in crude and gas prices could intensify pressure on the country’s import bill.",
+      "source": "The Hindu Business, 2026-11-18",
+      "url": "https://www.thehindu.com/business/Economy/indias-oct-crude-import-bill-soars-875-to-195-bn-amid-west-asia-tensions-volumes-up-11/article71716652.ece"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What percentage was reported in the story “India’s CSR spending leaves gaps in health, water security, innovation: Report”?",
+      "a": "60%"
+    },
+    {
+      "q": "How many countries were mentioned in the story “Panjab University improves its global standing in interdisciplinary scientific research”?",
+      "a": "102 countries"
+    },
+    {
+      "q": "How many districts were mentioned in the story “Bangladesh deploys paramilitary as unrest grows over Hasina's return”?",
+      "a": "28 districts"
+    },
+    {
+      "q": "According to the report “ACME seals $3.6-billion deal for Odisha green ammonia project”, what monetary figure was mentioned?",
+      "a": "$3.6"
+    },
+    {
+      "q": "According to the report “India’s Oct. crude import bill soars 87.5% to $19.5-bn amid West Asia tensions, volumes up 11%”, what monetary figure was mentioned?",
+      "a": "rs 87.5"
+    }
+  ]
+}
