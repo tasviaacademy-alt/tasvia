@@ -1699,6 +1699,7 @@ function vHomework(){
 const ICONS={assignments:"M4 5h16v15H4zM8 9h8M8 13h5M8 17h3M7 2v6M17 2v6",alerts:"M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0",parents:"M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7zM9 12l2 2 4-4",parentContacts:"M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM20 8v6M17 11h6",staff:"M16 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 20c0-3 3-5 6-5s6 2 6 5M14 15c3 0 8 1 8 5",money:"M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6",cards:"M3 5h18v14H3zM7 9h4v5H7zM14 10h4M14 13h3",centre:"M3 10l9-6 9 6M5 10v10h14V10M10 20v-5h4v5",backup:"M12 4v11M7 10l5 5 5-5M4 20h16"};
 function mhead(title,sub,right){return `<button class="back" data-act="more" data-k="">‹ More</button><div class="hd"><div><h2>${title}</h2>${sub?`<div class="sub">${sub}</div>`:""}</div>${right||""}</div>`}
 function vMore(){
+  if(UI.more==="leave")return window.tasviaLeaveView();
   if(UI.more==="assignments")return vAssignments();
   if(UI.more==="staff"){if(!isAdmin()){UI.more=null;return vMore()}return vStaff();}
   if(UI.more==="money"){if(!isAdmin()){UI.more=null;return vMore()}return vMoney();}
@@ -1715,6 +1716,7 @@ function vMore(){
     ["centre","Centre info & language","Notice, timings, message language"],
     ["parentContacts","Parent Contact Directory","Search, call or WhatsApp parents"],
      ["parents","Parent page links","Private page for each family"],
+    ["leave","Leave applications","Apply for leave · View request status"],
     ["alerts","Sounds & alerts",PREF.sound?"Sound on":"Sound off"],
     ["backup","Backup spreadsheets","Download for Excel or Google Sheets"]];
   return `<div class="hd"><h2>More</h2></div><div class="menu">`+items.map(([k,t,d])=>`<button class="item" data-act="more" data-k="${k}"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${ICONS[k]}"/></svg></span><div class="grow"><div class="nm">${t}</div><div class="mt">${d}</div></div><span aria-hidden="true" style="color:var(--muted)">›</span></button>`).join("")+`</div><div class="card" style="margin-top:14px"><h3>Account</h3><p class="sub" style="margin:0 0 10px">Signed in as ${esc((auth&&auth.currentUser&&auth.currentUser.email)||"")}</p><button class="btn ghost" data-act="signOut">Sign out</button></div>`;
