@@ -110,8 +110,8 @@
     openSheet("Leave request",body);
   }
 
-  const originalVMore=vMore;
-  vMore=function(){
+  window.tasviaLeaveView=renderLeaveView;
+  function pendingCount(){return leaveRows().filter(x=>x.status==="Pending").length;}
     if(UI.more==="leave")return renderLeaveView();
     const html=originalVMore();
     const item='<button class="item" data-act="more" data-k="leave"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v3M16 3v3M4 8h16M5 5h14v16H5zM8 12h3M8 16h8"/></svg></span><div class="grow"><div class="nm">Leave applications</div><div class="mt">'+(isAdmin()?(pendingCount()+" pending request(s)"): "Apply for leave · View status")+'</div></div><span aria-hidden="true" style="color:var(--muted)">›</span></button>';
