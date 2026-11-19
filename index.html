@@ -2354,7 +2354,7 @@ async function exportCSV(kind){
 function buildFullBackup(){
   const data={version:1,createdAt:new Date().toISOString(),app:"TASVIA Academy",collections:{
     students:S.students||{},fees:S.fees||{},paymentRecords:S.paymentRecords||{},tests:S.tests||{},attendance:S.att||{},diary:S.diary||{},
-    teachers:S.teachers||{},salaries:S.salaries||{},expenses:S.expenses||{},staffattendance:S.tatt||{},assignments:S.assignments||{},
+    teachers:S.teachers||{},salaries:S.salaries||{},expenses:S.expenses||{},staffattendance:S.tatt||{},assignments:S.assignments||{},leaveApplications:S.leaveApplications||{},
     info:S.info?{centre:S.info}:{} ,gkBackup:gkBackupRows||{}
   }};
   return data;
@@ -2379,7 +2379,7 @@ function restoreBackupFile(){
       const data=JSON.parse(await f.text()),c=data&&data.collections;
       if(!c||data.app!=="TASVIA Academy")throw new Error("Invalid backup");      if(!confirm("Restore this TASVIA backup? Existing matching records will be overwritten. This cannot be undone."))return;
       if(!db)throw new Error("Database unavailable");
-      const maps={students:c.students,fees:c.fees,paymentRecords:c.paymentRecords,tests:c.tests,attendance:c.attendance,diary:c.diary,teachers:c.teachers,salaries:c.salaries,expenses:c.expenses,staffattendance:c.staffattendance,assignments:c.assignments,gkBackup:c.gkBackup};
+      const maps={students:c.students,fees:c.fees,paymentRecords:c.paymentRecords,tests:c.tests,attendance:c.attendance,diary:c.diary,teachers:c.teachers,salaries:c.salaries,expenses:c.expenses,staffattendance:c.staffattendance,assignments:c.assignments,leaveApplications:c.leaveApplications,gkBackup:c.gkBackup};
       for(const [col,docs] of Object.entries(maps)){
         if(!docs||typeof docs!=="object")continue;
         const entries=Array.isArray(docs)?docs.map(x=>[x.id,x]):Object.entries(docs);
@@ -3021,6 +3021,7 @@ if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.service
 </script>
 
 <script src="./time-features.js?v=20261017-1"></script>
+<script src="./leave-module.js?v=20261119-1"></script>
 
 </body>
 </html>
