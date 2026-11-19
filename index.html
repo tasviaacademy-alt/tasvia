@@ -807,7 +807,7 @@ function subscribe(){
   unsubs.forEach(u=>u&&u());unsubs=[];lazyMoreLoaded=false;lazyTeacherAttLoaded=false;
   const onErr=(name,e)=>{
     if(e&&e.code==="permission-denied"){
-      const who=window.currentUser&&window.currentUser.role==="admin"?"admin":"staff";
+      const who=isAdmin()?"admin":"staff";
       console.warn("TASVIA Firestore permission denied:",name,who,e);
       setSync("Access issue · "+name);
     }else{
@@ -815,7 +815,7 @@ function subscribe(){
     }
   };
   const coll=(name,key,q)=>unsubs.push((q||db.collection(name)).onSnapshot({includeMetadataChanges:true},s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());const old=S[key];S[key]=o;if(!s.metadata||!s.metadata.hasPendingWrites)diffAlert(key,old||{},o);if(s.metadata&&!s.metadata.fromCache){seenFirst[key]=true;setSync("Live · connected")}else if(!navigator.onLine){setSync("Offline · waiting to reconnect")}scheduleRender();if((!s.metadata||!s.metadata.fromCache)&&(key==="students"||key==="fees"||key==="tests"||key==="att"||key==="diary"))schedulePV(true)},e=>onErr(name,e)));
-  const admin=window.currentUser&&window.currentUser.role==="admin";
+  const admin=isAdmin();
   coll("students","students");
   // Legacy student-ID migration is intentionally NOT automatic. It is a maintenance operation and must never run in the background while staff are recording payments.
   // Fee data is required for parent-view synchronization on every authorized staff device, not only admin devices.
