@@ -73,7 +73,7 @@
   }
   function leaveForm(){
     const email=leaveEmail();
-    if(!isStaff()||!email){toast("Please sign in with your TASVIA staff account.");return;}
+    if(!window.currentUser||!email){toast("Please sign in with your TASVIA staff account.");return;}
     const who=String(window.currentUser.name||email);
     openSheet("Apply for leave",'<form id="fLeaveApply">'+
       '<label class="f">Leave type<select name="leaveType" required><option value="Casual">Casual leave</option><option value="Sick">Sick leave</option><option value="Emergency">Emergency leave</option><option value="Personal">Personal leave</option><option value="Other">Other</option></select></label>'+
@@ -157,7 +157,7 @@
       if(f.id==="fLeaveApply"){
         const email=leaveEmail(),start=String(d.startDate||""),end=String(d.endDate||"");
         const days=leaveDays(start,end),reason=String(d.reason||"").trim();
-        if(!isStaff()||!email)throw new Error("Please sign in with your TASVIA staff account.");
+        if(!window.currentUser||!email)throw new Error("Please sign in with your TASVIA staff account.");
         if(!days)throw new Error("Please select a valid start and end date.");
         if(start<today())throw new Error("Leave applications must start today or later.");
         if(reason.length<5)throw new Error("Please enter a reason (at least 5 characters).");
