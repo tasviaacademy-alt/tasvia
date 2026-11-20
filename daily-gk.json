@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-11-19",
+  "date": "2026-11-20",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-first-pm",
-      "category": "Indian History",
-      "q": "Who was the first Prime Minister of independent India?",
-      "a": "Jawaharlal Nehru.",
+      "id": "static-india-constitution",
+      "category": "Indian Polity",
+      "q": "When did the Constitution of India come into effect?",
+      "a": "26 January 1950.",
       "options": [
-        "Jawaharlal Nehru.",
-        "Dr. Rajendra Prasad.",
-        "Lal Bahadur Shastri.",
-        "Sardar Vallabhbhai Patel."
+        "15 August 1947.",
+        "26 January 1950.",
+        "2 October 1950.",
+        "26 November 1949."
       ]
     },
     {
-      "id": "static-ashoka-chakra-spokes",
-      "category": "National Symbols",
-      "q": "How many spokes are there in the Ashoka Chakra on India's national flag?",
-      "a": "24.",
-      "options": [
-        "32.",
-        "18.",
-        "24.",
-        "12."
-      ]
-    },
-    {
-      "id": "static-telangana-capital",
+      "id": "static-india-smallest-state",
       "category": "Indian Geography",
-      "q": "What is the capital of Telangana?",
-      "a": "Hyderabad.",
+      "q": "Which is India's smallest state by area?",
+      "a": "Goa.",
       "options": [
-        "Karimnagar.",
-        "Nizamabad.",
-        "Warangal.",
-        "Hyderabad."
+        "Sikkim.",
+        "Tripura.",
+        "Manipur.",
+        "Goa."
       ]
     },
     {
-      "id": "static-human-heart",
-      "category": "Human Biology",
-      "q": "Which organ pumps blood around the human body?",
-      "a": "The heart.",
-      "options": [
-        "The kidneys.",
-        "The heart.",
-        "The lungs.",
-        "The liver."
-      ]
-    },
-    {
-      "id": "static-gk-telangana-capital",
+      "id": "static-telangana-festival",
       "category": "Telangana GK",
-      "q": "What is the capital city of Telangana?",
-      "a": "Hyderabad.",
+      "q": "Which floral festival is widely associated with Telangana?",
+      "a": "Bathukamma.",
       "options": [
-        "Nizamabad.",
-        "Warangal.",
-        "Hyderabad.",
-        "Karimnagar."
+        "Onam.",
+        "Bathukamma.",
+        "Pongal.",
+        "Bihu."
+      ]
+    },
+    {
+      "id": "static-computer-cpu",
+      "category": "Computer Basics",
+      "q": "What does CPU stand for?",
+      "a": "Central Processing Unit.",
+      "options": [
+        "Arithmetic Logic Unit.",
+        "Central Processing Unit.",
+        "Random Access Memory.",
+        "Graphics Processing Unit."
+      ]
+    },
+    {
+      "id": "static-literature-mahabharata",
+      "category": "Literature & Culture",
+      "q": "Who is traditionally credited with composing the Mahabharata?",
+      "a": "Vyasa.",
+      "options": [
+        "Kalidasa.",
+        "Tulsidas.",
+        "Valmiki.",
+        "Vyasa."
       ]
     }
   ]
