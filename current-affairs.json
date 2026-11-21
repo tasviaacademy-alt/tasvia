@@ -1,69 +1,69 @@
 {
-  "date": "2026-11-20",
+  "date": "2026-11-21",
   "month": "November 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
-      "category": "World",
-      "icon": "🌐",
-      "title": "Anthropic shares close 17% higher on first day of trading",
-      "text": "The shares ended the session at around $97, up from an IPO price of $83, after opening at $111.50 and briefly valuing the maker of the Claude chatbot at about $2 trillion",
-      "source": "The Hindu International, 2026-11-20",
-      "url": "https://www.thehindu.com/business/markets/ai-firm-anthropic-shares-wall-streets-nasdaq-debut/article71721723.ece"
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Chandel district official issues advisory after spurious liquor kills 11 in Manipur",
+      "text": "Chandel district urges reporting of adulterated liquor after 11 deaths; advisory warns against suspicious alcohol and to seek medical help.",
+      "source": "The Hindu National, 2026-11-21",
+      "url": "https://www.thehindu.com/news/national/manipur/chandel-district-official-issues-advisory-after-spurious-liquor-kills-11-in-manipur/article71726040.ece"
     },
     {
       "category": "India",
       "icon": "🇮🇳",
-      "title": "Nearing 3 years as Rajasthan CM, Bhajan Lal Sharma seeks to assert his authority",
-      "text": "Having entered office with virtually no administrative experience, his tenure has been a continuous tightrope walk between balancing the demands of the party’s central leadership and build authority of his own within the State.",
-      "source": "The Hindu National, 2026-11-20",
-      "url": "https://www.thehindu.com/news/national/rajasthan/as-three-year-mark-nears-bhajan-lal-sharma-seeks-to-shed-parchi-cm-tag/article71718633.ece"
-    },
-    {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "Nashik Court grants bail to Imtiaz Jaleel in TCS case on ₹50,000 bond",
-      "text": "When Mr. Jaleel sought bail, the state opposed, but the court granted release on bond since the sections allow bail",
-      "source": "The Hindu National, 2026-11-20",
-      "url": "https://www.thehindu.com/news/national/maharashtra/nashik-court-grants-bail-to-imtiaz-jaleel-in-tcs-case-on-50000-bond/article71720824.ece"
+      "title": "Infra push and low base effect pushes core sector growth to series-high of 10.9% in October 2026",
+      "text": "While the coal and electricity sectors saw growth shoot up, a large part of this was due to a statistical effect rather than growth in actual output. On the other hand, fuel-related sectors contracted again",
+      "source": "The Hindu National, 2026-11-21",
+      "url": "https://www.thehindu.com/business/Economy/infra-push-and-low-base-effect-pushes-core-sector-growth-to-series-high-in-october-2026/article71724481.ece"
     },
     {
       "category": "World",
       "icon": "🌐",
-      "title": "Draft of COP31 cover text drops references to fossil fuel phase-out, net zero dates",
-      "text": "COP31 draft cover text omits fossil fuel phase-out, net-zero dates, and $120B adaptation finance goals, signaling diluted ambitions and stalled commitments.",
+      "title": "Pakistan Army chief Munir vows to eliminate terrorism from country",
+      "text": "Pakistan overall witnessed a significant decline in terrorism-related violence during October, with attacks falling by 37%, deaths resulting from these attacks declining by 57%, and injuries decreasing by 71% compared to September, said Dawn newspaper report",
       "source": "The Hindu International, 2026-11-20",
-      "url": "https://www.thehindu.com/news/international/cop31-negotiators-publish-revised-deal-draft-with-no-mention-of-fossil-fuels/article71721240.ece"
+      "url": "https://www.thehindu.com/news/international/pakistan-army-chief-munir-vows-to-eliminate-terrorism-from-country/article71725751.ece"
     },
     {
       "category": "Economy",
       "icon": "💹",
-      "title": "Anthropic raises $81 billion in IPO amid AI market volatility",
-      "text": "The Claude maker priced its shares at $83 apiece, implying an equity valuation of about $1.03 trillion based on outstanding shares, with trading scheduled to begin on Nasdaq under the ticker ANT on November 19",
+      "title": "IRDAI imposes ₹2 cr penalty on Star Health",
+      "text": "The insurer is advised to ensure all policies are serviced as per the terms and conditions of the policy documents and no arbitrary deductions/denial are made to the claim without proper justification, IRDAI said.",
       "source": "The Hindu Business, 2026-11-20",
-      "url": "https://www.thehindu.com/business/anthropic-raises-81-billion-in-ipo-amid-ai-market-volatility/article71721392.ece"
+      "url": "https://www.thehindu.com/business/Industry/irdai-imposes-2-cr-penalty-on-star-health/article71725657.ece"
+    },
+    {
+      "category": "World",
+      "icon": "🌐",
+      "title": "Bangladesh hit by fresh arson attacks in political unrest",
+      "text": "Police said 124 people linked to the Awami League had been arrested in the capital Dhaka over the past 24 hours, without providing further details",
+      "source": "The Hindu International, 2026-11-20",
+      "url": "https://www.thehindu.com/news/international/bangladesh-hit-by-fresh-arson-attacks-in-political-unrest/article71725621.ece"
     }
   ],
   "quiz": [
     {
-      "q": "According to the report “Anthropic shares close 17% higher on first day of trading”, what monetary figure was mentioned?",
-      "a": "$97,"
+      "q": "How many deaths were mentioned in the story “Chandel district official issues advisory after spurious liquor kills 11 in Manipur”?",
+      "a": "11 deaths"
     },
     {
-      "q": "How many years were mentioned in the story “Nearing 3 years as Rajasthan CM, Bhajan Lal Sharma seeks to assert his authority”?",
-      "a": "3 years"
+      "q": "What percentage was reported in the story “Infra push and low base effect pushes core sector growth to series-high of 10.9% in October 2026”?",
+      "a": "10.9%"
     },
     {
-      "q": "According to the report “Nashik Court grants bail to Imtiaz Jaleel in TCS case on ₹50,000 bond”, what monetary figure was mentioned?",
-      "a": "₹50,000"
+      "q": "What percentage was reported in the story “Pakistan Army chief Munir vows to eliminate terrorism from country”?",
+      "a": "37%"
     },
     {
-      "q": "According to the report “Draft of COP31 cover text drops references to fossil fuel phase-out, net zero dates”, what monetary figure was mentioned?",
-      "a": "$120"
+      "q": "According to the report “IRDAI imposes ₹2 cr penalty on Star Health”, what monetary figure was mentioned?",
+      "a": "₹2"
     },
     {
-      "q": "According to the report “Anthropic raises $81 billion in IPO amid AI market volatility”, what monetary figure was mentioned?",
-      "a": "$83"
+      "q": "How many people were mentioned in the story “Bangladesh hit by fresh arson attacks in political unrest”?",
+      "a": "124 people"
     }
   ]
 }
