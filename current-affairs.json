@@ -1,69 +1,69 @@
 {
-  "date": "2026-11-21",
+  "date": "2026-11-22",
   "month": "November 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
       "category": "India",
       "icon": "🇮🇳",
-      "title": "Chandel district official issues advisory after spurious liquor kills 11 in Manipur",
-      "text": "Chandel district urges reporting of adulterated liquor after 11 deaths; advisory warns against suspicious alcohol and to seek medical help.",
-      "source": "The Hindu National, 2026-11-21",
-      "url": "https://www.thehindu.com/news/national/manipur/chandel-district-official-issues-advisory-after-spurious-liquor-kills-11-in-manipur/article71726040.ece"
+      "title": "Raja Ravi Varma Gallery of Oleographs and Chromo Lithographs inaugurated in Chennai",
+      "text": "Chennai hosts the inauguration of Raja Ravi Varma Gallery of Oleographs and Chromo Lithographs at CPRAF, marking 60 years of cultural philanthropy.",
+      "source": "The Hindu National, 2026-11-22",
+      "url": "https://www.thehindu.com/news/cities/chennai/raja-ravi-varma-gallery-of-oleographs-and-chromo-lithographs-inaugurated-in-chennai/article71729335.ece"
     },
     {
       "category": "India",
       "icon": "🇮🇳",
-      "title": "Infra push and low base effect pushes core sector growth to series-high of 10.9% in October 2026",
-      "text": "While the coal and electricity sectors saw growth shoot up, a large part of this was due to a statistical effect rather than growth in actual output. On the other hand, fuel-related sectors contracted again",
-      "source": "The Hindu National, 2026-11-21",
-      "url": "https://www.thehindu.com/business/Economy/infra-push-and-low-base-effect-pushes-core-sector-growth-to-series-high-in-october-2026/article71724481.ece"
-    },
-    {
-      "category": "World",
-      "icon": "🌐",
-      "title": "Pakistan Army chief Munir vows to eliminate terrorism from country",
-      "text": "Pakistan overall witnessed a significant decline in terrorism-related violence during October, with attacks falling by 37%, deaths resulting from these attacks declining by 57%, and injuries decreasing by 71% compared to September, said Dawn newspaper report",
-      "source": "The Hindu International, 2026-11-20",
-      "url": "https://www.thehindu.com/news/international/pakistan-army-chief-munir-vows-to-eliminate-terrorism-from-country/article71725751.ece"
+      "title": "Chennai International Book Fair 2027 to be held from January 16 to 18",
+      "text": "Chennai International Book Fair 2027 runs Jan 16–18 at Chennai Trade Centre, featuring global publishers, authors, translators, and a literary agent training program.",
+      "source": "The Hindu National, 2026-11-22",
+      "url": "https://www.thehindu.com/news/national/tamil-nadu/chennai-international-book-fair-2027-to-be-held-from-january-16-to-18/article71728191.ece"
     },
     {
       "category": "Economy",
       "icon": "💹",
-      "title": "IRDAI imposes ₹2 cr penalty on Star Health",
-      "text": "The insurer is advised to ensure all policies are serviced as per the terms and conditions of the policy documents and no arbitrary deductions/denial are made to the claim without proper justification, IRDAI said.",
-      "source": "The Hindu Business, 2026-11-20",
-      "url": "https://www.thehindu.com/business/Industry/irdai-imposes-2-cr-penalty-on-star-health/article71725657.ece"
+      "title": "India’s building automation market likely to grow to $12.56 billion by 2030",
+      "text": "India’s building automation market is projected to expand from $4.32 billion in 2025 to $12.56 billion by 2030, registering a CAGR of 23.8% industry officials said quoting a MarketsandMarkets report.",
+      "source": "The Hindu Business, 2026-11-21",
+      "url": "https://www.thehindu.com/business/indias-building-automation-market-likely-to-grow-to-1256-billion-by-2030/article71729114.ece"
     },
     {
-      "category": "World",
-      "icon": "🌐",
-      "title": "Bangladesh hit by fresh arson attacks in political unrest",
-      "text": "Police said 124 people linked to the Awami League had been arrested in the capital Dhaka over the past 24 hours, without providing further details",
-      "source": "The Hindu International, 2026-11-20",
-      "url": "https://www.thehindu.com/news/international/bangladesh-hit-by-fresh-arson-attacks-in-political-unrest/article71725621.ece"
+      "category": "Economy",
+      "icon": "💹",
+      "title": "Google offers $5 mn to IIT Kharagpur for AI research, talent development",
+      "text": "Building AI that works for everyone requires deep collaboration and strong academic leadership, says Google",
+      "source": "The Hindu Business, 2026-11-21",
+      "url": "https://www.thehindu.com/business/google-offers-5-mn-to-iit-kharagpur-for-ai-research-talent-development/article71729164.ece"
+    },
+    {
+      "category": "Telangana",
+      "icon": "📰",
+      "title": "More than 50% population uses pedestrian spaces, why focus on cars, asks panellist at IRC",
+      "text": "Science For All The weekly newsletter from science writers takes the jargon out of science and puts the fun in!",
+      "source": "The Hindu Telangana, 2026-11-21",
+      "url": "https://www.thehindu.com/news/national/telangana/more-than-50-population-uses-pedestrian-spaces-why-focus-on-cars-asks-panellist-at-irc/article71728849.ece"
     }
   ],
   "quiz": [
     {
-      "q": "How many deaths were mentioned in the story “Chandel district official issues advisory after spurious liquor kills 11 in Manipur”?",
-      "a": "11 deaths"
+      "q": "In which city or place did the reported event take place?",
+      "a": "Chennai"
     },
     {
-      "q": "What percentage was reported in the story “Infra push and low base effect pushes core sector growth to series-high of 10.9% in October 2026”?",
-      "a": "10.9%"
+      "q": "In which city or place did the reported event take place?",
+      "a": "Chennai"
     },
     {
-      "q": "What percentage was reported in the story “Pakistan Army chief Munir vows to eliminate terrorism from country”?",
-      "a": "37%"
+      "q": "According to the report “India’s building automation market likely to grow to $12.56 billion by 2030”, what monetary figure was mentioned?",
+      "a": "$4.32 billion"
     },
     {
-      "q": "According to the report “IRDAI imposes ₹2 cr penalty on Star Health”, what monetary figure was mentioned?",
-      "a": "₹2"
+      "q": "According to the report “Google offers $5 mn to IIT Kharagpur for AI research, talent development”, what monetary figure was mentioned?",
+      "a": "$5"
     },
     {
-      "q": "How many people were mentioned in the story “Bangladesh hit by fresh arson attacks in political unrest”?",
-      "a": "124 people"
+      "q": "What percentage was reported in the story “More than 50% population uses pedestrian spaces, why focus on cars, asks panellist at IRC”?",
+      "a": "50%"
     }
   ]
 }
