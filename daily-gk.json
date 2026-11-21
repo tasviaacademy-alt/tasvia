@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-11-21",
+  "date": "2026-11-22",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-gk-closest-planet-sun",
-      "category": "Astronomy",
-      "q": "Which planet is closest to the Sun?",
-      "a": "Mercury.",
+      "id": "static-computer-www",
+      "category": "Computer Basics",
+      "q": "What does WWW stand for?",
+      "a": "World Wide Web.",
+      "options": [
+        "World Wide Web.",
+        "Wireless World Web.",
+        "Wide World Web.",
+        "World Web Window."
+      ]
+    },
+    {
+      "id": "static-science-red-planet",
+      "category": "Science & Space",
+      "q": "Which planet is commonly called the Red Planet?",
+      "a": "Mars.",
       "options": [
         "Mercury.",
+        "Jupiter.",
         "Mars.",
-        "Venus.",
-        "Earth."
+        "Venus."
       ]
     },
     {
-      "id": "static-gk-computer-keyboard",
-      "category": "Computers",
-      "q": "Which device is mainly used to type text into a computer?",
-      "a": "Keyboard.",
-      "options": [
-        "Printer.",
-        "Keyboard.",
-        "Speaker.",
-        "Monitor."
-      ]
-    },
-    {
-      "id": "static-sports-olympics",
-      "category": "Sports",
-      "q": "How often are the Summer Olympic Games normally held?",
-      "a": "Every four years.",
-      "options": [
-        "Every three years.",
-        "Every four years.",
-        "Every two years.",
-        "Every five years."
-      ]
-    },
-    {
-      "id": "static-water-formula",
+      "id": "static-science-boiling-water",
       "category": "Science",
-      "q": "What is the chemical formula of water?",
-      "a": "H₂O.",
+      "q": "At what temperature does pure water boil at sea level?",
+      "a": "100°C.",
       "options": [
-        "CO₂.",
-        "H₂O.",
-        "NaCl.",
-        "O₂."
+        "150°C.",
+        "100°C.",
+        "0°C.",
+        "50°C."
       ]
     },
     {
-      "id": "static-maths-triangle",
-      "category": "Mathematics",
-      "q": "How many sides does a triangle have?",
-      "a": "Three.",
+      "id": "static-gk-nepal-capital",
+      "category": "World Geography",
+      "q": "What is the capital of Nepal?",
+      "a": "Kathmandu.",
       "options": [
-        "Four.",
-        "Three.",
-        "Six.",
-        "Five."
+        "Colombo.",
+        "Kathmandu.",
+        "Thimphu.",
+        "Dhaka."
+      ]
+    },
+    {
+      "id": "static-india-independence",
+      "category": "Indian History",
+      "q": "On which date did India become independent?",
+      "a": "15 August 1947.",
+      "options": [
+        "15 August 1947.",
+        "2 October 1947.",
+        "15 August 1948.",
+        "26 January 1950."
       ]
     }
   ]
