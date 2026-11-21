@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-21",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-gk-closest-planet-sun",
+      "category": "Astronomy",
+      "q": "Which planet is closest to the Sun?",
+      "a": "Mercury.",
+      "options": [
+        "Mercury.",
+        "Mars.",
+        "Venus.",
+        "Earth."
+      ]
+    },
+    {
+      "id": "static-gk-computer-keyboard",
+      "category": "Computers",
+      "q": "Which device is mainly used to type text into a computer?",
+      "a": "Keyboard.",
+      "options": [
+        "Printer.",
+        "Keyboard.",
+        "Speaker.",
+        "Monitor."
+      ]
+    },
+    {
+      "id": "static-sports-olympics",
+      "category": "Sports",
+      "q": "How often are the Summer Olympic Games normally held?",
+      "a": "Every four years.",
+      "options": [
+        "Every three years.",
+        "Every four years.",
+        "Every two years.",
+        "Every five years."
+      ]
+    },
+    {
+      "id": "static-water-formula",
+      "category": "Science",
+      "q": "What is the chemical formula of water?",
+      "a": "H₂O.",
+      "options": [
+        "CO₂.",
+        "H₂O.",
+        "NaCl.",
+        "O₂."
+      ]
+    },
+    {
+      "id": "static-maths-triangle",
+      "category": "Mathematics",
+      "q": "How many sides does a triangle have?",
+      "a": "Three.",
+      "options": [
+        "Four.",
+        "Three.",
+        "Six.",
+        "Five."
+      ]
+    }
+  ]
+}

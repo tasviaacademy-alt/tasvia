@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-11-20",
+  "date": "2026-11-21",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-india-constitution",
-      "category": "Indian Polity",
-      "q": "When did the Constitution of India come into effect?",
-      "a": "26 January 1950.",
+      "id": "static-gk-closest-planet-sun",
+      "category": "Astronomy",
+      "q": "Which planet is closest to the Sun?",
+      "a": "Mercury.",
       "options": [
-        "15 August 1947.",
-        "26 January 1950.",
-        "2 October 1950.",
-        "26 November 1949."
+        "Mercury.",
+        "Mars.",
+        "Venus.",
+        "Earth."
       ]
     },
     {
-      "id": "static-india-smallest-state",
-      "category": "Indian Geography",
-      "q": "Which is India's smallest state by area?",
-      "a": "Goa.",
+      "id": "static-gk-computer-keyboard",
+      "category": "Computers",
+      "q": "Which device is mainly used to type text into a computer?",
+      "a": "Keyboard.",
       "options": [
-        "Sikkim.",
-        "Tripura.",
-        "Manipur.",
-        "Goa."
+        "Printer.",
+        "Keyboard.",
+        "Speaker.",
+        "Monitor."
       ]
     },
     {
-      "id": "static-telangana-festival",
-      "category": "Telangana GK",
-      "q": "Which floral festival is widely associated with Telangana?",
-      "a": "Bathukamma.",
+      "id": "static-sports-olympics",
+      "category": "Sports",
+      "q": "How often are the Summer Olympic Games normally held?",
+      "a": "Every four years.",
       "options": [
-        "Onam.",
-        "Bathukamma.",
-        "Pongal.",
-        "Bihu."
+        "Every three years.",
+        "Every four years.",
+        "Every two years.",
+        "Every five years."
       ]
     },
     {
-      "id": "static-computer-cpu",
-      "category": "Computer Basics",
-      "q": "What does CPU stand for?",
-      "a": "Central Processing Unit.",
+      "id": "static-water-formula",
+      "category": "Science",
+      "q": "What is the chemical formula of water?",
+      "a": "H₂O.",
       "options": [
-        "Arithmetic Logic Unit.",
-        "Central Processing Unit.",
-        "Random Access Memory.",
-        "Graphics Processing Unit."
+        "CO₂.",
+        "H₂O.",
+        "NaCl.",
+        "O₂."
       ]
     },
     {
-      "id": "static-literature-mahabharata",
-      "category": "Literature & Culture",
-      "q": "Who is traditionally credited with composing the Mahabharata?",
-      "a": "Vyasa.",
+      "id": "static-maths-triangle",
+      "category": "Mathematics",
+      "q": "How many sides does a triangle have?",
+      "a": "Three.",
       "options": [
-        "Kalidasa.",
-        "Tulsidas.",
-        "Valmiki.",
-        "Vyasa."
+        "Four.",
+        "Three.",
+        "Six.",
+        "Five."
       ]
     }
   ]
