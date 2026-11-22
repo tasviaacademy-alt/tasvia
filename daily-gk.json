@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-11-22",
+  "date": "2026-11-23",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-computer-www",
-      "category": "Computer Basics",
-      "q": "What does WWW stand for?",
-      "a": "World Wide Web.",
+      "id": "static-economics-currency",
+      "category": "Economics",
+      "q": "What is the currency of India?",
+      "a": "The Indian rupee.",
       "options": [
-        "World Wide Web.",
-        "Wireless World Web.",
-        "Wide World Web.",
-        "World Web Window."
+        "The Sri Lankan rupee.",
+        "The Nepalese rupee.",
+        "The Bangladeshi taka.",
+        "The Indian rupee."
       ]
     },
     {
-      "id": "static-science-red-planet",
-      "category": "Science & Space",
-      "q": "Which planet is commonly called the Red Planet?",
-      "a": "Mars.",
-      "options": [
-        "Mercury.",
-        "Jupiter.",
-        "Mars.",
-        "Venus."
-      ]
-    },
-    {
-      "id": "static-science-boiling-water",
-      "category": "Science",
-      "q": "At what temperature does pure water boil at sea level?",
-      "a": "100°C.",
-      "options": [
-        "150°C.",
-        "100°C.",
-        "0°C.",
-        "50°C."
-      ]
-    },
-    {
-      "id": "static-gk-nepal-capital",
+      "id": "static-largest-ocean",
       "category": "World Geography",
-      "q": "What is the capital of Nepal?",
-      "a": "Kathmandu.",
+      "q": "Which is the largest ocean on Earth?",
+      "a": "The Pacific Ocean.",
       "options": [
-        "Colombo.",
-        "Kathmandu.",
-        "Thimphu.",
-        "Dhaka."
+        "The Atlantic Ocean.",
+        "The Indian Ocean.",
+        "The Pacific Ocean.",
+        "The Arctic Ocean."
       ]
     },
     {
-      "id": "static-india-independence",
-      "category": "Indian History",
-      "q": "On which date did India become independent?",
-      "a": "15 August 1947.",
+      "id": "static-sports-chess",
+      "category": "Sports",
+      "q": "How many squares are there on a standard chessboard?",
+      "a": "64.",
       "options": [
-        "15 August 1947.",
-        "2 October 1947.",
-        "15 August 1948.",
-        "26 January 1950."
+        "100.",
+        "48.",
+        "32.",
+        "64."
+      ]
+    },
+    {
+      "id": "static-literature-ramayana",
+      "category": "Literature & Culture",
+      "q": "Who is traditionally credited with composing the Sanskrit Ramayana?",
+      "a": "Valmiki.",
+      "options": [
+        "Kalidasa.",
+        "Vyasa.",
+        "Tulsidas.",
+        "Valmiki."
+      ]
+    },
+    {
+      "id": "static-gk-vitamin-sunlight",
+      "category": "Health & Science",
+      "q": "Which vitamin can the human body make when skin is exposed to sunlight?",
+      "a": "Vitamin D.",
+      "options": [
+        "Vitamin B12.",
+        "Vitamin C.",
+        "Vitamin D.",
+        "Vitamin A."
       ]
     }
   ]

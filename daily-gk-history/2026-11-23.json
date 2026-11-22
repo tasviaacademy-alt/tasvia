@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-23",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-economics-currency",
+      "category": "Economics",
+      "q": "What is the currency of India?",
+      "a": "The Indian rupee.",
+      "options": [
+        "The Sri Lankan rupee.",
+        "The Nepalese rupee.",
+        "The Bangladeshi taka.",
+        "The Indian rupee."
+      ]
+    },
+    {
+      "id": "static-largest-ocean",
+      "category": "World Geography",
+      "q": "Which is the largest ocean on Earth?",
+      "a": "The Pacific Ocean.",
+      "options": [
+        "The Atlantic Ocean.",
+        "The Indian Ocean.",
+        "The Pacific Ocean.",
+        "The Arctic Ocean."
+      ]
+    },
+    {
+      "id": "static-sports-chess",
+      "category": "Sports",
+      "q": "How many squares are there on a standard chessboard?",
+      "a": "64.",
+      "options": [
+        "100.",
+        "48.",
+        "32.",
+        "64."
+      ]
+    },
+    {
+      "id": "static-literature-ramayana",
+      "category": "Literature & Culture",
+      "q": "Who is traditionally credited with composing the Sanskrit Ramayana?",
+      "a": "Valmiki.",
+      "options": [
+        "Kalidasa.",
+        "Vyasa.",
+        "Tulsidas.",
+        "Valmiki."
+      ]
+    },
+    {
+      "id": "static-gk-vitamin-sunlight",
+      "category": "Health & Science",
+      "q": "Which vitamin can the human body make when skin is exposed to sunlight?",
+      "a": "Vitamin D.",
+      "options": [
+        "Vitamin B12.",
+        "Vitamin C.",
+        "Vitamin D.",
+        "Vitamin A."
+      ]
+    }
+  ]
+}
