@@ -1,69 +1,69 @@
 {
-  "date": "2026-11-22",
+  "date": "2026-11-23",
   "month": "November 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
       "category": "India",
       "icon": "🇮🇳",
-      "title": "Raja Ravi Varma Gallery of Oleographs and Chromo Lithographs inaugurated in Chennai",
-      "text": "Chennai hosts the inauguration of Raja Ravi Varma Gallery of Oleographs and Chromo Lithographs at CPRAF, marking 60 years of cultural philanthropy.",
-      "source": "The Hindu National, 2026-11-22",
-      "url": "https://www.thehindu.com/news/cities/chennai/raja-ravi-varma-gallery-of-oleographs-and-chromo-lithographs-inaugurated-in-chennai/article71729335.ece"
+      "title": "Wanted man held after 14 months for mob attack on Delhi police team in Chhatarpur",
+      "text": "The accused, identified as Arbaj Khan alias Baiju, a resident of Chandan Holla village in Chhatarpur, was apprehended by the Special Staff of South district from Village Gadpur in Bhiwadi on November 20, police said",
+      "source": "The Hindu National, 2026-11-23",
+      "url": "https://www.thehindu.com/news/cities/Delhi/wanted-man-held-after-14-months-for-mob-attack-on-delhi-police-team-in-chhatarpur/article71731513.ece"
     },
     {
       "category": "India",
       "icon": "🇮🇳",
-      "title": "Chennai International Book Fair 2027 to be held from January 16 to 18",
-      "text": "Chennai International Book Fair 2027 runs Jan 16–18 at Chennai Trade Centre, featuring global publishers, authors, translators, and a literary agent training program.",
-      "source": "The Hindu National, 2026-11-22",
-      "url": "https://www.thehindu.com/news/national/tamil-nadu/chennai-international-book-fair-2027-to-be-held-from-january-16-to-18/article71728191.ece"
+      "title": "Raut alleges BJP offers funds to secure support for Delimitation Bill",
+      "text": "Sanjay Raut alleged during the conference that an MP would receive ₹150 crore upon breaking away from a party to support the Delimitation Bill without facing disqualification",
+      "source": "The Hindu National, 2026-11-23",
+      "url": "https://www.thehindu.com/news/national/raut-alleges-bjp-offers-funds-to-secure-support-for-delimitation-bill/article71732151.ece"
     },
     {
-      "category": "Economy",
-      "icon": "💹",
-      "title": "India’s building automation market likely to grow to $12.56 billion by 2030",
-      "text": "India’s building automation market is projected to expand from $4.32 billion in 2025 to $12.56 billion by 2030, registering a CAGR of 23.8% industry officials said quoting a MarketsandMarkets report.",
-      "source": "The Hindu Business, 2026-11-21",
-      "url": "https://www.thehindu.com/business/indias-building-automation-market-likely-to-grow-to-1256-billion-by-2030/article71729114.ece"
+      "category": "World",
+      "icon": "🌐",
+      "title": "Nvidia faces U.S. accounting probe amid deepening turmoil: media",
+      "text": "The Securities and Exchange Commission inquiry is in its early stages, U.S. media reported, after Jensen Huang’s resignation as chief executive and a 14% fall in Nvidia shares on Friday (November 20, 2026)",
+      "source": "The Hindu International, 2026-11-22",
+      "url": "https://www.thehindu.com/news/international/nvidia-faces-us-accounting-probe-amid-deepening-turmoil-media/article71732128.ece"
     },
     {
-      "category": "Economy",
-      "icon": "💹",
-      "title": "Google offers $5 mn to IIT Kharagpur for AI research, talent development",
-      "text": "Building AI that works for everyone requires deep collaboration and strong academic leadership, says Google",
-      "source": "The Hindu Business, 2026-11-21",
-      "url": "https://www.thehindu.com/business/google-offers-5-mn-to-iit-kharagpur-for-ai-research-talent-development/article71729164.ece"
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "Syed Mushtaq Ali Trophy: Sachin dazzles in Tamil Nadu’s big win over Bihar",
+      "text": "The opener smashes 82 off 41 balls while Sai Kishore and Siddharth excel with the ball; Tejasvi runs riot for Delhi; Alam scalps four in four as Railways ends Saurashtra’s winning streak",
+      "source": "The Hindu Sport, 2026-11-22",
+      "url": "https://www.thehindu.com/sport/cricket/syed-mushtaq-ali-trophy-sachin-dazzles-in-tamil-nadus-big-win-over-bihar/article71732229.ece"
     },
     {
       "category": "Telangana",
       "icon": "📰",
-      "title": "More than 50% population uses pedestrian spaces, why focus on cars, asks panellist at IRC",
-      "text": "Science For All The weekly newsletter from science writers takes the jargon out of science and puts the fun in!",
-      "source": "The Hindu Telangana, 2026-11-21",
-      "url": "https://www.thehindu.com/news/national/telangana/more-than-50-population-uses-pedestrian-spaces-why-focus-on-cars-asks-panellist-at-irc/article71728849.ece"
+      "title": "About 3,500 runners participate in IITH half marathon 2026",
+      "text": "IITH’s 3rd half marathon drew about 3,500 participants across four races, featuring winners Ramavath Ramesh Chandra and Sunima Dila, with Paralympic gold medallist Petkar flagging off.",
+      "source": "The Hindu Telangana, 2026-11-22",
+      "url": "https://www.thehindu.com/news/national/telangana/about-3500-runners-participate-in-iith-half-marathon-2026/article71731007.ece"
     }
   ],
   "quiz": [
     {
-      "q": "In which city or place did the reported event take place?",
-      "a": "Chennai"
+      "q": "How many months were mentioned in the story “Wanted man held after 14 months for mob attack on Delhi police team in Chhatarpur”?",
+      "a": "14 months"
     },
     {
-      "q": "In which city or place did the reported event take place?",
-      "a": "Chennai"
+      "q": "According to the report “Raut alleges BJP offers funds to secure support for Delimitation Bill”, what monetary figure was mentioned?",
+      "a": "₹150 crore"
     },
     {
-      "q": "According to the report “India’s building automation market likely to grow to $12.56 billion by 2030”, what monetary figure was mentioned?",
-      "a": "$4.32 billion"
+      "q": "What percentage was reported in the story “Nvidia faces U.S. accounting probe amid deepening turmoil: media”?",
+      "a": "14%"
     },
     {
-      "q": "According to the report “Google offers $5 mn to IIT Kharagpur for AI research, talent development”, what monetary figure was mentioned?",
-      "a": "$5"
+      "q": "What score did Sachin make in the reported match?",
+      "a": "82 runs off 41 balls"
     },
     {
-      "q": "What percentage was reported in the story “More than 50% population uses pedestrian spaces, why focus on cars, asks panellist at IRC”?",
-      "a": "50%"
+      "q": "How many participants were mentioned in the story “About 3,500 runners participate in IITH half marathon 2026”?",
+      "a": "3,500 participants"
     }
   ]
 }
