@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-24",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-space-isro",
+      "category": "Science & Space",
+      "q": "What is the name of India's national space agency?",
+      "a": "ISRO (Indian Space Research Organisation).",
+      "options": [
+        "BARC (Bhabha Atomic Research Centre).",
+        "ISRO (Indian Space Research Organisation).",
+        "CSIR (Council of Scientific and Industrial Research).",
+        "DRDO (Defence Research and Development Organisation)."
+      ]
+    },
+    {
+      "id": "static-telangana-river",
+      "category": "Telangana GK",
+      "q": "Which major river flows through Telangana and is one of India's longest rivers?",
+      "a": "Godavari.",
+      "options": [
+        "Godavari.",
+        "Narmada.",
+        "Ravi.",
+        "Beas."
+      ]
+    },
+    {
+      "id": "static-maths-right-angle",
+      "category": "Mathematics",
+      "q": "How many degrees are in a right angle?",
+      "a": "90 degrees.",
+      "options": [
+        "45 degrees.",
+        "360 degrees.",
+        "90 degrees.",
+        "180 degrees."
+      ]
+    },
+    {
+      "id": "static-india-constitution-day",
+      "category": "Indian Polity",
+      "q": "When is Constitution Day observed in India?",
+      "a": "26 November.",
+      "options": [
+        "15 August.",
+        "26 January.",
+        "1 May.",
+        "26 November."
+      ]
+    },
+    {
+      "id": "static-gk-transpiration",
+      "category": "Plant Science",
+      "q": "What is the process called in which plants release water vapour mainly through their leaves?",
+      "a": "Transpiration.",
+      "options": [
+        "Transpiration.",
+        "Pollination.",
+        "Germination.",
+        "Fertilisation."
+      ]
+    }
+  ]
+}

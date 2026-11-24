@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-11-23",
+  "date": "2026-11-24",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-economics-currency",
-      "category": "Economics",
-      "q": "What is the currency of India?",
-      "a": "The Indian rupee.",
+      "id": "static-space-isro",
+      "category": "Science & Space",
+      "q": "What is the name of India's national space agency?",
+      "a": "ISRO (Indian Space Research Organisation).",
       "options": [
-        "The Sri Lankan rupee.",
-        "The Nepalese rupee.",
-        "The Bangladeshi taka.",
-        "The Indian rupee."
+        "BARC (Bhabha Atomic Research Centre).",
+        "ISRO (Indian Space Research Organisation).",
+        "CSIR (Council of Scientific and Industrial Research).",
+        "DRDO (Defence Research and Development Organisation)."
       ]
     },
     {
-      "id": "static-largest-ocean",
-      "category": "World Geography",
-      "q": "Which is the largest ocean on Earth?",
-      "a": "The Pacific Ocean.",
+      "id": "static-telangana-river",
+      "category": "Telangana GK",
+      "q": "Which major river flows through Telangana and is one of India's longest rivers?",
+      "a": "Godavari.",
       "options": [
-        "The Atlantic Ocean.",
-        "The Indian Ocean.",
-        "The Pacific Ocean.",
-        "The Arctic Ocean."
+        "Godavari.",
+        "Narmada.",
+        "Ravi.",
+        "Beas."
       ]
     },
     {
-      "id": "static-sports-chess",
-      "category": "Sports",
-      "q": "How many squares are there on a standard chessboard?",
-      "a": "64.",
+      "id": "static-maths-right-angle",
+      "category": "Mathematics",
+      "q": "How many degrees are in a right angle?",
+      "a": "90 degrees.",
       "options": [
-        "100.",
-        "48.",
-        "32.",
-        "64."
+        "45 degrees.",
+        "360 degrees.",
+        "90 degrees.",
+        "180 degrees."
       ]
     },
     {
-      "id": "static-literature-ramayana",
-      "category": "Literature & Culture",
-      "q": "Who is traditionally credited with composing the Sanskrit Ramayana?",
-      "a": "Valmiki.",
+      "id": "static-india-constitution-day",
+      "category": "Indian Polity",
+      "q": "When is Constitution Day observed in India?",
+      "a": "26 November.",
       "options": [
-        "Kalidasa.",
-        "Vyasa.",
-        "Tulsidas.",
-        "Valmiki."
+        "15 August.",
+        "26 January.",
+        "1 May.",
+        "26 November."
       ]
     },
     {
-      "id": "static-gk-vitamin-sunlight",
-      "category": "Health & Science",
-      "q": "Which vitamin can the human body make when skin is exposed to sunlight?",
-      "a": "Vitamin D.",
+      "id": "static-gk-transpiration",
+      "category": "Plant Science",
+      "q": "What is the process called in which plants release water vapour mainly through their leaves?",
+      "a": "Transpiration.",
       "options": [
-        "Vitamin B12.",
-        "Vitamin C.",
-        "Vitamin D.",
-        "Vitamin A."
+        "Transpiration.",
+        "Pollination.",
+        "Germination.",
+        "Fertilisation."
       ]
     }
   ]
