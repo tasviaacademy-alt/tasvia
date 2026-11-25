@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-25",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-science-gravity",
+      "category": "Science",
+      "q": "Which force pulls objects towards Earth?",
+      "a": "Gravity.",
+      "options": [
+        "Gravity.",
+        "Buoyancy.",
+        "Friction.",
+        "Magnetism."
+      ]
+    },
+    {
+      "id": "static-india-republic-day",
+      "category": "Indian Polity",
+      "q": "Which day is celebrated as India's Republic Day?",
+      "a": "26 January.",
+      "options": [
+        "15 August.",
+        "26 January.",
+        "2 October.",
+        "14 November."
+      ]
+    },
+    {
+      "id": "static-maths-prime",
+      "category": "Mathematics",
+      "q": "What is the smallest prime number?",
+      "a": "2.",
+      "options": [
+        "3.",
+        "2.",
+        "1.",
+        "5."
+      ]
+    },
+    {
+      "id": "static-world-equator",
+      "category": "World Geography",
+      "q": "What is the imaginary line that divides Earth into the Northern and Southern Hemispheres?",
+      "a": "The Equator.",
+      "options": [
+        "The Equator.",
+        "The Tropic of Cancer.",
+        "The Prime Meridian.",
+        "The Arctic Circle."
+      ]
+    },
+    {
+      "id": "static-india-largest-state",
+      "category": "Indian Geography",
+      "q": "Which is India's largest state by area?",
+      "a": "Rajasthan.",
+      "options": [
+        "Maharashtra.",
+        "Rajasthan.",
+        "Madhya Pradesh.",
+        "Uttar Pradesh."
+      ]
+    }
+  ]
+}
