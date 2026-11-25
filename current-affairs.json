@@ -1,69 +1,69 @@
 {
-  "date": "2026-11-24",
+  "date": "2026-11-25",
   "month": "November 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "CM’s promise of ₹1 crore a mirage for Sigachi blast victims’ kin in Telangana",
-      "text": "According to the victims’ kin, the company paid ₹37 lakh in three instalments. The Central Government has paid ₹2 lakh, which several families have yet to receive, and the State Government disbursed ₹1 lakh when the bodies were handed over",
-      "source": "The Hindu National, 2026-11-24",
-      "url": "https://www.thehindu.com/news/national/telangana/cms-promise-of-1-crore-a-mirage-for-sigachi-blast-victims-kin-in-telangana/article71735412.ece"
-    },
-    {
       "category": "World",
       "icon": "🌐",
-      "title": "5.6 magnitude earthquake strikes Nepal’s Koshi province close to China border",
-      "text": "The European-Mediterranean Seismological Centre (EMSC), however, put the earthquake’s magnitude at 5.3 and said it occurred at a depth of 10 kilometres",
-      "source": "The Hindu International, 2026-11-24",
-      "url": "https://www.thehindu.com/news/international/earthquake-strikes-nepals-koshi-province-close-to-china-border/article71737092.ece"
+      "title": "Radar issue delaying flights at Chicago O’Hare airport",
+      "text": "FAA radar issue delays flights into Chicago O’Hare; repairs expected to last into Wednesday, with about 12% of flights affected.",
+      "source": "The Hindu International, 2026-11-25",
+      "url": "https://www.thehindu.com/news/international/us-chicago-o-hare-international-airport-flight-delays-november-2026-updates/article71740881.ece"
     },
     {
       "category": "India",
       "icon": "🇮🇳",
-      "title": "Uttar Pradesh polls: SP, Congress kick off seat-sharing talks",
-      "text": "The meeting held at the residence of Congress Rajya Sabha MP Pramod Tiwari in New Delhi lasted just about 20 minutes, and the two sides are likely meet again November 24 to take the negotiations forward",
-      "source": "The Hindu National, 2026-11-24",
-      "url": "https://www.thehindu.com/news/national/uttar-pradesh/congress-sp-seat-sharing-discussions-to-continue-on-november-24/article71734959.ece"
+      "title": "Human Metabolic Chamber inaugurated at CMC in Vellore",
+      "text": "The Human Metabolic Chamber is a room-sized calorimeter that measures oxygen consumption and carbon dioxide production while a volunteer lives, eats, and sleeps inside for 24 hours or longer",
+      "source": "The Hindu National, 2026-11-25",
+      "url": "https://www.thehindu.com/news/national/tamil-nadu/human-metabolic-chamber-inaugurated-at-cmc-in-vellore/article71738645.ece"
+    },
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Under Nishant’s leadership, the future of the party remains bright for next 30 years, says Sanjay Jha",
+      "text": "Mr. Jha also said that former Chief Minister Nitish Kumar has transformed Bihar’s image and identity over the past two decades.",
+      "source": "The Hindu National, 2026-11-25",
+      "url": "https://www.thehindu.com/news/national/bihar/under-nishants-leadership-the-future-of-the-party-remains-bright-for-next-30-years-says-sanjay-jha/article71738545.ece"
     },
     {
       "category": "Economy",
       "icon": "💹",
-      "title": "Wall Street roars back as Nvidia reinstates Jensen Huang as CEO",
-      "text": "Nvidia shares surged 32.2%, on track for their biggest one-day jump in more than two decades after an extraordinary reversal, which followed President Donald Trump’s call for Jensen Huang’s return",
-      "source": "The Hindu Business, 2026-11-23",
-      "url": "https://www.thehindu.com/business/markets/wall-street-roars-back-as-nvidia-reinstates-jensen-huang-as-ceo/article71736138.ece"
+      "title": "PNGRB rewrites gas pipeline rules; proposes 14% returns to developers, shifts volume risk",
+      "text": "The regulator said the existing bidding framework had threatened the financial viability of projects when actual gas flows fell short of projections",
+      "source": "The Hindu Business, 2026-11-24",
+      "url": "https://www.thehindu.com/business/Industry/pngrb-rewrites-gas-pipeline-rules/article71739792.ece"
     },
     {
       "category": "Telangana",
       "icon": "📰",
-      "title": "RERA approvals for two Indiramma Housing towers in Hyderabad; to help beneficiaries in getting bank loans",
-      "text": "Telangana’s proposed Indiramma Housing towers in Malakpet and Quthbullapur receive RERA approval, enabling beneficiaries to secure bank loans for flats offered at a subsidised cost of ₹6 lakh.",
-      "source": "The Hindu Telangana, 2026-11-23",
-      "url": "https://www.thehindu.com/news/cities/Hyderabad/rera-approvals-for-two-indiramma-housing-towers-in-hyderabad-to-help-beneficiaries-in-getting-bank-loans/article71735686.ece"
+      "title": "₹10,000 crore five-month programme planned to prepare Telangana for El Nino",
+      "text": "Science For All The weekly newsletter from science writers takes the jargon out of science and puts the fun in!",
+      "source": "The Hindu Telangana, 2026-11-24",
+      "url": "https://www.thehindu.com/news/national/telangana/10000-crore-five-month-programme-planned-to-prepare-telangana-for-el-nino/article71739410.ece"
     }
   ],
   "quiz": [
     {
-      "q": "According to the report “CM’s promise of ₹1 crore a mirage for Sigachi blast victims’ kin in Telangana”, what monetary figure was mentioned?",
-      "a": "₹37 lakh"
+      "q": "What percentage was reported in the story “Radar issue delaying flights at Chicago O’Hare airport”?",
+      "a": "12%"
     },
     {
-      "q": "How many kilometres were mentioned in the story “5.6 magnitude earthquake strikes Nepal’s Koshi province close to China border”?",
-      "a": "10 kilometres"
+      "q": "How many hours were mentioned in the story “Human Metabolic Chamber inaugurated at CMC in Vellore”?",
+      "a": "24 hours"
     },
     {
-      "q": "In which city or place did the reported event take place?",
-      "a": "New Delhi"
+      "q": "How many years were mentioned in the story “Under Nishant’s leadership, the future of the party remains bright for next 30 years, says…”?",
+      "a": "30 years"
     },
     {
-      "q": "What percentage was reported in the story “Wall Street roars back as Nvidia reinstates Jensen Huang as CEO”?",
-      "a": "32.2%"
+      "q": "What percentage was reported in the story “PNGRB rewrites gas pipeline rules; proposes 14% returns to developers, shifts volume risk”?",
+      "a": "14%"
     },
     {
-      "q": "According to the report “RERA approvals for two Indiramma Housing towers in Hyderabad; to help beneficiaries in getting…”, what monetary figure was mentioned?",
-      "a": "₹6 lakh"
+      "q": "According to the report “₹10,000 crore five-month programme planned to prepare Telangana for El Nino”, what monetary figure was mentioned?",
+      "a": "₹10,000 crore"
     }
   ]
 }
