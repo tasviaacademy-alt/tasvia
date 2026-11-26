@@ -1,69 +1,69 @@
 {
-  "date": "2026-11-25",
+  "date": "2026-11-26",
   "month": "November 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "India’s satellite supply chain ‘highly dependent on imports’, says space body",
+      "text": "India’s space economy is currently valued at nearly $9 billion and is set to grow to $40-45 billion in less than a decade",
+      "source": "The Hindu National, 2026-11-26",
+      "url": "https://www.thehindu.com/sci-tech/science/indias-satellite-supply-chain-highly-dependent-on-imports-says-space-body/article71743312.ece"
+    },
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "ECI directs states to correct erroneous entries in SIR rolls through Form 8 during ongoing Special Summary Revision",
+      "text": "ECI directs corrections of erroneous SSR entries using Form 8 after SIR verification across 25 states/UTs.",
+      "source": "The Hindu National, 2026-11-26",
+      "url": "https://www.thehindu.com/news/national/eci-directs-states-to-correct-erroneous-entries-in-sir-rolls-through-form-8-during-ongoing-special-summary-revision/article71743520.ece"
+    },
+    {
       "category": "World",
       "icon": "🌐",
-      "title": "Radar issue delaying flights at Chicago O’Hare airport",
-      "text": "FAA radar issue delays flights into Chicago O’Hare; repairs expected to last into Wednesday, with about 12% of flights affected.",
-      "source": "The Hindu International, 2026-11-25",
-      "url": "https://www.thehindu.com/news/international/us-chicago-o-hare-international-airport-flight-delays-november-2026-updates/article71740881.ece"
-    },
-    {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "Human Metabolic Chamber inaugurated at CMC in Vellore",
-      "text": "The Human Metabolic Chamber is a room-sized calorimeter that measures oxygen consumption and carbon dioxide production while a volunteer lives, eats, and sleeps inside for 24 hours or longer",
-      "source": "The Hindu National, 2026-11-25",
-      "url": "https://www.thehindu.com/news/national/tamil-nadu/human-metabolic-chamber-inaugurated-at-cmc-in-vellore/article71738645.ece"
-    },
-    {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "Under Nishant’s leadership, the future of the party remains bright for next 30 years, says Sanjay Jha",
-      "text": "Mr. Jha also said that former Chief Minister Nitish Kumar has transformed Bihar’s image and identity over the past two decades.",
-      "source": "The Hindu National, 2026-11-25",
-      "url": "https://www.thehindu.com/news/national/bihar/under-nishants-leadership-the-future-of-the-party-remains-bright-for-next-30-years-says-sanjay-jha/article71738545.ece"
+      "title": "Fuel tanker crash ignites massive fire on highway surrounding Cairo, killing at least 30 people",
+      "text": "The blaze on Ring Road, a key artery that encircles the Egyptian capital, also injured at least 25 people and left more than two dozen cars and motorcycles charred, the Public Prosecutor’s office said in a statement",
+      "source": "The Hindu International, 2026-11-26",
+      "url": "https://www.thehindu.com/news/international/fuel-tanker-crash-ignites-massive-fire-on-highway-surrounding-cairo/article71744262.ece"
     },
     {
       "category": "Economy",
       "icon": "💹",
-      "title": "PNGRB rewrites gas pipeline rules; proposes 14% returns to developers, shifts volume risk",
-      "text": "The regulator said the existing bidding framework had threatened the financial viability of projects when actual gas flows fell short of projections",
-      "source": "The Hindu Business, 2026-11-24",
-      "url": "https://www.thehindu.com/business/Industry/pngrb-rewrites-gas-pipeline-rules/article71739792.ece"
+      "title": "Airtel to invest ₹1,200 cr in 3 data centers in Assam",
+      "text": "Airtel to invest ₹1,200 crore to build three Assam data centres (Guwahati, Jorhat, Silchar) by 2028, boosting digital infrastructure and jobs.",
+      "source": "The Hindu Business, 2026-11-26",
+      "url": "https://www.thehindu.com/business/Industry/airtel-to-invest-1200-cr-in-3-data-centers-in-assam/article71742828.ece"
     },
     {
-      "category": "Telangana",
-      "icon": "📰",
-      "title": "₹10,000 crore five-month programme planned to prepare Telangana for El Nino",
-      "text": "Science For All The weekly newsletter from science writers takes the jargon out of science and puts the fun in!",
-      "source": "The Hindu Telangana, 2026-11-24",
-      "url": "https://www.thehindu.com/news/national/telangana/10000-crore-five-month-programme-planned-to-prepare-telangana-for-el-nino/article71739410.ece"
+      "category": "World",
+      "icon": "🌐",
+      "title": "U.S. announces new 25% tariffs on India, second-highest in the 14 countries against which action has been taken",
+      "text": "The order by the U.S. Trade Representative also opens the door for a lower 17% tariff if India and the U.S. sign a trade deal",
+      "source": "The Hindu International, 2026-11-25",
+      "url": "https://www.thehindu.com/news/international/donald-trump-tariffs-us-midterm-elections/article71743081.ece"
     }
   ],
   "quiz": [
     {
-      "q": "What percentage was reported in the story “Radar issue delaying flights at Chicago O’Hare airport”?",
-      "a": "12%"
+      "q": "According to the report “India’s satellite supply chain ‘highly dependent on imports’, says space body”, what monetary figure was mentioned?",
+      "a": "$9 billion"
     },
     {
-      "q": "How many hours were mentioned in the story “Human Metabolic Chamber inaugurated at CMC in Vellore”?",
-      "a": "24 hours"
+      "q": "How many states were mentioned in the story “ECI directs states to correct erroneous entries in SIR rolls through Form 8 during ongoing…”?",
+      "a": "25 states"
     },
     {
-      "q": "How many years were mentioned in the story “Under Nishant’s leadership, the future of the party remains bright for next 30 years, says…”?",
-      "a": "30 years"
+      "q": "How many people were mentioned in the story “Fuel tanker crash ignites massive fire on highway surrounding Cairo, killing at least 30 people”?",
+      "a": "30 people"
     },
     {
-      "q": "What percentage was reported in the story “PNGRB rewrites gas pipeline rules; proposes 14% returns to developers, shifts volume risk”?",
-      "a": "14%"
+      "q": "According to the report “Airtel to invest ₹1,200 cr in 3 data centers in Assam”, what monetary figure was mentioned?",
+      "a": "₹1,200 crore"
     },
     {
-      "q": "According to the report “₹10,000 crore five-month programme planned to prepare Telangana for El Nino”, what monetary figure was mentioned?",
-      "a": "₹10,000 crore"
+      "q": "What percentage was reported in the story “U.S. announces new 25% tariffs on India, second-highest in the 14 countries against which action…”?",
+      "a": "25%"
     }
   ]
 }
