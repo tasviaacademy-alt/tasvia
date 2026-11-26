@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-26",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-computer-keyboard",
+      "category": "Computer Basics",
+      "q": "Which device is commonly used to type text into a computer?",
+      "a": "Keyboard.",
+      "options": [
+        "Speaker.",
+        "Monitor.",
+        "Printer.",
+        "Keyboard."
+      ]
+    },
+    {
+      "id": "static-india-parliament-lower-house",
+      "category": "Indian Polity",
+      "q": "Which is the lower house of the Parliament of India?",
+      "a": "Lok Sabha.",
+      "options": [
+        "Vidhan Parishad.",
+        "Supreme Court.",
+        "Rajya Sabha.",
+        "Lok Sabha."
+      ]
+    },
+    {
+      "id": "static-gk-white-blood-cells",
+      "category": "Human Body",
+      "q": "Which blood cells help the body fight infections?",
+      "a": "White blood cells.",
+      "options": [
+        "White blood cells.",
+        "Red blood cells.",
+        "Platelets.",
+        "Nerve cells."
+      ]
+    },
+    {
+      "id": "static-gk-solar-system-sun",
+      "category": "Science & Space",
+      "q": "Which star is at the centre of our solar system?",
+      "a": "The Sun.",
+      "options": [
+        "Polaris.",
+        "The Sun.",
+        "Sirius.",
+        "Alpha Centauri."
+      ]
+    },
+    {
+      "id": "static-gk-konark-state",
+      "category": "Indian Geography & Heritage",
+      "q": "In which Indian state is the Sun Temple at Konark located?",
+      "a": "Odisha.",
+      "options": [
+        "Rajasthan.",
+        "Odisha.",
+        "Gujarat.",
+        "Kerala."
+      ]
+    }
+  ]
+}

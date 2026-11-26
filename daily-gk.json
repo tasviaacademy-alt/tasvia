@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-11-25",
+  "date": "2026-11-26",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-science-gravity",
-      "category": "Science",
-      "q": "Which force pulls objects towards Earth?",
-      "a": "Gravity.",
+      "id": "static-computer-keyboard",
+      "category": "Computer Basics",
+      "q": "Which device is commonly used to type text into a computer?",
+      "a": "Keyboard.",
       "options": [
-        "Gravity.",
-        "Buoyancy.",
-        "Friction.",
-        "Magnetism."
+        "Speaker.",
+        "Monitor.",
+        "Printer.",
+        "Keyboard."
       ]
     },
     {
-      "id": "static-india-republic-day",
+      "id": "static-india-parliament-lower-house",
       "category": "Indian Polity",
-      "q": "Which day is celebrated as India's Republic Day?",
-      "a": "26 January.",
+      "q": "Which is the lower house of the Parliament of India?",
+      "a": "Lok Sabha.",
       "options": [
-        "15 August.",
-        "26 January.",
-        "2 October.",
-        "14 November."
+        "Vidhan Parishad.",
+        "Supreme Court.",
+        "Rajya Sabha.",
+        "Lok Sabha."
       ]
     },
     {
-      "id": "static-maths-prime",
-      "category": "Mathematics",
-      "q": "What is the smallest prime number?",
-      "a": "2.",
+      "id": "static-gk-white-blood-cells",
+      "category": "Human Body",
+      "q": "Which blood cells help the body fight infections?",
+      "a": "White blood cells.",
       "options": [
-        "3.",
-        "2.",
-        "1.",
-        "5."
+        "White blood cells.",
+        "Red blood cells.",
+        "Platelets.",
+        "Nerve cells."
       ]
     },
     {
-      "id": "static-world-equator",
-      "category": "World Geography",
-      "q": "What is the imaginary line that divides Earth into the Northern and Southern Hemispheres?",
-      "a": "The Equator.",
+      "id": "static-gk-solar-system-sun",
+      "category": "Science & Space",
+      "q": "Which star is at the centre of our solar system?",
+      "a": "The Sun.",
       "options": [
-        "The Equator.",
-        "The Tropic of Cancer.",
-        "The Prime Meridian.",
-        "The Arctic Circle."
+        "Polaris.",
+        "The Sun.",
+        "Sirius.",
+        "Alpha Centauri."
       ]
     },
     {
-      "id": "static-india-largest-state",
-      "category": "Indian Geography",
-      "q": "Which is India's largest state by area?",
-      "a": "Rajasthan.",
+      "id": "static-gk-konark-state",
+      "category": "Indian Geography & Heritage",
+      "q": "In which Indian state is the Sun Temple at Konark located?",
+      "a": "Odisha.",
       "options": [
-        "Maharashtra.",
         "Rajasthan.",
-        "Madhya Pradesh.",
-        "Uttar Pradesh."
+        "Odisha.",
+        "Gujarat.",
+        "Kerala."
       ]
     }
   ]
