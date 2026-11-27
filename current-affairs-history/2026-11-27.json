@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-27",
+  "month": "November 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Overnight sharp spell of rain drenches Hyderabad",
+      "text": "Sharp overnight rainfall drenched Hyderabad, flooding areas like Hafeezpet and Kukatpally while IMD warned of continuing showers and cooler temps.",
+      "source": "The Hindu National, 2026-11-27",
+      "url": "https://www.thehindu.com/news/cities/Hyderabad/overnight-sharp-spell-of-rain-drenches-hyderabad/article71749201.ece"
+    },
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Last-minute train ticket cancellation costs Railways ₹25,000",
+      "text": "Railways ordered to pay ₹25,000 compensation and ₹5,000 legal expenses after last-minute cancellation of a train ticket.",
+      "source": "The Hindu National, 2026-11-27",
+      "url": "https://www.thehindu.com/news/national/kerala/last-minute-train-ticket-cancellation-costs-railways-25000/article71747341.ece"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "NCLAT clears ₹480 crore in Jet Airways employees’ dues, sets two-week deadline",
+      "text": "The relief comes after a seven-year legal battle following the airline's grounding in 2019. In November 2024, the Supreme Court ordered its liquidation",
+      "source": "The Hindu Business, 2026-11-26",
+      "url": "https://www.thehindu.com/business/Industry/nclat-clears-480-crore-in-jet-airways-employees-dues-sets-two-week-deadline/article71746808.ece"
+    },
+    {
+      "category": "Economy",
+      "icon": "💹",
+      "title": "India attracts $31 billion in climate equity funding, but capital remains concentrated in power, transport",
+      "text": "Bridging this mismatch between project requirements and investor horizons will be critical to diversifying climate finance beyond power and transport and mobilising the investments needed for India’s long-term climate transition.",
+      "source": "The Hindu Business, 2026-11-26",
+      "url": "https://www.thehindu.com/business/india-attracts-31-billion-in-climate-equity-funding-but-capital-remains-concentrated-in-power-transport/article71747748.ece"
+    },
+    {
+      "category": "Telangana",
+      "icon": "📰",
+      "title": "ACB arrests TGSPDCL engineer for accepting ₹60,000 bribe in Gadwal",
+      "text": "ACB arrests TGSPDCL engineer in Gadwal for demanding and accepting ₹60,000 bribe to process ₹12.62 lakh bills.",
+      "source": "The Hindu Telangana, 2026-11-26",
+      "url": "https://www.thehindu.com/news/national/telangana/acb-arrests-tgspdcl-engineer-for-accepting-60000-bribe-in-gadwal/article71747440.ece"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "Which agency issued the heavy-rain alerts mentioned in the report?",
+      "a": "India Meteorological Department (IMD)"
+    },
+    {
+      "q": "According to the report “Last-minute train ticket cancellation costs Railways ₹25,000”, what monetary figure was mentioned?",
+      "a": "₹25,000"
+    },
+    {
+      "q": "According to the report “NCLAT clears ₹480 crore in Jet Airways employees’ dues, sets two-week deadline”, what monetary figure was mentioned?",
+      "a": "₹480 crore"
+    },
+    {
+      "q": "According to the report “India attracts $31 billion in climate equity funding, but capital remains concentrated in power,…”, what monetary figure was mentioned?",
+      "a": "$31 billion"
+    },
+    {
+      "q": "According to the report “ACB arrests TGSPDCL engineer for accepting ₹60,000 bribe in Gadwal”, what monetary figure was mentioned?",
+      "a": "₹60,000"
+    }
+  ]
+}
