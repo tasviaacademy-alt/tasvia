@@ -1,66 +1,66 @@
 {
   "schemaVersion": 3,
-  "date": "2026-11-26",
+  "date": "2026-11-27",
   "title": "Daily General Knowledge",
   "questions": [
     {
-      "id": "static-computer-keyboard",
-      "category": "Computer Basics",
-      "q": "Which device is commonly used to type text into a computer?",
-      "a": "Keyboard.",
+      "id": "static-india-capital",
+      "category": "Indian General Knowledge",
+      "q": "What is the capital of India?",
+      "a": "New Delhi.",
       "options": [
-        "Speaker.",
-        "Monitor.",
-        "Printer.",
-        "Keyboard."
+        "Chennai",
+        "Kolkata",
+        "New Delhi.",
+        "Mumbai"
       ]
     },
     {
-      "id": "static-india-parliament-lower-house",
-      "category": "Indian Polity",
-      "q": "Which is the lower house of the Parliament of India?",
-      "a": "Lok Sabha.",
+      "id": "static-gk-temperature-instrument",
+      "category": "Science",
+      "q": "Which instrument is used to measure temperature?",
+      "a": "A thermometer.",
       "options": [
-        "Vidhan Parishad.",
-        "Supreme Court.",
-        "Rajya Sabha.",
-        "Lok Sabha."
+        "A compass.",
+        "A barometer.",
+        "A telescope.",
+        "A thermometer."
       ]
     },
     {
-      "id": "static-gk-white-blood-cells",
-      "category": "Human Body",
-      "q": "Which blood cells help the body fight infections?",
-      "a": "White blood cells.",
+      "id": "static-biodiversity",
+      "category": "Environment",
+      "q": "What does biodiversity mean?",
+      "a": "The variety of living organisms in an area or on Earth.",
       "options": [
-        "White blood cells.",
-        "Red blood cells.",
-        "Platelets.",
-        "Nerve cells."
+        "The variety of living organisms in an area or on Earth.",
+        "The amount of rainfall in a year.",
+        "The movement of water through the atmosphere.",
+        "The number of buildings in a city."
       ]
     },
     {
-      "id": "static-gk-solar-system-sun",
-      "category": "Science & Space",
-      "q": "Which star is at the centre of our solar system?",
-      "a": "The Sun.",
+      "id": "static-telangana-formation",
+      "category": "Telangana GK",
+      "q": "On which date was Telangana formed as a state?",
+      "a": "2 June 2014.",
       "options": [
-        "Polaris.",
-        "The Sun.",
-        "Sirius.",
-        "Alpha Centauri."
+        "26 January 1950.",
+        "15 August 1947.",
+        "2 June 2014.",
+        "1 November 1956."
       ]
     },
     {
-      "id": "static-gk-konark-state",
-      "category": "Indian Geography & Heritage",
-      "q": "In which Indian state is the Sun Temple at Konark located?",
-      "a": "Odisha.",
+      "id": "static-india-national-flag",
+      "category": "National Symbols",
+      "q": "How many colours are there in the Indian national flag, excluding the Ashoka Chakra?",
+      "a": "Three.",
       "options": [
-        "Rajasthan.",
-        "Odisha.",
-        "Gujarat.",
-        "Kerala."
+        "Five.",
+        "Four.",
+        "Two.",
+        "Three."
       ]
     }
   ]
