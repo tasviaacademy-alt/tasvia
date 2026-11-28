@@ -1,69 +1,69 @@
 {
-  "date": "2026-11-27",
+  "date": "2026-11-28",
   "month": "November 2026",
   "title": "Daily Current Affairs",
   "items": [
     {
-      "category": "India",
-      "icon": "🇮🇳",
-      "title": "Overnight sharp spell of rain drenches Hyderabad",
-      "text": "Sharp overnight rainfall drenched Hyderabad, flooding areas like Hafeezpet and Kukatpally while IMD warned of continuing showers and cooler temps.",
-      "source": "The Hindu National, 2026-11-27",
-      "url": "https://www.thehindu.com/news/cities/Hyderabad/overnight-sharp-spell-of-rain-drenches-hyderabad/article71749201.ece"
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "IND vs NZ second Test: Akash Deep takes five wickets as India dismisses New Zealand for 356",
+      "text": "Akash Deep was the standout bowler for India, returning impressive figures of 5 for 99, while Brar (2/78) and Anshul Kamboj (2/79) claimed two wickets apiece",
+      "source": "The Hindu Sport, 2026-11-28",
+      "url": "https://www.thehindu.com/sport/cricket/india-vs-new-zealand-second-test-in-christchurch-day-2/article71753429.ece"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "Nathan Lyon’s 13-year reign as Australia’s top-choice spinner ends",
+      "text": "Australia axes Nathan Lyon after 13 years as lead spinner; squad includes Rocchiccioli and Clayton for the New Zealand Test series.",
+      "source": "The Hindu Sport, 2026-11-28",
+      "url": "https://www.thehindu.com/sport/cricket/nathan-lyons-13-year-reign-as-australias-top-choice-spinner-ends/article71753441.ece"
     },
     {
       "category": "India",
       "icon": "🇮🇳",
-      "title": "Last-minute train ticket cancellation costs Railways ₹25,000",
-      "text": "Railways ordered to pay ₹25,000 compensation and ₹5,000 legal expenses after last-minute cancellation of a train ticket.",
-      "source": "The Hindu National, 2026-11-27",
-      "url": "https://www.thehindu.com/news/national/kerala/last-minute-train-ticket-cancellation-costs-railways-25000/article71747341.ece"
+      "title": "INLD leader alleges Haryana universities saddled with ₹16,052 crore debt",
+      "text": "The State government has pushed 22 public universities into a debt burden over the past four years by converting grants-in-aid into perpetual loans.",
+      "source": "The Hindu National, 2026-11-28",
+      "url": "https://www.thehindu.com/news/cities/Delhi/inld-leader-alleges-haryana-universities-saddled-with-16052-crore-debt/article71750972.ece"
     },
     {
-      "category": "Economy",
-      "icon": "💹",
-      "title": "NCLAT clears ₹480 crore in Jet Airways employees’ dues, sets two-week deadline",
-      "text": "The relief comes after a seven-year legal battle following the airline's grounding in 2019. In November 2024, the Supreme Court ordered its liquidation",
-      "source": "The Hindu Business, 2026-11-26",
-      "url": "https://www.thehindu.com/business/Industry/nclat-clears-480-crore-in-jet-airways-employees-dues-sets-two-week-deadline/article71746808.ece"
-    },
-    {
-      "category": "Economy",
-      "icon": "💹",
-      "title": "India attracts $31 billion in climate equity funding, but capital remains concentrated in power, transport",
-      "text": "Bridging this mismatch between project requirements and investor horizons will be critical to diversifying climate finance beyond power and transport and mobilising the investments needed for India’s long-term climate transition.",
-      "source": "The Hindu Business, 2026-11-26",
-      "url": "https://www.thehindu.com/business/india-attracts-31-billion-in-climate-equity-funding-but-capital-remains-concentrated-in-power-transport/article71747748.ece"
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Centre proposes freeze on Lok Sabha seat proportions for States until 2051",
+      "text": "The new Constitutional Amendment Bill, accompanied by a fresh Delimitation Bill, proposes to increase the number of Lok Sabha seats in each State by 50%; they also bring into force the 33% reservation for women in the Lok Sabha",
+      "source": "The Hindu National, 2026-11-28",
+      "url": "https://www.thehindu.com/news/national/centre-proposes-freeze-on-lok-sabha-seat-proportions-for-states-until-2051/article71752150.ece"
     },
     {
       "category": "Telangana",
       "icon": "📰",
-      "title": "ACB arrests TGSPDCL engineer for accepting ₹60,000 bribe in Gadwal",
-      "text": "ACB arrests TGSPDCL engineer in Gadwal for demanding and accepting ₹60,000 bribe to process ₹12.62 lakh bills.",
-      "source": "The Hindu Telangana, 2026-11-26",
-      "url": "https://www.thehindu.com/news/national/telangana/acb-arrests-tgspdcl-engineer-for-accepting-60000-bribe-in-gadwal/article71747440.ece"
+      "title": "HC impleads CBI for assistance over SBI sanctioning ₹500 crore loan to M/s Sem India Fab",
+      "text": "Science For All The weekly newsletter from science writers takes the jargon out of science and puts the fun in!",
+      "source": "The Hindu Telangana, 2026-11-27",
+      "url": "https://www.thehindu.com/news/national/telangana/hc-impleads-cbi-for-assistance-over-sbi-sanctioning-500-crore-loan-to-ms-sem-india-fab/article71751590.ece"
     }
   ],
   "quiz": [
     {
-      "q": "Which agency issued the heavy-rain alerts mentioned in the report?",
-      "a": "India Meteorological Department (IMD)"
+      "q": "How many wickets were mentioned in the report “IND vs NZ second Test: Akash Deep takes five wickets as India dismisses New Zealand for 356”?",
+      "a": "5 wickets"
     },
     {
-      "q": "According to the report “Last-minute train ticket cancellation costs Railways ₹25,000”, what monetary figure was mentioned?",
-      "a": "₹25,000"
+      "q": "How many years were mentioned in the story “Nathan Lyon’s 13-year reign as Australia’s top-choice spinner ends”?",
+      "a": "13 years"
     },
     {
-      "q": "According to the report “NCLAT clears ₹480 crore in Jet Airways employees’ dues, sets two-week deadline”, what monetary figure was mentioned?",
-      "a": "₹480 crore"
+      "q": "According to the report “INLD leader alleges Haryana universities saddled with ₹16,052 crore debt”, what monetary figure was mentioned?",
+      "a": "₹16,052 crore"
     },
     {
-      "q": "According to the report “India attracts $31 billion in climate equity funding, but capital remains concentrated in power,…”, what monetary figure was mentioned?",
-      "a": "$31 billion"
+      "q": "What percentage was reported in the story “Centre proposes freeze on Lok Sabha seat proportions for States until 2051”?",
+      "a": "50%"
     },
     {
-      "q": "According to the report “ACB arrests TGSPDCL engineer for accepting ₹60,000 bribe in Gadwal”, what monetary figure was mentioned?",
-      "a": "₹60,000"
+      "q": "According to the report “HC impleads CBI for assistance over SBI sanctioning ₹500 crore loan to M/s Sem India Fab”, what monetary figure was mentioned?",
+      "a": "₹500 crore"
     }
   ]
 }

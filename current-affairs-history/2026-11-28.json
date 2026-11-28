@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-28",
+  "month": "November 2026",
+  "title": "Daily Current Affairs",
+  "items": [
+    {
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "IND vs NZ second Test: Akash Deep takes five wickets as India dismisses New Zealand for 356",
+      "text": "Akash Deep was the standout bowler for India, returning impressive figures of 5 for 99, while Brar (2/78) and Anshul Kamboj (2/79) claimed two wickets apiece",
+      "source": "The Hindu Sport, 2026-11-28",
+      "url": "https://www.thehindu.com/sport/cricket/india-vs-new-zealand-second-test-in-christchurch-day-2/article71753429.ece"
+    },
+    {
+      "category": "Sports",
+      "icon": "🏆",
+      "title": "Nathan Lyon’s 13-year reign as Australia’s top-choice spinner ends",
+      "text": "Australia axes Nathan Lyon after 13 years as lead spinner; squad includes Rocchiccioli and Clayton for the New Zealand Test series.",
+      "source": "The Hindu Sport, 2026-11-28",
+      "url": "https://www.thehindu.com/sport/cricket/nathan-lyons-13-year-reign-as-australias-top-choice-spinner-ends/article71753441.ece"
+    },
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "INLD leader alleges Haryana universities saddled with ₹16,052 crore debt",
+      "text": "The State government has pushed 22 public universities into a debt burden over the past four years by converting grants-in-aid into perpetual loans.",
+      "source": "The Hindu National, 2026-11-28",
+      "url": "https://www.thehindu.com/news/cities/Delhi/inld-leader-alleges-haryana-universities-saddled-with-16052-crore-debt/article71750972.ece"
+    },
+    {
+      "category": "India",
+      "icon": "🇮🇳",
+      "title": "Centre proposes freeze on Lok Sabha seat proportions for States until 2051",
+      "text": "The new Constitutional Amendment Bill, accompanied by a fresh Delimitation Bill, proposes to increase the number of Lok Sabha seats in each State by 50%; they also bring into force the 33% reservation for women in the Lok Sabha",
+      "source": "The Hindu National, 2026-11-28",
+      "url": "https://www.thehindu.com/news/national/centre-proposes-freeze-on-lok-sabha-seat-proportions-for-states-until-2051/article71752150.ece"
+    },
+    {
+      "category": "Telangana",
+      "icon": "📰",
+      "title": "HC impleads CBI for assistance over SBI sanctioning ₹500 crore loan to M/s Sem India Fab",
+      "text": "Science For All The weekly newsletter from science writers takes the jargon out of science and puts the fun in!",
+      "source": "The Hindu Telangana, 2026-11-27",
+      "url": "https://www.thehindu.com/news/national/telangana/hc-impleads-cbi-for-assistance-over-sbi-sanctioning-500-crore-loan-to-ms-sem-india-fab/article71751590.ece"
+    }
+  ],
+  "quiz": [
+    {
+      "q": "How many wickets were mentioned in the report “IND vs NZ second Test: Akash Deep takes five wickets as India dismisses New Zealand for 356”?",
+      "a": "5 wickets"
+    },
+    {
+      "q": "How many years were mentioned in the story “Nathan Lyon’s 13-year reign as Australia’s top-choice spinner ends”?",
+      "a": "13 years"
+    },
+    {
+      "q": "According to the report “INLD leader alleges Haryana universities saddled with ₹16,052 crore debt”, what monetary figure was mentioned?",
+      "a": "₹16,052 crore"
+    },
+    {
+      "q": "What percentage was reported in the story “Centre proposes freeze on Lok Sabha seat proportions for States until 2051”?",
+      "a": "50%"
+    },
+    {
+      "q": "According to the report “HC impleads CBI for assistance over SBI sanctioning ₹500 crore loan to M/s Sem India Fab”, what monetary figure was mentioned?",
+      "a": "₹500 crore"
+    }
+  ]
+}
