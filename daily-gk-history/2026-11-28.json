@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "date": "2026-11-28",
+  "title": "Daily General Knowledge",
+  "questions": [
+    {
+      "id": "static-fundamental-rights",
+      "category": "Indian Polity",
+      "q": "Which part of the Indian Constitution lists Fundamental Rights?",
+      "a": "Part III.",
+      "options": [
+        "Part II.",
+        "Part IV.",
+        "Part III.",
+        "Part V."
+      ]
+    },
+    {
+      "id": "static-science-sun-star",
+      "category": "Science & Space",
+      "q": "What is the Sun?",
+      "a": "A star.",
+      "options": [
+        "A comet.",
+        "A star.",
+        "A moon.",
+        "A planet."
+      ]
+    },
+    {
+      "id": "static-maths-perimeter-square",
+      "category": "Mathematics",
+      "q": "What is the perimeter of a square with each side 5 cm?",
+      "a": "20 cm.",
+      "options": [
+        "20 cm.",
+        "15 cm.",
+        "10 cm.",
+        "25 cm."
+      ]
+    },
+    {
+      "id": "static-computer-cpu",
+      "category": "Computer Basics",
+      "q": "What does CPU stand for?",
+      "a": "Central Processing Unit.",
+      "options": [
+        "Graphics Processing Unit.",
+        "Random Access Memory.",
+        "Central Processing Unit.",
+        "Arithmetic Logic Unit."
+      ]
+    },
+    {
+      "id": "static-gk-hardest-natural-substance",
+      "category": "Science",
+      "q": "Which of these is commonly known as the hardest naturally occurring substance?",
+      "a": "Diamond.",
+      "options": [
+        "Copper.",
+        "Quartz.",
+        "Gypsum.",
+        "Diamond."
+      ]
+    }
+  ]
+}
